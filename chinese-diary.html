@@ -1132,6 +1132,22 @@
     flex-wrap: wrap;
     gap: 16px;
   }
+  footer.site .meta {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    padding-top: 14px;
+    margin-top: 4px;
+    border-top: 1px solid var(--divider);
+    font-size: 10.5px;
+    color: var(--ink-4);
+    letter-spacing: 0.02em;
+  }
+  footer.site .meta a { color: var(--ink-3); text-decoration: none; transition: color 0.2s ease; }
+  footer.site .meta a:hover { color: var(--accent); }
   footer .legend {
     display: inline-flex;
     gap: 14px;
@@ -1374,6 +1390,10 @@
     </div>
     <div class="keys">
       <kbd>←</kbd><kbd>→</kbd> 移動 · <kbd>Space</kbd> 再生 · <kbd>Esc</kbd> 停止 · <kbd>P</kbd> Pinyin · <kbd>D</kbd> Theme
+    </div>
+    <div class="meta">
+      <span>個人の趣味の範囲で作っています。細かいバグなどはご容赦ください。</span>
+      <span>© 2026 mari · <a href="https://x.com/mmmmmmmari_" target="_blank" rel="noopener">@mmmmmmmari_</a></span>
     </div>
   </footer>
 </div>
