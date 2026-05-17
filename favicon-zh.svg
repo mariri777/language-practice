@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bgZh" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffa3bd"/>
+      <stop offset="100%" stop-color="#e76b8a"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bgZh)"/>
+  <text x="32" y="48"
+        text-anchor="middle"
+        font-family="'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
+        font-size="42"
+        font-weight="500"
+        fill="#ffffff">你</text>
+</svg>
