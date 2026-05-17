@@ -1,0 +1,20 @@
+{
+  "name": "你好！中国語アウトプット練習",
+  "short_name": "你好！",
+  "id": "/chinese-practice.html",
+  "start_url": "./chinese-practice.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff5f7",
+  "theme_color": "#e76b8a",
+  "lang": "ja",
+  "description": "中国語アウトプット練習ツール",
+  "icons": [
+    { "src": "icons/favicon-zh-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-zh-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-zh-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/favicon-zh-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "favicon-zh.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
