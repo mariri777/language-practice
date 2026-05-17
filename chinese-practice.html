@@ -1,0 +1,2867 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>你好！中国語アウトプット練習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff5f7; --bg-soft: #ffe7ee; --pink-light: #ffd0dd;
+      --pink: #ff8fa9; --pink-deep: #e76b8a; --pink-darker: #c84d6e;
+      --cream: #fffaf9; --white: #ffffff;
+      --ink: #4a2f3a; --ink-soft: #8a6a76; --ink-mute: #b69aa3;
+      --line: #f3d9d3;
+      --green: #6db99e; --green-soft: #d8f0e6;
+      --red: #e76b6b; --red-soft: #fde2e2;
+      --yellow: #f5c46b; --yellow-soft: #fbecc7;
+      --shadow: 0 14px 30px -18px rgba(231,107,138,.45);
+      --shadow-lg: 0 26px 60px -28px rgba(231,107,138,.55);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Plus Jakarta Sans", -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Noto Sans SC", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, #fff0f6 0%, #ffe1ec 25%, #fff6fa 50%, #ffd9e6 75%, #fff0f6 100%);
+      background-size: 400% 400%;
+      animation: bgShift 22s ease-in-out infinite;
+      background-attachment: fixed;
+      min-height: 100vh; line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      position: relative; overflow-x: hidden;
+    }
+    @keyframes bgShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* ふんわり光るピンクの bokeh レイヤー */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,170,196,.55) 0%, transparent 30%),
+        radial-gradient(circle at 82% 18%, rgba(255,195,215,.5) 0%, transparent 32%),
+        radial-gradient(circle at 28% 82%, rgba(255,160,190,.45) 0%, transparent 30%),
+        radial-gradient(circle at 78% 78%, rgba(255,205,220,.5) 0%, transparent 34%),
+        radial-gradient(circle at 50% 50%, rgba(255,225,235,.35) 0%, transparent 45%);
+      filter: blur(2px);
+      animation: bokehDrift 16s ease-in-out infinite alternate;
+    }
+    @keyframes bokehDrift {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(-12px, 10px, 0) scale(1.05); }
+      100% { transform: translate3d(8px, -14px, 0) scale(1.02); }
+    }
+
+    /* キラキラ星空レイヤー（CSSのみのドットパターン） */
+    body::after {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 12% 18%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.5px 1.5px at 84% 14%, rgba(255,220,235,.9), transparent 60%),
+        radial-gradient(2px 2px at 24% 64%, rgba(255,255,255,.8), transparent 60%),
+        radial-gradient(1.2px 1.2px at 62% 32%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.8px 1.8px at 92% 60%, rgba(255,235,245,.85), transparent 60%),
+        radial-gradient(1.5px 1.5px at 8% 88%, rgba(255,255,255,.85), transparent 60%),
+        radial-gradient(1.3px 1.3px at 46% 80%, rgba(255,220,235,.85), transparent 60%),
+        radial-gradient(2px 2px at 72% 90%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.4px 1.4px at 36% 8%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.6px 1.6px at 58% 56%, rgba(255,240,247,.85), transparent 60%);
+      animation: twinkle 4s ease-in-out infinite;
+      opacity: .85;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: .35; }
+      50%      { opacity: .95; }
+    }
+
+    .zh { font-family: "Noto Sans SC", "Plus Jakarta Sans", sans-serif; }
+
+    /* 浮遊する花びら・ハート・キラキラ */
+    .deco { position: fixed; pointer-events: none; z-index: 0; will-change: transform; }
+    .deco.petal  { animation: floatA 14s ease-in-out infinite; opacity: .6; }
+    .deco.heart  { animation: floatB 18s ease-in-out infinite; opacity: .55; }
+    .deco.spark  { animation: sparkle 3.6s ease-in-out infinite; opacity: .8; }
+    .deco.ribbon { animation: floatC 22s ease-in-out infinite; opacity: .5; }
+
+    .deco.p1 { top: 6%;  left: 4%;  font-size: 24px; animation-delay: 0s; }
+    .deco.p2 { top: 18%; right: 6%; font-size: 20px; animation-delay: -3s; }
+    .deco.p3 { bottom: 14%; left: 7%;  font-size: 26px; animation-delay: -6s; }
+    .deco.p4 { bottom: 24%; right: 5%; font-size: 18px; animation-delay: -9s; }
+    .deco.p5 { top: 48%; left: 2%;  font-size: 16px; animation-delay: -4s; }
+    .deco.p6 { top: 62%; right: 3%; font-size: 22px; animation-delay: -7s; }
+    .deco.h1d { top: 12%; left: 50%; font-size: 16px; animation-delay: -2s; }
+    .deco.h2d { bottom: 8%; right: 36%; font-size: 18px; animation-delay: -10s; }
+    .deco.s1 { top: 28%; left: 28%; font-size: 14px; animation-delay: 0s; }
+    .deco.s2 { top: 36%; right: 22%; font-size: 12px; animation-delay: -1.2s; }
+    .deco.s3 { bottom: 36%; left: 32%; font-size: 13px; animation-delay: -2.4s; }
+    .deco.s4 { bottom: 18%; right: 26%; font-size: 15px; animation-delay: -.8s; }
+    .deco.s5 { top: 70%; left: 18%; font-size: 11px; animation-delay: -1.8s; }
+    .deco.r1 { top: 40%; right: 10%; font-size: 18px; animation-delay: -5s; }
+
+    @keyframes floatA {
+      0%, 100% { transform: translateY(0)   rotate(0deg); }
+      50%      { transform: translateY(-22px) rotate(18deg); }
+    }
+    @keyframes floatB {
+      0%, 100% { transform: translate(0, 0)    rotate(-6deg) scale(1); }
+      50%      { transform: translate(-14px, -18px) rotate(8deg) scale(1.12); }
+    }
+    @keyframes floatC {
+      0%, 100% { transform: translateY(0) rotate(-12deg); opacity: .35; }
+      50%      { transform: translateY(-30px) rotate(10deg); opacity: .65; }
+    }
+    @keyframes sparkle {
+      0%, 100% { transform: scale(.6) rotate(0); opacity: .3; }
+      50%      { transform: scale(1.2) rotate(180deg); opacity: 1; }
+    }
+
+    /* モーションを抑えたいユーザー向け */
+    @media (prefers-reduced-motion: reduce) {
+      body, body::before, body::after, .deco { animation: none !important; }
+    }
+
+    .container { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    .header {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; margin-bottom: 22px;
+    }
+    .header-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--pink-deep); background: var(--white); padding: 7px 14px;
+      border-radius: 999px; box-shadow: var(--shadow); margin-bottom: 14px;
+    }
+    .header-eyebrow::before, .header-eyebrow::after { content: "✿"; font-size: 13px; }
+    .header h1 {
+      font-family: "Fraunces", serif; font-weight: 600;
+      font-size: clamp(28px, 5vw, 42px); line-height: 1.1; letter-spacing: -.02em;
+      text-align: center;
+      cursor: pointer; display: inline-block;
+      transition: transform .15s ease, color .15s ease, text-shadow .3s ease;
+      text-shadow: 0 2px 18px rgba(231,107,138,.15);
+    }
+    .header h1:hover { transform: translateY(-1px); text-shadow: 0 4px 22px rgba(231,107,138,.3); }
+    .header h1:hover .accent { color: var(--pink); }
+    .header h1:active { transform: translateY(0); }
+    .header h1 .accent { color: var(--pink-deep); font-style: italic; font-weight: 500; }
+    .header h1 .zh-title {
+      display: block; font-family: "Noto Sans SC", serif; font-weight: 500;
+      font-size: .55em; color: var(--pink); margin-top: 4px; letter-spacing: .04em;
+      text-align: center;
+    }
+
+    .stats { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 18px 0 20px; }
+    .stat-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--white); padding: 9px 14px; border-radius: 999px;
+      box-shadow: var(--shadow); font-size: 12px; color: var(--ink-soft);
+    }
+    .stat-pill .icon { font-size: 14px; }
+    .stat-pill .value {
+      font-family: "JetBrains Mono", monospace; font-weight: 600;
+      color: var(--pink-darker); font-size: 13px;
+    }
+    .stat-pill .goal-met { color: var(--green); }
+
+    /* ---- Course banner ---- */
+    .course-banner {
+      background: linear-gradient(135deg, #fff 0%, #fff5f7 100%);
+      border: 1px solid var(--line); border-radius: 22px;
+      padding: 18px 22px; box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    .course-info { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .hsk-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      color: var(--white); background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .hsk-tag::before { content: "🌸"; }
+    .course-label {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      color: var(--ink-mute); letter-spacing: .05em;
+    }
+    .course-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 20px; color: var(--ink); margin-bottom: 12px;
+    }
+    .course-progress { display: flex; align-items: center; gap: 12px; }
+    .progress-track {
+      flex: 1; height: 8px; background: var(--bg-soft);
+      border-radius: 999px; overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%; background: linear-gradient(90deg, #ffc6a8, var(--pink));
+      border-radius: 999px; transition: width .5s cubic-bezier(.2,.8,.2,1); width: 0%;
+    }
+    .progress-text {
+      font-family: "JetBrains Mono", monospace; font-size: 12px;
+      color: var(--ink-soft); white-space: nowrap;
+    }
+    .progress-text .mn { color: var(--pink-darker); font-weight: 600; }
+    .course-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .mini-btn {
+      font-family: inherit; font-size: 12px; font-weight: 600;
+      padding: 6px 12px; border-radius: 999px; cursor: pointer;
+      background: var(--white); color: var(--ink-soft); border: 1px solid var(--line);
+      transition: all .2s ease;
+    }
+    .mini-btn:hover { border-color: var(--pink); color: var(--pink-deep); }
+
+    /* ---- Card ---- */
+    .card {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 28px; padding: 32px 28px;
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ""; position: absolute; top: -60px; right: -60px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, #ffd6dd 0%, transparent 70%);
+      border-radius: 50%; opacity: .55; pointer-events: none;
+    }
+    .card::after {
+      content: ""; position: absolute; bottom: -50px; left: -50px;
+      width: 130px; height: 130px;
+      background: radial-gradient(circle, #ffe4ec 0%, transparent 70%);
+      border-radius: 50%; opacity: .5; pointer-events: none;
+    }
+
+    .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: relative; z-index: 1; }
+    .q-num {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      color: var(--ink-mute); letter-spacing: .08em;
+    }
+    .q-num .now { color: var(--pink-darker); font-weight: 600; }
+    .fav-btn {
+      background: transparent; border: none; cursor: pointer; font-size: 22px;
+      transition: transform .2s ease; filter: grayscale(.8); opacity: .5;
+    }
+    .fav-btn:hover { transform: scale(1.15); }
+    .fav-btn.active { filter: none; opacity: 1; animation: pop .3s ease; }
+    @keyframes pop { 0%{transform:scale(1);} 50%{transform:scale(1.3);} 100%{transform:scale(1);} }
+
+    .question-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px;
+    }
+    .question-ja {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: clamp(20px, 4vw, 26px);
+      line-height: 1.5; color: var(--ink); margin-bottom: 22px;
+      position: relative; z-index: 1;
+    }
+
+    .input-wrap { position: relative; z-index: 1; }
+    .answer-input {
+      width: 100%; font-family: "Noto Sans SC", sans-serif;
+      font-size: 20px; padding: 16px 18px;
+      border: 2px solid var(--line); border-radius: 18px;
+      background: var(--cream); color: var(--ink);
+      resize: vertical; min-height: 76px;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .answer-input::placeholder { color: var(--ink-mute); font-family: inherit; font-size: 14px; }
+    .answer-input:focus { outline: none; border-color: var(--pink); background: var(--white); }
+    .answer-input:disabled { opacity: .7; cursor: not-allowed; }
+
+    .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .btn {
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      padding: 11px 20px; border-radius: 999px; border: none;
+      cursor: pointer; transition: all .2s ease;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+      color: var(--white); box-shadow: 0 8px 20px -8px rgba(231,107,138,.6);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(231,107,138,.7); }
+    .btn-primary:disabled { background: var(--ink-mute); cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-ghost { background: var(--white); color: var(--ink-soft); border: 1.5px solid var(--line); }
+    .btn-ghost:hover { border-color: var(--pink); color: var(--pink-deep); }
+    .btn-next {
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-darker));
+      color: var(--white); box-shadow: 0 8px 20px -8px rgba(200,77,110,.6);
+    }
+    .btn-next:hover { transform: translateY(-2px); }
+
+    .hint {
+      margin-top: 12px; padding: 11px 14px;
+      background: var(--yellow-soft); border-radius: 14px;
+      font-size: 13px; color: #8a6a26; position: relative; z-index: 1;
+    }
+    .hint::before { content: "💡 "; }
+
+    /* ---- Result ---- */
+    .result { margin-top: 26px; position: relative; z-index: 1; animation: fadeUp .4s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+
+    .verdict {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 16px; border-radius: 16px;
+      font-size: 15px; font-weight: 600; margin-bottom: 18px;
+    }
+    .verdict-correct { background: var(--green-soft); color: #2f7c5e; }
+    .verdict-partial { background: var(--yellow-soft); color: #8a6a26; }
+    .verdict-wrong { background: var(--red-soft); color: #a23838; }
+    .verdict .emoji { font-size: 22px; }
+    .verdict-correct .mastered-badge {
+      margin-left: auto; font-size: 11px; padding: 4px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.6); color: #2f7c5e; font-weight: 700;
+    }
+
+    .answer-block {
+      background: var(--bg-soft); border-radius: 18px;
+      padding: 18px 20px; margin-bottom: 16px;
+    }
+    .answer-block .label {
+      font-size: 11px; font-weight: 700; letter-spacing: .18em;
+      color: var(--pink-deep); text-transform: uppercase; margin-bottom: 6px;
+    }
+    .answer-zh {
+      font-family: "Noto Sans SC", sans-serif; font-size: 24px; font-weight: 500;
+      color: var(--ink); line-height: 1.4;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .answer-pinyin {
+      font-style: italic; color: var(--pink-darker); font-size: 14px;
+      margin-top: 4px; font-family: "Plus Jakarta Sans", serif;
+    }
+    .speak-btn {
+      background: var(--white); border: 1.5px solid var(--line);
+      width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; font-size: 15px;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: all .2s ease;
+    }
+    .speak-btn:hover { background: var(--pink); color: var(--white); border-color: var(--pink); transform: scale(1.08); }
+    .your-answer {
+      font-family: "Noto Sans SC", sans-serif; font-size: 17px;
+      color: var(--ink-soft); margin-top: 4px;
+    }
+
+    .section-title {
+      font-size: 12px; font-weight: 700; letter-spacing: .12em;
+      color: var(--pink-deep); text-transform: uppercase;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+    }
+    .section-title::before { content: ""; width: 6px; height: 6px; background: var(--pink); border-radius: 50%; }
+
+    .grammar-block {
+      background: linear-gradient(135deg, #fff5f7 0%, #fff 100%);
+      border: 1px solid var(--line); border-left: 4px solid var(--pink);
+      border-radius: 14px; padding: 15px 17px;
+      font-size: 14px; line-height: 1.8; color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .grammar-block strong { color: var(--pink-darker); font-weight: 700; }
+    .grammar-block code {
+      font-family: "Noto Sans SC", "JetBrains Mono", monospace;
+      background: var(--bg-soft); padding: 1px 6px;
+      border-radius: 4px; color: var(--pink-darker); font-size: .95em;
+    }
+    .grammar-block .pat {
+      display: inline-block; background: var(--white); border: 1px dashed var(--pink-light);
+      padding: 2px 8px; border-radius: 6px; margin: 2px 0; font-family: "Noto Sans SC", sans-serif;
+    }
+
+    .words-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 10px; margin-bottom: 18px;
+    }
+    .word-item {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 14px; padding: 11px 13px;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .word-item:hover { transform: translateY(-2px); box-shadow: 0 8px 16px -8px rgba(231,107,138,.3); }
+    .word-zh { font-family: "Noto Sans SC", sans-serif; font-size: 19px; font-weight: 600; color: var(--ink); }
+    .word-pinyin { font-style: italic; color: var(--pink-darker); font-size: 12px; margin-top: 2px; }
+    .word-ja { font-size: 12px; color: var(--ink-soft); margin-top: 3px; line-height: 1.45; }
+
+    .next-wrap { margin-top: 20px; display: flex; justify-content: center; }
+
+    /* ---- Modal ---- */
+    .modal {
+      position: fixed; inset: 0; background: rgba(74,47,58,.5);
+      display: none; align-items: center; justify-content: center;
+      z-index: 100; padding: 20px; backdrop-filter: blur(4px);
+    }
+    .modal.open { display: flex; animation: fadeIn .25s ease; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    .modal-content {
+      background: var(--white); border-radius: 24px;
+      padding: 26px 24px; max-width: 520px; width: 100%;
+      max-height: 85vh; overflow-y: auto; position: relative;
+      box-shadow: var(--shadow-lg); animation: slideUp .3s cubic-bezier(.2,.8,.2,1);
+    }
+    @keyframes slideUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+    .modal-close {
+      position: absolute; top: 12px; right: 14px;
+      background: var(--bg-soft); border: none;
+      width: 32px; height: 32px; border-radius: 50%;
+      font-size: 18px; color: var(--ink-soft); cursor: pointer;
+      transition: all .2s ease;
+    }
+    .modal-close:hover { background: var(--pink); color: var(--white); }
+    .modal h3 {
+      font-family: "Fraunces", serif; font-weight: 500;
+      font-size: 22px; color: var(--ink); margin-bottom: 4px;
+    }
+    .modal-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; }
+
+    .course-list { display: flex; flex-direction: column; gap: 10px; }
+    .course-list-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; border-radius: 14px;
+      border: 1.5px solid var(--line); background: var(--white);
+      cursor: pointer; transition: all .2s ease;
+    }
+    .course-list-item:hover { border-color: var(--pink); transform: translateX(2px); }
+    .course-list-item.current {
+      background: linear-gradient(135deg, #fff 0%, var(--bg-soft) 100%);
+      border-color: var(--pink);
+    }
+    .course-list-item.done { background: var(--green-soft); border-color: var(--green); }
+    .cli-hsk {
+      font-size: 10px; font-weight: 700; letter-spacing: .05em;
+      color: var(--white); background: var(--pink-deep);
+      padding: 3px 7px; border-radius: 6px; flex-shrink: 0;
+    }
+    .cli-meta { flex: 1; }
+    .cli-num { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--ink-mute); }
+    .cli-title { font-size: 14px; color: var(--ink); font-weight: 500; margin-top: 1px; }
+    .cli-prog {
+      font-family: "JetBrains Mono", monospace; font-size: 12px;
+      color: var(--pink-darker); font-weight: 600; flex-shrink: 0;
+    }
+    .cli-prog.complete { color: var(--green); }
+
+    /* Course complete modal */
+    .complete-content { text-align: center; padding: 36px 24px; }
+    .complete-emoji { font-size: 54px; margin-bottom: 8px; animation: pop .6s ease; }
+    .complete-content h3 { font-size: 26px; margin-bottom: 6px; }
+    .complete-content p { color: var(--ink-soft); margin-bottom: 20px; }
+    .complete-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    .footer { margin-top: 48px; text-align: center; font-size: 12px; color: var(--ink-mute); }
+    .footer .heart { color: var(--pink-deep); }
+
+    .diff-correct { color: var(--green); font-weight: 600; }
+    .diff-wrong { color: var(--red); text-decoration: line-through; }
+    .diff-missing { color: var(--pink-darker); font-weight: 600; background: var(--bg-soft); padding: 0 4px; border-radius: 3px; }
+
+    /* ---- Views (home / level / intro / practice) ---- */
+    .view[hidden] { display: none !important; }
+
+    .view-title {
+      font-family: "Fraunces", serif; font-weight: 500;
+      font-size: 22px; color: var(--ink); text-align: center;
+      margin: 8px 0 22px;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      color: var(--pink-deep); background: var(--white);
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: 8px 14px; cursor: pointer; margin-bottom: 16px;
+      transition: all .2s ease;
+    }
+    .back-link:hover { background: var(--bg-soft); transform: translateX(-2px); }
+
+    /* HSK level cards */
+    .hsk-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px; margin-bottom: 20px;
+    }
+    .hsk-card {
+      position: relative; display: flex; flex-direction: column; gap: 6px;
+      padding: 22px 20px; text-align: left;
+      background: var(--white); border: 1.5px solid var(--line);
+      border-radius: 22px; cursor: pointer; box-shadow: var(--shadow);
+      transition: all .25s cubic-bezier(.2,.8,.2,1);
+      overflow: hidden; font-family: inherit;
+    }
+    .hsk-card::before {
+      content: ""; position: absolute; top: -30px; right: -30px;
+      width: 90px; height: 90px;
+      background: radial-gradient(circle, var(--pink-light) 0%, transparent 70%);
+      border-radius: 50%; opacity: .7; transition: transform .4s ease;
+    }
+    .hsk-card:hover {
+      transform: translateY(-4px); border-color: var(--pink);
+      box-shadow: var(--shadow-lg);
+    }
+    .hsk-card:hover::before { transform: scale(1.4); }
+    .hsk-card-num {
+      font-family: "Fraunces", serif; font-weight: 600;
+      font-size: 26px; color: var(--pink-darker);
+      letter-spacing: -.01em; position: relative; z-index: 1;
+    }
+    .hsk-card-label {
+      font-size: 12px; color: var(--ink-soft); position: relative; z-index: 1;
+    }
+    .hsk-card-progress {
+      margin-top: 6px; font-family: "JetBrains Mono", monospace;
+      font-size: 12px; color: var(--pink-deep); font-weight: 600;
+      position: relative; z-index: 1;
+    }
+    .hsk-card-progress .done-tag {
+      display: inline-block; margin-left: 6px;
+      font-size: 10px; color: var(--green); font-weight: 700;
+    }
+
+    /* Course list (level view) */
+    .course-cards {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .course-card {
+      display: flex; flex-direction: column; gap: 8px;
+      padding: 18px 20px; text-align: left;
+      background: var(--white); border: 1.5px solid var(--line);
+      border-radius: 18px; cursor: pointer; box-shadow: var(--shadow);
+      transition: all .2s ease; font-family: inherit;
+    }
+    .course-card:hover { transform: translateX(4px); border-color: var(--pink); }
+    .course-card.done { background: linear-gradient(135deg, #fff 0%, var(--green-soft) 100%); border-color: var(--green); }
+    .course-card.current { border-color: var(--pink); border-width: 2px; }
+    .cc-head {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .cc-num {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      font-weight: 600; color: var(--pink-darker);
+      background: var(--bg-soft); padding: 3px 9px; border-radius: 6px;
+    }
+    .course-card.done .cc-num { background: rgba(255,255,255,.8); color: var(--green); }
+    .cc-status {
+      margin-left: auto; font-size: 11px; font-weight: 700;
+      color: var(--ink-mute); font-family: "JetBrains Mono", monospace;
+    }
+    .cc-status.done { color: var(--green); }
+    .cc-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 18px; color: var(--ink);
+    }
+    .cc-bar-wrap { display: flex; align-items: center; gap: 10px; }
+    .cc-track {
+      flex: 1; height: 6px; background: var(--bg-soft);
+      border-radius: 999px; overflow: hidden;
+    }
+    .cc-bar {
+      height: 100%; background: linear-gradient(90deg, #ffc6a8, var(--pink));
+      border-radius: 999px; transition: width .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .course-card.done .cc-bar { background: var(--green); }
+
+    /* Intro view */
+    .intro-card {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 24px; padding: 28px 24px;
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+    }
+    .intro-card::before {
+      content: ""; position: absolute; top: -60px; right: -60px;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, #ffd6dd 0%, transparent 70%);
+      border-radius: 50%; opacity: .5; pointer-events: none;
+    }
+    .intro-meta {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px; position: relative; z-index: 1;
+    }
+    .intro-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 24px; line-height: 1.3;
+      color: var(--ink); margin-bottom: 14px;
+      position: relative; z-index: 1;
+    }
+    .intro-overview {
+      font-size: 14px; line-height: 1.85; color: var(--ink-soft);
+      margin-bottom: 22px; position: relative; z-index: 1;
+    }
+    .intro-section-title {
+      font-size: 12px; font-weight: 700; letter-spacing: .15em;
+      color: var(--pink-deep); text-transform: uppercase;
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+      position: relative; z-index: 1;
+    }
+    .intro-section-title::before {
+      content: "🌸"; font-size: 14px;
+    }
+    .intro-points {
+      list-style: none; padding: 0; margin: 0 0 24px;
+      display: flex; flex-direction: column; gap: 10px;
+      position: relative; z-index: 1;
+    }
+    .intro-points li {
+      padding: 12px 14px 12px 38px; position: relative;
+      background: var(--bg-soft); border-radius: 12px;
+      font-size: 14px; line-height: 1.7; color: var(--ink);
+    }
+    .intro-points li::before {
+      content: "✿"; position: absolute; left: 14px; top: 12px;
+      color: var(--pink); font-size: 14px;
+    }
+    .intro-points code {
+      font-family: "Noto Sans SC", "JetBrains Mono", monospace;
+      background: var(--white); padding: 1px 6px;
+      border-radius: 4px; color: var(--pink-darker); font-size: .95em;
+    }
+    .intro-points strong { color: var(--pink-darker); font-weight: 700; }
+    .intro-start {
+      width: 100%; justify-content: center; padding: 14px 20px !important;
+      font-size: 15px !important; position: relative; z-index: 1;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 14px 56px; }
+      .card { padding: 22px 18px; border-radius: 20px; }
+      .course-banner { padding: 14px 16px; border-radius: 18px; }
+      .question-ja { font-size: 18px; }
+      .answer-zh { font-size: 21px; }
+      .answer-input { font-size: 18px; }
+      .stat-pill { padding: 7px 11px; font-size: 11px; }
+      .btn { padding: 10px 16px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 装飾レイヤー（クリック透過） -->
+  <span class="deco petal p1">🌸</span>
+  <span class="deco petal p2">🌷</span>
+  <span class="deco petal p3">🌸</span>
+  <span class="deco petal p4">🌼</span>
+  <span class="deco petal p5">🌷</span>
+  <span class="deco petal p6">🌸</span>
+  <span class="deco heart h1d">💗</span>
+  <span class="deco heart h2d">💕</span>
+  <span class="deco spark s1">✨</span>
+  <span class="deco spark s2">⭐</span>
+  <span class="deco spark s3">✨</span>
+  <span class="deco spark s4">⭐</span>
+  <span class="deco spark s5">✦</span>
+  <span class="deco ribbon r1">🎀</span>
+
+  <div class="container">
+    <header class="header">
+      <span class="header-eyebrow">Chinese Output Trainer</span>
+      <h1 id="home-link" role="link" tabindex="0" title="トップへ戻る">
+        Daily <span class="accent">中国語</span> Talk
+        <span class="zh-title">你好！每天一句中文输出</span>
+      </h1>
+    </header>
+
+    <div class="stats">
+      <span class="stat-pill"><span class="icon">🔥</span>連続 <span class="value" id="streak">0</span> 日</span>
+      <span class="stat-pill"><span class="icon">🌸</span>今日 <span class="value" id="today-count">0</span> / 10</span>
+      <span class="stat-pill"><span class="icon">✨</span>完了 <span class="value" id="done-courses">0</span> コース</span>
+      <span class="stat-pill"><span class="icon">📚</span>累計 <span class="value" id="total">0</span> 文</span>
+    </div>
+
+    <!-- ============ HOME VIEW ============ -->
+    <div class="view view-home" id="view-home">
+      <h2 class="view-title">学びたい級を選ぼう ✿</h2>
+      <div class="hsk-cards">
+        <button class="hsk-card" data-hsk="1">
+          <span class="hsk-card-num">HSK 1</span>
+          <span class="hsk-card-label">入門 · 約150語</span>
+          <span class="hsk-card-progress" data-hsk-progress="1">3 コース</span>
+        </button>
+        <button class="hsk-card" data-hsk="2">
+          <span class="hsk-card-num">HSK 2</span>
+          <span class="hsk-card-label">初級 · 約300語</span>
+          <span class="hsk-card-progress" data-hsk-progress="2">3 コース</span>
+        </button>
+        <button class="hsk-card" data-hsk="3">
+          <span class="hsk-card-num">HSK 3</span>
+          <span class="hsk-card-label">初中級 · 約600語</span>
+          <span class="hsk-card-progress" data-hsk-progress="3">6 コース</span>
+        </button>
+        <button class="hsk-card" data-hsk="4">
+          <span class="hsk-card-num">HSK 4</span>
+          <span class="hsk-card-label">中級 · 約1200語</span>
+          <span class="hsk-card-progress" data-hsk-progress="4">12 コース</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ LEVEL VIEW ============ -->
+    <div class="view view-level" id="view-level" hidden>
+      <button class="back-link" data-back="home">← HSK選択へ</button>
+      <h2 class="view-title">HSK <span id="level-num">1</span> のコース一覧</h2>
+      <div class="course-cards" id="level-courses"></div>
+    </div>
+
+    <!-- ============ INTRO VIEW ============ -->
+    <div class="view view-intro" id="view-intro" hidden>
+      <button class="back-link" data-back="level">← コース一覧へ</button>
+      <div class="intro-card">
+        <div class="intro-meta">
+          <span class="hsk-tag">HSK <span id="intro-hsk">1</span></span>
+          <span class="course-label">Course <span id="intro-num">1</span></span>
+        </div>
+        <h2 class="intro-title" id="intro-title">コース名</h2>
+        <p class="intro-overview" id="intro-overview"></p>
+        <div class="intro-section-title">このコースで学ぶこと</div>
+        <ul class="intro-points" id="intro-points"></ul>
+        <button class="btn btn-primary intro-start" id="intro-start-btn">10問にチャレンジ ✿</button>
+      </div>
+    </div>
+
+    <!-- ============ PRACTICE VIEW ============ -->
+    <div class="view view-practice" id="view-practice" hidden>
+      <button class="back-link" data-back="level">← コース一覧へ</button>
+
+      <div class="course-banner">
+        <div class="course-info">
+          <span class="hsk-tag">HSK <span id="course-hsk">1</span></span>
+          <span class="course-label">Course <span id="course-num">1</span> / <span id="total-courses">24</span></span>
+        </div>
+        <h2 class="course-title" id="course-title">読み込み中…</h2>
+        <div class="course-progress">
+          <div class="progress-track"><div class="progress-bar" id="course-bar"></div></div>
+          <span class="progress-text"><span class="mn" id="mastered-count">0</span> / 10 マスター</span>
+        </div>
+        <div class="course-actions">
+          <button class="mini-btn" id="open-intro-btn">📖 ポイント再確認</button>
+          <button class="mini-btn" id="reset-course-btn">↺ このコースをリセット</button>
+        </div>
+      </div>
+
+      <main class="card">
+        <div class="card-head">
+          <span class="q-num">Question <span class="now" id="q-progress">1</span> / 10</span>
+          <button class="fav-btn" id="fav-btn" title="お気に入り">☆</button>
+        </div>
+
+        <div class="question-label">Translate to Chinese</div>
+        <div class="question-ja" id="question-ja">読み込み中…</div>
+
+        <div class="input-wrap">
+          <textarea class="answer-input zh" id="answer-input"
+            placeholder="ここに中国語で入力（例：我是学生）"
+            autocomplete="off" spellcheck="false"></textarea>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="check-btn">✿ 答え合わせ</button>
+          <button class="btn btn-ghost" id="hint-btn">💡 ヒント</button>
+          <button class="btn btn-ghost" id="skip-btn">⤴ スキップ</button>
+        </div>
+
+        <div id="hint-area"></div>
+        <div id="result-area"></div>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <p>加油！<span class="heart">♡</span> 一天一句、慢慢学</p>
+    </footer>
+  </div>
+
+  <!-- Course complete modal -->
+  <div class="modal" id="complete-modal">
+    <div class="modal-content complete-content">
+      <div class="complete-emoji">🌸✨🌸</div>
+      <h3>コース完了！</h3>
+      <p>10問すべてマスターしました 太棒了！</p>
+      <div class="complete-actions">
+        <button class="btn btn-next" id="next-course-btn">次のコースへ →</button>
+        <button class="btn btn-ghost" id="replay-course-btn">もう一度</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========================================================================
+    // COURSES DATA
+    // ========================================================================
+    const COURSES = [
+      // ============ HSK 1 ============
+      {
+        hsk: 1, num: 1, title: "あいさつ・自己紹介",
+        sentences: [
+          {
+            ja: "こんにちは。", zh: "你好。", py: "nǐ hǎo.",
+            g: "<strong>「你好」</strong>は中国語で最も基本のあいさつ。<code>你</code>（あなた）＋<code>好</code>（良い）で「あなた、ご機嫌よう」のニュアンス。<br>丁寧形は <code>您好（nín hǎo）</code>、目上や初対面で使う。複数人へは <code>你们好</code>、朝・昼・夜で <code>早上好 / 中午好 / 晚上好</code> も覚えておくと便利。",
+            w: [{z:"你",p:"nǐ",j:"あなた"},{z:"好",p:"hǎo",j:"良い"}]
+          },
+          {
+            ja: "お元気ですか？", zh: "你好吗？", py: "nǐ hǎo ma?",
+            g: "<strong>文末の <code>吗</code></strong> は「はい／いいえ」で答えられる疑問文を作る助詞。「平叙文＋吗？」で疑問になる。<br>答えは <code>我很好</code>（元気です）／ <code>不太好</code>（あまり良くない）など。中国では実は使用頻度がそこまで高くなく、英語の How are you? の直訳的表現。実際は <code>最近怎么样？</code>（最近どう？）のほうがよく使う。",
+            w: [{z:"你",p:"nǐ",j:"あなた"},{z:"好",p:"hǎo",j:"良い"},{z:"吗",p:"ma",j:"〜か（疑問）"}]
+          },
+          {
+            ja: "ありがとう。", zh: "谢谢你。", py: "xièxie nǐ.",
+            g: "<strong><code>谢谢</code></strong> は動詞の重ね型で「ありがとう」を表す定番表現。<code>你</code> や <code>您</code> を続けると相手を明示してより丁寧に。<br>返事は <code>不客气（bú kèqi）</code>（どういたしまして）／ <code>不用谢</code>／ <code>没事</code>。「本当にありがとう」と強めるなら <code>非常感谢</code> や <code>太谢谢你了</code>。",
+            w: [{z:"谢谢",p:"xièxie",j:"ありがとう"},{z:"你",p:"nǐ",j:"あなた"}],
+            alts: ["谢谢"]
+          },
+          {
+            ja: "どういたしまして。", zh: "不客气。", py: "bú kèqi.",
+            g: "<strong><code>不</code> の声調変化</strong>：本来は第4声 <code>bù</code> だが、直後が第4声の語（<code>客</code> kè）の場合は第2声 <code>bú</code> に変調する（ピンインでも書き分けることが多い）。<br>類似表現：<code>不用谢</code>（謝意は要らない）、<code>没事儿</code>（何でもないよ・北方話）、<code>没关系</code>（気にしないで）。",
+            w: [{z:"不",p:"bù",j:"〜ない"},{z:"客气",p:"kèqi",j:"遠慮する"}]
+          },
+          {
+            ja: "私は田中といいます。", zh: "我叫田中。", py: "wǒ jiào Tiánzhōng.",
+            g: "<strong>「主語＋叫＋名前」</strong>で「〜という名前です」。<code>叫</code> は「（〜と）呼ぶ／名乗る」の動詞。<br>フルネームは <code>叫</code>、姓だけなら <code>我姓田中</code> を使い分ける。丁寧な聞き方は <code>请问您贵姓？</code>（お名前を伺ってもよろしいですか）。否定 <code>我不叫...</code>、疑問 <code>你叫什么名字？</code>。",
+            w: [{z:"我",p:"wǒ",j:"私"},{z:"叫",p:"jiào",j:"〜と呼ぶ／名乗る"},{z:"田中",p:"Tiánzhōng",j:"田中"}]
+          },
+          {
+            ja: "お名前は何ですか？", zh: "你叫什么名字？", py: "nǐ jiào shénme míngzi?",
+            g: "<strong>疑問詞疑問文</strong>：中国語は英語と違い、疑問詞 <code>什么</code>（なに）を聞きたい場所にそのまま置く（語順を入れ替えない）。文末の <code>吗</code> は不要。<br>同様に <code>谁</code>（誰）、<code>哪</code>（どこ）、<code>几</code>（いくつ）、<code>多少</code>（いくら）、<code>怎么</code>（どう）も同じ語順ルール。",
+            w: [{z:"叫",p:"jiào",j:"名乗る"},{z:"什么",p:"shénme",j:"何"},{z:"名字",p:"míngzi",j:"名前"}]
+          },
+          {
+            ja: "私は日本人です。", zh: "我是日本人。", py: "wǒ shì Rìběn rén.",
+            g: "<strong>「A＋是＋B」構文</strong>（最重要の基本文型）。<code>是</code> は英語のbe動詞に似た連結詞で、AとBを等値で結ぶ。<br><strong>注意</strong>：形容詞には <code>是</code> を付けない（<code>她是漂亮</code>×／<code>她很漂亮</code>○）。否定は <code>不是</code>、疑問は文末 <code>吗</code> または「是不是？」型。",
+            w: [{z:"是",p:"shì",j:"〜である"},{z:"日本",p:"Rìběn",j:"日本"},{z:"人",p:"rén",j:"人"}]
+          },
+          {
+            ja: "彼は先生ではありません。", zh: "他不是老师。", py: "tā bú shì lǎoshī.",
+            g: "<strong><code>是</code> の否定 <code>不是</code></strong>。<code>是</code> は第4声なので <code>不</code> が第2声 <code>bú</code> に変調する。<br>正反疑問 <code>他是不是老师？</code>（彼は先生ですか？）は <code>吗</code> 不要で「是＋不是」を並べる形。答えは <code>是</code>／<code>不是</code> でOK。",
+            w: [{z:"他",p:"tā",j:"彼"},{z:"不",p:"bù",j:"〜ない"},{z:"老师",p:"lǎoshī",j:"先生"}]
+          },
+          {
+            ja: "お会いできて嬉しいです。", zh: "认识你很高兴。", py: "rènshi nǐ hěn gāoxìng.",
+            g: "<strong>形容詞述語文</strong>：「主語＋很＋形容詞」が基本形。<code>很</code> は強い「とても」の意味は薄く、形容詞文を整える文法的な飾り（裸の形容詞は比較ニュアンスを帯びる）。<br>語順を入れ替えた <code>很高兴认识你</code> も同義でよく使う。さらに丁寧なら <code>很高兴见到你</code>。",
+            w: [{z:"认识",p:"rènshi",j:"知り合う"},{z:"很",p:"hěn",j:"とても"},{z:"高兴",p:"gāoxìng",j:"嬉しい"}]
+          },
+          {
+            ja: "さようなら。", zh: "再见。", py: "zàijiàn.",
+            g: "<strong><code>再</code>（また）＋<code>见</code>（会う）</strong>で「また会いましょう＝さようなら」。直訳に近い構成で覚えやすい。<br>くだけた言い方：<code>拜拜（báibái）</code>（バイバイ）。「またね」系：<code>明天见</code>（また明日）、<code>回头见</code>（あとで）、<code>下次见</code>（また今度）。",
+            w: [{z:"再",p:"zài",j:"再び"},{z:"见",p:"jiàn",j:"会う"}]
+          }
+        ]
+      },
+      {
+        hsk: 1, num: 2, title: "数字・時間・量詞",
+        sentences: [
+          {
+            ja: "今、何時ですか？", zh: "现在几点？", py: "xiànzài jǐ diǎn?",
+            g: "<strong>疑問詞 <code>几</code> vs <code>多少</code></strong>：<code>几</code> は10以下の少ない数を尋ねる（時刻・曜日・家族の人数など）。<code>多少</code> は10以上含む任意の数や値段に使う。<br>時刻表現は <code>是</code> 不要で「数字＋点」が述語になる。例：<code>三点</code>（3時）、<code>三点半</code>（3:30）、<code>三点一刻</code>（3:15）、<code>差五分三点</code>（2:55）。",
+            w: [{z:"现在",p:"xiànzài",j:"今"},{z:"几",p:"jǐ",j:"いくつ"},{z:"点",p:"diǎn",j:"〜時"}]
+          },
+          {
+            ja: "私は今年20歳です。", zh: "我今年二十岁。", py: "wǒ jīnnián èrshí suì.",
+            g: "<strong>年齢には <code>是</code> を付けない</strong>のが原則。「主語＋数詞＋岁」で文が完結する（<code>我是二十岁</code> はやや不自然）。<br>10歳未満の子には <code>几岁？</code>、大人には <code>多大？</code>（いくつ？）、年配者には <code>多大年纪？</code> と聞き分ける。",
+            w: [{z:"今年",p:"jīnnián",j:"今年"},{z:"二十",p:"èrshí",j:"20"},{z:"岁",p:"suì",j:"歳"}]
+          },
+          {
+            ja: "今日は何曜日ですか？", zh: "今天星期几？", py: "jīntiān xīngqī jǐ?",
+            g: "<strong>曜日表現</strong>：<code>星期一〜星期六</code>（月〜土）、<code>星期天／星期日</code>（日曜）。<code>礼拜一</code>、<code>周一</code> などの言い方もある。<br>日付・曜日・時間を述語にする時は <code>是</code> を省略可：<code>今天（是）星期一</code>。否定文では <code>是</code> 必須：<code>今天不是星期一</code>。",
+            w: [{z:"今天",p:"jīntiān",j:"今日"},{z:"星期",p:"xīngqī",j:"週・曜日"},{z:"几",p:"jǐ",j:"いくつ"}]
+          },
+          {
+            ja: "明日は5月15日です。", zh: "明天是五月十五号。", py: "míngtiān shì wǔ yuè shíwǔ hào.",
+            g: "<strong>日付の語順は「年→月→日」</strong>と大きい単位から（日本語と同じ）。<code>号</code> は口語、<code>日</code> は書面語。<br>例：<code>2026年5月15号</code> = <code>二零二六年五月十五号</code>。月は <code>一月〜十二月</code>。「来月」<code>下个月</code>、「先月」<code>上个月</code>、「今月」<code>这个月</code>。",
+            w: [{z:"明天",p:"míngtiān",j:"明日"},{z:"月",p:"yuè",j:"月"},{z:"号",p:"hào",j:"日"}]
+          },
+          {
+            ja: "私には兄が一人います。", zh: "我有一个哥哥。", py: "wǒ yǒu yí ge gēge.",
+            g: "<strong>所有・存在の <code>有</code></strong>。否定は必ず <code>没有</code>（<code>不有</code>×）。<br><strong>「一」の声調変化</strong>：本来 <code>yī</code> だが、第4声の前で <code>yí</code>、他の声調の前で <code>yì</code> に変調する。<code>个</code> は第4声（軽声化することもあり）なので <code>一个</code> は <code>yí ge</code>。",
+            w: [{z:"有",p:"yǒu",j:"持つ・いる"},{z:"一个",p:"yí ge",j:"一人・一個"},{z:"哥哥",p:"gēge",j:"兄"}]
+          },
+          {
+            ja: "これは私の母です。", zh: "这是我妈妈。", py: "zhè shì wǒ māma.",
+            g: "<strong>所有の <code>的</code> の省略</strong>：親族・所属・密接な関係を表す時は <code>的</code> を省略するのが自然。<br>例：<code>我妈妈</code>（私の母）／<code>我们学校</code>（私たちの学校）／<code>他朋友</code>（彼の友達）。一方、所有関係が薄いと <code>的</code> 必須：<code>我的书</code>（私の本）。",
+            w: [{z:"这",p:"zhè",j:"これ"},{z:"妈妈",p:"māma",j:"母"}]
+          },
+          {
+            ja: "彼女には子どもが2人います。", zh: "她有两个孩子。", py: "tā yǒu liǎng ge háizi.",
+            g: "<strong>「二」 vs 「两」</strong>：量詞・序数の前は必ず <code>两</code>（liǎng）。<code>二</code>（èr）は単独の数や序数（第二）、電話番号・部屋番号などで使う。<br>例：<code>两个人</code>（二人）、<code>两本书</code>（本2冊）、<code>第二</code>（2番目）、<code>二月</code>（2月）。「2時」は両用：<code>两点</code> が普通。",
+            w: [{z:"她",p:"tā",j:"彼女"},{z:"两个",p:"liǎng ge",j:"2人・2個"},{z:"孩子",p:"háizi",j:"子ども"}]
+          },
+          {
+            ja: "この本はいくらですか？", zh: "这本书多少钱？", py: "zhè běn shū duōshao qián?",
+            g: "<strong>量詞</strong>：「指示詞／数詞＋量詞＋名詞」の語順。<code>本</code> は本の専用量詞。<br>主な量詞：<code>个</code>（汎用）／<code>本</code>（本）／<code>件</code>（衣服・事柄）／<code>张</code>（紙・テーブル）／<code>双</code>（ペア）／<code>条</code>（細長いもの）／<code>只</code>（動物）／<code>杯</code>（カップ）。値段は決まり文句 <code>多少钱？</code>。",
+            w: [{z:"本",p:"běn",j:"〜冊"},{z:"书",p:"shū",j:"本"},{z:"多少",p:"duōshao",j:"いくら"},{z:"钱",p:"qián",j:"お金"}]
+          },
+          {
+            ja: "全部で30元です。", zh: "一共三十块。", py: "yígòng sānshí kuài.",
+            g: "<strong>通貨の言い方</strong>：書面語 <code>元（yuán）</code>、口語 <code>块（kuài）</code>。1元 = 10角（jiǎo / 口語 <code>毛 máo</code>）= 100分（fēn）。<br>例：<code>三块五（毛）</code>＝3.5元。<code>一共</code> は「合計で」。「いくらですか？」<code>多少钱？</code>／「合計はいくら？」<code>一共多少钱？</code>。",
+            w: [{z:"一共",p:"yígòng",j:"合計"},{z:"三十",p:"sānshí",j:"30"},{z:"块",p:"kuài",j:"元（口語）"}]
+          },
+          {
+            ja: "私は5時に家に帰ります。", zh: "我五点回家。", py: "wǒ wǔ diǎn huí jiā.",
+            g: "<strong>時間詞の位置</strong>：中国語では時間詞は<strong>動詞の前</strong>に置くのが原則。「主語＋時間＋（場所）＋動詞」。<br>英語の <em>I go home at 5</em> のように後ろに置く語順は誤り（<code>我回家五点</code>×）。<code>回家</code>は離合詞で「家に帰る」が一語のように扱われ、目的語追加時は <code>回老家</code>（実家に帰る）のように <code>家</code> を入れ替える。",
+            w: [{z:"五点",p:"wǔ diǎn",j:"5時"},{z:"回",p:"huí",j:"帰る"},{z:"家",p:"jiā",j:"家"}]
+          }
+        ]
+      },
+      {
+        hsk: 1, num: 3, title: "場所・動作・所有",
+        sentences: [
+          {
+            ja: "私は家にいます。", zh: "我在家。", py: "wǒ zài jiā.",
+            g: "<strong>動詞 <code>在</code></strong>＝「〜にいる／〜にある」。「主語＋在＋場所」で所在を示す。否定 <code>不在</code>。<br><code>在</code> は<strong>動詞・前置詞・副詞</strong>の3用法がある：①動詞「いる」（我在家）、②前置詞「〜で」（我在家吃饭：家で食べる）、③副詞「〜している」（我在吃饭：食べている）。",
+            w: [{z:"在",p:"zài",j:"〜にいる"},{z:"家",p:"jiā",j:"家"}]
+          },
+          {
+            ja: "私は学校に行きます。", zh: "我去学校。", py: "wǒ qù xuéxiào.",
+            g: "<strong><code>去</code>（行く）／<code>来</code>（来る）</strong>は方向を表す移動動詞。話者の位置から離れるのが <code>去</code>、近づくのが <code>来</code>。<br>「主語＋去／来＋場所」で目的地を直接続ける（<code>去到学校</code>はやや冗長）。「行ったり来たり」<code>来来去去</code>。",
+            w: [{z:"去",p:"qù",j:"行く"},{z:"学校",p:"xuéxiào",j:"学校"}]
+          },
+          {
+            ja: "私はお茶を飲むのが好きです。", zh: "我喜欢喝茶。", py: "wǒ xǐhuan hē chá.",
+            g: "<strong><code>喜欢</code>＋動詞句／名詞</strong>：「〜することが好き／〜が好き」。動詞を続ける時はそのまま動詞を置く（英語の to不定詞や 〜ing 不要）。<br>例：<code>喜欢苹果</code>（リンゴが好き）／<code>喜欢看书</code>（読書が好き）。否定 <code>不喜欢</code>。「ちょっと好き」は <code>有点喜欢</code>、「とても好き」は <code>很喜欢／非常喜欢</code>。",
+            w: [{z:"喜欢",p:"xǐhuan",j:"好き"},{z:"喝",p:"hē",j:"飲む"},{z:"茶",p:"chá",j:"茶"}]
+          },
+          {
+            ja: "何を食べたいですか？", zh: "你想吃什么？", py: "nǐ xiǎng chī shénme?",
+            g: "<strong>助動詞 <code>想</code></strong>＝「〜したい」（願望）。「主語＋想＋動詞句」。<br><strong>3つの「〜したい／〜だろう」の使い分け</strong>：<code>想</code>（やわらかい願望「〜したいなあ」）／<code>要</code>（強い意志「〜する／〜が欲しい」）／<code>愿意</code>（同意・意欲）。否定はすべて <code>不＋</code>（<code>不想</code>等）。",
+            w: [{z:"想",p:"xiǎng",j:"〜したい"},{z:"吃",p:"chī",j:"食べる"},{z:"什么",p:"shénme",j:"何"}]
+          },
+          {
+            ja: "私は中国語が話せます。", zh: "我会说中文。", py: "wǒ huì shuō Zhōngwén.",
+            g: "<strong>助動詞 <code>会</code></strong>は「学習・訓練して習得した能力」を表す。<br><strong>「できる」の3兄弟</strong>：<code>会</code>（学習による技能）／<code>能</code>（条件が整って可能・身体的能力）／<code>可以</code>（許可・可能）。例：<code>我会开车</code>（運転技術がある）／<code>我能开车</code>（今日は運転できる）／<code>这里可以停车</code>（駐車してよい）。",
+            w: [{z:"会",p:"huì",j:"〜できる"},{z:"说",p:"shuō",j:"話す"},{z:"中文",p:"Zhōngwén",j:"中国語"}]
+          },
+          {
+            ja: "私は車の運転ができません。", zh: "我不会开车。", py: "wǒ bú huì kāichē.",
+            g: "<strong><code>会</code> の否定 <code>不会</code></strong>。<code>会</code> は第4声なので <code>不</code> は第2声 <code>bú</code> に変調。<br><code>开车</code> は「離合詞」：<code>开（動詞）＋车（目的語）</code> で一語扱いだが、間に修飾語が入れられる。例：<code>开了三年车</code>（3年運転している）。",
+            w: [{z:"不",p:"bù",j:"〜ない"},{z:"会",p:"huì",j:"できる"},{z:"开车",p:"kāichē",j:"運転する"}]
+          },
+          {
+            ja: "彼はテレビを見ています。", zh: "他在看电视。", py: "tā zài kàn diànshì.",
+            g: "<strong>進行アスペクト <code>在＋V</code></strong>＝「〜している（最中）」。副詞 <code>在</code> を動詞の前に置くだけ。<br><strong>進行を表す形は4種類</strong>：①<code>在＋V</code>、②<code>正在＋V</code>（より「ちょうど」感）、③<code>V＋呢</code>（口語的「〜してるんだよ」）、④三つを組み合わせた <code>正在...呢</code>。否定は <code>没在＋V</code>。",
+            w: [{z:"在",p:"zài",j:"〜している"},{z:"看",p:"kàn",j:"見る"},{z:"电视",p:"diànshì",j:"テレビ"}]
+          },
+          {
+            ja: "これは何ですか？", zh: "这是什么？", py: "zhè shì shénme?",
+            g: "<strong>指示代名詞</strong>：<code>这</code>（これ）／<code>那</code>（あれ・それ）／<code>哪</code>（どれ：疑問）。<br>後ろに量詞を伴って <code>这个</code>（これ）／<code>那个</code>（あれ）／<code>哪个</code>（どれ）の形でも頻出。基本疑問文「これは何？」<code>这是什么？</code>、「あれは誰？」<code>那是谁？</code> は超頻出フレーズ。",
+            w: [{z:"这",p:"zhè",j:"これ"},{z:"是",p:"shì",j:"〜である"},{z:"什么",p:"shénme",j:"何"}]
+          },
+          {
+            ja: "君の本は机の上にある。", zh: "你的书在桌子上。", py: "nǐ de shū zài zhuōzi shàng.",
+            g: "<strong>方位詞</strong>：場所名詞の後ろに付けて位置を明示する。<br><code>上（うえ）／下／里（なか）／外／前／后／左／右／旁边（そば）／中间（なか）</code>。<code>桌子上</code>＝<code>桌子的上面</code>。一般に固有名詞（国名・地名）には方位詞を付けず、普通名詞（机・部屋・体など）には方位詞が必要。<br><strong>所有の <code>的</code></strong>：所有が明確でない場合は省略不可。<code>你的书</code>（あなたの本）。",
+            w: [{z:"的",p:"de",j:"〜の"},{z:"书",p:"shū",j:"本"},{z:"桌子",p:"zhuōzi",j:"机"},{z:"上",p:"shàng",j:"上"}]
+          },
+          {
+            ja: "一緒に行きましょう。", zh: "我们一起去吧。", py: "wǒmen yìqǐ qù ba.",
+            g: "<strong>語気助詞 <code>吧</code></strong>の主な用法：①提案・勧誘「〜しましょう」（我们走吧）、②命令の柔らかい指示「〜して」（你说吧）、③推量「〜でしょう？」（你是日本人吧？）。<br><code>吗</code>（疑問）／<code>呢</code>（再問・継続「〜は？」）／<code>啊</code>（感嘆）と区別。「一緒に」<code>一起</code>＝「同じ場所・同じ時間に」。",
+            w: [{z:"我们",p:"wǒmen",j:"私たち"},{z:"一起",p:"yìqǐ",j:"一緒に"},{z:"去",p:"qù",j:"行く"},{z:"吧",p:"ba",j:"〜しよう"}]
+          }
+        ]
+      },
+      // ============ HSK 2 ============
+      {
+        hsk: 2, num: 1, title: "完了の「了」と経験の「过」",
+        sentences: [
+          {
+            ja: "私はご飯を食べました。", zh: "我吃了饭。", py: "wǒ chī le fàn.",
+            g: "<strong>動詞＋<code>了</code></strong>は<strong>完了・実現</strong>を表すアスペクト助詞（過去形ではない）。「主語＋V＋了＋目的語」が基本語順。<br>否定は <code>没（有）</code> を動詞の前に置き、<code>了</code> は外す：<code>我没吃饭</code>（食べていない）。疑問は <code>...了吗？</code> または正反疑問 <code>吃了没有？</code>。",
+            w: [{z:"吃",p:"chī",j:"食べる"},{z:"了",p:"le",j:"〜した"},{z:"饭",p:"fàn",j:"ご飯"}]
+          },
+          {
+            ja: "私は北京に行ったことがあります。", zh: "我去过北京。", py: "wǒ qù guo Běijīng.",
+            g: "<strong>動詞＋<code>过</code></strong>は<strong>経験</strong>を表すアスペクト助詞「〜したことがある」。生涯における経験の有無を述べる。<br><strong>「了」と「过」の違い</strong>：<code>了</code>は単発の完了・実現／<code>过</code>は累積した経験。否定は <code>没＋V＋过</code>：<code>我没去过</code>（行ったことがない）。",
+            w: [{z:"去",p:"qù",j:"行く"},{z:"过",p:"guo",j:"〜した経験"},{z:"北京",p:"Běijīng",j:"北京"}]
+          },
+          {
+            ja: "昨日、私は本を1冊読みました。", zh: "昨天我看了一本书。", py: "zuótiān wǒ kàn le yì běn shū.",
+            g: "<strong>「了」の重要ルール</strong>：目的語に<strong>数量詞・修飾語</strong>が付くと文として落ち着く。裸の <code>我看了书</code> は不自然で、<code>一本书</code>（1冊の本）や <code>那本书</code>（あの本）等を続けるか、文末に <code>了</code> を加える。<br>「一」は第3声 <code>本</code> の前で第4声 <code>yì</code> に変調。",
+            w: [{z:"昨天",p:"zuótiān",j:"昨日"},{z:"看",p:"kàn",j:"見る・読む"},{z:"一本",p:"yì běn",j:"1冊"}]
+          },
+          {
+            ja: "ご飯を食べましたか？", zh: "你吃饭了吗？", py: "nǐ chī fàn le ma?",
+            g: "<strong>文末の <code>了</code></strong>は<strong>状況変化／新事態の発生</strong>を表す（動詞直後の<code>了</code>とは別物）。「食べる状態が成立した」というニュアンス。<br>正反疑問 <code>你吃饭了没有？</code> もよく使う（短く <code>吃了没？</code>）。応答：<code>吃了</code>（食べた）／<code>还没吃</code>（まだ食べていない）。",
+            w: [{z:"吃饭",p:"chī fàn",j:"食事する"},{z:"了",p:"le",j:"〜した（変化）"},{z:"吗",p:"ma",j:"〜か"}]
+          },
+          {
+            ja: "私はご飯を食べていません。", zh: "我没吃饭。", py: "wǒ méi chī fàn.",
+            g: "<strong>否定の <code>不</code> と <code>没</code> の使い分け</strong>：<code>不</code>は意志・恒常的な否定／<code>没</code>は完了・実現の否定（〜していない・〜しなかった）。<br>例：<code>我不吃肉</code>（肉は食べない＝主義）／<code>我没吃肉</code>（肉を食べていない＝事実）。<code>没</code>とセットの動詞には <code>了</code> を付けない。",
+            w: [{z:"没",p:"méi",j:"〜していない"},{z:"吃",p:"chī",j:"食べる"},{z:"饭",p:"fàn",j:"ご飯"}]
+          },
+          {
+            ja: "彼はまだ家に帰っていません。", zh: "他还没回家。", py: "tā hái méi huí jiā.",
+            g: "<strong><code>还没</code>＋V</strong>＝「まだ〜していない」（今後する可能性を含む）。<br><code>还</code> は「まだ・依然として」の副詞で、進行中・継続中・未完了の状態を強調する。比較：<code>不</code>（しない）／<code>没</code>（していない）／<code>还没</code>（まだしていない＝今後する可能性あり）。<code>回家</code> は離合詞で <code>回了家</code> のように <code>了</code> を中に入れる。",
+            w: [{z:"还",p:"hái",j:"まだ"},{z:"没",p:"méi",j:"〜していない"},{z:"回家",p:"huí jiā",j:"帰宅する"}]
+          },
+          {
+            ja: "中国語を少し学んだことがあります。", zh: "我学过一点中文。", py: "wǒ xué guo yìdiǎn Zhōngwén.",
+            g: "<strong><code>一点</code>＋名詞</strong>＝「少しの〜」。動詞の後に置いて目的語の少量を示す（<code>有一点</code> や <code>一点点</code> も同義）。<br><strong>「一点」と「有点」の違い</strong>：名詞の前 <code>一点（儿）</code>（少しの〜：客観的少量）／形容詞の前 <code>有点（儿）</code>（ちょっと〜：マイナス感情を伴うことが多い）。<code>有点累</code>（ちょっと疲れた）。",
+            w: [{z:"学",p:"xué",j:"学ぶ"},{z:"过",p:"guo",j:"〜した経験"},{z:"一点",p:"yìdiǎn",j:"少し"},{z:"中文",p:"Zhōngwén",j:"中国語"}]
+          },
+          {
+            ja: "お母さんはたくさん料理を作りました。", zh: "妈妈做了很多菜。", py: "māma zuò le hěn duō cài.",
+            g: "<strong>「很多＋名詞」</strong>＝「たくさんの〜」。<code>很</code>は形式上付くが、ここでは「とても」の意味は薄く、「多」を整える働き（<code>多菜</code>とは言わない）。<br>同義：<code>许多</code>（書き言葉寄り）／<code>不少</code>（少なくない＝結構ある）。逆は <code>很少</code>。<code>做菜</code>は「料理を作る」の決まり文句。",
+            w: [{z:"做",p:"zuò",j:"作る・する"},{z:"很多",p:"hěn duō",j:"たくさん"},{z:"菜",p:"cài",j:"料理"}]
+          },
+          {
+            ja: "もう知っています。", zh: "我已经知道了。", py: "wǒ yǐjīng zhīdào le.",
+            g: "<strong>「已经...了」</strong>はセット表現で「もう〜した・〜になった」。<code>已经</code>（副詞「すでに」）＋文末 <code>了</code>（状況変化）で確定的なニュアンス。<br>否定 <code>还没</code>（まだ〜していない）と対をなす。例：<code>已经下班了</code>（もう退勤した）／<code>还没下班</code>（まだ退勤していない）。",
+            w: [{z:"已经",p:"yǐjīng",j:"もう・すでに"},{z:"知道",p:"zhīdào",j:"知る"}]
+          },
+          {
+            ja: "この映画を見たことがありますか？", zh: "你看过这部电影吗？", py: "nǐ kàn guo zhè bù diànyǐng ma?",
+            g: "<strong>経験を尋ねる：「V＋过...吗？」</strong>。正反疑問 <code>看过没有？</code> もよく使う。「ない」と答えるなら <code>没看过</code>。<br>量詞 <code>部</code> は映画・小説・作品の専用量詞。映画は <code>电影</code>、ドラマは <code>电视剧</code>、シリーズ作品の話数は <code>集</code>（1話 一集）。",
+            w: [{z:"看过",p:"kàn guo",j:"見たことがある"},{z:"部",p:"bù",j:"〜本（作品の量詞）"},{z:"电影",p:"diànyǐng",j:"映画"}]
+          }
+        ]
+      },
+      {
+        hsk: 2, num: 2, title: "進行・未来・願望",
+        sentences: [
+          {
+            ja: "彼は今、電話中です。", zh: "他正在打电话。", py: "tā zhèngzài dǎ diànhuà.",
+            g: "<strong>進行アスペクトの4形式</strong>：①<code>在＋V</code>（〜している）、②<code>正在＋V</code>（ちょうど〜している最中）、③<code>V＋呢</code>（〜してるんだよ：口語）、④<code>正在...呢</code>（強調）。<br><code>正</code>は「ちょうど」のニュアンスを足す。否定は <code>没在＋V</code>。<code>打电话</code>＝「電話をかける／話す」（<code>打</code>はもともと「打つ」だが、電話・タクシー・スポーツなど幅広く使う動詞）。",
+            w: [{z:"正在",p:"zhèngzài",j:"〜している最中"},{z:"打",p:"dǎ",j:"（電話を）かける"},{z:"电话",p:"diànhuà",j:"電話"}]
+          },
+          {
+            ja: "私は宿題をしています。", zh: "我在做作业。", py: "wǒ zài zuò zuòyè.",
+            g: "<strong>副詞 <code>在</code></strong>＋動詞 で進行を表す（最もシンプルな形）。動詞 <code>在</code>（〜にいる・ある）／前置詞 <code>在</code>（〜で）と区別。<br>同じ漢字でも品詞で意味が変わるのが中国語の特徴。文脈で判別：<code>我在家</code>（家にいる：動詞）／<code>我在家学习</code>（家で勉強する：前置詞）／<code>我在学习</code>（勉強している：副詞）。",
+            w: [{z:"在",p:"zài",j:"〜している"},{z:"做",p:"zuò",j:"する"},{z:"作业",p:"zuòyè",j:"宿題"}]
+          },
+          {
+            ja: "明日、病院に行く予定です。", zh: "明天我要去医院。", py: "míngtiān wǒ yào qù yīyuàn.",
+            g: "<strong>助動詞 <code>要</code></strong>には3義：①意志「〜する」（明天我要去）、②近未来「〜しそう」（要下雨了）、③必要・義務「〜しなければ」（你要小心）。<br><strong>要 vs 想</strong>：<code>要</code>はやや強い意志「〜する」／<code>想</code>はやわらかい願望「〜したいなあ」。否定は<code>要</code>の意志を否定したい時は <code>不想</code> を使うのが普通（<code>不要</code>は禁止の意味になる）。",
+            w: [{z:"明天",p:"míngtiān",j:"明日"},{z:"要",p:"yào",j:"〜する予定"},{z:"医院",p:"yīyuàn",j:"病院"}]
+          },
+          {
+            ja: "服を1着買いたい。", zh: "我想买一件衣服。", py: "wǒ xiǎng mǎi yí jiàn yīfu.",
+            g: "<strong><code>想</code></strong>＝願望「〜したい」。意思の強さは <code>愿意 &lt; 想 &lt; 要</code>。否定 <code>不想</code>。<br>量詞 <code>件</code> は<strong>上半身の衣類・物事・事件</strong>の量詞。<code>裤子</code>（ズボン）には <code>条</code>、<code>鞋</code>（靴）には <code>双</code>。「一」は第4声 <code>件</code> の前で第2声 <code>yí</code> に変調。",
+            w: [{z:"想",p:"xiǎng",j:"〜したい"},{z:"买",p:"mǎi",j:"買う"},{z:"件",p:"jiàn",j:"〜着"},{z:"衣服",p:"yīfu",j:"服"}]
+          },
+          {
+            ja: "来月、中国に行きます。", zh: "下个月我要去中国。", py: "xià ge yuè wǒ yào qù Zhōngguó.",
+            g: "<strong>時間軸の表現</strong>：<code>上个月</code>（先月）／<code>这个月</code>（今月）／<code>下个月</code>（来月）。同様に <code>上周/这周/下周</code>（週）、<code>前年/去年/今年/明年/后年</code>（年）。<br><strong>語順注意</strong>：時間詞は必ず動詞の前。場所も含むと「時間＋場所＋動詞」（<code>下个月我去中国旅游</code>）。",
+            w: [{z:"下个月",p:"xià ge yuè",j:"来月"},{z:"要",p:"yào",j:"〜する予定"},{z:"中国",p:"Zhōngguó",j:"中国"}]
+          },
+          {
+            ja: "彼は寝ているところです。", zh: "他在睡觉呢。", py: "tā zài shuìjiào ne.",
+            g: "<strong>文末の <code>呢</code></strong>には3用法：①進行の強調「〜しているところだよ」、②再問「〜は？」（<code>你呢？</code>）、③確認「〜じゃないか」。<br>進行形の組み合わせ：<code>正在...呢</code>＞<code>在...呢</code>＞<code>V呢</code>＞<code>在V</code>＞<code>正在V</code> の順に口語感が変わる。<code>睡觉</code>も離合詞：<code>睡了一觉</code>（一寝した）。",
+            w: [{z:"睡觉",p:"shuìjiào",j:"寝る"},{z:"呢",p:"ne",j:"〜しているよ"}]
+          },
+          {
+            ja: "お母さんは料理を作っています。", zh: "妈妈正在做饭。", py: "māma zhèngzài zuò fàn.",
+            g: "<code>正在＋V</code>はその瞬間に進行中であることを強調する。<code>正</code>は「ちょうど・まさに」、<code>在</code>は進行を示す副詞。<br><strong>注意</strong>：未来や仮定の動作には進行形を使わない。<code>明天我正在去公司</code>は不自然。「明日（〜時に）〜しているところ」と言うなら <code>明天这个时候我会在...</code> のように工夫が必要。",
+            w: [{z:"正在",p:"zhèngzài",j:"〜している最中"},{z:"做饭",p:"zuò fàn",j:"料理を作る"}]
+          },
+          {
+            ja: "コーヒーを1杯飲みたい。", zh: "我要喝一杯咖啡。", py: "wǒ yào hē yì bēi kāfēi.",
+            g: "<strong>注文の <code>要</code></strong>：レストランやカフェで「〜をください」は <code>要</code> を使う（<code>我要一杯咖啡</code> でもOK）。<br>量詞 <code>杯</code>＝カップ・グラス1杯分。<code>瓶</code>（瓶）、<code>碗</code>（お椀）、<code>盘</code>（皿）、<code>份</code>（一人前）も飲食でよく使う。「コーヒー」<code>咖啡</code> kāfēi はそのまま音訳。",
+            w: [{z:"要",p:"yào",j:"欲しい"},{z:"喝",p:"hē",j:"飲む"},{z:"杯",p:"bēi",j:"〜杯"},{z:"咖啡",p:"kāfēi",j:"コーヒー"}]
+          },
+          {
+            ja: "何をしていますか？", zh: "你在做什么呢？", py: "nǐ zài zuò shénme ne?",
+            g: "<strong>進行＋疑問詞＋呢</strong>の組み合わせ。<code>呢</code>は疑問の語気を柔らかくする働き。<br>疑問詞 <code>什么</code> を含むので <code>吗</code> は付けない（<code>什么吗？</code>×）。ただし <code>呢</code> は疑問詞疑問文にもつけられる：<code>你在做什么呢？</code>（何してるの？）／<code>什么时候来呢？</code>（いつ来るの？）。",
+            w: [{z:"在",p:"zài",j:"〜している"},{z:"做",p:"zuò",j:"する"},{z:"什么",p:"shénme",j:"何"}]
+          },
+          {
+            ja: "私はもうすぐ卒業します。", zh: "我快要毕业了。", py: "wǒ kuài yào bìyè le.",
+            g: "<strong>「快要...了 / 就要...了 / 快...了」</strong>＝「もうすぐ〜する」。差し迫った近未来を表す。文末 <code>了</code> 必須（状況変化）。<br><code>快要</code>は時間的に近い・<code>就要</code>は具体的時刻と一緒に使える（<code>明天就要考试了</code>）。<code>快要</code>は具体的時間とは併用不可。否定形は存在しない（近未来は事実ベースなので）。",
+            w: [{z:"快要",p:"kuài yào",j:"もうすぐ〜"},{z:"毕业",p:"bìyè",j:"卒業する"},{z:"了",p:"le",j:"〜になる"}]
+          }
+        ]
+      },
+      {
+        hsk: 2, num: 3, title: "比較・能力・依頼・接続",
+        sentences: [
+          {
+            ja: "私は彼より背が高い。", zh: "我比他高。", py: "wǒ bǐ tā gāo.",
+            g: "<strong>比較構文「A＋比＋B＋形容詞」</strong>＝「AはBより〜だ」。形容詞には <code>很</code> を付けない（<code>我比他很高</code>×）。<br>差を入れる場合は<strong>形容詞の後ろ</strong>に量を置く：<code>高一点</code>（少し高い）／<code>高得多</code>（ずっと高い）／<code>高十厘米</code>（10cm高い）。否定は <code>没有...那么高</code>（あれほど高くない）。",
+            w: [{z:"比",p:"bǐ",j:"〜より"},{z:"他",p:"tā",j:"彼"},{z:"高",p:"gāo",j:"高い"}]
+          },
+          {
+            ja: "彼は私より2歳年上です。", zh: "他比我大两岁。", py: "tā bǐ wǒ dà liǎng suì.",
+            g: "<strong>比較の差量</strong>：「A比B＋形容詞＋数量」で「Aは Bより〜だけ〜」。<br><code>大</code> は「（年齢・サイズが）大きい」、<code>小</code> は「小さい」で、年齢比較の必須語彙。「2」は量詞 <code>岁</code> の前なので必ず <code>两</code>。年下なら <code>他比我小两岁</code>。",
+            w: [{z:"比",p:"bǐ",j:"〜より"},{z:"大",p:"dà",j:"（年齢が）上"},{z:"两岁",p:"liǎng suì",j:"2歳"}]
+          },
+          {
+            ja: "私は中華料理が作れます。", zh: "我会做中国菜。", py: "wǒ huì zuò Zhōngguó cài.",
+            g: "<strong>助動詞 <code>会</code> 再確認</strong>：①学習で得た技能「〜できる」、②可能性「〜だろう」（<code>明天会下雨</code>）。<br>「できる」三兄弟の使い分け：<code>会</code>（学習・訓練：泳ぐ・運転・話す）／<code>能</code>（条件・体力・許容量：今日泳げる）／<code>可以</code>（許可：泳いでよい）。<code>中国菜</code>は「中華料理」、<code>日本菜</code>でも通じるが <code>日本料理</code> がより自然。",
+            w: [{z:"会",p:"huì",j:"〜できる"},{z:"做",p:"zuò",j:"作る"},{z:"中国菜",p:"Zhōngguó cài",j:"中華料理"}]
+          },
+          {
+            ja: "手伝ってもらえますか？", zh: "你能帮我吗？", py: "nǐ néng bāng wǒ ma?",
+            g: "<strong><code>能</code></strong>＝「（条件・能力的に）〜できる」。依頼や状況確認でよく使う。否定 <code>不能</code>（できない）。<br><strong>依頼の言い方</strong>：<code>能帮我吗？</code>（手伝える？）／<code>能不能帮我？</code>（手伝える？正反疑問）／<code>可以帮我吗？</code>（手伝ってよい？許可）／<code>请帮我</code>（手伝ってください）。<code>帮</code> の後に直接「人」を続ける。",
+            w: [{z:"能",p:"néng",j:"〜できる"},{z:"帮",p:"bāng",j:"手伝う"}]
+          },
+          {
+            ja: "ここで写真を撮ってもいいですか？", zh: "这里可以拍照吗？", py: "zhèli kěyǐ pāizhào ma?",
+            g: "<strong><code>可以</code></strong>＝「〜してもよい（許可）」。<code>能</code>に比べて許可・規則の側面が強い。<br>許可の答え方：<code>可以</code>（いいよ）／<code>不可以</code>（だめ）／<code>不行</code>（だめ：強め）。<code>拍照</code>は離合詞「写真を撮る」（<code>照</code>を目的語的に持つ）。「写真1枚」は <code>拍一张照（片）</code>。",
+            w: [{z:"这里",p:"zhèli",j:"ここ"},{z:"可以",p:"kěyǐ",j:"〜してよい"},{z:"拍照",p:"pāizhào",j:"写真を撮る"}]
+          },
+          {
+            ja: "ゆっくり話してください。", zh: "请慢点说。", py: "qǐng màn diǎn shuō.",
+            g: "<strong>「形容詞＋一点」</strong>＝「もう少し〜に」：<code>慢点</code>＝<code>慢一点</code>。比較対象が暗黙の現状で、それより少し〜にする命令・依頼。<br>例：<code>大点声</code>（もう少し大きい声で）／<code>快点儿</code>（もう少し早く）／<code>便宜点</code>（もう少し安く）。<code>请</code> を文頭に付けると丁寧な依頼に。",
+            w: [{z:"请",p:"qǐng",j:"どうぞ"},{z:"慢",p:"màn",j:"遅い・ゆっくり"},{z:"说",p:"shuō",j:"話す"}]
+          },
+          {
+            ja: "私も音楽が好きです。", zh: "我也喜欢音乐。", py: "wǒ yě xǐhuan yīnyuè.",
+            g: "<strong>副詞 <code>也</code></strong>＝「〜も」。動詞・形容詞の<strong>直前</strong>に置く（主語の後・動詞の前）。<br>位置ミスに注意：<code>也我喜欢</code>×、<code>我喜欢也</code>×。否定でも「〜も〜ない」は <code>我也不喜欢</code>。二つの主語並列「AもBも」は <code>A也...，B也...</code>（私も彼も：<code>我也喜欢，他也喜欢</code>）。",
+            w: [{z:"也",p:"yě",j:"〜も"},{z:"喜欢",p:"xǐhuan",j:"好き"},{z:"音乐",p:"yīnyuè",j:"音楽"}]
+          },
+          {
+            ja: "私たちはみんな学生です。", zh: "我们都是学生。", py: "wǒmen dōu shì xuéshēng.",
+            g: "<strong>副詞 <code>都</code></strong>＝「みな・すべて」。複数の対象を一括りにする。位置は動詞の前（<code>也</code>と同じ）。<br><code>都</code>が指すのは<strong>その前にある複数のもの</strong>：<code>我们都</code>（私たちみな）、<code>这些菜都很好吃</code>（これらの料理はみな美味しい）。「全否定」<code>都不...</code>（みな〜ない）／「部分否定」<code>不都...</code>（みな〜というわけではない）の区別も重要。",
+            w: [{z:"都",p:"dōu",j:"みな"},{z:"是",p:"shì",j:"〜である"},{z:"学生",p:"xuéshēng",j:"学生"}]
+          },
+          {
+            ja: "水を1杯ください。", zh: "给我一杯水。", py: "gěi wǒ yì bēi shuǐ.",
+            g: "<strong>動詞 <code>给</code></strong>＝「与える・渡す」。語順は「给＋人＋もの」で二重目的語をとる典型動詞。<br>類似の二重目的語動詞：<code>送</code>（贈る）／<code>告诉</code>（告げる）／<code>教</code>（教える）／<code>问</code>（尋ねる）。<code>给</code>は前置詞としても重要：<code>给我打电话</code>（私に電話する：人に対して）。",
+            w: [{z:"给",p:"gěi",j:"〜にあげる"},{z:"杯",p:"bēi",j:"〜杯"},{z:"水",p:"shuǐ",j:"水"}]
+          },
+          {
+            ja: "すごい！", zh: "太好了！", py: "tài hǎo le!",
+            g: "<strong>「太＋形容詞＋了」</strong>＝「あまりにも〜だ」「すごく〜」。感嘆・強調の決まり文句。<code>太</code>と <code>了</code> のセットが基本。<br>マイナス用法もある：<code>太贵了</code>（高すぎる）／<code>太累了</code>（疲れすぎ）。プラス強調：<code>太好了！</code>（よかった！）／<code>太棒了！</code>（最高！）。中程度の強調なら <code>非常</code>／<code>很</code> を使う。",
+            w: [{z:"太",p:"tài",j:"あまりにも"},{z:"好",p:"hǎo",j:"良い"},{z:"了",p:"le",j:"〜だ（感嘆）"}]
+          }
+        ]
+      },
+      // ============ HSK 3 ============
+      {
+        hsk: 3, num: 1, title: "因果・条件・譲歩",
+        sentences: [
+          {
+            ja: "もし明日雨が降ったら、私は行きません。", zh: "如果明天下雨，我就不去。", py: "rúguǒ míngtiān xià yǔ, wǒ jiù bú qù.",
+            g: "<strong>「如果...就...」</strong>＝仮定条件「もし〜なら、…」。前節で条件を提示し、後節の <code>就</code> で帰結を導く。<br><code>如果</code>＝<code>要是</code>＝<code>假如</code>（書面語的）で同義。後節の <code>就</code> は「条件が満たされたら直ちに／自然と」のニュアンスで、ほぼ必須セット。代わりに <code>那（么）</code> も使える：<code>如果...那么...</code>（より明確な「では」）。",
+            w: [{z:"如果",p:"rúguǒ",j:"もし"},{z:"下雨",p:"xià yǔ",j:"雨が降る"},{z:"就",p:"jiù",j:"〜なら"}]
+          },
+          {
+            ja: "彼は疲れているけれど、まだ働いている。", zh: "虽然他很累，但是还在工作。", py: "suīrán tā hěn lèi, dànshì hái zài gōngzuò.",
+            g: "<strong>「虽然...但是...」</strong>＝事実譲歩「〜だが、しかし…」。前節で事実を認め、後節で逆接の事実を述べる。<br>英語の though...still... と違って中国語では <strong>両方とも使う</strong>のが自然（片方省略も可）。<code>但是</code>＝<code>可是</code>＝<code>不过</code>（柔らかめ）。さらに強調する <code>尽管...也／还／可是</code> もある。<code>即使</code>（仮定譲歩「たとえ〜でも」）と意味的に対比。",
+            w: [{z:"虽然",p:"suīrán",j:"〜だが"},{z:"累",p:"lèi",j:"疲れている"},{z:"但是",p:"dànshì",j:"しかし"},{z:"还",p:"hái",j:"まだ"}]
+          },
+          {
+            ja: "風邪をひいたので、出勤しませんでした。", zh: "因为我感冒了，所以没去上班。", py: "yīnwèi wǒ gǎnmào le, suǒyǐ méi qù shàngbān.",
+            g: "<strong>「因为...所以...」</strong>＝因果「〜なので、…」。前節の原因 → 後節の結果。<br>両方付ける／片方省略のいずれも可。<code>由于</code>（書き言葉寄り）も同義。原因を後ろに置く倒置形 <code>...，是因为...</code> もよく使う：<code>我没去上班，是因为感冒了</code>。<code>感冒</code>は名詞・動詞両用。<code>了</code> は変化「風邪をひいた状態になった」。",
+            w: [{z:"因为",p:"yīnwèi",j:"〜なので"},{z:"感冒",p:"gǎnmào",j:"風邪をひく"},{z:"所以",p:"suǒyǐ",j:"だから"},{z:"上班",p:"shàngbān",j:"出勤する"}]
+          },
+          {
+            ja: "努力さえすれば、きっと成功する。", zh: "只要努力，就一定能成功。", py: "zhǐyào nǔlì, jiù yídìng néng chénggōng.",
+            g: "<strong>「只要...就...」</strong>＝十分条件「〜さえすれば、…」（条件を満たせば結果が出る）。<br>対比される構文「<strong>只有...才...</strong>」＝必要条件「〜してこそ、はじめて…」（その条件でないと成立しない）。前者はゆるい条件、後者は不可欠な条件。例：<code>只要有时间，我就去</code>（時間さえあれば行く）／<code>只有努力才能成功</code>（努力してこそ成功できる）。",
+            w: [{z:"只要",p:"zhǐyào",j:"〜さえすれば"},{z:"努力",p:"nǔlì",j:"努力する"},{z:"一定",p:"yídìng",j:"きっと"},{z:"成功",p:"chénggōng",j:"成功する"}]
+          },
+          {
+            ja: "退勤したら、すぐ家に帰る。", zh: "一下班，我就回家。", py: "yī xiàbān, wǒ jiù huí jiā.",
+            g: "<strong>「一...就...」</strong>＝「〜すると、すぐに…」（直後性）。前後で主語が同じでも異なってもよい。<br>例：<code>一到家就睡觉</code>（家に着くなり寝る）／<code>他一说，我就笑</code>（彼が話すと私は笑う）。「条件 → 即結果」を強調するため、習慣・反射的反応の表現にも頻繁。<code>下班</code>＝退勤、<code>上班</code>＝出勤。",
+            w: [{z:"一",p:"yī",j:"〜するとすぐ"},{z:"下班",p:"xiàbān",j:"退勤する"},{z:"就",p:"jiù",j:"すぐに"},{z:"回家",p:"huí jiā",j:"帰宅する"}]
+          },
+          {
+            ja: "リンゴ以外に、バナナも好きです。", zh: "除了苹果，我还喜欢香蕉。", py: "chúle píngguǒ, wǒ hái xǐhuan xiāngjiāo.",
+            g: "<strong>「除了...以外，还／也...」</strong>＝「〜以外にも、〜」（追加）。<code>以外</code>は省略可。後節 <code>还／也</code> 必須。<br>もう一つの意味は「<strong>除外</strong>」：<code>除了你以外，都来了</code>（君以外みな来た）。この場合は後節に <code>都</code> を使う。文脈と後節の語で意味を判別する。",
+            w: [{z:"除了",p:"chúle",j:"〜以外"},{z:"苹果",p:"píngguǒ",j:"リンゴ"},{z:"还",p:"hái",j:"さらに"},{z:"香蕉",p:"xiāngjiāo",j:"バナナ"}]
+          },
+          {
+            ja: "あなたはちゃんと休むべきだ。", zh: "你应该好好休息。", py: "nǐ yīnggāi hǎohāo xiūxi.",
+            g: "<strong>助動詞 <code>应该</code></strong>＝「〜すべきだ」（道徳・常識的に当然）。否定 <code>不应该</code>＝「〜すべきでない」。<br>類義：<code>该</code>（口語：そろそろ〜の時間）／<code>得（děi）</code>（〜しなければ：強い必要性）／<code>必须</code>（必須・規則）／<code>需要</code>（必要だ）。形容詞の重ね型 <code>好好</code>＝「しっかり・ちゃんと」（AA型）。",
+            w: [{z:"应该",p:"yīnggāi",j:"〜すべき"},{z:"好好",p:"hǎohāo",j:"しっかり"},{z:"休息",p:"xiūxi",j:"休む"}]
+          },
+          {
+            ja: "私は時間通りに宿題を終えなければならない。", zh: "我必须按时完成作业。", py: "wǒ bìxū ànshí wánchéng zuòyè.",
+            g: "<strong><code>必须</code></strong>＝「必ず〜しなければならない」（義務・規則）。否定は <code>不必</code>（〜する必要がない：<code>不必须</code>は不自然）。<br>類義の使い分け：<code>必须</code>（規則・義務）／<code>一定要</code>（強い決意）／<code>得</code>（口語：〜しなきゃ）／<code>需要</code>（〜する必要がある）。<code>按时</code>＝「時間通りに」（按＋名詞 で「〜に従って」）。",
+            w: [{z:"必须",p:"bìxū",j:"必ず〜"},{z:"按时",p:"ànshí",j:"時間通りに"},{z:"完成",p:"wánchéng",j:"完成する"},{z:"作业",p:"zuòyè",j:"宿題"}]
+          },
+          {
+            ja: "どうしてそんなに怒っているの？", zh: "你为什么那么生气？", py: "nǐ wèishénme nàme shēngqì?",
+            g: "<strong>疑問詞 <code>为什么</code></strong>＝「なぜ」。動詞・形容詞の前に置く。応答は <code>因为...</code>。<br><strong>「那么／这么＋形容詞」</strong>＝「あれほど／こんなに〜だ」（程度副詞）。<code>这么</code>は手元（近く・話し手側）、<code>那么</code>は離れた側または聞き手の状況を指す。<code>生气</code>は離合詞「気を生やす＝怒る」、<code>生我的气</code>（私に怒る）のように所有格を間に入れる。",
+            w: [{z:"为什么",p:"wèishénme",j:"なぜ"},{z:"那么",p:"nàme",j:"そんなに"},{z:"生气",p:"shēngqì",j:"怒る"}]
+          },
+          {
+            ja: "行きたくないのではなく、時間がないんです。", zh: "我不是不想去，而是没时间。", py: "wǒ bú shì bù xiǎng qù, ér shì méi shíjiān.",
+            g: "<strong>「不是...而是...」</strong>＝「〜ではなく、〜だ」（訂正・対比）。誤解を訂正する時の重要構文。<br>対比される「<strong>不是...就是...</strong>」＝「〜でなければ〜だ」（二者択一）：<code>不是他去就是我去</code>（彼か私が行く）。「<strong>是...不是...</strong>」もよく使う（肯定で訂正）。",
+            w: [{z:"不是",p:"bú shì",j:"〜ではない"},{z:"想",p:"xiǎng",j:"〜したい"},{z:"而是",p:"ér shì",j:"そうではなく"},{z:"时间",p:"shíjiān",j:"時間"}]
+          }
+        ]
+      },
+      {
+        hsk: 3, num: 2, title: "並列・比較拡張・程度",
+        sentences: [
+          {
+            ja: "テレビを見ながらご飯を食べる。", zh: "我一边吃饭一边看电视。", py: "wǒ yìbiān chī fàn yìbiān kàn diànshì.",
+            g: "<strong>「一边A，一边B」</strong>＝「Aしながら、Bする」（同時並行）。動作主は通常同じ人。<br>口語では <code>边A边B</code>（<code>边走边唱</code>：歩きながら歌う）と短縮も。類似表現 <code>一面...一面...</code>（書面語）。「片方が主・片方が副」のニュアンスはない（並列）。",
+            w: [{z:"一边",p:"yìbiān",j:"〜しながら"},{z:"吃饭",p:"chī fàn",j:"食事する"},{z:"看",p:"kàn",j:"見る"},{z:"电视",p:"diànshì",j:"テレビ"}]
+          },
+          {
+            ja: "だんだん寒くなってきた。", zh: "越来越冷了。", py: "yuè lái yuè lěng le.",
+            g: "<strong>「越来越＋形容詞／心理動詞」</strong>＝「ますます〜になる」（時間の経過で変化）。文末 <code>了</code> で「変化が今起きている」感を出す。<br>区別すべき構文「<strong>越A越B</strong>」＝「AすればするほどB」（条件と程度の連動）：<code>越多越好</code>（多ければ多いほどいい）。両者を混同しないこと。",
+            w: [{z:"越来越",p:"yuè lái yuè",j:"ますます"},{z:"冷",p:"lěng",j:"寒い"},{z:"了",p:"le",j:"〜になる"}]
+          },
+          {
+            ja: "この本はあの本より面白い。", zh: "这本书比那本有意思。", py: "zhè běn shū bǐ nà běn yǒu yìsi.",
+            g: "<strong>比較構文の応用</strong>：「A比B＋（更／还）＋形容詞」。<code>更</code>（さらに）／<code>还</code>（もっと）を加えて差を強調できる。<br><strong>NG</strong>：<code>很</code>／<code>非常</code>／<code>太</code> は比較文に使えない（<code>这本书比那本很有意思</code>×）。「面白い」<code>有意思</code>＝<code>有趣</code>。比較対象の名詞は量詞で受けられる：<code>那本（书）</code>。",
+            w: [{z:"比",p:"bǐ",j:"〜より"},{z:"本",p:"běn",j:"〜冊"},{z:"那",p:"nà",j:"あの"},{z:"有意思",p:"yǒu yìsi",j:"面白い"}]
+          },
+          {
+            ja: "早ければ早いほどいい。", zh: "越早越好。", py: "yuè zǎo yuè hǎo.",
+            g: "<strong>「越A越B」</strong>＝「AすればするほどB」。AとBは別の形容詞・動詞でOK：<code>越走越远</code>（歩けば歩くほど遠く）、<code>越多越好</code>（多いほどいい）。<br>同一主語が前提。AとBの主語が違う「Aするにつれ、Bは〜」は「<strong>随着A，B越来越...</strong>」を使う：<code>随着年龄的增长，他越来越成熟</code>。",
+            w: [{z:"越",p:"yuè",j:"〜するほど"},{z:"早",p:"zǎo",j:"早い"},{z:"好",p:"hǎo",j:"良い"}]
+          },
+          {
+            ja: "あなたと同じく、私も音楽が好きです。", zh: "跟你一样，我也喜欢音乐。", py: "gēn nǐ yíyàng, wǒ yě xǐhuan yīnyuè.",
+            g: "<strong>「A跟B一样」</strong>＝「AはBと同じだ」（等値比較）。前置詞 <code>跟</code>＝<code>和</code>＝<code>与</code>。否定 <code>跟...不一样</code>（〜とは違う）。<br>差を示す場合は「A跟B一样＋形容詞」＝「AはBと同じくらい〜」：<code>他跟我一样高</code>（彼は私と同じ背だ）。",
+            w: [{z:"跟",p:"gēn",j:"〜と"},{z:"一样",p:"yíyàng",j:"同じ"},{z:"也",p:"yě",j:"〜も"}]
+          },
+          {
+            ja: "彼は中国語をとても流暢に話す。", zh: "他汉语说得很流利。", py: "tā Hànyǔ shuō de hěn liúlì.",
+            g: "<strong>様態補語「V＋得＋形容詞」</strong>＝「〜のし方が…だ」（動作の状態・程度を評価）。<br>目的語があるときの2パターン：①「主語＋V＋目的語＋V＋得＋補語」（動詞を反復：<code>他说汉语说得很流利</code>）、②「主語＋目的語＋V＋得＋補語」（目的語前置：<code>他汉语说得很流利</code>）。否定は <code>得</code> の後を否定：<code>说得不流利</code>。",
+            w: [{z:"汉语",p:"Hànyǔ",j:"中国語"},{z:"说",p:"shuō",j:"話す"},{z:"得",p:"de",j:"〜のし方が"},{z:"流利",p:"liúlì",j:"流暢"}]
+          },
+          {
+            ja: "これはあれより少し高い。", zh: "这个比那个贵一点。", py: "zhège bǐ nàge guì yìdiǎn.",
+            g: "<strong>比較の差量（小）</strong>：<code>比＋A＋形＋一点儿</code>＝「Aより少し〜」。やや差がある時。<br>差量の段階：<code>一点儿</code>（少し）＜<code>一些</code>（やや）＜<code>得多</code>（ずっと）＜<code>多了</code>（はるかに）。具体的数値も入る：<code>贵十块</code>（10元高い）。否定の差量「あまり〜ない」は <code>没（有）那么...</code>。",
+            w: [{z:"比",p:"bǐ",j:"〜より"},{z:"贵",p:"guì",j:"高い"},{z:"一点",p:"yìdiǎn",j:"少し"}]
+          },
+          {
+            ja: "この服はあの服ほどきれいではない。", zh: "这件衣服没有那件那么漂亮。", py: "zhè jiàn yīfu méiyǒu nà jiàn nàme piàoliang.",
+            g: "<strong>比較の否定「A没有B（这么／那么）＋形容詞」</strong>＝「AはBほど〜ない」。<code>不比</code>とは異なる（<code>不比</code>は「〜より劣るわけではない」のニュアンス）。<br>例：<code>我没有他高</code>（彼ほど背が高くない）。<code>这么／那么</code>は省略可だが、入れたほうが自然。形容詞は普通の形（<code>很</code>等は不要）。",
+            w: [{z:"没有",p:"méiyǒu",j:"〜ほどない"},{z:"那么",p:"nàme",j:"あれほど"},{z:"漂亮",p:"piàoliang",j:"きれい"}]
+          },
+          {
+            ja: "私は中国語を3年勉強しました。", zh: "我学了三年中文。", py: "wǒ xué le sān nián Zhōngwén.",
+            g: "<strong>動作の継続時間「V＋了＋時間量＋目的語」</strong>。時間量は<strong>動詞の直後</strong>に置く。<br>もし「今も続いている」と言いたければ文末にも <code>了</code> を加える：<code>我学了三年中文了</code>（3年学んで、まだ学んでいる）。否定は <code>没学</code>。「3年前から」は <code>从三年前开始</code>。",
+            w: [{z:"学",p:"xué",j:"学ぶ"},{z:"了",p:"le",j:"〜した"},{z:"三年",p:"sān nián",j:"3年間"}]
+          },
+          {
+            ja: "彼は毎日来る。", zh: "他每天都来。", py: "tā měitiān dōu lái.",
+            g: "<strong>「每＋名詞＋都...」</strong>＝「〜ごとに、すべて…」。<code>每</code>と <code>都</code> はセットで使うのが原則。<br>例：<code>每个人都喜欢</code>（みんなが好き）／<code>每次都迟到</code>（毎回遅刻する）。<code>都</code>を省くと不自然。<code>每天</code>＝毎日、<code>每周</code>＝毎週、<code>每月</code>＝毎月、<code>每年</code>＝毎年。",
+            w: [{z:"每天",p:"měitiān",j:"毎日"},{z:"都",p:"dōu",j:"みな"},{z:"来",p:"lái",j:"来る"}]
+          }
+        ]
+      },
+      {
+        hsk: 3, num: 3, title: "把構文（処置）",
+        sentences: [
+          {
+            ja: "鍵を家に忘れた。", zh: "我把钥匙忘在家里了。", py: "wǒ bǎ yàoshi wàng zài jiā li le.",
+            g: "<strong>把構文（処置文）</strong>：「主語＋把＋目的語＋動詞＋補語/了」。目的語を動詞の前に出し、その目的語に対する<strong>処置・処理・変化</strong>を強調する。<br><strong>必須要件</strong>：①目的語は特定のもの（不特定の「一个〜」は基本不可）、②動詞は単独不可で、補語・<code>了</code>・重ね型などを伴う必要がある（<code>我把书看</code>×／<code>我把书看完了</code>○）。",
+            w: [{z:"把",p:"bǎ",j:"〜を"},{z:"钥匙",p:"yàoshi",j:"鍵"},{z:"忘",p:"wàng",j:"忘れる"},{z:"在",p:"zài",j:"〜に"}]
+          },
+          {
+            ja: "ドアを閉めてください。", zh: "请把门关上。", py: "qǐng bǎ mén guān shàng.",
+            g: "<strong>把構文＋方向／結果補語</strong>。<code>关上</code>＝「閉める＋上（密着）」で完全に閉まる状態。<br>命令・依頼で <code>请把...</code> はよく使う。<code>请</code> なしの命令も可：<code>把门关上</code>（ドア閉めて）。否定は <code>没把...</code>（〜しなかった）／<code>别把...</code>（〜するな）。",
+            w: [{z:"请",p:"qǐng",j:"どうぞ"},{z:"门",p:"mén",j:"ドア"},{z:"关",p:"guān",j:"閉める"},{z:"上",p:"shàng",j:"〜きる"}]
+          },
+          {
+            ja: "宿題をやり終えた。", zh: "我把作业做完了。", py: "wǒ bǎ zuòyè zuò wán le.",
+            g: "<strong>把＋目的語＋V＋結果補語＋了</strong> の典型。「処置 → 完了」を示す代表パターン。<br><code>做完</code>＝「やる＋完了」。同様の結果補語：<code>看完</code>（読み終える）／<code>写完</code>（書き終える）／<code>说完</code>（言い終える）。否定形は <code>没把...做完</code>（やり終わらなかった）。",
+            w: [{z:"作业",p:"zuòyè",j:"宿題"},{z:"做",p:"zuò",j:"する"},{z:"完",p:"wán",j:"終わる"}]
+          },
+          {
+            ja: "彼はコップを割ってしまった。", zh: "他把杯子打破了。", py: "tā bǎ bēizi dǎ pò le.",
+            g: "<strong>「望ましくない変化」を表す把構文</strong>。<code>打破</code>＝「（叩いて）壊す」。意図しない・残念な結果のニュアンス。<br>類似：<code>把车撞坏了</code>（車をぶつけて壊した）／<code>把衣服弄脏了</code>（服を汚した）／<code>把信丢了</code>（手紙をなくした）。<code>弄</code>は「（何かを使って）〜する／〜してしまう」の汎用動詞で結果補語と相性◎。",
+            w: [{z:"杯子",p:"bēizi",j:"コップ"},{z:"打",p:"dǎ",j:"叩く"},{z:"破",p:"pò",j:"壊れる"}]
+          },
+          {
+            ja: "母はご飯をちゃんと作った。", zh: "妈妈把饭做好了。", py: "māma bǎ fàn zuò hǎo le.",
+            g: "<strong>結果補語 <code>好</code></strong>＝「ちゃんと・完了して」（うまく出来上がった状態）。<br>類例：<code>准备好了</code>（準備できた）／<code>写好了</code>（書き上げた）／<code>说好了</code>（取り決めた）。把構文と相性が良く、計画的・完成度のある処置を示す。",
+            w: [{z:"饭",p:"fàn",j:"ご飯"},{z:"做",p:"zuò",j:"作る"},{z:"好",p:"hǎo",j:"うまく〜"}]
+          },
+          {
+            ja: "手紙を彼に送った。", zh: "我把信寄给他了。", py: "wǒ bǎ xìn jì gěi tā le.",
+            g: "<strong>「V＋给＋人」</strong>＝「（誰々）に〜する」（受け手を示す補語）。把構文と組み合わせると「Aを誰々に〜する」が表現できる。<br>例：<code>把书还给他</code>（本を彼に返す）／<code>把礼物送给妈妈</code>（プレゼントを母に贈る）。<code>给</code>は前置詞・動詞・補語と複数の品詞で活躍する超重要語。",
+            w: [{z:"信",p:"xìn",j:"手紙"},{z:"寄",p:"jì",j:"郵送する"},{z:"给",p:"gěi",j:"〜に"}]
+          },
+          {
+            ja: "本を机の上に置いてください。", zh: "请把书放在桌子上。", py: "qǐng bǎ shū fàng zài zhuōzi shàng.",
+            g: "<strong>「V＋在＋場所」</strong>＝「〜（場所）に〜する」（着点補語）。把構文との組み合わせは超頻出。<br>例：<code>把车停在这里</code>（ここに車を止める）／<code>把名字写在纸上</code>（紙に名前を書く）／<code>把照片贴在墙上</code>（写真を壁に貼る）。状態の到達点を <code>在</code> で示す。",
+            w: [{z:"放",p:"fàng",j:"置く"},{z:"桌子",p:"zhuōzi",j:"机"},{z:"上",p:"shàng",j:"上"}]
+          },
+          {
+            ja: "窓を開けて。", zh: "你把窗户打开吧。", py: "nǐ bǎ chuānghu dǎ kāi ba.",
+            g: "<strong>結果補語 <code>开</code></strong>＝「開く・離れる」。<code>打开</code>＝「（叩いて）開ける」。<br>反義は <code>关上</code>。<code>打</code> は「動作を施す」汎用動詞で多くの結果補語と組む：<code>打开（开ける）／打破（壊す）／打死（殺す）／打扫（掃除する）</code>。<code>吧</code> で「〜してね」と柔らかい命令に。",
+            w: [{z:"窗户",p:"chuānghu",j:"窓"},{z:"打开",p:"dǎ kāi",j:"開ける"},{z:"吧",p:"ba",j:"〜して"}]
+          },
+          {
+            ja: "私はこのことを彼に話した。", zh: "我把这件事告诉他了。", py: "wǒ bǎ zhè jiàn shì gàosu tā le.",
+            g: "<strong>「告诉」＋二重目的語</strong>：「告诉＋人＋内容」（人に内容を告げる）。把構文に組み込むと「内容を人に告げた」と内容を強調できる。<br>類例の二重目的語動詞：<code>给</code>（与える）／<code>送</code>（贈る）／<code>问</code>（尋ねる）／<code>教</code>（教える）／<code>还（huán）</code>（返す）。<code>件</code> は事柄の量詞。",
+            w: [{z:"这件事",p:"zhè jiàn shì",j:"このこと"},{z:"告诉",p:"gàosu",j:"告げる"}]
+          },
+          {
+            ja: "彼は車を運転して行ってしまった。", zh: "他把车开走了。", py: "tā bǎ chē kāi zǒu le.",
+            g: "<strong>方向補語 <code>走</code></strong>＝「離れていく」。<code>开走</code>＝「運転して去る」。<br>把構文と方向補語の組み合わせは「処置で位置が変わる」を表す典型：<code>把椅子搬过来</code>（椅子を運んでくる）／<code>把垃圾扔出去</code>（ゴミを捨てる）／<code>把照片寄过来</code>（写真を送ってくる）。",
+            w: [{z:"车",p:"chē",j:"車"},{z:"开",p:"kāi",j:"運転する"},{z:"走",p:"zǒu",j:"去る"}]
+          }
+        ]
+      },
+      {
+        hsk: 3, num: 4, title: "結果補語",
+        sentences: [
+          {
+            ja: "あなたが見えました。", zh: "我看见了你。", py: "wǒ kàn jiàn le nǐ.",
+            g: "<strong>結果補語 <code>见</code></strong>＝「（感覚で）認識できた」。動詞だけでは動作のみで結果は不明だが、結果補語で「結果として認識した」を表す。<br>感覚動詞とよく結合：<code>看见</code>（見える）／<code>听见</code>（聞こえる）／<code>闻见</code>（嗅ぎ取る）／<code>梦见</code>（夢に見る）。否定 <code>没看见</code>。可能形 <code>看得见／看不见</code>（見える／見えない）。",
+            w: [{z:"看",p:"kàn",j:"見る"},{z:"见",p:"jiàn",j:"〜できる（感覚）"}]
+          },
+          {
+            ja: "聞き取れた。", zh: "我听懂了。", py: "wǒ tīng dǒng le.",
+            g: "<strong>結果補語 <code>懂</code></strong>＝「理解できた」。<code>听懂</code>＝「聴いて理解できた」、<code>看懂</code>＝「読んで・見て理解できた」。<br><code>懂</code>は単独動詞でも使う：<code>我懂了</code>（わかった）。否定形は <code>没听懂</code>（聞き取れなかった）。可能形 <code>听得懂</code>（聞き取れる）／<code>听不懂</code>（聞き取れない）は実用度高。",
+            w: [{z:"听",p:"tīng",j:"聞く"},{z:"懂",p:"dǒng",j:"理解する"}]
+          },
+          {
+            ja: "その本は見つかりませんでした。", zh: "我没找到那本书。", py: "wǒ méi zhǎo dào nà běn shū.",
+            g: "<strong>結果補語 <code>到</code></strong>＝「（目的に）達した・達成した」。動作の結果として目的が達成されたことを示す。<br>例：<code>买到</code>（買えた・手に入った）／<code>找到</code>（見つかった）／<code>办到</code>（やり遂げた）／<code>想到</code>（思いつく）／<code>等到</code>（待ち得る）。否定形 <code>没＋V＋到</code>。",
+            w: [{z:"找",p:"zhǎo",j:"探す"},{z:"到",p:"dào",j:"達する"},{z:"那本书",p:"nà běn shū",j:"あの本"}]
+          },
+          {
+            ja: "この漢字を書き間違えた。", zh: "这个汉字我写错了。", py: "zhège hànzì wǒ xiě cuò le.",
+            g: "<strong>結果補語 <code>错</code></strong>＝「間違った結果になる」。<br>類例：<code>说错</code>（言い間違える）／<code>看错</code>（見間違える）／<code>听错</code>（聞き間違える）／<code>打错电话</code>（電話番号を間違える）／<code>记错</code>（覚え間違える）。反対 <code>对</code>＝「正しい」：<code>猜对了</code>（当たった）。",
+            w: [{z:"汉字",p:"hànzì",j:"漢字"},{z:"写",p:"xiě",j:"書く"},{z:"错",p:"cuò",j:"間違える"}]
+          },
+          {
+            ja: "食べ終わった。", zh: "我吃完了。", py: "wǒ chī wán le.",
+            g: "<strong>結果補語 <code>完</code></strong>＝「終わる・完了する」。動作が完遂したことを示す。<br>類例：<code>用完</code>（使い切る）／<code>说完</code>（話し終える）／<code>读完</code>（読み終える）／<code>做完</code>（やり終える）。否定 <code>没吃完</code>（食べきっていない）。可能 <code>吃得完／吃不完</code>（食べきれる／きれない）。",
+            w: [{z:"吃",p:"chī",j:"食べる"},{z:"完",p:"wán",j:"終わる"}]
+          },
+          {
+            ja: "当たった！", zh: "你猜对了！", py: "nǐ cāi duì le!",
+            g: "<strong>結果補語 <code>对</code></strong>＝「正しい結果」。<code>猜对</code>＝当てる、<code>说对</code>＝正しく言う、<code>做对</code>＝正解する。<br>反義は <code>错</code>。<code>猜</code>は「推測する・当てる」の動詞。「クイズ」<code>谜语 míyǔ</code>。「当たり！」と感嘆するなら <code>猜对了！</code> や <code>没错！</code>（その通り）。",
+            w: [{z:"猜",p:"cāi",j:"推測する"},{z:"对",p:"duì",j:"正しい"}]
+          },
+          {
+            ja: "この本を読み終えた。", zh: "我看完这本书了。", py: "wǒ kàn wán zhè běn shū le.",
+            g: "結果補語 <code>完</code> ＋ 文末 <code>了</code> の組み合わせ。動作完了＋変化のニュアンスを両方含む。<br><strong>「V＋完＋目的語＋了」</strong>の語順を守る。否定 <code>没看完</code>（<code>了</code>を外す）。<code>看书</code>＝「本を読む」、<code>读书</code>＝「学ぶ・読む」のニュアンス差。",
+            w: [{z:"看完",p:"kàn wán",j:"読み終わる"},{z:"这本",p:"zhè běn",j:"この〜"}]
+          },
+          {
+            ja: "彼はまだ作り終わっていない。", zh: "他还没做好。", py: "tā hái méi zuò hǎo.",
+            g: "<strong>結果補語の否定</strong>：「没＋V＋補語」で「〜し終わっていない」。<code>了</code> は使わない。<br><code>还没</code>＝「まだ〜していない」（今後する可能性）。完了の<code>做完</code>と区別：<code>做完</code>（全工程終了）／<code>做好</code>（うまく仕上がる）。前者は量的完了、後者は質的完成のニュアンス。",
+            w: [{z:"还没",p:"hái méi",j:"まだ〜していない"},{z:"做好",p:"zuò hǎo",j:"作り終わる"}]
+          },
+          {
+            ja: "はっきり聞き取れなかった。", zh: "我没听清楚。", py: "wǒ méi tīng qīngchu.",
+            g: "<strong>結果補語 <code>清楚</code></strong>＝「はっきり・明瞭に」。<br>動詞＋形容詞型の結果補語の代表例：<code>听清楚</code>（聴き取る）／<code>看清楚</code>（見える）／<code>说清楚</code>（はっきり言う）／<code>想清楚</code>（はっきり考える）。否定 <code>没＋V＋清楚</code>。可能形：<code>看得清楚／看不清楚</code>。",
+            w: [{z:"听",p:"tīng",j:"聞く"},{z:"清楚",p:"qīngchu",j:"はっきり"}]
+          },
+          {
+            ja: "このことを覚えた。", zh: "这件事我记住了。", py: "zhè jiàn shì wǒ jì zhù le.",
+            g: "<strong>結果補語 <code>住</code></strong>＝「しっかり・固定する」（とどまる）。<code>记住</code>＝「記憶に定着する」。<br>類例：<code>站住</code>（立ち止まる）／<code>抓住</code>（つかむ・捕まえる）／<code>挡住</code>（さえぎる）／<code>停住</code>（停止する）。安定・固定の結果を表す。<code>这件事</code> の前置で話題化（このことについては、覚えた）。",
+            w: [{z:"事",p:"shì",j:"こと"},{z:"记",p:"jì",j:"覚える"},{z:"住",p:"zhù",j:"〜しとどめる"}]
+          }
+        ]
+      },
+      {
+        hsk: 3, num: 5, title: "様態補語・方向補語",
+        sentences: [
+          {
+            ja: "彼は歌うのが上手です。", zh: "他唱歌唱得很好。", py: "tā chàng gē chàng de hěn hǎo.",
+            g: "<strong>様態補語＋目的語動詞反復</strong>：「主語＋V＋目的語＋V＋得＋補語」。目的語を後ろに残す場合、動詞を繰り返す必要がある。<br>もう一つの書き方：<code>他歌唱得很好</code>（目的語前置）。否定は <code>唱得不好</code>。疑問は <code>唱得好不好？</code> または <code>唱得怎么样？</code>。<code>得</code>（de）は様態補語専用のマーカー（<code>的</code>とは別字）。",
+            w: [{z:"唱",p:"chàng",j:"歌う"},{z:"歌",p:"gē",j:"歌"},{z:"得",p:"de",j:"〜のし方が"}]
+          },
+          {
+            ja: "彼は嬉しくて飛び上がった。", zh: "他高兴得跳了起来。", py: "tā gāoxìng de tiào le qǐlái.",
+            g: "<strong>形容詞＋得＋動詞句</strong>＝「〜くて、〜する」（程度補語）。前の状態が原因で後の動作・状態が起こる。<br>例：<code>累得走不动</code>（疲れて歩けない）／<code>气得说不出话</code>（怒って言葉が出ない）／<code>笑得肚子疼</code>（笑いすぎでお腹が痛い）。<code>跳起来</code>＝「飛び上がる」（方向補語 <code>起来</code>：下から上）。",
+            w: [{z:"高兴",p:"gāoxìng",j:"嬉しい"},{z:"跳",p:"tiào",j:"跳ぶ"},{z:"起来",p:"qǐlái",j:"〜し始める／上がる"}]
+          },
+          {
+            ja: "彼は外から歩いて入ってきた。", zh: "他从外面走进来了。", py: "tā cóng wàimiàn zǒu jìnlái le.",
+            g: "<strong>複合方向補語「V＋進む方向＋来／去」</strong>。話者の位置を基準に <code>来</code>（こちら向き）／<code>去</code>（向こう向き）。<br>方向の組み合わせ：<code>进来／进去（入る）</code>／<code>出来／出去（出る）</code>／<code>上来／上去（上る）</code>／<code>下来／下去（下りる）</code>／<code>回来／回去（戻る）</code>／<code>过来／过去（やって来る／向こうへ）</code>。<code>从＋場所</code>＝「〜から」。",
+            w: [{z:"从",p:"cóng",j:"〜から"},{z:"外面",p:"wàimiàn",j:"外"},{z:"走",p:"zǒu",j:"歩く"},{z:"进来",p:"jìnlái",j:"入ってくる"}]
+          },
+          {
+            ja: "出してちょっと見せて。", zh: "你拿出来给我看看。", py: "nǐ ná chūlái gěi wǒ kàn kan.",
+            g: "<strong>動詞の重ね型「VV／V一V／V了V」</strong>＝「ちょっと〜する」（試み・軽い動作）。<code>看看</code>＝<code>看一看</code>＝<code>看了看</code>。<br>方向補語 <code>出来</code>（中→外）。「あなたが出して、私にちょっと見せて」と二つの動作を <code>给</code> でつなぐ。<code>给我看看</code>＝「私に見せて」（給予＋動作）。",
+            w: [{z:"拿",p:"ná",j:"取る"},{z:"出来",p:"chūlái",j:"出てくる"},{z:"看看",p:"kàn kan",j:"ちょっと見る"}]
+          },
+          {
+            ja: "先生は教室に入ってきた。", zh: "老师走进教室来了。", py: "lǎoshī zǒu jìn jiàoshì lái le.",
+            g: "<strong>方向補語の途中に場所が割り込む</strong>：「V＋進む方向＋場所＋来／去」の語順。<br>例：<code>走进教室来</code>（教室に入ってくる）／<code>跑出门去</code>（ドアから走り出していく）／<code>飞回家来</code>（飛んで家に戻ってくる）。場所を <code>来／去</code> の前に挟むのがポイント。",
+            w: [{z:"老师",p:"lǎoshī",j:"先生"},{z:"教室",p:"jiàoshì",j:"教室"},{z:"进",p:"jìn",j:"入る"}]
+          },
+          {
+            ja: "私は彼より速く走れる。", zh: "我跑得比他快。", py: "wǒ pǎo de bǐ tā kuài.",
+            g: "<strong>様態補語＋比較</strong>：「V＋得＋比＋B＋形容詞」＝「Bより〜にVする」。比較の <code>比</code> を様態補語の中に組み込む応用形。<br>または「主語＋比＋B＋V＋得＋形容詞」：<code>我比他跑得快</code>（同義）。比較の位置を変えられるのが中国語の柔軟さ。",
+            w: [{z:"跑",p:"pǎo",j:"走る"},{z:"得",p:"de",j:"〜し方が"},{z:"快",p:"kuài",j:"速い"}]
+          },
+          {
+            ja: "この料理は辛すぎて食べきれない。", zh: "这个菜辣得我吃不了。", py: "zhège cài là de wǒ chī bu liǎo.",
+            g: "<strong>程度補語「形＋得＋主語＋V不＋了／其他」</strong>＝「〜すぎて〜できない」。前半が原因、後半が結果として動作不可能。<br><code>吃不了</code>（食べきれない）の <code>了</code> は <code>liǎo</code>（〜できる）と読む。可能補語 <code>V＋得了／V＋不了</code> は「全部やりきれる／きれない」を表す。同類：<code>受不了</code>（耐えられない）／<code>忘不了</code>（忘れられない）。",
+            w: [{z:"菜",p:"cài",j:"料理"},{z:"辣",p:"là",j:"辛い"},{z:"吃不了",p:"chī bu liǎo",j:"食べきれない"}]
+          },
+          {
+            ja: "聞こえますか？", zh: "你听得见吗？", py: "nǐ tīng de jiàn ma?",
+            g: "<strong>可能補語「V＋得＋補語 / V＋不＋補語」</strong>＝「〜できる／〜できない」。動詞と補語の間に <code>得</code> または <code>不</code> を挟む。<br>例：<code>看得见／看不见</code>（見える／見えない）／<code>听得懂／听不懂</code>（聞き取れる／取れない）／<code>买得到／买不到</code>（買える／買えない）。<code>能V</code> との違い：可能補語は具体的状況下での可否、<code>能</code>はより一般的な能力。",
+            w: [{z:"听",p:"tīng",j:"聞く"},{z:"得",p:"de",j:"〜できる"},{z:"见",p:"jiàn",j:"認識する"}]
+          },
+          {
+            ja: "外に出ていく。", zh: "走出去。", py: "zǒu chūqù.",
+            g: "<strong>方向補語の基本「V＋方向（来/去）」</strong>。<code>走出去</code>＝「歩いて外へ出る」（話者から離れる）。<br>反対の動き：<code>走出来</code>（話者の方へ出てくる）。命令文・短い指示でよく使う。「来」「去」を取り違えると話者位置が逆転するので注意。",
+            w: [{z:"走",p:"zǒu",j:"歩く"},{z:"出去",p:"chūqù",j:"出ていく"}]
+          },
+          {
+            ja: "本を持ってきて。", zh: "把书拿过来。", py: "bǎ shū ná guòlái.",
+            g: "<strong>方向補語 <code>过来／过去</code></strong>＝「こちらへ／あちらへ」（横方向の移動）。<br>派生的な抽象用法も多い：<code>醒过来</code>（目覚める）／<code>反应过来</code>（事態を理解する）／<code>转过去</code>（向こうを向く）。把構文と方向補語のセットで「Aをこちらへ運ぶ」が自然に表現できる。",
+            w: [{z:"把",p:"bǎ",j:"〜を"},{z:"拿",p:"ná",j:"持つ"},{z:"过来",p:"guòlái",j:"こちらへ"}]
+          }
+        ]
+      },
+      {
+        hsk: 3, num: 6, title: "助動詞・使役・推測",
+        sentences: [
+          {
+            ja: "私は早く寝るべきだ。", zh: "我应该早点睡觉。", py: "wǒ yīnggāi zǎo diǎn shuìjiào.",
+            g: "<strong><code>应该</code></strong>＝「〜すべき／〜のはずだ」。義務的当然＋推測的当然の両義あり。<br>例：①義務「<code>你应该努力</code>（努力すべき）」、②推測「<code>他应该到了</code>（もう着いたはず）」。否定 <code>不应该</code>（〜すべきでない）／<code>不应该</code>（〜のはずがない）。短縮形 <code>该</code>。<code>早点</code>＝<code>早一点</code>（少し早めに）。",
+            w: [{z:"应该",p:"yīnggāi",j:"〜すべき"},{z:"早点",p:"zǎo diǎn",j:"早めに"},{z:"睡觉",p:"shuìjiào",j:"寝る"}]
+          },
+          {
+            ja: "お母さんは私に宿題をさせる。", zh: "妈妈让我做作业。", py: "māma ràng wǒ zuò zuòyè.",
+            g: "<strong>使役構文「让／叫＋人＋V」</strong>＝「人に〜させる」。<br><code>让</code>（させる・許す：中立〜やわらかい）／<code>叫</code>（〜させる：やや命令的）／<code>使</code>（〜させる・引き起こす：書き言葉的、感情・状態の使役）／<code>请</code>（〜してもらう：丁寧）。例：<code>这件事使我很难过</code>（このことは私を悲しませた）。否定は使役動詞の前に <code>不</code>：<code>不让我去</code>（行かせない）。",
+            w: [{z:"让",p:"ràng",j:"〜させる"},{z:"做",p:"zuò",j:"する"},{z:"作业",p:"zuòyè",j:"宿題"}]
+          },
+          {
+            ja: "あなたは来ないと思っていた。", zh: "我以为你不来了。", py: "wǒ yǐwéi nǐ bù lái le.",
+            g: "<strong><code>以为</code> vs <code>认为</code></strong>：<code>以为</code>は「（誤って）〜と思い込んでいた」（実は違った）／<code>认为</code>は中立的「〜と考える」。<br>例：<code>我以为你是日本人</code>（日本人だと思っていた＝実は違う）／<code>我认为你是对的</code>（あなたは正しいと思う）。<code>觉得</code>＝主観的「〜と感じる」、<code>认为</code>＝理性的判断、<code>以为</code>＝間違った認識。",
+            w: [{z:"以为",p:"yǐwéi",j:"〜と思っていた"},{z:"不来",p:"bù lái",j:"来ない"}]
+          },
+          {
+            ja: "彼はもう帰ったかもしれない。", zh: "他可能已经走了。", py: "tā kěnéng yǐjīng zǒu le.",
+            g: "<strong>推量副詞</strong>：<code>可能</code>（〜かもしれない：可能性50%前後）／<code>大概</code>（〜だろう：60〜70%）／<code>也许</code>（もしかすると：低め）／<code>一定</code>（必ず：100%）／<code>肯定</code>（きっと：90%以上）。<br><code>可能</code>は動詞・形容詞両用、文頭にも置ける。否定 <code>不可能</code>（〜のはずがない）。",
+            w: [{z:"可能",p:"kěnéng",j:"〜かもしれない"},{z:"已经",p:"yǐjīng",j:"もう"},{z:"走",p:"zǒu",j:"帰る・去る"}]
+          },
+          {
+            ja: "彼は来月結婚するそうです。", zh: "听说他下个月结婚。", py: "tīngshuō tā xià ge yuè jiéhūn.",
+            g: "<strong>伝聞「听说...」</strong>＝「（耳で）〜と聞いた／〜だそうだ」。文頭に置くのが一般的。<br>類例：<code>据说</code>（〜と言われている：書面語寄り）／<code>看上去／看起来</code>（〜のように見える）／<code>说不定</code>（もしかすると）。情報源を明示するなら <code>听他说</code>（彼から聞いた）。",
+            w: [{z:"听说",p:"tīngshuō",j:"〜だそうだ"},{z:"下个月",p:"xià ge yuè",j:"来月"},{z:"结婚",p:"jiéhūn",j:"結婚する"}]
+          },
+          {
+            ja: "私は中国文化に興味があります。", zh: "我对中国文化感兴趣。", py: "wǒ duì Zhōngguó wénhuà gǎn xìngqù.",
+            g: "<strong>前置詞 <code>对</code></strong>＝「〜に対して／〜について」。<code>对...感兴趣</code>＝「〜に興味がある」（決まり文句）。<br>同類：<code>对...有意见</code>（〜に意見がある）／<code>对...热情</code>（〜に親切）／<code>对...负责</code>（〜に責任を持つ）。<code>对</code> は動詞の前に置く。<code>对于</code>＝<code>对</code>のやや書面語版。",
+            w: [{z:"对",p:"duì",j:"〜に対して"},{z:"文化",p:"wénhuà",j:"文化"},{z:"感兴趣",p:"gǎn xìngqù",j:"興味がある"}]
+          },
+          {
+            ja: "このことは私を悲しませた。", zh: "这件事让我很难过。", py: "zhè jiàn shì ràng wǒ hěn nánguò.",
+            g: "<strong>感情の使役</strong>：「（事／物）让／使＋人＋（很）形容詞」＝「（事は）人を〜させる／人は〜に感じる」。<br>例：<code>这部电影让我很感动</code>（この映画は感動的だった）／<code>这件事使我很失望</code>（このことは私を失望させた）。中国語では「人が感じる」より「物事が人に感じさせる」と表現することが多い。",
+            w: [{z:"事",p:"shì",j:"こと"},{z:"让",p:"ràng",j:"〜させる"},{z:"难过",p:"nánguò",j:"悲しい"}]
+          },
+          {
+            ja: "心配しないで、大丈夫。", zh: "别担心，没关系。", py: "bié dānxīn, méi guānxi.",
+            g: "<strong>禁止の <code>别</code>＋V</strong>＝「〜するな」（<code>不要</code>と同義、より口語的）。<br>柔らかい禁止 <code>别...了</code>＝「もう〜しないで」（既に始まっていることをやめさせる）：<code>别哭了</code>（もう泣かないで）。<code>没关系</code>＝「大丈夫」（マイナス事態を打ち消す）。返事の <code>没事</code>（北方話）も同義。",
+            w: [{z:"别",p:"bié",j:"〜するな"},{z:"担心",p:"dānxīn",j:"心配する"},{z:"没关系",p:"méi guānxi",j:"大丈夫"}]
+          },
+          {
+            ja: "早く寝た方がいいよ。", zh: "你最好早点睡觉。", py: "nǐ zuìhǎo zǎo diǎn shuìjiào.",
+            g: "<strong><code>最好</code></strong>＝「〜した方がいい」（推奨・アドバイス）。<code>应该</code>より柔らかい忠告。<br>類似：<code>你不如...</code>（〜した方が）／<code>建议你...</code>（〜することを提案）。否定の助言は <code>最好不要</code>（しない方がいい）／<code>最好别</code>（〜しない方が）。",
+            w: [{z:"最好",p:"zuìhǎo",j:"〜した方がいい"},{z:"早点",p:"zǎo diǎn",j:"早めに"}]
+          },
+          {
+            ja: "ついに彼が来た。", zh: "他终于来了。", py: "tā zhōngyú lái le.",
+            g: "<strong><code>终于</code></strong>＝「ついに・とうとう」（長い時間や努力の末にようやく）。プラス結果との相性が良い。<br>類義 <code>总算</code>＝「やっとのことで」（やや苦労を強調）／<code>到底</code>（一体・結局）。マイナス結果なら <code>终究</code>（結局〜となる）。文末 <code>了</code> で「ようやくその状態になった」変化を示す。",
+            w: [{z:"终于",p:"zhōngyú",j:"ついに"},{z:"来",p:"lái",j:"来る"}]
+          }
+        ]
+      },
+      // ============ HSK 4 ============
+      {
+        hsk: 4, num: 1, title: "高度な接続詞①不管・即使・既然",
+        sentences: [
+          {
+            ja: "どんなに忙しくても、電話します。", zh: "不管多忙，我都会给你打电话。", py: "bùguǎn duō máng, wǒ dōu huì gěi nǐ dǎ diànhuà.",
+            g: "<strong>「不管...都...」</strong>＝「〜にかかわらず…」（条件無関係譲歩）。前節には<strong>不確定要素</strong>を入れる：①疑問詞（谁／什么／怎么／多）、②選択（A还是B）、③否定の並列（不...也不...）。<br><code>无论</code>＝<code>不论</code>＝<code>不管</code>で同義（<code>无论</code>はやや書面語）。後節 <code>都／也</code> 必須。<code>多＋形容詞</code>＝「どれほど〜でも」。",
+            w: [{z:"不管",p:"bùguǎn",j:"〜にかかわらず"},{z:"多",p:"duō",j:"どんなに"},{z:"忙",p:"máng",j:"忙しい"},{z:"都",p:"dōu",j:"とにかく"}]
+          },
+          {
+            ja: "たとえ雨でも、試合は予定通り行います。", zh: "即使下雨，比赛也照常进行。", py: "jíshǐ xià yǔ, bǐsài yě zhàocháng jìnxíng.",
+            g: "<strong>「即使...也...」</strong>＝<strong>仮定譲歩</strong>「（仮に）〜だとしても」。後節 <code>也</code> 必須。<br>事実譲歩の <code>虽然...但是...</code>（〜だけれども：実際にそう）と区別。<code>即使</code>はまだ起きていない仮定上の譲歩。同義：<code>即便</code>（書面語）／<code>就算</code>（口語）／<code>哪怕</code>（極端な仮定）。<code>照常</code>＝「通常通り」、<code>进行</code>＝「行う・進める」。",
+            w: [{z:"即使",p:"jíshǐ",j:"たとえ〜でも"},{z:"比赛",p:"bǐsài",j:"試合"},{z:"照常",p:"zhàocháng",j:"いつも通り"},{z:"进行",p:"jìnxíng",j:"行う"}]
+          },
+          {
+            ja: "来たのだから、ご飯食べていって。", zh: "既然你来了，就留下来吃饭吧。", py: "jìrán nǐ lái le, jiù liú xiàlái chīfàn ba.",
+            g: "<strong>「既然...就...」</strong>＝「〜である以上は、…」（既存の事実を前提に結論を導く）。<br><code>如果...就...</code>（仮定）との違い：<code>既然</code>は<strong>すでに分かっている事実</strong>が前提、<code>如果</code>はまだ起きていない仮定。例：<code>既然你不去，那我也不去</code>（君が行かないなら、私も行かない）。<code>留下来</code>＝「とどまる」（方向補語）。",
+            w: [{z:"既然",p:"jìrán",j:"〜である以上"},{z:"留",p:"liú",j:"とどまる"},{z:"下来",p:"xiàlái",j:"〜し続ける"}]
+          },
+          {
+            ja: "どんな困難に出会っても、彼は諦めない。", zh: "无论遇到什么困难，他都不放弃。", py: "wúlùn yùdào shénme kùnnan, tā dōu bú fàngqì.",
+            g: "<strong><code>无论...都...</code></strong>＝<code>不管...都...</code> の書面語版。フォーマルな文章でよく使う。<br>後ろには疑問詞・選択肢・<code>多＋形</code>などの不確定要素を伴う。<code>遇到</code>は「（偶然）出会う・直面する」、<code>放弃</code>は「諦める・放棄する」。否定の決意・意志を表すスローガン的表現。",
+            w: [{z:"无论",p:"wúlùn",j:"〜にかかわらず"},{z:"遇到",p:"yùdào",j:"出会う"},{z:"困难",p:"kùnnan",j:"困難"},{z:"放弃",p:"fàngqì",j:"諦める"}]
+          },
+          {
+            ja: "結果がどうであれ、私は後悔しない。", zh: "不论结果如何，我都不后悔。", py: "búlùn jiéguǒ rúhé, wǒ dōu bù hòuhuǐ.",
+            g: "<strong><code>不论</code></strong>＝<code>无论</code>＝<code>不管</code>。<code>如何</code>は書面語の「どう・どのように」（口語 <code>怎么样</code>）。<br><code>结果如何</code>＝「結果がどうであろうと」（結果がどう転んでも）。決意を述べる慣用句で、ビジネスやスピーチでも頻出。",
+            w: [{z:"不论",p:"búlùn",j:"〜にかかわらず"},{z:"结果",p:"jiéguǒ",j:"結果"},{z:"如何",p:"rúhé",j:"どう"},{z:"后悔",p:"hòuhuǐ",j:"後悔する"}]
+          },
+          {
+            ja: "彼が反対しても、私はやる。", zh: "即便他不同意，我也要做。", py: "jíbiàn tā bù tóngyì, wǒ yě yào zuò.",
+            g: "<strong><code>即便</code></strong>＝<code>即使</code>の書面語版で同義。後節は <code>也</code>。<br>例：<code>即便下雨，我也要去</code>（雨でも行く）。<code>同意</code>＝「同意する・賛成する」、反対は <code>反对</code>。<code>要</code>は意志「〜する」。",
+            w: [{z:"即便",p:"jíbiàn",j:"たとえ"},{z:"同意",p:"tóngyì",j:"同意する"},{z:"也要",p:"yě yào",j:"〜でもやる"}]
+          },
+          {
+            ja: "ほんの少しの希望でも、試してみよう。", zh: "哪怕只有一点希望，也要尝试。", py: "nǎpà zhǐyǒu yìdiǎn xīwàng, yě yào chángshì.",
+            g: "<strong><code>哪怕</code></strong>＝「たとえ〜であっても」（極端な仮定の譲歩）。<code>即使</code>より仮定が極端で「ありえないことでも」のニュアンス。<br>例：<code>哪怕花再多钱也要买</code>（どれだけお金がかかっても買う）。<code>尝试</code>＝「試みる」（書面語、口語は <code>试一下</code>）。",
+            w: [{z:"哪怕",p:"nǎpà",j:"たとえ〜でも"},{z:"只有",p:"zhǐyǒu",j:"〜しかない"},{z:"希望",p:"xīwàng",j:"希望"},{z:"尝试",p:"chángshì",j:"試みる"}]
+          },
+          {
+            ja: "一度決めたら、後悔できない。", zh: "一旦决定，就不能后悔。", py: "yídàn juédìng, jiù bù néng hòuhuǐ.",
+            g: "<strong><code>一旦...就...</code></strong>＝「いったん〜したら、…」（仮定的＋一度起きたら不可逆）。<br><code>一旦</code>はまだ起きていない条件を仮定し、起きた瞬間からの帰結を述べる。<code>如果</code>より「決定的瞬間」を強調。例：<code>一旦发生问题，立刻通知我</code>（問題が発生したら直ちに連絡）。",
+            w: [{z:"一旦",p:"yídàn",j:"いったん〜したら"},{z:"决定",p:"juédìng",j:"決定する"},{z:"不能",p:"bù néng",j:"〜できない"},{z:"后悔",p:"hòuhuǐ",j:"後悔する"}]
+          },
+          {
+            ja: "そういうことなら、無理しないで。", zh: "既然这样，就不要勉强。", py: "jìrán zhèyàng, jiù bú yào miǎnqiǎng.",
+            g: "<strong><code>既然这样</code></strong>＝「そういうことなら」（既存状況を受けて結論する慣用句）。<br>類似：<code>既然如此</code>（書面語）／<code>那么</code>（じゃあ）。<code>不要勉强</code>＝「無理しないで」（<code>不要＋V</code>＝「〜するな」）。会話で相手を気遣う典型表現。",
+            w: [{z:"既然",p:"jìrán",j:"〜である以上"},{z:"这样",p:"zhèyàng",j:"このように"},{z:"勉强",p:"miǎnqiǎng",j:"無理する"}]
+          },
+          {
+            ja: "あなたが何を言おうと、私は信じない。", zh: "无论你怎么说，我都不信。", py: "wúlùn nǐ zěnme shuō, wǒ dōu bú xìn.",
+            g: "<strong><code>无论＋疑问詞</code></strong>＝「どう／何／どんなに〜しても」。疑問詞 <code>怎么</code>（どう）／<code>什么</code>（何）／<code>谁</code>（誰）／<code>多</code>（どれだけ）が無関係条件を作る。<br>後節 <code>都／也</code> 必須。「相手の主張を全否定」する強い表現で、対立場面で使われる。<code>信</code>＝「信じる」（<code>相信</code>の短縮）。",
+            w: [{z:"无论",p:"wúlùn",j:"〜にかかわらず"},{z:"怎么",p:"zěnme",j:"どう"},{z:"说",p:"shuō",j:"言う"},{z:"信",p:"xìn",j:"信じる"}]
+          }
+        ]
+      },
+      {
+        hsk: 4, num: 2, title: "高度な接続詞②不仅・除非・与其",
+        sentences: [
+          {
+            ja: "彼は中国語だけでなく、日本語も話せる。", zh: "他不仅会说中文，还会说日语。", py: "tā bùjǐn huì shuō Zhōngwén, hái huì shuō Rìyǔ.",
+            g: "<strong>「不仅...还／也...」</strong>＝「〜だけでなく、さらに〜」（並列追加）。後節 <code>还／也／而且</code>。<br><code>不仅</code>＝<code>不但</code>＝<code>不只</code>。文の主語が変わる場合は <code>不仅A...，B也...</code>：<code>不仅他来了，我也来了</code>。否定への展開「だけでなく」もOK：<code>不仅没来，还打电话</code>（来ないどころか電話してきた）。",
+            w: [{z:"不仅",p:"bùjǐn",j:"〜だけでなく"},{z:"还",p:"hái",j:"さらに"},{z:"中文",p:"Zhōngwén",j:"中国語"},{z:"日语",p:"Rìyǔ",j:"日本語"}]
+          },
+          {
+            ja: "彼は聡明なだけでなく、努力家でもある。", zh: "他不但聪明，而且很努力。", py: "tā búdàn cōngming, érqiě hěn nǔlì.",
+            g: "<strong>「不但...而且...」</strong>＝「〜だけでなく、しかも〜」（程度の上昇・追加強調）。<code>不但</code>＝<code>不仅</code>。<br><code>而且</code>は <code>还／也</code> より「強める」ニュアンスが強い。形容詞・動詞の並列で使う。聡明＋努力など、複数の長所を述べる時の定番。",
+            w: [{z:"不但",p:"búdàn",j:"〜だけでなく"},{z:"聪明",p:"cōngming",j:"聡明"},{z:"而且",p:"érqiě",j:"しかも"},{z:"努力",p:"nǔlì",j:"努力家"}]
+          },
+          {
+            ja: "謝らないなら、許さない。", zh: "除非你道歉，否则我不原谅你。", py: "chúfēi nǐ dàoqiàn, fǒuzé wǒ bù yuánliàng nǐ.",
+            g: "<strong>「除非...否则...」</strong>＝「〜しない限り、さもなければ〜」（唯一条件）。<br><code>除非</code>は<strong>唯一の必要条件</strong>を提示し、<code>否则</code>（さもなくば）で逆の結果を示す。同義「<code>除非...才...</code>」も可：<code>除非你道歉，我才原谅你</code>（謝ってこそ許す）。<code>道歉</code>＝謝る、<code>原谅</code>＝許す。",
+            w: [{z:"除非",p:"chúfēi",j:"〜しない限り"},{z:"道歉",p:"dàoqiàn",j:"謝る"},{z:"否则",p:"fǒuzé",j:"さもなくば"},{z:"原谅",p:"yuánliàng",j:"許す"}]
+          },
+          {
+            ja: "努力してこそ、成功できる。", zh: "只有努力，才能成功。", py: "zhǐyǒu nǔlì, cái néng chénggōng.",
+            g: "<strong>「只有...才...」</strong>＝「〜してこそ、はじめて…」（必要条件：その条件でなければ成立しない）。<br>「<strong>只要...就...</strong>」（〜さえすれば：十分条件）と対比。<code>只有</code>は唯一の手段や絶対条件、<code>只要</code>は最小限の条件。後節 <code>才</code> 必須。<code>才</code>＝「はじめて・やっと」（限定）。",
+            w: [{z:"只有",p:"zhǐyǒu",j:"〜してこそ"},{z:"才",p:"cái",j:"はじめて"},{z:"能",p:"néng",j:"〜できる"},{z:"成功",p:"chénggōng",j:"成功"}]
+          },
+          {
+            ja: "文句を言うより、行動しよう。", zh: "与其抱怨，不如行动。", py: "yǔqí bàoyuàn, bùrú xíngdòng.",
+            g: "<strong>「与其A，不如B」</strong>＝「AよりむしろBの方がよい」（選択）。Aを退け、Bを推奨する。<br>後節 <code>不如</code>＝「〜に及ばない・〜の方がよい」。類似「<code>与其A，宁可B</code>」＝「Aより、いっそB」（やや極端な選択）。<code>抱怨</code>＝不平を言う、<code>行动</code>＝行動する。スローガン・諺風によく使う。",
+            w: [{z:"与其",p:"yǔqí",j:"〜よりむしろ"},{z:"抱怨",p:"bàoyuàn",j:"不平を言う"},{z:"不如",p:"bùrú",j:"〜の方がよい"},{z:"行动",p:"xíngdòng",j:"行動する"}]
+          },
+          {
+            ja: "歩く方がいい、彼の車には乗らない。", zh: "宁可走路，也不坐他的车。", py: "nìngkě zǒulù, yě bú zuò tā de chē.",
+            g: "<strong>「宁可A，也不B」</strong>＝「BするくらいならAする」「いっそAでも、Bはしない」。<br><code>宁可</code>＝「いっそ〜の方がまし」（不本意な選択）、<code>也不</code>＝「絶対にBしない」。強い拒否＋代替案の表現。類似「宁愿」＝「いっそ〜したい」。",
+            w: [{z:"宁可",p:"nìngkě",j:"いっそ"},{z:"走路",p:"zǒulù",j:"歩く"},{z:"也不",p:"yě bú",j:"〜しない"},{z:"坐",p:"zuò",j:"乗る"}]
+          },
+          {
+            ja: "やりたくないのではなく、時間がないんです。", zh: "不是不愿意，而是没时间。", py: "bú shì bú yuànyi, ér shì méi shíjiān.",
+            g: "<strong>「不是...而是...」</strong>＝「〜ではなく、〜だ」（訂正対比）。誤解を正す時の典型表現。<br>類似「<strong>不是...就是...</strong>」＝「〜でなければ〜だ」（二者択一）。例：<code>他不是病了，就是累了</code>（病気か疲れかどちらか）。<code>愿意</code>＝「〜したい・意欲がある」。",
+            w: [{z:"不是",p:"bú shì",j:"〜ではない"},{z:"愿意",p:"yuànyi",j:"〜したい"},{z:"而是",p:"ér shì",j:"〜だ"}]
+          },
+          {
+            ja: "それだけでなく、彼は奨学金も獲得した。", zh: "不仅如此，他还获得了奖学金。", py: "bùjǐn rúcǐ, tā hái huòdé le jiǎngxuéjīn.",
+            g: "<strong><code>不仅如此</code></strong>＝「それだけでなく」（接続詞句）。文と文をつないで「さらに」と話を進める時に使う。<br><code>如此</code>＝「このように・そのように」（書面語の「这样」）。書面・スピーチでよく使う改まった追加表現。<code>获得</code>＝「獲得する」、<code>奖学金</code>＝奨学金。",
+            w: [{z:"不仅如此",p:"bùjǐn rúcǐ",j:"それだけでなく"},{z:"获得",p:"huòdé",j:"獲得する"},{z:"奖学金",p:"jiǎngxuéjīn",j:"奨学金"}]
+          },
+          {
+            ja: "失敗したのは、努力しなかったからだ。", zh: "之所以失败，是因为没有努力。", py: "zhīsuǒyǐ shībài, shì yīnwèi méi yǒu nǔlì.",
+            g: "<strong>「之所以...，是因为...」</strong>＝「〜したのは、〜だからだ」（結果→原因の倒置）。<br>普通の <code>因为...所以...</code>（原因→結果）を倒置して結果を先に述べ、原因を後で強調する形。文章・分析的説明でよく使う。<code>失败</code>＝失敗、反義 <code>成功</code>。",
+            w: [{z:"之所以",p:"zhīsuǒyǐ",j:"〜のは"},{z:"失败",p:"shībài",j:"失敗"},{z:"是因为",p:"shì yīnwèi",j:"〜だからだ"}]
+          },
+          {
+            ja: "努力を通じて、彼はついに夢を実現した。", zh: "通过努力，他终于实现了梦想。", py: "tōngguò nǔlì, tā zhōngyú shíxiàn le mèngxiǎng.",
+            g: "<strong>前置詞 <code>通过</code></strong>＝「〜を通じて」（手段・方法）。書面語的に使われる。<br>類似：<code>经过</code>（〜を経て・〜の経過で）／<code>靠</code>（〜に頼って）。<code>实现</code>＝実現する、<code>梦想</code>＝夢。<code>终于</code>＝ついに（プラス結果の到達）。",
+            w: [{z:"通过",p:"tōngguò",j:"〜を通じて"},{z:"努力",p:"nǔlì",j:"努力"},{z:"实现",p:"shíxiàn",j:"実現する"},{z:"梦想",p:"mèngxiǎng",j:"夢"}]
+          }
+        ]
+      },
+      {
+        hsk: 4, num: 3, title: "因果・推量・由来",
+        sentences: [
+          {
+            ja: "天気が悪いので、飛行機が遅れた。", zh: "由于天气不好，飞机晚点了。", py: "yóuyú tiānqì bù hǎo, fēijī wǎndiǎn le.",
+            g: "<strong><code>由于</code></strong>＝「〜のために・〜により」（書面語的な「因为」）。<br><code>由于</code>は原因を客観的に説明する書き言葉寄り。後節は <code>所以</code> or 単独で結果を述べる。例：<code>由于工作原因</code>（仕事の関係で）／<code>由于天气</code>（天気のせいで）。<code>晚点</code>＝（飛行機・電車が）遅れる。",
+            w: [{z:"由于",p:"yóuyú",j:"〜のため"},{z:"天气",p:"tiānqì",j:"天気"},{z:"飞机",p:"fēijī",j:"飛行機"},{z:"晚点",p:"wǎndiǎn",j:"遅れる"}]
+          },
+          {
+            ja: "この問題は解決が難しそうだ。", zh: "这个问题恐怕不容易解决。", py: "zhège wèntí kǒngpà bù róngyì jiějué.",
+            g: "<strong><code>恐怕</code></strong>＝「おそらく〜だろう」（マイナス推量・心配）。直訳は「〜ではないかと恐れる」。<br>使い分け：プラス推測なら <code>可能／也许／大概</code>、マイナス予感なら <code>恐怕</code>。例：<code>恐怕来不及了</code>（間に合わないかも）。<code>容易</code>＝容易、否定 <code>不容易</code>＝難しい。",
+            w: [{z:"问题",p:"wèntí",j:"問題"},{z:"恐怕",p:"kǒngpà",j:"おそらく"},{z:"容易",p:"róngyì",j:"容易"},{z:"解决",p:"jiějué",j:"解決する"}]
+          },
+          {
+            ja: "おそらく彼は来ないだろう。", zh: "估计他不会来了。", py: "gūjì tā bú huì lái le.",
+            g: "<strong><code>估计</code></strong>＝「（経験・状況から）推測する」。動詞としても副詞的にも使える。<br>類似：<code>看来</code>（見たところ）／<code>大概</code>（だいたい）／<code>可能</code>（〜かもしれない）。<code>估计</code>は中立的で日常会話頻出。<code>不会＋V＋了</code>＝「〜しないだろう（変化）」。",
+            w: [{z:"估计",p:"gūjì",j:"推測する"},{z:"不会",p:"bú huì",j:"〜しないだろう"},{z:"来",p:"lái",j:"来る"}]
+          },
+          {
+            ja: "明日は雨が降るかもしれない。", zh: "也许明天会下雨。", py: "yěxǔ míngtiān huì xià yǔ.",
+            g: "<strong><code>也许</code></strong>＝「もしかすると・〜かもしれない」（可能性低め）。<br>推量副詞のニュアンス比較：<code>一定</code>（必ず）＞<code>肯定</code>（きっと）＞<code>大概</code>（だいたい）＞<code>可能</code>（かも）＞<code>也许</code>（もしかすると）。<code>会</code>は「〜のはず・〜だろう」（可能性）の助動詞。",
+            w: [{z:"也许",p:"yěxǔ",j:"もしかすると"},{z:"会",p:"huì",j:"〜だろう"},{z:"下雨",p:"xià yǔ",j:"雨が降る"}]
+          },
+          {
+            ja: "だから、早めに出発した方がいい。", zh: "因此，我们应该早点出发。", py: "yīncǐ, wǒmen yīnggāi zǎo diǎn chūfā.",
+            g: "<strong><code>因此</code></strong>＝「だから・したがって」（接続詞、書面語）。<code>所以</code>のフォーマル版。<br>類似：<code>所以</code>（だから：口語・書面語両用）／<code>于是</code>（そこで：時間的に続いて）／<code>因而</code>（したがって：書面語）。「結論を導く」フォーマルなトーン。<code>出发</code>＝出発する。",
+            w: [{z:"因此",p:"yīncǐ",j:"したがって"},{z:"应该",p:"yīnggāi",j:"〜すべき"},{z:"出发",p:"chūfā",j:"出発する"}]
+          },
+          {
+            ja: "彼は辞職するそうだ。", zh: "据说他要辞职了。", py: "jùshuō tā yào cízhí le.",
+            g: "<strong><code>据说</code></strong>＝「〜と言われている／〜だそうだ」（伝聞、書面語寄り）。<br><code>听说</code>（聞いた話）よりやや客観的・改まった印象。情報源を明示するなら <code>据他说</code>（彼が言うには）／<code>据报道</code>（報道によると）／<code>据我所知</code>（私の知る限り）。<code>辞职</code>＝辞職する、反義 <code>就职</code>。",
+            w: [{z:"据说",p:"jùshuō",j:"〜だそうだ"},{z:"辞职",p:"cízhí",j:"辞職する"}]
+          },
+          {
+            ja: "鍵を忘れたからだ。", zh: "这是因为我忘了带钥匙。", py: "zhè shì yīnwèi wǒ wàng le dài yàoshi.",
+            g: "<strong>「这是因为...」</strong>＝「これは〜だからだ」（理由を強調する説明）。<br>事象の理由を後付けで説明する型。倒置の <code>之所以...是因为...</code> とほぼ同じ機能。<code>忘了带</code>＝「持ってくるのを忘れた」（V＋了＋V の連動）。",
+            w: [{z:"这是",p:"zhè shì",j:"これは"},{z:"因为",p:"yīnwèi",j:"〜だから"},{z:"忘了",p:"wàng le",j:"忘れた"},{z:"带",p:"dài",j:"持っていく"}]
+          },
+          {
+            ja: "君の助けのおかげで、成功できた。", zh: "多亏了你的帮助，我才能成功。", py: "duōkuī le nǐ de bāngzhù, wǒ cái néng chénggōng.",
+            g: "<strong><code>多亏</code></strong>＝「〜のおかげで」（プラスの理由を感謝する）。<code>多亏了</code>の形で使うことが多い。<br>類似：<code>幸亏</code>（幸い・〜のおかげで）／<code>幸好</code>（運よく）。後節 <code>才</code> で「だからこそ」を強調。感謝・恩を述べる時の慣用句。",
+            w: [{z:"多亏",p:"duōkuī",j:"〜のおかげで"},{z:"帮助",p:"bāngzhù",j:"助け"},{z:"才能",p:"cái néng",j:"〜してこそできた"}]
+          },
+          {
+            ja: "交通渋滞のせいで、遅刻した。", zh: "由于交通堵塞，我迟到了。", py: "yóuyú jiāotōng dǔsè, wǒ chídào le.",
+            g: "<code>由于</code> ＋名詞句で原因を示す。後節は主節文。話し言葉でも書き言葉でも使える便利な前置詞句。<br><code>交通堵塞</code>＝「交通渋滞」（口語 <code>堵车</code>）。<code>迟到</code>＝遅刻する、反義 <code>早到</code>。「言い訳」として日常頻出。",
+            w: [{z:"由于",p:"yóuyú",j:"〜のため"},{z:"交通",p:"jiāotōng",j:"交通"},{z:"堵塞",p:"dǔsè",j:"渋滞"},{z:"迟到",p:"chídào",j:"遅刻する"}]
+          },
+          {
+            ja: "彼は怠けたからこそ失敗した。", zh: "正因为他懒，所以才失败。", py: "zhèng yīnwèi tā lǎn, suǒyǐ cái shībài.",
+            g: "<strong>「正因为...所以才...」</strong>＝「まさに〜だからこそ…」（理由を強調）。<br><code>正</code>は「ちょうど・まさに」で原因を限定強調。後節の <code>才</code> は「〜してこそ」のニュアンス。日常では <code>就是因为...，所以...</code> もよく使う。<code>懒</code>＝怠ける／怠惰。",
+            w: [{z:"正因为",p:"zhèng yīnwèi",j:"まさに〜だから"},{z:"懒",p:"lǎn",j:"怠ける"},{z:"才",p:"cái",j:"〜してこそ"},{z:"失败",p:"shībài",j:"失敗"}]
+          }
+        ]
+      },
+      {
+        hsk: 4, num: 4, title: "評価・印象・伝聞",
+        sentences: [
+          {
+            ja: "どうやら彼は来ないようだ。", zh: "看来他不会来了。", py: "kànlái tā bú huì lái le.",
+            g: "<strong><code>看来</code></strong>＝「（見たところ）〜のようだ」（観察に基づく判断）。文頭に置く挿入語。<br>類似：<code>看起来</code>（見たところ：感覚的）／<code>似乎</code>（〜のように見える：書面語）／<code>好像</code>（〜のようだ：口語）。判断の根拠が外から見える事象にあるとき使う。",
+            w: [{z:"看来",p:"kànlái",j:"見たところ"},{z:"不会",p:"bú huì",j:"〜しないだろう"},{z:"来",p:"lái",j:"来る"}]
+          },
+          {
+            ja: "彼はあまり機嫌が良くないようだ。", zh: "他似乎不太高兴。", py: "tā sìhū bú tài gāoxìng.",
+            g: "<strong><code>似乎</code></strong>＝「〜のようだ・〜らしい」（控えめな推測、書面語寄り）。口語の <code>好像</code> と同義だが、ややかしこまった印象。<br><code>不太＋形容詞</code>＝「あまり〜ない」（婉曲な否定）。<code>不太高兴</code>（あまり嬉しくない＝機嫌が悪い）。直接的否定 <code>不高兴</code> より柔らかい。",
+            w: [{z:"似乎",p:"sìhū",j:"〜のようだ"},{z:"不太",p:"bú tài",j:"あまり〜ない"},{z:"高兴",p:"gāoxìng",j:"嬉しい"}]
+          },
+          {
+            ja: "聞くところによると、来月結婚するそうだ。", zh: "听说他下个月就要结婚了。", py: "tīngshuō tā xià ge yuè jiù yào jiéhūn le.",
+            g: "<strong>「就要...了」</strong>＝「もうすぐ〜する」（差し迫った近未来、具体時間と併用可）。<br><code>快要...了</code> との違い：<code>就要</code>は具体時刻と一緒に使える（<code>明天就要</code>○ / <code>明天快要</code>×）、<code>快要</code>は単独で「もうすぐ」感を出す。文末 <code>了</code> 必須。",
+            w: [{z:"听说",p:"tīngshuō",j:"〜だそうだ"},{z:"就要",p:"jiù yào",j:"もうすぐ〜"},{z:"结婚",p:"jiéhūn",j:"結婚する"}]
+          },
+          {
+            ja: "聞いた感じでは、一理あるね。", zh: "听起来很有道理。", py: "tīng qǐlái hěn yǒu dàoli.",
+            g: "<strong>「V＋起来＋形容詞」</strong>＝「〜してみると〜だ」（行為を通じての印象）。<br>定番表現多数：<code>看起来</code>（見た感じ）／<code>听起来</code>（聞いた感じ）／<code>说起来</code>（言ってみれば）／<code>想起来</code>（思い出す）／<code>用起来</code>（使い勝手は）／<code>吃起来</code>（食べてみると）。「有道理」＝「一理ある・もっともだ」。",
+            w: [{z:"听起来",p:"tīng qǐlái",j:"聞いた感じ"},{z:"道理",p:"dàoli",j:"道理・理屈"}]
+          },
+          {
+            ja: "この映画は見る価値がある。", zh: "这部电影值得一看。", py: "zhè bù diànyǐng zhíde yí kàn.",
+            g: "<strong>「值得＋V」</strong>＝「〜する価値がある」。<br>動詞前の「一」は「ちょっと〜する／一度〜してみる」のニュアンス。「<code>一看</code>＝一度見てみる」、「<code>一试</code>＝試してみる」。否定 <code>不值得</code>＝価値がない。<code>值得＋名詞</code> もOK：<code>值得信赖</code>（信頼に値する）。",
+            w: [{z:"部",p:"bù",j:"〜本（作品）"},{z:"电影",p:"diànyǐng",j:"映画"},{z:"值得",p:"zhíde",j:"〜する価値がある"}]
+          },
+          {
+            ja: "私はこのアイデアが悪くないと思う。", zh: "我觉得这个想法不错。", py: "wǒ juéde zhège xiǎngfǎ búcuò.",
+            g: "<strong>動詞 <code>觉得</code></strong>＝「〜と感じる・〜と思う」（主観）。<br>「思う」三兄弟：<code>觉得</code>（主観的感想）／<code>认为</code>（理性的判断）／<code>以为</code>（誤った思い込み）。<code>不错</code>＝「悪くない＝なかなか良い」（中国語独特のポジティブ表現）。",
+            w: [{z:"觉得",p:"juéde",j:"〜と思う"},{z:"想法",p:"xiǎngfǎ",j:"考え"},{z:"不错",p:"búcuò",j:"なかなか良い"}]
+          },
+          {
+            ja: "私から見れば、彼は正しい。", zh: "在我看来，他是对的。", py: "zài wǒ kàn lái, tā shì duì de.",
+            g: "<strong>「在＋人＋看来」</strong>＝「（人）から見れば」（視点・意見の前置き）。<br>類似：<code>对我来说</code>（私にとっては）／<code>依我看</code>（私の見るところ）。<code>是...的</code> 構文＝「〜のだ」（断定の強調）。<code>对</code>＝「正しい」（形容詞）。",
+            w: [{z:"在",p:"zài",j:"〜では"},{z:"看来",p:"kànlái",j:"見る限り"},{z:"对",p:"duì",j:"正しい"}]
+          },
+          {
+            ja: "このことは私に大きな影響を与えた。", zh: "这件事对我影响很大。", py: "zhè jiàn shì duì wǒ yǐngxiǎng hěn dà.",
+            g: "<strong>「对＋人＋影响＋很＋形容詞」</strong>＝「人に〜な影響を与える」。<br><code>对</code>は「対象」を示す前置詞。<code>影响</code>は名詞・動詞両用：<code>有影响</code>（影響がある）／<code>影响身体</code>（健康に影響する）。「影響度」は <code>很大／不大／很小</code>。",
+            w: [{z:"对",p:"duì",j:"〜に対して"},{z:"影响",p:"yǐngxiǎng",j:"影響"},{z:"大",p:"dà",j:"大きい"}]
+          },
+          {
+            ja: "今回の旅行は深い印象を残した。", zh: "这次旅行给我留下了深刻的印象。", py: "zhè cì lǚxíng gěi wǒ liú xià le shēnkè de yìnxiàng.",
+            g: "<strong>「给＋人＋V」</strong>＝「人に〜する」（前置詞 <code>给</code>）。<code>留下＋印象</code>＝「印象を残す」（決まり文句）。<br>「V＋下」＝「とどめる・残す」（結果補語）。<code>留下</code>（残す）／<code>记下</code>（書き留める）／<code>写下</code>（書き残す）。<code>深刻</code>＝（印象が）深い・痛切。",
+            w: [{z:"旅行",p:"lǚxíng",j:"旅行"},{z:"给",p:"gěi",j:"〜に"},{z:"留下",p:"liú xià",j:"残す"},{z:"印象",p:"yìnxiàng",j:"印象"}]
+          },
+          {
+            ja: "この本は人を深く考えさせる。", zh: "这本书让人深思。", py: "zhè běn shū ràng rén shēnsī.",
+            g: "<code>让人＋V</code>＝「人を〜させる」（一般的・抽象的な使役）。動作主が特定の「誰か」ではなく、一般の人々を指す。<br>類例：<code>让人感动</code>（感動させる）／<code>让人失望</code>（失望させる）／<code>让人开心</code>（楽しませる）。書面語的に <code>使人...</code> も同義。<code>深思</code>＝深く考える。",
+            w: [{z:"让",p:"ràng",j:"〜させる"},{z:"人",p:"rén",j:"人（一般）"},{z:"深思",p:"shēnsī",j:"深く考える"}]
+          }
+        ]
+      },
+      {
+        hsk: 4, num: 5, title: "慣用・程度・感嘆",
+        sentences: [
+          {
+            ja: "この子は本当に賢い！", zh: "这个孩子真聪明！", py: "zhège háizi zhēn cōngming!",
+            g: "<strong><code>真</code></strong>＝「本当に・実に」（感嘆・実感を込めた強調）。<code>很</code>より話者の感情がこもる。<br><code>很</code>（形式的な「とても」）／<code>非常</code>（非常に）／<code>真</code>（本当に）／<code>太...了</code>（〜すぎる）の使い分けに注意。<code>真</code>は感嘆文でよく使う。<code>聪明</code>＝賢い・聡明。",
+            w: [{z:"孩子",p:"háizi",j:"子ども"},{z:"真",p:"zhēn",j:"本当に"},{z:"聪明",p:"cōngming",j:"賢い"}]
+          },
+          {
+            ja: "なんと彼は来なかった！", zh: "他居然没来！", py: "tā jūrán méi lái!",
+            g: "<strong><code>居然</code></strong>＝「なんと・意外にも」（予想外の事態への驚き）。<br><code>竟然</code>＝<code>居然</code>（ほぼ同義、互換可）。プラス・マイナスどちらの予想外でも使える：<code>他居然成功了</code>（なんと成功した）／<code>他居然没来</code>（なんと来なかった）。文の動詞・形容詞の前に置く。",
+            w: [{z:"居然",p:"jūrán",j:"なんと"},{z:"没来",p:"méi lái",j:"来なかった"}]
+          },
+          {
+            ja: "信じられないほどだ。", zh: "我简直不敢相信。", py: "wǒ jiǎnzhí bù gǎn xiāngxìn.",
+            g: "<strong><code>简直</code></strong>＝「まったく・まるで〜だ」（程度の極端さを強調）。<br>誇張表現で「ほとんど〜に等しい」のニュアンス。<code>简直是天才</code>（まるで天才だ）。<code>不敢＋V</code>＝「〜する勇気がない・〜できない」。<code>相信</code>＝信じる、<code>不敢相信</code>＝信じられない。",
+            w: [{z:"简直",p:"jiǎnzhí",j:"まったく"},{z:"不敢",p:"bù gǎn",j:"〜できない"},{z:"相信",p:"xiāngxìn",j:"信じる"}]
+          },
+          {
+            ja: "まさか忘れたのか？", zh: "难道你忘了吗？", py: "nándào nǐ wàng le ma?",
+            g: "<strong><code>难道...吗？</code></strong>＝「まさか〜ではあるまい／〜なのか」（反語）。文末 <code>吗</code> 必須。<br>否定の反語は <code>难道你不知道吗？</code>（知らないわけがない＝知っているはず）。話者の信じがたい気持ち・驚き・批判を含む。日常会話より文章・議論でよく使う。",
+            w: [{z:"难道",p:"nándào",j:"まさか"},{z:"忘了",p:"wàng le",j:"忘れた"}]
+          },
+          {
+            ja: "どうせ誰も知らない。", zh: "反正没人知道。", py: "fǎnzhèng méi rén zhīdào.",
+            g: "<strong><code>反正</code></strong>＝「どうせ・いずれにせよ」（結果が決まっている、開き直り）。<br>状況がどうあれ結論は同じ、というニュアンス。<code>反正不去</code>（どうせ行かない）／<code>反正都一样</code>（どうせ同じだ）。<code>没人＋V</code>＝「誰も〜しない」（否定の主語）。",
+            w: [{z:"反正",p:"fǎnzhèng",j:"どうせ"},{z:"没人",p:"méi rén",j:"誰もいない"},{z:"知道",p:"zhīdào",j:"知る"}]
+          },
+          {
+            ja: "彼はわざわざ行かなかった。", zh: "他偏偏没去。", py: "tā piānpiān méi qù.",
+            g: "<strong><code>偏偏</code></strong>＝「あえて・わざわざ・よりによって」（期待・常識に反する）。<br>マイナスのニュアンスが強い：<code>偏偏下雨了</code>（よりによって雨だ）／<code>他偏偏不听</code>（よりによって聞かない）。「皮肉・不満」を含む慣用副詞。",
+            w: [{z:"偏偏",p:"piānpiān",j:"わざわざ・よりによって"},{z:"没去",p:"méi qù",j:"行かなかった"}]
+          },
+          {
+            ja: "絶対に遅刻しないで。", zh: "你千万别迟到。", py: "nǐ qiānwàn bié chídào.",
+            g: "<strong><code>千万</code></strong>＝「絶対に・何としても」（強い忠告・念押し）。<code>别／不要／要</code>とセットでよく使う。<br>例：<code>千万小心</code>（くれぐれも気をつけて）／<code>千万不要忘</code>（絶対に忘れないで）。重要事項の忠告で頻出。<code>迟到</code>＝遅刻する。",
+            w: [{z:"千万",p:"qiānwàn",j:"絶対に"},{z:"别",p:"bié",j:"〜するな"},{z:"迟到",p:"chídào",j:"遅刻する"}]
+          },
+          {
+            ja: "すぐにでも家に帰りたい。", zh: "我巴不得马上回家。", py: "wǒ bābude mǎshàng huí jiā.",
+            g: "<strong><code>巴不得</code></strong>＝「ぜひ〜したい・〜してたまらない」（強い願望、口語的）。<br>「願望はあるが実際にはできない」ニュアンスがある。例：<code>我巴不得现在就走</code>（今すぐにでも行きたい）。<code>恨不得</code>（〜してしまいたい：もっと強い焦燥感）と類義。",
+            w: [{z:"巴不得",p:"bābude",j:"〜したくてたまらない"},{z:"马上",p:"mǎshàng",j:"すぐに"},{z:"回家",p:"huí jiā",j:"帰宅する"}]
+          },
+          {
+            ja: "知っていれば行かなかったのに。", zh: "早知道就不去了。", py: "zǎo zhīdào jiù bú qù le.",
+            g: "<strong>「早知道...就...」</strong>＝「もし早く知っていたら〜だったのに」（後悔）。<br>過去への仮定的後悔の慣用構文。例：<code>早知道下雨，就带伞了</code>（雨と分かっていたら傘を持ってきたのに）。<code>早</code>＝「とっくに・早めに」。",
+            w: [{z:"早知道",p:"zǎo zhīdào",j:"早く知っていれば"},{z:"就",p:"jiù",j:"〜のに"},{z:"不去",p:"bú qù",j:"行かない"}]
+          },
+          {
+            ja: "彼はどうしてそうなんだろう？", zh: "他怎么会这样？", py: "tā zěnme huì zhèyàng?",
+            g: "<strong>「怎么会...？」</strong>＝「どうして〜だろうか」（意外・困惑・反語）。<br><code>怎么</code>＝「どう・なぜ」、<code>会</code>＝「〜だろう（推量）」、<code>这样</code>＝「このように」。「信じられない・理解できない」気持ちを表す。返事や同情の場面で頻出。",
+            w: [{z:"怎么",p:"zěnme",j:"どう・なぜ"},{z:"会",p:"huì",j:"〜だろう"},{z:"这样",p:"zhèyàng",j:"このように"}]
+          }
+        ]
+      },
+      {
+        hsk: 4, num: 6, title: "受身・関連表現",
+        sentences: [
+          {
+            ja: "財布を盗まれた。", zh: "我的钱包被偷了。", py: "wǒ de qiánbāo bèi tōu le.",
+            g: "<strong>受身構文「主語＋被＋（動作主）＋V＋了／補語」</strong>＝「〜される」。動作主は省略可。<br>例：<code>我被骗了</code>（だまされた）／<code>他被老师批评了</code>（先生に叱られた）。中国語の受身は<strong>不利な事態</strong>に使うことが多い（最近は中立化も）。動作主を入れる場合は <code>被</code> の直後：<code>被小偷偷了</code>（泥棒に盗まれた）。",
+            w: [{z:"钱包",p:"qiánbāo",j:"財布"},{z:"被",p:"bèi",j:"〜される"},{z:"偷",p:"tōu",j:"盗む"}]
+          },
+          {
+            ja: "この本は彼が書いたものだ。", zh: "这本书是他写的。", py: "zhè běn shū shì tā xiě de.",
+            g: "<strong>「是...的」構文</strong>：既に起きた動作について<strong>「いつ・どこで・誰が・どうやって」</strong>を強調する。<br><code>是</code>と<code>的</code>の間に強調したい要素を入れる。例：<code>我是昨天来的</code>（昨日来た）／<code>是在北京买的</code>（北京で買った）／<code>是他做的</code>（彼が作った）。動作の有無ではなく状況を伝える。",
+            w: [{z:"本",p:"běn",j:"〜冊"},{z:"是",p:"shì",j:"〜だ"},{z:"写",p:"xiě",j:"書く"},{z:"的",p:"de",j:"〜のだ"}]
+          },
+          {
+            ja: "これは専門家が決定したものだ。", zh: "这是由专家决定的。", py: "zhè shì yóu zhuānjiā juédìng de.",
+            g: "<strong>前置詞 <code>由</code></strong>＝「〜によって」（動作主・責任者を導く、書面語的受身）。<br><code>由＋人＋V</code>「人が〜する」（責任・主導の所在を示す）。例：<code>这件事由我负责</code>（このことは私が責任を持つ）。受身的だが <code>被</code> と違って「権限・割り当て」の含み。<code>专家</code>＝専門家。",
+            w: [{z:"由",p:"yóu",j:"〜によって"},{z:"专家",p:"zhuānjiā",j:"専門家"},{z:"决定",p:"juédìng",j:"決定する"}]
+          },
+          {
+            ja: "私にとって、健康が一番大切。", zh: "对我来说，健康最重要。", py: "duì wǒ lái shuō, jiànkāng zuì zhòngyào.",
+            g: "<strong>「对+人+来说」</strong>＝「（人）にとって」（観点の前置き）。文頭に置く挿入語。<br>類似：<code>对+人+而言</code>（書面語）／<code>在+人+看来</code>（〜から見れば）。意見・評価を述べる時の定番。<code>最</code>＝「最も」（形容詞前で最上級）。",
+            w: [{z:"对",p:"duì",j:"〜に対して"},{z:"来说",p:"lái shuō",j:"〜にとっては"},{z:"健康",p:"jiànkāng",j:"健康"},{z:"重要",p:"zhòngyào",j:"重要"}]
+          },
+          {
+            ja: "このことについて、私は違う意見がある。", zh: "关于这件事，我有不同的看法。", py: "guānyú zhè jiàn shì, wǒ yǒu bùtóng de kànfǎ.",
+            g: "<strong>前置詞 <code>关于</code></strong>＝「〜について」（話題の範囲を示す）。文頭で使うのが普通。<br><code>关于</code>（話題）／<code>对于</code>（対象）／<code>至于</code>（〜について言えば：話題転換）の使い分けに注意。<code>看法</code>＝見方・意見、<code>不同的看法</code>＝異なる意見。",
+            w: [{z:"关于",p:"guānyú",j:"〜について"},{z:"事",p:"shì",j:"こと"},{z:"不同",p:"bùtóng",j:"異なる"},{z:"看法",p:"kànfǎ",j:"意見"}]
+          },
+          {
+            ja: "この問題は私と関係ない。", zh: "这个问题与我无关。", py: "zhège wèntí yǔ wǒ wú guān.",
+            g: "<strong>「A与B无关」</strong>＝「AはBと関係ない」（書面語的）。<code>与</code>＝<code>跟／和</code>（書面語版）／<code>无</code>＝<code>没有</code>の書面語。<br>口語なら <code>跟我没关系</code>（私と関係ない）。否定の決まり文句として頻出。<code>有关</code>＝関係ある／<code>无关</code>＝関係ない。",
+            w: [{z:"与",p:"yǔ",j:"〜と"},{z:"无关",p:"wú guān",j:"関係ない"}]
+          },
+          {
+            ja: "値段については、相談できる。", zh: "至于价格，我们可以商量。", py: "zhìyú jiàgé, wǒmen kěyǐ shāngliang.",
+            g: "<strong><code>至于</code></strong>＝「〜については・〜に関しては」（話題転換・先送り）。前文と関連した新しい話題を切り出すときに使う。<br><code>关于</code>との違い：<code>关于</code>は新しい話題を導入、<code>至于</code>は既出の流れから派生・切り替え。<code>商量</code>＝相談する。",
+            w: [{z:"至于",p:"zhìyú",j:"〜については"},{z:"价格",p:"jiàgé",j:"値段"},{z:"商量",p:"shāngliang",j:"相談する"}]
+          },
+          {
+            ja: "私の知る限り、彼は中国に行ったことがない。", zh: "据我所知，他没去过中国。", py: "jù wǒ suǒ zhī, tā méi qù guo Zhōngguó.",
+            g: "<strong>「据我所知」</strong>＝「私の知る限り」（決まり文句、書面語的）。<br><code>据＋人＋所＋動詞</code>の形（「〜が〜するところによれば」）。<code>所</code>は古典語的な助詞。会話でも使える慎重な発言の前置き。",
+            w: [{z:"据",p:"jù",j:"〜によると"},{z:"所知",p:"suǒ zhī",j:"知るところ"},{z:"过",p:"guo",j:"〜したことがある"}]
+          },
+          {
+            ja: "このような状況では、私もどうしようもない。", zh: "在这种情况下，我也没办法。", py: "zài zhè zhǒng qíngkuàng xià, wǒ yě méi bànfǎ.",
+            g: "<strong>「在...情况下」</strong>＝「〜の状況において」（条件設定の前置き、書面語的）。<br>類似：<code>在...的时候</code>（〜のとき）／<code>在...过程中</code>（〜の過程で）／<code>在...条件下</code>（〜の条件下で）。<code>没办法</code>＝「どうしようもない・仕方がない」（慣用句）。",
+            w: [{z:"种",p:"zhǒng",j:"〜種類の"},{z:"情况",p:"qíngkuàng",j:"状況"},{z:"办法",p:"bànfǎ",j:"方法"}]
+          },
+          {
+            ja: "彼の助けのおかげで、私は任務を完了した。", zh: "在他的帮助下，我完成了任务。", py: "zài tā de bāngzhù xià, wǒ wánchéng le rènwu.",
+            g: "<strong>「在...帮助下／领导下／支持下」</strong>＝「〜の助け／指導／支持のもとで」（書面語フォーマル）。<br><code>在...下</code> の枠で「条件・背景」を示す書面表現。スピーチ・公式文書で頻出。<code>完成</code>＝完成する／<code>任务</code>＝任務・タスク。",
+            w: [{z:"帮助",p:"bāngzhù",j:"助け"},{z:"完成",p:"wánchéng",j:"完成"},{z:"任务",p:"rènwu",j:"任務"}]
+          }
+        ]
+      },
+      {
+        hsk: 4, num: 7, title: "比較拡張・程度の強調",
+        sentences: [
+          {
+            ja: "今回は前回よりずっと良かった。", zh: "这次比上次好得多。", py: "zhè cì bǐ shàng cì hǎo de duō.",
+            g: "<strong>差量の表現「形容詞＋得多／多了」</strong>＝「ずっと〜だ」（差が大きい）。<br>段階：<code>一点儿</code>（少し）＜<code>一些</code>（やや）＜<code>得多</code>（ずっと）＜<code>多了</code>（はるかに）。<code>得多</code> は <code>得</code> ＋ 形容詞 <code>多</code>（差が多い）の構造。例：<code>贵得多</code>（ずっと高い）。",
+            w: [{z:"这次",p:"zhè cì",j:"今回"},{z:"上次",p:"shàng cì",j:"前回"},{z:"得多",p:"de duō",j:"ずっと"}]
+          },
+          {
+            ja: "私は彼より背が高くない。", zh: "我没有他高。", py: "wǒ méi yǒu tā gāo.",
+            g: "<strong>比較の否定「A没有B（这么／那么）+形容詞」</strong>＝「AはBほど〜ない」。<br><code>不比</code> との違い：<code>不比</code>は「〜より劣るわけではない」（同等以上）のニュアンスがあり、純粋な否定にはならない。「AはBほど〜ない」と言いたい時は <code>没有</code> を使う。否定形では形容詞に <code>很</code> を付けない。",
+            w: [{z:"没有",p:"méi yǒu",j:"〜ほどない"},{z:"他",p:"tā",j:"彼"},{z:"高",p:"gāo",j:"高い"}]
+          },
+          {
+            ja: "彼は私ほど聡明ではない。", zh: "他不如我聪明。", py: "tā bùrú wǒ cōngming.",
+            g: "<strong>「A不如B＋形容詞」</strong>＝「AはBに及ばない／BほどAではない」（書面語的比較否定）。<br><code>不如</code>は「〜に及ばない」（劣っている）。後ろの形容詞は省略可：<code>他不如我</code>＝「彼は私に及ばない」。<code>没有...那么</code>と同じ意味だが、より凝った言い方。",
+            w: [{z:"不如",p:"bùrú",j:"〜に及ばない"},{z:"聪明",p:"cōngming",j:"聡明"}]
+          },
+          {
+            ja: "これはあれと同じくらい良い。", zh: "这个跟那个一样好。", py: "zhège gēn nàge yíyàng hǎo.",
+            g: "<strong>「A跟B一样＋形容詞」</strong>＝「AはBと同じくらい〜」（等値比較）。<br><code>跟</code>＝<code>和</code>＝<code>与</code>。否定 <code>A跟B不一样</code>（〜と違う）。性質を比べるなら：<code>这件衣服跟那件一样漂亮</code>（同じくらいきれい）。",
+            w: [{z:"跟",p:"gēn",j:"〜と"},{z:"一样",p:"yíyàng",j:"同じ"},{z:"好",p:"hǎo",j:"良い"}]
+          },
+          {
+            ja: "この本はあの本の2倍高い。", zh: "这本书比那本贵两倍。", py: "zhè běn shū bǐ nà běn guì liǎng bèi.",
+            g: "<strong>倍数表現</strong>：「A＋比＋B＋形容詞＋数詞＋倍」。「Aは Bより N倍〜」。<br><code>两倍</code>＝2倍。中国語の倍数の数え方は「元の量＋増加分」なので、<code>贵两倍</code>＝「2倍高い（3倍の値段）」と解釈されることが多い。曖昧さを避けるなら <code>是...的两倍</code>（〜の2倍だ）が無難。",
+            w: [{z:"比",p:"bǐ",j:"〜より"},{z:"贵",p:"guì",j:"高い"},{z:"两倍",p:"liǎng bèi",j:"2倍"}]
+          },
+          {
+            ja: "私は彼と歳がだいたい同じだ。", zh: "我跟他差不多大。", py: "wǒ gēn tā chàbuduō dà.",
+            g: "<strong><code>差不多</code></strong>＝「ほぼ・だいたい」（程度・量がほぼ同じ）。<br>副詞用法：<code>差不多大</code>（だいたい同じ歳）／<code>差不多一样</code>（ほぼ同じ）／<code>差不多了</code>（もうそろそろだ）。形容詞用法：<code>水平差不多</code>（レベルがほぼ同じ）。日常会話頻出。",
+            w: [{z:"跟",p:"gēn",j:"〜と"},{z:"差不多",p:"chàbuduō",j:"ほぼ・同じくらい"},{z:"大",p:"dà",j:"（年齢が）大きい"}]
+          },
+          {
+            ja: "彼は私よりさらに努力している。", zh: "他比我更努力。", py: "tā bǐ wǒ gèng nǔlì.",
+            g: "<strong>比較の強調 <code>更／还</code></strong>：<code>更</code>＝「さらに」（書面語的）／<code>还</code>＝「もっと」（口語的）。形容詞の前に置く。<br>例：<code>更好</code>（さらに良い）／<code>还高</code>（もっと高い）。中国語の比較文では <code>很／非常</code> を使わないが、<code>更／还</code> は使える点を区別。",
+            w: [{z:"比",p:"bǐ",j:"〜より"},{z:"更",p:"gèng",j:"さらに"},{z:"努力",p:"nǔlì",j:"努力する"}]
+          },
+          {
+            ja: "健康ほど大切なものはない。", zh: "没有什么比健康更重要。", py: "méi yǒu shénme bǐ jiànkāng gèng zhòngyào.",
+            g: "<strong>「没有什么比A更...」</strong>＝「Aほど〜なものはない」（最上級的表現）。<br>類似：<code>没有谁比他更聪明</code>（彼ほど賢い人はいない）／<code>没有比这更好的了</code>（これ以上良いものはない）。否定×比較で最上級的ニュアンスを出す慣用構文。",
+            w: [{z:"没有",p:"méi yǒu",j:"〜ない"},{z:"什么",p:"shénme",j:"何か"},{z:"健康",p:"jiànkāng",j:"健康"}]
+          },
+          {
+            ja: "これは私が見た中で一番良い映画だ。", zh: "这是我看过最好的电影。", py: "zhè shì wǒ kàn guo zuì hǎo de diànyǐng.",
+            g: "<strong>「最＋形容詞」</strong>＝「最も〜」（最上級）。比較対象を明示するときは <code>...中／里</code> を使う。<br>例：<code>所有人中</code>（みんなの中で）／<code>这些里面</code>（この中で）。「経験ベスト」は <code>V过的＋最＋形容詞＋的＋名詞</code> の型でよく表現する：<code>吃过最好吃的菜</code>（食べた中で一番美味しい料理）。",
+            w: [{z:"看过",p:"kàn guo",j:"見たことがある"},{z:"最",p:"zuì",j:"最も"},{z:"电影",p:"diànyǐng",j:"映画"}]
+          },
+          {
+            ja: "中国語を学ぶ人がますます増えている。", zh: "越来越多的人开始学中文。", py: "yuè lái yuè duō de rén kāishǐ xué Zhōngwén.",
+            g: "<strong>「越来越＋形容詞＋的＋名詞」</strong>＝「ますます〜な〜」（増加・変化の主語化）。<br>主語位置に変化を組み込む型。例：<code>越来越多的人喜欢咖啡</code>（コーヒー好きが増える）／<code>越来越少的人吸烟</code>（喫煙者が減る）。<code>开始＋V</code>＝「〜し始める」。",
+            w: [{z:"越来越",p:"yuè lái yuè",j:"ますます"},{z:"开始",p:"kāishǐ",j:"〜し始める"},{z:"学",p:"xué",j:"学ぶ"}]
+          }
+        ]
+      },
+      {
+        hsk: 4, num: 8, title: "方向・可能補語の応用",
+        sentences: [
+          {
+            ja: "この箱は持ち上げられない。", zh: "这个箱子我拿不动。", py: "zhège xiāngzi wǒ ná bu dòng.",
+            g: "<strong>可能補語 <code>V得动／V不动</code></strong>＝「（力的に）動かせる／動かせない」。<br><code>动</code>＝「動く」が補語化して「動かせる」の意味に。類例：<code>走不动</code>（歩けない＝疲れて）／<code>搬不动</code>（運べない）／<code>抬不动</code>（持ち上がらない）。体力・力のなさを表す重要表現。",
+            w: [{z:"箱子",p:"xiāngzi",j:"箱"},{z:"拿",p:"ná",j:"持つ"},{z:"动",p:"dòng",j:"動かす"}]
+          },
+          {
+            ja: "この字ははっきり見えない。", zh: "这个字我看不清楚。", py: "zhège zì wǒ kàn bu qīngchu.",
+            g: "<strong>可能補語の頻出形 <code>V得清楚／V不清楚</code></strong>＝「はっきり〜できる／できない」。<br>感覚動詞と組む：<code>看不清楚</code>（はっきり見えない）／<code>听不清楚</code>（聞き取れない）／<code>说不清楚</code>（うまく説明できない）／<code>想不清楚</code>（考えがまとまらない）。",
+            w: [{z:"字",p:"zì",j:"字"},{z:"看",p:"kàn",j:"見る"},{z:"清楚",p:"qīngchu",j:"はっきり"}]
+          },
+          {
+            ja: "聞こえますか？", zh: "你听得见吗？", py: "nǐ tīng de jiàn ma?",
+            g: "<strong>可能補語の肯定形「V＋得＋補語」</strong>＝「〜できる」。<br><code>能V</code>との違い：可能補語は<strong>具体的状況下での可否</strong>（音量・距離・条件などによる）／<code>能</code>は能力・許可の一般的な可否。耳が遠い／距離が遠いといった具体的状況なら <code>听得见</code> が自然。",
+            w: [{z:"听",p:"tīng",j:"聞く"},{z:"得",p:"de",j:"〜できる"},{z:"见",p:"jiàn",j:"認識する"}]
+          },
+          {
+            ja: "このことは私にはできない。", zh: "这件事我办不到。", py: "zhè jiàn shì wǒ bàn bu dào.",
+            g: "<strong>可能補語 <code>V得到／V不到</code></strong>＝「達成できる／できない」。<br>例：<code>办不到</code>（処理できない）／<code>做不到</code>（やり遂げられない）／<code>买不到</code>（買えない＝売り切れ等）／<code>想不到</code>（思いつかない・予想外）。<code>办</code>＝「（事を）処理する・手配する」。",
+            w: [{z:"事",p:"shì",j:"こと"},{z:"办",p:"bàn",j:"処理する"},{z:"到",p:"dào",j:"達する"}]
+          },
+          {
+            ja: "彼は話すのが速すぎて、聞き取れない。", zh: "他说得太快，我听不懂。", py: "tā shuō de tài kuài, wǒ tīng bu dǒng.",
+            g: "<strong>可能補語 <code>V得懂／V不懂</code></strong>＝「理解できる／できない」。<br><code>听不懂</code>（聞いて理解できない）／<code>看不懂</code>（読んで／見て分からない）／<code>想不懂</code>（考えても分からない）。<code>说得太快</code>＝「話すのが速すぎる」（様態補語）。",
+            w: [{z:"得",p:"de",j:"〜のし方が"},{z:"快",p:"kuài",j:"速い"},{z:"懂",p:"dǒng",j:"理解する"}]
+          },
+          {
+            ja: "こんなにたくさん、食べきれる？", zh: "这么多东西，吃得完吗？", py: "zhème duō dōngxi, chī de wán ma?",
+            g: "<strong>可能補語 <code>V得完／V不完</code></strong>＝「（量を）終わらせられる／られない」。量的完了の可否を問う。<br>例：<code>看不完</code>（読み終わらない）／<code>用不完</code>（使い切れない）／<code>做不完</code>（やりきれない）。<code>这么＋形容詞</code>＝「こんなに〜」（程度を指す）。",
+            w: [{z:"这么",p:"zhème",j:"こんなに"},{z:"东西",p:"dōngxi",j:"物"},{z:"完",p:"wán",j:"終わる"}]
+          },
+          {
+            ja: "彼は嬉しくて、笑い出した。", zh: "他高兴得笑了起来。", py: "tā gāoxìng de xiào le qǐlái.",
+            g: "<strong>方向補語 <code>V＋起来</code></strong>（抽象用法）＝「〜し始める」（動作の開始）。<br>例：<code>笑起来</code>（笑い出す）／<code>哭起来</code>（泣き出す）／<code>下起雨来</code>（雨が降り出す）／<code>想起来</code>（思い出す）。本来は「下から上」の方向だが、開始・思い出すの意味に拡張されている。",
+            w: [{z:"高兴",p:"gāoxìng",j:"嬉しい"},{z:"笑",p:"xiào",j:"笑う"},{z:"起来",p:"qǐlái",j:"〜し始める"}]
+          },
+          {
+            ja: "言うのは簡単、やるのは難しい。", zh: "这件事说起来容易，做起来难。", py: "zhè jiàn shì shuō qǐlái róngyì, zuò qǐlái nán.",
+            g: "<strong>「V起来＋形容詞」</strong>＝「〜してみると〜だ」（行為を通じての評価）。<br>頻出表現多数：<code>说起来</code>（言ってみれば）／<code>看起来</code>（見たところ）／<code>听起来</code>（聞いた感じ）／<code>吃起来</code>（食べた感じ）／<code>用起来</code>（使った感じ）。",
+            w: [{z:"说起来",p:"shuō qǐlái",j:"言ってみると"},{z:"容易",p:"róngyì",j:"簡単"},{z:"难",p:"nán",j:"難しい"}]
+          },
+          {
+            ja: "彼は持ちこたえた／頑張り続けた。", zh: "他坚持下去了。", py: "tā jiānchí xiàqù le.",
+            g: "<strong>方向補語 <code>V＋下去</code></strong>（抽象用法）＝「〜し続ける」（動作の継続）。<br>例：<code>坚持下去</code>（続ける）／<code>说下去</code>（話し続ける）／<code>活下去</code>（生き続ける）／<code>读下去</code>（読み続ける）。継続を表す方向補語の代表用法。",
+            w: [{z:"坚持",p:"jiānchí",j:"持続する"},{z:"下去",p:"xiàqù",j:"〜し続ける"}]
+          },
+          {
+            ja: "私は良いアイデアを思いついた。", zh: "我想出来一个好办法。", py: "wǒ xiǎng chūlái yí ge hǎo bànfǎ.",
+            g: "<strong>方向補語 <code>V＋出来</code></strong>（抽象用法）＝「（隠れていたものが）現れる・出てくる」。<br>例：<code>想出来</code>（思いつく）／<code>看出来</code>（見抜く）／<code>说出来</code>（口に出す）／<code>找出来</code>（探し当てる）／<code>认出来</code>（見分ける）。隠れていた認識・アイデアが「表に出る」感覚。",
+            w: [{z:"想",p:"xiǎng",j:"考える"},{z:"出来",p:"chūlái",j:"現れる"},{z:"办法",p:"bànfǎ",j:"方法"}]
+          }
+        ]
+      },
+      {
+        hsk: 4, num: 9, title: "抽象・関連・条件",
+        sentences: [
+          {
+            ja: "年を取るにつれ、静けさが好きになってきた。", zh: "随着年龄的增长，我越来越喜欢安静。", py: "suízhe niánlíng de zēngzhǎng, wǒ yuè lái yuè xǐhuan ānjìng.",
+            g: "<strong>前置詞 <code>随着</code></strong>＝「〜にともなって・〜につれて」。後ろは名詞句（変化や進行）。<br>後節と <code>越来越...</code>／<code>也...</code>／<code>逐渐...</code> を組み合わせるのが典型。書面語でも会話でも頻出。例：<code>随着时间的推移</code>（時の流れとともに）／<code>随着科技的发展</code>（科学技術の発展に伴い）。",
+            w: [{z:"随着",p:"suízhe",j:"〜につれて"},{z:"年龄",p:"niánlíng",j:"年齢"},{z:"增长",p:"zēngzhǎng",j:"増加"},{z:"安静",p:"ānjìng",j:"静か"}]
+          },
+          {
+            ja: "技術の発展にともない、生活はますます便利になっている。", zh: "随着科技的发展，生活越来越方便。", py: "suízhe kējì de fāzhǎn, shēnghuó yuè lái yuè fāngbiàn.",
+            g: "<code>随着＋名詞＋的＋変化動詞</code> ＋ 主節「越来越...」のセット。社会・テクノロジーの変化を語る決まり構造。<br><code>科技</code>＝科学技術、<code>发展</code>＝発展、<code>方便</code>＝便利。書き言葉・スピーチ・記事で頻出。",
+            w: [{z:"科技",p:"kējì",j:"科学技術"},{z:"发展",p:"fāzhǎn",j:"発展"},{z:"生活",p:"shēnghuó",j:"生活"},{z:"方便",p:"fāngbiàn",j:"便利"}]
+          },
+          {
+            ja: "試合に参加した人には、みな景品がある。", zh: "凡是参加比赛的人，都有奖品。", py: "fánshì cānjiā bǐsài de rén, dōu yǒu jiǎngpǐn.",
+            g: "<strong><code>凡是...都...</code></strong>＝「およそ〜なら、みな…」（例外なし）。<br><code>凡是</code>はある集合の全要素を網羅。主語の前に置き、後節 <code>都</code> 必須。日常では <code>凡是</code> なしの <code>参加比赛的人都有奖品</code> もOKだが、<code>凡是</code>を付けると「例外なし」感が強まる。",
+            w: [{z:"凡是",p:"fánshì",j:"およそ〜なら"},{z:"参加",p:"cānjiā",j:"参加する"},{z:"奖品",p:"jiǎngpǐn",j:"景品"}]
+          },
+          {
+            ja: "この問題に対して、専門家は異なる見解がある。", zh: "对于这个问题，专家有不同的看法。", py: "duìyú zhège wèntí, zhuānjiā yǒu bùtóng de kànfǎ.",
+            g: "<strong><code>对于</code></strong>＝「〜に関して・〜に対して」（書面語、<code>对</code> のフォーマル版）。<br><code>对</code>と <code>对于</code> の使い分け：人・物への態度なら <code>对</code>（<code>对我好</code>）、抽象的な事柄・問題なら <code>对于</code> がやや好まれる。文頭に置けるのは <code>对于</code> のほうが自然。",
+            w: [{z:"对于",p:"duìyú",j:"〜に関して"},{z:"问题",p:"wèntí",j:"問題"},{z:"专家",p:"zhuānjiā",j:"専門家"}]
+          },
+          {
+            ja: "細部については、後で議論しましょう。", zh: "至于细节，我们以后再讨论。", py: "zhìyú xìjié, wǒmen yǐhòu zài tǎolùn.",
+            g: "<code>至于</code>＝「〜については（話題転換）」。<br><code>再＋V</code>＝「（また・後で）〜する」（時間的後続）。<code>以后再讨论</code>（後で議論する）。<code>细节</code>＝細部・ディテール、<code>讨论</code>＝議論する。",
+            w: [{z:"至于",p:"zhìyú",j:"〜については"},{z:"细节",p:"xìjié",j:"細部"},{z:"以后",p:"yǐhòu",j:"後で"},{z:"讨论",p:"tǎolùn",j:"議論"}]
+          },
+          {
+            ja: "今回の経験を通して、多くを学んだ。", zh: "通过这次经验，我学到了很多。", py: "tōngguò zhè cì jīngyàn, wǒ xué dào le hěn duō.",
+            g: "<strong>「通过＋N」</strong>＝「〜を通して・〜によって」（手段・経験）。文頭で使う。<br><code>学到</code>＝「学び取る・身につける」（結果補語 <code>到</code> で「達成」を示す）。例：<code>得到</code>（得る）／<code>找到</code>（見つかる）／<code>买到</code>（買える）。",
+            w: [{z:"通过",p:"tōngguò",j:"〜を通じて"},{z:"经验",p:"jīngyàn",j:"経験"},{z:"学到",p:"xué dào",j:"学び取る"}]
+          },
+          {
+            ja: "仕事の関係で、よく出張する。", zh: "由于工作原因，我经常出差。", py: "yóuyú gōngzuò yuányīn, wǒ jīngcháng chūchāi.",
+            g: "<strong>「由于＋N」</strong>＝「〜のために」（書面語・正式な原因）。<code>由于工作</code>（仕事の関係で）は決まり文句。<br><code>经常</code>＝「よく・しばしば」（副詞）。頻度副詞の比較：<code>常常</code>（よく）／<code>经常</code>（しばしば）／<code>有时候</code>（時々）／<code>偶尔</code>（たまに）。<code>出差</code>＝出張する。",
+            w: [{z:"由于",p:"yóuyú",j:"〜のため"},{z:"原因",p:"yuányīn",j:"原因"},{z:"经常",p:"jīngcháng",j:"よく"},{z:"出差",p:"chūchāi",j:"出張"}]
+          },
+          {
+            ja: "このような状況で、私たちは冷静になるべきだ。", zh: "在这种情况下，我们应该冷静。", py: "zài zhè zhǒng qíngkuàng xià, wǒmen yīnggāi lěngjìng.",
+            g: "<strong>「在...的情况下」</strong>＝「〜の状況下で」（書面語的条件設定）。<br><code>种</code>＝種類の量詞（<code>这种／那种</code>＝この／あの種の）。<code>冷静</code>＝冷静・落ち着く。スピーチ・記事の状況分析でよく使う構文。",
+            w: [{z:"种",p:"zhǒng",j:"種類"},{z:"情况",p:"qíngkuàng",j:"状況"},{z:"应该",p:"yīnggāi",j:"〜すべき"},{z:"冷静",p:"lěngjìng",j:"冷静"}]
+          },
+          {
+            ja: "彼の影響を受けて、私は音楽が好きになった。", zh: "在他的影响下，我开始喜欢音乐。", py: "zài tā de yǐngxiǎng xià, wǒ kāishǐ xǐhuan yīnyuè.",
+            g: "<code>在...影响下</code>＝「〜の影響のもとで」。書面語的だが日常でも自然。<br>同型：<code>在...指导下</code>（指導のもとで）／<code>在...帮助下</code>（助けによって）／<code>在...努力下</code>（〜の努力で）。<code>开始＋V</code>＝「〜し始める」。",
+            w: [{z:"影响",p:"yǐngxiǎng",j:"影響"},{z:"开始",p:"kāishǐ",j:"〜し始める"},{z:"音乐",p:"yīnyuè",j:"音楽"}]
+          },
+          {
+            ja: "ある意味では、彼は正しい。", zh: "从某种意义上说，他是对的。", py: "cóng mǒu zhǒng yìyì shàng shuō, tā shì duì de.",
+            g: "<strong>「从...上说／看」</strong>＝「〜から見ると・〜の点から言えば」（書面語、視点導入）。<br>類似：<code>从...角度</code>（〜の角度から）／<code>从...来看</code>（〜から見ると）。<code>某</code>＝「ある」（不特定の人・物）、<code>某种</code>＝「ある種の」。論述で頻出。",
+            w: [{z:"从",p:"cóng",j:"〜から"},{z:"某种",p:"mǒu zhǒng",j:"ある種の"},{z:"意义",p:"yìyì",j:"意味"}]
+          }
+        ]
+      },
+      {
+        hsk: 4, num: 10, title: "経過・順序・継起",
+        sentences: [
+          {
+            ja: "先にご飯を食べて、その後で宿題をする。", zh: "我先吃饭，然后做作业。", py: "wǒ xiān chī fàn, ránhòu zuò zuòyè.",
+            g: "<strong>「先A，然后B」</strong>＝「先にA、それからB」（時間順）。<br><code>先</code>と <code>然后</code> はセットで使うのが定番。<code>先</code>を省略してもいいが、対比で「先に〜」を強調するなら <code>先</code> を付ける。類似：<code>先...再...</code>（先に〜してから〜）。",
+            w: [{z:"先",p:"xiān",j:"先に"},{z:"然后",p:"ránhòu",j:"その後"},{z:"作业",p:"zuòyè",j:"宿題"}]
+          },
+          {
+            ja: "まず目標を明確にしなければ。", zh: "首先，我们要明确目标。", py: "shǒuxiān, wǒmen yào míngquè mùbiāo.",
+            g: "<strong><code>首先</code></strong>＝「まず第一に」（順序の冒頭）。続いて <code>其次</code>（次に）／<code>然后</code>（それから）／<code>最后</code>（最後に）でリスト的に展開する。<br>会議・プレゼン・文章の論述で頻出。<code>明确</code>＝明確にする（動詞・形容詞両用）、<code>目标</code>＝目標。",
+            w: [{z:"首先",p:"shǒuxiān",j:"まず第一に"},{z:"明确",p:"míngquè",j:"明確にする"},{z:"目标",p:"mùbiāo",j:"目標"}]
+          },
+          {
+            ja: "それから、彼はまたいくつか話した。", zh: "接着，他又说了几句。", py: "jiēzhe, tā yòu shuō le jǐ jù.",
+            g: "<strong><code>接着</code></strong>＝「続いて・それから」（直接の連続）。前の動作・話題に直接つなげる。<br><code>然后</code>はやや時間の隔たり、<code>接着</code>は連続性が強い。<code>又＋V＋了</code>＝「また〜した」（既に起きたことの繰り返し）。<code>句</code>は「言葉の量詞」（<code>几句</code>＝数句）。",
+            w: [{z:"接着",p:"jiēzhe",j:"続いて"},{z:"又",p:"yòu",j:"また"},{z:"几句",p:"jǐ jù",j:"いくつか（の言葉）"}]
+          },
+          {
+            ja: "最後に、彼はついに成功した。", zh: "最后，他终于成功了。", py: "zuìhòu, tā zhōngyú chénggōng le.",
+            g: "<strong><code>最后</code></strong>＝「最後に・最終的に」（順序の終わり）。<br><code>最后</code>（最終段階・結末）／<code>后来</code>（後になって：過去の話）／<code>以后</code>（これから・〜後）の区別。<code>终于</code>と組み合わせると「努力の末ようやく」のニュアンスが強まる。",
+            w: [{z:"最后",p:"zuìhòu",j:"最後に"},{z:"终于",p:"zhōngyú",j:"ついに"},{z:"成功",p:"chénggōng",j:"成功する"}]
+          },
+          {
+            ja: "最初は、彼が冗談を言っていると思っていた。", zh: "起初，我以为他在开玩笑。", py: "qǐchū, wǒ yǐwéi tā zài kāi wánxiào.",
+            g: "<strong><code>起初</code></strong>＝「最初は・はじめのころ」（書面語的）。口語では <code>一开始</code>。<br>後で<strong>事実が違った</strong>と判明する展開でよく使う：<code>起初我以为...，后来才知道...</code>。<code>开玩笑</code>＝冗談を言う（離合詞）。",
+            w: [{z:"起初",p:"qǐchū",j:"最初は"},{z:"以为",p:"yǐwéi",j:"〜と思っていた"},{z:"开玩笑",p:"kāi wánxiào",j:"冗談を言う"}]
+          },
+          {
+            ja: "その後、彼は優秀になった。", zh: "后来，他变得很优秀。", py: "hòulái, tā biàn de hěn yōuxiù.",
+            g: "<strong><code>后来</code></strong>＝「その後・後になって」（過去の出来事の連続）。<br><code>后来</code>は<strong>過去</strong>の続き、<code>以后</code>は<strong>未来</strong>を指す。例：<code>后来怎么了？</code>（その後どうなった？）／<code>以后再说</code>（後で話そう）。<code>变得＋形容詞</code>＝「〜になる」（変化）。",
+            w: [{z:"后来",p:"hòulái",j:"その後"},{z:"变得",p:"biàn de",j:"〜になる"},{z:"优秀",p:"yōuxiù",j:"優秀"}]
+          },
+          {
+            ja: "最初はあまり慣れなかった。", zh: "一开始，我不太适应。", py: "yì kāishǐ, wǒ bú tài shìyìng.",
+            g: "<strong><code>一开始</code></strong>＝「最初は」（口語的）。<code>起初</code> の口語版。<br><code>适应</code>＝「適応する・慣れる」（動詞）。<code>不太＋形容詞／動詞</code>＝「あまり〜ない」（婉曲否定）。日常会話の感想表現で頻出。",
+            w: [{z:"一开始",p:"yì kāishǐ",j:"最初は"},{z:"不太",p:"bú tài",j:"あまり〜ない"},{z:"适应",p:"shìyìng",j:"慣れる"}]
+          },
+          {
+            ja: "同時に、私は日本語も学んでいる。", zh: "同时，我也在学习日语。", py: "tóngshí, wǒ yě zài xuéxí Rìyǔ.",
+            g: "<strong><code>同时</code></strong>＝「同時に・それと並行して」（接続詞）。文頭で並列を導く。<br>関連語：<code>另外</code>（それから）／<code>此外</code>（それ以外に）／<code>而且</code>（しかも）。同じ主体が複数の事を並行する文脈で使う。<code>也</code>を併用して「〜も」を明示。",
+            w: [{z:"同时",p:"tóngshí",j:"同時に"},{z:"也",p:"yě",j:"〜も"},{z:"学习",p:"xuéxí",j:"学ぶ"}]
+          },
+          {
+            ja: "それ以外に、彼はピアノも弾ける。", zh: "此外，他还会弹钢琴。", py: "cǐwài, tā hái huì tán gāngqín.",
+            g: "<strong><code>此外</code></strong>＝「それ以外に・このほかに」（接続詞、書面語的）。<br>口語では <code>另外</code>。リスト的に項目を追加する時に使う。<code>弹</code>＝「（弦楽器・鍵盤楽器を）弾く」、<code>钢琴</code>＝ピアノ。<code>吹</code>（管楽器）／<code>拉</code>（バイオリン）との楽器動詞の使い分けも知っておくと◎。",
+            w: [{z:"此外",p:"cǐwài",j:"そのほかに"},{z:"弹",p:"tán",j:"弾く"},{z:"钢琴",p:"gāngqín",j:"ピアノ"}]
+          },
+          {
+            ja: "要するに、今回の旅行は楽しかった。", zh: "总之，这次旅行很愉快。", py: "zǒngzhī, zhè cì lǚxíng hěn yúkuài.",
+            g: "<strong><code>总之</code></strong>＝「要するに・結論を言えば」（まとめの接続詞）。<br>類似：<code>总而言之</code>（書面語）／<code>反正</code>（どうせ）／<code>简单地说</code>（簡単に言うと）。話のまとめ・要約で使う。<code>愉快</code>＝楽しい（書面語寄り、口語は <code>开心</code>）。",
+            w: [{z:"总之",p:"zǒngzhī",j:"要するに"},{z:"旅行",p:"lǚxíng",j:"旅行"},{z:"愉快",p:"yúkuài",j:"楽しい"}]
+          }
+        ]
+      },
+      {
+        hsk: 4, num: 11, title: "思考・感情の表現",
+        sentences: [
+          {
+            ja: "あなたは来ないと思っていた。", zh: "我以为你不来了。", py: "wǒ yǐwéi nǐ bù lái le.",
+            g: "<strong><code>以为</code></strong>＝「（誤って）〜と思い込んでいた」（実は違っていた）。<br><code>认为</code>（中立的に「〜と考える」）、<code>觉得</code>（主観的に「〜と感じる」）、<code>以为</code>（誤った思い込み）の3つの使い分けは超重要。<code>不来了</code>＝「来なくなった」（状況変化）。",
+            w: [{z:"以为",p:"yǐwéi",j:"〜と思っていた"},{z:"不来",p:"bù lái",j:"来ない"}]
+          },
+          {
+            ja: "彼は正しいと思う。", zh: "我认为他是对的。", py: "wǒ rènwéi tā shì duì de.",
+            g: "<strong><code>认为</code></strong>＝「〜と考える・〜と判断する」（理性的判断、やや正式）。<br>論評・意見表明に使う。<code>是...的</code>構文＝「〜だ」（断定）。<code>觉得</code>はもっと主観的、<code>认为</code>は議論で「私の立場は〜」のニュアンス。",
+            w: [{z:"认为",p:"rènwéi",j:"〜と考える"},{z:"对",p:"duì",j:"正しい"}]
+          },
+          {
+            ja: "この料理は美味しいと思う。", zh: "我觉得这个菜很好吃。", py: "wǒ juéde zhège cài hěn hǎochī.",
+            g: "<strong><code>觉得</code></strong>＝「（主観的に）〜と感じる」。最も日常的な意見表明。<br>会話頻度：<code>觉得</code> ＞ <code>认为</code> ＞ <code>以为</code>。「料理が美味しい」<code>好吃</code>（食べ物）／<code>好喝</code>（飲み物）／<code>好看</code>（見た目）／<code>好听</code>（音）／<code>好闻</code>（匂い）と感覚別に使い分け。",
+            w: [{z:"觉得",p:"juéde",j:"〜と思う"},{z:"菜",p:"cài",j:"料理"},{z:"好吃",p:"hǎochī",j:"美味しい"}]
+          },
+          {
+            ja: "とても幸せに感じる。", zh: "我感到很幸福。", py: "wǒ gǎn dào hěn xìngfú.",
+            g: "<strong>「感到＋形容詞／感情名詞」</strong>＝「〜と感じる」（書面語的）。<br>類似：<code>感到很高兴</code>（嬉しく感じる）／<code>感到失望</code>（失望を覚える）／<code>感到惊讶</code>（驚きを感じる）。<code>觉得</code>より客観的・改まった印象。<code>幸福</code>＝幸せ（持続的）／<code>开心／快乐</code>＝楽しい（瞬間的）。",
+            w: [{z:"感到",p:"gǎn dào",j:"〜と感じる"},{z:"幸福",p:"xìngfú",j:"幸せ"}]
+          },
+          {
+            ja: "明日は天気が良いといいなあ。", zh: "我希望明天天气好。", py: "wǒ xīwàng míngtiān tiānqì hǎo.",
+            g: "<strong><code>希望</code></strong>＝「望む・期待する」（実現可能な願望）。<br>類似：<code>盼望</code>（待ち望む：強い）／<code>渴望</code>（切望する：強い）。<code>希望＋主述句</code>の語順「〜が〜であってほしい」。否定 <code>不希望</code>（望まない）。願望表現の最頻出語。",
+            w: [{z:"希望",p:"xīwàng",j:"望む"},{z:"天气",p:"tiānqì",j:"天気"},{z:"好",p:"hǎo",j:"良い"}]
+          },
+          {
+            ja: "休暇の到来を心待ちにしている。", zh: "我盼望着假期的到来。", py: "wǒ pànwàng zhe jiàqī de dàolái.",
+            g: "<strong><code>盼望</code></strong>＝「待ち望む・切望する」（<code>希望</code>より強く感情的）。<br><code>V＋着</code>＝「〜している」（持続アスペクト：状態が続いている）。例：<code>等着</code>（待っている）／<code>想着</code>（思っている）。<code>到来</code>＝（時期・物事の）到来（書面語的名詞）。",
+            w: [{z:"盼望",p:"pànwàng",j:"切望する"},{z:"假期",p:"jiàqī",j:"休暇"},{z:"到来",p:"dàolái",j:"到来"}]
+          },
+          {
+            ja: "私は一人で家にいるのが怖い。", zh: "我害怕一个人在家。", py: "wǒ hàipà yí ge rén zài jiā.",
+            g: "<strong><code>害怕</code></strong>＝「怖がる・恐れる」（動詞）。後ろに名詞句・動詞句が続く。<br>類似：<code>怕</code>（怖い：口語）／<code>恐怕</code>（〜ではないかと心配：副詞）／<code>担心</code>（心配する）。<code>一个人</code>＝「（一人で）独りで」（副詞句）。<code>害怕＋V</code>＝「〜するのが怖い」。",
+            w: [{z:"害怕",p:"hàipà",j:"怖い"},{z:"一个人",p:"yí ge rén",j:"一人で"}]
+          },
+          {
+            ja: "彼は仕事にとても真面目だ。", zh: "他对工作十分认真。", py: "tā duì gōngzuò shífēn rènzhēn.",
+            g: "<strong>「对＋N＋形容詞」</strong>＝「Nに対して〜だ」（態度を表す形容詞文の典型）。<br><code>十分</code>＝「非常に」（<code>很</code> や <code>非常</code> のやや書き言葉版）。態度の評価形容詞：<code>认真</code>（真面目）／<code>负责</code>（責任感がある）／<code>热情</code>（熱心・親切）／<code>严格</code>（厳しい）。",
+            w: [{z:"对",p:"duì",j:"〜に対して"},{z:"工作",p:"gōngzuò",j:"仕事"},{z:"十分",p:"shífēn",j:"非常に"},{z:"认真",p:"rènzhēn",j:"真面目"}]
+          },
+          {
+            ja: "私は結果に非常に満足している。", zh: "我对结果非常满意。", py: "wǒ duì jiéguǒ fēicháng mǎnyì.",
+            g: "<code>对+N+满意／不满</code>＝「Nに満足／不満」（決まり文句）。<br><code>满意</code>＝「満足だ」（形容詞）、反義 <code>不满意／不满</code>。類似：<code>对...感兴趣</code>（興味がある）／<code>对...负责</code>（責任を持つ）／<code>对...有意见</code>（不満がある）。",
+            w: [{z:"结果",p:"jiéguǒ",j:"結果"},{z:"非常",p:"fēicháng",j:"非常に"},{z:"满意",p:"mǎnyì",j:"満足"}]
+          },
+          {
+            ja: "彼はこのことについて悲しみを覚えた。", zh: "他为这件事感到难过。", py: "tā wèi zhè jiàn shì gǎn dào nánguò.",
+            g: "<strong>前置詞 <code>为</code></strong>＝「〜のために・〜について」（理由・対象）。<br>感情を表す動詞と組む：<code>为...感到高兴／难过／自豪</code>（〜のために嬉しい／悲しい／誇りに思う）。<code>为</code> は手段や目的にも使う：<code>为你好</code>（君のためを思って）。",
+            w: [{z:"为",p:"wèi",j:"〜のために"},{z:"事",p:"shì",j:"こと"},{z:"难过",p:"nánguò",j:"悲しい"}]
+          }
+        ]
+      },
+      {
+        hsk: 4, num: 12, title: "仮定・選択・万一",
+        sentences: [
+          {
+            ja: "文句を言うより、行動した方がいい。", zh: "与其抱怨，不如行动。", py: "yǔqí bàoyuàn, bùrú xíngdòng.",
+            g: "<strong>「与其A，不如B」</strong>＝「AよりむしろBの方がよい」（選択：Bを推奨）。<br>類似「<code>与其...宁可...</code>」＝「Aよりいっそ B」（極端な選択）。<code>不如</code> は「〜には及ばない」が原義で、Bを推す形に。スローガン・諺風によく使う構文。",
+            w: [{z:"与其",p:"yǔqí",j:"〜よりむしろ"},{z:"抱怨",p:"bàoyuàn",j:"不平を言う"},{z:"不如",p:"bùrú",j:"〜の方がよい"},{z:"行动",p:"xíngdòng",j:"行動"}]
+          },
+          {
+            ja: "歩く方がいい、彼の車には乗らない。", zh: "宁可走路，也不坐他的车。", py: "nìngkě zǒulù, yě bú zuò tā de chē.",
+            g: "<strong>「宁可A，也不B」</strong>＝「Aを選ぶ、Bは絶対しない」（強い拒否＋代替）。<br><code>宁可／宁愿</code>＝「いっそ〜する方を選ぶ」（不本意な選択）。<code>也不</code>＝「決して〜しない」。覚悟の決まった選択を表す慣用構文。",
+            w: [{z:"宁可",p:"nìngkě",j:"いっそ"},{z:"走路",p:"zǒulù",j:"歩く"},{z:"坐",p:"zuò",j:"乗る"}]
+          },
+          {
+            ja: "そうじゃないなら、ご飯食べに行こうよ。", zh: "要不我们去吃饭吧。", py: "yàobu wǒmen qù chī fàn ba.",
+            g: "<strong><code>要不</code></strong>＝「〜しないなら／じゃあ〜しよう」（提案・代替）。<br>類似：<code>要不然</code>（さもなければ）／<code>不然</code>（でなければ）。会話で代案を提示する時に頻出：<code>要不你来？</code>（あなたが来る？）。<code>吧</code> で提案を柔らかく。",
+            w: [{z:"要不",p:"yàobu",j:"じゃあ〜"},{z:"吃饭",p:"chī fàn",j:"ご飯を食べる"}]
+          },
+          {
+            ja: "万一雨が降ったらどうする？", zh: "万一下雨怎么办？", py: "wànyī xià yǔ zěnme bàn?",
+            g: "<strong><code>万一</code></strong>＝「万一・もしも」（低い確率の悪い仮定）。<br><code>如果</code>より「ほぼ起きないが、念のため」のニュアンス。<code>怎么办？</code>＝「どうする？」（解決を問う決まり文句）。「念のための備え」を語る場面で頻出。",
+            w: [{z:"万一",p:"wànyī",j:"万一"},{z:"下雨",p:"xià yǔ",j:"雨が降る"},{z:"怎么办",p:"zěnme bàn",j:"どうする"}]
+          },
+          {
+            ja: "ほんのわずかな希望でも、試したい。", zh: "哪怕只有一点希望，也要尝试。", py: "nǎpà zhǐyǒu yìdiǎn xīwàng, yě yào chángshì.",
+            g: "<strong>「哪怕...也...」</strong>＝「たとえ〜でも」（極端な仮定譲歩）。<br><code>哪怕</code>は <code>即使</code> よりさらに極端な仮定で「ありえないほどわずかでも・大変でも」のニュアンス。<code>只有＋数量＋N</code>＝「〜しか〜ない」（少量を強調）。",
+            w: [{z:"哪怕",p:"nǎpà",j:"たとえ〜でも"},{z:"只有",p:"zhǐyǒu",j:"〜しかない"},{z:"尝试",p:"chángshì",j:"試みる"}]
+          },
+          {
+            ja: "さもなくば、間に合わないよ。", zh: "否则就来不及了。", py: "fǒuzé jiù lái bu jí le.",
+            g: "<strong><code>否则</code></strong>＝「さもなくば・そうしないと」（書面語的）。<br>口語の <code>不然</code> ／ <code>要不然</code> と同義。前文の条件が満たされない場合の悪い結果を導く。<code>来不及</code>＝「間に合わない」（可能補語の決まり文句、反義 <code>来得及</code>＝間に合う）。",
+            w: [{z:"否则",p:"fǒuzé",j:"さもなくば"},{z:"来不及",p:"lái bu jí",j:"間に合わない"}]
+          },
+          {
+            ja: "そうでなければ、どう説明する？", zh: "不然怎么解释呢？", py: "bùrán zěnme jiěshì ne?",
+            g: "<strong><code>不然</code></strong>＝「でなければ」（口語的）。<br><code>否则</code> の口語版。会話でよく使う。<code>怎么＋V＋呢？</code>＝「どうやって〜するのか」（柔らかい反問）。<code>解释</code>＝「説明する・解釈する」（動詞）。",
+            w: [{z:"不然",p:"bùrán",j:"でなければ"},{z:"解释",p:"jiěshì",j:"説明する"},{z:"呢",p:"ne",j:"〜のか"}]
+          },
+          {
+            ja: "もし私があなただったら、こうはしない。", zh: "假如我是你，我就不会这么做。", py: "jiǎrú wǒ shì nǐ, wǒ jiù bú huì zhème zuò.",
+            g: "<strong><code>假如</code></strong>＝「もし〜なら」（書面語的な「如果」）。<br>類義：<code>如果／要是／假如／假使／倘若</code>。いずれも仮定で <code>就</code> とセットでよく使う。<code>不会＋V</code>＝「〜しないだろう」（推量否定）。<code>这么做</code>＝「このようにする」。",
+            w: [{z:"假如",p:"jiǎrú",j:"もし"},{z:"就",p:"jiù",j:"〜のだろう"},{z:"这么",p:"zhème",j:"このように"}]
+          },
+          {
+            ja: "もし時間があったら、必ず会いに行く。", zh: "倘若有时间，我一定去看你。", py: "tǎngruò yǒu shíjiān, wǒ yídìng qù kàn nǐ.",
+            g: "<strong><code>倘若</code></strong>＝「もし〜であれば」（書面語、古風な響き）。<br>日常会話より文章・改まった場面で使われる。<code>一定＋V</code>＝「必ず〜する」（強い決意）。<code>看你</code>＝「あなたに会う・あなたを訪ねる」。",
+            w: [{z:"倘若",p:"tǎngruò",j:"もし"},{z:"一定",p:"yídìng",j:"必ず"},{z:"看",p:"kàn",j:"会う・訪ねる"}]
+          },
+          {
+            ja: "問題が起きたら、直ちに連絡してください。", zh: "一旦发生问题，立刻通知我。", py: "yídàn fāshēng wèntí, lìkè tōngzhī wǒ.",
+            g: "<strong><code>一旦...，立刻／马上／就...</code></strong>＝「いったん〜したら、直ちに…」（仮定的＋即時対応）。<br>業務・緊急対応・ルール説明で頻出。<code>立刻</code>＝<code>马上</code>＝<code>立即</code>（直ちに）。<code>通知</code>＝知らせる、<code>发生</code>＝（事件・問題が）起こる。",
+            w: [{z:"一旦",p:"yídàn",j:"いったん〜したら"},{z:"发生",p:"fāshēng",j:"起こる"},{z:"立刻",p:"lìkè",j:"直ちに"},{z:"通知",p:"tōngzhī",j:"知らせる"}]
+          }
+        ]
+      }
+    ];
+
+    // ========================================================================
+    // COURSE INTROS (each course's learning points)
+    // ========================================================================
+    const COURSE_INTROS = [
+      // HSK 1 - C1
+      { overview: "中国語で最も基本のあいさつと、自分・相手の紹介の表現。後の学習すべての土台になる「是」構文・疑問詞・形容詞文の基本ルールを確認します。",
+        points: ["「主語＋是＋名詞」の基本構文と否定 <code>不是</code>・疑問 <code>吗</code>","疑問詞 <code>什么</code> の語順（語順を変えない）","形容詞述語文の <code>很</code>（飾りとしての役割）","「不」の声調変化（第4声の前で <code>bú</code>）","名乗りの <code>叫</code>、丁寧形 <code>您</code>"] },
+      // HSK 1 - C2
+      { overview: "数字・時刻・日付・年齢・量詞といった、日常会話に欠かせない数量表現を一気に押さえます。",
+        points: ["疑問詞 <code>几</code>（10以下）vs <code>多少</code>（数の制限なし）","数字「2」の区別：<code>二</code> と <code>两</code>","量詞の基本：<code>个 / 本 / 件 / 张 / 杯</code> など","年齢・日付・曜日・時刻では <code>是</code> を省略","所有・存在の <code>有</code>、否定は必ず <code>没有</code>"] },
+      // HSK 1 - C3
+      { overview: "「いる・行く・来る・好き・〜したい・〜できる」など、動作と所有・場所の基本表現。指示代名詞や方位詞も学びます。",
+        points: ["<code>在</code> の3用法（動詞・前置詞・副詞）","助動詞 <code>想</code>（願望）/ <code>要</code>（意志）/ <code>会</code>（学んでできる）","進行アスペクト <code>在＋V</code>","指示代名詞 <code>这 / 那 / 哪</code>","方位詞 <code>上 / 下 / 里 / 外</code> など","所有・修飾の <code>的</code>（省略可能なケース）"] },
+      // HSK 2 - C4
+      { overview: "中国語に過去形はありません。代わりに「了」と「过」が完了・経験を担います。否定の「没」との関係も超重要です。",
+        points: ["動詞＋<code>了</code>＝完了・実現（過去形ではない）","動詞＋<code>过</code>＝経験「〜したことがある」","否定の <code>不</code>（意志・恒常）vs <code>没</code>（完了の否定）","<code>还没＋V</code>＝「まだ〜していない」","<code>已经...了</code> のセット表現","文末 <code>了</code> は状況変化（動詞直後の <code>了</code> と区別）"] },
+      // HSK 2 - C5
+      { overview: "現在進行中の動作、近い未来、強い意志と願望。日常会話で最も使う「今〜している」「これから〜する」表現を整理します。",
+        points: ["進行の4形式：<code>在 / 正在 / V呢 / 正在...呢</code>","助動詞 <code>要</code> の3義（意志・近未来・必要）","<code>想</code> と <code>要</code> の強さの違い","近未来 <code>快要...了 / 就要...了</code>","<code>正</code>（ちょうど）/ <code>呢</code>（〜してるよ）のニュアンス"] },
+      // HSK 2 - C6
+      { overview: "「AはBより〜」の比較構文、「できる」三兄弟、依頼・提案など、会話で頻出の対人表現を集めました。",
+        points: ["比較構文「A＋比＋B＋形」と差量（<code>一点 / 得多 / 多了</code>）","<code>会 / 能 / 可以</code> の使い分け","副詞 <code>也 / 都</code> の位置（動詞の前）","<code>给</code> の二重目的語「給＋人＋もの」","感嘆 <code>太...了</code>","重ね型「<code>慢点</code>」「<code>便宜点</code>」（少し〜に）"] },
+      // HSK 3 - C7
+      { overview: "中国語の複文の基本セット。仮定・譲歩・因果・条件など、論理的に話すのに不可欠な接続詞をまとめて習得します。",
+        points: ["仮定：<code>如果...就...</code>","事実譲歩：<code>虽然...但是...</code>","因果：<code>因为...所以...</code> と倒置 <code>...，是因为...</code>","十分条件 <code>只要...就...</code> vs 必要条件 <code>只有...才...</code>","直後性 <code>一...就...</code>","追加 <code>除了...还／也...</code>","訂正対比 <code>不是...而是...</code>"] },
+      // HSK 3 - C8
+      { overview: "「〜しながら」「ますます〜」「Bほど〜ない」など、並列・段階・比較を表現する文型。様態補語もここで本格的に登場します。",
+        points: ["<code>一边A，一边B</code> 同時動作","<code>越来越＋形</code> / <code>越A越B</code>","比較強調 <code>更／还</code>、否定 <code>没有...那么...</code>","<code>跟...一样</code> 等値比較","様態補語「V＋得＋形」と目的語処理","動作の継続時間「V＋了＋時間量＋目的語」"] },
+      // HSK 3 - C9
+      { overview: "中国語学習の最大の山「把構文」。目的語を動詞の前に出し、それに対する処置を強調する独特の語順を体系的に練習します。",
+        points: ["「主語＋把＋目的語＋V＋補語/了」基本形","<strong>必須要件</strong>：目的語は特定のもの、動詞は補語等を伴う","<code>V＋在＋場所</code>（着点）","<code>V＋给＋人</code>（与格）","<code>V＋好／完／错</code>（結果補語との組合せ）","意図しない変化（<code>把杯子打破了</code>）"] },
+      // HSK 3 - C10
+      { overview: "動詞の後に置いて結果を示す「結果補語」を一気に習得。動作の結末を表す中国語独特の表現で、HSK3最大の重要文法です。",
+        points: ["感覚の結果 <code>见</code>：<code>看见 / 听见</code>","理解の結果 <code>懂</code>：<code>听懂 / 看懂</code>","達成の結果 <code>到</code>：<code>找到 / 买到 / 想到</code>","間違いの結果 <code>错</code>：<code>写错 / 听错</code>","完了の結果 <code>完</code>：<code>吃完 / 看完</code>","その他：<code>对 / 好 / 清楚 / 住</code>","否定形「<code>没＋V＋補語</code>」（了は付けない）"] },
+      // HSK 3 - C11
+      { overview: "補語の応用編。動詞のし方を評価する様態補語、移動の方向を示す方向補語、可能性を表す可能補語の3兄弟を整理します。",
+        points: ["様態補語の目的語処理（動詞反復 or 目的語前置）","程度補語「形＋得＋動詞句」（〜くて〜する）","方向補語 <code>来／去</code> 基本","複合方向補語 <code>进来／出去／回去</code>","可能補語 <code>V得＋補 / V不＋補</code>（〜できる／できない）"] },
+      // HSK 3 - C12
+      { overview: "義務・使役・推量・伝聞など、話し手の判断や態度を示す表現。「思う」三兄弟の使い分けは特に重要です。",
+        points: ["助動詞 <code>应该</code>（義務的当然＆推測的当然）","使役 <code>让／叫／使／请</code> の違い","「思う」三兄弟：<code>以为</code>（誤った思い込み）/ <code>认为</code>（理性）/ <code>觉得</code>（主観）","推量副詞 <code>可能 / 大概 / 也许 / 一定</code>","伝聞 <code>听说</code>","<code>对...感兴趣</code>、感情の使役「<code>让我难过</code>」","禁止 <code>别</code>、応答 <code>没关系</code>"] },
+      // HSK 4 - C13
+      { overview: "「どんなに〜でも」「たとえ〜でも」「〜だからこそ」など、HSK4で頻出の譲歩・条件無関係・既成事実の接続詞群。",
+        points: ["条件無関係：<code>不管／无论／不论...都／也...</code>","仮定譲歩：<code>即使／即便／哪怕...也...</code>","既成事実：<code>既然...就...</code>","一旦性：<code>一旦...就...</code>","後節 <code>都／也</code> 必須のルール"] },
+      // HSK 4 - C14
+      { overview: "「〜だけでなく」「〜しない限り」「AよりむしろB」など、論述・スピーチでも活きる高度な複文をまとめて習得。",
+        points: ["並列追加：<code>不仅...还／也／而且...</code>","唯一条件：<code>除非...否则／才...</code>","必要条件：<code>只有...才...</code>","選択：<code>与其...不如... / 宁可...也不...</code>","訂正：<code>不是...而是... / 不是...就是...</code>","因果倒置：<code>之所以...是因为...</code>","手段：<code>通过＋N</code>"] },
+      // HSK 4 - C15
+      { overview: "書面語的でフォーマルな因果・推量・由来の表現。プレゼン・記事・正式な場で使える語彙を中心に学びます。",
+        points: ["書面語の因果 <code>由于...，因此...</code>","マイナス推量 <code>恐怕</code>","客観的推測 <code>估计</code>","可能性低め <code>也许</code>","伝聞の書面語 <code>据说</code>","感謝の理由 <code>多亏</code>","強調因果 <code>正因为...所以才...</code>"] },
+      // HSK 4 - C16
+      { overview: "「〜のように見える」「〜らしい」など観察に基づく判断と評価。意見表明の前置きや「V起来」の派生用法も整理します。",
+        points: ["観察判断 <code>看来</code>","書面語の推測 <code>似乎</code>","伝聞復習 <code>听说＋就要...了</code>","<code>V＋起来＋形</code>（〜してみると〜だ）","<code>值得＋V</code>（〜する価値がある）","視点 <code>在...看来</code> / <code>对...来说</code>","「<code>让人＋V</code>」一般的使役"] },
+      // HSK 4 - C17
+      { overview: "驚き・呆れ・諦め・念押しなど、感情を強く乗せる慣用副詞のコレクション。会話に表情を加える上級表現です。",
+        points: ["感嘆強調 <code>真／太...了</code>","意外性 <code>居然／竟然</code>","誇張 <code>简直</code>","反語 <code>难道...吗？</code>","諦め <code>反正</code>","皮肉 <code>偏偏</code>","念押し <code>千万</code>","強い願望 <code>巴不得</code>","後悔 <code>早知道就...</code>"] },
+      // HSK 4 - C18
+      { overview: "受身構文と、視点・話題・条件設定の前置詞句。書き言葉・スピーチで活躍する「フォーマルな枠組み」を一通り押さえます。",
+        points: ["受身 <code>被＋（動作主）＋V＋了／補</code>","強調 <code>是...的</code>（いつ／どこで／誰が／どうやって）","<code>由＋人＋V</code>（責任所在）","<code>对...来说</code>（〜にとって）","<code>关于</code>（話題）/ <code>至于</code>（転換）/ <code>对于</code>（対象）","<code>与...无关</code>（〜と関係ない）","<code>在...情况下／影响下／帮助下</code>"] },
+      // HSK 4 - C19
+      { overview: "HSK3で学んだ比較構文を発展させ、差量・等値・倍数・最上級まで。「ずっと〜」「全然違う」「一番〜」を自在に。",
+        points: ["差量「<code>得多／多了</code>」（ずっと〜）","否定 <code>没有...高 / 不如</code>","等値 <code>跟...一样＋形</code>","倍数 <code>比A...两倍 / 是A的两倍</code>","近似 <code>差不多</code>","強調 <code>更／还＋形</code>","最上級 <code>最＋形 / 没有什么比A更...</code>","増加表現 <code>越来越多的＋名詞</code>"] },
+      // HSK 4 - C20
+      { overview: "可能補語と方向補語の派生・抽象用法をマスター。「持ち上がらない」「思いつく」「やり続ける」など、ニュアンスの幅を広げます。",
+        points: ["可能補語 <code>V得／V不＋动／见／到／完／懂／清楚</code>","<code>V＋起来</code>（開始）/ 状態評価","<code>V＋下去</code>（継続）","<code>V＋出来</code>（出現・思いつき）","<code>能V</code> と可能補語の使い分け（一般能力 vs 具体条件）"] },
+      // HSK 4 - C21
+      { overview: "「〜につれて」「およそ〜なら」など抽象度の高い前置詞・接続詞。論述・分析・改まった会話で使われる重要表現を集めました。",
+        points: ["<code>随着＋N＋的変化</code>（〜につれて）","<code>凡是...都...</code>（およそ〜なら）","<code>对于／关于／至于</code> の使い分け","<code>通过＋N</code>（〜を通じて）","<code>由于</code>（書面語の因果）","<code>在...情况下／影响下</code>","<code>从...上说／角度</code>（視点）"] },
+      // HSK 4 - C22
+      { overview: "順番に物事を語る・要約する・話題を切り替える。プレゼンや報告に必要な「論述の流れ」を作る接続詞を一気に習得します。",
+        points: ["<code>先A，然后B</code> / <code>首先...其次...最后...</code>","<code>接着</code> 直接連続 vs <code>然后</code> 時間順","<code>起初 / 一开始</code> vs <code>后来</code>（過去）vs <code>以后</code>（未来）","<code>同时</code>（並行）","<code>此外 / 另外</code>（追加）","<code>总之</code>（要するに）"] },
+      // HSK 4 - C23
+      { overview: "「思う」「感じる」「望む」「怖い」「満足だ」など、心の動きを正確に表す動詞・形容詞。<code>对</code> や <code>为</code> との組合せが鍵。",
+        points: ["<code>以为</code>（思い込み）/ <code>认为</code>（判断）/ <code>觉得</code>（感想）","<code>感到＋感情</code>（〜と感じる）","<code>希望 / 盼望 / 渴望</code> の強さの違い","<code>害怕＋V／N</code>（〜が怖い）","<code>对＋N＋认真／满意</code>（〜に対して〜だ）","<code>为＋N＋感到...</code>（〜のために〜と感じる）"] },
+      // HSK 4 - C24
+      { overview: "極端な仮定、強い拒否、緊急対応など、決断と選択の表現。スピード感のあるリアルな会話にも対応できる仕上げのコース。",
+        points: ["選択 <code>与其...不如... / 宁可...也不...</code>","提案 <code>要不</code>","万一の備え <code>万一...怎么办？</code>","極端な譲歩 <code>哪怕...也...</code>","条件不充足の結果 <code>否则／不然</code>","書面語の仮定 <code>假如／倘若</code>","緊急対応 <code>一旦...，立刻／马上...</code>"] }
+    ];
+
+    // ========================================================================
+    // STATE & STORAGE
+    // ========================================================================
+    const STORAGE_KEY = "cn-practice-v2";
+    const TOTAL_COURSES_PLANNED = 24;
+
+    const defaultState = {
+      streak: 0, lastDate: "",
+      todayCount: 0, total: 0,
+      currentCourseId: 0,
+      mastered: {},        // { courseId: [sentIdx, ...] }
+      completedCourses: [],
+      favorites: [],       // ["courseId-sentIdx"]
+      recentInCourse: {},  // { courseId: [sentIdx, ...] } (avoid immediate repeats)
+      inProgress: null     // { courseId, sentIdx, input } - 練習中に離脱した場合の途中状態
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { ...defaultState };
+        return { ...defaultState, ...JSON.parse(raw) };
+      } catch { return { ...defaultState }; }
+    }
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+    const state = loadState();
+
+    function todayStr() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    }
+    function yesterdayStr() {
+      const d = new Date(); d.setDate(d.getDate()-1);
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    }
+    function rollDayIfNeeded() {
+      const today = todayStr();
+      if (state.lastDate !== today) state.todayCount = 0;
+    }
+    rollDayIfNeeded();
+
+    if (state.currentCourseId >= COURSES.length) state.currentCourseId = COURSES.length - 1;
+
+    // ========================================================================
+    // DOM
+    // ========================================================================
+    const $ = (s) => document.querySelector(s);
+    const elStreak = $("#streak");
+    const elTodayCount = $("#today-count");
+    const elDoneCourses = $("#done-courses");
+    const elTotal = $("#total");
+    const elCourseHsk = $("#course-hsk");
+    const elCourseNum = $("#course-num");
+    const elTotalCourses = $("#total-courses");
+    const elCourseTitle = $("#course-title");
+    const elCourseBar = $("#course-bar");
+    const elMasteredCount = $("#mastered-count");
+    const elQProgress = $("#q-progress");
+    const elQuestion = $("#question-ja");
+    const elInput = $("#answer-input");
+    const elCheckBtn = $("#check-btn");
+    const elHintBtn = $("#hint-btn");
+    const elSkipBtn = $("#skip-btn");
+    const elHintArea = $("#hint-area");
+    const elResult = $("#result-area");
+    const elFavBtn = $("#fav-btn");
+    const elCompleteModal = $("#complete-modal");
+    const elOpenIntroBtn = $("#open-intro-btn");
+    const elResetCourseBtn = $("#reset-course-btn");
+    const elNextCourseBtn = $("#next-course-btn");
+    const elReplayCourseBtn = $("#replay-course-btn");
+
+    // Views
+    const views = {
+      home: $("#view-home"),
+      level: $("#view-level"),
+      intro: $("#view-intro"),
+      practice: $("#view-practice")
+    };
+    const elLevelNum = $("#level-num");
+    const elLevelCourses = $("#level-courses");
+    const elIntroHsk = $("#intro-hsk");
+    const elIntroNum = $("#intro-num");
+    const elIntroTitle = $("#intro-title");
+    const elIntroOverview = $("#intro-overview");
+    const elIntroPoints = $("#intro-points");
+    const elIntroStartBtn = $("#intro-start-btn");
+
+    elTotalCourses.textContent = COURSES.length; // actual count
+
+    // ========================================================================
+    // VIEW MANAGEMENT
+    // ========================================================================
+    let currentView = "home";
+    let selectedLevel = 1;
+
+    function showView(name) {
+      Object.entries(views).forEach(([k, el]) => {
+        if (k === name) el.removeAttribute("hidden");
+        else el.setAttribute("hidden", "");
+      });
+      currentView = name;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderHome() {
+      [1, 2, 3, 4].forEach(hsk => {
+        const total = COURSES.filter(c => c.hsk === hsk).length;
+        const done = COURSES.reduce((acc, c, i) => {
+          return acc + (c.hsk === hsk && masteredList(i).length >= c.sentences.length ? 1 : 0);
+        }, 0);
+        const el = document.querySelector(`[data-hsk-progress="${hsk}"]`);
+        if (!el) return;
+        const doneTag = done > 0 ? ` <span class="done-tag">✓ ${done}</span>` : "";
+        el.innerHTML = `${total} コース${doneTag}`;
+      });
+    }
+
+    function renderLevelView(hsk) {
+      selectedLevel = hsk;
+      elLevelNum.textContent = hsk;
+      const items = COURSES.map((c, i) => ({ c, i })).filter(x => x.c.hsk === hsk);
+      const html = items.map(({ c, i }) => {
+        const mc = masteredList(i).length;
+        const total = c.sentences.length;
+        const done = mc >= total;
+        const isCurrent = i === state.currentCourseId;
+        const cls = ["course-card", done ? "done" : "", isCurrent ? "current" : ""].filter(Boolean).join(" ");
+        const pct = (mc / total) * 100;
+        const status = done ? "✓ 完了" : `${mc} / ${total}`;
+        return `
+          <button class="${cls}" data-course-id="${i}">
+            <div class="cc-head">
+              <span class="cc-num">Course ${i + 1}</span>
+              <span class="cc-status ${done ? 'done' : ''}">${status}</span>
+            </div>
+            <div class="cc-title">${c.title}</div>
+            <div class="cc-bar-wrap">
+              <div class="cc-track"><div class="cc-bar" style="width:${pct}%"></div></div>
+            </div>
+          </button>
+        `;
+      }).join("");
+      elLevelCourses.innerHTML = html;
+      elLevelCourses.querySelectorAll("[data-course-id]").forEach(el => {
+        el.addEventListener("click", () => {
+          const id = parseInt(el.dataset.courseId);
+          renderIntroView(id);
+        });
+      });
+    }
+
+    function renderIntroView(courseId) {
+      state.currentCourseId = courseId;
+      saveState();
+      const c = COURSES[courseId];
+      const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
+      elIntroHsk.textContent = c.hsk;
+      elIntroNum.textContent = courseId + 1;
+      elIntroTitle.textContent = c.title;
+      elIntroOverview.textContent = intro.overview;
+      elIntroPoints.innerHTML = intro.points.map(p => `<li>${p}</li>`).join("");
+      const mc = masteredList(courseId).length;
+      const total = c.sentences.length;
+      const done = mc >= total;
+      elIntroStartBtn.textContent = done ? "🌸 もう一度挑戦する" : (mc > 0 ? "続きから挑戦 ✿" : "10問にチャレンジ ✿");
+      showView("intro");
+    }
+
+    function startPractice() {
+      renderHeader();
+      showView("practice");
+      // 途中保存がそのコース宛なら、その文から再開
+      const ip = state.inProgress;
+      if (ip && ip.courseId === state.currentCourseId
+          && !masteredList(state.currentCourseId).includes(ip.sentIdx)) {
+        const course = getCourse(state.currentCourseId);
+        if (course && course.sentences[ip.sentIdx]) {
+          currentSent = course.sentences[ip.sentIdx];
+          currentSentIdx = ip.sentIdx;
+          checked = false;
+          elQuestion.textContent = currentSent.ja;
+          elInput.value = ip.input || "";
+          elInput.disabled = false;
+          elCheckBtn.disabled = false;
+          elInput.focus();
+          elHintArea.innerHTML = "";
+          elResult.innerHTML = "";
+          renderFav();
+          renderHeader();
+          return;
+        }
+      }
+      pickNext();
+    }
+
+    let currentSent = null;
+    let currentSentIdx = -1;
+    let checked = false;
+
+    // 練習中の途中状態を保存（未回答の文 + 入力中のテキスト）
+    function saveInProgress() {
+      if (currentView !== "practice") return;
+      if (!currentSent || currentSentIdx < 0) return;
+      if (checked) return; // 採点済みの文は途中扱いしない
+      state.inProgress = {
+        courseId: state.currentCourseId,
+        sentIdx: currentSentIdx,
+        input: elInput.value || ""
+      };
+      saveState();
+    }
+
+    // ========================================================================
+    // TTS
+    // ========================================================================
+    let zhVoice = null;
+    function pickZhVoice() {
+      if (!window.speechSynthesis) return;
+      const voices = window.speechSynthesis.getVoices();
+      if (!voices || !voices.length) return;
+      const preferred = ["Tingting","Ting-Ting","Sin-ji","Mei-Jia",
+        "Microsoft Xiaoxiao","Microsoft Yaoyao","Microsoft Huihui",
+        "Google 普通话（中国大陆）","Google 中文（中国大陆）"];
+      zhVoice =
+        voices.find(v => /^zh[-_]CN/i.test(v.lang) && preferred.some(n => v.name.includes(n))) ||
+        voices.find(v => /^zh[-_]CN/i.test(v.lang)) ||
+        voices.find(v => /^cmn/i.test(v.lang)) ||
+        voices.find(v => /^zh/i.test(v.lang)) || null;
+    }
+    if (window.speechSynthesis) {
+      pickZhVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickZhVoice);
+    }
+    function speak(text) {
+      try {
+        const synth = window.speechSynthesis;
+        if (!synth) return;
+        synth.cancel();
+        if (!zhVoice) pickZhVoice();
+        const u = new SpeechSynthesisUtterance(text);
+        if (zhVoice) { u.voice = zhVoice; u.lang = zhVoice.lang; }
+        else u.lang = "zh-CN";
+        u.rate = 0.85;
+        synth.speak(u);
+      } catch (e) {}
+    }
+
+    // ========================================================================
+    // CORE LOGIC
+    // ========================================================================
+    function getCourse(id) { return COURSES[id]; }
+    function masteredList(id) { return state.mastered[id] || []; }
+    function isCompleted(id) {
+      const c = getCourse(id);
+      return c && masteredList(id).length >= c.sentences.length;
+    }
+    function markMastered(courseId, sentIdx) {
+      if (!state.mastered[courseId]) state.mastered[courseId] = [];
+      if (!state.mastered[courseId].includes(sentIdx)) {
+        state.mastered[courseId].push(sentIdx);
+      }
+      if (isCompleted(courseId) && !state.completedCourses.includes(courseId)) {
+        state.completedCourses.push(courseId);
+      }
+    }
+    function favKey(courseId, sentIdx) { return `${courseId}-${sentIdx}`; }
+    function isFavorite(courseId, sentIdx) {
+      return state.favorites.includes(favKey(courseId, sentIdx));
+    }
+    function toggleFavorite() {
+      if (currentSentIdx === -1) return;
+      const key = favKey(state.currentCourseId, currentSentIdx);
+      const idx = state.favorites.indexOf(key);
+      if (idx >= 0) state.favorites.splice(idx, 1);
+      else state.favorites.push(key);
+      saveState();
+      renderFav();
+    }
+    function renderFav() {
+      const on = isFavorite(state.currentCourseId, currentSentIdx);
+      elFavBtn.classList.toggle("active", on);
+      elFavBtn.textContent = on ? "⭐" : "☆";
+    }
+
+    function pickNext() {
+      const course = getCourse(state.currentCourseId);
+      if (!course) return;
+
+      // 別の文へ移るので、以前の途中保存は破棄
+      state.inProgress = null;
+
+      const mastered = masteredList(state.currentCourseId);
+      if (mastered.length >= course.sentences.length) {
+        showCompleteModal();
+        return;
+      }
+
+      const unmastered = course.sentences
+        .map((s, i) => ({ s, i }))
+        .filter(({ i }) => !mastered.includes(i));
+
+      const recent = state.recentInCourse[state.currentCourseId] || [];
+      const fresh = unmastered.filter(({ i }) => !recent.includes(i));
+      const pool = fresh.length > 0 ? fresh : unmastered;
+
+      const choice = pool[Math.floor(Math.random() * pool.length)];
+      currentSent = choice.s;
+      currentSentIdx = choice.i;
+      checked = false;
+
+      if (!state.recentInCourse[state.currentCourseId]) state.recentInCourse[state.currentCourseId] = [];
+      state.recentInCourse[state.currentCourseId].push(currentSentIdx);
+      const maxRecent = Math.min(3, Math.max(1, course.sentences.length - mastered.length - 1));
+      while (state.recentInCourse[state.currentCourseId].length > maxRecent) {
+        state.recentInCourse[state.currentCourseId].shift();
+      }
+      saveState();
+
+      elQuestion.textContent = currentSent.ja;
+      elInput.value = "";
+      elInput.disabled = false;
+      elCheckBtn.disabled = false;
+      elInput.focus();
+      elHintArea.innerHTML = "";
+      elResult.innerHTML = "";
+      renderFav();
+      renderHeader();
+    }
+
+    // Retry the SAME sentence without picking a new one
+    function retryCurrent() {
+      if (!currentSent) return;
+      checked = false;
+      elInput.value = "";
+      elInput.disabled = false;
+      elCheckBtn.disabled = false;
+      elHintArea.innerHTML = "";
+      elResult.innerHTML = "";
+      elInput.focus();
+    }
+
+    function renderHeader() {
+      const course = getCourse(state.currentCourseId);
+      if (!course) return;
+      elCourseHsk.textContent = course.hsk;
+      elCourseNum.textContent = state.currentCourseId + 1;
+      elCourseTitle.textContent = course.title;
+      const mc = masteredList(state.currentCourseId).length;
+      const total = course.sentences.length;
+      elMasteredCount.textContent = mc;
+      elCourseBar.style.width = `${(mc / total) * 100}%`;
+      elQProgress.textContent = mc + 1 > total ? total : (mc + 1);
+    }
+
+    function renderStats() {
+      elStreak.textContent = state.streak;
+      elTodayCount.textContent = state.todayCount;
+      elDoneCourses.textContent = state.completedCourses.length;
+      elTotal.textContent = state.total;
+      elTodayCount.classList.toggle("goal-met", state.todayCount >= 10);
+    }
+
+    // ========================================================================
+    // CHECK ANSWER
+    // ========================================================================
+    function normalize(s) {
+      return (s || "")
+        .replace(/[\s　]/g, "")
+        .replace(/[，。．、！？!?,.;:；：]/g, "")
+        .trim();
+    }
+    function checkAlternatives(user) {
+      const u = normalize(user);
+      if (normalize(currentSent.zh) === u) return true;
+      if (currentSent.alts) return currentSent.alts.some(a => normalize(a) === u);
+      return false;
+    }
+    function compareAnswer(user, correct) {
+      const u = normalize(user), c = normalize(correct);
+      if (u === c) return { verdict: "correct" };
+      if (u.length === 0) return { verdict: "wrong", diff: "（未入力）" };
+      const m = u.length, n = c.length;
+      const dp = Array.from({length: m+1}, () => new Array(n+1).fill(0));
+      for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) {
+        if (u[i-1] === c[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+        else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+      }
+      const lcs = dp[m][n];
+      const similarity = (2*lcs)/(m+n);
+      let i = m, j = n; const ops = [];
+      while (i > 0 && j > 0) {
+        if (u[i-1] === c[j-1]) { ops.push({type:"ok",ch:c[j-1]}); i--; j--; }
+        else if (dp[i-1][j] >= dp[i][j-1]) { ops.push({type:"extra",ch:u[i-1]}); i--; }
+        else { ops.push({type:"miss",ch:c[j-1]}); j--; }
+      }
+      while (i > 0) { ops.push({type:"extra",ch:u[i-1]}); i--; }
+      while (j > 0) { ops.push({type:"miss",ch:c[j-1]}); j--; }
+      ops.reverse();
+      const diff = ops.map(op => {
+        if (op.type === "ok") return `<span class="diff-correct">${op.ch}</span>`;
+        if (op.type === "miss") return `<span class="diff-missing">${op.ch}</span>`;
+        return `<span class="diff-wrong">${op.ch}</span>`;
+      }).join("");
+      return { verdict: similarity > 0.7 ? "partial" : "wrong", diff, similarity };
+    }
+
+    function renderResult(user) {
+      const cmp = compareAnswer(user, currentSent.zh);
+      const isCorrect = checkAlternatives(user) || cmp.verdict === "correct";
+
+      let alreadyMastered = masteredList(state.currentCourseId).includes(currentSentIdx);
+      let verdictHTML;
+      if (isCorrect) {
+        const badge = alreadyMastered ? "" : `<span class="mastered-badge">✿ +1 マスター</span>`;
+        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">🌸</span>完璧！太棒了！${badge}</div>`;
+      } else if (cmp.verdict === "partial") {
+        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">🌷</span>惜しい！もう一度この文に挑戦してみよう</div>`;
+      } else {
+        verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">💭</span>模範解答を覚えてもう一度</div>`;
+      }
+
+      const wordsHTML = currentSent.w.map(w => `
+        <div class="word-item">
+          <div class="word-zh zh">${w.z}</div>
+          <div class="word-pinyin">${w.p}</div>
+          <div class="word-ja">${w.j}</div>
+        </div>
+      `).join("");
+
+      const yourAnsHTML = (user && !isCorrect)
+        ? `<div class="your-answer"><span style="color:var(--ink-mute);font-size:11px;">あなたの答え：</span><br>${cmp.diff || user}</div>` : "";
+
+      elResult.innerHTML = `
+        <div class="result">
+          ${verdictHTML}
+          <div class="answer-block">
+            <div class="label">模範解答</div>
+            <div class="answer-zh zh">
+              <span>${currentSent.zh}</span>
+              <button class="speak-btn" id="speak-btn" title="発音を聞く">🔊</button>
+            </div>
+            <div class="answer-pinyin">${currentSent.py}</div>
+            ${yourAnsHTML}
+          </div>
+          <div class="section-title">文法ポイント</div>
+          <div class="grammar-block">${currentSent.g}</div>
+          <div class="section-title">単語</div>
+          <div class="words-grid">${wordsHTML}</div>
+          <div class="next-wrap">
+            <button class="btn btn-next" id="next-btn">${isCorrect ? "次の問題へ ✿" : "もう一度やる →"}</button>
+          </div>
+        </div>
+      `;
+      $("#speak-btn").addEventListener("click", () => speak(currentSent.zh));
+      $("#next-btn").addEventListener("click", () => {
+        if (isCorrect) {
+          pickNext();
+        } else {
+          retryCurrent();
+        }
+      });
+
+      if (!checked) {
+        const today = todayStr();
+        if (state.lastDate === today) {
+          state.todayCount += 1;
+        } else {
+          if (state.lastDate === yesterdayStr()) state.streak += 1;
+          else state.streak = 1;
+          state.lastDate = today;
+          state.todayCount = 1;
+        }
+        state.total += 1;
+        if (isCorrect && !alreadyMastered) {
+          markMastered(state.currentCourseId, currentSentIdx);
+        }
+        // 採点したので途中保存をクリア
+        state.inProgress = null;
+        renderStats();
+        renderHeader();
+        saveState();
+
+        if (isCompleted(state.currentCourseId) && isCorrect && !alreadyMastered) {
+          setTimeout(showCompleteModal, 900);
+        }
+      }
+      checked = true;
+      elCheckBtn.disabled = true;
+      elInput.disabled = true;
+      setTimeout(() => speak(currentSent.zh), 350);
+    }
+
+    // ========================================================================
+    // MODALS
+    // ========================================================================
+    function openModal(modal) { modal.classList.add("open"); }
+    function closeModal(modal) { modal.classList.remove("open"); }
+    document.addEventListener("click", (e) => {
+      if (e.target.dataset.close !== undefined) {
+        e.target.closest(".modal").classList.remove("open");
+      } else if (e.target.classList.contains("modal")) {
+        e.target.classList.remove("open");
+      }
+    });
+
+    function showCompleteModal() {
+      const isLast = state.currentCourseId === COURSES.length - 1;
+      elNextCourseBtn.textContent = isLast ? "🌸 ホームへ戻る" : "次のコースへ →";
+      openModal(elCompleteModal);
+    }
+
+    // 完了モーダル: 次のコースへ → 次コースのIntro画面
+    elNextCourseBtn.addEventListener("click", () => {
+      closeModal(elCompleteModal);
+      if (state.currentCourseId < COURSES.length - 1) {
+        renderIntroView(state.currentCourseId + 1);
+      } else {
+        renderHome();
+        showView("home");
+      }
+    });
+
+    // 完了モーダル: もう一度 → 現コースをリセットして再開
+    elReplayCourseBtn.addEventListener("click", () => {
+      closeModal(elCompleteModal);
+      state.mastered[state.currentCourseId] = [];
+      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+      saveState();
+      renderHeader();
+      pickNext();
+    });
+
+    // 練習画面 → ポイント再確認（Intro画面に戻る）
+    elOpenIntroBtn.addEventListener("click", () => {
+      renderIntroView(state.currentCourseId);
+    });
+
+    // 練習画面 → このコースをリセット
+    elResetCourseBtn.addEventListener("click", () => {
+      if (!confirm("このコースの進捗をリセットしますか？")) return;
+      state.mastered[state.currentCourseId] = [];
+      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+      saveState();
+      renderHeader();
+      pickNext();
+    });
+
+    // HSKカードクリック → そのHSKのコース一覧へ
+    document.querySelectorAll(".hsk-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const hsk = parseInt(card.dataset.hsk);
+        renderLevelView(hsk);
+        showView("level");
+      });
+    });
+
+    // タイトルクリック → トップ（HOME）へ（途中の場合は記録を保存）
+    function goHome() {
+      saveInProgress();
+      renderHome();
+      renderStats();
+      showView("home");
+    }
+    const elHomeLink = document.getElementById("home-link");
+    if (elHomeLink) {
+      elHomeLink.addEventListener("click", goHome);
+      elHomeLink.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goHome(); }
+      });
+    }
+
+    // 戻るボタン
+    document.querySelectorAll(".back-link").forEach(btn => {
+      btn.addEventListener("click", () => {
+        saveInProgress();
+        const target = btn.dataset.back;
+        if (target === "home") {
+          renderHome();
+          showView("home");
+        } else if (target === "level") {
+          const hsk = currentView === "practice"
+            ? COURSES[state.currentCourseId].hsk
+            : (COURSES[state.currentCourseId] ? COURSES[state.currentCourseId].hsk : selectedLevel);
+          renderLevelView(hsk);
+          showView("level");
+        }
+      });
+    });
+
+    // 入力途中のテキスト変更も保存（その場で書き込み過ぎないよう軽くデバウンス）
+    let _ipSaveTimer = null;
+    elInput.addEventListener("input", () => {
+      if (!currentSent || checked) return;
+      clearTimeout(_ipSaveTimer);
+      _ipSaveTimer = setTimeout(saveInProgress, 400);
+    });
+
+    // タブを閉じる/離れる時にも保存
+    window.addEventListener("beforeunload", saveInProgress);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") saveInProgress();
+    });
+
+    // Intro画面 → 練習開始
+    elIntroStartBtn.addEventListener("click", startPractice);
+
+    // ========================================================================
+    // HINT
+    // ========================================================================
+    function showHint() {
+      if (!currentSent) return;
+      const first = currentSent.zh.charAt(0);
+      const fw = currentSent.w[0];
+      const py = fw ? fw.p : "";
+      elHintArea.innerHTML = `<div class="hint">最初の字は <strong class="zh">${first}</strong>（${py}）、合計 ${currentSent.zh.length} 文字</div>`;
+    }
+
+    // ========================================================================
+    // EVENT LISTENERS
+    // ========================================================================
+    elCheckBtn.addEventListener("click", () => {
+      if (!currentSent || checked) return;
+      renderResult(elInput.value);
+    });
+    elHintBtn.addEventListener("click", showHint);
+    elSkipBtn.addEventListener("click", pickNext);
+    // Enter で答え合わせ（Shift+Enter は改行）。IME 変換中は無視。
+    // 採点に使った Enter がそのまま「次へ」に流れないよう、
+    // 一度キーを離してから（keyup を経由してから）でないと「次へ」を発火させない。
+    let enterArmedForNext = false;
+
+    elInput.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.shiftKey) return; // 改行は Shift+Enter
+      if (checked) return;
+      e.preventDefault();
+      e.stopPropagation();
+      enterArmedForNext = false; // 採点直後は disarmed
+      elCheckBtn.click();
+    });
+
+    // 採点後（input が disabled）に Enter で「次へ／もう一度」
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.shiftKey || e.metaKey || e.ctrlKey) return;
+      if (currentView !== "practice") return;
+      if (!checked) return;
+      if (!enterArmedForNext) return; // 一度 keyup を経由していないと無視
+      const nb = document.getElementById("next-btn");
+      if (nb) { e.preventDefault(); nb.click(); enterArmedForNext = false; }
+    });
+
+    // Enter を離した時点で「次へ」を arm する（キーリピートでの突き抜けを防止）
+    document.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") enterArmedForNext = true;
+    });
+    elFavBtn.addEventListener("click", toggleFavorite);
+
+    // ========================================================================
+    // START
+    // ========================================================================
+    renderStats();
+    renderHome();
+    showView("home");
+  </script>
+</body>
+</html>

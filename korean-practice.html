@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>안녕！韓国語アウトプット練習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff5f7; --bg-soft: #ffe7ee; --pink-light: #ffd0dd;
+      --pink: #ff8fa9; --pink-deep: #e76b8a; --pink-darker: #c84d6e;
+      --cream: #fffaf9; --white: #ffffff;
+      --ink: #4a2f3a; --ink-soft: #8a6a76; --ink-mute: #b69aa3;
+      --line: #f3d9d3;
+      --green: #6db99e; --green-soft: #d8f0e6;
+      --red: #e76b6b; --red-soft: #fde2e2;
+      --yellow: #f5c46b; --yellow-soft: #fbecc7;
+      --shadow: 0 14px 30px -18px rgba(231,107,138,.45);
+      --shadow-lg: 0 26px 60px -28px rgba(231,107,138,.55);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Plus Jakarta Sans", -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Noto Sans KR", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, #fff0f6 0%, #ffe1ec 25%, #fff6fa 50%, #ffd9e6 75%, #fff0f6 100%);
+      background-size: 400% 400%;
+      animation: bgShift 22s ease-in-out infinite;
+      background-attachment: fixed;
+      min-height: 100vh; line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      position: relative; overflow-x: hidden;
+    }
+    @keyframes bgShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* ふんわり光るピンクの bokeh レイヤー */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,170,196,.55) 0%, transparent 30%),
+        radial-gradient(circle at 82% 18%, rgba(255,195,215,.5) 0%, transparent 32%),
+        radial-gradient(circle at 28% 82%, rgba(255,160,190,.45) 0%, transparent 30%),
+        radial-gradient(circle at 78% 78%, rgba(255,205,220,.5) 0%, transparent 34%),
+        radial-gradient(circle at 50% 50%, rgba(255,225,235,.35) 0%, transparent 45%);
+      filter: blur(2px);
+      animation: bokehDrift 16s ease-in-out infinite alternate;
+    }
+    @keyframes bokehDrift {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(-12px, 10px, 0) scale(1.05); }
+      100% { transform: translate3d(8px, -14px, 0) scale(1.02); }
+    }
+
+    /* キラキラ星空レイヤー（CSSのみのドットパターン） */
+    body::after {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 12% 18%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.5px 1.5px at 84% 14%, rgba(255,220,235,.9), transparent 60%),
+        radial-gradient(2px 2px at 24% 64%, rgba(255,255,255,.8), transparent 60%),
+        radial-gradient(1.2px 1.2px at 62% 32%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.8px 1.8px at 92% 60%, rgba(255,235,245,.85), transparent 60%),
+        radial-gradient(1.5px 1.5px at 8% 88%, rgba(255,255,255,.85), transparent 60%),
+        radial-gradient(1.3px 1.3px at 46% 80%, rgba(255,220,235,.85), transparent 60%),
+        radial-gradient(2px 2px at 72% 90%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.4px 1.4px at 36% 8%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.6px 1.6px at 58% 56%, rgba(255,240,247,.85), transparent 60%);
+      animation: twinkle 4s ease-in-out infinite;
+      opacity: .85;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: .35; }
+      50%      { opacity: .95; }
+    }
+
+    .ko { font-family: "Noto Sans KR", "Plus Jakarta Sans", sans-serif; }
+
+    /* 浮遊する花びら・ハート・キラキラ */
+    .deco { position: fixed; pointer-events: none; z-index: 0; will-change: transform; }
+    .deco.petal  { animation: floatA 14s ease-in-out infinite; opacity: .6; }
+    .deco.heart  { animation: floatB 18s ease-in-out infinite; opacity: .55; }
+    .deco.spark  { animation: sparkle 3.6s ease-in-out infinite; opacity: .8; }
+    .deco.ribbon { animation: floatC 22s ease-in-out infinite; opacity: .5; }
+
+    .deco.p1 { top: 6%;  left: 4%;  font-size: 24px; animation-delay: 0s; }
+    .deco.p2 { top: 18%; right: 6%; font-size: 20px; animation-delay: -3s; }
+    .deco.p3 { bottom: 14%; left: 7%;  font-size: 26px; animation-delay: -6s; }
+    .deco.p4 { bottom: 24%; right: 5%; font-size: 18px; animation-delay: -9s; }
+    .deco.p5 { top: 48%; left: 2%;  font-size: 16px; animation-delay: -4s; }
+    .deco.p6 { top: 62%; right: 3%; font-size: 22px; animation-delay: -7s; }
+    .deco.h1d { top: 12%; left: 50%; font-size: 16px; animation-delay: -2s; }
+    .deco.h2d { bottom: 8%; right: 36%; font-size: 18px; animation-delay: -10s; }
+    .deco.s1 { top: 28%; left: 28%; font-size: 14px; animation-delay: 0s; }
+    .deco.s2 { top: 36%; right: 22%; font-size: 12px; animation-delay: -1.2s; }
+    .deco.s3 { bottom: 36%; left: 32%; font-size: 13px; animation-delay: -2.4s; }
+    .deco.s4 { bottom: 18%; right: 26%; font-size: 15px; animation-delay: -.8s; }
+    .deco.s5 { top: 70%; left: 18%; font-size: 11px; animation-delay: -1.8s; }
+    .deco.r1 { top: 40%; right: 10%; font-size: 18px; animation-delay: -5s; }
+
+    @keyframes floatA {
+      0%, 100% { transform: translateY(0)   rotate(0deg); }
+      50%      { transform: translateY(-22px) rotate(18deg); }
+    }
+    @keyframes floatB {
+      0%, 100% { transform: translate(0, 0)    rotate(-6deg) scale(1); }
+      50%      { transform: translate(-14px, -18px) rotate(8deg) scale(1.12); }
+    }
+    @keyframes floatC {
+      0%, 100% { transform: translateY(0) rotate(-12deg); opacity: .35; }
+      50%      { transform: translateY(-30px) rotate(10deg); opacity: .65; }
+    }
+    @keyframes sparkle {
+      0%, 100% { transform: scale(.6) rotate(0); opacity: .3; }
+      50%      { transform: scale(1.2) rotate(180deg); opacity: 1; }
+    }
+
+    /* モーションを抑えたいユーザー向け */
+    @media (prefers-reduced-motion: reduce) {
+      body, body::before, body::after, .deco { animation: none !important; }
+    }
+
+    .container { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    .header {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; margin-bottom: 22px;
+    }
+    .header-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--pink-deep); background: var(--white); padding: 7px 14px;
+      border-radius: 999px; box-shadow: var(--shadow); margin-bottom: 14px;
+    }
+    .header-eyebrow::before, .header-eyebrow::after { content: "✿"; font-size: 13px; }
+    .header h1 {
+      font-family: "Fraunces", serif; font-weight: 600;
+      font-size: clamp(28px, 5vw, 42px); line-height: 1.1; letter-spacing: -.02em;
+      text-align: center;
+      cursor: pointer; display: inline-block;
+      transition: transform .15s ease, color .15s ease, text-shadow .3s ease;
+      text-shadow: 0 2px 18px rgba(231,107,138,.15);
+    }
+    .header h1:hover { transform: translateY(-1px); text-shadow: 0 4px 22px rgba(231,107,138,.3); }
+    .header h1:hover .accent { color: var(--pink); }
+    .header h1:active { transform: translateY(0); }
+    .header h1 .accent { color: var(--pink-deep); font-style: italic; font-weight: 500; }
+    .header h1 .ko-title {
+      display: block; font-family: "Noto Sans KR", serif; font-weight: 500;
+      font-size: .55em; color: var(--pink); margin-top: 4px; letter-spacing: .04em;
+      text-align: center;
+    }
+
+    .stats { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 18px 0 20px; }
+    .stat-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--white); padding: 9px 14px; border-radius: 999px;
+      box-shadow: var(--shadow); font-size: 12px; color: var(--ink-soft);
+    }
+    .stat-pill .icon { font-size: 14px; }
+    .stat-pill .value {
+      font-family: "JetBrains Mono", monospace; font-weight: 600;
+      color: var(--pink-darker); font-size: 13px;
+    }
+    .stat-pill .goal-met { color: var(--green); }
+
+    /* ---- Course banner ---- */
+    .course-banner {
+      background: linear-gradient(135deg, #fff 0%, #fff5f7 100%);
+      border: 1px solid var(--line); border-radius: 22px;
+      padding: 18px 22px; box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    .course-info { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .topik-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      color: var(--white); background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .topik-tag::before { content: "🌸"; }
+    .course-label {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      color: var(--ink-mute); letter-spacing: .05em;
+    }
+    .course-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 20px; color: var(--ink); margin-bottom: 12px;
+    }
+    .course-progress { display: flex; align-items: center; gap: 12px; }
+    .progress-track {
+      flex: 1; height: 8px; background: var(--bg-soft);
+      border-radius: 999px; overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%; background: linear-gradient(90deg, #ffc6a8, var(--pink));
+      border-radius: 999px; transition: width .5s cubic-bezier(.2,.8,.2,1); width: 0%;
+    }
+    .progress-text {
+      font-family: "JetBrains Mono", monospace; font-size: 12px;
+      color: var(--ink-soft); white-space: nowrap;
+    }
+    .progress-text .mn { color: var(--pink-darker); font-weight: 600; }
+    .course-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .mini-btn {
+      font-family: inherit; font-size: 12px; font-weight: 600;
+      padding: 6px 12px; border-radius: 999px; cursor: pointer;
+      background: var(--white); color: var(--ink-soft); border: 1px solid var(--line);
+      transition: all .2s ease;
+    }
+    .mini-btn:hover { border-color: var(--pink); color: var(--pink-deep); }
+
+    /* ---- Card ---- */
+    .card {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 28px; padding: 32px 28px;
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ""; position: absolute; top: -60px; right: -60px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, #ffd6dd 0%, transparent 70%);
+      border-radius: 50%; opacity: .55; pointer-events: none;
+    }
+    .card::after {
+      content: ""; position: absolute; bottom: -50px; left: -50px;
+      width: 130px; height: 130px;
+      background: radial-gradient(circle, #ffe4ec 0%, transparent 70%);
+      border-radius: 50%; opacity: .5; pointer-events: none;
+    }
+
+    .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: relative; z-index: 1; }
+    .q-num {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      color: var(--ink-mute); letter-spacing: .08em;
+    }
+    .q-num .now { color: var(--pink-darker); font-weight: 600; }
+    .fav-btn {
+      background: transparent; border: none; cursor: pointer; font-size: 22px;
+      transition: transform .2s ease; filter: grayscale(.8); opacity: .5;
+    }
+    .fav-btn:hover { transform: scale(1.15); }
+    .fav-btn.active { filter: none; opacity: 1; animation: pop .3s ease; }
+    @keyframes pop { 0%{transform:scale(1);} 50%{transform:scale(1.3);} 100%{transform:scale(1);} }
+
+    .question-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px;
+    }
+    .question-ja {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: clamp(20px, 4vw, 26px);
+      line-height: 1.5; color: var(--ink); margin-bottom: 22px;
+      position: relative; z-index: 1;
+    }
+
+    .input-wrap { position: relative; z-index: 1; }
+    .answer-input {
+      width: 100%; font-family: "Noto Sans KR", sans-serif;
+      font-size: 20px; padding: 16px 18px;
+      border: 2px solid var(--line); border-radius: 18px;
+      background: var(--cream); color: var(--ink);
+      resize: vertical; min-height: 76px;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .answer-input::placeholder { color: var(--ink-mute); font-family: inherit; font-size: 14px; }
+    .answer-input:focus { outline: none; border-color: var(--pink); background: var(--white); }
+    .answer-input:disabled { opacity: .7; cursor: not-allowed; }
+
+    .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .btn {
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      padding: 11px 20px; border-radius: 999px; border: none;
+      cursor: pointer; transition: all .2s ease;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+      color: var(--white); box-shadow: 0 8px 20px -8px rgba(231,107,138,.6);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(231,107,138,.7); }
+    .btn-primary:disabled { background: var(--ink-mute); cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-ghost { background: var(--white); color: var(--ink-soft); border: 1.5px solid var(--line); }
+    .btn-ghost:hover { border-color: var(--pink); color: var(--pink-deep); }
+    .btn-next {
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-darker));
+      color: var(--white); box-shadow: 0 8px 20px -8px rgba(200,77,110,.6);
+    }
+    .btn-next:hover { transform: translateY(-2px); }
+
+    .hint {
+      margin-top: 12px; padding: 11px 14px;
+      background: var(--yellow-soft); border-radius: 14px;
+      font-size: 13px; color: #8a6a26; position: relative; z-index: 1;
+    }
+    .hint::before { content: "💡 "; }
+
+    /* ---- Result ---- */
+    .result { margin-top: 26px; position: relative; z-index: 1; animation: fadeUp .4s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+
+    .verdict {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 16px; border-radius: 16px;
+      font-size: 15px; font-weight: 600; margin-bottom: 18px;
+    }
+    .verdict-correct { background: var(--green-soft); color: #2f7c5e; }
+    .verdict-partial { background: var(--yellow-soft); color: #8a6a26; }
+    .verdict-wrong { background: var(--red-soft); color: #a23838; }
+    .verdict .emoji { font-size: 22px; }
+    .verdict-correct .mastered-badge {
+      margin-left: auto; font-size: 11px; padding: 4px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.6); color: #2f7c5e; font-weight: 700;
+    }
+
+    .answer-block {
+      background: var(--bg-soft); border-radius: 18px;
+      padding: 18px 20px; margin-bottom: 16px;
+    }
+    .answer-block .label {
+      font-size: 11px; font-weight: 700; letter-spacing: .18em;
+      color: var(--pink-deep); text-transform: uppercase; margin-bottom: 6px;
+    }
+    .answer-ko {
+      font-family: "Noto Sans KR", sans-serif; font-size: 24px; font-weight: 500;
+      color: var(--ink); line-height: 1.4;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .answer-roman {
+      font-style: italic; color: var(--pink-darker); font-size: 14px;
+      margin-top: 4px; font-family: "Plus Jakarta Sans", serif;
+    }
+    .speak-btn {
+      background: var(--white); border: 1.5px solid var(--line);
+      width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; font-size: 15px;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: all .2s ease;
+    }
+    .speak-btn:hover { background: var(--pink); color: var(--white); border-color: var(--pink); transform: scale(1.08); }
+    .your-answer {
+      font-family: "Noto Sans KR", sans-serif; font-size: 17px;
+      color: var(--ink-soft); margin-top: 4px;
+    }
+
+    .section-title {
+      font-size: 12px; font-weight: 700; letter-spacing: .12em;
+      color: var(--pink-deep); text-transform: uppercase;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+    }
+    .section-title::before { content: ""; width: 6px; height: 6px; background: var(--pink); border-radius: 50%; }
+
+    .grammar-block {
+      background: linear-gradient(135deg, #fff5f7 0%, #fff 100%);
+      border: 1px solid var(--line); border-left: 4px solid var(--pink);
+      border-radius: 14px; padding: 15px 17px;
+      font-size: 14px; line-height: 1.8; color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .grammar-block strong { color: var(--pink-darker); font-weight: 700; }
+    .grammar-block code {
+      font-family: "Noto Sans KR", "JetBrains Mono", monospace;
+      background: var(--bg-soft); padding: 1px 6px;
+      border-radius: 4px; color: var(--pink-darker); font-size: .95em;
+    }
+    .grammar-block .pat {
+      display: inline-block; background: var(--white); border: 1px dashed var(--pink-light);
+      padding: 2px 8px; border-radius: 6px; margin: 2px 0; font-family: "Noto Sans KR", sans-serif;
+    }
+
+    .words-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 10px; margin-bottom: 18px;
+    }
+    .word-item {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 14px; padding: 11px 13px;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .word-item:hover { transform: translateY(-2px); box-shadow: 0 8px 16px -8px rgba(231,107,138,.3); }
+    .word-ko { font-family: "Noto Sans KR", sans-serif; font-size: 19px; font-weight: 600; color: var(--ink); }
+    .word-roman { font-style: italic; color: var(--pink-darker); font-size: 12px; margin-top: 2px; }
+    .word-ja { font-size: 12px; color: var(--ink-soft); margin-top: 3px; line-height: 1.45; }
+
+    .next-wrap { margin-top: 20px; display: flex; justify-content: center; }
+
+    /* ---- Modal ---- */
+    .modal {
+      position: fixed; inset: 0; background: rgba(74,47,58,.5);
+      display: none; align-items: center; justify-content: center;
+      z-index: 100; padding: 20px; backdrop-filter: blur(4px);
+    }
+    .modal.open { display: flex; animation: fadeIn .25s ease; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    .modal-content {
+      background: var(--white); border-radius: 24px;
+      padding: 26px 24px; max-width: 520px; width: 100%;
+      max-height: 85vh; overflow-y: auto; position: relative;
+      box-shadow: var(--shadow-lg); animation: slideUp .3s cubic-bezier(.2,.8,.2,1);
+    }
+    @keyframes slideUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+    .modal-close {
+      position: absolute; top: 12px; right: 14px;
+      background: var(--bg-soft); border: none;
+      width: 32px; height: 32px; border-radius: 50%;
+      font-size: 18px; color: var(--ink-soft); cursor: pointer;
+      transition: all .2s ease;
+    }
+    .modal-close:hover { background: var(--pink); color: var(--white); }
+    .modal h3 {
+      font-family: "Fraunces", serif; font-weight: 500;
+      font-size: 22px; color: var(--ink); margin-bottom: 4px;
+    }
+    .modal-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; }
+
+    .course-list { display: flex; flex-direction: column; gap: 10px; }
+    .course-list-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; border-radius: 14px;
+      border: 1.5px solid var(--line); background: var(--white);
+      cursor: pointer; transition: all .2s ease;
+    }
+    .course-list-item:hover { border-color: var(--pink); transform: translateX(2px); }
+    .course-list-item.current {
+      background: linear-gradient(135deg, #fff 0%, var(--bg-soft) 100%);
+      border-color: var(--pink);
+    }
+    .course-list-item.done { background: var(--green-soft); border-color: var(--green); }
+    .cli-topik {
+      font-size: 10px; font-weight: 700; letter-spacing: .05em;
+      color: var(--white); background: var(--pink-deep);
+      padding: 3px 7px; border-radius: 6px; flex-shrink: 0;
+    }
+    .cli-meta { flex: 1; }
+    .cli-num { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--ink-mute); }
+    .cli-title { font-size: 14px; color: var(--ink); font-weight: 500; margin-top: 1px; }
+    .cli-prog {
+      font-family: "JetBrains Mono", monospace; font-size: 12px;
+      color: var(--pink-darker); font-weight: 600; flex-shrink: 0;
+    }
+    .cli-prog.complete { color: var(--green); }
+
+    /* Course complete modal */
+    .complete-content { text-align: center; padding: 36px 24px; }
+    .complete-emoji { font-size: 54px; margin-bottom: 8px; animation: pop .6s ease; }
+    .complete-content h3 { font-size: 26px; margin-bottom: 6px; }
+    .complete-content p { color: var(--ink-soft); margin-bottom: 20px; }
+    .complete-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    .footer { margin-top: 48px; text-align: center; font-size: 12px; color: var(--ink-mute); }
+    .footer .heart { color: var(--pink-deep); }
+
+    .diff-correct { color: var(--green); font-weight: 600; }
+    .diff-wrong { color: var(--red); text-decoration: line-through; }
+    .diff-missing { color: var(--pink-darker); font-weight: 600; background: var(--bg-soft); padding: 0 4px; border-radius: 3px; }
+
+    /* ---- Views (home / level / intro / practice) ---- */
+    .view[hidden] { display: none !important; }
+
+    .view-title {
+      font-family: "Fraunces", serif; font-weight: 500;
+      font-size: 22px; color: var(--ink); text-align: center;
+      margin: 8px 0 22px;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      color: var(--pink-deep); background: var(--white);
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: 8px 14px; cursor: pointer; margin-bottom: 16px;
+      transition: all .2s ease;
+    }
+    .back-link:hover { background: var(--bg-soft); transform: translateX(-2px); }
+
+    /* TOPIK level cards */
+    .topik-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px; margin-bottom: 20px;
+    }
+    .topik-card {
+      position: relative; display: flex; flex-direction: column; gap: 6px;
+      padding: 22px 20px; text-align: left;
+      background: var(--white); border: 1.5px solid var(--line);
+      border-radius: 22px; cursor: pointer; box-shadow: var(--shadow);
+      transition: all .25s cubic-bezier(.2,.8,.2,1);
+      overflow: hidden; font-family: inherit;
+    }
+    .topik-card::before {
+      content: ""; position: absolute; top: -30px; right: -30px;
+      width: 90px; height: 90px;
+      background: radial-gradient(circle, var(--pink-light) 0%, transparent 70%);
+      border-radius: 50%; opacity: .7; transition: transform .4s ease;
+    }
+    .topik-card:hover {
+      transform: translateY(-4px); border-color: var(--pink);
+      box-shadow: var(--shadow-lg);
+    }
+    .topik-card:hover::before { transform: scale(1.4); }
+    .topik-card-num {
+      font-family: "Fraunces", serif; font-weight: 600;
+      font-size: 26px; color: var(--pink-darker);
+      letter-spacing: -.01em; position: relative; z-index: 1;
+    }
+    .topik-card-label {
+      font-size: 12px; color: var(--ink-soft); position: relative; z-index: 1;
+    }
+    .topik-card-progress {
+      margin-top: 6px; font-family: "JetBrains Mono", monospace;
+      font-size: 12px; color: var(--pink-deep); font-weight: 600;
+      position: relative; z-index: 1;
+    }
+    .topik-card-progress .done-tag {
+      display: inline-block; margin-left: 6px;
+      font-size: 10px; color: var(--green); font-weight: 700;
+    }
+
+    /* Course list (level view) */
+    .course-cards {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .course-card {
+      display: flex; flex-direction: column; gap: 8px;
+      padding: 18px 20px; text-align: left;
+      background: var(--white); border: 1.5px solid var(--line);
+      border-radius: 18px; cursor: pointer; box-shadow: var(--shadow);
+      transition: all .2s ease; font-family: inherit;
+    }
+    .course-card:hover { transform: translateX(4px); border-color: var(--pink); }
+    .course-card.done { background: linear-gradient(135deg, #fff 0%, var(--green-soft) 100%); border-color: var(--green); }
+    .course-card.current { border-color: var(--pink); border-width: 2px; }
+    .cc-head {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .cc-num {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      font-weight: 600; color: var(--pink-darker);
+      background: var(--bg-soft); padding: 3px 9px; border-radius: 6px;
+    }
+    .course-card.done .cc-num { background: rgba(255,255,255,.8); color: var(--green); }
+    .cc-status {
+      margin-left: auto; font-size: 11px; font-weight: 700;
+      color: var(--ink-mute); font-family: "JetBrains Mono", monospace;
+    }
+    .cc-status.done { color: var(--green); }
+    .cc-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 18px; color: var(--ink);
+    }
+    .cc-bar-wrap { display: flex; align-items: center; gap: 10px; }
+    .cc-track {
+      flex: 1; height: 6px; background: var(--bg-soft);
+      border-radius: 999px; overflow: hidden;
+    }
+    .cc-bar {
+      height: 100%; background: linear-gradient(90deg, #ffc6a8, var(--pink));
+      border-radius: 999px; transition: width .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .course-card.done .cc-bar { background: var(--green); }
+
+    /* Intro view */
+    .intro-card {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 24px; padding: 28px 24px;
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+    }
+    .intro-card::before {
+      content: ""; position: absolute; top: -60px; right: -60px;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, #ffd6dd 0%, transparent 70%);
+      border-radius: 50%; opacity: .5; pointer-events: none;
+    }
+    .intro-meta {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px; position: relative; z-index: 1;
+    }
+    .intro-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 24px; line-height: 1.3;
+      color: var(--ink); margin-bottom: 14px;
+      position: relative; z-index: 1;
+    }
+    .intro-overview {
+      font-size: 14px; line-height: 1.85; color: var(--ink-soft);
+      margin-bottom: 22px; position: relative; z-index: 1;
+    }
+    .intro-section-title {
+      font-size: 12px; font-weight: 700; letter-spacing: .15em;
+      color: var(--pink-deep); text-transform: uppercase;
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+      position: relative; z-index: 1;
+    }
+    .intro-section-title::before {
+      content: "🌸"; font-size: 14px;
+    }
+    .intro-points {
+      list-style: none; padding: 0; margin: 0 0 24px;
+      display: flex; flex-direction: column; gap: 10px;
+      position: relative; z-index: 1;
+    }
+    .intro-points li {
+      padding: 12px 14px 12px 38px; position: relative;
+      background: var(--bg-soft); border-radius: 12px;
+      font-size: 14px; line-height: 1.7; color: var(--ink);
+    }
+    .intro-points li::before {
+      content: "✿"; position: absolute; left: 14px; top: 12px;
+      color: var(--pink); font-size: 14px;
+    }
+    .intro-points code {
+      font-family: "Noto Sans KR", "JetBrains Mono", monospace;
+      background: var(--white); padding: 1px 6px;
+      border-radius: 4px; color: var(--pink-darker); font-size: .95em;
+    }
+    .intro-points strong { color: var(--pink-darker); font-weight: 700; }
+    .intro-start {
+      width: 100%; justify-content: center; padding: 14px 20px !important;
+      font-size: 15px !important; position: relative; z-index: 1;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 14px 56px; }
+      .card { padding: 22px 18px; border-radius: 20px; }
+      .course-banner { padding: 14px 16px; border-radius: 18px; }
+      .question-ja { font-size: 18px; }
+      .answer-ko { font-size: 21px; }
+      .answer-input { font-size: 18px; }
+      .stat-pill { padding: 7px 11px; font-size: 11px; }
+      .btn { padding: 10px 16px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 装飾レイヤー（クリック透過） -->
+  <span class="deco petal p1">🌸</span>
+  <span class="deco petal p2">🌷</span>
+  <span class="deco petal p3">🌸</span>
+  <span class="deco petal p4">🌼</span>
+  <span class="deco petal p5">🌷</span>
+  <span class="deco petal p6">🌸</span>
+  <span class="deco heart h1d">💗</span>
+  <span class="deco heart h2d">💕</span>
+  <span class="deco spark s1">✨</span>
+  <span class="deco spark s2">⭐</span>
+  <span class="deco spark s3">✨</span>
+  <span class="deco spark s4">⭐</span>
+  <span class="deco spark s5">✦</span>
+  <span class="deco ribbon r1">🎀</span>
+
+  <div class="container">
+    <header class="header">
+      <span class="header-eyebrow">Korean Output Trainer</span>
+      <h1 id="home-link" role="link" tabindex="0" title="トップへ戻る">
+        Daily <span class="accent">한국어</span> Talk
+        <span class="ko-title">안녕하세요！매일 한 문장 한국어 출력</span>
+      </h1>
+    </header>
+
+    <div class="stats">
+      <span class="stat-pill"><span class="icon">🔥</span>連続 <span class="value" id="streak">0</span> 日</span>
+      <span class="stat-pill"><span class="icon">🌸</span>今日 <span class="value" id="today-count">0</span> / 10</span>
+      <span class="stat-pill"><span class="icon">✨</span>完了 <span class="value" id="done-courses">0</span> コース</span>
+      <span class="stat-pill"><span class="icon">📚</span>累計 <span class="value" id="total">0</span> 文</span>
+    </div>
+
+    <!-- ============ HOME VIEW ============ -->
+    <div class="view view-home" id="view-home">
+      <h2 class="view-title">学びたい級を選ぼう ✿</h2>
+      <div class="topik-cards">
+        <button class="topik-card" data-topik="1">
+          <span class="topik-card-num">TOPIK 1</span>
+          <span class="topik-card-label">入門 · 初級前半</span>
+          <span class="topik-card-progress" data-topik-progress="1">3 コース</span>
+        </button>
+        <button class="topik-card" data-topik="2">
+          <span class="topik-card-num">TOPIK 2</span>
+          <span class="topik-card-label">初級 · 過去と進行</span>
+          <span class="topik-card-progress" data-topik-progress="2">3 コース</span>
+        </button>
+        <button class="topik-card" data-topik="3">
+          <span class="topik-card-num">TOPIK 3</span>
+          <span class="topik-card-label">中級 · 複文と推量</span>
+          <span class="topik-card-progress" data-topik-progress="3">3 コース</span>
+        </button>
+        <button class="topik-card" data-topik="4">
+          <span class="topik-card-num">TOPIK 4</span>
+          <span class="topik-card-label">中上級 · 抽象表現</span>
+          <span class="topik-card-progress" data-topik-progress="4">3 コース</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ LEVEL VIEW ============ -->
+    <div class="view view-level" id="view-level" hidden>
+      <button class="back-link" data-back="home">← TOPIK選択へ</button>
+      <h2 class="view-title">TOPIK <span id="level-num">1</span> のコース一覧</h2>
+      <div class="course-cards" id="level-courses"></div>
+    </div>
+
+    <!-- ============ INTRO VIEW ============ -->
+    <div class="view view-intro" id="view-intro" hidden>
+      <button class="back-link" data-back="level">← コース一覧へ</button>
+      <div class="intro-card">
+        <div class="intro-meta">
+          <span class="topik-tag">TOPIK <span id="intro-topik">1</span></span>
+          <span class="course-label">Course <span id="intro-num">1</span></span>
+        </div>
+        <h2 class="intro-title" id="intro-title">コース名</h2>
+        <p class="intro-overview" id="intro-overview"></p>
+        <div class="intro-section-title">このコースで学ぶこと</div>
+        <ul class="intro-points" id="intro-points"></ul>
+        <button class="btn btn-primary intro-start" id="intro-start-btn">チャレンジ開始 ✿</button>
+      </div>
+    </div>
+
+    <!-- ============ PRACTICE VIEW ============ -->
+    <div class="view view-practice" id="view-practice" hidden>
+      <button class="back-link" data-back="level">← コース一覧へ</button>
+
+      <div class="course-banner">
+        <div class="course-info">
+          <span class="topik-tag">TOPIK <span id="course-topik">1</span></span>
+          <span class="course-label">Course <span id="course-num">1</span> / <span id="total-courses">12</span></span>
+        </div>
+        <h2 class="course-title" id="course-title">読み込み中…</h2>
+        <div class="course-progress">
+          <div class="progress-track"><div class="progress-bar" id="course-bar"></div></div>
+          <span class="progress-text"><span class="mn" id="mastered-count">0</span> / <span id="course-total">4</span> マスター</span>
+        </div>
+        <div class="course-actions">
+          <button class="mini-btn" id="open-intro-btn">📖 ポイント再確認</button>
+          <button class="mini-btn" id="reset-course-btn">↺ このコースをリセット</button>
+        </div>
+      </div>
+
+      <main class="card">
+        <div class="card-head">
+          <span class="q-num">Question <span class="now" id="q-progress">1</span> / <span id="q-total">4</span></span>
+          <button class="fav-btn" id="fav-btn" title="お気に入り">☆</button>
+        </div>
+
+        <div class="question-label">Translate to Korean</div>
+        <div class="question-ja" id="question-ja">読み込み中…</div>
+
+        <div class="input-wrap">
+          <textarea class="answer-input ko" id="answer-input"
+            placeholder="ここに韓国語で入力（例：저는 학생이에요）"
+            autocomplete="off" spellcheck="false"></textarea>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="check-btn">✿ 答え合わせ</button>
+          <button class="btn btn-ghost" id="hint-btn">💡 ヒント</button>
+          <button class="btn btn-ghost" id="skip-btn">⤴ スキップ</button>
+        </div>
+
+        <div id="hint-area"></div>
+        <div id="result-area"></div>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <p>화이팅！<span class="heart">♡</span> 매일 한 문장씩 천천히</p>
+    </footer>
+  </div>
+
+  <!-- Course complete modal -->
+  <div class="modal" id="complete-modal">
+    <div class="modal-content complete-content">
+      <div class="complete-emoji">🌸✨🌸</div>
+      <h3>コース完了！</h3>
+      <p>全問マスターしました 잘했어요！</p>
+      <div class="complete-actions">
+        <button class="btn btn-next" id="next-course-btn">次のコースへ →</button>
+        <button class="btn btn-ghost" id="replay-course-btn">もう一度</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========================================================================
+    // COURSES DATA
+    // ========================================================================
+    const COURSES = [
+      // ============ TOPIK 1 ============
+      {
+        topik: 1, num: 1, title: "あいさつ・自己紹介",
+        sentences: [
+          {
+            ja: "こんにちは。", ko: "안녕하세요.", roman: "annyeonghaseyo.",
+            w: [
+              { ko: "안녕", roman: "annyeong", ja: "安寧／こんにちは（挨拶語幹）" },
+              { ko: "하다", roman: "hada", ja: "する（基本動詞）" },
+              { ko: "-세요", roman: "-seyo", ja: "丁寧の尊敬語尾" }
+            ],
+            g: "「안녕」は漢字「安寧」の意で「平和に」。<strong>-(으)세요</strong> は尊敬の丁寧形語尾。別れは <code>안녕히 가세요</code>（去る人へ）／ <code>안녕히 계세요</code>（残る人へ）と使い分ける。"
+          },
+          {
+            ja: "ありがとうございます。", ko: "감사합니다.", roman: "gamsahamnida.",
+            w: [
+              { ko: "감사", roman: "gamsa", ja: "感謝" },
+              { ko: "하다", roman: "hada", ja: "する" },
+              { ko: "-ㅂ니다", roman: "-mnida", ja: "公式的な丁寧語尾（합쇼体）" }
+            ],
+            g: "<strong>-ㅂ니다／-습니다</strong> は最もフォーマルな丁寧形（합쇼体）。柔らかい해요体は <code>감사해요</code>、ネイティブ語の <code>고마워요</code> もよく使う。返事は <code>천만에요</code>。",
+            alts: ["고맙습니다", "감사해요", "고마워요"]
+          },
+          {
+            ja: "私は学生です。", ko: "저는 학생이에요.", roman: "jeoneun haksaeng-ieyo.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "私（謙譲）" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "학생", roman: "haksaeng", ja: "学生" },
+              { ko: "-이에요", roman: "-ieyo", ja: "〜です（パッチム有）" }
+            ],
+            g: "<strong>「N + 이에요/예요」</strong>＝「Nです」。<strong>パッチム有→이에요、無→예요</strong>。<code>-입니다</code> はよりフォーマル。<code>저</code>（謙譲の私）と <code>나</code>（タメ口の私）を使い分ける。",
+            alts: ["저는 학생입니다"]
+          },
+          {
+            ja: "お名前は何ですか？", ko: "이름이 뭐예요?", roman: "ireumi mwoyeyo?",
+            w: [
+              { ko: "이름", roman: "ireum", ja: "名前" },
+              { ko: "-이", roman: "-i", ja: "主格助詞" },
+              { ko: "뭐", roman: "mwo", ja: "何（무엇の口語形）" },
+              { ko: "-예요", roman: "-yeyo", ja: "〜ですか" }
+            ],
+            g: "<code>뭐</code>＝書き言葉の <code>무엇</code> の口語形。<strong>「N이/가 뭐예요?」</strong>で「Nは何ですか?」。フォーマル: <code>성함이 어떻게 되세요?</code>（お名前は何と仰います?）。",
+            alts: ["이름이 무엇이에요?"]
+          }
+        ]
+      },
+      {
+        topik: 1, num: 2, title: "数字・時間・存在",
+        sentences: [
+          {
+            ja: "私は20歳です。", ko: "저는 스무 살이에요.", roman: "jeoneun seumu sarieyo.",
+            w: [
+              { ko: "스무", roman: "seumu", ja: "20（固有数詞・冠形形）" },
+              { ko: "살", roman: "sal", ja: "歳（年齢の量詞）" }
+            ],
+            g: "<strong>年齢は固有数詞＋살</strong>。<code>스물 → 스무</code> のように「살」の前で形が変わる（한/두/세/네/스무）。漢字数詞＋세 は公文書的（20세）。",
+            alts: ["저는 스무 살입니다", "스무 살이에요"]
+          },
+          {
+            ja: "今何時ですか？", ko: "지금 몇 시예요?", roman: "jigeum myeot siyeyo?",
+            w: [
+              { ko: "지금", roman: "jigeum", ja: "今" },
+              { ko: "몇", roman: "myeot", ja: "何／いくつ" },
+              { ko: "시", roman: "si", ja: "〜時" }
+            ],
+            g: "時刻は<strong>「固有数詞＋시 (時)」＋「漢字数詞＋분 (分)」</strong>の混合。例: <code>두 시 삼십 분</code>（2時30分）。"
+          },
+          {
+            ja: "彼は家にいません。", ko: "그는 집에 없어요.", roman: "geuneun jib-e eopseoyo.",
+            w: [
+              { ko: "그", roman: "geu", ja: "彼" },
+              { ko: "집", roman: "jib", ja: "家" },
+              { ko: "-에", roman: "-e", ja: "〜に（場所・方向）" },
+              { ko: "없다", roman: "eopda", ja: "ない／いない" }
+            ],
+            g: "<strong>있다（いる/ある） ↔ 없다（いない/ない）</strong> は基本動詞。場所助詞 <code>-에</code> は「-に」（静的存在・方向）。否定の <code>안 있다</code> ではなく <code>없다</code> を使う。"
+          },
+          {
+            ja: "妹が一人います。", ko: "여동생이 한 명 있어요.", roman: "yeodongsaeng-i han myeong isseoyo.",
+            w: [
+              { ko: "여동생", roman: "yeodongsaeng", ja: "妹" },
+              { ko: "한", roman: "han", ja: "1（固有数詞・冠形形）" },
+              { ko: "명", roman: "myeong", ja: "人（量詞）" },
+              { ko: "있다", roman: "itda", ja: "いる／ある" }
+            ],
+            g: "<strong>量詞</strong>：<code>명/사람</code>（人）、<code>개</code>（個）、<code>마리</code>（動物）、<code>권</code>（冊）。「N이/가 있어요」で存在表現。"
+          }
+        ]
+      },
+      {
+        topik: 1, num: 3, title: "助詞・希望・指示",
+        sentences: [
+          {
+            ja: "今日は天気がいいです。", ko: "오늘 날씨가 좋아요.", roman: "oneul nalssiga joayo.",
+            w: [
+              { ko: "오늘", roman: "oneul", ja: "今日" },
+              { ko: "날씨", roman: "nalssi", ja: "天気" },
+              { ko: "-가", roman: "-ga", ja: "主格助詞（パッチム無）" },
+              { ko: "좋다", roman: "johda", ja: "良い" }
+            ],
+            g: "<strong>主格助詞</strong>：パッチム有→<code>-이</code>、無→<code>-가</code>。形容詞も해요体で活用：<code>좋다 → 좋아요</code>（陽母音は -아요）。",
+            alts: ["오늘은 날씨가 좋아요"]
+          },
+          {
+            ja: "私はリンゴが好きです。", ko: "저는 사과를 좋아해요.", roman: "jeoneun sagwareul joahaeyo.",
+            w: [
+              { ko: "사과", roman: "sagwa", ja: "りんご" },
+              { ko: "-를", roman: "-reul", ja: "目的格（パッチム無）" },
+              { ko: "좋아하다", roman: "joahada", ja: "好む（他動詞）" }
+            ],
+            g: "韓国語の「好き」は<strong>他動詞 <code>좋아하다</code></strong>＝目的語を取る。形容詞の <code>좋다</code>（良い）とは別。「N이/가 좋다」（感情的）と「N을/를 좋아하다」（行為的）を使い分け。"
+          },
+          {
+            ja: "水が飲みたいです。", ko: "물을 마시고 싶어요.", roman: "mureul masigo sipeoyo.",
+            w: [
+              { ko: "물", roman: "mul", ja: "水" },
+              { ko: "-을", roman: "-eul", ja: "目的格（パッチム有）" },
+              { ko: "마시다", roman: "masida", ja: "飲む" },
+              { ko: "-고 싶다", roman: "-go sipda", ja: "〜したい" }
+            ],
+            g: "<strong>「V-고 싶다」</strong>＝「〜したい」（一人称の願望）。<strong>三人称</strong>には <code>-고 싶어하다</code> を使う：<code>그는 물을 마시고 싶어해요</code>。"
+          },
+          {
+            ja: "これは私の本です。", ko: "이것은 제 책이에요.", roman: "igeoseun je chaeg-ieyo.",
+            w: [
+              { ko: "이것", roman: "igeot", ja: "これ" },
+              { ko: "-은", roman: "-eun", ja: "主題（パッチム有）" },
+              { ko: "제", roman: "je", ja: "私の（저의の縮約）" },
+              { ko: "책", roman: "chaek", ja: "本" }
+            ],
+            g: "指示代名詞：<code>이</code>（これ・近称）／<code>그</code>（それ・中称）／<code>저</code>（あれ・遠称）。「私の」は <code>저의 → 제</code>、「あなたの」は <code>너의 → 네</code>。口語では「이거／그거／저거」も多用。",
+            alts: ["이거 제 책이에요"]
+          }
+        ]
+      },
+      // ============ TOPIK 2 ============
+      {
+        topik: 2, num: 1, title: "過去と進行",
+        sentences: [
+          {
+            ja: "私は毎日7時に起きます。", ko: "저는 매일 일곱 시에 일어나요.", roman: "jeoneun maeil ilgop sie ireonayo.",
+            w: [
+              { ko: "매일", roman: "maeil", ja: "毎日" },
+              { ko: "일곱", roman: "ilgop", ja: "7（固有数詞）" },
+              { ko: "-에", roman: "-e", ja: "〜に（時間）" },
+              { ko: "일어나다", roman: "ireonada", ja: "起きる" }
+            ],
+            g: "時刻に<strong>助詞 <code>-에</code></strong>を付ける。語順は「主語＋時間＋動詞」。日本語と同じく時間詞は動詞より前。"
+          },
+          {
+            ja: "昨日お店に行きました。", ko: "어제 가게에 갔어요.", roman: "eoje gage-e gasseoyo.",
+            w: [
+              { ko: "어제", roman: "eoje", ja: "昨日" },
+              { ko: "가게", roman: "gage", ja: "店" },
+              { ko: "가다", roman: "gada", ja: "行く" },
+              { ko: "-았어요", roman: "-asseoyo", ja: "過去・해요体" }
+            ],
+            g: "<strong>過去形 <code>-았/-었/-였-</code></strong>。陽母音(ㅏ/ㅗ)→았、陰母音→었、하다→했。<code>가다→갔어요</code>、<code>먹다→먹었어요</code>、<code>하다→했어요</code>。"
+          },
+          {
+            ja: "彼は今電話しています。", ko: "그는 지금 전화하고 있어요.", roman: "geuneun jigeum jeonhwahago isseoyo.",
+            w: [
+              { ko: "전화하다", roman: "jeonhwahada", ja: "電話する" },
+              { ko: "-고 있다", roman: "-go itda", ja: "〜している（進行）" }
+            ],
+            g: "<strong>「V-고 있다」</strong>＝進行「〜している」。書き言葉では <code>V-는 중이다</code> も同義。尊敬形は <code>-고 계시다</code>。"
+          },
+          {
+            ja: "もう食べました。", ko: "벌써 먹었어요.", roman: "beolsseo meogeosseoyo.",
+            w: [
+              { ko: "벌써", roman: "beolsseo", ja: "もう／既に" },
+              { ko: "먹다", roman: "meokda", ja: "食べる" }
+            ],
+            g: "<code>벌써</code>（予想より早い「もう」）と <code>이미</code>（時点強調の「既に」）は近いが微妙に違う。<code>벌써</code> には驚きのニュアンスがある。",
+            alts: ["이미 먹었어요"]
+          }
+        ]
+      },
+      {
+        topik: 2, num: 2, title: "比較・能力・依頼",
+        sentences: [
+          {
+            ja: "韓国料理を作れます。", ko: "한국 음식을 만들 수 있어요.", roman: "hanguk eumsigeul mandeul su isseoyo.",
+            w: [
+              { ko: "음식", roman: "eumsig", ja: "料理／食べ物" },
+              { ko: "만들다", roman: "mandeulda", ja: "作る" },
+              { ko: "-ㄹ 수 있다", roman: "-l su itda", ja: "〜できる（可能）" }
+            ],
+            g: "<strong>「V-(으)ㄹ 수 있다」</strong>＝可能「〜できる」。否定は <code>-(으)ㄹ 수 없다</code>。<code>만들다</code> はㄹ語幹なので「만들 수 있다」（ㄹが残る）。"
+          },
+          {
+            ja: "彼は私より背が高い。", ko: "그는 저보다 키가 커요.", roman: "geuneun jeoboda kiga keoyo.",
+            w: [
+              { ko: "-보다", roman: "-boda", ja: "〜より（比較）" },
+              { ko: "키", roman: "ki", ja: "背丈" },
+              { ko: "크다", roman: "keuda", ja: "大きい／（背が）高い" }
+            ],
+            g: "<strong>比較構文「A는 B보다 + 形容詞」</strong>。強調は <code>-보다 더</code>、<code>훨씬</code>（はるかに）。「身長」は <code>키가 크다/작다</code>（高い/低い）と表現。"
+          },
+          {
+            ja: "一緒に行きましょう。", ko: "같이 가요.", roman: "gachi gayo.",
+            w: [
+              { ko: "같이", roman: "gachi", ja: "一緒に" },
+              { ko: "가다", roman: "gada", ja: "行く" }
+            ],
+            g: "<strong>해요体の <code>-아요/-어요</code></strong>はイントネーション・文脈で①平叙②疑問③勧誘④命令を兼ねる万能語尾。<code>가요</code>だけで「行きます/行きますか/行きましょう/行ってください」になり得る。",
+            alts: ["같이 갑시다", "함께 가요"]
+          },
+          {
+            ja: "ゆっくり話してください。", ko: "천천히 말해 주세요.", roman: "cheoncheonhi malhae juseyo.",
+            w: [
+              { ko: "천천히", roman: "cheoncheonhi", ja: "ゆっくり" },
+              { ko: "말하다", roman: "malhada", ja: "話す" },
+              { ko: "-아/어 주세요", roman: "-a/eo juseyo", ja: "〜してください（依頼）" }
+            ],
+            g: "<strong>「V-아/어 주세요」</strong>で丁寧な依頼。<code>-아/어 주다</code> は「(相手のために)〜してあげる/くれる」の意味で、依頼の <code>주세요</code> はその尊敬命令形。"
+          }
+        ]
+      },
+      {
+        topik: 2, num: 3, title: "活用変則・程度・量詞",
+        sentences: [
+          {
+            ja: "この服はきれいです。", ko: "이 옷이 예뻐요.", roman: "i osi yeppeoyo.",
+            w: [
+              { ko: "이", roman: "i", ja: "この" },
+              { ko: "옷", roman: "ot", ja: "服" },
+              { ko: "예쁘다", roman: "yeppeuda", ja: "きれい" }
+            ],
+            g: "<strong>으탈락活用</strong>：<code>예쁘다 → 예뻐요</code>（語幹「으」が脱落して「어요」と結合）。同じく <code>바쁘다 → 바빠요</code>、<code>크다 → 커요</code>。",
+            alts: ["이 옷이 예쁘네요", "이 옷 예뻐요"]
+          },
+          {
+            ja: "これはいくらですか？", ko: "이거 얼마예요?", roman: "igeo eolmayeyo?",
+            w: [
+              { ko: "이거", roman: "igeo", ja: "これ（이것の口語）" },
+              { ko: "얼마", roman: "eolma", ja: "いくら" }
+            ],
+            g: "値段を聞く定番フレーズ。回答は「<code>만 원이에요</code>」（1万ウォンです）など。<strong>「얼마」</strong>＝値段・数量を尋ねる。",
+            alts: ["이것은 얼마예요?", "얼마예요?"]
+          },
+          {
+            ja: "部屋に2人います。", ko: "방에 두 사람이 있어요.", roman: "bang-e du sarami isseoyo.",
+            w: [
+              { ko: "방", roman: "bang", ja: "部屋" },
+              { ko: "두", roman: "du", ja: "2（固有数詞・冠形形）" },
+              { ko: "사람", roman: "saram", ja: "人" }
+            ],
+            g: "<strong>存在文「場所-에 + N-이/가 있다」</strong>。固有数詞は名詞の前で形が変化：<code>한/두/세/네/스무</code>（1/2/3/4/20）。",
+            alts: ["방에 두 명 있어요"]
+          },
+          {
+            ja: "なぜ来ないの？", ko: "왜 안 와요?", roman: "wae an wayo?",
+            w: [
+              { ko: "왜", roman: "wae", ja: "なぜ" },
+              { ko: "안", roman: "an", ja: "〜しない（短形否定）" },
+              { ko: "오다", roman: "oda", ja: "来る" }
+            ],
+            g: "<strong>否定の2形態</strong>：①<code>안 + V</code>（短形・口語）／②<code>V -지 않다</code>（長形・書面）。意味はほぼ同じだが、<code>안</code> の方が日常的。<code>오다 → 안 와요 / 오지 않아요</code>。",
+            alts: ["왜 오지 않아요?"]
+          }
+        ]
+      },
+      // ============ TOPIK 3 ============
+      {
+        topik: 3, num: 1, title: "仮定・意志・忠告",
+        sentences: [
+          {
+            ja: "もし明日雨が降ったら、行きません。", ko: "내일 비가 오면 안 갈 거예요.", roman: "naeil biga omyeon an gal geoyeyo.",
+            w: [
+              { ko: "내일", roman: "naeil", ja: "明日" },
+              { ko: "비", roman: "bi", ja: "雨" },
+              { ko: "-(으)면", roman: "-(eu)myeon", ja: "〜たら/〜なら" },
+              { ko: "-(으)ㄹ 거예요", roman: "-(eu)l geoyeyo", ja: "〜つもり/だろう" }
+            ],
+            g: "<strong>「V-(으)면」</strong>で条件「〜たら/〜なら」。<strong>「V-(으)ㄹ 거예요」</strong>は未来・推量「〜するつもり/〜だろう」。仮定文の頻出セット。"
+          },
+          {
+            ja: "早く寝た方がいいですよ。", ko: "일찍 자는 게 좋을 거예요.", roman: "iljjig janeun ge joeul geoyeyo.",
+            w: [
+              { ko: "일찍", roman: "iljjig", ja: "早く" },
+              { ko: "자다", roman: "jada", ja: "寝る" },
+              { ko: "-는 게", roman: "-neun ge", ja: "〜することが（-는 것이の縮約）" }
+            ],
+            g: "<strong>「V-는 게 좋다」</strong>＝「〜した方がいい」。婉曲にするため文末を <code>-(으)ㄹ 거예요</code> にする。代替: <code>일찍 자는 게 어때요?</code>（早く寝たらどう?）。",
+            alts: ["일찍 자는 게 좋아요"]
+          },
+          {
+            ja: "この本はあの本より面白い。", ko: "이 책이 저 책보다 재미있어요.", roman: "i chaegi jeo chaegboda jaemiisseoyo.",
+            w: [
+              { ko: "책", roman: "chaek", ja: "本" },
+              { ko: "재미있다", roman: "jaemiitda", ja: "面白い" }
+            ],
+            g: "比較構文の応用。<code>재미있다</code>＝<code>재미</code>（興味）＋<code>있다</code>（ある）で形容詞のように振る舞う。反対は <code>재미없다</code>。"
+          },
+          {
+            ja: "韓国語を3年勉強しました。", ko: "한국어를 삼 년 동안 배웠어요.", roman: "hangugeoreul sam nyeon dongan baewosseoyo.",
+            w: [
+              { ko: "한국어", roman: "hangugeo", ja: "韓国語" },
+              { ko: "삼", roman: "sam", ja: "3（漢字数詞）" },
+              { ko: "년", roman: "nyeon", ja: "年（漢字語と結合）" },
+              { ko: "동안", roman: "dongan", ja: "〜の間" },
+              { ko: "배우다", roman: "baeuda", ja: "学ぶ" }
+            ],
+            g: "期間を表すときは<strong>「漢字数詞＋년/개월/일＋동안」</strong>。<code>동안</code> は省略可で <code>삼 년 배웠어요</code> も自然。<strong>年・月・日は漢字数詞</strong>、<strong>時間・歳は固有数詞</strong>。",
+            alts: ["한국어를 삼 년 배웠어요", "한국어를 3년 동안 공부했어요"]
+          }
+        ]
+      },
+      {
+        topik: 3, num: 2, title: "譲歩・禁止・同時動作",
+        sentences: [
+          {
+            ja: "彼は疲れているけれど、まだ働いています。", ko: "그는 피곤하지만 아직 일하고 있어요.", roman: "geuneun pigonhajiman ajig ilhago isseoyo.",
+            w: [
+              { ko: "피곤하다", roman: "pigonhada", ja: "疲れている" },
+              { ko: "-지만", roman: "-jiman", ja: "〜けれども" },
+              { ko: "아직", roman: "ajig", ja: "まだ" },
+              { ko: "일하다", roman: "ilhada", ja: "働く" }
+            ],
+            g: "<strong>「V/A-지만」</strong>で逆接「〜けれども」。「<code>-(으)나</code>」は書き言葉的。<code>아직</code>（まだ・継続）と <code>벌써</code>（もう・予想より早く）を対比して覚える。"
+          },
+          {
+            ja: "心配しないで、大丈夫。", ko: "걱정하지 마세요, 괜찮아요.", roman: "geokjeonghaji maseyo, gwaenchanayo.",
+            w: [
+              { ko: "걱정하다", roman: "geokjeonghada", ja: "心配する" },
+              { ko: "-지 마세요", roman: "-ji maseyo", ja: "〜しないでください（禁止）" },
+              { ko: "괜찮다", roman: "gwaenchanta", ja: "大丈夫" }
+            ],
+            g: "<strong>「V-지 마세요」</strong>で「〜しないでください」（命令の否定）。親しい間では <code>-지 마</code>（〜しないで）。<code>괜찮다</code> は「大丈夫」「結構です」の万能形容詞。"
+          },
+          {
+            ja: "彼はテレビを見ながらご飯を食べる。", ko: "그는 텔레비전을 보면서 밥을 먹어요.", roman: "geuneun tellebijeoneul bomyeonseo babeul meogeoyo.",
+            w: [
+              { ko: "텔레비전", roman: "tellebijeon", ja: "テレビ" },
+              { ko: "-(으)면서", roman: "-(eu)myeonseo", ja: "〜しながら" },
+              { ko: "밥", roman: "bab", ja: "ご飯" }
+            ],
+            g: "<strong>「V-(으)면서」</strong>で同時並行動作「〜ながら」。<strong>前後の動作主が同一</strong>でなければならない。略形「-(으)며」は書面的。",
+            alts: ["그는 티브이를 보면서 밥을 먹어요"]
+          },
+          {
+            ja: "鍵を家に忘れてきた。", ko: "열쇠를 집에 두고 왔어요.", roman: "yeolsoereul jib-e dugo wasseoyo.",
+            w: [
+              { ko: "열쇠", roman: "yeolsoe", ja: "鍵" },
+              { ko: "두다", roman: "duda", ja: "置く" },
+              { ko: "-고 오다", roman: "-go oda", ja: "〜してくる" }
+            ],
+            g: "<strong>「V-고 오다/가다」</strong>で「〜してくる/〜していく」。直訳「置いてきた」が韓国語では自然。<code>잊다</code>（忘れる）より <code>두고 왔다</code> が口語的。"
+          }
+        ]
+      },
+      {
+        topik: 3, num: 3, title: "手段・思い込み・変化",
+        sentences: [
+          {
+            ja: "私は自転車で来ました。", ko: "저는 자전거로 왔어요.", roman: "jeoneun jajeongeoro wasseoyo.",
+            w: [
+              { ko: "자전거", roman: "jajeongeo", ja: "自転車" },
+              { ko: "-로/으로", roman: "-ro/euro", ja: "〜で（手段）" }
+            ],
+            g: "<strong>手段の助詞 <code>-(으)로</code></strong>。母音／ㄹパッチム後は <code>-로</code>、それ以外は <code>-으로</code>。例: <code>버스로</code>（バスで）、<code>지하철로</code>（地下鉄で）。"
+          },
+          {
+            ja: "あなたが来ないと思っていた。", ko: "안 오는 줄 알았어요.", roman: "an oneun jul arasseoyo.",
+            w: [
+              { ko: "안 오다", roman: "an oda", ja: "来ない" },
+              { ko: "-는 줄 알다", roman: "-neun jul alda", ja: "〜だと思う（思い込み）" }
+            ],
+            g: "<strong>「-는/(으)ㄴ 줄 알았다」</strong>＝「〜だと思っていた」。<strong>実際とは違った思い込み</strong>を表す（中国語の <code>以为</code> に近い）。否定は <code>-는 줄 몰랐다</code>（知らなかった）。"
+          },
+          {
+            ja: "だんだん寒くなってきた。", ko: "점점 추워지고 있어요.", roman: "jeomjeom chuwojigo isseoyo.",
+            w: [
+              { ko: "점점", roman: "jeomjeom", ja: "だんだん" },
+              { ko: "춥다", roman: "chubda", ja: "寒い" },
+              { ko: "-아/어지다", roman: "-a/eojida", ja: "〜くなる（変化）" }
+            ],
+            g: "<strong>「A-아/어지다」</strong>で状態変化「〜くなる」。<code>춥다 → 추워지다</code>（ㅂ変則：ㅂ→우）。<code>-고 있다</code> を付けて進行中の変化を表す。",
+            alts: ["점점 추워져요"]
+          },
+          {
+            ja: "この料理は美味しそうです。", ko: "이 음식은 맛있어 보여요.", roman: "i eumsigeun masisseo boyeoyo.",
+            w: [
+              { ko: "음식", roman: "eumsig", ja: "料理／食べ物" },
+              { ko: "맛있다", roman: "masitda", ja: "美味しい" },
+              { ko: "-아/어 보이다", roman: "-a/eo boida", ja: "〜に見える／そうだ" }
+            ],
+            g: "<strong>「A-아/어 보이다」</strong>で「〜に見える／〜そうだ」（視覚に基づく推量）。<code>맛있어 보이다</code>（美味しそう）、<code>예뻐 보이다</code>（きれいに見える）、<code>피곤해 보이다</code>（疲れて見える）。"
+          }
+        ]
+      },
+      // ============ TOPIK 4 ============
+      {
+        topik: 4, num: 1, title: "高度な接続詞・並列",
+        sentences: [
+          {
+            ja: "努力を通じて、彼はついに夢を実現した。", ko: "노력을 통해 그는 마침내 꿈을 이루었어요.", roman: "noryeogeul tonghae geuneun machimnae kkumeul iruwosseoyo.",
+            w: [
+              { ko: "노력", roman: "noryeog", ja: "努力" },
+              { ko: "통하다", roman: "tonghada", ja: "通じる" },
+              { ko: "마침내", roman: "machimnae", ja: "ついに" },
+              { ko: "꿈", roman: "kkum", ja: "夢" },
+              { ko: "이루다", roman: "iruda", ja: "成し遂げる" }
+            ],
+            g: "<strong>「N을/를 통해(서)」</strong>で「〜を通じて」（手段・経路）。<code>마침내</code> は長い過程の末の到達感を伴う「ついに」。<code>드디어</code> も類似。",
+            alts: ["노력을 통해서 그는 마침내 꿈을 이루었어요", "노력을 통해 그는 결국 꿈을 이루었어요"]
+          },
+          {
+            ja: "彼は韓国語だけでなく、日本語も話せる。", ko: "그는 한국어뿐만 아니라 일본어도 할 수 있어요.", roman: "geuneun hangugeoppunman anira ilboneodo hal su isseoyo.",
+            w: [
+              { ko: "-뿐(만) 아니라", roman: "-ppun(man) anira", ja: "〜だけでなく" },
+              { ko: "일본어", roman: "ilboneo", ja: "日本語" },
+              { ko: "-도", roman: "-do", ja: "〜も" }
+            ],
+            g: "<strong>「N뿐(만) 아니라 N도」</strong>＝「〜だけでなく〜も」。動詞節は <code>V-(으)ㄹ 뿐만 아니라</code>。日常では <code>-도 -도</code>（〜も〜も）も多用。"
+          },
+          {
+            ja: "文句を言うよりは、行動しよう。", ko: "불평하느니 행동하는 게 낫지요.", roman: "bulpyeonghaneuni haengdonghaneun ge natjyo.",
+            w: [
+              { ko: "불평하다", roman: "bulpyeonghada", ja: "不平を言う" },
+              { ko: "-느니", roman: "-neuni", ja: "〜するよりむしろ" },
+              { ko: "행동하다", roman: "haengdonghada", ja: "行動する" },
+              { ko: "낫다", roman: "natda", ja: "ましだ" }
+            ],
+            g: "<strong>「V-느니」</strong>＝「〜するよりむしろ」。<strong>「-는 게 낫다」</strong>（〜の方がいい）とセットで使う。<code>-지요/-죠</code> は確認・同意を求める語尾。",
+            alts: ["불평하느니 차라리 행동하는 게 낫죠"]
+          },
+          {
+            ja: "来たのだから、ご飯を食べていって。", ko: "왔으니까 밥 먹고 가세요.", roman: "wasseunikka bab meokgo gaseyo.",
+            w: [
+              { ko: "오다", roman: "oda", ja: "来る（왔으니까）" },
+              { ko: "-(으)니까", roman: "-(eu)nikka", ja: "〜だから" },
+              { ko: "-고 가다", roman: "-go gada", ja: "〜していく" }
+            ],
+            g: "<strong>「-(으)니까」</strong>は主観的な理由「〜だから」。<strong>命令・勧誘文と相性が良い</strong>（<code>-아/어서</code> は命令・勧誘と一緒に使えない）。"
+          }
+        ]
+      },
+      {
+        topik: 4, num: 2, title: "譲歩・伝聞・印象",
+        sentences: [
+          {
+            ja: "どんなに忙しくても、電話します。", ko: "아무리 바빠도 전화할게요.", roman: "amuri bappado jeonhwahalgeyo.",
+            w: [
+              { ko: "아무리", roman: "amuri", ja: "どんなに" },
+              { ko: "바쁘다", roman: "bappeuda", ja: "忙しい" },
+              { ko: "-아/어도", roman: "-a/eodo", ja: "〜ても" },
+              { ko: "-(으)ㄹ게요", roman: "-(eu)lgeyo", ja: "〜しますね（意志）" }
+            ],
+            g: "<strong>「아무리 A-아/어도」</strong>で「どんなにAでも」（譲歩）。<strong>「-(으)ㄹ게요」</strong>は話者の意志・約束「〜しますね」（聞き手を意識）。<code>-(으)ㄹ 거예요</code>（推量）と区別。"
+          },
+          {
+            ja: "雨が降っても、試合は予定通り行います。", ko: "비가 와도 경기는 예정대로 진행해요.", roman: "biga wado gyeonggineun yejeongdaero jinhaenghaeyo.",
+            w: [
+              { ko: "경기", roman: "gyeonggi", ja: "試合" },
+              { ko: "예정", roman: "yejeong", ja: "予定" },
+              { ko: "-대로", roman: "-daero", ja: "〜通り" },
+              { ko: "진행하다", roman: "jinhaenghada", ja: "進める" }
+            ],
+            g: "<strong>「V-아/어도」</strong>で譲歩「〜ても」。<strong>「N대로」</strong>で「〜の通り／〜のままに」。例：<code>예정대로</code>（予定通り）、<code>말대로</code>（言葉通り）。"
+          },
+          {
+            ja: "来月結婚するそうです。", ko: "다음 달에 결혼한다고 해요.", roman: "daeum dare gyeolhonhandago haeyo.",
+            w: [
+              { ko: "다음 달", roman: "daeum dal", ja: "来月" },
+              { ko: "결혼하다", roman: "gyeolhonhada", ja: "結婚する" },
+              { ko: "-ㄴ/는다고 하다", roman: "-n/neundago hada", ja: "〜するそうだ（伝聞）" }
+            ],
+            g: "<strong>間接話法（伝聞）</strong>：動詞現在は <code>-ㄴ/는다고 하다</code>、形容詞は <code>-다고 하다</code>、名詞は <code>-(이)라고 하다</code>。口語縮約形 <code>결혼한대요</code> も超頻出。",
+            alts: ["다음 달에 결혼한대요", "다음 달에 결혼한다고 합니다"]
+          },
+          {
+            ja: "この問題は簡単に解決しなさそうだ。", ko: "이 문제는 쉽게 해결되지 않을 것 같아요.", roman: "i munjeneun swipge haegyeoldoeji aneul geot gatayo.",
+            w: [
+              { ko: "문제", roman: "munje", ja: "問題" },
+              { ko: "쉽게", roman: "swipge", ja: "簡単に" },
+              { ko: "해결되다", roman: "haegyeoldoeda", ja: "解決される" },
+              { ko: "-(으)ㄹ 것 같다", roman: "-(eu)l geot gatda", ja: "〜しそうだ" }
+            ],
+            g: "<strong>「V-(으)ㄹ 것 같다」</strong>で推量「〜しそうだ／だろう」。否定は <code>-지 않을 것 같다</code>。能動 <code>해결하다</code> ↔ 受動 <code>해결되다</code>。"
+          }
+        ]
+      },
+      {
+        topik: 4, num: 3, title: "程度・抽象・状態",
+        sentences: [
+          {
+            ja: "年を取るにつれ、静けさが好きになる。", ko: "나이가 들수록 조용한 게 좋아져요.", roman: "naiga deulsurok joyonghan ge joajyeoyo.",
+            w: [
+              { ko: "나이", roman: "nai", ja: "年齢" },
+              { ko: "들다", roman: "deulda", ja: "（年が）入る" },
+              { ko: "-(으)ㄹ수록", roman: "-(eu)lsurok", ja: "〜するほど" },
+              { ko: "조용하다", roman: "joyonghada", ja: "静か" },
+              { ko: "좋아지다", roman: "joajida", ja: "好きになる" }
+            ],
+            g: "<strong>「V-(으)ㄹ수록」</strong>で「〜するほど」（比例的変化）。強調形 <strong>「-(으)면 -(으)ㄹ수록」</strong> もある：<code>들면 들수록</code>。「年を取る」は <code>나이가 들다</code> が決まり文句。"
+          },
+          {
+            ja: "この小説は一読の価値がある。", ko: "이 소설은 한 번 읽어 볼 만해요.", roman: "i soseoreun han beon ilgeo bol manhaeyo.",
+            w: [
+              { ko: "소설", roman: "soseol", ja: "小説" },
+              { ko: "한 번", roman: "han beon", ja: "一度" },
+              { ko: "읽다", roman: "ikda", ja: "読む" },
+              { ko: "-(으)ㄹ 만하다", roman: "-(eu)l manhada", ja: "〜する価値がある" }
+            ],
+            g: "<strong>「V-(으)ㄹ 만하다」</strong>で「〜する価値がある／まあまあ〜できる」。<code>볼 만하다</code>（見るに値する／そこそこ見られる）、<code>먹을 만하다</code>（食べられる）。"
+          },
+          {
+            ja: "私は韓国文化に興味があります。", ko: "저는 한국 문화에 관심이 있어요.", roman: "jeoneun hanguk munhwa-e gwansimi isseoyo.",
+            w: [
+              { ko: "문화", roman: "munhwa", ja: "文化" },
+              { ko: "-에", roman: "-e", ja: "〜に（対象）" },
+              { ko: "관심", roman: "gwansim", ja: "関心／興味" }
+            ],
+            g: "<strong>「N에 관심이 있다」</strong>で「〜に関心がある」。否定は <code>관심이 없다</code>、強調は <code>관심이 많다</code>。<strong>「-에 흥미가 있다」</strong> もほぼ同義。"
+          },
+          {
+            ja: "彼は仕事にとても真面目だ。", ko: "그는 일에 매우 성실해요.", roman: "geuneun ire maeu seongsilhaeyo.",
+            w: [
+              { ko: "일", roman: "il", ja: "仕事" },
+              { ko: "매우", roman: "maeu", ja: "とても" },
+              { ko: "성실하다", roman: "seongsilhada", ja: "誠実だ／真面目だ" }
+            ],
+            g: "<strong>「N에 + 形容詞」</strong>で対象「Nに対して〜だ」。<code>매우</code>（書面・口語両用）≈ <code>아주</code>（口語的）≈ <code>되게</code>（くだけた口語）。",
+            alts: ["그는 일에 아주 성실해요"]
+          }
+        ]
+      }
+    ];
+
+    // ========================================================================
+    // COURSE INTROS (each course's learning points)
+    // ========================================================================
+    const COURSE_INTROS = [
+      // TOPIK 1 - C1 あいさつ・自己紹介
+      { overview: "韓国語で最も基本のあいさつと自己紹介の表現。「Nです」構文・尊敬の語尾・疑問詞の語順といった、これから先すべての土台を確認します。",
+        points: ["<strong>-(으)세요</strong> 尊敬の丁寧語尾（안녕하세요）","<strong>-ㅂ니다／-습니다</strong> フォーマルな합쇼体","「N + 이에요/예요」＝「Nです」（パッチム有無で使い分け）","謙譲の <code>저</code> vs タメ口の <code>나</code>","疑問詞 <code>뭐</code>（무엇の口語形）の使い方"] },
+      // TOPIK 1 - C2 数字・時間・存在
+      { overview: "数字・時刻・年齢・人数といった、日常会話に欠かせない数量と存在の表現。固有数詞と漢字数詞の使い分けがポイントです。",
+        points: ["<strong>年齢は固有数詞＋살</strong>（한/두/세/네/스무 の冠形形）","時刻は<strong>固有数詞＋시</strong>＋<strong>漢字数詞＋분</strong>の混合","存在動詞 <code>있다 ↔ 없다</code>（いる/ある ↔ いない/ない）","場所助詞 <code>-에</code>（〜に）","量詞 <code>명/사람</code>（人）、<code>개</code>、<code>마리</code>、<code>권</code>"] },
+      // TOPIK 1 - C3 助詞・希望・指示
+      { overview: "主格・目的格・主題助詞、希望の「〜したい」、指示代名詞といった基本パーツ。文を組み立てるための骨組みを揃えます。",
+        points: ["<strong>主格助詞</strong> <code>-이/-가</code>（パッチム有無）","<strong>目的格</strong> <code>-을/-를</code> と他動詞 <code>좋아하다</code>","<strong>「V-고 싶다」</strong>＝「〜したい」（一人称）／三人称は <code>-고 싶어하다</code>","해요体の活用（陽母音 → -아요、陰母音 → -어요）","指示代名詞 <code>이／그／저</code> と所有の <code>제／네</code>"] },
+      // TOPIK 2 - C4 過去と進行
+      { overview: "韓国語の時制の中心、過去形と進行形。陽母音／陰母音／하다語幹で変わる過去語尾と「〜している」表現を一気に押さえます。",
+        points: ["<strong>過去形 <code>-았/-었/-였-</code></strong>（陽母音／陰母音／하다）","<strong>「V-고 있다」</strong>＝進行「〜している」（書面語は <code>-는 중이다</code>）","時刻の助詞 <code>-에</code>（〜に）","<code>벌써</code>（予想より早い「もう」）と <code>이미</code>（時点強調）","語順は「主語＋時間詞＋動詞」"] },
+      // TOPIK 2 - C5 比較・能力・依頼
+      { overview: "「〜できる」「〜より〜」「〜してください」など、会話で頻出の対人表現。可能・比較・勧誘・依頼を1コースで網羅します。",
+        points: ["<strong>「V-(으)ㄹ 수 있다/없다」</strong>＝可能／不可能","比較構文「<strong>A는 B보다 + 形容詞</strong>」","해요体の万能語尾（平叙／疑問／勧誘／命令を兼ねる）","<strong>「V-아/어 주세요」</strong>＝丁寧な依頼","ㄹ語幹の <code>만들다</code> の活用（만들 수 있다）"] },
+      // TOPIK 2 - C6 活用変則・程度・量詞
+      { overview: "으탈락・固有数詞の冠形形・否定の2形態など、中級に進むために避けて通れない変則活用と細かい使い分けをまとめます。",
+        points: ["<strong>으탈락活用</strong>：<code>예쁘다→예뻐요、바쁘다→바빠요、크다→커요</code>","「얼마」で値段・数量を尋ねる","存在文「<code>場所-에 + N-이/가 있다</code>」と固有数詞の冠形形","<strong>否定の2形態</strong>：<code>안 + V</code>（短形）／<code>V -지 않다</code>（長形）","指示詞の口語形 <code>이거／그거／저거</code>"] },
+      // TOPIK 3 - C7 仮定・意志・忠告
+      { overview: "「もし〜なら」「〜した方がいい」「〜年間〜した」など、未来予測・助言・期間表現を整理。条件文と婉曲な提案が中心です。",
+        points: ["<strong>「V-(으)면」</strong>条件「〜たら/〜なら」","<strong>「V-(으)ㄹ 거예요」</strong>未来・推量「〜だろう」","<strong>「V-는 게 좋다」</strong>＝「〜した方がいい」（婉曲）","<code>재미있다/재미없다</code> の形容詞的振る舞い","期間表現「<strong>漢字数詞＋년/개월/일＋동안</strong>」"] },
+      // TOPIK 3 - C8 譲歩・禁止・同時動作
+      { overview: "逆接・禁止命令・同時動作・複合動詞といった文の組み立てパーツ。複文を作る基本セットを習得します。",
+        points: ["<strong>「-지만」</strong>＝逆接「〜けれども」（書面語は <code>-(으)나</code>）","<strong>「V-지 마세요」</strong>＝禁止「〜しないでください」","<strong>「V-(으)면서」</strong>＝同時並行「〜ながら」（主語同一）","<strong>「V-고 오다/가다」</strong>＝「〜してくる／〜していく」","<code>아직</code>（まだ）vs <code>벌써</code>（もう）の対比"] },
+      // TOPIK 3 - C9 手段・思い込み・変化
+      { overview: "手段の助詞、誤った思い込み、状態変化、視覚に基づく推量。中級ならではの抽象的なニュアンスを表現する文型を扱います。",
+        points: ["<strong>手段の助詞 <code>-(으)로</code></strong>（自전거로／버스로）","<strong>「-는/(으)ㄴ 줄 알았다」</strong>＝「〜だと思っていた」（事実と違う思い込み）","<strong>「A-아/어지다」</strong>＝状態変化「〜くなる」","<strong>「A-아/어 보이다」</strong>＝視覚に基づく推量「〜そうだ」","ㅂ変則：<code>춥다 → 추워지다</code>"] },
+      // TOPIK 4 - C10 高度な接続詞・並列
+      { overview: "「〜を通じて」「〜だけでなく」「〜よりむしろ」「〜だから」など、論述・スピーチで活きる接続表現をまとめて習得します。",
+        points: ["<strong>「N을/를 통해(서)」</strong>＝手段・経路「〜を通じて」","<strong>「N뿐(만) 아니라 N도」</strong>＝「〜だけでなく〜も」","<strong>「V-느니」＋「-는 게 낫다」</strong>＝「〜するよりむしろ〜の方がいい」","<strong>「-(으)니까」</strong>＝主観的な理由（命令・勧誘と相性◎）","副詞 <code>마침내／드디어</code>（ついに）の使い分け"] },
+      // TOPIK 4 - C11 譲歩・伝聞・印象
+      { overview: "極端な譲歩、間接話法（伝聞）、推量「〜しそうだ」など、話者の判断・態度を示すフォーマル寄りの表現を集めました。",
+        points: ["<strong>「아무리 A-아/어도」</strong>＝「どんなにAでも」（譲歩）","<strong>「-(으)ㄹ게요」</strong>＝意志・約束「〜しますね」","<strong>「N대로」</strong>＝「〜の通り／〜のままに」","<strong>間接話法</strong> <code>-ㄴ/는다고 하다</code>（伝聞）と縮約 <code>-대요</code>","<strong>「V-(으)ㄹ 것 같다」</strong>＝推量「〜しそうだ／だろう」"] },
+      // TOPIK 4 - C12 程度・抽象・状態
+      { overview: "「〜するほど」「〜する価値がある」「〜に関心がある」など、抽象度の高い程度・対象・評価の表現で仕上げ。中上級らしい言い回しを身につけます。",
+        points: ["<strong>「V-(으)ㄹ수록」</strong>＝「〜するほど」（比例的変化）","<strong>「V-(으)ㄹ 만하다」</strong>＝「〜する価値がある」","<strong>「N에 관심이 있다」</strong>＝「〜に関心がある」","<strong>「N에 + 形容詞」</strong>＝対象「Nに対して〜だ」","程度副詞 <code>매우 ≈ 아주 ≈ 되게</code> の使い分け","慣用句「<code>나이가 들다</code>」（年を取る）"] }
+    ];
+
+    // ========================================================================
+    // STATE & STORAGE
+    // ========================================================================
+    const STORAGE_KEY = "ko-practice-v2";
+    const TOTAL_COURSES_PLANNED = 12;
+
+    const defaultState = {
+      streak: 0, lastDate: "",
+      todayCount: 0, total: 0,
+      currentCourseId: 0,
+      mastered: {},        // { courseId: [sentIdx, ...] }
+      completedCourses: [],
+      favorites: [],       // ["courseId-sentIdx"]
+      recentInCourse: {},  // { courseId: [sentIdx, ...] } (avoid immediate repeats)
+      inProgress: null     // { courseId, sentIdx, input } - 練習中に離脱した場合の途中状態
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { ...defaultState };
+        return { ...defaultState, ...JSON.parse(raw) };
+      } catch { return { ...defaultState }; }
+    }
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+    const state = loadState();
+
+    function todayStr() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    }
+    function yesterdayStr() {
+      const d = new Date(); d.setDate(d.getDate()-1);
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    }
+    function rollDayIfNeeded() {
+      const today = todayStr();
+      if (state.lastDate !== today) state.todayCount = 0;
+    }
+    rollDayIfNeeded();
+
+    if (state.currentCourseId >= COURSES.length) state.currentCourseId = COURSES.length - 1;
+
+    // ========================================================================
+    // DOM
+    // ========================================================================
+    const $ = (s) => document.querySelector(s);
+    const elStreak = $("#streak");
+    const elTodayCount = $("#today-count");
+    const elDoneCourses = $("#done-courses");
+    const elTotal = $("#total");
+    const elCourseTopik = $("#course-topik");
+    const elCourseNum = $("#course-num");
+    const elTotalCourses = $("#total-courses");
+    const elCourseTitle = $("#course-title");
+    const elCourseBar = $("#course-bar");
+    const elMasteredCount = $("#mastered-count");
+    const elCourseTotal = $("#course-total");
+    const elQProgress = $("#q-progress");
+    const elQTotal = $("#q-total");
+    const elQuestion = $("#question-ja");
+    const elInput = $("#answer-input");
+    const elCheckBtn = $("#check-btn");
+    const elHintBtn = $("#hint-btn");
+    const elSkipBtn = $("#skip-btn");
+    const elHintArea = $("#hint-area");
+    const elResult = $("#result-area");
+    const elFavBtn = $("#fav-btn");
+    const elCompleteModal = $("#complete-modal");
+    const elOpenIntroBtn = $("#open-intro-btn");
+    const elResetCourseBtn = $("#reset-course-btn");
+    const elNextCourseBtn = $("#next-course-btn");
+    const elReplayCourseBtn = $("#replay-course-btn");
+
+    // Views
+    const views = {
+      home: $("#view-home"),
+      level: $("#view-level"),
+      intro: $("#view-intro"),
+      practice: $("#view-practice")
+    };
+    const elLevelNum = $("#level-num");
+    const elLevelCourses = $("#level-courses");
+    const elIntroTopik = $("#intro-topik");
+    const elIntroNum = $("#intro-num");
+    const elIntroTitle = $("#intro-title");
+    const elIntroOverview = $("#intro-overview");
+    const elIntroPoints = $("#intro-points");
+    const elIntroStartBtn = $("#intro-start-btn");
+
+    elTotalCourses.textContent = COURSES.length; // actual count
+
+    // ========================================================================
+    // VIEW MANAGEMENT
+    // ========================================================================
+    let currentView = "home";
+    let selectedLevel = 1;
+
+    function showView(name) {
+      Object.entries(views).forEach(([k, el]) => {
+        if (k === name) el.removeAttribute("hidden");
+        else el.setAttribute("hidden", "");
+      });
+      currentView = name;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderHome() {
+      [1, 2, 3, 4].forEach(topik => {
+        const total = COURSES.filter(c => c.topik === topik).length;
+        const done = COURSES.reduce((acc, c, i) => {
+          return acc + (c.topik === topik && masteredList(i).length >= c.sentences.length ? 1 : 0);
+        }, 0);
+        const el = document.querySelector(`[data-topik-progress="${topik}"]`);
+        if (!el) return;
+        const doneTag = done > 0 ? ` <span class="done-tag">✓ ${done}</span>` : "";
+        el.innerHTML = `${total} コース${doneTag}`;
+      });
+    }
+
+    function renderLevelView(topik) {
+      selectedLevel = topik;
+      elLevelNum.textContent = topik;
+      const items = COURSES.map((c, i) => ({ c, i })).filter(x => x.c.topik === topik);
+      const html = items.map(({ c, i }) => {
+        const mc = masteredList(i).length;
+        const total = c.sentences.length;
+        const done = mc >= total;
+        const isCurrent = i === state.currentCourseId;
+        const cls = ["course-card", done ? "done" : "", isCurrent ? "current" : ""].filter(Boolean).join(" ");
+        const pct = (mc / total) * 100;
+        const status = done ? "✓ 完了" : `${mc} / ${total}`;
+        return `
+          <button class="${cls}" data-course-id="${i}">
+            <div class="cc-head">
+              <span class="cc-num">Course ${i + 1}</span>
+              <span class="cc-status ${done ? 'done' : ''}">${status}</span>
+            </div>
+            <div class="cc-title">${c.title}</div>
+            <div class="cc-bar-wrap">
+              <div class="cc-track"><div class="cc-bar" style="width:${pct}%"></div></div>
+            </div>
+          </button>
+        `;
+      }).join("");
+      elLevelCourses.innerHTML = html;
+      elLevelCourses.querySelectorAll("[data-course-id]").forEach(el => {
+        el.addEventListener("click", () => {
+          const id = parseInt(el.dataset.courseId);
+          renderIntroView(id);
+        });
+      });
+    }
+
+    function renderIntroView(courseId) {
+      state.currentCourseId = courseId;
+      saveState();
+      const c = COURSES[courseId];
+      const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
+      elIntroTopik.textContent = c.topik;
+      elIntroNum.textContent = courseId + 1;
+      elIntroTitle.textContent = c.title;
+      elIntroOverview.textContent = intro.overview;
+      elIntroPoints.innerHTML = intro.points.map(p => `<li>${p}</li>`).join("");
+      const mc = masteredList(courseId).length;
+      const total = c.sentences.length;
+      const done = mc >= total;
+      elIntroStartBtn.textContent = done ? "🌸 もう一度挑戦する" : (mc > 0 ? "続きから挑戦 ✿" : "チャレンジ開始 ✿");
+      showView("intro");
+    }
+
+    function startPractice() {
+      renderHeader();
+      showView("practice");
+      // 途中保存がそのコース宛なら、その文から再開
+      const ip = state.inProgress;
+      if (ip && ip.courseId === state.currentCourseId
+          && !masteredList(state.currentCourseId).includes(ip.sentIdx)) {
+        const course = getCourse(state.currentCourseId);
+        if (course && course.sentences[ip.sentIdx]) {
+          currentSent = course.sentences[ip.sentIdx];
+          currentSentIdx = ip.sentIdx;
+          checked = false;
+          elQuestion.textContent = currentSent.ja;
+          elInput.value = ip.input || "";
+          elInput.disabled = false;
+          elCheckBtn.disabled = false;
+          elInput.focus();
+          elHintArea.innerHTML = "";
+          elResult.innerHTML = "";
+          renderFav();
+          renderHeader();
+          return;
+        }
+      }
+      pickNext();
+    }
+
+    let currentSent = null;
+    let currentSentIdx = -1;
+    let checked = false;
+
+    // 練習中の途中状態を保存（未回答の文 + 入力中のテキスト）
+    function saveInProgress() {
+      if (currentView !== "practice") return;
+      if (!currentSent || currentSentIdx < 0) return;
+      if (checked) return; // 採点済みの文は途中扱いしない
+      state.inProgress = {
+        courseId: state.currentCourseId,
+        sentIdx: currentSentIdx,
+        input: elInput.value || ""
+      };
+      saveState();
+    }
+
+    // ========================================================================
+    // TTS
+    // ========================================================================
+    let koVoice = null;
+    function pickKoVoice() {
+      if (!window.speechSynthesis) return;
+      const voices = window.speechSynthesis.getVoices();
+      if (!voices || !voices.length) return;
+      const preferred = [
+        "Yuna", "Suhyun", "Heami",
+        "Microsoft Heami", "Microsoft SunHi",
+        "Google 한국의", "Google 한국어"
+      ];
+      koVoice =
+        voices.find(v => /^ko[-_]KR/i.test(v.lang) && preferred.some(n => v.name.includes(n))) ||
+        voices.find(v => /^ko[-_]KR/i.test(v.lang)) ||
+        voices.find(v => /^ko/i.test(v.lang)) ||
+        null;
+    }
+    if (window.speechSynthesis) {
+      pickKoVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickKoVoice);
+    }
+    function speak(text) {
+      try {
+        const synth = window.speechSynthesis;
+        if (!synth) return;
+        synth.cancel();
+        if (!koVoice) pickKoVoice();
+        const u = new SpeechSynthesisUtterance(text);
+        if (koVoice) { u.voice = koVoice; u.lang = koVoice.lang; }
+        else u.lang = "ko-KR";
+        u.rate = 0.9;
+        u.pitch = 1;
+        synth.speak(u);
+      } catch (e) {}
+    }
+
+    // ========================================================================
+    // CORE LOGIC
+    // ========================================================================
+    function getCourse(id) { return COURSES[id]; }
+    function masteredList(id) { return state.mastered[id] || []; }
+    function isCompleted(id) {
+      const c = getCourse(id);
+      return c && masteredList(id).length >= c.sentences.length;
+    }
+    function markMastered(courseId, sentIdx) {
+      if (!state.mastered[courseId]) state.mastered[courseId] = [];
+      if (!state.mastered[courseId].includes(sentIdx)) {
+        state.mastered[courseId].push(sentIdx);
+      }
+      if (isCompleted(courseId) && !state.completedCourses.includes(courseId)) {
+        state.completedCourses.push(courseId);
+      }
+    }
+    function favKey(courseId, sentIdx) { return `${courseId}-${sentIdx}`; }
+    function isFavorite(courseId, sentIdx) {
+      return state.favorites.includes(favKey(courseId, sentIdx));
+    }
+    function toggleFavorite() {
+      if (currentSentIdx === -1) return;
+      const key = favKey(state.currentCourseId, currentSentIdx);
+      const idx = state.favorites.indexOf(key);
+      if (idx >= 0) state.favorites.splice(idx, 1);
+      else state.favorites.push(key);
+      saveState();
+      renderFav();
+    }
+    function renderFav() {
+      const on = isFavorite(state.currentCourseId, currentSentIdx);
+      elFavBtn.classList.toggle("active", on);
+      elFavBtn.textContent = on ? "⭐" : "☆";
+    }
+
+    function pickNext() {
+      const course = getCourse(state.currentCourseId);
+      if (!course) return;
+
+      // 別の文へ移るので、以前の途中保存は破棄
+      state.inProgress = null;
+
+      const mastered = masteredList(state.currentCourseId);
+      if (mastered.length >= course.sentences.length) {
+        showCompleteModal();
+        return;
+      }
+
+      const unmastered = course.sentences
+        .map((s, i) => ({ s, i }))
+        .filter(({ i }) => !mastered.includes(i));
+
+      const recent = state.recentInCourse[state.currentCourseId] || [];
+      const fresh = unmastered.filter(({ i }) => !recent.includes(i));
+      const pool = fresh.length > 0 ? fresh : unmastered;
+
+      const choice = pool[Math.floor(Math.random() * pool.length)];
+      currentSent = choice.s;
+      currentSentIdx = choice.i;
+      checked = false;
+
+      if (!state.recentInCourse[state.currentCourseId]) state.recentInCourse[state.currentCourseId] = [];
+      state.recentInCourse[state.currentCourseId].push(currentSentIdx);
+      const maxRecent = Math.min(3, Math.max(1, course.sentences.length - mastered.length - 1));
+      while (state.recentInCourse[state.currentCourseId].length > maxRecent) {
+        state.recentInCourse[state.currentCourseId].shift();
+      }
+      saveState();
+
+      elQuestion.textContent = currentSent.ja;
+      elInput.value = "";
+      elInput.disabled = false;
+      elCheckBtn.disabled = false;
+      elInput.focus();
+      elHintArea.innerHTML = "";
+      elResult.innerHTML = "";
+      renderFav();
+      renderHeader();
+    }
+
+    // Retry the SAME sentence without picking a new one
+    function retryCurrent() {
+      if (!currentSent) return;
+      checked = false;
+      elInput.value = "";
+      elInput.disabled = false;
+      elCheckBtn.disabled = false;
+      elHintArea.innerHTML = "";
+      elResult.innerHTML = "";
+      elInput.focus();
+    }
+
+    function renderHeader() {
+      const course = getCourse(state.currentCourseId);
+      if (!course) return;
+      elCourseTopik.textContent = course.topik;
+      elCourseNum.textContent = state.currentCourseId + 1;
+      elCourseTitle.textContent = course.title;
+      const mc = masteredList(state.currentCourseId).length;
+      const total = course.sentences.length;
+      elMasteredCount.textContent = mc;
+      elCourseTotal.textContent = total;
+      elQTotal.textContent = total;
+      elCourseBar.style.width = `${(mc / total) * 100}%`;
+      elQProgress.textContent = mc + 1 > total ? total : (mc + 1);
+    }
+
+    function renderStats() {
+      elStreak.textContent = state.streak;
+      elTodayCount.textContent = state.todayCount;
+      elDoneCourses.textContent = state.completedCourses.length;
+      elTotal.textContent = state.total;
+      elTodayCount.classList.toggle("goal-met", state.todayCount >= 10);
+    }
+
+    // ========================================================================
+    // CHECK ANSWER
+    // ========================================================================
+    function normalize(s) {
+      return (s || "")
+        .replace(/[\s　]/g, "")
+        .replace(/[，。．、！？!?,.;:；：]/g, "")
+        .trim();
+    }
+    function checkAlternatives(user) {
+      const u = normalize(user);
+      if (normalize(currentSent.ko) === u) return true;
+      if (currentSent.alts) return currentSent.alts.some(a => normalize(a) === u);
+      return false;
+    }
+    function compareAnswer(user, correct) {
+      const u = normalize(user), c = normalize(correct);
+      if (u === c) return { verdict: "correct" };
+      if (u.length === 0) return { verdict: "wrong", diff: "（未入力）" };
+      const m = u.length, n = c.length;
+      const dp = Array.from({length: m+1}, () => new Array(n+1).fill(0));
+      for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) {
+        if (u[i-1] === c[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+        else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+      }
+      const lcs = dp[m][n];
+      const similarity = (2*lcs)/(m+n);
+      let i = m, j = n; const ops = [];
+      while (i > 0 && j > 0) {
+        if (u[i-1] === c[j-1]) { ops.push({type:"ok",ch:c[j-1]}); i--; j--; }
+        else if (dp[i-1][j] >= dp[i][j-1]) { ops.push({type:"extra",ch:u[i-1]}); i--; }
+        else { ops.push({type:"miss",ch:c[j-1]}); j--; }
+      }
+      while (i > 0) { ops.push({type:"extra",ch:u[i-1]}); i--; }
+      while (j > 0) { ops.push({type:"miss",ch:c[j-1]}); j--; }
+      ops.reverse();
+      const diff = ops.map(op => {
+        if (op.type === "ok") return `<span class="diff-correct">${op.ch}</span>`;
+        if (op.type === "miss") return `<span class="diff-missing">${op.ch}</span>`;
+        return `<span class="diff-wrong">${op.ch}</span>`;
+      }).join("");
+      return { verdict: similarity > 0.7 ? "partial" : "wrong", diff, similarity };
+    }
+
+    function renderResult(user) {
+      const cmp = compareAnswer(user, currentSent.ko);
+      const isCorrect = checkAlternatives(user) || cmp.verdict === "correct";
+
+      let alreadyMastered = masteredList(state.currentCourseId).includes(currentSentIdx);
+      let verdictHTML;
+      if (isCorrect) {
+        const badge = alreadyMastered ? "" : `<span class="mastered-badge">✿ +1 マスター</span>`;
+        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">🌸</span>완벽해요！すばらしい！${badge}</div>`;
+      } else if (cmp.verdict === "partial") {
+        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">🌷</span>아쉬워요！もう一度この文に挑戦してみよう</div>`;
+      } else {
+        verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">💭</span>모범 답안을 보고もう一度</div>`;
+      }
+
+      const wordsHTML = currentSent.w.map(w => `
+        <div class="word-item">
+          <div class="word-ko ko">${w.ko}</div>
+          <div class="word-roman">${w.roman}</div>
+          <div class="word-ja">${w.ja}</div>
+        </div>
+      `).join("");
+
+      const yourAnsHTML = (user && !isCorrect)
+        ? `<div class="your-answer"><span style="color:var(--ink-mute);font-size:11px;">あなたの答え：</span><br>${cmp.diff || user}</div>` : "";
+
+      const altsHTML = (currentSent.alts && currentSent.alts.length > 0)
+        ? `<div style="margin-top:10px;font-size:13px;color:var(--ink-soft);">他の自然な言い方: <span class="ko" style="color:var(--ink);">${currentSent.alts.join(" / ")}</span></div>`
+        : "";
+
+      elResult.innerHTML = `
+        <div class="result">
+          ${verdictHTML}
+          <div class="answer-block">
+            <div class="label">모범 답안 (模範解答)</div>
+            <div class="answer-ko ko">
+              <span>${currentSent.ko}</span>
+              <button class="speak-btn" id="speak-btn" title="発音を聞く">🔊</button>
+            </div>
+            <div class="answer-roman">${currentSent.roman}</div>
+            ${yourAnsHTML}
+            ${altsHTML}
+          </div>
+          <div class="section-title">文法ポイント</div>
+          <div class="grammar-block">${currentSent.g}</div>
+          <div class="section-title">単語</div>
+          <div class="words-grid">${wordsHTML}</div>
+          <div class="next-wrap">
+            <button class="btn btn-next" id="next-btn">${isCorrect ? "次の問題へ ✿" : "もう一度やる →"}</button>
+          </div>
+        </div>
+      `;
+      $("#speak-btn").addEventListener("click", () => speak(currentSent.ko));
+      $("#next-btn").addEventListener("click", () => {
+        if (isCorrect) {
+          pickNext();
+        } else {
+          retryCurrent();
+        }
+      });
+
+      if (!checked) {
+        const today = todayStr();
+        if (state.lastDate === today) {
+          state.todayCount += 1;
+        } else {
+          if (state.lastDate === yesterdayStr()) state.streak += 1;
+          else state.streak = 1;
+          state.lastDate = today;
+          state.todayCount = 1;
+        }
+        state.total += 1;
+        if (isCorrect && !alreadyMastered) {
+          markMastered(state.currentCourseId, currentSentIdx);
+        }
+        // 採点したので途中保存をクリア
+        state.inProgress = null;
+        renderStats();
+        renderHeader();
+        saveState();
+
+        if (isCompleted(state.currentCourseId) && isCorrect && !alreadyMastered) {
+          setTimeout(showCompleteModal, 900);
+        }
+      }
+      checked = true;
+      elCheckBtn.disabled = true;
+      elInput.disabled = true;
+      setTimeout(() => speak(currentSent.ko), 350);
+    }
+
+    // ========================================================================
+    // MODALS
+    // ========================================================================
+    function openModal(modal) { modal.classList.add("open"); }
+    function closeModal(modal) { modal.classList.remove("open"); }
+    document.addEventListener("click", (e) => {
+      if (e.target.dataset.close !== undefined) {
+        e.target.closest(".modal").classList.remove("open");
+      } else if (e.target.classList.contains("modal")) {
+        e.target.classList.remove("open");
+      }
+    });
+
+    function showCompleteModal() {
+      const isLast = state.currentCourseId === COURSES.length - 1;
+      elNextCourseBtn.textContent = isLast ? "🌸 ホームへ戻る" : "次のコースへ →";
+      openModal(elCompleteModal);
+    }
+
+    // 完了モーダル: 次のコースへ → 次コースのIntro画面
+    elNextCourseBtn.addEventListener("click", () => {
+      closeModal(elCompleteModal);
+      if (state.currentCourseId < COURSES.length - 1) {
+        renderIntroView(state.currentCourseId + 1);
+      } else {
+        renderHome();
+        showView("home");
+      }
+    });
+
+    // 完了モーダル: もう一度 → 現コースをリセットして再開
+    elReplayCourseBtn.addEventListener("click", () => {
+      closeModal(elCompleteModal);
+      state.mastered[state.currentCourseId] = [];
+      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+      saveState();
+      renderHeader();
+      pickNext();
+    });
+
+    // 練習画面 → ポイント再確認（Intro画面に戻る）
+    elOpenIntroBtn.addEventListener("click", () => {
+      renderIntroView(state.currentCourseId);
+    });
+
+    // 練習画面 → このコースをリセット
+    elResetCourseBtn.addEventListener("click", () => {
+      if (!confirm("このコースの進捗をリセットしますか？")) return;
+      state.mastered[state.currentCourseId] = [];
+      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+      saveState();
+      renderHeader();
+      pickNext();
+    });
+
+    // TOPIKカードクリック → そのTOPIKのコース一覧へ
+    document.querySelectorAll(".topik-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const topik = parseInt(card.dataset.topik);
+        renderLevelView(topik);
+        showView("level");
+      });
+    });
+
+    // タイトルクリック → トップ（HOME）へ（途中の場合は記録を保存）
+    function goHome() {
+      saveInProgress();
+      renderHome();
+      renderStats();
+      showView("home");
+    }
+    const elHomeLink = document.getElementById("home-link");
+    if (elHomeLink) {
+      elHomeLink.addEventListener("click", goHome);
+      elHomeLink.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goHome(); }
+      });
+    }
+
+    // 戻るボタン
+    document.querySelectorAll(".back-link").forEach(btn => {
+      btn.addEventListener("click", () => {
+        saveInProgress();
+        const target = btn.dataset.back;
+        if (target === "home") {
+          renderHome();
+          showView("home");
+        } else if (target === "level") {
+          const topik = currentView === "practice"
+            ? COURSES[state.currentCourseId].topik
+            : (COURSES[state.currentCourseId] ? COURSES[state.currentCourseId].topik : selectedLevel);
+          renderLevelView(topik);
+          showView("level");
+        }
+      });
+    });
+
+    // 入力途中のテキスト変更も保存（その場で書き込み過ぎないよう軽くデバウンス）
+    let _ipSaveTimer = null;
+    elInput.addEventListener("input", () => {
+      if (!currentSent || checked) return;
+      clearTimeout(_ipSaveTimer);
+      _ipSaveTimer = setTimeout(saveInProgress, 400);
+    });
+
+    // タブを閉じる/離れる時にも保存
+    window.addEventListener("beforeunload", saveInProgress);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") saveInProgress();
+    });
+
+    // Intro画面 → 練習開始
+    elIntroStartBtn.addEventListener("click", startPractice);
+
+    // ========================================================================
+    // HINT
+    // ========================================================================
+    function showHint() {
+      if (!currentSent) return;
+      const first = currentSent.ko.split(/\s/)[0];
+      const len = currentSent.ko.replace(/\s/g, "").length;
+      elHintArea.innerHTML = `<div class="hint">最初の単語は <strong class="ko">${first}</strong>、合計 ${len} 文字（スペース除く）</div>`;
+    }
+
+    // ========================================================================
+    // EVENT LISTENERS
+    // ========================================================================
+    elCheckBtn.addEventListener("click", () => {
+      if (!currentSent || checked) return;
+      renderResult(elInput.value);
+    });
+    elHintBtn.addEventListener("click", showHint);
+    elSkipBtn.addEventListener("click", pickNext);
+    // Enter で答え合わせ（Shift+Enter は改行）。IME 変換中は無視。
+    // 採点に使った Enter がそのまま「次へ」に流れないよう、
+    // 一度キーを離してから（keyup を経由してから）でないと「次へ」を発火させない。
+    let enterArmedForNext = false;
+
+    elInput.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.shiftKey) return; // 改行は Shift+Enter
+      if (checked) return;
+      e.preventDefault();
+      e.stopPropagation();
+      enterArmedForNext = false; // 採点直後は disarmed
+      elCheckBtn.click();
+    });
+
+    // 採点後（input が disabled）に Enter で「次へ／もう一度」
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.shiftKey || e.metaKey || e.ctrlKey) return;
+      if (currentView !== "practice") return;
+      if (!checked) return;
+      if (!enterArmedForNext) return; // 一度 keyup を経由していないと無視
+      const nb = document.getElementById("next-btn");
+      if (nb) { e.preventDefault(); nb.click(); enterArmedForNext = false; }
+    });
+
+    // Enter を離した時点で「次へ」を arm する（キーリピートでの突き抜けを防止）
+    document.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") enterArmedForNext = true;
+    });
+    elFavBtn.addEventListener("click", toggleFavorite);
+
+    // ========================================================================
+    // START
+    // ========================================================================
+    renderStats();
+    renderHome();
+    showView("home");
+  </script>
+</body>
+</html>

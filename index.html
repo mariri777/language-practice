@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Language Practice · 学習ツール集</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="theme-color" content="#984a2e">
+<style>
+  :root {
+    --bg: #f4f0e6;
+    --bg-elevated: #faf7ee;
+    --bg-card: #ffffff;
+    --bg-subtle: #ebe4d2;
+    --ink: #1a1611;
+    --ink-2: #4a4239;
+    --ink-3: #82786b;
+    --ink-4: #b3a78f;
+    --ink-5: #d5cbb8;
+    --accent: #984a2e;
+    --accent-2: #7a3a23;
+    --accent-soft: #f1e1d7;
+    --accent-glow: rgba(152, 74, 46, 0.10);
+    --border: #e0d6bd;
+    --border-strong: #cdc1a3;
+    --divider: #e8e0c8;
+    --shadow-sm: 0 1px 2px rgba(26, 22, 17, 0.04);
+    --shadow: 0 1px 3px rgba(26, 22, 17, 0.04), 0 2px 12px rgba(26, 22, 17, 0.04);
+    --shadow-lg: 0 4px 16px rgba(26, 22, 17, 0.06), 0 24px 56px rgba(26, 22, 17, 0.06);
+    --ease: cubic-bezier(0.2, 0, 0.2, 1);
+    --dur: 220ms;
+    --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI",
+               "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", system-ui, sans-serif;
+    --font-display: -apple-system, "SF Pro Display", "Inter", "Hiragino Sans", sans-serif;
+    --font-zh: "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    --font-zh-serif: "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", serif;
+    --font-ko: "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  }
+
+  body.dark {
+    --bg: #14110d;
+    --bg-elevated: #1c1813;
+    --bg-card: #1f1b16;
+    --bg-subtle: #25201a;
+    --ink: #f1ebde;
+    --ink-2: #cdc2b1;
+    --ink-3: #938874;
+    --ink-4: #5e5447;
+    --ink-5: #3a342b;
+    --accent: #d97757;
+    --accent-2: #e08670;
+    --accent-soft: rgba(217, 119, 87, 0.14);
+    --accent-glow: rgba(217, 119, 87, 0.18);
+    --border: #2e2820;
+    --border-strong: #3d3528;
+    --divider: #28221a;
+  }
+
+  * { box-sizing: border-box; }
+  *:focus { outline: none; }
+  *:focus-visible {
+    outline: 1.5px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  html {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-ui);
+    color: var(--ink);
+    line-height: 1.65;
+    background: var(--bg);
+    min-height: 100vh;
+    font-size: 15px;
+    letter-spacing: -0.005em;
+    transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .app {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+  @media (max-width: 720px) {
+    .app { padding: 32px 20px 56px; }
+  }
+
+  header.site {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 720px) {
+    header.site { margin-bottom: 40px; }
+  }
+
+  .brand .eyebrow {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand .eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 1.5px;
+    background: linear-gradient(to right, var(--accent), transparent);
+    border-radius: 1px;
+  }
+  .brand h1 {
+    margin: 0 0 12px;
+    font-family: var(--font-zh-serif);
+    font-size: clamp(34px, 5vw, 48px);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .brand h1 .ko {
+    font-family: var(--font-ko);
+    font-weight: 400;
+  }
+  .brand h1 .sep {
+    color: var(--ink-4);
+    margin: 0 12px;
+    font-weight: 300;
+  }
+  .brand p {
+    margin: 0;
+    font-size: 15.5px;
+    color: var(--ink-3);
+    max-width: 540px;
+    line-height: 1.7;
+  }
+
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--dur) var(--ease);
+    flex-shrink: 0;
+  }
+  .icon-btn:hover {
+    color: var(--accent);
+    border-color: var(--border-strong);
+    background: var(--bg-card);
+  }
+  .icon-btn svg { width: 16px; height: 16px; }
+  body:not(.dark) .icon-btn .moon { display: block; }
+  body:not(.dark) .icon-btn .sun { display: none; }
+  body.dark .icon-btn .moon { display: none; }
+  body.dark .icon-btn .sun { display: block; }
+
+  /* Featured card */
+  .featured {
+    margin-bottom: 32px;
+  }
+  .tool-card {
+    display: block;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--dur) var(--ease);
+    position: relative;
+    overflow: hidden;
+  }
+  .tool-card.featured {
+    padding: 44px;
+    background:
+      radial-gradient(ellipse 60% 80% at 100% 0%, var(--accent-soft), transparent 70%),
+      var(--bg-elevated);
+  }
+  .tool-card:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+  .tool-card:hover .cta {
+    color: var(--accent);
+    gap: 12px;
+  }
+  @media (max-width: 720px) {
+    .tool-card { padding: 24px 20px; border-radius: 14px; }
+    .tool-card.featured { padding: 28px 22px; }
+  }
+
+  .card-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 14px;
+  }
+  .badge-new {
+    display: inline-flex;
+    padding: 2px 8px;
+    background: var(--accent);
+    color: white;
+    border-radius: 999px;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  body.dark .badge-new { color: var(--bg); }
+
+  .tool-card h2 {
+    font-family: var(--font-zh-serif);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 4px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .tool-card.featured h2 {
+    font-size: clamp(28px, 3.6vw, 38px);
+  }
+  .tool-card h2 .ko {
+    font-family: var(--font-ko);
+    font-weight: 400;
+  }
+  .tool-card .subtitle {
+    font-size: 14px;
+    color: var(--ink-3);
+    margin: 0 0 18px;
+    letter-spacing: 0.02em;
+  }
+  .tool-card .description {
+    font-size: 14.5px;
+    color: var(--ink-2);
+    line-height: 1.75;
+    margin: 0 0 20px;
+    max-width: 580px;
+  }
+  .features {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+  }
+  .features li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--ink-2);
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  body.dark .features li { background: var(--bg-subtle); }
+  .features li i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    transition: all var(--dur) var(--ease);
+  }
+  .cta svg {
+    width: 13px;
+    height: 13px;
+    transition: transform var(--dur) var(--ease);
+  }
+  .tool-card:hover .cta svg {
+    transform: translateX(3px);
+  }
+
+  /* Grid of secondary tools */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; gap: 16px; }
+  }
+
+  /* Footer */
+  footer.site {
+    margin-top: 64px;
+    padding-top: 28px;
+    border-top: 1px solid var(--divider);
+    color: var(--ink-3);
+    font-size: 11.5px;
+    letter-spacing: 0.015em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  footer.site a {
+    color: var(--ink-3);
+    text-decoration: none;
+    transition: color var(--dur) var(--ease);
+  }
+  footer.site a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="site">
+    <div class="brand">
+      <div class="eyebrow">Language Practice</div>
+      <h1>中文<span class="sep">·</span><span class="ko">한국어</span></h1>
+      <p>パッセージの書写・音読、級別の作文ドリルなど、毎日続けるための学習ツール集。</p>
+    </div>
+    <button class="icon-btn" id="theme-toggle" title="テーマ切替" aria-label="テーマ切替">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    </button>
+  </header>
+
+  <section class="featured">
+    <a href="chinese-diary.html" class="tool-card featured">
+      <div class="card-eyebrow">
+        <span>中文 · Chinese</span>
+        <span class="badge-new">NEW</span>
+      </div>
+      <h2>汉语日记</h2>
+      <p class="subtitle">Chinese Diary — 1日1パッセージ、書写と音読で身につく</p>
+      <p class="description">
+        書写・音読の反復で記憶に定着させるパッセージ書写トレーニング。HSK 1〜4 のレベルに沿った日記風の文章を、聞いて、読んで、書いて、覚える。
+      </p>
+      <ul class="features">
+        <li><i></i>HSK 1〜4 対応</li>
+        <li><i></i>音声再生（ゆっくり / 通常）</li>
+        <li><i></i>声調カラー表示</li>
+        <li><i></i>田字格キャンバス</li>
+        <li><i></i>タイピング比較</li>
+        <li><i></i>ダーク/ライト</li>
+      </ul>
+      <span class="cta">
+        開く
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </span>
+    </a>
+  </section>
+
+  <section class="grid">
+    <a href="chinese-practice.html" class="tool-card">
+      <div class="card-eyebrow">中文 · Output</div>
+      <h2>你好！</h2>
+      <p class="subtitle">中国語アウトプット練習</p>
+      <p class="description">
+        HSK級別の課題型ドリル。日本語→中国語に作文しながら反復練習。
+      </p>
+      <ul class="features">
+        <li><i></i>HSK 1〜6 コース</li>
+        <li><i></i>作文ドリル</li>
+        <li><i></i>進捗トラッキング</li>
+      </ul>
+      <span class="cta">
+        開く
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </span>
+    </a>
+
+    <a href="korean-practice.html" class="tool-card">
+      <div class="card-eyebrow"><span class="ko">한국어 · Output</span></div>
+      <h2><span class="ko">안녕！</span></h2>
+      <p class="subtitle">韓国語アウトプット練習</p>
+      <p class="description">
+        日本語→韓国語に作文しながら、TOPIK級レベルの表現を身につける反復ドリル。
+      </p>
+      <ul class="features">
+        <li><i></i>級別コース</li>
+        <li><i></i>作文ドリル</li>
+        <li><i></i>進捗トラッキング</li>
+      </ul>
+      <span class="cta">
+        開く
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </span>
+    </a>
+  </section>
+
+  <footer class="site">
+    <span>データはお使いのブラウザにのみ保存されます</span>
+    <a href="https://github.com/mariri777/language-practice" target="_blank" rel="noopener">GitHub →</a>
+  </footer>
+</div>
+
+<script>
+  const STORE = 'language-practice-theme';
+  let theme = localStorage.getItem(STORE) || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const apply = () => document.body.classList.toggle('dark', theme === 'dark');
+  apply();
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(STORE, theme);
+    apply();
+  });
+</script>
+</body>
+</html>
