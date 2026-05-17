@@ -1,0 +1,20 @@
+{
+  "name": "汉语日记 · Chinese Diary",
+  "short_name": "汉语日记",
+  "id": "/chinese-diary.html",
+  "start_url": "./chinese-diary.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f0e6",
+  "theme_color": "#984a2e",
+  "lang": "ja",
+  "description": "HSK 1〜4を日記スタイルで書き写す中国語学習ツール",
+  "icons": [
+    { "src": "icons/favicon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
