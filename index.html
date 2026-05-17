@@ -3,72 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Language Practice · 学習ツール集</title>
+<title>A Language Collection · 中文 한국어</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="theme-color" content="#984a2e">
+<meta name="theme-color" content="#0c0b09">
 <style>
   :root {
-    --bg: #f4f0e6;
-    --bg-elevated: #faf7ee;
-    --bg-card: #ffffff;
-    --bg-subtle: #ebe4d2;
-    --ink: #1a1611;
-    --ink-2: #4a4239;
-    --ink-3: #82786b;
-    --ink-4: #b3a78f;
-    --ink-5: #d5cbb8;
-    --accent: #984a2e;
-    --accent-2: #7a3a23;
-    --accent-soft: #f1e1d7;
-    --accent-glow: rgba(152, 74, 46, 0.10);
-    --border: #e0d6bd;
-    --border-strong: #cdc1a3;
-    --divider: #e8e0c8;
-    --shadow-sm: 0 1px 2px rgba(26, 22, 17, 0.04);
-    --shadow: 0 1px 3px rgba(26, 22, 17, 0.04), 0 2px 12px rgba(26, 22, 17, 0.04);
-    --shadow-lg: 0 4px 16px rgba(26, 22, 17, 0.06), 0 24px 56px rgba(26, 22, 17, 0.06);
+    --bg: #f3efe5;
+    --bg-card: #faf6ec;
+    --bg-pure: #ffffff;
+    --bg-subtle: #e9e2cf;
+    --bg-deeper: #ddd4be;
+
+    --ink: #0c0b09;
+    --ink-2: #36312a;
+    --ink-3: #7a7065;
+    --ink-4: #aea493;
+    --ink-5: #cfc6b3;
+
+    --accent: #7a2c3a;
+    --accent-2: #5e1f29;
+    --accent-soft: rgba(122, 44, 58, 0.08);
+    --accent-glow: rgba(122, 44, 58, 0.16);
+
+    --rule: #c2b9a5;
+    --divider: #d8d0bd;
+
     --ease: cubic-bezier(0.2, 0, 0.2, 1);
-    --dur: 220ms;
+    --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur: 320ms;
+    --dur-slow: 700ms;
+
     --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI",
                "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", system-ui, sans-serif;
     --font-display: -apple-system, "SF Pro Display", "Inter", "Hiragino Sans", sans-serif;
-    --font-zh: "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
-    --font-zh-serif: "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", serif;
-    --font-ko: "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    --font-zh: "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", "SimSun", "宋体", serif;
+    --font-ko: "Apple SD Gothic Neo", "Nanum Myeongjo", "Noto Serif KR", "Source Han Serif K", serif;
+    --font-num: "Cormorant Garamond", "Iowan Old Style", "Charter", Georgia, serif;
+    --font-mono: "SF Mono", "JetBrains Mono", "Menlo", "Consolas", monospace;
   }
 
   body.dark {
-    --bg: #14110d;
-    --bg-elevated: #1c1813;
-    --bg-card: #1f1b16;
-    --bg-subtle: #25201a;
-    --ink: #f1ebde;
-    --ink-2: #cdc2b1;
-    --ink-3: #938874;
-    --ink-4: #5e5447;
-    --ink-5: #3a342b;
-    --accent: #d97757;
-    --accent-2: #e08670;
-    --accent-soft: rgba(217, 119, 87, 0.14);
-    --accent-glow: rgba(217, 119, 87, 0.18);
-    --border: #2e2820;
-    --border-strong: #3d3528;
-    --divider: #28221a;
+    --bg: #0d0c0a;
+    --bg-card: #15130f;
+    --bg-pure: #1a1814;
+    --bg-subtle: #1f1b16;
+    --bg-deeper: #28221c;
+
+    --ink: #f3eddf;
+    --ink-2: #c8baa3;
+    --ink-3: #948675;
+    --ink-4: #5e5448;
+    --ink-5: #38322a;
+
+    --accent: #d68088;
+    --accent-2: #e29ea4;
+    --accent-soft: rgba(214, 128, 136, 0.12);
+    --accent-glow: rgba(214, 128, 136, 0.20);
+
+    --rule: #36302a;
+    --divider: #28221c;
   }
 
   * { box-sizing: border-box; }
   *:focus { outline: none; }
   *:focus-visible {
     outline: 1.5px solid var(--accent);
-    outline-offset: 2px;
-    border-radius: 4px;
+    outline-offset: 4px;
+    border-radius: 2px;
   }
 
   html {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -81,359 +90,636 @@
     font-size: 15px;
     letter-spacing: -0.005em;
     transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+    overflow-x: hidden;
   }
 
   ::selection {
-    background: var(--accent-soft);
-    color: var(--accent);
+    background: var(--ink);
+    color: var(--bg);
   }
 
-  .app {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 56px 40px 80px;
-  }
-  @media (max-width: 720px) {
-    .app { padding: 32px 20px 56px; }
-  }
-
-  header.site {
+  /* ============ Top Bar ============ */
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 22px 40px;
     display: flex;
-    align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 56px;
-    gap: 24px;
-    flex-wrap: wrap;
+    align-items: center;
+    pointer-events: none;
   }
+  .topbar > * { pointer-events: auto; }
   @media (max-width: 720px) {
-    header.site { margin-bottom: 40px; }
+    .topbar { padding: 16px 20px; }
   }
 
-  .brand .eyebrow {
+  .top-mark {
     font-family: var(--font-display);
     font-size: 11px;
     font-weight: 600;
-    color: var(--accent);
+    color: var(--ink-2);
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
-    margin-bottom: 12px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
   }
-  .brand .eyebrow::before {
-    content: "";
-    width: 24px;
-    height: 1.5px;
-    background: linear-gradient(to right, var(--accent), transparent);
-    border-radius: 1px;
-  }
-  .brand h1 {
-    margin: 0 0 12px;
-    font-family: var(--font-zh-serif);
-    font-size: clamp(34px, 5vw, 48px);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    line-height: 1.15;
-    color: var(--ink);
-  }
-  .brand h1 .ko {
-    font-family: var(--font-ko);
-    font-weight: 400;
-  }
-  .brand h1 .sep {
-    color: var(--ink-4);
-    margin: 0 12px;
-    font-weight: 300;
-  }
-  .brand p {
-    margin: 0;
-    font-size: 15.5px;
-    color: var(--ink-3);
-    max-width: 540px;
-    line-height: 1.7;
-  }
+  .top-mark span { color: var(--ink-4); margin: 0 8px; }
 
-  .icon-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: transparent;
+  .theme-toggle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: var(--bg);
     color: var(--ink-2);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all var(--dur) var(--ease);
-    flex-shrink: 0;
+    backdrop-filter: blur(8px);
   }
-  .icon-btn:hover {
+  .theme-toggle:hover {
     color: var(--accent);
-    border-color: var(--border-strong);
-    background: var(--bg-card);
+    border-color: var(--accent);
   }
-  .icon-btn svg { width: 16px; height: 16px; }
-  body:not(.dark) .icon-btn .moon { display: block; }
-  body:not(.dark) .icon-btn .sun { display: none; }
-  body.dark .icon-btn .moon { display: none; }
-  body.dark .icon-btn .sun { display: block; }
+  .theme-toggle svg { width: 14px; height: 14px; }
+  body:not(.dark) .theme-toggle .moon { display: block; }
+  body:not(.dark) .theme-toggle .sun { display: none; }
+  body.dark .theme-toggle .moon { display: none; }
+  body.dark .theme-toggle .sun { display: block; }
 
-  /* Featured card */
-  .featured {
-    margin-bottom: 32px;
-  }
-  .tool-card {
-    display: block;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 36px;
-    text-decoration: none;
-    color: inherit;
-    transition: all var(--dur) var(--ease);
+  /* ============ Hero ============ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 40px 80px;
+    text-align: center;
     position: relative;
     overflow: hidden;
   }
-  .tool-card.featured {
-    padding: 44px;
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
     background:
-      radial-gradient(ellipse 60% 80% at 100% 0%, var(--accent-soft), transparent 70%),
-      var(--bg-elevated);
-  }
-  .tool-card:hover {
-    border-color: var(--border-strong);
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-2px);
-  }
-  .tool-card:hover .cta {
-    color: var(--accent);
-    gap: 12px;
-  }
-  @media (max-width: 720px) {
-    .tool-card { padding: 24px 20px; border-radius: 14px; }
-    .tool-card.featured { padding: 28px 22px; }
+      radial-gradient(ellipse 70% 60% at 50% 30%, var(--accent-soft), transparent 70%),
+      radial-gradient(circle at 20% 90%, var(--bg-subtle), transparent 50%);
+    z-index: 0;
+    pointer-events: none;
   }
 
-  .card-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 980px;
+  }
+
+  .hero-eyebrow {
     font-family: var(--font-display);
     font-size: 11px;
     font-weight: 600;
     color: var(--accent);
+    letter-spacing: 0.32em;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    margin-bottom: 14px;
-  }
-  .badge-new {
-    display: inline-flex;
-    padding: 2px 8px;
-    background: var(--accent);
-    color: white;
-    border-radius: 999px;
-    font-size: 9.5px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-  }
-  body.dark .badge-new { color: var(--bg); }
-
-  .tool-card h2 {
-    font-family: var(--font-zh-serif);
-    font-size: 32px;
-    font-weight: 500;
-    color: var(--ink);
-    margin: 0 0 4px;
-    letter-spacing: 0.02em;
-    line-height: 1.2;
-  }
-  .tool-card.featured h2 {
-    font-size: clamp(28px, 3.6vw, 38px);
-  }
-  .tool-card h2 .ko {
-    font-family: var(--font-ko);
-    font-weight: 400;
-  }
-  .tool-card .subtitle {
-    font-size: 14px;
-    color: var(--ink-3);
-    margin: 0 0 18px;
-    letter-spacing: 0.02em;
-  }
-  .tool-card .description {
-    font-size: 14.5px;
-    color: var(--ink-2);
-    line-height: 1.75;
-    margin: 0 0 20px;
-    max-width: 580px;
-  }
-  .features {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin: 0 0 24px;
-    padding: 0;
-    list-style: none;
-  }
-  .features li {
+    margin-bottom: 40px;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 5px 11px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    color: var(--ink-2);
-    border-radius: 999px;
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    gap: 14px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s var(--ease-out-soft) 0.2s forwards;
   }
-  body.dark .features li { background: var(--bg-subtle); }
-  .features li i {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: "";
+    width: 32px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .hero-title {
+    font-family: var(--font-zh);
+    font-size: clamp(72px, 14vw, 160px);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+    margin: 0 0 12px;
+    color: var(--ink);
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1.2s var(--ease-out-soft) 0.4s forwards;
+  }
+  .hero-title .x {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+    margin: 0 0.15em;
+    vertical-align: 0.06em;
+    font-size: 0.65em;
+  }
+  .hero-title .ko {
+    font-family: var(--font-ko);
+    font-weight: 500;
+  }
+
+  .hero-sub {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 2.4vw, 26px);
+    color: var(--ink-2);
+    margin: 24px 0 8px;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s var(--ease-out-soft) 0.7s forwards;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--ink-3);
+    max-width: 480px;
+    margin: 28px auto 0;
+    line-height: 1.85;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s var(--ease-out-soft) 0.9s forwards;
+  }
+
+  .hero-meta {
+    margin-top: 64px;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--ink-3);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeIn 1s var(--ease) 1.2s forwards;
+  }
+  .hero-meta span { color: var(--ink-4); margin: 0 14px; }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: var(--ink-4);
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeIn 1.4s var(--ease) 1.6s forwards;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, transparent, var(--ink-4));
+    animation: scrollPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.7); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  @keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* ============ Tools Section ============ */
+  .tools {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 80px 40px 120px;
+  }
+  @media (max-width: 720px) {
+    .tools { padding: 40px 20px 80px; }
+  }
+
+  .section-head {
+    text-align: center;
+    margin-bottom: 88px;
+  }
+  .section-head .label {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .section-head h2 {
+    font-family: var(--font-zh);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+  .section-head .em {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .tool-row {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 56px;
+    padding: 64px 0;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    align-items: center;
+    transition: padding var(--dur) var(--ease);
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  .tool-row.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1s var(--ease-out-soft), transform 1s var(--ease-out-soft);
+  }
+  .tool-row:first-child { border-top: 1px solid var(--rule); }
+  .tool-row:last-child { border-bottom: 1px solid var(--rule); }
+
+  .tool-row:hover {
+    padding-left: 12px;
+  }
+  .tool-row:hover .tool-char {
+    transform: scale(1.05) rotate(-2deg);
+    color: var(--accent);
+  }
+  .tool-row:hover .cta {
+    color: var(--accent);
+    letter-spacing: 0.18em;
+  }
+  .tool-row:hover .cta-line {
     background: var(--accent);
+    transform: scaleX(1.15);
+  }
+
+  @media (max-width: 880px) {
+    .tool-row {
+      grid-template-columns: 56px 1fr;
+      gap: 24px;
+      padding: 44px 0;
+    }
+    .tool-row .tool-char-wrap { display: none; }
+  }
+
+  .tool-num {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(56px, 7vw, 88px);
+    color: var(--ink-4);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    transition: color var(--dur) var(--ease);
+  }
+  .tool-row:hover .tool-num {
+    color: var(--ink);
+  }
+
+  .tool-body {
+    max-width: 580px;
+  }
+
+  .tool-tag {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--ink-3);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tool-tag .new {
+    padding: 2px 8px;
+    background: var(--accent);
+    color: var(--bg);
+    border-radius: 999px;
+    font-size: 8.5px;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+  body.dark .tool-tag .new { color: var(--bg); }
+
+  .tool-title {
+    font-family: var(--font-zh);
+    font-size: clamp(34px, 4.5vw, 52px);
+    font-weight: 400;
+    color: var(--ink);
+    margin: 0 0 4px;
+    letter-spacing: 0.04em;
+    line-height: 1.05;
+  }
+  .tool-title .ko {
+    font-family: var(--font-ko);
+    font-weight: 500;
+  }
+
+  .tool-sub {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-2);
+    margin: 0 0 18px;
+    font-weight: 400;
+    letter-spacing: 0.005em;
+  }
+
+  .tool-desc {
+    font-size: 14.5px;
+    color: var(--ink-3);
+    line-height: 1.85;
+    margin: 0 0 22px;
+    max-width: 540px;
+  }
+
+  .tool-meta {
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+    margin-bottom: 28px;
+  }
+  .tool-meta span {
+    color: var(--ink-4);
+    margin: 0 8px;
   }
 
   .cta {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 14px;
     color: var(--ink);
     font-family: var(--font-display);
-    font-size: 13px;
+    font-size: 11.5px;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     transition: all var(--dur) var(--ease);
   }
-  .cta svg {
-    width: 13px;
-    height: 13px;
-    transition: transform var(--dur) var(--ease);
-  }
-  .tool-card:hover .cta svg {
-    transform: translateX(3px);
+  .cta-line {
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--ink);
+    transition: all var(--dur) var(--ease);
+    transform-origin: left;
   }
 
-  /* Grid of secondary tools */
-  .grid {
+  .tool-char-wrap {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tool-char {
+    font-family: var(--font-zh);
+    font-size: 220px;
+    font-weight: 400;
+    color: var(--ink-5);
+    line-height: 0.8;
+    transition: all var(--dur-slow) var(--ease-out-soft);
+    user-select: none;
+    pointer-events: none;
+  }
+  .tool-char.ko {
+    font-family: var(--font-ko);
+    font-weight: 500;
+    font-size: 180px;
+  }
+
+  /* ============ Stats / Bottom info ============ */
+  .stats {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 80px 40px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    border-top: 1px solid var(--rule);
   }
   @media (max-width: 720px) {
-    .grid { grid-template-columns: 1fr; gap: 16px; }
+    .stats {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding: 48px 20px;
+    }
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat .num {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(40px, 5vw, 56px);
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .stat .num .small {
+    font-size: 0.4em;
+    color: var(--ink-3);
+    margin-left: 8px;
+    font-style: normal;
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    vertical-align: 0.3em;
+  }
+  .stat .label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
   }
 
-  /* Footer */
+  /* ============ Footer ============ */
   footer.site {
-    margin-top: 64px;
-    padding-top: 28px;
-    border-top: 1px solid var(--divider);
-    color: var(--ink-3);
-    font-size: 11.5px;
-    letter-spacing: 0.015em;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 32px 40px 56px;
+    border-top: 1px solid var(--rule);
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 16px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
   }
-  footer.site a {
+  @media (max-width: 720px) {
+    footer.site { padding: 24px 20px 32px; }
+  }
+  footer .left { display: inline-flex; align-items: center; gap: 14px; }
+  footer .left .seal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--font-zh);
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 4px;
+    transform: rotate(-3deg);
+  }
+  body.dark footer .left .seal { color: var(--bg); }
+  footer a {
     color: var(--ink-3);
     text-decoration: none;
     transition: color var(--dur) var(--ease);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
   }
-  footer.site a:hover { color: var(--accent); }
+  footer a:hover { color: var(--accent); }
 </style>
 </head>
 <body>
-<div class="app">
-  <header class="site">
-    <div class="brand">
-      <div class="eyebrow">Language Practice</div>
-      <h1>中文<span class="sep">·</span><span class="ko">한국어</span></h1>
-      <p>パッセージの書写・音読、級別の作文ドリルなど、毎日続けるための学習ツール集。</p>
-    </div>
-    <button class="icon-btn" id="theme-toggle" title="テーマ切替" aria-label="テーマ切替">
-      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-    </button>
-  </header>
 
-  <section class="featured">
-    <a href="chinese-diary.html" class="tool-card featured">
-      <div class="card-eyebrow">
-        <span>中文 · Chinese</span>
-        <span class="badge-new">NEW</span>
-      </div>
-      <h2>汉语日记</h2>
-      <p class="subtitle">Chinese Diary — 1日1パッセージ、書写と音読で身につく</p>
-      <p class="description">
-        書写・音読の反復で記憶に定着させるパッセージ書写トレーニング。HSK 1〜4 のレベルに沿った日記風の文章を、聞いて、読んで、書いて、覚える。
-      </p>
-      <ul class="features">
-        <li><i></i>HSK 1〜4 対応</li>
-        <li><i></i>音声再生（ゆっくり / 通常）</li>
-        <li><i></i>声調カラー表示</li>
-        <li><i></i>田字格キャンバス</li>
-        <li><i></i>タイピング比較</li>
-        <li><i></i>ダーク/ライト</li>
-      </ul>
-      <span class="cta">
-        開く
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </span>
-    </a>
-  </section>
-
-  <section class="grid">
-    <a href="chinese-practice.html" class="tool-card">
-      <div class="card-eyebrow">中文 · Output</div>
-      <h2>你好！</h2>
-      <p class="subtitle">中国語アウトプット練習</p>
-      <p class="description">
-        HSK級別の課題型ドリル。日本語→中国語に作文しながら反復練習。
-      </p>
-      <ul class="features">
-        <li><i></i>HSK 1〜6 コース</li>
-        <li><i></i>作文ドリル</li>
-        <li><i></i>進捗トラッキング</li>
-      </ul>
-      <span class="cta">
-        開く
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </span>
-    </a>
-
-    <a href="korean-practice.html" class="tool-card">
-      <div class="card-eyebrow"><span class="ko">한국어 · Output</span></div>
-      <h2><span class="ko">안녕！</span></h2>
-      <p class="subtitle">韓国語アウトプット練習</p>
-      <p class="description">
-        日本語→韓国語に作文しながら、TOPIK級レベルの表現を身につける反復ドリル。
-      </p>
-      <ul class="features">
-        <li><i></i>級別コース</li>
-        <li><i></i>作文ドリル</li>
-        <li><i></i>進捗トラッキング</li>
-      </ul>
-      <span class="cta">
-        開く
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </span>
-    </a>
-  </section>
-
-  <footer class="site">
-    <span>データはお使いのブラウザにのみ保存されます</span>
-    <a href="https://github.com/mariri777/language-practice" target="_blank" rel="noopener">GitHub →</a>
-  </footer>
+<div class="topbar">
+  <div class="top-mark">A Language Collection<span>·</span>2026</div>
+  <button class="theme-toggle" id="theme-toggle" aria-label="テーマ切替">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  </button>
 </div>
 
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Three Tools · Two Languages</div>
+    <h1 class="hero-title">
+      中文<span class="x">&amp;</span><span class="ko">한국어</span>
+    </h1>
+    <p class="hero-sub">A daily practice, written by hand.</p>
+    <p class="hero-desc">パッセージの書写・音読、級別の作文ドリル。<br>毎日続けるための、静かで丁寧な学習ツール集。</p>
+    <div class="hero-meta">Chinese<span>·</span>Korean<span>·</span>HSK<span>·</span>Daily Practice</div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <span class="scroll-line"></span>
+  </div>
+</section>
+
+<section class="tools">
+  <div class="section-head">
+    <div class="label">The Collection</div>
+    <h2>三つの<span class="em">教材</span></h2>
+  </div>
+
+  <a href="chinese-diary.html" class="tool-row" data-reveal>
+    <span class="tool-num">01</span>
+    <div class="tool-body">
+      <div class="tool-tag">Chinese · Daily Passage<span class="new">NEW</span></div>
+      <h3 class="tool-title">汉语日记</h3>
+      <p class="tool-sub">Chinese Diary</p>
+      <p class="tool-desc">
+        HSK 1〜4のレベルに沿った日記風の短文を、聞いて、読んで、書き写す。
+        書写と音読の反復で、記憶に静かに定着させていく日々のトレーニング。
+      </p>
+      <div class="tool-meta">HSK 1–4<span>·</span>Audio<span>·</span>田字格<span>·</span>Typing Diff</div>
+      <span class="cta">Begin the diary<span class="cta-line"></span></span>
+    </div>
+    <div class="tool-char-wrap"><span class="tool-char">汉</span></div>
+  </a>
+
+  <a href="chinese-practice.html" class="tool-row" data-reveal>
+    <span class="tool-num">02</span>
+    <div class="tool-body">
+      <div class="tool-tag">Chinese · Output Drill</div>
+      <h3 class="tool-title">你好！</h3>
+      <p class="tool-sub">中国語アウトプット練習</p>
+      <p class="tool-desc">
+        日本語から中国語へ作文するアウトプット型ドリル。
+        級別のコースを反復することで、表現が口から自然に出てくるようになるまで。
+      </p>
+      <div class="tool-meta">HSK Courses<span>·</span>Drill<span>·</span>Favourites</div>
+      <span class="cta">Open the drill<span class="cta-line"></span></span>
+    </div>
+    <div class="tool-char-wrap"><span class="tool-char">练</span></div>
+  </a>
+
+  <a href="korean-practice.html" class="tool-row" data-reveal>
+    <span class="tool-num">03</span>
+    <div class="tool-body">
+      <div class="tool-tag">Korean · Output Drill</div>
+      <h3 class="tool-title"><span class="ko">안녕！</span></h3>
+      <p class="tool-sub">韓国語アウトプット練習</p>
+      <p class="tool-desc">
+        日本語から韓国語への作文ドリル。級別の表現を反復しながら、
+        ハングルの読み書きと口に出すリズムを身につける。
+      </p>
+      <div class="tool-meta">TOPIK Courses<span>·</span>Drill<span>·</span>Favourites</div>
+      <span class="cta">Open the drill<span class="cta-line"></span></span>
+    </div>
+    <div class="tool-char-wrap"><span class="tool-char ko">한</span></div>
+  </a>
+</section>
+
+<section class="stats">
+  <div class="stat">
+    <div class="num">25<span class="small">/80</span></div>
+    <div class="label">Chinese Diary Lessons</div>
+  </div>
+  <div class="stat">
+    <div class="num">240<span class="small">sentences</span></div>
+    <div class="label">Output Drill Bank</div>
+  </div>
+  <div class="stat">
+    <div class="num">2<span class="small">languages</span></div>
+    <div class="label">Chinese &amp; Korean</div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="left">
+    <span class="seal">汉</span>
+    Data stays in your browser
+  </div>
+  <a href="https://github.com/mariri777/language-practice" target="_blank" rel="noopener">View on GitHub →</a>
+</footer>
+
 <script>
-  const STORE = 'language-practice-theme';
+  // Theme toggle
+  const STORE = 'language-collection-theme';
   let theme = localStorage.getItem(STORE) || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   const apply = () => document.body.classList.toggle('dark', theme === 'dark');
   apply();
@@ -442,6 +728,18 @@
     localStorage.setItem(STORE, theme);
     apply();
   });
+
+  // Scroll-reveal
+  const reveals = document.querySelectorAll('[data-reveal]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+  reveals.forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
