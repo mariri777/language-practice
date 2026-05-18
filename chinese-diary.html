@@ -943,6 +943,29 @@
   }
   .char-count.complete { color: var(--accent); font-weight: 600; }
 
+  .typing-submode-tabs { margin-bottom: 10px; }
+  .dictation-card {
+    background: var(--bg-subtle);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 18px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .dictation-card .dictation-icon { font-size: 28px; line-height: 1; }
+  .dictation-card .dictation-msg {
+    flex: 1;
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    min-width: 180px;
+  }
+  body.dark .dictation-card { background: var(--bg-card); }
+
   .diff-output {
     margin-top: 14px;
     padding: 16px 18px;
@@ -1352,12 +1375,27 @@
       </div>
 
       <div class="write-pane" id="typing-pane">
-        <p class="right-hint">中国語IMEを使ってもピンインでも入力できます。一字ずつ確認しながら書き写しましょう。</p>
+        <div class="grid-tabs typing-submode-tabs" id="typing-submode-tabs">
+          <button class="grid-tab active" data-submode="original">原文</button>
+          <button class="grid-tab" data-submode="dictation">聞き取り</button>
+          <button class="grid-tab" data-submode="translation">和訳</button>
+        </div>
+
+        <p class="right-hint" id="typing-hint">中国語IMEを使ってもピンインでも入力できます。一字ずつ確認しながら書き写しましょう。</p>
 
         <details class="reference-block" id="reference-block" open>
-          <summary>参照する原文を表示</summary>
+          <summary id="reference-summary">参照する原文を表示</summary>
           <div class="reference-text" id="reference-text"></div>
         </details>
+
+        <div class="dictation-card" id="dictation-card" hidden>
+          <div class="dictation-icon">🔊</div>
+          <p class="dictation-msg">上のオーディオで聞いて書き取ろう。原文と和訳は隠れています。</p>
+          <button class="canvas-btn" id="dictation-play">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            もう一度聞く
+          </button>
+        </div>
 
         <textarea class="typing-input" id="typing-input"
                   placeholder="ここに書き写してください…"
@@ -2046,6 +2084,7 @@ let showPinyin = progress._showPinyin !== false;
 let gridMode = progress._gridMode || 'tianzi';
 let theme = progress._theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 let writeMode = progress._writeMode || 'typing';  // 'canvas' or 'typing'
+let typingSubMode = progress._typingSubMode || 'original';  // 'original' | 'dictation' | 'translation'
 
 function currentLesson() {
   return LESSONS[currentIdx];
@@ -2517,14 +2556,65 @@ function updateReferenceText() {
   const lesson = currentLesson();
   if (!lesson) return;
   const refEl = document.getElementById('reference-text');
+  const summary = document.getElementById('reference-summary');
   refEl.innerHTML = '';
-  lesson.sentences.forEach(s => {
+  if (typingSubMode === 'translation') {
     const p = document.createElement('p');
-    p.textContent = s.zh;
-    p.style.margin = '0 0 4px';
+    p.textContent = lesson.translation || '';
+    p.style.margin = '0';
     refEl.appendChild(p);
-  });
+    if (summary) summary.textContent = '日本語訳を表示';
+  } else {
+    lesson.sentences.forEach(s => {
+      const p = document.createElement('p');
+      p.textContent = s.zh;
+      p.style.margin = '0 0 4px';
+      refEl.appendChild(p);
+    });
+    if (summary) summary.textContent = '参照する原文を表示';
+  }
 }
+
+function applyTypingSubMode(mode) {
+  typingSubMode = mode;
+  const refBlock = document.getElementById('reference-block');
+  const dictCard = document.getElementById('dictation-card');
+  const hint = document.getElementById('typing-hint');
+  const input = document.getElementById('typing-input');
+  document.querySelectorAll('#typing-submode-tabs .grid-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.submode === mode);
+  });
+  if (mode === 'dictation') {
+    refBlock.hidden = true;
+    dictCard.hidden = false;
+    hint.textContent = '上のオーディオで聞き取って書き写しましょう。原文は表示されていません。';
+    input.placeholder = '聞き取った文を書いてください…';
+  } else if (mode === 'translation') {
+    refBlock.hidden = false;
+    dictCard.hidden = true;
+    hint.textContent = '和訳を見て、中国語で書いてみましょう。「原文と比較」で答え合わせができます。';
+    input.placeholder = '和訳を見て中国語を書いてください…';
+  } else {
+    refBlock.hidden = false;
+    dictCard.hidden = true;
+    hint.textContent = '中国語IMEを使ってもピンインでも入力できます。一字ずつ確認しながら書き写しましょう。';
+    input.placeholder = 'ここに書き写してください…';
+  }
+  updateReferenceText();
+}
+
+document.querySelectorAll('#typing-submode-tabs .grid-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    const m = t.dataset.submode;
+    progress._typingSubMode = m;
+    saveProgress(progress);
+    applyTypingSubMode(m);
+  });
+});
+
+document.getElementById('dictation-play').addEventListener('click', () => {
+  document.getElementById('play-all-normal').click();
+});
 
 const PUNCT_RE = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/;
 const PUNCT_RE_G = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/g;
@@ -2627,6 +2717,7 @@ applyTheme();
 applyPinyinVisibility();
 applyGridMode(gridMode);
 applyWriteMode(writeMode);
+applyTypingSubMode(typingSubMode);
 renderDayJump();
 renderDay();
 updateReferenceText();
