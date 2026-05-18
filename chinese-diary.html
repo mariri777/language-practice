@@ -640,6 +640,52 @@
   }
   body.hide-pinyin .pinyin { display: none; }
 
+  .sentence-ja {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.6;
+    margin: 0 0 10px;
+    padding-left: 10px;
+    border-left: 2px solid var(--divider);
+  }
+  body.hide-translation .sentence-ja { display: none; }
+
+  .display-toggles {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .display-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--ink-3);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+  }
+  .display-toggle:hover { color: var(--ink-2); }
+  .display-toggle.active {
+    background: var(--bg-elevated);
+    color: var(--ink);
+    border-color: var(--ink-3);
+  }
+  .display-toggle .dt-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ink-mute);
+    transition: background var(--dur) var(--ease);
+  }
+  .display-toggle.active .dt-dot { background: var(--accent); }
+
   .audio-pills {
     display: inline-flex;
     gap: 5px;
@@ -1257,10 +1303,6 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
     <div class="toggle-group">
-      <button class="pill-toggle active" id="pinyin-toggle" title="ピンイン表示 (P)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Pinyin
-      </button>
       <button class="reset-link" id="reset-btn" title="進捗リセット">⟲ Reset</button>
     </div>
   </nav>
@@ -1298,12 +1340,18 @@
         </button>
       </div>
 
-      <div class="passage" id="passage"></div>
-
-      <div class="translation">
-        <div class="section-label">日本語訳</div>
-        <div class="translation-text" id="translation-text"></div>
+      <div class="display-toggles">
+        <button class="display-toggle active" id="pinyin-toggle" title="拼音 表示切替">
+          <span class="dt-dot"></span>
+          拼音
+        </button>
+        <button class="display-toggle active" id="translation-toggle" title="和訳 表示切替">
+          <span class="dt-dot"></span>
+          和訳
+        </button>
       </div>
+
+      <div class="passage" id="passage"></div>
 
       <div class="vocab-section">
         <div class="section-label" style="margin-bottom:10px;">単語</div>
@@ -1376,12 +1424,12 @@
 
       <div class="write-pane" id="typing-pane">
         <div class="grid-tabs typing-submode-tabs" id="typing-submode-tabs">
-          <button class="grid-tab active" data-submode="original">原文</button>
+          <button class="grid-tab active" data-submode="original">原文表示</button>
           <button class="grid-tab" data-submode="dictation">聞き取り</button>
-          <button class="grid-tab" data-submode="translation">和訳</button>
+          <button class="grid-tab" data-submode="translation">和訳表示</button>
         </div>
 
-        <p class="right-hint" id="typing-hint">中国語IMEを使ってもピンインでも入力できます。一字ずつ確認しながら書き写しましょう。</p>
+        <p class="right-hint" id="typing-hint" hidden></p>
 
         <details class="reference-block" id="reference-block" open>
           <summary id="reference-summary">参照する原文を表示</summary>
@@ -1390,10 +1438,17 @@
 
         <div class="dictation-card" id="dictation-card" hidden>
           <div class="dictation-icon">🔊</div>
-          <p class="dictation-msg">上のオーディオで聞いて書き取ろう。原文と和訳は隠れています。</p>
-          <button class="canvas-btn" id="dictation-play">
+          <button class="canvas-btn" id="dictation-play-normal">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            もう一度聞く
+            通常
+          </button>
+          <button class="canvas-btn" id="dictation-play-slow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            ゆっくり
+          </button>
+          <button class="canvas-btn" id="dictation-stop">
+            <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+            停止
           </button>
         </div>
 
@@ -1425,9 +1480,6 @@
       <span class="t3"><i></i>第3声</span>
       <span class="t4"><i></i>第4声</span>
       <span class="t0"><i></i>軽声</span>
-    </div>
-    <div class="keys">
-      <kbd>←</kbd><kbd>→</kbd> 移動 · <kbd>Space</kbd> 再生 · <kbd>Esc</kbd> 停止 · <kbd>P</kbd> Pinyin · <kbd>D</kbd> Theme
     </div>
     <div class="meta">
       <span>個人の趣味の範囲で作っています。細かいバグなどはご容赦ください。</span>
@@ -2081,6 +2133,7 @@ let progress = loadProgress();
 let currentIdx = progress._currentIdx ?? 0;  // 0-based array index
 if (currentIdx < 0 || currentIdx >= LESSONS.length) currentIdx = 0;
 let showPinyin = progress._showPinyin !== false;
+let showTranslation = progress._showTranslation !== false;
 let gridMode = progress._gridMode || 'tianzi';
 let theme = progress._theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 let writeMode = progress._writeMode || 'typing';  // 'canvas' or 'typing'
@@ -2255,13 +2308,25 @@ function doRender(lesson) {
 
   const passage = document.getElementById('passage');
   passage.innerHTML = '';
+
+  // 和訳を文末記号で区切り、各中国語文の文末記号数に応じて割り当てる
+  const jaChunks = (lesson.translation || '')
+    .split(/(?<=[。！？!?])/)
+    .map(s => s.trim())
+    .filter(Boolean);
+  let jaIdx = 0;
+
   lesson.sentences.forEach(s => {
     const row = document.createElement('div');
     row.className = 'sentence';
     row.dataset.zh = s.zh;
+    const punctCount = Math.max(1, (s.zh.match(/[。！？!?]/g) || []).length);
+    const jaForRow = jaChunks.slice(jaIdx, jaIdx + punctCount).join('');
+    jaIdx += punctCount;
     row.innerHTML = `
       <p class="zh"></p>
       <p class="pinyin">${colorizePinyin(s.pinyin)}</p>
+      <p class="sentence-ja"></p>
       <div class="audio-pills">
         <button class="audio-pill" data-rate="0.95">
           <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
@@ -2274,6 +2339,9 @@ function doRender(lesson) {
       </div>
     `;
     row.querySelector('.zh').textContent = s.zh;
+    const jaEl = row.querySelector('.sentence-ja');
+    jaEl.textContent = jaForRow;
+    if (!jaForRow) jaEl.style.display = 'none';
     row.addEventListener('click', e => {
       if (e.target.closest('.audio-pill')) return;
       speakSentence(s.zh, 0.95, row);
@@ -2286,8 +2354,6 @@ function doRender(lesson) {
     });
     passage.appendChild(row);
   });
-
-  document.getElementById('translation-text').textContent = lesson.translation;
 
   const vlist = document.getElementById('vocab-list');
   vlist.innerHTML = '';
@@ -2347,6 +2413,11 @@ function applyPinyinVisibility() {
   document.getElementById('pinyin-toggle').classList.toggle('active', showPinyin);
 }
 
+function applyTranslationVisibility() {
+  document.body.classList.toggle('hide-translation', !showTranslation);
+  document.getElementById('translation-toggle').classList.toggle('active', showTranslation);
+}
+
 function goToIdx(n, animate = true) {
   if (n < 0 || n >= LESSONS.length) return;
   stopAudio();
@@ -2380,8 +2451,8 @@ document.getElementById('complete-btn').addEventListener('click', () => {
 document.getElementById('reset-btn').addEventListener('click', () => {
   if (confirm('進捗をすべてリセットしますか？（取り消せません）')) {
     localStorage.removeItem(STORAGE_KEY);
-    progress = {}; currentIdx = 0; showPinyin = true; gridMode = 'tianzi';
-    applyPinyinVisibility(); applyGridMode(gridMode);
+    progress = {}; currentIdx = 0; showPinyin = true; showTranslation = true; gridMode = 'tianzi';
+    applyPinyinVisibility(); applyTranslationVisibility(); applyGridMode(gridMode);
     renderDay(); renderDayJump();
   }
 });
@@ -2393,6 +2464,13 @@ document.getElementById('pinyin-toggle').addEventListener('click', () => {
   progress._showPinyin = showPinyin;
   saveProgress(progress);
   applyPinyinVisibility();
+});
+
+document.getElementById('translation-toggle').addEventListener('click', () => {
+  showTranslation = !showTranslation;
+  progress._showTranslation = showTranslation;
+  saveProgress(progress);
+  applyTranslationVisibility();
 });
 
 document.getElementById('play-all-normal').addEventListener('click', e => {
@@ -2559,10 +2637,17 @@ function updateReferenceText() {
   const summary = document.getElementById('reference-summary');
   refEl.innerHTML = '';
   if (typingSubMode === 'translation') {
-    const p = document.createElement('p');
-    p.textContent = lesson.translation || '';
-    p.style.margin = '0';
-    refEl.appendChild(p);
+    // 和訳を文末記号（。！？）で区切って、原文と同じく一文ずつ改行表示
+    const parts = (lesson.translation || '')
+      .split(/(?<=[。！？])/)
+      .map(s => s.trim())
+      .filter(Boolean);
+    parts.forEach(s => {
+      const p = document.createElement('p');
+      p.textContent = s;
+      p.style.margin = '0 0 4px';
+      refEl.appendChild(p);
+    });
     if (summary) summary.textContent = '日本語訳を表示';
   } else {
     lesson.sentences.forEach(s => {
@@ -2587,17 +2672,20 @@ function applyTypingSubMode(mode) {
   if (mode === 'dictation') {
     refBlock.hidden = true;
     dictCard.hidden = false;
-    hint.textContent = '上のオーディオで聞き取って書き写しましょう。原文は表示されていません。';
+    hint.hidden = false;
+    hint.textContent = '下のボタンで聞き取って書き写しましょう。原文と和訳は表示されていません。';
     input.placeholder = '聞き取った文を書いてください…';
   } else if (mode === 'translation') {
     refBlock.hidden = false;
     dictCard.hidden = true;
-    hint.textContent = '和訳を見て、中国語で書いてみましょう。「原文と比較」で答え合わせができます。';
+    hint.hidden = true;
+    hint.textContent = '';
     input.placeholder = '和訳を見て中国語を書いてください…';
   } else {
     refBlock.hidden = false;
     dictCard.hidden = true;
-    hint.textContent = '中国語IMEを使ってもピンインでも入力できます。一字ずつ確認しながら書き写しましょう。';
+    hint.hidden = true;
+    hint.textContent = '';
     input.placeholder = 'ここに書き写してください…';
   }
   updateReferenceText();
@@ -2612,8 +2700,14 @@ document.querySelectorAll('#typing-submode-tabs .grid-tab').forEach(t => {
   });
 });
 
-document.getElementById('dictation-play').addEventListener('click', () => {
+document.getElementById('dictation-play-normal').addEventListener('click', () => {
   document.getElementById('play-all-normal').click();
+});
+document.getElementById('dictation-play-slow').addEventListener('click', () => {
+  document.getElementById('play-all-slow').click();
+});
+document.getElementById('dictation-stop').addEventListener('click', () => {
+  document.getElementById('stop-audio').click();
 });
 
 const PUNCT_RE = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/;
@@ -2715,6 +2809,7 @@ window.addEventListener('resize', fitCanvas);
 
 applyTheme();
 applyPinyinVisibility();
+applyTranslationVisibility();
 applyGridMode(gridMode);
 applyWriteMode(writeMode);
 applyTypingSubMode(typingSubMode);
