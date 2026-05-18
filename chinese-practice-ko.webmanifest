@@ -1,0 +1,20 @@
+{
+  "name": "你好！중국어 아웃풋 연습",
+  "short_name": "你好！",
+  "id": "/chinese-practice-ko.html",
+  "start_url": "./chinese-practice-ko.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff5f7",
+  "theme_color": "#e76b8a",
+  "lang": "ko",
+  "description": "한국인 학습자를 위한 중국어 아웃풋 연습 도구",
+  "icons": [
+    { "src": "icons/favicon-zh-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-zh-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-zh-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/favicon-zh-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "favicon-zh.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
