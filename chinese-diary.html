@@ -2327,7 +2327,12 @@ document.getElementById('day-jump').addEventListener('change', e => goToIdx(pars
 document.getElementById('complete-btn').addEventListener('click', () => {
   const lesson = currentLesson();
   const dp = getLessonProgress(lesson);
+  const wasCompleted = dp.completed;
   dp.completed = !dp.completed;
+  // 完了に切り替えた時だけ、次回起動時は次のレッスンから始まるよう保存（最終レッスンは除く）
+  if (!wasCompleted && currentIdx < LESSONS.length - 1) {
+    progress._currentIdx = currentIdx + 1;
+  }
   setLessonProgress(lesson, dp);
   renderDay();
   renderDayJump();
