@@ -2828,10 +2828,13 @@
     // ========================================================================
     function showHint() {
       if (!currentSent) return;
-      const first = currentSent.zh.charAt(0);
-      const fw = currentSent.w[0];
-      const py = fw ? fw.p : "";
-      elHintArea.innerHTML = `<div class="hint">最初の字は <strong class="zh">${first}</strong>（${py}）、合計 ${currentSent.zh.length} 文字</div>`;
+      const firstPy = (currentSent.py || "").split(/\s+/)[0].replace(/[.,!?。、！？]+$/, "");
+      // Each Chinese syllable has exactly one vowel cluster — count them to get word length.
+      const syl = firstPy.toLowerCase().match(/[aeiouüāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]+/g);
+      const sylCount = syl ? syl.length : 1;
+      const firstWord = currentSent.zh.slice(0, sylCount);
+      const charCount = currentSent.zh.replace(/[\s。、，．・！？!?,.;:：；「」『』（）()　]/g, "").length;
+      elHintArea.innerHTML = `<div class="hint">最初の単語は <strong class="zh">${firstWord}</strong>（${firstPy}）、合計 ${charCount} 文字</div>`;
     }
 
     // ========================================================================

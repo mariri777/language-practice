@@ -2521,11 +2521,14 @@ function updateReferenceText() {
   });
 }
 
+const PUNCT_RE = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/;
+const PUNCT_RE_G = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/g;
+
 function updateCharCount() {
   const typed = typingInput.value;
   const original = getLessonText();
-  const typedCount = [...typed].filter(c => !/\s/.test(c)).length;
-  const originalCount = [...original].filter(c => !/\s/.test(c)).length;
+  const typedCount = [...typed].filter(c => !PUNCT_RE.test(c)).length;
+  const originalCount = [...original].filter(c => !PUNCT_RE.test(c)).length;
   charCount.textContent = `${typedCount} / ${originalCount} 文字`;
   charCount.classList.toggle('complete', typedCount >= originalCount && typedCount > 0);
 }
@@ -2541,9 +2544,9 @@ function clearTyping() {
 }
 
 function computeDiff(typed, original) {
-  // Normalize: remove whitespace for comparison
-  const t = [...typed.replace(/\s+/g, '')];
-  const o = [...original.replace(/\s+/g, '')];
+  // Normalize: remove whitespace and punctuation for comparison
+  const t = [...typed.replace(PUNCT_RE_G, '')];
+  const o = [...original.replace(PUNCT_RE_G, '')];
   const result = [];
   let match = 0, wrong = 0, missing = 0, extra = 0;
   const maxLen = Math.max(t.length, o.length);

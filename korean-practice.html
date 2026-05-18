@@ -2009,9 +2009,11 @@
     // ========================================================================
     function showHint() {
       if (!currentSent) return;
-      const first = currentSent.ko.split(/\s/)[0];
-      const len = currentSent.ko.replace(/\s/g, "").length;
-      elHintArea.innerHTML = `<div class="hint">最初の単語は <strong class="ko">${first}</strong>、合計 ${len} 文字（スペース除く）</div>`;
+      // 最初のハングル1音節だけを見せる（単語全体だと答えそのものになるケースが多いため）
+      const stripped = currentSent.ko.replace(/[\s。、，．・！？!?,.;:：；「」『』（）()　]/g, "");
+      const first = [...stripped][0] || "";
+      const len = stripped.length;
+      elHintArea.innerHTML = `<div class="hint">最初の文字は <strong class="ko">${first}</strong>、合計 ${len} 文字</div>`;
     }
 
     // ========================================================================
