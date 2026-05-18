@@ -1051,23 +1051,110 @@
     color: var(--ink);
     font-variant-numeric: tabular-nums;
   }
-  .diff-match {
-    color: var(--ink);
+  .diff-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
   }
+  .diff-line {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--divider);
+  }
+  body.dark .diff-line { background: var(--bg-subtle); }
+  .diff-line.is-ok { border-color: rgba(58, 158, 100, 0.35); background: rgba(58, 158, 100, 0.06); }
+  .diff-line.has-error { border-color: rgba(192, 57, 43, 0.30); background: rgba(192, 57, 43, 0.04); }
+  body.dark .diff-line.is-ok { background: rgba(58, 158, 100, 0.12); }
+  body.dark .diff-line.has-error { background: rgba(240, 133, 122, 0.10); }
+  .diff-line-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .diff-line-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+  }
+  .diff-line-status {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+  }
+  .diff-line-status.ok { color: #2f7a4d; background: rgba(58, 158, 100, 0.16); }
+  .diff-line-status.err { color: #c0392b; background: rgba(192, 57, 43, 0.12); }
+  body.dark .diff-line-status.ok { color: #7dd6a3; background: rgba(58, 158, 100, 0.24); }
+  body.dark .diff-line-status.err { color: #f0857a; background: rgba(240, 133, 122, 0.18); }
+  .diff-row-label {
+    display: inline-block;
+    min-width: 32px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    color: var(--ink-4);
+    margin-right: 8px;
+    letter-spacing: 0.06em;
+    vertical-align: middle;
+  }
+  .diff-line-orig {
+    color: var(--ink-3);
+    font-size: 14px;
+    margin-bottom: 6px;
+    line-height: 1.7;
+  }
+  .diff-line-typed {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    font-size: 16px;
+    line-height: 2;
+  }
+  .diff-row-body { display: inline; }
+  .diff-match { color: var(--ink); }
   .diff-wrong {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1.05;
+    margin: 0 1px;
+    padding: 0 2px;
+    background: rgba(192, 57, 43, 0.08);
+    border-radius: 4px;
+  }
+  .diff-wrong .diff-typed-char {
+    color: #c0392b;
+    text-decoration: line-through;
+    text-decoration-color: rgba(192, 57, 43, 0.55);
+    font-size: 14px;
+  }
+  .diff-wrong .diff-expect-char {
+    color: #2f7a4d;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  body.dark .diff-wrong { background: rgba(240, 133, 122, 0.14); }
+  body.dark .diff-wrong .diff-typed-char { color: #f0857a; }
+  body.dark .diff-wrong .diff-expect-char { color: #7dd6a3; }
+  .diff-missing {
     color: #c0392b;
     background: rgba(192, 57, 43, 0.10);
-    border-radius: 3px;
-    padding: 0 2px;
+    border: 1px dashed rgba(192, 57, 43, 0.45);
+    border-radius: 4px;
+    padding: 0 3px;
+    margin: 0 1px;
   }
-  body.dark .diff-wrong {
+  body.dark .diff-missing {
     color: #f0857a;
     background: rgba(240, 133, 122, 0.12);
-  }
-  .diff-missing {
-    color: var(--ink-4);
-    opacity: 0.55;
-    border-bottom: 1px dashed var(--ink-4);
+    border-color: rgba(240, 133, 122, 0.45);
   }
   .diff-extra {
     color: #c0392b;
@@ -1075,6 +1162,11 @@
     text-decoration-color: rgba(192, 57, 43, 0.6);
   }
   body.dark .diff-extra { color: #f0857a; }
+  .diff-empty {
+    color: var(--ink-4);
+    font-style: italic;
+    font-size: 13px;
+  }
 
   .grid-tabs {
     display: inline-flex;
@@ -2189,9 +2281,18 @@ function speakSentence(text, rate, sentenceEl) {
   speechSynthesis.speak(u);
 }
 
+// 听写 (dictation) playback supports pause/resume: stopping captures the
+// current sentence index, and the next play resumes from that point.
+let dictationResumeIdx = null;
+let dictationActiveIdx = null;
+let dictationToken = null;
+
 function speakAll(sentenceEls, rate, btn) {
   if (!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
+  // Cancel any in-flight dictation loop so onend doesn't fight this loop.
+  dictationActiveIdx = null;
+  dictationToken = null;
   setActiveBtn(btn);
   let i = 0;
   const speakNext = () => {
@@ -2212,7 +2313,57 @@ function speakAll(sentenceEls, rate, btn) {
   speakNext();
 }
 
+function playDictation(rate) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  setActiveBtn(null);
+  if (playingSentenceEl) { playingSentenceEl.classList.remove('playing'); playingSentenceEl = null; }
+
+  const sentenceEls = document.querySelectorAll('.sentence');
+  if (sentenceEls.length === 0) return;
+
+  let startIdx = (dictationResumeIdx !== null && dictationResumeIdx < sentenceEls.length)
+    ? dictationResumeIdx
+    : 0;
+  dictationResumeIdx = null;
+
+  let i = startIdx;
+  dictationActiveIdx = i;
+  const myToken = Symbol('dictation');
+  dictationToken = myToken;
+
+  const speakNext = () => {
+    if (dictationToken !== myToken) return;
+    if (i >= sentenceEls.length) {
+      dictationActiveIdx = null;
+      if (playingSentenceEl) { playingSentenceEl.classList.remove('playing'); playingSentenceEl = null; }
+      return;
+    }
+    dictationActiveIdx = i;
+    const el = sentenceEls[i];
+    const u = new SpeechSynthesisUtterance(el.dataset.zh);
+    u.lang = 'zh-CN'; u.rate = rate;
+    const v = pickZhVoice(); if (v) u.voice = v;
+    if (playingSentenceEl) playingSentenceEl.classList.remove('playing');
+    el.classList.add('playing'); playingSentenceEl = el;
+    u.onend = () => {
+      if (dictationToken !== myToken) return;
+      i++;
+      speakNext();
+    };
+    speechSynthesis.speak(u);
+  };
+  speakNext();
+}
+
 function stopAudio() {
+  // If a dictation loop is mid-flight, remember where it was so the next
+  // dictation-play resumes there.
+  if (dictationActiveIdx !== null) {
+    dictationResumeIdx = dictationActiveIdx;
+    dictationActiveIdx = null;
+  }
+  dictationToken = null;
   if ('speechSynthesis' in window) speechSynthesis.cancel();
   setActiveBtn(null);
   if (playingSentenceEl) { playingSentenceEl.classList.remove('playing'); playingSentenceEl = null; }
@@ -2421,6 +2572,7 @@ function applyTranslationVisibility() {
 function goToIdx(n, animate = true) {
   if (n < 0 || n >= LESSONS.length) return;
   stopAudio();
+  dictationResumeIdx = null;
   currentIdx = n;
   progress._currentIdx = currentIdx;
   saveProgress(progress);
@@ -2701,14 +2853,12 @@ document.querySelectorAll('#typing-submode-tabs .grid-tab').forEach(t => {
 });
 
 document.getElementById('dictation-play-normal').addEventListener('click', () => {
-  document.getElementById('play-all-normal').click();
+  playDictation(0.95);
 });
 document.getElementById('dictation-play-slow').addEventListener('click', () => {
-  document.getElementById('play-all-slow').click();
+  playDictation(0.55);
 });
-document.getElementById('dictation-stop').addEventListener('click', () => {
-  document.getElementById('stop-audio').click();
-});
+document.getElementById('dictation-stop').addEventListener('click', stopAudio);
 
 const PUNCT_RE = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/;
 const PUNCT_RE_G = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/g;
@@ -2733,29 +2883,78 @@ function clearTyping() {
 }
 
 function computeDiff(typed, original) {
-  // Normalize: remove whitespace and punctuation for comparison
+  // Strip whitespace/punctuation for comparison, but use LCS alignment so
+  // a single dropped char doesn't cascade into "everything after is wrong".
   const t = [...typed.replace(PUNCT_RE_G, '')];
   const o = [...original.replace(PUNCT_RE_G, '')];
-  const result = [];
-  let match = 0, wrong = 0, missing = 0, extra = 0;
-  const maxLen = Math.max(t.length, o.length);
-  for (let i = 0; i < maxLen; i++) {
-    if (t[i] === undefined) {
-      result.push({ char: o[i], type: 'missing' });
-      missing++;
-    } else if (o[i] === undefined) {
-      result.push({ char: t[i], type: 'extra' });
-      extra++;
-    } else if (t[i] === o[i]) {
-      result.push({ char: t[i], type: 'match' });
-      match++;
-    } else {
-      // Show typed char as wrong, also indicate expected
-      result.push({ char: t[i], type: 'wrong', expected: o[i] });
-      wrong++;
+  const n = t.length, m = o.length;
+
+  if (n === 0 && m === 0) {
+    return { ops: [], match: 0, wrong: 0, missing: 0, extra: 0, total: 0 };
+  }
+
+  const dp = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+  for (let i = 1; i <= n; i++) {
+    for (let j = 1; j <= m; j++) {
+      if (t[i-1] === o[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+      else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
     }
   }
-  return { result, match, wrong, missing, extra, total: o.length };
+
+  const ops = [];
+  let i = n, j = m;
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && t[i-1] === o[j-1]) {
+      ops.push({ type: 'match', char: t[i-1], oi: j-1 });
+      i--; j--;
+    } else if (j > 0 && (i === 0 || dp[i][j-1] >= dp[i-1][j])) {
+      ops.push({ type: 'missing', char: o[j-1], oi: j-1 });
+      j--;
+    } else {
+      ops.push({ type: 'extra', char: t[i-1] });
+      i--;
+    }
+  }
+  ops.reverse();
+
+  // Pair adjacent missing+extra into a single "wrong" substitution.
+  const merged = [];
+  for (let k = 0; k < ops.length; k++) {
+    const a = ops[k], b = ops[k+1];
+    if (a.type === 'missing' && b && b.type === 'extra') {
+      merged.push({ type: 'wrong', char: b.char, expected: a.char, oi: a.oi });
+      k++;
+    } else if (a.type === 'extra' && b && b.type === 'missing') {
+      merged.push({ type: 'wrong', char: a.char, expected: b.char, oi: b.oi });
+      k++;
+    } else {
+      merged.push(a);
+    }
+  }
+
+  let match = 0, wrong = 0, missing = 0, extra = 0;
+  for (const op of merged) {
+    if (op.type === 'match') match++;
+    else if (op.type === 'wrong') wrong++;
+    else if (op.type === 'missing') missing++;
+    else if (op.type === 'extra') extra++;
+  }
+  return { ops: merged, match, wrong, missing, extra, total: m };
+}
+
+function splitOriginalSentences(original) {
+  // Split keeping the trailing punctuation with each sentence.
+  const sentences = [];
+  let cur = '';
+  for (const c of original) {
+    cur += c;
+    if (/[。！？!?]/.test(c)) {
+      sentences.push(cur);
+      cur = '';
+    }
+  }
+  if (cur.trim()) sentences.push(cur);
+  return sentences;
 }
 
 function renderDiff() {
@@ -2766,23 +2965,56 @@ function renderDiff() {
     diffOutput.innerHTML = '<span class="diff-label">比較結果</span><p style="color:var(--ink-3);font-size:13px;font-style:italic;">タイピングエリアに文章を入力してから比較してください。</p>';
     return;
   }
-  const { result, match, wrong, missing, extra, total } = computeDiff(typed, original);
-  const html = result.map(r => {
-    if (r.type === 'wrong') {
-      return `<span class="diff-wrong" title="正解: ${escapeHtml(r.expected)}">${escapeHtml(r.char)}</span>`;
-    } else if (r.type === 'missing') {
-      return `<span class="diff-missing">${escapeHtml(r.char)}</span>`;
-    } else if (r.type === 'extra') {
-      return `<span class="diff-extra">${escapeHtml(r.char)}</span>`;
+  const { ops, match, wrong, missing, extra, total } = computeDiff(typed, original);
+
+  // Split original into sentences; bucket ops by which sentence each op belongs to.
+  const sentences = splitOriginalSentences(original);
+  const sentenceLens = sentences.map(s => [...s.replace(PUNCT_RE_G, '')].length);
+  const cumLens = [];
+  { let acc = 0; for (const l of sentenceLens) { acc += l; cumLens.push(acc); } }
+
+  const buckets = sentences.map(() => []);
+  let lastBucket = 0;
+  for (const op of ops) {
+    let b;
+    if (op.type === 'match' || op.type === 'wrong' || op.type === 'missing') {
+      b = cumLens.findIndex(c => op.oi < c);
+      if (b === -1) b = sentences.length - 1;
+      lastBucket = b;
     } else {
-      return `<span class="diff-match">${escapeHtml(r.char)}</span>`;
+      // 'extra' has no original index — attach to the bucket of the surrounding chars.
+      b = lastBucket;
     }
+    buckets[b].push(op);
+  }
+
+  const linesHtml = sentences.map((origLine, idx) => {
+    const bucket = buckets[idx];
+    const hasErrors = bucket.length === 0 || bucket.some(op => op.type !== 'match');
+    const typedHtml = bucket.length === 0
+      ? '<span class="diff-empty">（未入力）</span>'
+      : bucket.map(op => {
+          if (op.type === 'match') return `<span class="diff-match">${escapeHtml(op.char)}</span>`;
+          if (op.type === 'wrong') return `<span class="diff-wrong"><span class="diff-typed-char">${escapeHtml(op.char)}</span><span class="diff-expect-char">${escapeHtml(op.expected)}</span></span>`;
+          if (op.type === 'missing') return `<span class="diff-missing">${escapeHtml(op.char)}</span>`;
+          if (op.type === 'extra') return `<span class="diff-extra">${escapeHtml(op.char)}</span>`;
+          return '';
+        }).join('');
+    const badge = hasErrors ? '<span class="diff-line-status err">要確認</span>' : '<span class="diff-line-status ok">✓ 正解</span>';
+    return `
+      <div class="diff-line ${hasErrors ? 'has-error' : 'is-ok'}">
+        <div class="diff-line-head"><span class="diff-line-label">第${idx + 1}文</span>${badge}</div>
+        <div class="diff-line-orig"><span class="diff-row-label">原文</span>${escapeHtml(origLine)}</div>
+        <div class="diff-line-typed"><span class="diff-row-label">入力</span><span class="diff-row-body">${typedHtml}</span></div>
+      </div>
+    `;
   }).join('');
+
   const accuracy = total > 0 ? Math.round((match / total) * 100) : 0;
   diffOutput.hidden = false;
   diffOutput.innerHTML = `
     <span class="diff-label">比較結果 · 正解率 ${accuracy}%</span>
-    <div>${html}</div>
+    <div class="diff-lines">${linesHtml}</div>
     <div class="diff-summary">
       <span>正解 <strong>${match}</strong></span>
       <span>誤字 <strong>${wrong}</strong></span>
