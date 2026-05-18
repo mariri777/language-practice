@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>你好！중국어 아웃풋 연습</title>
+  <link rel="icon" type="image/svg+xml" href="favicon-zh.svg" />
+  <link rel="apple-touch-icon" href="icons/favicon-zh-180.png" />
+  <link rel="manifest" href="chinese-practice-ko.webmanifest" />
+  <meta name="theme-color" content="#e76b8a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="你好！" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff5f7; --bg-soft: #ffe7ee; --pink-light: #ffd0dd;
+      --pink: #ff8fa9; --pink-deep: #e76b8a; --pink-darker: #c84d6e;
+      --cream: #fffaf9; --white: #ffffff;
+      --ink: #4a2f3a; --ink-soft: #8a6a76; --ink-mute: #b69aa3;
+      --line: #f3d9d3;
+      --green: #6db99e; --green-soft: #d8f0e6;
+      --red: #e76b6b; --red-soft: #fde2e2;
+      --yellow: #f5c46b; --yellow-soft: #fbecc7;
+      --shadow: 0 14px 30px -18px rgba(231,107,138,.45);
+      --shadow-lg: 0 26px 60px -28px rgba(231,107,138,.55);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Plus Jakarta Sans", -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Noto Sans SC", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, #fff0f6 0%, #ffe1ec 25%, #fff6fa 50%, #ffd9e6 75%, #fff0f6 100%);
+      background-size: 400% 400%;
+      animation: bgShift 22s ease-in-out infinite;
+      background-attachment: fixed;
+      min-height: 100vh; line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      position: relative; overflow-x: hidden;
+    }
+    @keyframes bgShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* ふんわり光るピンクの bokeh レイヤー */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,170,196,.55) 0%, transparent 30%),
+        radial-gradient(circle at 82% 18%, rgba(255,195,215,.5) 0%, transparent 32%),
+        radial-gradient(circle at 28% 82%, rgba(255,160,190,.45) 0%, transparent 30%),
+        radial-gradient(circle at 78% 78%, rgba(255,205,220,.5) 0%, transparent 34%),
+        radial-gradient(circle at 50% 50%, rgba(255,225,235,.35) 0%, transparent 45%);
+      filter: blur(2px);
+      animation: bokehDrift 16s ease-in-out infinite alternate;
+    }
+    @keyframes bokehDrift {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(-12px, 10px, 0) scale(1.05); }
+      100% { transform: translate3d(8px, -14px, 0) scale(1.02); }
+    }
+
+    /* キラキラ星空レイヤー（CSSのみのドットパターン） */
+    body::after {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 12% 18%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.5px 1.5px at 84% 14%, rgba(255,220,235,.9), transparent 60%),
+        radial-gradient(2px 2px at 24% 64%, rgba(255,255,255,.8), transparent 60%),
+        radial-gradient(1.2px 1.2px at 62% 32%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.8px 1.8px at 92% 60%, rgba(255,235,245,.85), transparent 60%),
+        radial-gradient(1.5px 1.5px at 8% 88%, rgba(255,255,255,.85), transparent 60%),
+        radial-gradient(1.3px 1.3px at 46% 80%, rgba(255,220,235,.85), transparent 60%),
+        radial-gradient(2px 2px at 72% 90%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.4px 1.4px at 36% 8%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.6px 1.6px at 58% 56%, rgba(255,240,247,.85), transparent 60%);
+      animation: twinkle 4s ease-in-out infinite;
+      opacity: .85;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: .35; }
+      50%      { opacity: .95; }
+    }
+
+    .zh { font-family: "Noto Sans SC", "Plus Jakarta Sans", sans-serif; }
+
+    /* 浮遊する花びら・ハート・キラキラ */
+    .deco { position: fixed; pointer-events: none; z-index: 0; will-change: transform; }
+    .deco.petal  { animation: floatA 14s ease-in-out infinite; opacity: .6; }
+    .deco.heart  { animation: floatB 18s ease-in-out infinite; opacity: .55; }
+    .deco.spark  { animation: sparkle 3.6s ease-in-out infinite; opacity: .8; }
+    .deco.ribbon { animation: floatC 22s ease-in-out infinite; opacity: .5; }
+
+    .deco.p1 { top: 6%;  left: 4%;  font-size: 24px; animation-delay: 0s; }
+    .deco.p2 { top: 18%; right: 6%; font-size: 20px; animation-delay: -3s; }
+    .deco.p3 { bottom: 14%; left: 7%;  font-size: 26px; animation-delay: -6s; }
+    .deco.p4 { bottom: 24%; right: 5%; font-size: 18px; animation-delay: -9s; }
+    .deco.p5 { top: 48%; left: 2%;  font-size: 16px; animation-delay: -4s; }
+    .deco.p6 { top: 62%; right: 3%; font-size: 22px; animation-delay: -7s; }
+    .deco.h1d { top: 12%; left: 50%; font-size: 16px; animation-delay: -2s; }
+    .deco.h2d { bottom: 8%; right: 36%; font-size: 18px; animation-delay: -10s; }
+    .deco.s1 { top: 28%; left: 28%; font-size: 14px; animation-delay: 0s; }
+    .deco.s2 { top: 36%; right: 22%; font-size: 12px; animation-delay: -1.2s; }
+    .deco.s3 { bottom: 36%; left: 32%; font-size: 13px; animation-delay: -2.4s; }
+    .deco.s4 { bottom: 18%; right: 26%; font-size: 15px; animation-delay: -.8s; }
+    .deco.s5 { top: 70%; left: 18%; font-size: 11px; animation-delay: -1.8s; }
+    .deco.r1 { top: 40%; right: 10%; font-size: 18px; animation-delay: -5s; }
+
+    @keyframes floatA {
+      0%, 100% { transform: translateY(0)   rotate(0deg); }
+      50%      { transform: translateY(-22px) rotate(18deg); }
+    }
+    @keyframes floatB {
+      0%, 100% { transform: translate(0, 0)    rotate(-6deg) scale(1); }
+      50%      { transform: translate(-14px, -18px) rotate(8deg) scale(1.12); }
+    }
+    @keyframes floatC {
+      0%, 100% { transform: translateY(0) rotate(-12deg); opacity: .35; }
+      50%      { transform: translateY(-30px) rotate(10deg); opacity: .65; }
+    }
+    @keyframes sparkle {
+      0%, 100% { transform: scale(.6) rotate(0); opacity: .3; }
+      50%      { transform: scale(1.2) rotate(180deg); opacity: 1; }
+    }
+
+    /* モーションを抑えたいユーザー向け */
+    @media (prefers-reduced-motion: reduce) {
+      body, body::before, body::after, .deco { animation: none !important; }
+    }
+
+    .container { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    .header {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; margin-bottom: 22px;
+    }
+    .header-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--pink-deep); background: var(--white); padding: 7px 14px;
+      border-radius: 999px; box-shadow: var(--shadow); margin-bottom: 14px;
+    }
+    .header-eyebrow::before, .header-eyebrow::after { content: "✿"; font-size: 13px; }
+    .header h1 {
+      font-family: "Fraunces", serif; font-weight: 600;
+      font-size: clamp(28px, 5vw, 42px); line-height: 1.1; letter-spacing: -.02em;
+      text-align: center;
+      cursor: pointer; display: inline-block;
+      transition: transform .15s ease, color .15s ease, text-shadow .3s ease;
+      text-shadow: 0 2px 18px rgba(231,107,138,.15);
+    }
+    .header h1:hover { transform: translateY(-1px); text-shadow: 0 4px 22px rgba(231,107,138,.3); }
+    .header h1:hover .accent { color: var(--pink); }
+    .header h1:active { transform: translateY(0); }
+    .header h1 .accent { color: var(--pink-deep); font-style: italic; font-weight: 500; }
+    .header h1 .zh-title {
+      display: block; font-family: "Noto Sans SC", serif; font-weight: 500;
+      font-size: .55em; color: var(--pink); margin-top: 4px; letter-spacing: .04em;
+      text-align: center;
+    }
+
+    .stats { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 18px 0 20px; }
+    .stat-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--white); padding: 9px 14px; border-radius: 999px;
+      box-shadow: var(--shadow); font-size: 12px; color: var(--ink-soft);
+    }
+    .stat-pill .icon { font-size: 14px; }
+    .stat-pill .value {
+      font-family: "JetBrains Mono", monospace; font-weight: 600;
+      color: var(--pink-darker); font-size: 13px;
+    }
+    .stat-pill .goal-met { color: var(--green); }
+
+    /* ---- Course banner ---- */
+    .course-banner {
+      background: linear-gradient(135deg, #fff 0%, #fff5f7 100%);
+      border: 1px solid var(--line); border-radius: 22px;
+      padding: 18px 22px; box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    .course-info { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .hsk-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      color: var(--white); background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .hsk-tag::before { content: "🌸"; }
+    .course-label {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      color: var(--ink-mute); letter-spacing: .05em;
+    }
+    .course-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 20px; color: var(--ink); margin-bottom: 12px;
+    }
+    .course-progress { display: flex; align-items: center; gap: 12px; }
+    .progress-track {
+      flex: 1; height: 8px; background: var(--bg-soft);
+      border-radius: 999px; overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%; background: linear-gradient(90deg, #ffc6a8, var(--pink));
+      border-radius: 999px; transition: width .5s cubic-bezier(.2,.8,.2,1); width: 0%;
+    }
+    .progress-text {
+      font-family: "JetBrains Mono", monospace; font-size: 12px;
+      color: var(--ink-soft); white-space: nowrap;
+    }
+    .progress-text .mn { color: var(--pink-darker); font-weight: 600; }
+    .course-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .mini-btn {
+      font-family: inherit; font-size: 12px; font-weight: 600;
+      padding: 6px 12px; border-radius: 999px; cursor: pointer;
+      background: var(--white); color: var(--ink-soft); border: 1px solid var(--line);
+      transition: all .2s ease;
+    }
+    .mini-btn:hover { border-color: var(--pink); color: var(--pink-deep); }
+
+    /* ---- Card ---- */
+    .card {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 28px; padding: 32px 28px;
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ""; position: absolute; top: -60px; right: -60px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, #ffd6dd 0%, transparent 70%);
+      border-radius: 50%; opacity: .55; pointer-events: none;
+    }
+    .card::after {
+      content: ""; position: absolute; bottom: -50px; left: -50px;
+      width: 130px; height: 130px;
+      background: radial-gradient(circle, #ffe4ec 0%, transparent 70%);
+      border-radius: 50%; opacity: .5; pointer-events: none;
+    }
+
+    .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: relative; z-index: 1; }
+    .q-num {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      color: var(--ink-mute); letter-spacing: .08em;
+    }
+    .q-num .now { color: var(--pink-darker); font-weight: 600; }
+    .fav-btn {
+      background: transparent; border: none; cursor: pointer; font-size: 22px;
+      transition: transform .2s ease; filter: grayscale(.8); opacity: .5;
+    }
+    .fav-btn:hover { transform: scale(1.15); }
+    .fav-btn.active { filter: none; opacity: 1; animation: pop .3s ease; }
+    @keyframes pop { 0%{transform:scale(1);} 50%{transform:scale(1.3);} 100%{transform:scale(1);} }
+
+    .question-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px;
+    }
+    .question-ja {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: clamp(20px, 4vw, 26px);
+      line-height: 1.5; color: var(--ink); margin-bottom: 22px;
+      position: relative; z-index: 1;
+    }
+
+    .input-wrap { position: relative; z-index: 1; }
+    .answer-input {
+      width: 100%; font-family: "Noto Sans SC", sans-serif;
+      font-size: 20px; padding: 16px 18px;
+      border: 2px solid var(--line); border-radius: 18px;
+      background: var(--cream); color: var(--ink);
+      resize: vertical; min-height: 76px;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .answer-input::placeholder { color: var(--ink-mute); font-family: inherit; font-size: 14px; }
+    .answer-input:focus { outline: none; border-color: var(--pink); background: var(--white); }
+    .answer-input:disabled { opacity: .7; cursor: not-allowed; }
+
+    .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .btn {
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      padding: 11px 20px; border-radius: 999px; border: none;
+      cursor: pointer; transition: all .2s ease;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+      color: var(--white); box-shadow: 0 8px 20px -8px rgba(231,107,138,.6);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(231,107,138,.7); }
+    .btn-primary:disabled { background: var(--ink-mute); cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-ghost { background: var(--white); color: var(--ink-soft); border: 1.5px solid var(--line); }
+    .btn-ghost:hover { border-color: var(--pink); color: var(--pink-deep); }
+    .btn-next {
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-darker));
+      color: var(--white); box-shadow: 0 8px 20px -8px rgba(200,77,110,.6);
+    }
+    .btn-next:hover { transform: translateY(-2px); }
+
+    .hint {
+      margin-top: 12px; padding: 11px 14px;
+      background: var(--yellow-soft); border-radius: 14px;
+      font-size: 13px; color: #8a6a26; position: relative; z-index: 1;
+    }
+    .hint::before { content: "💡 "; }
+
+    /* ---- Result ---- */
+    .result { margin-top: 26px; position: relative; z-index: 1; animation: fadeUp .4s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+
+    .verdict {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 16px; border-radius: 16px;
+      font-size: 15px; font-weight: 600; margin-bottom: 18px;
+    }
+    .verdict-correct { background: var(--green-soft); color: #2f7c5e; }
+    .verdict-partial { background: var(--yellow-soft); color: #8a6a26; }
+    .verdict-wrong { background: var(--red-soft); color: #a23838; }
+    .verdict .emoji { font-size: 22px; }
+    .verdict-correct .mastered-badge {
+      margin-left: auto; font-size: 11px; padding: 4px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.6); color: #2f7c5e; font-weight: 700;
+    }
+
+    .answer-block {
+      background: var(--bg-soft); border-radius: 18px;
+      padding: 18px 20px; margin-bottom: 16px;
+    }
+    .answer-block .label {
+      font-size: 11px; font-weight: 700; letter-spacing: .18em;
+      color: var(--pink-deep); text-transform: uppercase; margin-bottom: 6px;
+    }
+    .answer-zh {
+      font-family: "Noto Sans SC", sans-serif; font-size: 24px; font-weight: 500;
+      color: var(--ink); line-height: 1.4;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .answer-pinyin {
+      font-style: italic; color: var(--pink-darker); font-size: 14px;
+      margin-top: 4px; font-family: "Plus Jakarta Sans", serif;
+    }
+    .speak-btn {
+      background: var(--white); border: 1.5px solid var(--line);
+      width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; font-size: 15px;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: all .2s ease;
+    }
+    .speak-btn:hover { background: var(--pink); color: var(--white); border-color: var(--pink); transform: scale(1.08); }
+    .your-answer {
+      font-family: "Noto Sans SC", sans-serif; font-size: 17px;
+      color: var(--ink-soft); margin-top: 4px;
+    }
+
+    .section-title {
+      font-size: 12px; font-weight: 700; letter-spacing: .12em;
+      color: var(--pink-deep); text-transform: uppercase;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+    }
+    .section-title::before { content: ""; width: 6px; height: 6px; background: var(--pink); border-radius: 50%; }
+
+    .grammar-block {
+      background: linear-gradient(135deg, #fff5f7 0%, #fff 100%);
+      border: 1px solid var(--line); border-left: 4px solid var(--pink);
+      border-radius: 14px; padding: 15px 17px;
+      font-size: 14px; line-height: 1.8; color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .grammar-block strong { color: var(--pink-darker); font-weight: 700; }
+    .grammar-block code {
+      font-family: "Noto Sans SC", "JetBrains Mono", monospace;
+      background: var(--bg-soft); padding: 1px 6px;
+      border-radius: 4px; color: var(--pink-darker); font-size: .95em;
+    }
+    .grammar-block .pat {
+      display: inline-block; background: var(--white); border: 1px dashed var(--pink-light);
+      padding: 2px 8px; border-radius: 6px; margin: 2px 0; font-family: "Noto Sans SC", sans-serif;
+    }
+
+    .words-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 10px; margin-bottom: 18px;
+    }
+    .word-item {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 14px; padding: 11px 13px;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .word-item:hover { transform: translateY(-2px); box-shadow: 0 8px 16px -8px rgba(231,107,138,.3); }
+    .word-zh { font-family: "Noto Sans SC", sans-serif; font-size: 19px; font-weight: 600; color: var(--ink); }
+    .word-pinyin { font-style: italic; color: var(--pink-darker); font-size: 12px; margin-top: 2px; }
+    .word-ja { font-size: 12px; color: var(--ink-soft); margin-top: 3px; line-height: 1.45; }
+
+    .next-wrap { margin-top: 20px; display: flex; justify-content: center; }
+
+    /* ---- Modal ---- */
+    .modal {
+      position: fixed; inset: 0; background: rgba(74,47,58,.5);
+      display: none; align-items: center; justify-content: center;
+      z-index: 100; padding: 20px; backdrop-filter: blur(4px);
+    }
+    .modal.open { display: flex; animation: fadeIn .25s ease; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    .modal-content {
+      background: var(--white); border-radius: 24px;
+      padding: 26px 24px; max-width: 520px; width: 100%;
+      max-height: 85vh; overflow-y: auto; position: relative;
+      box-shadow: var(--shadow-lg); animation: slideUp .3s cubic-bezier(.2,.8,.2,1);
+    }
+    @keyframes slideUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+    .modal-close {
+      position: absolute; top: 12px; right: 14px;
+      background: var(--bg-soft); border: none;
+      width: 32px; height: 32px; border-radius: 50%;
+      font-size: 18px; color: var(--ink-soft); cursor: pointer;
+      transition: all .2s ease;
+    }
+    .modal-close:hover { background: var(--pink); color: var(--white); }
+    .modal h3 {
+      font-family: "Fraunces", serif; font-weight: 500;
+      font-size: 22px; color: var(--ink); margin-bottom: 4px;
+    }
+    .modal-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; }
+
+    .course-list { display: flex; flex-direction: column; gap: 10px; }
+    .course-list-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; border-radius: 14px;
+      border: 1.5px solid var(--line); background: var(--white);
+      cursor: pointer; transition: all .2s ease;
+    }
+    .course-list-item:hover { border-color: var(--pink); transform: translateX(2px); }
+    .course-list-item.current {
+      background: linear-gradient(135deg, #fff 0%, var(--bg-soft) 100%);
+      border-color: var(--pink);
+    }
+    .course-list-item.done { background: var(--green-soft); border-color: var(--green); }
+    .cli-hsk {
+      font-size: 10px; font-weight: 700; letter-spacing: .05em;
+      color: var(--white); background: var(--pink-deep);
+      padding: 3px 7px; border-radius: 6px; flex-shrink: 0;
+    }
+    .cli-meta { flex: 1; }
+    .cli-num { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--ink-mute); }
+    .cli-title { font-size: 14px; color: var(--ink); font-weight: 500; margin-top: 1px; }
+    .cli-prog {
+      font-family: "JetBrains Mono", monospace; font-size: 12px;
+      color: var(--pink-darker); font-weight: 600; flex-shrink: 0;
+    }
+    .cli-prog.complete { color: var(--green); }
+
+    /* Course complete modal */
+    .complete-content { text-align: center; padding: 36px 24px; }
+    .complete-emoji { font-size: 54px; margin-bottom: 8px; animation: pop .6s ease; }
+    .complete-content h3 { font-size: 26px; margin-bottom: 6px; }
+    .complete-content p { color: var(--ink-soft); margin-bottom: 20px; }
+    .complete-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    .footer { margin-top: 48px; text-align: center; font-size: 12px; color: var(--ink-mute); }
+    .footer .footer-meta { margin-top: 14px; font-size: 11px; opacity: 0.85; }
+    .footer .footer-copy { margin-top: 4px; font-size: 11px; }
+    .footer a { color: var(--pink-deep); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+    .footer .heart { color: var(--pink-deep); }
+
+    .diff-correct { color: var(--green); font-weight: 600; }
+    .diff-wrong { color: var(--red); text-decoration: line-through; }
+    .diff-missing { color: var(--pink-darker); font-weight: 600; background: var(--bg-soft); padding: 0 4px; border-radius: 3px; }
+
+    /* ---- Views (home / level / intro / practice) ---- */
+    .view[hidden] { display: none !important; }
+
+    .view-title {
+      font-family: "Fraunces", serif; font-weight: 500;
+      font-size: 22px; color: var(--ink); text-align: center;
+      margin: 8px 0 22px;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      color: var(--pink-deep); background: var(--white);
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: 8px 14px; cursor: pointer; margin-bottom: 16px;
+      transition: all .2s ease;
+    }
+    .back-link:hover { background: var(--bg-soft); transform: translateX(-2px); }
+
+    /* HSK level cards */
+    .hsk-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px; margin-bottom: 20px;
+    }
+    .hsk-card {
+      position: relative; display: flex; flex-direction: column; gap: 6px;
+      padding: 22px 20px; text-align: left;
+      background: var(--white); border: 1.5px solid var(--line);
+      border-radius: 22px; cursor: pointer; box-shadow: var(--shadow);
+      transition: all .25s cubic-bezier(.2,.8,.2,1);
+      overflow: hidden; font-family: inherit;
+    }
+    .hsk-card::before {
+      content: ""; position: absolute; top: -30px; right: -30px;
+      width: 90px; height: 90px;
+      background: radial-gradient(circle, var(--pink-light) 0%, transparent 70%);
+      border-radius: 50%; opacity: .7; transition: transform .4s ease;
+    }
+    .hsk-card:hover {
+      transform: translateY(-4px); border-color: var(--pink);
+      box-shadow: var(--shadow-lg);
+    }
+    .hsk-card:hover::before { transform: scale(1.4); }
+    .hsk-card-num {
+      font-family: "Fraunces", serif; font-weight: 600;
+      font-size: 26px; color: var(--pink-darker);
+      letter-spacing: -.01em; position: relative; z-index: 1;
+    }
+    .hsk-card-label {
+      font-size: 12px; color: var(--ink-soft); position: relative; z-index: 1;
+    }
+    .hsk-card-progress {
+      margin-top: 6px; font-family: "JetBrains Mono", monospace;
+      font-size: 12px; color: var(--pink-deep); font-weight: 600;
+      position: relative; z-index: 1;
+    }
+    .hsk-card-progress .done-tag {
+      display: inline-block; margin-left: 6px;
+      font-size: 10px; color: var(--green); font-weight: 700;
+    }
+
+    /* Course list (level view) */
+    .course-cards {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .course-card {
+      display: flex; flex-direction: column; gap: 8px;
+      padding: 18px 20px; text-align: left;
+      background: var(--white); border: 1.5px solid var(--line);
+      border-radius: 18px; cursor: pointer; box-shadow: var(--shadow);
+      transition: all .2s ease; font-family: inherit;
+    }
+    .course-card:hover { transform: translateX(4px); border-color: var(--pink); }
+    .course-card.done { background: linear-gradient(135deg, #fff 0%, var(--green-soft) 100%); border-color: var(--green); }
+    .course-card.current { border-color: var(--pink); border-width: 2px; }
+    .cc-head {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .cc-num {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      font-weight: 600; color: var(--pink-darker);
+      background: var(--bg-soft); padding: 3px 9px; border-radius: 6px;
+    }
+    .course-card.done .cc-num { background: rgba(255,255,255,.8); color: var(--green); }
+    .cc-status {
+      margin-left: auto; font-size: 11px; font-weight: 700;
+      color: var(--ink-mute); font-family: "JetBrains Mono", monospace;
+    }
+    .cc-status.done { color: var(--green); }
+    .cc-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 18px; color: var(--ink);
+    }
+    .cc-bar-wrap { display: flex; align-items: center; gap: 10px; }
+    .cc-track {
+      flex: 1; height: 6px; background: var(--bg-soft);
+      border-radius: 999px; overflow: hidden;
+    }
+    .cc-bar {
+      height: 100%; background: linear-gradient(90deg, #ffc6a8, var(--pink));
+      border-radius: 999px; transition: width .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .course-card.done .cc-bar { background: var(--green); }
+
+    /* Intro view */
+    .intro-card {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 24px; padding: 28px 24px;
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+    }
+    .intro-card::before {
+      content: ""; position: absolute; top: -60px; right: -60px;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, #ffd6dd 0%, transparent 70%);
+      border-radius: 50%; opacity: .5; pointer-events: none;
+    }
+    .intro-meta {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px; position: relative; z-index: 1;
+    }
+    .intro-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 24px; line-height: 1.3;
+      color: var(--ink); margin-bottom: 14px;
+      position: relative; z-index: 1;
+    }
+    .intro-overview {
+      font-size: 14px; line-height: 1.85; color: var(--ink-soft);
+      margin-bottom: 22px; position: relative; z-index: 1;
+    }
+    .intro-section-title {
+      font-size: 12px; font-weight: 700; letter-spacing: .15em;
+      color: var(--pink-deep); text-transform: uppercase;
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+      position: relative; z-index: 1;
+    }
+    .intro-section-title::before {
+      content: "🌸"; font-size: 14px;
+    }
+    .intro-points {
+      list-style: none; padding: 0; margin: 0 0 24px;
+      display: flex; flex-direction: column; gap: 10px;
+      position: relative; z-index: 1;
+    }
+    .intro-points li {
+      padding: 12px 14px 12px 38px; position: relative;
+      background: var(--bg-soft); border-radius: 12px;
+      font-size: 14px; line-height: 1.7; color: var(--ink);
+    }
+    .intro-points li::before {
+      content: "✿"; position: absolute; left: 14px; top: 12px;
+      color: var(--pink); font-size: 14px;
+    }
+    .intro-points code {
+      font-family: "Noto Sans SC", "JetBrains Mono", monospace;
+      background: var(--white); padding: 1px 6px;
+      border-radius: 4px; color: var(--pink-darker); font-size: .95em;
+    }
+    .intro-points strong { color: var(--pink-darker); font-weight: 700; }
+    .intro-start {
+      width: 100%; justify-content: center; padding: 14px 20px !important;
+      font-size: 15px !important; position: relative; z-index: 1;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 14px 56px; }
+      .card { padding: 22px 18px; border-radius: 20px; }
+      .course-banner { padding: 14px 16px; border-radius: 18px; }
+      .question-ja { font-size: 18px; }
+      .answer-zh { font-size: 21px; }
+      .answer-input { font-size: 18px; }
+      .stat-pill { padding: 7px 11px; font-size: 11px; }
+      .btn { padding: 10px 16px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 装飾レイヤー（クリック透過） -->
+  <span class="deco petal p1">🌸</span>
+  <span class="deco petal p2">🌷</span>
+  <span class="deco petal p3">🌸</span>
+  <span class="deco petal p4">🌼</span>
+  <span class="deco petal p5">🌷</span>
+  <span class="deco petal p6">🌸</span>
+  <span class="deco heart h1d">💗</span>
+  <span class="deco heart h2d">💕</span>
+  <span class="deco spark s1">✨</span>
+  <span class="deco spark s2">⭐</span>
+  <span class="deco spark s3">✨</span>
+  <span class="deco spark s4">⭐</span>
+  <span class="deco spark s5">✦</span>
+  <span class="deco ribbon r1">🎀</span>
+
+  <div class="container">
+    <header class="header">
+      <span class="header-eyebrow">Chinese Output Trainer</span>
+      <h1 id="home-link" role="link" tabindex="0" title="홈으로 돌아가기">
+        Daily <span class="accent">중국어</span> Talk
+        <span class="zh-title">你好！每天一句中文输出</span>
+      </h1>
+    </header>
+
+    <div class="stats">
+      <span class="stat-pill"><span class="icon">🔥</span>연속 <span class="value" id="streak">0</span> 일</span>
+      <span class="stat-pill"><span class="icon">🌸</span>오늘 <span class="value" id="today-count">0</span> / 10</span>
+      <span class="stat-pill"><span class="icon">✨</span>완료 <span class="value" id="done-courses">0</span> 코스</span>
+      <span class="stat-pill"><span class="icon">📚</span>누적 <span class="value" id="total">0</span> 문장</span>
+    </div>
+
+    <!-- ============ HOME VIEW ============ -->
+    <div class="view view-home" id="view-home">
+      <h2 class="view-title">배우고 싶은 급수를 선택하세요 ✿</h2>
+      <div class="hsk-cards">
+        <button class="hsk-card" data-hsk="1">
+          <span class="hsk-card-num">HSK 1</span>
+          <span class="hsk-card-label">입문 · 약 150단어</span>
+          <span class="hsk-card-progress" data-hsk-progress="1">3 코스</span>
+        </button>
+        <button class="hsk-card" data-hsk="2" disabled style="opacity:0.5;cursor:not-allowed;">
+          <span class="hsk-card-num">HSK 2</span>
+          <span class="hsk-card-label">초급 · 약 300단어</span>
+          <span class="hsk-card-progress" data-hsk-progress="2">준비 중</span>
+        </button>
+        <button class="hsk-card" data-hsk="3" disabled style="opacity:0.5;cursor:not-allowed;">
+          <span class="hsk-card-num">HSK 3</span>
+          <span class="hsk-card-label">초중급 · 약 600단어</span>
+          <span class="hsk-card-progress" data-hsk-progress="3">준비 중</span>
+        </button>
+        <button class="hsk-card" data-hsk="4" disabled style="opacity:0.5;cursor:not-allowed;">
+          <span class="hsk-card-num">HSK 4</span>
+          <span class="hsk-card-label">중급 · 약 1200단어</span>
+          <span class="hsk-card-progress" data-hsk-progress="4">준비 중</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ LEVEL VIEW ============ -->
+    <div class="view view-level" id="view-level" hidden>
+      <button class="back-link" data-back="home">← HSK 선택으로</button>
+      <h2 class="view-title">HSK <span id="level-num">1</span> 코스 목록</h2>
+      <div class="course-cards" id="level-courses"></div>
+    </div>
+
+    <!-- ============ INTRO VIEW ============ -->
+    <div class="view view-intro" id="view-intro" hidden>
+      <button class="back-link" data-back="level">← 코스 목록으로</button>
+      <div class="intro-card">
+        <div class="intro-meta">
+          <span class="hsk-tag">HSK <span id="intro-hsk">1</span></span>
+          <span class="course-label">Course <span id="intro-num">1</span></span>
+        </div>
+        <h2 class="intro-title" id="intro-title">코스 이름</h2>
+        <p class="intro-overview" id="intro-overview"></p>
+        <div class="intro-section-title">이 코스에서 배울 내용</div>
+        <ul class="intro-points" id="intro-points"></ul>
+        <button class="btn btn-primary intro-start" id="intro-start-btn">10문제 도전 ✿</button>
+      </div>
+    </div>
+
+    <!-- ============ PRACTICE VIEW ============ -->
+    <div class="view view-practice" id="view-practice" hidden>
+      <button class="back-link" data-back="level">← 코스 목록으로</button>
+
+      <div class="course-banner">
+        <div class="course-info">
+          <span class="hsk-tag">HSK <span id="course-hsk">1</span></span>
+          <span class="course-label">Course <span id="course-num">1</span> / <span id="total-courses">24</span></span>
+        </div>
+        <h2 class="course-title" id="course-title">로딩 중…</h2>
+        <div class="course-progress">
+          <div class="progress-track"><div class="progress-bar" id="course-bar"></div></div>
+          <span class="progress-text"><span class="mn" id="mastered-count">0</span> / 10 마스터</span>
+        </div>
+        <div class="course-actions">
+          <button class="mini-btn" id="open-intro-btn">📖 포인트 다시 보기</button>
+          <button class="mini-btn" id="reset-course-btn">↺ 이 코스 리셋</button>
+        </div>
+      </div>
+
+      <main class="card">
+        <div class="card-head">
+          <span class="q-num">Question <span class="now" id="q-progress">1</span> / 10</span>
+          <button class="fav-btn" id="fav-btn" title="즐겨찾기">☆</button>
+        </div>
+
+        <div class="question-label">Translate to Chinese</div>
+        <div class="question-ja" id="question-ja">로딩 중…</div>
+
+        <div class="input-wrap">
+          <textarea class="answer-input zh" id="answer-input"
+            placeholder="여기에 중국어로 입력 (예: 我是学生)"
+            autocomplete="off" spellcheck="false"></textarea>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="check-btn">✿ 정답 확인</button>
+          <button class="btn btn-ghost" id="hint-btn">💡 힌트</button>
+          <button class="btn btn-ghost" id="skip-btn">⤴ 스킵</button>
+        </div>
+
+        <div id="hint-area"></div>
+        <div id="result-area"></div>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <p>加油！<span class="heart">♡</span> 一天一句、慢慢学</p>
+      <p class="footer-meta">개인 취미 범위로 만들고 있습니다. 사소한 버그는 양해 부탁드립니다.</p>
+      <p class="footer-copy">© 2026 mari · <a href="https://x.com/mmmmmmmari_" target="_blank" rel="noopener">@mmmmmmmari_</a></p>
+    </footer>
+  </div>
+
+  <!-- Course complete modal -->
+  <div class="modal" id="complete-modal">
+    <div class="modal-content complete-content">
+      <div class="complete-emoji">🌸✨🌸</div>
+      <h3>코스 완료!</h3>
+      <p>10문제 모두 마스터했습니다 太棒了！</p>
+      <div class="complete-actions">
+        <button class="btn btn-next" id="next-course-btn">다음 코스로 →</button>
+        <button class="btn btn-ghost" id="replay-course-btn">다시 한 번</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========================================================================
+    // COURSES DATA
+    // ========================================================================
+    const COURSES = [
+      // ============ HSK 1 ============
+      {
+        hsk: 1, num: 1, title: "인사·자기소개",
+        sentences: [
+          {
+            ja: "안녕하세요.", zh: "你好。", py: "nǐ hǎo.",
+            g: "<strong>「你好」</strong>는 중국어에서 가장 기본적인 인사. <code>你</code>(너)＋<code>好</code>(좋다)로 「당신, 안녕하세요」 정도의 뉘앙스.<br>존칭형은 <code>您好(nín hǎo)</code>로 윗사람이나 처음 만나는 사이에 사용. 여러 사람에게는 <code>你们好</code>, 아침·점심·저녁은 <code>早上好 / 中午好 / 晚上好</code>도 외워두면 편리.",
+            w: [{z:"你",p:"nǐ",j:"너"},{z:"好",p:"hǎo",j:"좋다"}]
+          },
+          {
+            ja: "잘 지내세요?", zh: "你好吗？", py: "nǐ hǎo ma?",
+            g: "<strong>문장 끝의 <code>吗</code></strong>는 「예/아니오」로 답할 수 있는 의문문을 만드는 조사. 「평서문＋吗？」로 의문문이 됨.<br>답은 <code>我很好</code>(잘 지내요) / <code>不太好</code>(별로 안 좋아요) 등. 사실 중국에서는 사용 빈도가 그리 높지 않으며, 영어 How are you?의 직역에 가까운 표현. 실제로는 <code>最近怎么样？</code>(요즘 어때?)를 더 많이 씀.",
+            w: [{z:"你",p:"nǐ",j:"너"},{z:"好",p:"hǎo",j:"좋다"},{z:"吗",p:"ma",j:"~까(의문)"}]
+          },
+          {
+            ja: "감사합니다.", zh: "谢谢你。", py: "xièxie nǐ.",
+            g: "<strong><code>谢谢</code></strong>는 동사의 중첩형으로 「감사합니다」를 나타내는 대표 표현. <code>你</code>나 <code>您</code>을 붙이면 상대를 명시해 더 정중해짐.<br>답은 <code>不客气(bú kèqi)</code>(천만에요) / <code>不用谢</code> / <code>没事</code>. 「정말 감사해요」를 강조하려면 <code>非常感谢</code>나 <code>太谢谢你了</code>.",
+            w: [{z:"谢谢",p:"xièxie",j:"감사하다"},{z:"你",p:"nǐ",j:"너"}],
+            alts: ["谢谢"]
+          },
+          {
+            ja: "천만에요.", zh: "不客气。", py: "bú kèqi.",
+            g: "<strong><code>不</code>의 성조 변화</strong>: 원래는 제4성 <code>bù</code>이지만, 바로 뒤에 제4성 글자(<code>客</code> kè)가 오면 제2성 <code>bú</code>로 변조(병음에서도 구분해 쓰는 경우가 많음).<br>유사 표현: <code>不用谢</code>(감사 표시 필요없음), <code>没事儿</code>(괜찮아·북방 구어), <code>没关系</code>(신경쓰지 마).",
+            w: [{z:"不",p:"bù",j:"~않다"},{z:"客气",p:"kèqi",j:"사양하다"}]
+          },
+          {
+            ja: "저는 다나카라고 합니다.", zh: "我叫田中。", py: "wǒ jiào Tiánzhōng.",
+            g: "<strong>「주어＋叫＋이름」</strong>으로 「~라고 합니다」. <code>叫</code>는 「(~라고) 부르다/이름이 ~이다」의 동사.<br>풀네임은 <code>叫</code>, 성씨만이라면 <code>我姓田中</code>로 구분해 사용. 정중하게 묻는 표현은 <code>请问您贵姓？</code>(성함을 여쭤봐도 될까요). 부정 <code>我不叫...</code>, 의문 <code>你叫什么名字？</code>.",
+            w: [{z:"我",p:"wǒ",j:"나"},{z:"叫",p:"jiào",j:"~라 부르다/이름이 ~이다"},{z:"田中",p:"Tiánzhōng",j:"다나카"}]
+          },
+          {
+            ja: "성함이 어떻게 되세요?", zh: "你叫什么名字？", py: "nǐ jiào shénme míngzi?",
+            g: "<strong>의문사 의문문</strong>: 중국어는 영어와 달리 의문사 <code>什么</code>(무엇)를 묻고 싶은 자리에 그대로 놓음(어순을 바꾸지 않음). 문장 끝의 <code>吗</code>는 불필요.<br>마찬가지로 <code>谁</code>(누구), <code>哪</code>(어디), <code>几</code>(몇), <code>多少</code>(얼마), <code>怎么</code>(어떻게)도 동일한 어순 규칙.",
+            w: [{z:"叫",p:"jiào",j:"이름이 ~이다"},{z:"什么",p:"shénme",j:"무엇"},{z:"名字",p:"míngzi",j:"이름"}]
+          },
+          {
+            ja: "저는 일본인이에요.", zh: "我是日本人。", py: "wǒ shì Rìběn rén.",
+            g: "<strong>「A＋是＋B」 구문</strong>(가장 중요한 기본 문형). <code>是</code>는 영어의 be동사와 비슷한 연결사로, A와 B를 동등하게 잇는 역할.<br><strong>주의</strong>: 형용사에는 <code>是</code>를 붙이지 않음(<code>她是漂亮</code>× / <code>她很漂亮</code>○). 부정은 <code>不是</code>, 의문은 문말 <code>吗</code>나 「是不是？」 형태.",
+            w: [{z:"是",p:"shì",j:"~이다"},{z:"日本",p:"Rìběn",j:"일본"},{z:"人",p:"rén",j:"사람"}]
+          },
+          {
+            ja: "그는 선생님이 아닙니다.", zh: "他不是老师。", py: "tā bú shì lǎoshī.",
+            g: "<strong><code>是</code>의 부정 <code>不是</code></strong>. <code>是</code>가 제4성이므로 <code>不</code>가 제2성 <code>bú</code>로 변조.<br>정반의문 <code>他是不是老师？</code>(그는 선생님인가요?)는 <code>吗</code> 없이 「是＋不是」를 나란히 두는 형태. 답은 <code>是</code>/<code>不是</code>로 OK.",
+            w: [{z:"他",p:"tā",j:"그"},{z:"不",p:"bù",j:"~않다"},{z:"老师",p:"lǎoshī",j:"선생님"}]
+          },
+          {
+            ja: "만나서 반갑습니다.", zh: "认识你很高兴。", py: "rènshi nǐ hěn gāoxìng.",
+            g: "<strong>형용사 술어문</strong>: 「주어＋很＋형용사」가 기본형. <code>很</code>은 「매우」라는 강한 의미는 약하고, 형용사문을 정돈하는 문법적 장식 역할(맨몸의 형용사는 비교 뉘앙스를 띠게 됨).<br>어순을 바꾼 <code>很高兴认识你</code>도 동의어로 많이 사용. 더 정중하게는 <code>很高兴见到你</code>.",
+            w: [{z:"认识",p:"rènshi",j:"알게 되다"},{z:"很",p:"hěn",j:"매우"},{z:"高兴",p:"gāoxìng",j:"기쁘다"}]
+          },
+          {
+            ja: "안녕히 가세요.", zh: "再见。", py: "zàijiàn.",
+            g: "<strong><code>再</code>(또)＋<code>见</code>(만나다)</strong>로 「또 만나요＝안녕히」. 직역에 가까운 구성으로 외우기 쉬움.<br>편한 말투: <code>拜拜(báibái)</code>(바이바이). 「또 봐」 계열: <code>明天见</code>(내일 봐요), <code>回头见</code>(이따 봐요), <code>下次见</code>(다음에 봐요).",
+            w: [{z:"再",p:"zài",j:"또, 다시"},{z:"见",p:"jiàn",j:"만나다"}]
+          }
+        ]
+      },
+      {
+        hsk: 1, num: 2, title: "숫자·시간·양사",
+        sentences: [
+          {
+            ja: "지금 몇 시예요?", zh: "现在几点？", py: "xiànzài jǐ diǎn?",
+            g: "<strong>의문사 <code>几</code> vs <code>多少</code></strong>: <code>几</code>는 10 이하의 적은 수를 묻는 데 사용(시각·요일·가족 인원 등). <code>多少</code>는 10 이상 포함 임의의 수나 가격에 사용.<br>시각 표현은 <code>是</code> 없이 「숫자＋点」이 술어가 됨. 예: <code>三点</code>(3시), <code>三点半</code>(3:30), <code>三点一刻</code>(3:15), <code>差五分三点</code>(2:55).",
+            w: [{z:"现在",p:"xiànzài",j:"지금"},{z:"几",p:"jǐ",j:"몇"},{z:"点",p:"diǎn",j:"~시"}]
+          },
+          {
+            ja: "저는 올해 20살이에요.", zh: "我今年二十岁。", py: "wǒ jīnnián èrshí suì.",
+            g: "<strong>나이에는 <code>是</code>를 붙이지 않는</strong>다는 원칙. 「주어＋수사＋岁」로 문장이 완성됨(<code>我是二十岁</code>는 다소 부자연스러움).<br>10세 미만 아이에게는 <code>几岁？</code>, 어른에게는 <code>多大？</code>(몇 살?), 노인에게는 <code>多大年纪？</code>로 구분.",
+            w: [{z:"今年",p:"jīnnián",j:"올해"},{z:"二十",p:"èrshí",j:"20"},{z:"岁",p:"suì",j:"살(나이)"}]
+          },
+          {
+            ja: "오늘 무슨 요일이에요?", zh: "今天星期几？", py: "jīntiān xīngqī jǐ?",
+            g: "<strong>요일 표현</strong>: <code>星期一~星期六</code>(월~토), <code>星期天/星期日</code>(일요일). <code>礼拜一</code>, <code>周一</code> 같은 표현도 있음.<br>날짜·요일·시간을 술어로 할 때는 <code>是</code> 생략 가능: <code>今天（是）星期一</code>. 부정문에서는 <code>是</code> 필수: <code>今天不是星期一</code>.",
+            w: [{z:"今天",p:"jīntiān",j:"오늘"},{z:"星期",p:"xīngqī",j:"주, 요일"},{z:"几",p:"jǐ",j:"몇"}]
+          },
+          {
+            ja: "내일은 5월 15일이에요.", zh: "明天是五月十五号。", py: "míngtiān shì wǔ yuè shíwǔ hào.",
+            g: "<strong>날짜 어순은 「년→월→일」</strong>로 큰 단위부터(한국어와 동일). <code>号</code>는 구어, <code>日</code>는 문어.<br>예: <code>2026年5月15号</code> = <code>二零二六年五月十五号</code>. 월은 <code>一月~十二月</code>. 「다음 달」 <code>下个月</code>, 「지난달」 <code>上个月</code>, 「이번 달」 <code>这个月</code>.",
+            w: [{z:"明天",p:"míngtiān",j:"내일"},{z:"月",p:"yuè",j:"월"},{z:"号",p:"hào",j:"일"}]
+          },
+          {
+            ja: "저에게는 형이 한 명 있어요.", zh: "我有一个哥哥。", py: "wǒ yǒu yí ge gēge.",
+            g: "<strong>소유·존재의 <code>有</code></strong>. 부정은 반드시 <code>没有</code>(<code>不有</code>×).<br><strong>「一」의 성조 변화</strong>: 본래 <code>yī</code>이지만, 제4성 앞에서 <code>yí</code>, 다른 성조 앞에서 <code>yì</code>로 변조. <code>个</code>는 제4성(경성화되기도 함)이므로 <code>一个</code>는 <code>yí ge</code>.",
+            w: [{z:"有",p:"yǒu",j:"있다, 가지다"},{z:"一个",p:"yí ge",j:"한 명, 한 개"},{z:"哥哥",p:"gēge",j:"형, 오빠"}]
+          },
+          {
+            ja: "이쪽은 저의 어머니예요.", zh: "这是我妈妈。", py: "zhè shì wǒ māma.",
+            g: "<strong>소유의 <code>的</code> 생략</strong>: 가족·소속·밀접한 관계를 나타낼 때는 <code>的</code>를 생략하는 것이 자연스러움.<br>예: <code>我妈妈</code>(우리 엄마)/<code>我们学校</code>(우리 학교)/<code>他朋友</code>(그의 친구). 반면 소유 관계가 약하면 <code>的</code> 필수: <code>我的书</code>(나의 책).",
+            w: [{z:"这",p:"zhè",j:"이것, 이"},{z:"妈妈",p:"māma",j:"어머니, 엄마"}]
+          },
+          {
+            ja: "그녀에게는 아이가 두 명 있어요.", zh: "她有两个孩子。", py: "tā yǒu liǎng ge háizi.",
+            g: "<strong>「二」 vs 「两」</strong>: 양사·서수 앞에서는 반드시 <code>两</code>(liǎng). <code>二</code>(èr)는 단독 숫자나 서수(제2), 전화번호·방번호 등에 사용.<br>예: <code>两个人</code>(두 명), <code>两本书</code>(책 2권), <code>第二</code>(2번째), <code>二月</code>(2월). 「2시」는 양쪽 다 가능: <code>两点</code>이 일반적.",
+            w: [{z:"她",p:"tā",j:"그녀"},{z:"两个",p:"liǎng ge",j:"두 명, 두 개"},{z:"孩子",p:"háizi",j:"아이"}]
+          },
+          {
+            ja: "이 책은 얼마예요?", zh: "这本书多少钱？", py: "zhè běn shū duōshao qián?",
+            g: "<strong>양사</strong>: 「지시사/수사＋양사＋명사」 어순. <code>本</code>은 책의 전용 양사.<br>주요 양사: <code>个</code>(범용)/<code>本</code>(책)/<code>件</code>(옷·사건)/<code>张</code>(종이·테이블)/<code>双</code>(쌍)/<code>条</code>(가늘고 긴 것)/<code>只</code>(동물)/<code>杯</code>(컵). 가격은 정해진 표현 <code>多少钱？</code>.",
+            w: [{z:"本",p:"běn",j:"~권"},{z:"书",p:"shū",j:"책"},{z:"多少",p:"duōshao",j:"얼마"},{z:"钱",p:"qián",j:"돈"}]
+          },
+          {
+            ja: "모두 30위안이에요.", zh: "一共三十块。", py: "yígòng sānshí kuài.",
+            g: "<strong>화폐 단위</strong>: 문어 <code>元(yuán)</code>, 구어 <code>块(kuài)</code>. 1元 = 10角(jiǎo / 구어 <code>毛 máo</code>) = 100分(fēn).<br>예: <code>三块五（毛）</code>＝3.5元. <code>一共</code>은 「합쳐서」. 「얼마예요？」 <code>多少钱？</code> / 「합계는 얼마?」 <code>一共多少钱？</code>.",
+            w: [{z:"一共",p:"yígòng",j:"합쳐서, 총"},{z:"三十",p:"sānshí",j:"30"},{z:"块",p:"kuài",j:"위안(구어)"}]
+          },
+          {
+            ja: "저는 5시에 집에 가요.", zh: "我五点回家。", py: "wǒ wǔ diǎn huí jiā.",
+            g: "<strong>시간사의 위치</strong>: 중국어에서 시간사는 <strong>동사 앞</strong>에 두는 것이 원칙. 「주어＋시간＋(장소)＋동사」.<br>영어 <em>I go home at 5</em>처럼 뒤에 두는 어순은 오류(<code>我回家五点</code>×). <code>回家</code>는 이합사로 「집에 돌아가다」가 한 단어처럼 다뤄지며, 목적어 추가 시 <code>回老家</code>(고향에 가다)처럼 <code>家</code>를 교체.",
+            w: [{z:"五点",p:"wǔ diǎn",j:"5시"},{z:"回",p:"huí",j:"돌아가다"},{z:"家",p:"jiā",j:"집"}]
+          }
+        ]
+      },
+      {
+        hsk: 1, num: 3, title: "장소·동작·소유",
+        sentences: [
+          {
+            ja: "저는 집에 있어요.", zh: "我在家。", py: "wǒ zài jiā.",
+            g: "<strong>동사 <code>在</code></strong> ＝ 「~에 있다」. 「주어＋在＋장소」로 소재를 나타냄. 부정 <code>不在</code>.<br><code>在</code>은 <strong>동사·전치사·부사</strong>의 3가지 용법이 있음: ①동사 「있다」(我在家), ②전치사 「~에서」(我在家吃饭: 집에서 먹다), ③부사 「~하고 있다」(我在吃饭: 먹고 있다).",
+            w: [{z:"在",p:"zài",j:"~에 있다"},{z:"家",p:"jiā",j:"집"}]
+          },
+          {
+            ja: "저는 학교에 가요.", zh: "我去学校。", py: "wǒ qù xuéxiào.",
+            g: "<strong><code>去</code>(가다) / <code>来</code>(오다)</strong>는 방향을 나타내는 이동 동사. 화자에게서 멀어지는 것이 <code>去</code>, 가까워지는 것이 <code>来</code>.<br>「주어＋去/来＋장소」로 목적지를 바로 이음(<code>去到学校</code>는 다소 장황). 「오가다」 <code>来来去去</code>.",
+            w: [{z:"去",p:"qù",j:"가다"},{z:"学校",p:"xuéxiào",j:"학교"}]
+          },
+          {
+            ja: "저는 차 마시는 걸 좋아해요.", zh: "我喜欢喝茶。", py: "wǒ xǐhuan hē chá.",
+            g: "<strong><code>喜欢</code>＋동사구/명사</strong>: 「~하는 것을 좋아하다 / ~를 좋아하다」. 동사를 이을 때 그대로 동사를 둠(영어의 to부정사나 ~ing 불필요).<br>예: <code>喜欢苹果</code>(사과를 좋아한다) / <code>喜欢看书</code>(독서를 좋아한다). 부정 <code>不喜欢</code>. 「조금 좋아한다」 <code>有点喜欢</code>, 「많이 좋아한다」 <code>很喜欢/非常喜欢</code>.",
+            w: [{z:"喜欢",p:"xǐhuan",j:"좋아하다"},{z:"喝",p:"hē",j:"마시다"},{z:"茶",p:"chá",j:"차"}]
+          },
+          {
+            ja: "뭐 먹고 싶어요?", zh: "你想吃什么？", py: "nǐ xiǎng chī shénme?",
+            g: "<strong>조동사 <code>想</code></strong> ＝ 「~하고 싶다」(소망). 「주어＋想＋동사구」.<br><strong>「~하고 싶다 / ~할 것이다」 3가지 구분</strong>: <code>想</code>(부드러운 소망 「~하고 싶다」) / <code>要</code>(강한 의지 「~할 것이다 / ~를 원한다」) / <code>愿意</code>(동의·의향). 부정은 모두 <code>不＋</code>(<code>不想</code> 등).",
+            w: [{z:"想",p:"xiǎng",j:"~하고 싶다"},{z:"吃",p:"chī",j:"먹다"},{z:"什么",p:"shénme",j:"무엇"}]
+          },
+          {
+            ja: "저는 중국어를 할 수 있어요.", zh: "我会说中文。", py: "wǒ huì shuō Zhōngwén.",
+            g: "<strong>조동사 <code>会</code></strong>는 「학습·훈련을 통해 습득한 능력」을 나타냄.<br><strong>「할 수 있다」 3형제</strong>: <code>会</code>(학습으로 익힌 기능) / <code>能</code>(조건이 갖춰져서 가능·신체적 능력) / <code>可以</code>(허가·가능). 예: <code>我会开车</code>(운전 기술이 있다) / <code>我能开车</code>(오늘은 운전할 수 있다) / <code>这里可以停车</code>(여기 주차해도 된다).",
+            w: [{z:"会",p:"huì",j:"~할 수 있다"},{z:"说",p:"shuō",j:"말하다"},{z:"中文",p:"Zhōngwén",j:"중국어"}]
+          },
+          {
+            ja: "저는 운전을 못 해요.", zh: "我不会开车。", py: "wǒ bú huì kāichē.",
+            g: "<strong><code>会</code>의 부정 <code>不会</code></strong>. <code>会</code>는 제4성이므로 <code>不</code>는 제2성 <code>bú</code>로 변조.<br><code>开车</code>는 「이합사」: <code>开(동사)＋车(목적어)</code>로 한 단어 취급되지만, 사이에 수식어가 들어갈 수 있음. 예: <code>开了三年车</code>(3년째 운전하고 있다).",
+            w: [{z:"不",p:"bù",j:"~않다"},{z:"会",p:"huì",j:"할 수 있다"},{z:"开车",p:"kāichē",j:"운전하다"}]
+          },
+          {
+            ja: "그는 TV를 보고 있어요.", zh: "他在看电视。", py: "tā zài kàn diànshì.",
+            g: "<strong>진행상 <code>在＋V</code></strong> ＝ 「~하고 있다(중)」. 부사 <code>在</code>를 동사 앞에 두기만 하면 됨.<br><strong>진행을 나타내는 형태는 4가지</strong>: ①<code>在＋V</code>, ②<code>正在＋V</code>(「마침」 뉘앙스), ③<code>V＋呢</code>(구어적 「~하고 있어」), ④셋을 합친 <code>正在...呢</code>. 부정은 <code>没在＋V</code>.",
+            w: [{z:"在",p:"zài",j:"~하고 있다"},{z:"看",p:"kàn",j:"보다"},{z:"电视",p:"diànshì",j:"TV"}]
+          },
+          {
+            ja: "이것은 뭐예요?", zh: "这是什么？", py: "zhè shì shénme?",
+            g: "<strong>지시대명사</strong>: <code>这</code>(이) / <code>那</code>(저, 그) / <code>哪</code>(어느: 의문).<br>뒤에 양사를 동반해 <code>这个</code>(이것) / <code>那个</code>(저것) / <code>哪个</code>(어느 것) 형태도 자주 사용. 기본 의문문 「이것은 뭐?」 <code>这是什么？</code>, 「저 사람은 누구?」 <code>那是谁？</code>는 매우 자주 쓰는 표현.",
+            w: [{z:"这",p:"zhè",j:"이, 이것"},{z:"是",p:"shì",j:"~이다"},{z:"什么",p:"shénme",j:"무엇"}]
+          },
+          {
+            ja: "네 책은 책상 위에 있어.", zh: "你的书在桌子上。", py: "nǐ de shū zài zhuōzi shàng.",
+            g: "<strong>방위사</strong>: 장소 명사 뒤에 붙여 위치를 명시.<br><code>上(위) / 下 / 里(안) / 外 / 前 / 后 / 左 / 右 / 旁边(옆) / 中间(가운데)</code>. <code>桌子上</code>＝<code>桌子的上面</code>. 일반적으로 고유명사(국명·지명)에는 방위사를 붙이지 않고, 보통명사(책상·방·몸 등)에는 방위사가 필요.<br><strong>소유의 <code>的</code></strong>: 소유가 분명하지 않을 때는 생략 불가. <code>你的书</code>(너의 책).",
+            w: [{z:"的",p:"de",j:"~의"},{z:"书",p:"shū",j:"책"},{z:"桌子",p:"zhuōzi",j:"책상"},{z:"上",p:"shàng",j:"위"}]
+          },
+          {
+            ja: "같이 가요.", zh: "我们一起去吧。", py: "wǒmen yìqǐ qù ba.",
+            g: "<strong>어기조사 <code>吧</code></strong>의 주요 용법: ①제안·권유 「~합시다」(我们走吧), ②명령의 부드러운 지시 「~하세요」(你说吧), ③추측 「~죠?」(你是日本人吧？).<br><code>吗</code>(의문) / <code>呢</code>(되묻기·계속 「~은요?」) / <code>啊</code>(감탄)와 구분. 「같이」 <code>一起</code> ＝ 「같은 장소·같은 시간에」.",
+            w: [{z:"我们",p:"wǒmen",j:"우리"},{z:"一起",p:"yìqǐ",j:"같이"},{z:"去",p:"qù",j:"가다"},{z:"吧",p:"ba",j:"~합시다"}]
+          }
+        ]
+      }
+    ];
+
+    // ========================================================================
+    // COURSE INTROS (each course's learning points)
+    // ========================================================================
+    const COURSE_INTROS = [
+      // HSK 1 - C1
+      { overview: "중국어에서 가장 기본적인 인사와 자기소개·상대 소개 표현. 이후 학습의 토대가 되는 「是」 구문·의문사·형용사문의 기본 규칙을 확인합니다.",
+        points: ["「주어＋是＋명사」 기본 구문과 부정 <code>不是</code>·의문 <code>吗</code>","의문사 <code>什么</code>의 어순(어순 변화 없음)","형용사 술어문의 <code>很</code>(꾸밈말 역할)","「不」의 성조 변화(제4성 앞에서 <code>bú</code>)","이름을 말하는 <code>叫</code>, 존칭 <code>您</code>"] },
+      // HSK 1 - C2
+      { overview: "숫자·시각·날짜·나이·양사 등 일상 회화에 빠질 수 없는 수량 표현을 한꺼번에 익힙니다.",
+        points: ["의문사 <code>几</code>(10 이하) vs <code>多少</code>(제한 없음)","숫자 「2」 구분: <code>二</code>와 <code>两</code>","양사 기본: <code>个 / 本 / 件 / 张 / 杯</code> 등","나이·날짜·요일·시각에서는 <code>是</code> 생략","소유·존재의 <code>有</code>, 부정은 반드시 <code>没有</code>"] },
+      // HSK 1 - C3
+      { overview: "「있다·가다·오다·좋아하다·~하고 싶다·~할 수 있다」 등 동작과 소유·장소의 기본 표현. 지시대명사와 방위사도 배웁니다.",
+        points: ["<code>在</code>의 3가지 용법(동사·전치사·부사)","조동사 <code>想</code>(바람) / <code>要</code>(의지) / <code>会</code>(배워서 할 수 있음)","진행상 <code>在＋V</code>","지시대명사 <code>这 / 那 / 哪</code>","방위사 <code>上 / 下 / 里 / 外</code> 등","소유·수식의 <code>的</code>(생략 가능한 경우)"] }
+    ];
+
+    // ========================================================================
+    // STATE & STORAGE
+    // ========================================================================
+    const STORAGE_KEY = "cn-practice-v2";
+    const TOTAL_COURSES_PLANNED = 24;
+
+    const defaultState = {
+      streak: 0, lastDate: "",
+      todayCount: 0, total: 0,
+      currentCourseId: 0,
+      mastered: {},        // { courseId: [sentIdx, ...] }
+      completedCourses: [],
+      favorites: [],       // ["courseId-sentIdx"]
+      recentInCourse: {},  // { courseId: [sentIdx, ...] } (avoid immediate repeats)
+      inProgress: null     // { courseId, sentIdx, input } - 練習中に離脱した場合の途中状態
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { ...defaultState };
+        return { ...defaultState, ...JSON.parse(raw) };
+      } catch { return { ...defaultState }; }
+    }
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+    const state = loadState();
+
+    function todayStr() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    }
+    function yesterdayStr() {
+      const d = new Date(); d.setDate(d.getDate()-1);
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    }
+    function rollDayIfNeeded() {
+      const today = todayStr();
+      if (state.lastDate !== today) state.todayCount = 0;
+    }
+    rollDayIfNeeded();
+
+    if (state.currentCourseId >= COURSES.length) state.currentCourseId = COURSES.length - 1;
+
+    // ========================================================================
+    // DOM
+    // ========================================================================
+    const $ = (s) => document.querySelector(s);
+    const elStreak = $("#streak");
+    const elTodayCount = $("#today-count");
+    const elDoneCourses = $("#done-courses");
+    const elTotal = $("#total");
+    const elCourseHsk = $("#course-hsk");
+    const elCourseNum = $("#course-num");
+    const elTotalCourses = $("#total-courses");
+    const elCourseTitle = $("#course-title");
+    const elCourseBar = $("#course-bar");
+    const elMasteredCount = $("#mastered-count");
+    const elQProgress = $("#q-progress");
+    const elQuestion = $("#question-ja");
+    const elInput = $("#answer-input");
+    const elCheckBtn = $("#check-btn");
+    const elHintBtn = $("#hint-btn");
+    const elSkipBtn = $("#skip-btn");
+    const elHintArea = $("#hint-area");
+    const elResult = $("#result-area");
+    const elFavBtn = $("#fav-btn");
+    const elCompleteModal = $("#complete-modal");
+    const elOpenIntroBtn = $("#open-intro-btn");
+    const elResetCourseBtn = $("#reset-course-btn");
+    const elNextCourseBtn = $("#next-course-btn");
+    const elReplayCourseBtn = $("#replay-course-btn");
+
+    // Views
+    const views = {
+      home: $("#view-home"),
+      level: $("#view-level"),
+      intro: $("#view-intro"),
+      practice: $("#view-practice")
+    };
+    const elLevelNum = $("#level-num");
+    const elLevelCourses = $("#level-courses");
+    const elIntroHsk = $("#intro-hsk");
+    const elIntroNum = $("#intro-num");
+    const elIntroTitle = $("#intro-title");
+    const elIntroOverview = $("#intro-overview");
+    const elIntroPoints = $("#intro-points");
+    const elIntroStartBtn = $("#intro-start-btn");
+
+    elTotalCourses.textContent = COURSES.length; // actual count
+
+    // ========================================================================
+    // VIEW MANAGEMENT
+    // ========================================================================
+    let currentView = "home";
+    let selectedLevel = 1;
+
+    function showView(name) {
+      Object.entries(views).forEach(([k, el]) => {
+        if (k === name) el.removeAttribute("hidden");
+        else el.setAttribute("hidden", "");
+      });
+      currentView = name;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderHome() {
+      [1, 2, 3, 4].forEach(hsk => {
+        const total = COURSES.filter(c => c.hsk === hsk).length;
+        if (total === 0) return; // 준비 중 카드는 그대로
+        const done = COURSES.reduce((acc, c, i) => {
+          return acc + (c.hsk === hsk && masteredList(i).length >= c.sentences.length ? 1 : 0);
+        }, 0);
+        const el = document.querySelector(`[data-hsk-progress="${hsk}"]`);
+        if (!el) return;
+        const doneTag = done > 0 ? ` <span class="done-tag">✓ ${done}</span>` : "";
+        el.innerHTML = `${total} 코스${doneTag}`;
+      });
+    }
+
+    function renderLevelView(hsk) {
+      selectedLevel = hsk;
+      elLevelNum.textContent = hsk;
+      const items = COURSES.map((c, i) => ({ c, i })).filter(x => x.c.hsk === hsk);
+      const html = items.map(({ c, i }) => {
+        const mc = masteredList(i).length;
+        const total = c.sentences.length;
+        const done = mc >= total;
+        const isCurrent = i === state.currentCourseId;
+        const cls = ["course-card", done ? "done" : "", isCurrent ? "current" : ""].filter(Boolean).join(" ");
+        const pct = (mc / total) * 100;
+        const status = done ? "✓ 완료" : `${mc} / ${total}`;
+        return `
+          <button class="${cls}" data-course-id="${i}">
+            <div class="cc-head">
+              <span class="cc-num">Course ${i + 1}</span>
+              <span class="cc-status ${done ? 'done' : ''}">${status}</span>
+            </div>
+            <div class="cc-title">${c.title}</div>
+            <div class="cc-bar-wrap">
+              <div class="cc-track"><div class="cc-bar" style="width:${pct}%"></div></div>
+            </div>
+          </button>
+        `;
+      }).join("");
+      elLevelCourses.innerHTML = html;
+      elLevelCourses.querySelectorAll("[data-course-id]").forEach(el => {
+        el.addEventListener("click", () => {
+          const id = parseInt(el.dataset.courseId);
+          renderIntroView(id);
+        });
+      });
+    }
+
+    function renderIntroView(courseId) {
+      state.currentCourseId = courseId;
+      saveState();
+      const c = COURSES[courseId];
+      const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
+      elIntroHsk.textContent = c.hsk;
+      elIntroNum.textContent = courseId + 1;
+      elIntroTitle.textContent = c.title;
+      elIntroOverview.textContent = intro.overview;
+      elIntroPoints.innerHTML = intro.points.map(p => `<li>${p}</li>`).join("");
+      const mc = masteredList(courseId).length;
+      const total = c.sentences.length;
+      const done = mc >= total;
+      elIntroStartBtn.textContent = done ? "🌸 다시 도전" : (mc > 0 ? "이어서 도전 ✿" : "10문제 도전 ✿");
+      showView("intro");
+    }
+
+    function startPractice() {
+      renderHeader();
+      showView("practice");
+      // 途中保存がそのコース宛なら、その文から再開
+      const ip = state.inProgress;
+      if (ip && ip.courseId === state.currentCourseId
+          && !masteredList(state.currentCourseId).includes(ip.sentIdx)) {
+        const course = getCourse(state.currentCourseId);
+        if (course && course.sentences[ip.sentIdx]) {
+          currentSent = course.sentences[ip.sentIdx];
+          currentSentIdx = ip.sentIdx;
+          checked = false;
+          elQuestion.textContent = currentSent.ja;
+          elInput.value = ip.input || "";
+          elInput.disabled = false;
+          elCheckBtn.disabled = false;
+          elInput.focus();
+          elHintArea.innerHTML = "";
+          elResult.innerHTML = "";
+          renderFav();
+          renderHeader();
+          return;
+        }
+      }
+      pickNext();
+    }
+
+    let currentSent = null;
+    let currentSentIdx = -1;
+    let checked = false;
+
+    // 練習中の途中状態を保存（未回答の文 + 入力中のテキスト）
+    function saveInProgress() {
+      if (currentView !== "practice") return;
+      if (!currentSent || currentSentIdx < 0) return;
+      if (checked) return; // 採点済みの文は途中扱いしない
+      state.inProgress = {
+        courseId: state.currentCourseId,
+        sentIdx: currentSentIdx,
+        input: elInput.value || ""
+      };
+      saveState();
+    }
+
+    // ========================================================================
+    // TTS
+    // ========================================================================
+    let zhVoice = null;
+    function pickZhVoice() {
+      if (!window.speechSynthesis) return;
+      const voices = window.speechSynthesis.getVoices();
+      if (!voices || !voices.length) return;
+      const preferred = ["Tingting","Ting-Ting","Sin-ji","Mei-Jia",
+        "Microsoft Xiaoxiao","Microsoft Yaoyao","Microsoft Huihui",
+        "Google 普通话（中国大陆）","Google 中文（中国大陆）"];
+      zhVoice =
+        voices.find(v => /^zh[-_]CN/i.test(v.lang) && preferred.some(n => v.name.includes(n))) ||
+        voices.find(v => /^zh[-_]CN/i.test(v.lang)) ||
+        voices.find(v => /^cmn/i.test(v.lang)) ||
+        voices.find(v => /^zh/i.test(v.lang)) || null;
+    }
+    if (window.speechSynthesis) {
+      pickZhVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickZhVoice);
+    }
+    function speak(text) {
+      try {
+        const synth = window.speechSynthesis;
+        if (!synth) return;
+        synth.cancel();
+        if (!zhVoice) pickZhVoice();
+        const u = new SpeechSynthesisUtterance(text);
+        if (zhVoice) { u.voice = zhVoice; u.lang = zhVoice.lang; }
+        else u.lang = "zh-CN";
+        u.rate = 0.85;
+        synth.speak(u);
+      } catch (e) {}
+    }
+
+    // ========================================================================
+    // CORE LOGIC
+    // ========================================================================
+    function getCourse(id) { return COURSES[id]; }
+    function masteredList(id) { return state.mastered[id] || []; }
+    function isCompleted(id) {
+      const c = getCourse(id);
+      return c && masteredList(id).length >= c.sentences.length;
+    }
+    function markMastered(courseId, sentIdx) {
+      if (!state.mastered[courseId]) state.mastered[courseId] = [];
+      if (!state.mastered[courseId].includes(sentIdx)) {
+        state.mastered[courseId].push(sentIdx);
+      }
+      if (isCompleted(courseId) && !state.completedCourses.includes(courseId)) {
+        state.completedCourses.push(courseId);
+      }
+    }
+    function favKey(courseId, sentIdx) { return `${courseId}-${sentIdx}`; }
+    function isFavorite(courseId, sentIdx) {
+      return state.favorites.includes(favKey(courseId, sentIdx));
+    }
+    function toggleFavorite() {
+      if (currentSentIdx === -1) return;
+      const key = favKey(state.currentCourseId, currentSentIdx);
+      const idx = state.favorites.indexOf(key);
+      if (idx >= 0) state.favorites.splice(idx, 1);
+      else state.favorites.push(key);
+      saveState();
+      renderFav();
+    }
+    function renderFav() {
+      const on = isFavorite(state.currentCourseId, currentSentIdx);
+      elFavBtn.classList.toggle("active", on);
+      elFavBtn.textContent = on ? "⭐" : "☆";
+    }
+
+    function pickNext() {
+      const course = getCourse(state.currentCourseId);
+      if (!course) return;
+
+      // 別の文へ移るので、以前の途中保存は破棄
+      state.inProgress = null;
+
+      const mastered = masteredList(state.currentCourseId);
+      if (mastered.length >= course.sentences.length) {
+        showCompleteModal();
+        return;
+      }
+
+      const unmastered = course.sentences
+        .map((s, i) => ({ s, i }))
+        .filter(({ i }) => !mastered.includes(i));
+
+      const recent = state.recentInCourse[state.currentCourseId] || [];
+      const fresh = unmastered.filter(({ i }) => !recent.includes(i));
+      const pool = fresh.length > 0 ? fresh : unmastered;
+
+      const choice = pool[Math.floor(Math.random() * pool.length)];
+      currentSent = choice.s;
+      currentSentIdx = choice.i;
+      checked = false;
+
+      if (!state.recentInCourse[state.currentCourseId]) state.recentInCourse[state.currentCourseId] = [];
+      state.recentInCourse[state.currentCourseId].push(currentSentIdx);
+      const maxRecent = Math.min(3, Math.max(1, course.sentences.length - mastered.length - 1));
+      while (state.recentInCourse[state.currentCourseId].length > maxRecent) {
+        state.recentInCourse[state.currentCourseId].shift();
+      }
+      saveState();
+
+      elQuestion.textContent = currentSent.ja;
+      elInput.value = "";
+      elInput.disabled = false;
+      elCheckBtn.disabled = false;
+      elInput.focus();
+      elHintArea.innerHTML = "";
+      elResult.innerHTML = "";
+      renderFav();
+      renderHeader();
+    }
+
+    // Retry the SAME sentence without picking a new one
+    function retryCurrent() {
+      if (!currentSent) return;
+      checked = false;
+      elInput.value = "";
+      elInput.disabled = false;
+      elCheckBtn.disabled = false;
+      elHintArea.innerHTML = "";
+      elResult.innerHTML = "";
+      elInput.focus();
+    }
+
+    function renderHeader() {
+      const course = getCourse(state.currentCourseId);
+      if (!course) return;
+      elCourseHsk.textContent = course.hsk;
+      elCourseNum.textContent = state.currentCourseId + 1;
+      elCourseTitle.textContent = course.title;
+      const mc = masteredList(state.currentCourseId).length;
+      const total = course.sentences.length;
+      elMasteredCount.textContent = mc;
+      elCourseBar.style.width = `${(mc / total) * 100}%`;
+      elQProgress.textContent = mc + 1 > total ? total : (mc + 1);
+    }
+
+    function renderStats() {
+      elStreak.textContent = state.streak;
+      elTodayCount.textContent = state.todayCount;
+      elDoneCourses.textContent = state.completedCourses.length;
+      elTotal.textContent = state.total;
+      elTodayCount.classList.toggle("goal-met", state.todayCount >= 10);
+    }
+
+    // ========================================================================
+    // CHECK ANSWER
+    // ========================================================================
+    function normalize(s) {
+      return (s || "")
+        .replace(/[\s　]/g, "")
+        .replace(/[，。．、！？!?,.;:；：]/g, "")
+        .trim();
+    }
+    function checkAlternatives(user) {
+      const u = normalize(user);
+      if (normalize(currentSent.zh) === u) return true;
+      if (currentSent.alts) return currentSent.alts.some(a => normalize(a) === u);
+      return false;
+    }
+    function compareAnswer(user, correct) {
+      const u = normalize(user), c = normalize(correct);
+      if (u === c) return { verdict: "correct" };
+      if (u.length === 0) return { verdict: "wrong", diff: "（未入力）" };
+      const m = u.length, n = c.length;
+      const dp = Array.from({length: m+1}, () => new Array(n+1).fill(0));
+      for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) {
+        if (u[i-1] === c[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+        else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+      }
+      const lcs = dp[m][n];
+      const similarity = (2*lcs)/(m+n);
+      let i = m, j = n; const ops = [];
+      while (i > 0 && j > 0) {
+        if (u[i-1] === c[j-1]) { ops.push({type:"ok",ch:c[j-1]}); i--; j--; }
+        else if (dp[i-1][j] >= dp[i][j-1]) { ops.push({type:"extra",ch:u[i-1]}); i--; }
+        else { ops.push({type:"miss",ch:c[j-1]}); j--; }
+      }
+      while (i > 0) { ops.push({type:"extra",ch:u[i-1]}); i--; }
+      while (j > 0) { ops.push({type:"miss",ch:c[j-1]}); j--; }
+      ops.reverse();
+      const diff = ops.map(op => {
+        if (op.type === "ok") return `<span class="diff-correct">${op.ch}</span>`;
+        if (op.type === "miss") return `<span class="diff-missing">${op.ch}</span>`;
+        return `<span class="diff-wrong">${op.ch}</span>`;
+      }).join("");
+      return { verdict: similarity > 0.7 ? "partial" : "wrong", diff, similarity };
+    }
+
+    function renderResult(user) {
+      const cmp = compareAnswer(user, currentSent.zh);
+      const isCorrect = checkAlternatives(user) || cmp.verdict === "correct";
+
+      let alreadyMastered = masteredList(state.currentCourseId).includes(currentSentIdx);
+      let verdictHTML;
+      if (isCorrect) {
+        const badge = alreadyMastered ? "" : `<span class="mastered-badge">✿ +1 마스터</span>`;
+        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">🌸</span>완벽해요！太棒了！${badge}</div>`;
+      } else if (cmp.verdict === "partial") {
+        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">🌷</span>아쉬워요！이 문장을 다시 도전해 보세요</div>`;
+      } else {
+        verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">💭</span>모범 답안을 외우고 다시 도전</div>`;
+      }
+
+      const wordsHTML = currentSent.w.map(w => `
+        <div class="word-item">
+          <div class="word-zh zh">${w.z}</div>
+          <div class="word-pinyin">${w.p}</div>
+          <div class="word-ja">${w.j}</div>
+        </div>
+      `).join("");
+
+      const yourAnsHTML = (user && !isCorrect)
+        ? `<div class="your-answer"><span style="color:var(--ink-mute);font-size:11px;">내 답안：</span><br>${cmp.diff || user}</div>` : "";
+
+      elResult.innerHTML = `
+        <div class="result">
+          ${verdictHTML}
+          <div class="answer-block">
+            <div class="label">모범 답안</div>
+            <div class="answer-zh zh">
+              <span>${currentSent.zh}</span>
+              <button class="speak-btn" id="speak-btn" title="발음 듣기">🔊</button>
+            </div>
+            <div class="answer-pinyin">${currentSent.py}</div>
+            ${yourAnsHTML}
+          </div>
+          <div class="section-title">문법 포인트</div>
+          <div class="grammar-block">${currentSent.g}</div>
+          <div class="section-title">단어</div>
+          <div class="words-grid">${wordsHTML}</div>
+          <div class="next-wrap">
+            <button class="btn btn-next" id="next-btn">${isCorrect ? "다음 문제 ✿" : "다시 도전 →"}</button>
+          </div>
+        </div>
+      `;
+      $("#speak-btn").addEventListener("click", () => speak(currentSent.zh));
+      $("#next-btn").addEventListener("click", () => {
+        if (isCorrect) {
+          pickNext();
+        } else {
+          retryCurrent();
+        }
+      });
+
+      if (!checked) {
+        const today = todayStr();
+        if (state.lastDate === today) {
+          state.todayCount += 1;
+        } else {
+          if (state.lastDate === yesterdayStr()) state.streak += 1;
+          else state.streak = 1;
+          state.lastDate = today;
+          state.todayCount = 1;
+        }
+        state.total += 1;
+        if (isCorrect && !alreadyMastered) {
+          markMastered(state.currentCourseId, currentSentIdx);
+        }
+        // 採点したので途中保存をクリア
+        state.inProgress = null;
+        renderStats();
+        renderHeader();
+        saveState();
+
+        if (isCompleted(state.currentCourseId) && isCorrect && !alreadyMastered) {
+          setTimeout(showCompleteModal, 900);
+        }
+      }
+      checked = true;
+      elCheckBtn.disabled = true;
+      elInput.disabled = true;
+      setTimeout(() => speak(currentSent.zh), 350);
+    }
+
+    // ========================================================================
+    // MODALS
+    // ========================================================================
+    function openModal(modal) { modal.classList.add("open"); }
+    function closeModal(modal) { modal.classList.remove("open"); }
+    document.addEventListener("click", (e) => {
+      if (e.target.dataset.close !== undefined) {
+        e.target.closest(".modal").classList.remove("open");
+      } else if (e.target.classList.contains("modal")) {
+        e.target.classList.remove("open");
+      }
+    });
+
+    function showCompleteModal() {
+      const isLast = state.currentCourseId === COURSES.length - 1;
+      elNextCourseBtn.textContent = isLast ? "🌸 홈으로 돌아가기" : "다음 코스로 →";
+      openModal(elCompleteModal);
+    }
+
+    // 完了モーダル: 次のコースへ → 次コースのIntro画面
+    elNextCourseBtn.addEventListener("click", () => {
+      closeModal(elCompleteModal);
+      if (state.currentCourseId < COURSES.length - 1) {
+        renderIntroView(state.currentCourseId + 1);
+      } else {
+        renderHome();
+        showView("home");
+      }
+    });
+
+    // 完了モーダル: もう一度 → 現コースをリセットして再開
+    elReplayCourseBtn.addEventListener("click", () => {
+      closeModal(elCompleteModal);
+      state.mastered[state.currentCourseId] = [];
+      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+      saveState();
+      renderHeader();
+      pickNext();
+    });
+
+    // 練習画面 → ポイント再確認（Intro画面に戻る）
+    elOpenIntroBtn.addEventListener("click", () => {
+      renderIntroView(state.currentCourseId);
+    });
+
+    // 練習画面 → このコースをリセット
+    elResetCourseBtn.addEventListener("click", () => {
+      if (!confirm("이 코스의 진도를 리셋하시겠습니까？")) return;
+      state.mastered[state.currentCourseId] = [];
+      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+      saveState();
+      renderHeader();
+      pickNext();
+    });
+
+    // HSKカードクリック → そのHSKのコース一覧へ
+    document.querySelectorAll(".hsk-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const hsk = parseInt(card.dataset.hsk);
+        renderLevelView(hsk);
+        showView("level");
+      });
+    });
+
+    // タイトルクリック → トップ（HOME）へ（途中の場合は記録を保存）
+    function goHome() {
+      saveInProgress();
+      renderHome();
+      renderStats();
+      showView("home");
+    }
+    const elHomeLink = document.getElementById("home-link");
+    if (elHomeLink) {
+      elHomeLink.addEventListener("click", goHome);
+      elHomeLink.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goHome(); }
+      });
+    }
+
+    // 戻るボタン
+    document.querySelectorAll(".back-link").forEach(btn => {
+      btn.addEventListener("click", () => {
+        saveInProgress();
+        const target = btn.dataset.back;
+        if (target === "home") {
+          renderHome();
+          showView("home");
+        } else if (target === "level") {
+          const hsk = currentView === "practice"
+            ? COURSES[state.currentCourseId].hsk
+            : (COURSES[state.currentCourseId] ? COURSES[state.currentCourseId].hsk : selectedLevel);
+          renderLevelView(hsk);
+          showView("level");
+        }
+      });
+    });
+
+    // 入力途中のテキスト変更も保存（その場で書き込み過ぎないよう軽くデバウンス）
+    let _ipSaveTimer = null;
+    elInput.addEventListener("input", () => {
+      if (!currentSent || checked) return;
+      clearTimeout(_ipSaveTimer);
+      _ipSaveTimer = setTimeout(saveInProgress, 400);
+    });
+
+    // タブを閉じる/離れる時にも保存
+    window.addEventListener("beforeunload", saveInProgress);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") saveInProgress();
+    });
+
+    // Intro画面 → 練習開始
+    elIntroStartBtn.addEventListener("click", startPractice);
+
+    // ========================================================================
+    // HINT
+    // ========================================================================
+    function showHint() {
+      if (!currentSent) return;
+      const firstPy = (currentSent.py || "").split(/\s+/)[0].replace(/[.,!?。、！？]+$/, "");
+      // Each Chinese syllable has exactly one vowel cluster — count them to get word length.
+      const syl = firstPy.toLowerCase().match(/[aeiouüāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]+/g);
+      const sylCount = syl ? syl.length : 1;
+      const firstWord = currentSent.zh.slice(0, sylCount);
+      const charCount = currentSent.zh.replace(/[\s。、，．・！？!?,.;:：；「」『』（）()　]/g, "").length;
+      elHintArea.innerHTML = `<div class="hint">첫 단어는 <strong class="zh">${firstWord}</strong>（${firstPy}）, 총 ${charCount} 글자</div>`;
+    }
+
+    // ========================================================================
+    // EVENT LISTENERS
+    // ========================================================================
+    elCheckBtn.addEventListener("click", () => {
+      if (!currentSent || checked) return;
+      renderResult(elInput.value);
+    });
+    elHintBtn.addEventListener("click", showHint);
+    elSkipBtn.addEventListener("click", pickNext);
+    // Enter で答え合わせ（Shift+Enter は改行）。IME 変換中は無視。
+    // 採点に使った Enter がそのまま「次へ」に流れないよう、
+    // 一度キーを離してから（keyup を経由してから）でないと「次へ」を発火させない。
+    let enterArmedForNext = false;
+
+    elInput.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.shiftKey) return; // 改行は Shift+Enter
+      if (checked) return;
+      e.preventDefault();
+      e.stopPropagation();
+      enterArmedForNext = false; // 採点直後は disarmed
+      elCheckBtn.click();
+    });
+
+    // 採点後（input が disabled）に Enter で「次へ／もう一度」
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.shiftKey || e.metaKey || e.ctrlKey) return;
+      if (currentView !== "practice") return;
+      if (!checked) return;
+      if (!enterArmedForNext) return; // 一度 keyup を経由していないと無視
+      const nb = document.getElementById("next-btn");
+      if (nb) { e.preventDefault(); nb.click(); enterArmedForNext = false; }
+    });
+
+    // Enter を離した時点で「次へ」を arm する（キーリピートでの突き抜けを防止）
+    document.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") enterArmedForNext = true;
+    });
+    elFavBtn.addEventListener("click", toggleFavorite);
+
+    // ========================================================================
+    // START
+    // ========================================================================
+    renderStats();
+    renderHome();
+    showView("home");
+  </script>
+</body>
+</html>
