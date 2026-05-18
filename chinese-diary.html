@@ -1392,6 +1392,35 @@
         </button>
       </div>
 
+      <div class="grid-tabs typing-submode-tabs" id="typing-submode-tabs">
+        <button class="grid-tab active" data-submode="original">原文表示</button>
+        <button class="grid-tab" data-submode="dictation">聞き取り</button>
+        <button class="grid-tab" data-submode="translation">和訳表示</button>
+      </div>
+
+      <p class="right-hint" id="typing-hint" hidden></p>
+
+      <details class="reference-block" id="reference-block" open>
+        <summary id="reference-summary">参照する原文を表示</summary>
+        <div class="reference-text" id="reference-text"></div>
+      </details>
+
+      <div class="dictation-card" id="dictation-card" hidden>
+        <div class="dictation-icon">🔊</div>
+        <button class="canvas-btn" id="dictation-play-normal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          通常
+        </button>
+        <button class="canvas-btn" id="dictation-play-slow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          ゆっくり
+        </button>
+        <button class="canvas-btn" id="dictation-stop">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+          停止
+        </button>
+      </div>
+
       <div class="write-pane" id="canvas-pane" hidden>
         <p class="right-hint">紙に書くのが理想ですが、このキャンバスでも練習できます。漢字練習には田字格が便利です。</p>
 
@@ -1423,35 +1452,6 @@
       </div>
 
       <div class="write-pane" id="typing-pane">
-        <div class="grid-tabs typing-submode-tabs" id="typing-submode-tabs">
-          <button class="grid-tab active" data-submode="original">原文表示</button>
-          <button class="grid-tab" data-submode="dictation">聞き取り</button>
-          <button class="grid-tab" data-submode="translation">和訳表示</button>
-        </div>
-
-        <p class="right-hint" id="typing-hint" hidden></p>
-
-        <details class="reference-block" id="reference-block" open>
-          <summary id="reference-summary">参照する原文を表示</summary>
-          <div class="reference-text" id="reference-text"></div>
-        </details>
-
-        <div class="dictation-card" id="dictation-card" hidden>
-          <div class="dictation-icon">🔊</div>
-          <button class="canvas-btn" id="dictation-play-normal">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            通常
-          </button>
-          <button class="canvas-btn" id="dictation-play-slow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            ゆっくり
-          </button>
-          <button class="canvas-btn" id="dictation-stop">
-            <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
-            停止
-          </button>
-        </div>
-
         <textarea class="typing-input" id="typing-input"
                   placeholder="ここに書き写してください…"
                   spellcheck="false"></textarea>
