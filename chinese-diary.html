@@ -1311,17 +1311,17 @@
       <h2 class="lesson-title" style="font-size:22px;margin-bottom:6px;">あなたのノート</h2>
 
       <div class="mode-tabs" id="mode-tabs">
-        <button class="mode-tab active" data-mode="canvas">
+        <button class="mode-tab" data-mode="canvas">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
           手書き
         </button>
-        <button class="mode-tab" data-mode="typing">
+        <button class="mode-tab active" data-mode="typing">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M7 16h10"/></svg>
           タイピング
         </button>
       </div>
 
-      <div class="write-pane" id="canvas-pane">
+      <div class="write-pane" id="canvas-pane" hidden>
         <p class="right-hint">紙に書くのが理想ですが、このキャンバスでも練習できます。漢字練習には田字格が便利です。</p>
 
         <div class="grid-tabs" id="grid-tabs">
@@ -1351,7 +1351,7 @@
         </div>
       </div>
 
-      <div class="write-pane" id="typing-pane" hidden>
+      <div class="write-pane" id="typing-pane">
         <p class="right-hint">中国語IMEを使ってもピンインでも入力できます。一字ずつ確認しながら書き写しましょう。</p>
 
         <details class="reference-block" id="reference-block" open>
@@ -2045,7 +2045,7 @@ if (currentIdx < 0 || currentIdx >= LESSONS.length) currentIdx = 0;
 let showPinyin = progress._showPinyin !== false;
 let gridMode = progress._gridMode || 'tianzi';
 let theme = progress._theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-let writeMode = progress._writeMode || 'canvas';  // 'canvas' or 'typing'
+let writeMode = progress._writeMode || 'typing';  // 'canvas' or 'typing'
 
 function currentLesson() {
   return LESSONS[currentIdx];
