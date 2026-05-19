@@ -12,6 +12,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="汉语日记">
+<script src="./s2t.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -685,6 +686,32 @@
     transition: background var(--dur) var(--ease);
   }
   .display-toggle.active .dt-dot { background: var(--accent); }
+
+  .script-toggle {
+    display: inline-flex;
+    padding: 2px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+  .script-toggle-btn {
+    border: none;
+    background: transparent;
+    padding: 5px 12px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+  }
+  .script-toggle-btn:not(.active):hover { color: var(--ink-2); }
+  .script-toggle-btn.active {
+    background: var(--bg-elevated);
+    color: var(--ink);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
 
   .audio-pills {
     display: inline-flex;
@@ -1441,6 +1468,10 @@
           <span class="dt-dot"></span>
           和訳
         </button>
+        <div class="script-toggle" role="tablist" aria-label="文字種">
+          <button type="button" class="script-toggle-btn active" id="script-simp" role="tab" aria-selected="true">簡体字</button>
+          <button type="button" class="script-toggle-btn" id="script-trad" role="tab" aria-selected="false">繁体字</button>
+        </div>
       </div>
 
       <div class="passage" id="passage"></div>
@@ -2230,6 +2261,14 @@ let gridMode = progress._gridMode || 'tianzi';
 let theme = progress._theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 let writeMode = progress._writeMode || 'typing';  // 'canvas' or 'typing'
 let typingSubMode = progress._typingSubMode || 'original';  // 'original' | 'dictation' | 'translation'
+let traditional = progress._traditional === true;  // false: 簡体字 / true: 繁体字
+
+// Simplified→Traditional helper. Display-only; underlying data stays simplified.
+function tx(s) {
+  if (!s) return s;
+  if (traditional && window.S2T) return window.S2T.convert(s);
+  return s;
+}
 
 function currentLesson() {
   return LESSONS[currentIdx];
@@ -2489,7 +2528,7 @@ function doRender(lesson) {
         </button>
       </div>
     `;
-    row.querySelector('.zh').textContent = s.zh;
+    row.querySelector('.zh').textContent = tx(s.zh);
     const jaEl = row.querySelector('.sentence-ja');
     jaEl.textContent = jaForRow;
     if (!jaForRow) jaEl.style.display = 'none';
@@ -2509,7 +2548,7 @@ function doRender(lesson) {
   const vlist = document.getElementById('vocab-list');
   vlist.innerHTML = '';
   lesson.vocab.forEach(v => {
-    const zh = document.createElement('div'); zh.className = 'vocab-zh'; zh.textContent = v.zh;
+    const zh = document.createElement('div'); zh.className = 'vocab-zh'; zh.textContent = tx(v.zh);
     const py = document.createElement('div'); py.className = 'vocab-py'; py.innerHTML = colorizePinyin(v.pinyin);
     const ja = document.createElement('div'); ja.className = 'vocab-ja'; ja.textContent = v.ja;
     vlist.appendChild(zh); vlist.appendChild(py); vlist.appendChild(ja);
@@ -2603,8 +2642,8 @@ document.getElementById('complete-btn').addEventListener('click', () => {
 document.getElementById('reset-btn').addEventListener('click', () => {
   if (confirm('進捗をすべてリセットしますか？（取り消せません）')) {
     localStorage.removeItem(STORAGE_KEY);
-    progress = {}; currentIdx = 0; showPinyin = true; showTranslation = true; gridMode = 'tianzi';
-    applyPinyinVisibility(); applyTranslationVisibility(); applyGridMode(gridMode);
+    progress = {}; currentIdx = 0; showPinyin = true; showTranslation = true; gridMode = 'tianzi'; traditional = false;
+    applyPinyinVisibility(); applyTranslationVisibility(); applyScriptToggle(); applyGridMode(gridMode);
     renderDay(); renderDayJump();
   }
 });
@@ -2624,6 +2663,32 @@ document.getElementById('translation-toggle').addEventListener('click', () => {
   saveProgress(progress);
   applyTranslationVisibility();
 });
+
+function applyScriptToggle() {
+  const simp = document.getElementById('script-simp');
+  const trad = document.getElementById('script-trad');
+  simp.classList.toggle('active', !traditional);
+  simp.setAttribute('aria-selected', String(!traditional));
+  trad.classList.toggle('active', traditional);
+  trad.setAttribute('aria-selected', String(traditional));
+}
+function setScript(t) {
+  if (traditional === t) return;
+  traditional = t;
+  progress._traditional = traditional;
+  saveProgress(progress);
+  applyScriptToggle();
+  // Re-render anything that displays Chinese chars.
+  renderDay();
+  updateReferenceText();
+  updateCharCount();
+  // Re-render diff if it's currently shown.
+  if (diffOutput && !diffOutput.hidden && typingInput && typingInput.value.trim()) {
+    renderDiff();
+  }
+}
+document.getElementById('script-simp').addEventListener('click', () => setScript(false));
+document.getElementById('script-trad').addEventListener('click', () => setScript(true));
 
 document.getElementById('play-all-normal').addEventListener('click', e => {
   speakAll(document.querySelectorAll('.sentence'), 0.95, e.currentTarget);
@@ -2779,7 +2844,7 @@ const diffOutput = document.getElementById('diff-output');
 function getLessonText() {
   const lesson = currentLesson();
   if (!lesson) return '';
-  return lesson.sentences.map(s => s.zh).join('\n');
+  return lesson.sentences.map(s => tx(s.zh)).join('\n');
 }
 
 function updateReferenceText() {
@@ -2804,7 +2869,7 @@ function updateReferenceText() {
   } else {
     lesson.sentences.forEach(s => {
       const p = document.createElement('p');
-      p.textContent = s.zh;
+      p.textContent = tx(s.zh);
       p.style.margin = '0 0 4px';
       refEl.appendChild(p);
     });
@@ -3042,6 +3107,7 @@ window.addEventListener('resize', fitCanvas);
 applyTheme();
 applyPinyinVisibility();
 applyTranslationVisibility();
+applyScriptToggle();
 applyGridMode(gridMode);
 applyWriteMode(writeMode);
 applyTypingSubMode(typingSubMode);

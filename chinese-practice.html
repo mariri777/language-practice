@@ -12,6 +12,7 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="你好！" />
+  <script src="./s2t.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -185,6 +186,40 @@
       color: var(--pink-darker); font-size: 13px;
     }
     .stat-pill .goal-met { color: var(--green); }
+
+    /* ---- Script (簡/繁) toggle ---- */
+    .script-toggle {
+      display: inline-flex;
+      padding: 3px;
+      background: var(--white);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      margin: 0 0 18px;
+    }
+    .script-toggle-row {
+      display: flex;
+      justify-content: center;
+      margin: -8px 0 8px;
+    }
+    .script-toggle-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.04em;
+      transition: background 0.15s, color 0.15s;
+    }
+    .script-toggle-btn.active {
+      background: var(--pink);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(231, 107, 138, 0.3);
+    }
+    .script-toggle-btn:not(.active):hover { color: var(--pink-deep); }
 
     /* ---- Course banner ---- */
     .course-banner {
@@ -686,6 +721,13 @@
       <span class="stat-pill"><span class="icon">🌸</span>今日 <span class="value" id="today-count">0</span> / 10</span>
       <span class="stat-pill"><span class="icon">✨</span>完了 <span class="value" id="done-courses">0</span> コース</span>
       <span class="stat-pill"><span class="icon">📚</span>累計 <span class="value" id="total">0</span> 文</span>
+    </div>
+
+    <div class="script-toggle-row">
+      <div class="script-toggle" role="tablist" aria-label="文字種">
+        <button type="button" class="script-toggle-btn active" id="script-simp" role="tab" aria-selected="true">簡体字</button>
+        <button type="button" class="script-toggle-btn" id="script-trad" role="tab" aria-selected="false">繁体字</button>
+      </div>
     </div>
 
     <!-- ============ HOME VIEW ============ -->
@@ -2228,8 +2270,17 @@
       completedCourses: [],
       favorites: [],       // ["courseId-sentIdx"]
       recentInCourse: {},  // { courseId: [sentIdx, ...] } (avoid immediate repeats)
-      inProgress: null     // { courseId, sentIdx, input } - 練習中に離脱した場合の途中状態
+      inProgress: null,    // { courseId, sentIdx, input } - 練習中に離脱した場合の途中状態
+      traditional: false   // 簡体字(false) / 繁体字(true)
     };
+
+    // Simplified→Traditional helper. Always returns the string in the currently
+    // active script. The underlying data stays simplified; conversion is display-only.
+    function tx(s) {
+      if (!s) return s;
+      if (state && state.traditional && window.S2T) return window.S2T.convert(s);
+      return s;
+    }
 
     function loadState() {
       try {
@@ -2377,7 +2428,7 @@
       elIntroNum.textContent = courseId + 1;
       elIntroTitle.textContent = c.title;
       elIntroOverview.textContent = intro.overview;
-      elIntroPoints.innerHTML = intro.points.map(p => `<li>${p}</li>`).join("");
+      elIntroPoints.innerHTML = intro.points.map(p => `<li>${tx(p)}</li>`).join("");
       const mc = masteredList(courseId).length;
       const total = c.sentences.length;
       const done = mc >= total;
@@ -2588,14 +2639,24 @@
         .replace(/[，。．、！？!?,.;:；：]/g, "")
         .trim();
     }
+    // For matching: canonicalize to traditional so the user can type in either
+    // script and still be accepted. Display layer (compareAnswer / tx) still
+    // uses the user's chosen script for clean visual diffs.
+    function canonical(s) {
+      const n = normalize(s);
+      return window.S2T ? window.S2T.convert(n) : n;
+    }
     function checkAlternatives(user) {
-      const u = normalize(user);
-      if (normalize(currentSent.zh) === u) return true;
-      if (currentSent.alts) return currentSent.alts.some(a => normalize(a) === u);
+      const u = canonical(user);
+      if (canonical(currentSent.zh) === u) return true;
+      if (currentSent.alts) return currentSent.alts.some(a => canonical(a) === u);
       return false;
     }
     function compareAnswer(user, correct) {
-      const u = normalize(user), c = normalize(correct);
+      // Render the diff in whichever script the user is viewing.
+      const userView = (state && state.traditional && window.S2T) ? window.S2T.convert(user) : user;
+      const correctView = tx(correct);
+      const u = normalize(userView), c = normalize(correctView);
       if (u === c) return { verdict: "correct" };
       if (u.length === 0) return { verdict: "wrong", diff: "（未入力）" };
       const m = u.length, n = c.length;
@@ -2640,7 +2701,7 @@
 
       const wordsHTML = currentSent.w.map(w => `
         <div class="word-item">
-          <div class="word-zh zh">${w.z}</div>
+          <div class="word-zh zh">${tx(w.z)}</div>
           <div class="word-pinyin">${w.p}</div>
           <div class="word-ja">${w.j}</div>
         </div>
@@ -2655,14 +2716,14 @@
           <div class="answer-block">
             <div class="label">模範解答</div>
             <div class="answer-zh zh">
-              <span>${currentSent.zh}</span>
+              <span>${tx(currentSent.zh)}</span>
               <button class="speak-btn" id="speak-btn" title="発音を聞く">🔊</button>
             </div>
             <div class="answer-pinyin">${currentSent.py}</div>
             ${yourAnsHTML}
           </div>
           <div class="section-title">文法ポイント</div>
-          <div class="grammar-block">${currentSent.g}</div>
+          <div class="grammar-block">${tx(currentSent.g)}</div>
           <div class="section-title">単語</div>
           <div class="words-grid">${wordsHTML}</div>
           <div class="next-wrap">
@@ -2834,7 +2895,7 @@
       const sylCount = syl ? syl.length : 1;
       const firstWord = currentSent.zh.slice(0, sylCount);
       const charCount = currentSent.zh.replace(/[\s。、，．・！？!?,.;:：；「」『』（）()　]/g, "").length;
-      elHintArea.innerHTML = `<div class="hint">最初の単語は <strong class="zh">${firstWord}</strong>（${firstPy}）、合計 ${charCount} 文字</div>`;
+      elHintArea.innerHTML = `<div class="hint">最初の単語は <strong class="zh">${tx(firstWord)}</strong>（${firstPy}）、合計 ${charCount} 文字</div>`;
     }
 
     // ========================================================================
@@ -2879,6 +2940,34 @@
       if (e.key === "Enter") enterArmedForNext = true;
     });
     elFavBtn.addEventListener("click", toggleFavorite);
+
+    // 簡/繁 toggle
+    function applyScriptToggle() {
+      const simp = document.getElementById("script-simp");
+      const trad = document.getElementById("script-trad");
+      simp.classList.toggle("active", !state.traditional);
+      simp.setAttribute("aria-selected", String(!state.traditional));
+      trad.classList.toggle("active", state.traditional);
+      trad.setAttribute("aria-selected", String(state.traditional));
+    }
+    function setScript(traditional) {
+      if (state.traditional === traditional) return;
+      state.traditional = traditional;
+      saveState();
+      applyScriptToggle();
+      // Re-render whichever views can change.
+      renderHome();
+      const introView = document.getElementById("view-intro");
+      if (introView && !introView.hidden) {
+        renderIntroView(state.currentCourseId);
+      }
+      if (currentSent && checked) {
+        renderResult(elInput.value);
+      }
+    }
+    document.getElementById("script-simp").addEventListener("click", () => setScript(false));
+    document.getElementById("script-trad").addEventListener("click", () => setScript(true));
+    applyScriptToggle();
 
     // ========================================================================
     // START
