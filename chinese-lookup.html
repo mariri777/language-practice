@@ -642,7 +642,7 @@
     <div class="eyebrow">Handwriting Lookup</div>
     <h1>手写查字</h1>
     <p class="sub">Draw a character, find the reading.</p>
-    <p class="hint">枠の中に知りたい文字を書くだけ。拼音と意味が出て、辞書にそのまま渡せます。</p>
+    <p class="hint">枠の中に知りたい文字を書くだけ。拼音と意味が出て、辞書にそのまま渡せます。<br>辞書ボタンを押すと字が自動でコピーされるので、開いた辞書アプリに貼り付けるだけ。</p>
   </section>
 
   <div class="pad" id="pad">
@@ -687,7 +687,11 @@
           <label>新しい辞書を追加</label>
           <input type="text" id="add-name" placeholder="表示名（例: Weblio日中）">
           <input type="text" id="add-url" class="url" placeholder="https://example.com/search?q={q}">
-          <div class="hint">URLの <code>{q}</code> が選んだ字に置き換わります。Plecoなど独自スキーム（<code>plecoapi://...</code>）もOK。</div>
+          <div class="hint">
+            ボタンを押すと、選んだ字が自動でクリップボードにコピーされてから開きます。<br>
+            URLに <code>{q}</code> を入れると検索URLになる（例: <code>https://cjjc.weblio.jp/content/{q}</code>）。<br>
+            <code>{q}</code> 抜きでアプリ起動だけ（例: <code>hanzii://</code>）にすれば、開いたアプリに貼り付けるだけでOK。
+          </div>
           <div class="dict-add-buttons">
             <button class="btn primary" id="add-dict" type="button">+ 追加</button>
             <button class="btn" id="reset-dicts" type="button">デフォルトに戻す</button>
@@ -994,10 +998,11 @@
   // ============ Dictionary destinations (configurable) ============
   const STORE_DICTS = 'chinese-lookup-dicts-v1';
   const DEFAULT_DICTS = [
-    { id: 'pleco', name: 'Pleco', url: 'plecoapi://x-callback-url/s?q={q}', enabled: true },
-    { id: 'gtranslate', name: 'Google翻訳', url: 'https://translate.google.com/?sl=zh-CN&tl=ja&text={q}&op=translate', enabled: true },
+    { id: 'hanzii-app', name: 'HANZI dict (アプリ起動)', url: 'hanzii://', enabled: true },
     { id: 'hokujirou', name: '北辞郎', url: 'https://www.ctrans.org/search/index.php?word={q}&searchtype=cn', enabled: true },
-    { id: 'weblio', name: 'Weblio日中', url: 'https://cjjc.weblio.jp/content/{q}', enabled: false },
+    { id: 'weblio', name: 'Weblio日中', url: 'https://cjjc.weblio.jp/content/{q}', enabled: true },
+    { id: 'gtranslate', name: 'Google翻訳', url: 'https://translate.google.com/?sl=zh-CN&tl=ja&text={q}&op=translate', enabled: false },
+    { id: 'pleco', name: 'Pleco', url: 'plecoapi://x-callback-url/s?q={q}', enabled: false },
     { id: 'mdbg', name: 'MDBG (英)', url: 'https://www.mdbg.net/chinese/dictionary?page=worddict&wdrst=0&wdqb={q}', enabled: false },
     { id: 'baidu', name: '百度词典', url: 'https://dict.baidu.com/s?wd={q}', enabled: false }
   ];
@@ -1026,8 +1031,11 @@
       b.type = 'button';
       b.dataset.dict = d.id;
       b.textContent = d.name;
-      b.addEventListener('click', () => {
+      b.addEventListener('click', async () => {
         if (!currentChar) return;
+        // Pre-copy the character so users can paste in apps that don't
+        // accept search via URL scheme (most dict apps).
+        try { await navigator.clipboard.writeText(currentChar); } catch (_) {}
         const url = d.url.replace(/\{q\}/g, encodeURIComponent(currentChar));
         window.open(url, '_blank');
       });
