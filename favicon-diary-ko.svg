@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bgDiaryKo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a85738"/>
+      <stop offset="100%" stop-color="#874426"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bgDiaryKo)"/>
+  <text x="32" y="42"
+        text-anchor="middle"
+        font-family="'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif"
+        font-size="22"
+        font-weight="700"
+        fill="#faf7ee"
+        letter-spacing="0.02em">일기</text>
+  <text x="32" y="58"
+        text-anchor="middle"
+        font-family="'Songti SC', 'STSong', 'SimSun', serif"
+        font-size="13"
+        font-weight="500"
+        fill="rgba(250,247,238,0.7)">汉语</text>
+</svg>
