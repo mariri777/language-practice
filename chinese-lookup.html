@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>手写查字 · Chinese Handwriting Lookup</title>
+<link rel="icon" type="image/svg+xml" href="favicon-lookup.svg">
+<link rel="apple-touch-icon" href="icons/favicon-zh-180.png">
+<link rel="manifest" href="chinese-lookup.webmanifest">
+<meta name="theme-color" content="#7a2c3a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="手写查">
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+</script>
+<style>
+  :root {
+    --bg: #f3efe5;
+    --bg-card: #faf6ec;
+    --bg-pure: #ffffff;
+    --bg-subtle: #e9e2cf;
+    --bg-deeper: #ddd4be;
+
+    --ink: #0c0b09;
+    --ink-2: #36312a;
+    --ink-3: #7a7065;
+    --ink-4: #aea493;
+    --ink-5: #cfc6b3;
+
+    --accent: #7a2c3a;
+    --accent-2: #5e1f29;
+    --accent-soft: rgba(122, 44, 58, 0.08);
+    --accent-glow: rgba(122, 44, 58, 0.16);
+
+    --rule: #c2b9a5;
+    --divider: #d8d0bd;
+    --grid: #d4cbb6;
+    --grid-soft: #e3dcc8;
+
+    --ease: cubic-bezier(0.2, 0, 0.2, 1);
+    --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur: 280ms;
+
+    --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI",
+               "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", system-ui, sans-serif;
+    --font-display: -apple-system, "SF Pro Display", "Inter", "Hiragino Sans", sans-serif;
+    --font-zh: "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", "SimSun", "宋体", serif;
+    --font-num: "Cormorant Garamond", "Iowan Old Style", "Charter", Georgia, serif;
+  }
+
+  body.dark {
+    --bg: #0d0c0a;
+    --bg-card: #15130f;
+    --bg-pure: #1a1814;
+    --bg-subtle: #1f1b16;
+    --bg-deeper: #28221c;
+
+    --ink: #f3eddf;
+    --ink-2: #c8baa3;
+    --ink-3: #948675;
+    --ink-4: #5e5448;
+    --ink-5: #38322a;
+
+    --accent: #d68088;
+    --accent-2: #e29ea4;
+    --accent-soft: rgba(214, 128, 136, 0.12);
+    --accent-glow: rgba(214, 128, 136, 0.20);
+
+    --rule: #36302a;
+    --divider: #28221c;
+    --grid: #38322a;
+    --grid-soft: #25201b;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    margin: 0;
+    font-family: var(--font-ui);
+    color: var(--ink);
+    background: var(--bg);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+    transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+    overscroll-behavior-y: contain;
+  }
+  ::selection { background: var(--ink); color: var(--bg); }
+
+  /* ============ Top bar ============ */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: saturate(160%) blur(10px);
+    -webkit-backdrop-filter: saturate(160%) blur(10px);
+    border-bottom: 1px solid var(--divider);
+  }
+  .back-link {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color var(--dur) var(--ease);
+  }
+  .back-link:hover { color: var(--accent); }
+  .back-link .arrow {
+    display: inline-block;
+    transition: transform var(--dur) var(--ease);
+  }
+  .back-link:hover .arrow { transform: translateX(-3px); }
+
+  .top-title {
+    font-family: var(--font-zh);
+    font-size: 18px;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+  }
+
+  .theme-toggle {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all var(--dur) var(--ease);
+  }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .theme-toggle svg { width: 14px; height: 14px; }
+  body:not(.dark) .theme-toggle .moon { display: block; }
+  body:not(.dark) .theme-toggle .sun  { display: none; }
+  body.dark .theme-toggle .moon { display: none; }
+  body.dark .theme-toggle .sun  { display: block; }
+
+  /* ============ Layout ============ */
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 28px 20px 80px;
+  }
+
+  .lede {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .lede .eyebrow {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .lede h1 {
+    font-family: var(--font-zh);
+    font-weight: 400;
+    font-size: clamp(34px, 7vw, 44px);
+    margin: 0 0 6px;
+    letter-spacing: 0.05em;
+  }
+  .lede .sub {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-3);
+    letter-spacing: 0.01em;
+  }
+  .lede .hint {
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-top: 10px;
+    line-height: 1.7;
+  }
+
+  /* ============ Canvas ============ */
+  .pad {
+    position: relative;
+    margin: 0 auto;
+    width: min(360px, 88vw);
+    aspect-ratio: 1 / 1;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    box-shadow: 0 2px 0 var(--accent-soft), 0 18px 40px -28px rgba(0,0,0,.18);
+    overflow: hidden;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .pad .tianzi {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .pad canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+  }
+  .pad .placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-zh);
+    font-size: 80px;
+    color: var(--ink-5);
+    pointer-events: none;
+    transition: opacity var(--dur) var(--ease);
+    letter-spacing: 0.06em;
+  }
+  .pad.has-ink .placeholder { opacity: 0; }
+
+  .pad-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 16px auto 0;
+    flex-wrap: wrap;
+  }
+  .btn {
+    appearance: none;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    color: var(--ink-2);
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 9px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .btn:hover { color: var(--accent); border-color: var(--accent); }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: .35; cursor: not-allowed; }
+  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  body.dark .btn.primary { color: var(--bg); }
+  .btn.primary:hover { background: var(--accent-2); border-color: var(--accent-2); color: #fff; }
+  body.dark .btn.primary:hover { color: var(--bg); }
+
+  /* ============ Candidates ============ */
+  .candidates {
+    margin-top: 28px;
+    min-height: 64px;
+  }
+  .candidates-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .candidates-row {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 6px 14px;
+    margin: 0 -6px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .candidates-row::-webkit-scrollbar { height: 4px; }
+  .candidates-row::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+  .cand {
+    flex: 0 0 auto;
+    width: 58px;
+    height: 64px;
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    color: var(--ink);
+    font-family: var(--font-zh);
+    font-size: 34px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    scroll-snap-align: start;
+    padding: 0;
+  }
+  .cand:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .cand.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  body.dark .cand.active { color: var(--bg); }
+
+  .status {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 18px 0;
+  }
+  .status.error { color: var(--accent); text-transform: none; letter-spacing: 0.02em; font-family: var(--font-ui); font-size: 13px; }
+
+  /* ============ Selected detail ============ */
+  .detail {
+    margin-top: 24px;
+    padding: 28px 24px 26px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    text-align: center;
+  }
+  .detail[hidden] { display: none; }
+  .detail .big {
+    font-family: var(--font-zh);
+    font-size: clamp(96px, 22vw, 132px);
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 8px;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .detail .pinyin {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 28px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+    min-height: 36px;
+  }
+  .detail .speak {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--ink-3);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 6px;
+    vertical-align: 0.05em;
+    transition: color var(--dur) var(--ease);
+  }
+  .detail .speak:hover { color: var(--accent); }
+  .detail .meaning {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin: 10px auto 0;
+    max-width: 520px;
+    min-height: 22px;
+  }
+  .detail .meaning.dim { color: var(--ink-3); font-style: italic; }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 22px;
+  }
+  .copy-flash {
+    position: fixed;
+    left: 50%;
+    bottom: 32px;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 280ms var(--ease-out-soft);
+    z-index: 200;
+  }
+  .copy-flash.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ============ History ============ */
+  .history {
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--divider);
+  }
+  .history-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .history-label .clear-history {
+    background: none; border: none;
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    cursor: pointer;
+    padding: 4px 0;
+    transition: color var(--dur) var(--ease);
+  }
+  .history-label .clear-history:hover { color: var(--accent); }
+  .history-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .history-list:empty::after {
+    content: "まだありません";
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-4);
+    font-style: italic;
+  }
+  .hist {
+    appearance: none;
+    border: 1px solid var(--divider);
+    background: var(--bg-card);
+    color: var(--ink);
+    font-family: var(--font-zh);
+    font-size: 22px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    line-height: 1.3;
+  }
+  .hist:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ============ Footer ============ */
+  footer.site {
+    max-width: 680px;
+    margin: 24px auto 0;
+    padding: 24px 20px 40px;
+    border-top: 1px solid var(--divider);
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    color: var(--ink-4);
+    letter-spacing: 0.06em;
+    text-align: center;
+  }
+  footer.site a { color: var(--ink-3); text-decoration: none; transition: color var(--dur) var(--ease); }
+  footer.site a:hover { color: var(--accent); }
+
+  /* ============ Dictionary settings ============ */
+  .dict-settings {
+    margin-top: 18px;
+    text-align: center;
+  }
+  .dict-settings-toggle {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--ink-3);
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color var(--dur) var(--ease);
+  }
+  .dict-settings-toggle:hover { color: var(--accent); }
+  .dict-settings-panel {
+    margin-top: 14px;
+    padding: 18px 18px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-radius: 8px;
+    text-align: left;
+    font-size: 13.5px;
+  }
+  .dict-settings-panel[hidden] { display: none; }
+  .dict-row {
+    display: grid;
+    grid-template-columns: 22px 1fr 28px;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .dict-row:last-of-type { border-bottom: none; }
+  .dict-row .check {
+    width: 18px; height: 18px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  .dict-row .info {
+    overflow: hidden;
+  }
+  .dict-row .nm {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 13px;
+  }
+  .dict-row .url {
+    font-family: "SF Mono", "Menlo", monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    word-break: break-all;
+    line-height: 1.45;
+    margin-top: 1px;
+  }
+  .dict-row .del {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--ink-4);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all var(--dur) var(--ease);
+  }
+  .dict-row .del:hover { color: var(--accent); }
+  .dict-row.disabled .nm,
+  .dict-row.disabled .url { opacity: 0.45; }
+
+  .dict-add {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--divider);
+  }
+  .dict-add label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 4px;
+  }
+  .dict-add input {
+    width: 100%;
+    appearance: none;
+    border: 1px solid var(--divider);
+    background: var(--bg);
+    color: var(--ink);
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: inherit;
+    margin-bottom: 8px;
+  }
+  .dict-add input.url { font-family: "SF Mono", "Menlo", monospace; font-size: 12px; }
+  .dict-add input:focus { border-color: var(--accent); outline: none; }
+  .dict-add .hint {
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .dict-add .hint code {
+    background: var(--bg-subtle);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+    color: var(--accent);
+  }
+  .dict-add-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .dict-row .cta-action {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--ink-4);
+    font-family: var(--font-display);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 6px;
+    transition: color var(--dur) var(--ease);
+  }
+  .dict-row .cta-action:hover { color: var(--accent); }
+
+  @media (max-width: 480px) {
+    main { padding: 22px 16px 60px; }
+    .cand { width: 52px; height: 58px; font-size: 30px; }
+    .detail { padding: 22px 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link"><span class="arrow">←</span> Back</a>
+  <div class="top-title">手写查字</div>
+  <button class="theme-toggle" id="theme-toggle" aria-label="テーマ切替">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  </button>
+</div>
+
+<main>
+  <section class="lede">
+    <div class="eyebrow">Handwriting Lookup</div>
+    <h1>手写查字</h1>
+    <p class="sub">Draw a character, find the reading.</p>
+    <p class="hint">枠の中に知りたい文字を書くだけ。拼音と意味が出て、辞書にそのまま渡せます。</p>
+  </section>
+
+  <div class="pad" id="pad">
+    <svg class="tianzi" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <rect x="1.5" y="1.5" width="97" height="97" fill="none" stroke="var(--grid)" stroke-width="0.8"/>
+      <line x1="50" y1="2" x2="50" y2="98" stroke="var(--grid-soft)" stroke-width="0.5" stroke-dasharray="2 2"/>
+      <line x1="2" y1="50" x2="98" y2="50" stroke="var(--grid-soft)" stroke-width="0.5" stroke-dasharray="2 2"/>
+      <line x1="2"  y1="2"  x2="98" y2="98" stroke="var(--grid-soft)" stroke-width="0.4" stroke-dasharray="2 2"/>
+      <line x1="98" y1="2"  x2="2"  y2="98" stroke="var(--grid-soft)" stroke-width="0.4" stroke-dasharray="2 2"/>
+    </svg>
+    <canvas id="canvas" width="600" height="600"></canvas>
+    <div class="placeholder" id="placeholder">字</div>
+  </div>
+
+  <div class="pad-actions">
+    <button class="btn" id="undo" disabled>↶ 一画戻る</button>
+    <button class="btn" id="clear" disabled>⟲ クリア</button>
+  </div>
+
+  <section class="candidates">
+    <div class="candidates-label">候補</div>
+    <div class="candidates-row" id="candidates"></div>
+    <div class="status" id="status">枠の中に字を書いてください</div>
+  </section>
+
+  <section class="detail" id="detail" hidden>
+    <div class="big" id="detail-char">字</div>
+    <div class="pinyin">
+      <span id="detail-pinyin"></span>
+      <button class="speak" id="speak" aria-label="発音を聞く">🔊</button>
+    </div>
+    <div class="meaning dim" id="detail-meaning">意味を取得中…</div>
+    <div class="actions" id="actions">
+      <button class="btn primary" data-builtin="copy-char">字をコピー</button>
+      <button class="btn" data-builtin="copy-pinyin">拼音をコピー</button>
+    </div>
+    <div class="dict-settings">
+      <button class="dict-settings-toggle" id="dict-toggle" type="button">⚙ 辞書設定</button>
+      <div class="dict-settings-panel" id="dict-panel" hidden>
+        <div id="dict-list"></div>
+        <div class="dict-add">
+          <label>新しい辞書を追加</label>
+          <input type="text" id="add-name" placeholder="表示名（例: Weblio日中）">
+          <input type="text" id="add-url" class="url" placeholder="https://example.com/search?q={q}">
+          <div class="hint">URLの <code>{q}</code> が選んだ字に置き換わります。Plecoなど独自スキーム（<code>plecoapi://...</code>）もOK。</div>
+          <div class="dict-add-buttons">
+            <button class="btn primary" id="add-dict" type="button">+ 追加</button>
+            <button class="btn" id="reset-dicts" type="button">デフォルトに戻す</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="history">
+    <div class="history-label">
+      <span>最近調べた字</span>
+      <button class="clear-history" id="clear-history">クリア</button>
+    </div>
+    <div class="history-list" id="history-list"></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div>認識：Google Input Tools　·　拼音：pinyin-pro　·　意味：Google翻訳</div>
+  <div style="margin-top:6px;"><a href="index.html">← ホームに戻る</a></div>
+</footer>
+
+<div class="copy-flash" id="flash">コピーしました</div>
+
+<script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.27.0/dist/index.js"></script>
+<script>
+(() => {
+  // ============ Theme ============
+  const STORE_THEME = 'language-collection-theme';
+  let theme = localStorage.getItem(STORE_THEME) || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const applyTheme = () => document.body.classList.toggle('dark', theme === 'dark');
+  applyTheme();
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(STORE_THEME, theme);
+    applyTheme();
+  });
+
+  // ============ Canvas drawing ============
+  const pad = document.getElementById('pad');
+  const canvas = document.getElementById('canvas');
+  const placeholder = document.getElementById('placeholder');
+  const ctx = canvas.getContext('2d');
+  const LOGICAL = 600;          // logical drawing surface (px)
+  canvas.width = LOGICAL;
+  canvas.height = LOGICAL;
+
+  // strokes: Array<{ xs: number[], ys: number[], ts: number[] }>
+  let strokes = [];
+  let current = null;
+  let startTime = 0;
+
+  const inkColor = () => getComputedStyle(document.body).getPropertyValue('--ink').trim() || '#0c0b09';
+
+  function redraw() {
+    ctx.clearRect(0, 0, LOGICAL, LOGICAL);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = inkColor();
+    ctx.lineWidth = 14;
+    for (const s of strokes) {
+      if (s.xs.length < 1) continue;
+      ctx.beginPath();
+      ctx.moveTo(s.xs[0], s.ys[0]);
+      if (s.xs.length === 1) {
+        ctx.arc(s.xs[0], s.ys[0], 6, 0, Math.PI * 2);
+        ctx.fillStyle = inkColor();
+        ctx.fill();
+      } else {
+        for (let i = 1; i < s.xs.length - 1; i++) {
+          const xc = (s.xs[i] + s.xs[i + 1]) / 2;
+          const yc = (s.ys[i] + s.ys[i + 1]) / 2;
+          ctx.quadraticCurveTo(s.xs[i], s.ys[i], xc, yc);
+        }
+        ctx.lineTo(s.xs[s.xs.length - 1], s.ys[s.ys.length - 1]);
+        ctx.stroke();
+      }
+    }
+    pad.classList.toggle('has-ink', strokes.length > 0);
+    const hasInk = strokes.length > 0;
+    document.getElementById('undo').disabled = !hasInk;
+    document.getElementById('clear').disabled = !hasInk;
+  }
+
+  function getPos(ev) {
+    const rect = canvas.getBoundingClientRect();
+    const x = ((ev.clientX - rect.left) / rect.width) * LOGICAL;
+    const y = ((ev.clientY - rect.top) / rect.height) * LOGICAL;
+    return { x, y };
+  }
+
+  function onDown(ev) {
+    if (ev.button !== undefined && ev.button !== 0) return;
+    ev.preventDefault();
+    canvas.setPointerCapture?.(ev.pointerId);
+    if (strokes.length === 0) startTime = performance.now();
+    const { x, y } = getPos(ev);
+    const t = performance.now() - startTime;
+    current = { xs: [x], ys: [y], ts: [t] };
+    strokes.push(current);
+    cancelRecognition();
+    redraw();
+  }
+  function onMove(ev) {
+    if (!current) return;
+    ev.preventDefault();
+    const { x, y } = getPos(ev);
+    const last = current.xs.length - 1;
+    if (last >= 0) {
+      const dx = x - current.xs[last];
+      const dy = y - current.ys[last];
+      if (dx * dx + dy * dy < 4) return;  // skip tiny moves
+    }
+    current.xs.push(x);
+    current.ys.push(y);
+    current.ts.push(performance.now() - startTime);
+    redraw();
+  }
+  function onUp(ev) {
+    if (!current) return;
+    canvas.releasePointerCapture?.(ev.pointerId);
+    current = null;
+    scheduleRecognition();
+  }
+
+  canvas.addEventListener('pointerdown', onDown);
+  canvas.addEventListener('pointermove', onMove);
+  canvas.addEventListener('pointerup', onUp);
+  canvas.addEventListener('pointercancel', onUp);
+  canvas.addEventListener('pointerleave', (e) => { if (current) onUp(e); });
+
+  document.getElementById('undo').addEventListener('click', () => {
+    strokes.pop();
+    redraw();
+    if (strokes.length === 0) clearCandidates();
+    else scheduleRecognition(0);
+  });
+  document.getElementById('clear').addEventListener('click', () => {
+    strokes = [];
+    redraw();
+    clearCandidates();
+  });
+
+  // ============ Recognition (Google Input Tools) ============
+  let recogTimer = null;
+  let recogSeq = 0;
+  const statusEl = document.getElementById('status');
+  const candRow = document.getElementById('candidates');
+
+  function cancelRecognition() {
+    if (recogTimer) { clearTimeout(recogTimer); recogTimer = null; }
+  }
+  function scheduleRecognition(delay = 320) {
+    cancelRecognition();
+    if (strokes.length === 0) return;
+    recogTimer = setTimeout(recognize, delay);
+  }
+  function clearCandidates() {
+    candRow.innerHTML = '';
+    statusEl.textContent = '枠の中に字を書いてください';
+    statusEl.classList.remove('error');
+    statusEl.style.display = '';
+  }
+
+  async function recognize() {
+    const seq = ++recogSeq;
+    const ink = strokes.map(s => [s.xs.slice(), s.ys.slice(), s.ts.slice()]);
+    const body = {
+      requests: [{
+        writing_guide: { writing_area_width: LOGICAL, writing_area_height: LOGICAL },
+        pre_context: '',
+        max_num_results: 12,
+        max_completions: 0,
+        ink,
+        language: 'zh_CN'
+      }]
+    };
+    statusEl.textContent = '認識中…';
+    statusEl.classList.remove('error');
+    statusEl.style.display = '';
+    try {
+      const res = await fetch('https://www.google.com/inputtools/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const text = await res.text();
+      if (seq !== recogSeq) return;
+      const cleaned = text.replace(/^\)\]\}'\s*/, '');
+      const json = JSON.parse(cleaned);
+      if (json[0] !== 'SUCCESS') throw new Error('API returned ' + json[0]);
+      const candidates = (json[1] && json[1][0] && json[1][0][1]) || [];
+      renderCandidates(candidates);
+    } catch (err) {
+      if (seq !== recogSeq) return;
+      statusEl.textContent = 'うまく取れませんでした。電波が悪いか、Googleの認識サーバーに繋がらないみたいです。少し待ってもう一度。';
+      statusEl.classList.add('error');
+      candRow.innerHTML = '';
+    }
+  }
+
+  function renderCandidates(list) {
+    candRow.innerHTML = '';
+    if (!list || list.length === 0) {
+      statusEl.textContent = '候補が見つかりませんでした';
+      return;
+    }
+    statusEl.style.display = 'none';
+    list.forEach((char, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'cand';
+      btn.type = 'button';
+      btn.textContent = char;
+      btn.addEventListener('click', () => selectCharacter(char, btn));
+      candRow.appendChild(btn);
+      if (i === 0) selectCharacter(char, btn, /*silent*/ true);
+    });
+  }
+
+  // ============ Selected character detail ============
+  const detail = document.getElementById('detail');
+  const detailChar = document.getElementById('detail-char');
+  const detailPinyin = document.getElementById('detail-pinyin');
+  const detailMeaning = document.getElementById('detail-meaning');
+  let currentChar = '';
+  let currentPinyin = '';
+
+  function getPinyin(char) {
+    try {
+      if (window.pinyinPro && typeof window.pinyinPro.pinyin === 'function') {
+        return window.pinyinPro.pinyin(char, { toneType: 'symbol', type: 'array' }).join(' ');
+      }
+    } catch (_) {}
+    return '';
+  }
+
+  async function fetchMeaning(char) {
+    try {
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=zh-CN&tl=ja&dt=t&q=${encodeURIComponent(char)}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('translate failed');
+      const json = await res.json();
+      const tr = (json[0] || []).map(x => x[0]).filter(Boolean).join('');
+      return tr || '';
+    } catch {
+      return '';
+    }
+  }
+
+  async function selectCharacter(char, btn, silent = false) {
+    currentChar = char;
+    [...candRow.querySelectorAll('.cand')].forEach(b => b.classList.toggle('active', b === btn));
+    detail.hidden = false;
+    detailChar.textContent = char;
+    currentPinyin = getPinyin(char);
+    detailPinyin.textContent = currentPinyin || '—';
+    detailMeaning.textContent = '意味を取得中…';
+    detailMeaning.classList.add('dim');
+    pushHistory(char);
+    const meaning = await fetchMeaning(char);
+    if (currentChar !== char) return;
+    if (meaning) {
+      detailMeaning.textContent = meaning;
+      detailMeaning.classList.remove('dim');
+    } else {
+      detailMeaning.textContent = '意味の自動取得に失敗しました（オフライン？）。下のボタンから辞書で引いてください。';
+      detailMeaning.classList.add('dim');
+    }
+    if (!silent) detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ============ Actions ============
+  function flash(msg) {
+    const el = document.getElementById('flash');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(flash._t);
+    flash._t = setTimeout(() => el.classList.remove('show'), 1300);
+  }
+  async function copy(text, label) {
+    try {
+      await navigator.clipboard.writeText(text);
+      flash(label + 'をコピーしました');
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); flash(label + 'をコピーしました'); } catch { flash('コピー失敗'); }
+      ta.remove();
+    }
+  }
+  // Builtin actions (copy buttons)
+  document.querySelectorAll('[data-builtin]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (!currentChar) return;
+      const a = el.dataset.builtin;
+      if (a === 'copy-char') return copy(currentChar, '字');
+      if (a === 'copy-pinyin') return copy(currentPinyin || '', '拼音');
+    });
+  });
+
+  // ============ Dictionary destinations (configurable) ============
+  const STORE_DICTS = 'chinese-lookup-dicts-v1';
+  const DEFAULT_DICTS = [
+    { id: 'pleco', name: 'Pleco', url: 'plecoapi://x-callback-url/s?q={q}', enabled: true },
+    { id: 'gtranslate', name: 'Google翻訳', url: 'https://translate.google.com/?sl=zh-CN&tl=ja&text={q}&op=translate', enabled: true },
+    { id: 'hokujirou', name: '北辞郎', url: 'https://www.ctrans.org/search/index.php?word={q}&searchtype=cn', enabled: true },
+    { id: 'weblio', name: 'Weblio日中', url: 'https://cjjc.weblio.jp/content/{q}', enabled: false },
+    { id: 'mdbg', name: 'MDBG (英)', url: 'https://www.mdbg.net/chinese/dictionary?page=worddict&wdrst=0&wdqb={q}', enabled: false },
+    { id: 'baidu', name: '百度词典', url: 'https://dict.baidu.com/s?wd={q}', enabled: false }
+  ];
+
+  function loadDicts() {
+    try {
+      const raw = localStorage.getItem(STORE_DICTS);
+      if (!raw) return JSON.parse(JSON.stringify(DEFAULT_DICTS));
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    } catch (_) {}
+    return JSON.parse(JSON.stringify(DEFAULT_DICTS));
+  }
+  function saveDicts(list) {
+    localStorage.setItem(STORE_DICTS, JSON.stringify(list));
+  }
+
+  function renderActions() {
+    const wrap = document.getElementById('actions');
+    // Remove all dynamic dict buttons (keep the builtin copy buttons)
+    [...wrap.querySelectorAll('[data-dict]')].forEach(el => el.remove());
+    const dicts = loadDicts().filter(d => d.enabled);
+    dicts.forEach(d => {
+      const b = document.createElement('button');
+      b.className = 'btn';
+      b.type = 'button';
+      b.dataset.dict = d.id;
+      b.textContent = d.name;
+      b.addEventListener('click', () => {
+        if (!currentChar) return;
+        const url = d.url.replace(/\{q\}/g, encodeURIComponent(currentChar));
+        window.open(url, '_blank');
+      });
+      wrap.appendChild(b);
+    });
+  }
+
+  function renderDictList() {
+    const list = document.getElementById('dict-list');
+    list.innerHTML = '';
+    const dicts = loadDicts();
+    dicts.forEach((d, idx) => {
+      const row = document.createElement('div');
+      row.className = 'dict-row' + (d.enabled ? '' : ' disabled');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.className = 'check';
+      cb.checked = !!d.enabled;
+      cb.addEventListener('change', () => {
+        const arr = loadDicts();
+        arr[idx].enabled = cb.checked;
+        saveDicts(arr);
+        renderDictList();
+        renderActions();
+      });
+      const info = document.createElement('div');
+      info.className = 'info';
+      const nm = document.createElement('div');
+      nm.className = 'nm';
+      nm.textContent = d.name;
+      const url = document.createElement('div');
+      url.className = 'url';
+      url.textContent = d.url;
+      info.appendChild(nm); info.appendChild(url);
+      const del = document.createElement('button');
+      del.className = 'del';
+      del.type = 'button';
+      del.textContent = '×';
+      del.title = '削除';
+      del.addEventListener('click', () => {
+        if (!confirm(`「${d.name}」を削除しますか？`)) return;
+        const arr = loadDicts();
+        arr.splice(idx, 1);
+        saveDicts(arr);
+        renderDictList();
+        renderActions();
+      });
+      row.appendChild(cb); row.appendChild(info); row.appendChild(del);
+      list.appendChild(row);
+    });
+    if (dicts.length === 0) {
+      list.innerHTML = '<div style="font-size:12px;color:var(--ink-4);text-align:center;padding:14px 0;">辞書が登録されていません</div>';
+    }
+  }
+
+  document.getElementById('dict-toggle').addEventListener('click', () => {
+    const p = document.getElementById('dict-panel');
+    p.hidden = !p.hidden;
+    if (!p.hidden) renderDictList();
+  });
+  document.getElementById('add-dict').addEventListener('click', () => {
+    const nameEl = document.getElementById('add-name');
+    const urlEl = document.getElementById('add-url');
+    const name = nameEl.value.trim();
+    const url = urlEl.value.trim();
+    if (!name || !url) { flash('名前とURLを入れてください'); return; }
+    if (!url.includes('{q}')) { flash('URLに {q} を入れてください'); return; }
+    const arr = loadDicts();
+    arr.push({ id: 'custom-' + Date.now(), name, url, enabled: true });
+    saveDicts(arr);
+    nameEl.value = ''; urlEl.value = '';
+    renderDictList();
+    renderActions();
+    flash('追加しました');
+  });
+  document.getElementById('reset-dicts').addEventListener('click', () => {
+    if (!confirm('デフォルトの辞書リストに戻しますか？\n（追加したカスタム辞書は消えます）')) return;
+    localStorage.removeItem(STORE_DICTS);
+    renderDictList();
+    renderActions();
+  });
+
+  renderActions();
+
+  // Speak
+  document.getElementById('speak').addEventListener('click', () => {
+    if (!currentChar || !('speechSynthesis' in window)) return;
+    const u = new SpeechSynthesisUtterance(currentChar);
+    u.lang = 'zh-CN';
+    u.rate = 0.85;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  });
+
+  // ============ History ============
+  const STORE_HIST = 'chinese-lookup-history';
+  function loadHistory() {
+    try { return JSON.parse(localStorage.getItem(STORE_HIST) || '[]'); }
+    catch { return []; }
+  }
+  function saveHistory(list) {
+    localStorage.setItem(STORE_HIST, JSON.stringify(list.slice(0, 40)));
+  }
+  function pushHistory(char) {
+    const list = loadHistory().filter(c => c !== char);
+    list.unshift(char);
+    saveHistory(list);
+    renderHistory();
+  }
+  function renderHistory() {
+    const wrap = document.getElementById('history-list');
+    wrap.innerHTML = '';
+    loadHistory().forEach(char => {
+      const b = document.createElement('button');
+      b.className = 'hist';
+      b.type = 'button';
+      b.textContent = char;
+      b.addEventListener('click', () => {
+        // Re-open detail; create a one-off fake candidate row containing just this char so it's selectable
+        candRow.innerHTML = '';
+        const cb = document.createElement('button');
+        cb.className = 'cand active';
+        cb.type = 'button';
+        cb.textContent = char;
+        cb.addEventListener('click', () => selectCharacter(char, cb));
+        candRow.appendChild(cb);
+        statusEl.style.display = 'none';
+        selectCharacter(char, cb);
+      });
+      wrap.appendChild(b);
+    });
+  }
+  document.getElementById('clear-history').addEventListener('click', () => {
+    if (!confirm('履歴をクリアしますか？')) return;
+    saveHistory([]);
+    renderHistory();
+  });
+
+  renderHistory();
+  redraw();
+})();
+</script>
+</body>
+</html>

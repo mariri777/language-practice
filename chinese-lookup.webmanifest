@@ -1,0 +1,20 @@
+{
+  "name": "手写查字 · Chinese Handwriting Lookup",
+  "short_name": "手写查",
+  "id": "/chinese-lookup.html",
+  "start_url": "./chinese-lookup.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3efe5",
+  "theme_color": "#7a2c3a",
+  "lang": "ja",
+  "description": "手書きから拼音と意味を引く、中国語の漢字ルックアップ",
+  "icons": [
+    { "src": "icons/favicon-zh-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-zh-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-zh-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/favicon-zh-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "favicon-lookup.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
