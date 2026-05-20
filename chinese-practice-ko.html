@@ -55,7 +55,7 @@
       50% { background-position: 100% 50%; }
     }
 
-    /* ふんわり光るピンクの bokeh レイヤー */
+    /* 부드럽게 빛나는 핑크 bokeh 레이어 */
     body::before {
       content: "";
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -74,7 +74,7 @@
       100% { transform: translate3d(8px, -14px, 0) scale(1.02); }
     }
 
-    /* キラキラ星空レイヤー（CSSのみのドットパターン） */
+    /* 반짝이는 별빛 레이어 (CSS만으로 표현한 도트 패턴) */
     body::after {
       content: "";
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -99,7 +99,7 @@
 
     .zh { font-family: "Noto Sans SC", "Plus Jakarta Sans", sans-serif; }
 
-    /* 浮遊する花びら・ハート・キラキラ */
+    /* 떠다니는 꽃잎·하트·반짝임 */
     .deco { position: fixed; pointer-events: none; z-index: 0; will-change: transform; }
     .deco.petal  { animation: floatA 14s ease-in-out infinite; opacity: .6; }
     .deco.heart  { animation: floatB 18s ease-in-out infinite; opacity: .55; }
@@ -138,7 +138,7 @@
       50%      { transform: scale(1.2) rotate(180deg); opacity: 1; }
     }
 
-    /* モーションを抑えたいユーザー向け */
+    /* 모션을 줄이고 싶은 사용자를 위한 설정 */
     @media (prefers-reduced-motion: reduce) {
       body, body::before, body::after, .deco { animation: none !important; }
     }
@@ -691,7 +691,7 @@
   </style>
 </head>
 <body>
-  <!-- 装飾レイヤー（クリック透過） -->
+  <!-- 장식 레이어 (클릭 통과) -->
   <span class="deco petal p1">🌸</span>
   <span class="deco petal p2">🌷</span>
   <span class="deco petal p3">🌸</span>
@@ -1218,7 +1218,7 @@
     function startPractice() {
       renderHeader();
       showView("practice");
-      // 途中保存がそのコース宛なら、その文から再開
+      // 진행 중 저장이 해당 코스용이면 그 문장부터 재개
       const ip = state.inProgress;
       if (ip && ip.courseId === state.currentCourseId
           && !masteredList(state.currentCourseId).includes(ip.sentIdx)) {
@@ -1246,11 +1246,11 @@
     let currentSentIdx = -1;
     let checked = false;
 
-    // 練習中の途中状態を保存（未回答の文 + 入力中のテキスト）
+    // 연습 중인 진행 상태를 저장 (미응답 문장 + 입력 중인 텍스트)
     function saveInProgress() {
       if (currentView !== "practice") return;
       if (!currentSent || currentSentIdx < 0) return;
-      if (checked) return; // 採点済みの文は途中扱いしない
+      if (checked) return; // 채점 완료된 문장은 진행 중으로 취급하지 않음
       state.inProgress = {
         courseId: state.currentCourseId,
         sentIdx: currentSentIdx,
@@ -1335,7 +1335,7 @@
       const course = getCourse(state.currentCourseId);
       if (!course) return;
 
-      // 別の文へ移るので、以前の途中保存は破棄
+      // 다른 문장으로 이동하므로 이전 진행 중 저장은 폐기
       state.inProgress = null;
 
       const mastered = masteredList(state.currentCourseId);
@@ -1530,7 +1530,7 @@
         if (isCorrect && !alreadyMastered) {
           markMastered(state.currentCourseId, currentSentIdx);
         }
-        // 採点したので途中保存をクリア
+        // 채점했으므로 진행 중 저장을 클리어
         state.inProgress = null;
         renderStats();
         renderHeader();
@@ -1565,7 +1565,7 @@
       openModal(elCompleteModal);
     }
 
-    // 完了モーダル: 次のコースへ → 次コースのIntro画面
+    // 완료 모달: 다음 코스로 → 다음 코스의 Intro 화면
     elNextCourseBtn.addEventListener("click", () => {
       closeModal(elCompleteModal);
       if (state.currentCourseId < COURSES.length - 1) {
@@ -1576,7 +1576,7 @@
       }
     });
 
-    // 完了モーダル: もう一度 → 現コースをリセットして再開
+    // 완료 모달: 다시 한 번 → 현재 코스를 리셋하고 재개
     elReplayCourseBtn.addEventListener("click", () => {
       closeModal(elCompleteModal);
       state.mastered[state.currentCourseId] = [];
@@ -1586,12 +1586,12 @@
       pickNext();
     });
 
-    // 練習画面 → ポイント再確認（Intro画面に戻る）
+    // 연습 화면 → 포인트 다시 보기 (Intro 화면으로 돌아감)
     elOpenIntroBtn.addEventListener("click", () => {
       renderIntroView(state.currentCourseId);
     });
 
-    // 練習画面 → このコースをリセット
+    // 연습 화면 → 이 코스를 리셋
     elResetCourseBtn.addEventListener("click", () => {
       if (!confirm("이 코스의 진도를 리셋하시겠습니까？")) return;
       state.mastered[state.currentCourseId] = [];
@@ -1601,7 +1601,7 @@
       pickNext();
     });
 
-    // HSKカードクリック → そのHSKのコース一覧へ
+    // HSK 카드 클릭 → 해당 HSK의 코스 목록으로
     document.querySelectorAll(".hsk-card").forEach(card => {
       card.addEventListener("click", () => {
         const hsk = parseInt(card.dataset.hsk);
@@ -1610,7 +1610,7 @@
       });
     });
 
-    // タイトルクリック → トップ（HOME）へ（途中の場合は記録を保存）
+    // 타이틀 클릭 → 톱(HOME)으로 (진행 중인 경우 기록을 저장)
     function goHome() {
       saveInProgress();
       renderHome();
@@ -1625,7 +1625,7 @@
       });
     }
 
-    // 戻るボタン
+    // 뒤로 가기 버튼
     document.querySelectorAll(".back-link").forEach(btn => {
       btn.addEventListener("click", () => {
         saveInProgress();
@@ -1643,7 +1643,7 @@
       });
     });
 
-    // 入力途中のテキスト変更も保存（その場で書き込み過ぎないよう軽くデバウンス）
+    // 입력 중인 텍스트 변경도 저장 (즉시 너무 자주 쓰지 않도록 가볍게 디바운스)
     let _ipSaveTimer = null;
     elInput.addEventListener("input", () => {
       if (!currentSent || checked) return;
@@ -1651,7 +1651,7 @@
       _ipSaveTimer = setTimeout(saveInProgress, 400);
     });
 
-    // タブを閉じる/離れる時にも保存
+    // 탭을 닫거나 떠날 때에도 저장
     window.addEventListener("beforeunload", saveInProgress);
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "hidden") saveInProgress();
@@ -1683,35 +1683,35 @@
     });
     elHintBtn.addEventListener("click", showHint);
     elSkipBtn.addEventListener("click", pickNext);
-    // Enter で答え合わせ（Shift+Enter は改行）。IME 変換中は無視。
-    // 採点に使った Enter がそのまま「次へ」に流れないよう、
-    // 一度キーを離してから（keyup を経由してから）でないと「次へ」を発火させない。
+    // Enter로 정답 확인 (Shift+Enter는 줄바꿈). IME 변환 중에는 무시.
+    // 채점에 사용된 Enter가 그대로 「다음」으로 흘러가지 않도록,
+    // 한 번 키를 떼고 나서 (keyup을 거친 후가 아니면) 「다음」을 발화시키지 않음.
     let enterArmedForNext = false;
 
     elInput.addEventListener("keydown", (e) => {
       if (e.key !== "Enter") return;
       if (e.isComposing || e.keyCode === 229) return;
-      if (e.shiftKey) return; // 改行は Shift+Enter
+      if (e.shiftKey) return; // 줄바꿈은 Shift+Enter
       if (checked) return;
       e.preventDefault();
       e.stopPropagation();
-      enterArmedForNext = false; // 採点直後は disarmed
+      enterArmedForNext = false; // 채점 직후는 disarmed
       elCheckBtn.click();
     });
 
-    // 採点後（input が disabled）に Enter で「次へ／もう一度」
+    // 채점 후 (input이 disabled) Enter로 「다음/다시 한 번」
     document.addEventListener("keydown", (e) => {
       if (e.key !== "Enter") return;
       if (e.isComposing || e.keyCode === 229) return;
       if (e.shiftKey || e.metaKey || e.ctrlKey) return;
       if (currentView !== "practice") return;
       if (!checked) return;
-      if (!enterArmedForNext) return; // 一度 keyup を経由していないと無視
+      if (!enterArmedForNext) return; // 한 번 keyup을 거치지 않으면 무시
       const nb = document.getElementById("next-btn");
       if (nb) { e.preventDefault(); nb.click(); enterArmedForNext = false; }
     });
 
-    // Enter を離した時点で「次へ」を arm する（キーリピートでの突き抜けを防止）
+    // Enter를 뗀 시점에 「다음」을 arm 함 (키 리피트로 인한 관통 방지)
     document.addEventListener("keyup", (e) => {
       if (e.key === "Enter") enterArmedForNext = true;
     });
