@@ -192,6 +192,17 @@
     margin-top: 10px;
     line-height: 1.7;
   }
+  .lede .spec {
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    color: var(--ink-4);
+    letter-spacing: 0.1em;
+  }
+  .lede .spec b {
+    color: var(--accent);
+    font-weight: 600;
+  }
 
   /* ============ Canvas ============ */
   .pad {
@@ -643,6 +654,7 @@
     <h1>手写查字</h1>
     <p class="sub">Draw a character, find the reading.</p>
     <p class="hint">枠の中に知りたい文字を書くだけ。拼音と意味が出て、辞書にそのまま渡せます。<br>辞書ボタンを押すと字が自動でコピーされるので、開いた辞書アプリに貼り付けるだけ。</p>
+    <p class="spec">認識単位: <b>1文字</b>　·　候補: 最大12個　·　対応: 簡体字</p>
   </section>
 
   <div class="pad" id="pad">
@@ -998,10 +1010,10 @@
   // ============ Dictionary destinations (configurable) ============
   const STORE_DICTS = 'chinese-lookup-dicts-v1';
   const DEFAULT_DICTS = [
-    { id: 'hanzii-app', name: 'HANZI dict (アプリ起動)', url: 'hanzii://', enabled: true },
-    { id: 'hokujirou', name: '北辞郎', url: 'https://www.ctrans.org/search/index.php?word={q}&searchtype=cn', enabled: true },
-    { id: 'weblio', name: 'Weblio日中', url: 'https://cjjc.weblio.jp/content/{q}', enabled: true },
-    { id: 'gtranslate', name: 'Google翻訳', url: 'https://translate.google.com/?sl=zh-CN&tl=ja&text={q}&op=translate', enabled: false },
+    { id: 'gtranslate', name: 'Google翻訳', url: 'https://translate.google.com/?sl=zh-CN&tl=ja&text={q}&op=translate', enabled: true },
+    { id: 'hanzii-app', name: 'HANZI dict (アプリ起動)', url: 'hanzii://', enabled: false },
+    { id: 'hokujirou', name: '北辞郎', url: 'https://www.ctrans.org/search/index.php?word={q}&searchtype=cn', enabled: false },
+    { id: 'weblio', name: 'Weblio日中', url: 'https://cjjc.weblio.jp/content/{q}', enabled: false },
     { id: 'pleco', name: 'Pleco', url: 'plecoapi://x-callback-url/s?q={q}', enabled: false },
     { id: 'mdbg', name: 'MDBG (英)', url: 'https://www.mdbg.net/chinese/dictionary?page=worddict&wdrst=0&wdqb={q}', enabled: false },
     { id: 'baidu', name: '百度词典', url: 'https://dict.baidu.com/s?wd={q}', enabled: false }
