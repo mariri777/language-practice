@@ -739,10 +739,10 @@
           <span class="hsk-card-label">입문 · 약 150단어</span>
           <span class="hsk-card-progress" data-hsk-progress="1">3 코스</span>
         </button>
-        <button class="hsk-card" data-hsk="2" disabled style="opacity:0.5;cursor:not-allowed;">
+        <button class="hsk-card" data-hsk="2">
           <span class="hsk-card-num">HSK 2</span>
           <span class="hsk-card-label">초급 · 약 300단어</span>
-          <span class="hsk-card-progress" data-hsk-progress="2">준비 중</span>
+          <span class="hsk-card-progress" data-hsk-progress="2">3 코스</span>
         </button>
         <button class="hsk-card" data-hsk="3" disabled style="opacity:0.5;cursor:not-allowed;">
           <span class="hsk-card-num">HSK 3</span>
@@ -1017,6 +1017,172 @@
             w: [{z:"我们",p:"wǒmen",j:"우리"},{z:"一起",p:"yìqǐ",j:"같이"},{z:"去",p:"qù",j:"가다"},{z:"吧",p:"ba",j:"~합시다"}]
           }
         ]
+      },
+      // ============ HSK 2 ============
+      {
+        hsk: 2, num: 1, title: "완료의 「了」와 경험의 「过」",
+        sentences: [
+          {
+            ja: "저는 밥을 먹었습니다.", zh: "我吃了饭。", py: "wǒ chī le fàn.",
+            g: "<strong>동사＋<code>了</code></strong>는 <strong>완료·실현</strong>을 나타내는 상(aspect) 조사 (과거형이 아님). 「주어＋V＋了＋목적어」가 기본 어순.<br>부정은 <code>没（有）</code>를 동사 앞에 두고 <code>了</code>는 뺀다: <code>我没吃饭</code>(먹지 않았다). 의문은 <code>...了吗？</code> 또는 정반의문문 <code>吃了没有？</code>.",
+            w: [{z:"吃",p:"chī",j:"먹다"},{z:"了",p:"le",j:"~했다"},{z:"饭",p:"fàn",j:"밥"}]
+          },
+          {
+            ja: "저는 베이징에 간 적이 있습니다.", zh: "我去过北京。", py: "wǒ qù guo Běijīng.",
+            g: "<strong>동사＋<code>过</code></strong>는 <strong>경험</strong>을 나타내는 상 조사 「~한 적이 있다」. 일생 동안의 경험 유무를 진술.<br><strong>「了」와 「过」의 차이</strong>: <code>了</code>는 단발 완료·실현 / <code>过</code>는 누적된 경험. 부정은 <code>没＋V＋过</code>: <code>我没去过</code>(간 적이 없다).",
+            w: [{z:"去",p:"qù",j:"가다"},{z:"过",p:"guo",j:"~한 경험"},{z:"北京",p:"Běijīng",j:"베이징"}]
+          },
+          {
+            ja: "어제 저는 책을 한 권 읽었습니다.", zh: "昨天我看了一本书。", py: "zuótiān wǒ kàn le yì běn shū.",
+            g: "<strong>「了」의 중요 규칙</strong>: 목적어에 <strong>수량사·수식어</strong>가 붙어야 문장이 자연스럽게 마무리됨. 맨몸의 <code>我看了书</code>는 부자연스럽고, <code>一本书</code>(한 권의 책)나 <code>那本书</code>(그 책) 등을 잇거나 문말에 <code>了</code>를 추가.<br>「一」은 제3성 <code>本</code> 앞에서 제4성 <code>yì</code>로 변조.",
+            w: [{z:"昨天",p:"zuótiān",j:"어제"},{z:"看",p:"kàn",j:"보다·읽다"},{z:"一本",p:"yì běn",j:"한 권"}]
+          },
+          {
+            ja: "밥을 먹었습니까?", zh: "你吃饭了吗？", py: "nǐ chī fàn le ma?",
+            g: "<strong>문말의 <code>了</code></strong>는 <strong>상황 변화/새 사태의 발생</strong>을 나타냄 (동사 직후의 <code>了</code>와는 별개). 「먹는 상태가 성립했다」는 뉘앙스.<br>정반의문문 <code>你吃饭了没有？</code>도 자주 쓰임 (짧게는 <code>吃了没？</code>). 응답: <code>吃了</code>(먹었다) / <code>还没吃</code>(아직 안 먹었다).",
+            w: [{z:"吃饭",p:"chī fàn",j:"식사하다"},{z:"了",p:"le",j:"~했다(변화)"},{z:"吗",p:"ma",j:"~까"}]
+          },
+          {
+            ja: "저는 밥을 먹지 않았습니다.", zh: "我没吃饭。", py: "wǒ méi chī fàn.",
+            g: "<strong>부정 <code>不</code>와 <code>没</code>의 구분</strong>: <code>不</code>는 의지·항상적 부정 / <code>没</code>는 완료·실현의 부정 (~하지 않았다·~한 적이 없다).<br>예: <code>我不吃肉</code>(고기는 안 먹는다＝주의·신념) / <code>我没吃肉</code>(고기를 안 먹었다＝사실). <code>没</code>와 함께 쓰는 동사에는 <code>了</code>를 붙이지 않음.",
+            w: [{z:"没",p:"méi",j:"~하지 않았다"},{z:"吃",p:"chī",j:"먹다"},{z:"饭",p:"fàn",j:"밥"}]
+          },
+          {
+            ja: "그는 아직 집에 돌아오지 않았습니다.", zh: "他还没回家。", py: "tā hái méi huí jiā.",
+            g: "<strong><code>还没</code>＋V</strong>＝「아직 ~하지 않았다」 (앞으로 할 가능성을 포함).<br><code>还</code>는 「아직·여전히」의 부사로, 진행 중·계속 중·미완료 상태를 강조. 비교: <code>不</code>(하지 않는다) / <code>没</code>(하지 않았다) / <code>还没</code>(아직 하지 않았다＝앞으로 할 가능성 있음). <code>回家</code>는 이합사로 <code>回了家</code>처럼 <code>了</code>를 사이에 끼움.",
+            w: [{z:"还",p:"hái",j:"아직"},{z:"没",p:"méi",j:"~하지 않았다"},{z:"回家",p:"huí jiā",j:"귀가하다"}]
+          },
+          {
+            ja: "중국어를 조금 배운 적이 있습니다.", zh: "我学过一点中文。", py: "wǒ xué guo yìdiǎn Zhōngwén.",
+            g: "<strong><code>一点</code>＋명사</strong>＝「약간의 ~」. 동사 뒤에 두어 목적어의 적은 양을 나타냄 (<code>有一点</code>이나 <code>一点点</code>도 동의어).<br><strong>「一点」과 「有点」의 차이</strong>: 명사 앞 <code>一点(儿)</code>(약간의 ~: 객관적 소량) / 형용사 앞 <code>有点(儿)</code>(좀 ~: 주로 부정적 감정을 동반). <code>有点累</code>(좀 피곤하다).",
+            w: [{z:"学",p:"xué",j:"배우다"},{z:"过",p:"guo",j:"~한 경험"},{z:"一点",p:"yìdiǎn",j:"약간"},{z:"中文",p:"Zhōngwén",j:"중국어"}]
+          },
+          {
+            ja: "엄마는 요리를 많이 만들었습니다.", zh: "妈妈做了很多菜。", py: "māma zuò le hěn duō cài.",
+            g: "<strong>「很多＋명사」</strong>＝「많은 ~」. <code>很</code>은 형식상 붙지만 여기서는 「매우」의 뜻은 약하고, 「多」를 가다듬는 역할 (<code>多菜</code>라고는 하지 않음).<br>동의어: <code>许多</code>(문어체 쪽) / <code>不少</code>(적지 않다＝꽤 있다). 반대는 <code>很少</code>. <code>做菜</code>는 「요리를 만들다」의 관용 표현.",
+            w: [{z:"做",p:"zuò",j:"만들다·하다"},{z:"很多",p:"hěn duō",j:"많이"},{z:"菜",p:"cài",j:"요리"}]
+          },
+          {
+            ja: "이미 알고 있습니다.", zh: "我已经知道了。", py: "wǒ yǐjīng zhīdào le.",
+            g: "<strong>「已经...了」</strong>는 세트 표현으로 「이미 ~했다·~이 되었다」. <code>已经</code>(부사 「이미」)＋문말 <code>了</code>(상황 변화)로 확정적인 뉘앙스.<br>부정 <code>还没</code>(아직 ~하지 않았다)와 짝을 이룸. 예: <code>已经下班了</code>(이미 퇴근했다) / <code>还没下班</code>(아직 퇴근하지 않았다).",
+            w: [{z:"已经",p:"yǐjīng",j:"이미·벌써"},{z:"知道",p:"zhīdào",j:"알다"}]
+          },
+          {
+            ja: "이 영화를 본 적이 있나요?", zh: "你看过这部电影吗？", py: "nǐ kàn guo zhè bù diànyǐng ma?",
+            g: "<strong>경험을 묻기: 「V＋过...吗？」</strong>. 정반의문문 <code>看过没有？</code>도 자주 사용. 「없다」고 답하려면 <code>没看过</code>.<br>양사 <code>部</code>는 영화·소설·작품 전용 양사. 영화는 <code>电影</code>, 드라마는 <code>电视剧</code>, 시리즈 작품의 화수는 <code>集</code>(1화 一集).",
+            w: [{z:"看过",p:"kàn guo",j:"본 적이 있다"},{z:"部",p:"bù",j:"~편(작품의 양사)"},{z:"电影",p:"diànyǐng",j:"영화"}]
+          }
+        ]
+      },
+      {
+        hsk: 2, num: 2, title: "진행·미래·소망",
+        sentences: [
+          {
+            ja: "그는 지금 통화 중입니다.", zh: "他正在打电话。", py: "tā zhèngzài dǎ diànhuà.",
+            g: "<strong>진행 상의 4형식</strong>: ①<code>在＋V</code>(~하고 있다), ②<code>正在＋V</code>(마침 ~하고 있는 중), ③<code>V＋呢</code>(~하고 있어: 구어), ④<code>正在...呢</code>(강조).<br><code>正</code>은 「마침」의 뉘앙스를 더함. 부정은 <code>没在＋V</code>. <code>打电话</code>＝「전화를 걸다/통화하다」 (<code>打</code>는 원래 「치다」지만 전화·택시·스포츠 등 폭넓게 쓰는 동사).",
+            w: [{z:"正在",p:"zhèngzài",j:"~하고 있는 중"},{z:"打",p:"dǎ",j:"(전화를) 걸다"},{z:"电话",p:"diànhuà",j:"전화"}]
+          },
+          {
+            ja: "저는 숙제를 하고 있습니다.", zh: "我在做作业。", py: "wǒ zài zuò zuòyè.",
+            g: "<strong>부사 <code>在</code></strong>＋동사로 진행을 나타냄 (가장 단순한 형태). 동사 <code>在</code>(~에 있다)/전치사 <code>在</code>(~에서)와 구별.<br>같은 한자라도 품사에 따라 의미가 달라지는 것이 중국어의 특징. 문맥으로 판별: <code>我在家</code>(집에 있다: 동사) / <code>我在家学习</code>(집에서 공부한다: 전치사) / <code>我在学习</code>(공부하고 있다: 부사).",
+            w: [{z:"在",p:"zài",j:"~하고 있다"},{z:"做",p:"zuò",j:"하다"},{z:"作业",p:"zuòyè",j:"숙제"}]
+          },
+          {
+            ja: "내일 병원에 갈 예정입니다.", zh: "明天我要去医院。", py: "míngtiān wǒ yào qù yīyuàn.",
+            g: "<strong>조동사 <code>要</code></strong>에는 3가지 뜻: ①의지 「~할 것이다」(明天我要去), ②근접 미래 「~할 것 같다」(要下雨了), ③필요·의무 「~해야 한다」(你要小心).<br><strong>要 vs 想</strong>: <code>要</code>는 다소 강한 의지 「~한다」 / <code>想</code>은 부드러운 소망 「~하고 싶다」. <code>要</code>의 의지를 부정할 때는 <code>不想</code>을 쓰는 것이 보통 (<code>不要</code>는 금지의 뜻이 됨).",
+            w: [{z:"明天",p:"míngtiān",j:"내일"},{z:"要",p:"yào",j:"~할 예정"},{z:"医院",p:"yīyuàn",j:"병원"}]
+          },
+          {
+            ja: "옷을 한 벌 사고 싶습니다.", zh: "我想买一件衣服。", py: "wǒ xiǎng mǎi yí jiàn yīfu.",
+            g: "<strong><code>想</code></strong>＝소망 「~하고 싶다」. 의지의 강도는 <code>愿意 &lt; 想 &lt; 要</code>. 부정 <code>不想</code>.<br>양사 <code>件</code>은 <strong>상의류·일·사건</strong>의 양사. <code>裤子</code>(바지)에는 <code>条</code>, <code>鞋</code>(신발)에는 <code>双</code>. 「一」은 제4성 <code>件</code> 앞에서 제2성 <code>yí</code>로 변조.",
+            w: [{z:"想",p:"xiǎng",j:"~하고 싶다"},{z:"买",p:"mǎi",j:"사다"},{z:"件",p:"jiàn",j:"~벌"},{z:"衣服",p:"yīfu",j:"옷"}]
+          },
+          {
+            ja: "다음 달에 중국에 갑니다.", zh: "下个月我要去中国。", py: "xià ge yuè wǒ yào qù Zhōngguó.",
+            g: "<strong>시간축 표현</strong>: <code>上个月</code>(지난달) / <code>这个月</code>(이번 달) / <code>下个月</code>(다음 달). 마찬가지로 <code>上周/这周/下周</code>(주), <code>前年/去年/今年/明年/后年</code>(연).<br><strong>어순 주의</strong>: 시간사는 반드시 동사 앞. 장소도 포함하면 「시간＋장소＋동사」(<code>下个月我去中国旅游</code>).",
+            w: [{z:"下个月",p:"xià ge yuè",j:"다음 달"},{z:"要",p:"yào",j:"~할 예정"},{z:"中国",p:"Zhōngguó",j:"중국"}]
+          },
+          {
+            ja: "그는 자고 있어요.", zh: "他在睡觉呢。", py: "tā zài shuìjiào ne.",
+            g: "<strong>문말의 <code>呢</code></strong>에는 3가지 용법: ①진행 강조 「~하고 있는 중이야」, ②되묻기 「~는?」(<code>你呢？</code>), ③확인 「~잖아」.<br>진행형 조합: <code>正在...呢</code>＞<code>在...呢</code>＞<code>V呢</code>＞<code>在V</code>＞<code>正在V</code> 순으로 구어 느낌이 변화. <code>睡觉</code>도 이합사: <code>睡了一觉</code>(한숨 잤다).",
+            w: [{z:"睡觉",p:"shuìjiào",j:"자다"},{z:"呢",p:"ne",j:"~하고 있어"}]
+          },
+          {
+            ja: "엄마는 요리를 하고 있습니다.", zh: "妈妈正在做饭。", py: "māma zhèngzài zuò fàn.",
+            g: "<code>正在＋V</code>는 그 순간에 진행 중임을 강조. <code>正</code>은 「마침·바로」, <code>在</code>는 진행을 나타내는 부사.<br><strong>주의</strong>: 미래나 가정의 동작에는 진행형을 쓰지 않음. <code>明天我正在去公司</code>는 부자연스러움. 「내일 (~시에) ~하고 있을 것이다」라고 하려면 <code>明天这个时候我会在...</code>처럼 표현을 다듬어야 함.",
+            w: [{z:"正在",p:"zhèngzài",j:"~하고 있는 중"},{z:"做饭",p:"zuò fàn",j:"요리하다"}]
+          },
+          {
+            ja: "커피 한 잔 마시고 싶어요.", zh: "我要喝一杯咖啡。", py: "wǒ yào hē yì bēi kāfēi.",
+            g: "<strong>주문의 <code>要</code></strong>: 식당이나 카페에서 「~ 주세요」는 <code>要</code>를 씀 (<code>我要一杯咖啡</code>도 OK).<br>양사 <code>杯</code>＝컵·잔 한 잔 분량. <code>瓶</code>(병), <code>碗</code>(공기), <code>盘</code>(접시), <code>份</code>(1인분)도 음식에 자주 사용. 「커피」 <code>咖啡</code> kāfēi는 그대로 음역.",
+            w: [{z:"要",p:"yào",j:"원하다"},{z:"喝",p:"hē",j:"마시다"},{z:"杯",p:"bēi",j:"~잔"},{z:"咖啡",p:"kāfēi",j:"커피"}]
+          },
+          {
+            ja: "뭐 하고 있어요?", zh: "你在做什么呢？", py: "nǐ zài zuò shénme ne?",
+            g: "<strong>진행＋의문사＋呢</strong>의 조합. <code>呢</code>는 의문의 어기를 부드럽게 하는 역할.<br>의문사 <code>什么</code>를 포함하므로 <code>吗</code>는 붙이지 않음 (<code>什么吗？</code>×). 단 <code>呢</code>는 의문사 의문문에도 붙일 수 있음: <code>你在做什么呢？</code>(뭐 하고 있어?) / <code>什么时候来呢？</code>(언제 와?).",
+            w: [{z:"在",p:"zài",j:"~하고 있다"},{z:"做",p:"zuò",j:"하다"},{z:"什么",p:"shénme",j:"무엇"}]
+          },
+          {
+            ja: "저는 곧 졸업합니다.", zh: "我快要毕业了。", py: "wǒ kuài yào bìyè le.",
+            g: "<strong>「快要...了 / 就要...了 / 快...了」</strong>＝「곧 ~할 것이다」. 임박한 근접 미래를 나타냄. 문말 <code>了</code> 필수 (상황 변화).<br><code>快要</code>는 시간적으로 가깝고, <code>就要</code>는 구체적 시각과 함께 쓸 수 있음 (<code>明天就要考试了</code>). <code>快要</code>는 구체적 시간과 함께 쓸 수 없음. 부정형은 존재하지 않음 (근접 미래는 사실 기반이므로).",
+            w: [{z:"快要",p:"kuài yào",j:"곧 ~"},{z:"毕业",p:"bìyè",j:"졸업하다"},{z:"了",p:"le",j:"~이 되다"}]
+          }
+        ]
+      },
+      {
+        hsk: 2, num: 3, title: "비교·능력·부탁·접속",
+        sentences: [
+          {
+            ja: "저는 그보다 키가 큽니다.", zh: "我比他高。", py: "wǒ bǐ tā gāo.",
+            g: "<strong>비교 구문 「A＋比＋B＋형용사」</strong>＝「A는 B보다 ~다」. 형용사에는 <code>很</code>을 붙이지 않음 (<code>我比他很高</code>×).<br>차이를 넣을 때는 <strong>형용사 뒤</strong>에 양을 둠: <code>高一点</code>(조금 더 높다) / <code>高得多</code>(훨씬 높다) / <code>高十厘米</code>(10cm 더 높다). 부정은 <code>没有...那么高</code>(그만큼 높지 않다).",
+            w: [{z:"比",p:"bǐ",j:"~보다"},{z:"他",p:"tā",j:"그"},{z:"高",p:"gāo",j:"높다"}]
+          },
+          {
+            ja: "그는 저보다 두 살 많습니다.", zh: "他比我大两岁。", py: "tā bǐ wǒ dà liǎng suì.",
+            g: "<strong>비교의 차이량</strong>: 「A比B＋형용사＋수량」으로 「A는 B보다 ~만큼 ~」.<br><code>大</code>는 「(나이·크기가) 많다·크다」, <code>小</code>는 「작다·어리다」로, 나이 비교 필수 어휘. 「2」는 양사 <code>岁</code> 앞이므로 반드시 <code>两</code>. 나이가 어리면 <code>他比我小两岁</code>.",
+            w: [{z:"比",p:"bǐ",j:"~보다"},{z:"大",p:"dà",j:"(나이가) 많다"},{z:"两岁",p:"liǎng suì",j:"두 살"}]
+          },
+          {
+            ja: "저는 중국요리를 만들 수 있습니다.", zh: "我会做中国菜。", py: "wǒ huì zuò Zhōngguó cài.",
+            g: "<strong>조동사 <code>会</code> 재확인</strong>: ①학습으로 얻은 기능 「~할 수 있다」, ②가능성 「~일 것이다」(<code>明天会下雨</code>).<br>「할 수 있다」 삼형제 사용법: <code>会</code>(학습·훈련: 수영·운전·말하기) / <code>能</code>(조건·체력·허용량: 오늘 수영할 수 있다) / <code>可以</code>(허가: 수영해도 좋다). <code>中国菜</code>는 「중국요리」, <code>日本菜</code>도 통하지만 <code>日本料理</code>가 더 자연스러움.",
+            w: [{z:"会",p:"huì",j:"~할 수 있다"},{z:"做",p:"zuò",j:"만들다"},{z:"中国菜",p:"Zhōngguó cài",j:"중국요리"}]
+          },
+          {
+            ja: "도와주시겠어요?", zh: "你能帮我吗？", py: "nǐ néng bāng wǒ ma?",
+            g: "<strong><code>能</code></strong>＝「(조건·능력적으로) ~할 수 있다」. 부탁이나 상황 확인에서 자주 사용. 부정 <code>不能</code>(할 수 없다).<br><strong>부탁 표현</strong>: <code>能帮我吗？</code>(도와줄 수 있어?) / <code>能不能帮我？</code>(도와줄 수 있어? 정반의문문) / <code>可以帮我吗？</code>(도와줘도 돼? 허가) / <code>请帮我</code>(도와주세요). <code>帮</code> 뒤에는 직접 「사람」을 잇는다.",
+            w: [{z:"能",p:"néng",j:"~할 수 있다"},{z:"帮",p:"bāng",j:"돕다"}]
+          },
+          {
+            ja: "여기서 사진을 찍어도 되나요?", zh: "这里可以拍照吗？", py: "zhèli kěyǐ pāizhào ma?",
+            g: "<strong><code>可以</code></strong>＝「~해도 좋다(허가)」. <code>能</code>에 비해 허가·규칙의 측면이 강함.<br>허가에 대한 답: <code>可以</code>(돼) / <code>不可以</code>(안 돼) / <code>不行</code>(안 돼: 강하게). <code>拍照</code>는 이합사 「사진을 찍다」 (<code>照</code>를 목적어처럼 가짐). 「사진 한 장」은 <code>拍一张照(片)</code>.",
+            w: [{z:"这里",p:"zhèli",j:"여기"},{z:"可以",p:"kěyǐ",j:"~해도 좋다"},{z:"拍照",p:"pāizhào",j:"사진을 찍다"}]
+          },
+          {
+            ja: "천천히 말씀해 주세요.", zh: "请慢点说。", py: "qǐng màn diǎn shuō.",
+            g: "<strong>「형용사＋一点」</strong>＝「조금 더 ~로」: <code>慢点</code>＝<code>慢一点</code>. 비교 대상이 암묵의 현 상태이고, 그보다 조금 ~로 만들라는 명령·부탁.<br>예: <code>大点声</code>(조금 더 큰 목소리로) / <code>快点儿</code>(조금 더 빨리) / <code>便宜点</code>(조금 더 싸게). <code>请</code>을 문두에 두면 정중한 부탁이 됨.",
+            w: [{z:"请",p:"qǐng",j:"부디·~해 주세요"},{z:"慢",p:"màn",j:"느리다·천천히"},{z:"说",p:"shuō",j:"말하다"}]
+          },
+          {
+            ja: "저도 음악을 좋아합니다.", zh: "我也喜欢音乐。", py: "wǒ yě xǐhuan yīnyuè.",
+            g: "<strong>부사 <code>也</code></strong>＝「~도」. 동사·형용사의 <strong>바로 앞</strong>에 둠 (주어 뒤·동사 앞).<br>위치 실수 주의: <code>也我喜欢</code>×, <code>我喜欢也</code>×. 부정에서도 「~도 ~않다」는 <code>我也不喜欢</code>. 두 주어 병렬 「A도 B도」는 <code>A也...，B也...</code>(나도 그도: <code>我也喜欢，他也喜欢</code>).",
+            w: [{z:"也",p:"yě",j:"~도"},{z:"喜欢",p:"xǐhuan",j:"좋아하다"},{z:"音乐",p:"yīnyuè",j:"음악"}]
+          },
+          {
+            ja: "우리는 모두 학생입니다.", zh: "我们都是学生。", py: "wǒmen dōu shì xuéshēng.",
+            g: "<strong>부사 <code>都</code></strong>＝「모두·전부」. 여러 대상을 한데 묶음. 위치는 동사 앞 (<code>也</code>와 동일).<br><code>都</code>가 가리키는 것은 <strong>그 앞에 있는 복수의 대상</strong>: <code>我们都</code>(우리 모두), <code>这些菜都很好吃</code>(이 요리들은 모두 맛있다). 「전체 부정」 <code>都不...</code>(모두 ~ 않다) / 「부분 부정」 <code>不都...</code>(모두 ~인 것은 아니다)의 구분도 중요.",
+            w: [{z:"都",p:"dōu",j:"모두"},{z:"是",p:"shì",j:"~이다"},{z:"学生",p:"xuéshēng",j:"학생"}]
+          },
+          {
+            ja: "물 한 잔 주세요.", zh: "给我一杯水。", py: "gěi wǒ yì bēi shuǐ.",
+            g: "<strong>동사 <code>给</code></strong>＝「주다·건네다」. 어순은 「给＋사람＋물건」으로 이중 목적어를 취하는 대표 동사.<br>유사한 이중 목적어 동사: <code>送</code>(선사하다) / <code>告诉</code>(알리다) / <code>教</code>(가르치다) / <code>问</code>(묻다). <code>给</code>는 전치사로도 중요: <code>给我打电话</code>(나에게 전화하다: 사람을 대상으로).",
+            w: [{z:"给",p:"gěi",j:"~에게 주다"},{z:"杯",p:"bēi",j:"~잔"},{z:"水",p:"shuǐ",j:"물"}]
+          },
+          {
+            ja: "정말 좋아요!", zh: "太好了！", py: "tài hǎo le!",
+            g: "<strong>「太＋형용사＋了」</strong>＝「너무 ~다」 「엄청 ~」. 감탄·강조의 관용 표현. <code>太</code>와 <code>了</code>의 세트가 기본.<br>부정적 용법도 있음: <code>太贵了</code>(너무 비싸다) / <code>太累了</code>(너무 피곤하다). 긍정적 강조: <code>太好了！</code>(잘됐다!) / <code>太棒了！</code>(최고다!). 중간 정도의 강조는 <code>非常</code>/<code>很</code>을 사용.",
+            w: [{z:"太",p:"tài",j:"너무"},{z:"好",p:"hǎo",j:"좋다"},{z:"了",p:"le",j:"~다(감탄)"}]
+          }
+        ]
       }
     ];
 
@@ -1032,7 +1198,16 @@
         points: ["의문사 <code>几</code>(10 이하) vs <code>多少</code>(제한 없음)","숫자 「2」 구분: <code>二</code>와 <code>两</code>","양사 기본: <code>个 / 本 / 件 / 张 / 杯</code> 등","나이·날짜·요일·시각에서는 <code>是</code> 생략","소유·존재의 <code>有</code>, 부정은 반드시 <code>没有</code>"] },
       // HSK 1 - C3
       { overview: "「있다·가다·오다·좋아하다·~하고 싶다·~할 수 있다」 등 동작과 소유·장소의 기본 표현. 지시대명사와 방위사도 배웁니다.",
-        points: ["<code>在</code>의 3가지 용법(동사·전치사·부사)","조동사 <code>想</code>(바람) / <code>要</code>(의지) / <code>会</code>(배워서 할 수 있음)","진행상 <code>在＋V</code>","지시대명사 <code>这 / 那 / 哪</code>","방위사 <code>上 / 下 / 里 / 外</code> 등","소유·수식의 <code>的</code>(생략 가능한 경우)"] }
+        points: ["<code>在</code>의 3가지 용법(동사·전치사·부사)","조동사 <code>想</code>(바람) / <code>要</code>(의지) / <code>会</code>(배워서 할 수 있음)","진행상 <code>在＋V</code>","지시대명사 <code>这 / 那 / 哪</code>","방위사 <code>上 / 下 / 里 / 外</code> 등","소유·수식의 <code>的</code>(생략 가능한 경우)"] },
+      // HSK 2 - C4
+      { overview: "중국어에는 과거형이 없습니다. 대신 「了」와 「过」가 완료·경험을 담당합니다. 부정의 「没」와의 관계도 매우 중요합니다.",
+        points: ["동사＋<code>了</code>＝완료·실현(과거형이 아님)","동사＋<code>过</code>＝경험 「~한 적이 있다」","부정의 <code>不</code>(의지·항상) vs <code>没</code>(완료의 부정)","<code>还没＋V</code>＝「아직 ~하지 않았다」","<code>已经...了</code>의 세트 표현","문말 <code>了</code>는 상황 변화(동사 직후의 <code>了</code>와 구별)"] },
+      // HSK 2 - C5
+      { overview: "현재 진행 중인 동작, 가까운 미래, 강한 의지와 소망. 일상 회화에서 가장 많이 쓰는 「지금 ~하고 있다」 「앞으로 ~할 것이다」 표현을 정리합니다.",
+        points: ["진행의 4형식: <code>在 / 正在 / V呢 / 正在...呢</code>","조동사 <code>要</code>의 3가지 뜻(의지·근접 미래·필요)","<code>想</code>과 <code>要</code>의 강도 차이","근접 미래 <code>快要...了 / 就要...了</code>","<code>正</code>(마침)/<code>呢</code>(~하고 있어)의 뉘앙스"] },
+      // HSK 2 - C6
+      { overview: "「A는 B보다 ~」 비교 구문, 「할 수 있다」 삼형제, 부탁·제안 등 회화에서 자주 등장하는 대인 표현을 모았습니다.",
+        points: ["비교 구문 「A＋比＋B＋형용사」와 차이량(<code>一点 / 得多 / 多了</code>)","<code>会 / 能 / 可以</code>의 사용 구분","부사 <code>也 / 都</code>의 위치(동사 앞)","<code>给</code>의 이중 목적어 「给＋사람＋물건」","감탄 <code>太...了</code>","중첩형 「<code>慢点</code>」「<code>便宜点</code>」(조금 ~로)"] }
     ];
 
     // ========================================================================
