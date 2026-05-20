@@ -494,142 +494,6 @@
   footer.site a { color: var(--ink-3); text-decoration: none; transition: color var(--dur) var(--ease); }
   footer.site a:hover { color: var(--accent); }
 
-  /* ============ Dictionary settings ============ */
-  .dict-settings {
-    margin-top: 18px;
-    text-align: center;
-  }
-  .dict-settings-toggle {
-    appearance: none;
-    border: none;
-    background: transparent;
-    color: var(--ink-3);
-    font-family: var(--font-display);
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    cursor: pointer;
-    padding: 4px 8px;
-    transition: color var(--dur) var(--ease);
-  }
-  .dict-settings-toggle:hover { color: var(--accent); }
-  .dict-settings-panel {
-    margin-top: 14px;
-    padding: 18px 18px 14px;
-    background: var(--bg-card);
-    border: 1px solid var(--divider);
-    border-radius: 8px;
-    text-align: left;
-    font-size: 13.5px;
-  }
-  .dict-settings-panel[hidden] { display: none; }
-  .dict-row {
-    display: grid;
-    grid-template-columns: 22px 1fr 28px;
-    gap: 10px;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--divider);
-  }
-  .dict-row:last-of-type { border-bottom: none; }
-  .dict-row .check {
-    width: 18px; height: 18px;
-    accent-color: var(--accent);
-    cursor: pointer;
-  }
-  .dict-row .info {
-    overflow: hidden;
-  }
-  .dict-row .nm {
-    font-weight: 600;
-    color: var(--ink);
-    font-size: 13px;
-  }
-  .dict-row .url {
-    font-family: "SF Mono", "Menlo", monospace;
-    font-size: 11px;
-    color: var(--ink-3);
-    word-break: break-all;
-    line-height: 1.45;
-    margin-top: 1px;
-  }
-  .dict-row .del {
-    appearance: none;
-    border: none;
-    background: transparent;
-    color: var(--ink-4);
-    cursor: pointer;
-    font-size: 18px;
-    line-height: 1;
-    padding: 2px 4px;
-    border-radius: 4px;
-    transition: all var(--dur) var(--ease);
-  }
-  .dict-row .del:hover { color: var(--accent); }
-  .dict-row.disabled .nm,
-  .dict-row.disabled .url { opacity: 0.45; }
-
-  .dict-add {
-    margin-top: 14px;
-    padding-top: 14px;
-    border-top: 1px dashed var(--divider);
-  }
-  .dict-add label {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    margin-bottom: 4px;
-  }
-  .dict-add input {
-    width: 100%;
-    appearance: none;
-    border: 1px solid var(--divider);
-    background: var(--bg);
-    color: var(--ink);
-    padding: 8px 10px;
-    border-radius: 4px;
-    font-size: 13px;
-    font-family: inherit;
-    margin-bottom: 8px;
-  }
-  .dict-add input.url { font-family: "SF Mono", "Menlo", monospace; font-size: 12px; }
-  .dict-add input:focus { border-color: var(--accent); outline: none; }
-  .dict-add .hint {
-    font-size: 11px;
-    color: var(--ink-3);
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-  .dict-add .hint code {
-    background: var(--bg-subtle);
-    padding: 1px 5px;
-    border-radius: 3px;
-    font-size: 11px;
-    color: var(--accent);
-  }
-  .dict-add-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-
-  .dict-row .cta-action {
-    appearance: none;
-    border: none;
-    background: transparent;
-    color: var(--ink-4);
-    font-family: var(--font-display);
-    font-size: 9px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    cursor: pointer;
-    padding: 0;
-    margin-right: 6px;
-    transition: color var(--dur) var(--ease);
-  }
-  .dict-row .cta-action:hover { color: var(--accent); }
-
   @media (max-width: 480px) {
     main { padding: 22px 16px 60px; }
     .cand { width: 52px; height: 58px; font-size: 30px; }
@@ -687,29 +551,10 @@
       <button class="speak" id="speak" aria-label="発音を聞く">🔊</button>
     </div>
     <div class="meaning dim" id="detail-meaning">意味を取得中…</div>
-    <div class="actions" id="actions">
+    <div class="actions">
       <button class="btn primary" data-builtin="copy-char">字をコピー</button>
       <button class="btn" data-builtin="copy-pinyin">拼音をコピー</button>
-    </div>
-    <div class="dict-settings">
-      <button class="dict-settings-toggle" id="dict-toggle" type="button">⚙ 辞書設定</button>
-      <div class="dict-settings-panel" id="dict-panel" hidden>
-        <div id="dict-list"></div>
-        <div class="dict-add">
-          <label>新しい辞書を追加</label>
-          <input type="text" id="add-name" placeholder="表示名（例: Weblio日中）">
-          <input type="text" id="add-url" class="url" placeholder="https://example.com/search?q={q}">
-          <div class="hint">
-            ボタンを押すと、選んだ字が自動でクリップボードにコピーされてから開きます。<br>
-            URLに <code>{q}</code> を入れると検索URLになる（例: <code>https://cjjc.weblio.jp/content/{q}</code>）。<br>
-            <code>{q}</code> 抜きでアプリ起動だけ（例: <code>hanzii://</code>）にすれば、開いたアプリに貼り付けるだけでOK。
-          </div>
-          <div class="dict-add-buttons">
-            <button class="btn primary" id="add-dict" type="button">+ 追加</button>
-            <button class="btn" id="reset-dicts" type="button">デフォルトに戻す</button>
-          </div>
-        </div>
-      </div>
+      <button class="btn" data-builtin="gtranslate">Google翻訳</button>
     </div>
   </section>
 
@@ -723,7 +568,7 @@
 </main>
 
 <footer class="site">
-  <div>認識：Google Input Tools　·　拼音：pinyin-pro　·　意味：Google翻訳</div>
+  <div>認識: Google Input Tools　·　拼音: pinyin-pro　·　翻訳: Google翻訳</div>
   <div style="margin-top:6px;"><a href="index.html">← ホームに戻る</a></div>
 </footer>
 
@@ -997,140 +842,19 @@
       ta.remove();
     }
   }
-  // Builtin actions (copy buttons)
+  // Builtin actions (copy + Google翻訳)
   document.querySelectorAll('[data-builtin]').forEach(el => {
-    el.addEventListener('click', () => {
+    el.addEventListener('click', async () => {
       if (!currentChar) return;
       const a = el.dataset.builtin;
       if (a === 'copy-char') return copy(currentChar, '字');
       if (a === 'copy-pinyin') return copy(currentPinyin || '', '拼音');
-    });
-  });
-
-  // ============ Dictionary destinations (configurable) ============
-  const STORE_DICTS = 'chinese-lookup-dicts-v1';
-  const DEFAULT_DICTS = [
-    { id: 'gtranslate', name: 'Google翻訳', url: 'https://translate.google.com/?sl=zh-CN&tl=ja&text={q}&op=translate', enabled: true },
-    { id: 'hanzii-app', name: 'HANZI dict (アプリ起動)', url: 'hanzii://', enabled: false },
-    { id: 'hokujirou', name: '北辞郎', url: 'https://www.ctrans.org/search/index.php?word={q}&searchtype=cn', enabled: false },
-    { id: 'weblio', name: 'Weblio日中', url: 'https://cjjc.weblio.jp/content/{q}', enabled: false },
-    { id: 'pleco', name: 'Pleco', url: 'plecoapi://x-callback-url/s?q={q}', enabled: false },
-    { id: 'mdbg', name: 'MDBG (英)', url: 'https://www.mdbg.net/chinese/dictionary?page=worddict&wdrst=0&wdqb={q}', enabled: false },
-    { id: 'baidu', name: '百度词典', url: 'https://dict.baidu.com/s?wd={q}', enabled: false }
-  ];
-
-  function loadDicts() {
-    try {
-      const raw = localStorage.getItem(STORE_DICTS);
-      if (!raw) return JSON.parse(JSON.stringify(DEFAULT_DICTS));
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-    } catch (_) {}
-    return JSON.parse(JSON.stringify(DEFAULT_DICTS));
-  }
-  function saveDicts(list) {
-    localStorage.setItem(STORE_DICTS, JSON.stringify(list));
-  }
-
-  function renderActions() {
-    const wrap = document.getElementById('actions');
-    // Remove all dynamic dict buttons (keep the builtin copy buttons)
-    [...wrap.querySelectorAll('[data-dict]')].forEach(el => el.remove());
-    const dicts = loadDicts().filter(d => d.enabled);
-    dicts.forEach(d => {
-      const b = document.createElement('button');
-      b.className = 'btn';
-      b.type = 'button';
-      b.dataset.dict = d.id;
-      b.textContent = d.name;
-      b.addEventListener('click', async () => {
-        if (!currentChar) return;
-        // Pre-copy the character so users can paste in apps that don't
-        // accept search via URL scheme (most dict apps).
+      if (a === 'gtranslate') {
         try { await navigator.clipboard.writeText(currentChar); } catch (_) {}
-        const url = d.url.replace(/\{q\}/g, encodeURIComponent(currentChar));
-        window.open(url, '_blank');
-      });
-      wrap.appendChild(b);
+        window.open('https://translate.google.com/?sl=zh-CN&tl=ja&text=' + encodeURIComponent(currentChar) + '&op=translate', '_blank');
+      }
     });
-  }
-
-  function renderDictList() {
-    const list = document.getElementById('dict-list');
-    list.innerHTML = '';
-    const dicts = loadDicts();
-    dicts.forEach((d, idx) => {
-      const row = document.createElement('div');
-      row.className = 'dict-row' + (d.enabled ? '' : ' disabled');
-      const cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.className = 'check';
-      cb.checked = !!d.enabled;
-      cb.addEventListener('change', () => {
-        const arr = loadDicts();
-        arr[idx].enabled = cb.checked;
-        saveDicts(arr);
-        renderDictList();
-        renderActions();
-      });
-      const info = document.createElement('div');
-      info.className = 'info';
-      const nm = document.createElement('div');
-      nm.className = 'nm';
-      nm.textContent = d.name;
-      const url = document.createElement('div');
-      url.className = 'url';
-      url.textContent = d.url;
-      info.appendChild(nm); info.appendChild(url);
-      const del = document.createElement('button');
-      del.className = 'del';
-      del.type = 'button';
-      del.textContent = '×';
-      del.title = '削除';
-      del.addEventListener('click', () => {
-        if (!confirm(`「${d.name}」を削除しますか？`)) return;
-        const arr = loadDicts();
-        arr.splice(idx, 1);
-        saveDicts(arr);
-        renderDictList();
-        renderActions();
-      });
-      row.appendChild(cb); row.appendChild(info); row.appendChild(del);
-      list.appendChild(row);
-    });
-    if (dicts.length === 0) {
-      list.innerHTML = '<div style="font-size:12px;color:var(--ink-4);text-align:center;padding:14px 0;">辞書が登録されていません</div>';
-    }
-  }
-
-  document.getElementById('dict-toggle').addEventListener('click', () => {
-    const p = document.getElementById('dict-panel');
-    p.hidden = !p.hidden;
-    if (!p.hidden) renderDictList();
   });
-  document.getElementById('add-dict').addEventListener('click', () => {
-    const nameEl = document.getElementById('add-name');
-    const urlEl = document.getElementById('add-url');
-    const name = nameEl.value.trim();
-    const url = urlEl.value.trim();
-    if (!name || !url) { flash('名前とURLを入れてください'); return; }
-    if (!url.includes('{q}')) { flash('URLに {q} を入れてください'); return; }
-    const arr = loadDicts();
-    arr.push({ id: 'custom-' + Date.now(), name, url, enabled: true });
-    saveDicts(arr);
-    nameEl.value = ''; urlEl.value = '';
-    renderDictList();
-    renderActions();
-    flash('追加しました');
-  });
-  document.getElementById('reset-dicts').addEventListener('click', () => {
-    if (!confirm('デフォルトの辞書リストに戻しますか？\n（追加したカスタム辞書は消えます）')) return;
-    localStorage.removeItem(STORE_DICTS);
-    renderDictList();
-    renderActions();
-  });
-
-  renderActions();
 
   // Speak
   document.getElementById('speak').addEventListener('click', () => {
