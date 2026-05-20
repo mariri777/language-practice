@@ -1,12 +1,13 @@
 // Language Practice — shared service worker
 // Bump VERSION whenever shipping new HTML / asset content.
-const VERSION = 'v1.6.5';
+const VERSION = 'v1.7.0';
 const CACHE = `lang-practice-${VERSION}`;
 
 const ASSETS = [
   './',
   './index.html',
   './chinese-diary.html',
+  './chinese-diary-ko.html',
   './chinese-practice.html',
   './chinese-practice-ko.html',
   './chinese-lookup.html',
@@ -14,6 +15,7 @@ const ASSETS = [
   './s2t.js',
   './index.webmanifest',
   './chinese-diary.webmanifest',
+  './chinese-diary-ko.webmanifest',
   './chinese-practice.webmanifest',
   './chinese-practice-ko.webmanifest',
   './chinese-lookup.webmanifest',
@@ -23,6 +25,7 @@ const ASSETS = [
   './favicon-zh.svg',
   './favicon-ko.svg',
   './favicon-lookup.svg',
+  './favicon-diary-ko.svg',
   './icons/favicon-180.png',
   './icons/favicon-192.png',
   './icons/favicon-512.png',

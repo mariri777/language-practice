@@ -1,0 +1,3121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汉语日记 · 한국어판</title>
+<link rel="icon" type="image/svg+xml" href="favicon-diary-ko.svg">
+<link rel="apple-touch-icon" href="icons/favicon-180.png">
+<link rel="manifest" href="chinese-diary-ko.webmanifest">
+<meta name="theme-color" content="#984a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="汉语日记 KO">
+<script src="./s2t.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+</script>
+<style>
+  :root {
+    /* === Light (default) — restrained warm paper === */
+    --bg: #f4f0e6;
+    --bg-elevated: #faf7ee;
+    --bg-card: #ffffff;
+    --bg-subtle: #ebe4d2;
+    --bg-deeper: #e4dbc4;
+
+    --ink: #1a1611;
+    --ink-2: #4a4239;
+    --ink-3: #82786b;
+    --ink-4: #b3a78f;
+    --ink-5: #d5cbb8;
+
+    /* Single accent: refined warm clay */
+    --accent: #984a2e;
+    --accent-2: #7a3a23;
+    --accent-soft: #f1e1d7;
+    --accent-glow: rgba(152, 74, 46, 0.10);
+
+    --border: #e0d6bd;
+    --border-strong: #cdc1a3;
+    --divider: #e8e0c8;
+
+    --shadow-sm: 0 1px 2px rgba(26, 22, 17, 0.04);
+    --shadow: 0 1px 3px rgba(26, 22, 17, 0.04), 0 2px 12px rgba(26, 22, 17, 0.04);
+    --shadow-lg: 0 4px 16px rgba(26, 22, 17, 0.06), 0 24px 56px rgba(26, 22, 17, 0.06);
+
+    --t1: #2f7bd1;
+    --t2: #2d8a57;
+    --t3: #c98624;
+    --t4: #b8442a;
+    --t0: #9a8e7a;
+
+    --ease: cubic-bezier(0.2, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+    --dur-fast: 150ms;
+    --dur: 220ms;
+    --dur-slow: 380ms;
+
+    --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI",
+               "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", system-ui, sans-serif;
+    --font-display: -apple-system, "SF Pro Display", "Inter", "Hiragino Sans", sans-serif;
+    --font-zh: "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC", "Noto Sans SC",
+               "Microsoft YaHei", sans-serif;
+    --font-zh-serif: "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", serif;
+    --font-mono: "SF Mono", "JetBrains Mono", "Menlo", "Consolas", monospace;
+  }
+
+  body.dark {
+    --bg: #14110d;
+    --bg-elevated: #1c1813;
+    --bg-card: #1f1b16;
+    --bg-subtle: #25201a;
+    --bg-deeper: #2c2620;
+
+    --ink: #f1ebde;
+    --ink-2: #cdc2b1;
+    --ink-3: #938874;
+    --ink-4: #5e5447;
+    --ink-5: #3a342b;
+
+    --accent: #d97757;
+    --accent-2: #e08670;
+    --accent-soft: rgba(217, 119, 87, 0.14);
+    --accent-glow: rgba(217, 119, 87, 0.18);
+
+    --border: #2e2820;
+    --border-strong: #3d3528;
+    --divider: #28221a;
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.4), 0 28px 56px rgba(0,0,0,0.3);
+
+    --t1: #6aa9e8;
+    --t2: #6dc996;
+    --t3: #f0bb6a;
+    --t4: #ec8b73;
+    --t0: #7a7163;
+  }
+
+  * { box-sizing: border-box; }
+  *:focus { outline: none; }
+  *:focus-visible {
+    outline: 1.5px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-ui);
+    color: var(--ink);
+    line-height: 1.65;
+    background: var(--bg);
+    min-height: 100vh;
+    font-size: 15px;
+    letter-spacing: -0.005em;
+    transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  /* ========== Layout ========== */
+  .app {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 32px 40px 80px;
+  }
+  @media (max-width: 720px) {
+    .app { padding: 20px; }
+  }
+
+  /* ========== Header ========== */
+  header.site {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 28px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--divider);
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .brand h1 {
+    margin: 0;
+    font-family: var(--font-zh-serif);
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .brand h1 .sub {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-left: 10px;
+    vertical-align: 2px;
+  }
+  .brand p {
+    margin: 6px 0 0;
+    font-size: 12.5px;
+    color: var(--ink-3);
+    letter-spacing: 0.01em;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .progress-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .progress-numbers {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  .progress-numbers .now {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .progress-numbers .of {
+    font-size: 13px;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .progress-numbers .label {
+    font-size: 10px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-left: 10px;
+    font-weight: 500;
+  }
+  .progress-dots {
+    display: inline-flex;
+    gap: 4px;
+  }
+  .progress-dots i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    transition: background var(--dur) var(--ease);
+  }
+  .progress-dots i.done {
+    background: var(--accent);
+  }
+  .progress-dots i.current {
+    background: var(--ink-3);
+    box-shadow: 0 0 0 2px var(--bg);
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--dur) var(--ease);
+  }
+  .icon-btn:hover {
+    color: var(--accent);
+    border-color: var(--border-strong);
+    background: var(--bg-card);
+  }
+  .icon-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+  body:not(.dark) .icon-btn .moon { display: block; }
+  body:not(.dark) .icon-btn .sun { display: none; }
+  body.dark .icon-btn .moon { display: none; }
+  body.dark .icon-btn .sun { display: block; }
+
+  /* ========== Voice warning ========== */
+  .voice-warning {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    color: var(--ink-2);
+    padding: 12px 18px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    display: none;
+    line-height: 1.6;
+  }
+
+  /* ========== Day Navigator ========== */
+  .day-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 13px;
+    background: transparent;
+    color: var(--ink-2);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all var(--dur) var(--ease);
+  }
+  .nav-btn:hover:not(:disabled) {
+    background: var(--bg-subtle);
+    color: var(--ink);
+  }
+  .nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .nav-btn svg { width: 13px; height: 13px; }
+
+  .day-indicator {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    padding: 0 14px;
+    border-left: 1px solid var(--divider);
+    border-right: 1px solid var(--divider);
+  }
+  .day-indicator .num {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .day-indicator .total {
+    font-size: 12px;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .day-indicator .total::before { content: " / "; }
+
+  .day-jump {
+    flex: 1;
+    min-width: 200px;
+    padding: 8px 32px 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ink-2);
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2382786b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+  .day-jump:hover {
+    background-color: var(--bg-subtle);
+    color: var(--ink);
+  }
+
+  .toggle-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    padding-left: 4px;
+    border-left: 1px solid var(--divider);
+  }
+  .pill-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: transparent;
+    border: none;
+    font-size: 12px;
+    color: var(--ink-3);
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    user-select: none;
+    font-family: inherit;
+  }
+  .pill-toggle:hover { color: var(--ink); }
+  .pill-toggle.active {
+    background: var(--bg-subtle);
+    color: var(--ink);
+  }
+  .pill-toggle svg { width: 12px; height: 12px; }
+
+  .reset-link {
+    background: none;
+    border: none;
+    color: var(--ink-4);
+    font-size: 11px;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: inherit;
+    transition: all var(--dur) var(--ease);
+    letter-spacing: 0.02em;
+  }
+  .reset-link:hover {
+    color: var(--accent);
+  }
+
+  /* ========== Main layout ========== */
+  main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 980px) {
+    main { grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  .card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 36px;
+    box-shadow: var(--shadow-sm);
+  }
+  @media (max-width: 720px) {
+    .card { padding: 24px 20px; border-radius: 14px; }
+  }
+
+  /* ========== Lesson Header ========== */
+  .lesson-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .hsk-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .hsk-badge i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .theme-text {
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .theme-text .sep {
+    color: var(--ink-4);
+    margin: 0 6px;
+  }
+  .theme-text .zh {
+    color: var(--ink-2);
+    font-family: var(--font-zh);
+    margin-right: 2px;
+  }
+
+  .lesson-title {
+    font-family: var(--font-zh-serif);
+    font-size: clamp(30px, 4vw, 42px);
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 8px;
+    letter-spacing: 0.015em;
+    line-height: 1.15;
+  }
+  .lesson-subtitle {
+    font-size: 14px;
+    color: var(--ink-3);
+    margin: 0 0 28px;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+
+  /* ========== Grammar Tip ========== */
+  .tip {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    background: var(--bg-subtle);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .tip-label {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+
+  /* ========== Audio Bar ========== */
+  .audio-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+  .play-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    background: var(--ink);
+    color: var(--bg-card);
+    border: 1px solid var(--ink);
+    border-radius: 9px;
+    font-size: 12.5px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    position: relative;
+    letter-spacing: 0.01em;
+  }
+  .play-btn:hover {
+    background: var(--ink-2);
+    border-color: var(--ink-2);
+  }
+  body.dark .play-btn {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  body.dark .play-btn:hover {
+    background: var(--ink-2);
+  }
+  .play-btn.ghost {
+    background: transparent;
+    color: var(--ink-2);
+    border: 1px solid var(--border-strong);
+  }
+  .play-btn.ghost:hover {
+    background: var(--bg-card);
+    color: var(--ink);
+    border-color: var(--ink-3);
+  }
+  .play-btn svg { width: 11px; height: 11px; }
+  .play-btn.playing::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 11px;
+    border: 1.5px solid var(--accent);
+    animation: pulse 1.4s infinite;
+    pointer-events: none;
+  }
+  @keyframes pulse {
+    0% { opacity: 0.5; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.16); }
+  }
+
+  /* ========== Passage / Sentences ========== */
+  .passage {
+    margin-bottom: 28px;
+  }
+  .sentence {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--divider);
+    position: relative;
+    cursor: pointer;
+    transition: padding var(--dur) var(--ease);
+  }
+  .sentence:last-child { border-bottom: none; padding-bottom: 4px; }
+  .sentence:first-child { padding-top: 4px; }
+  .sentence:hover { padding-left: 12px; }
+  .sentence::before {
+    content: "";
+    position: absolute;
+    left: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 0;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: height var(--dur) var(--ease);
+  }
+  .sentence:hover::before { height: 60%; }
+  .sentence.playing { padding-left: 12px; }
+  .sentence.playing::before {
+    height: 70%;
+    animation: bar-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes bar-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  .sentence.playing .zh {
+    color: var(--accent);
+  }
+
+  .zh {
+    font-family: var(--font-zh);
+    font-size: clamp(20px, 2.1vw, 23px);
+    line-height: 1.6;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    margin: 0 0 6px;
+    font-weight: 400;
+    transition: color var(--dur) var(--ease);
+  }
+
+  .pinyin {
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.01em;
+    margin: 0 0 10px;
+    line-height: 1.55;
+    font-style: italic;
+    transition: opacity var(--dur) var(--ease);
+  }
+  body.hide-pinyin .pinyin { display: none; }
+
+  .sentence-ja {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.6;
+    margin: 0 0 10px;
+    padding-left: 10px;
+    border-left: 2px solid var(--divider);
+  }
+  body.hide-translation .sentence-ja { display: none; }
+
+  .display-toggles {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .display-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--ink-3);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+  }
+  .display-toggle:hover { color: var(--ink-2); }
+  .display-toggle.active {
+    background: var(--bg-elevated);
+    color: var(--ink);
+    border-color: var(--ink-3);
+  }
+  .display-toggle .dt-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ink-mute);
+    transition: background var(--dur) var(--ease);
+  }
+  .display-toggle.active .dt-dot { background: var(--accent); }
+
+  .script-toggle {
+    display: inline-flex;
+    padding: 2px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+  .script-toggle-btn {
+    border: none;
+    background: transparent;
+    padding: 5px 12px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+  }
+  .script-toggle-btn:not(.active):hover { color: var(--ink-2); }
+  .script-toggle-btn.active {
+    background: var(--bg-elevated);
+    color: var(--ink);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  .audio-pills {
+    display: inline-flex;
+    gap: 5px;
+    opacity: 0.45;
+    transition: opacity var(--dur) var(--ease);
+  }
+  .sentence:hover .audio-pills,
+  .sentence:focus-within .audio-pills,
+  body.touch .audio-pills {
+    opacity: 1;
+  }
+  .audio-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--ink-3);
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    letter-spacing: 0.02em;
+  }
+  .audio-pill:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .audio-pill svg { width: 8px; height: 8px; }
+
+  /* ========== Translation ========== */
+  .translation {
+    padding: 18px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 24px;
+  }
+  body.dark .translation {
+    background: var(--bg-subtle);
+  }
+  .section-label {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 10px;
+  }
+  .translation-text {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.85;
+    letter-spacing: 0.005em;
+  }
+
+  /* ========== Vocab ========== */
+  .vocab-section { margin-bottom: 28px; }
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: max-content max-content 1fr;
+    gap: 8px 24px;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 13.5px;
+    align-items: baseline;
+  }
+  body.dark .vocab-grid {
+    background: var(--bg-subtle);
+  }
+  .vocab-zh {
+    font-family: var(--font-zh);
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 14.5px;
+  }
+  .vocab-py {
+    color: var(--ink-3);
+    font-style: italic;
+    font-size: 12.5px;
+  }
+  .vocab-ja {
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+
+  /* ========== Counters ========== */
+  .progress-block {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 14px 4px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .counter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .counter-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  .dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+  .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1.5px solid var(--border-strong);
+    cursor: pointer;
+    transition: all var(--dur) var(--ease-spring);
+  }
+  .dot:hover {
+    border-color: var(--accent);
+    transform: scale(1.12);
+  }
+  .dot.filled {
+    background: var(--accent);
+    border-color: var(--accent);
+    animation: fill-pop var(--dur-slow) var(--ease-spring);
+  }
+  @keyframes fill-pop {
+    0% { transform: scale(0.6); }
+    50% { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+
+  .complete-btn {
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--ink);
+    color: var(--bg-card);
+    border: 1px solid var(--ink);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .complete-btn:hover {
+    background: var(--ink-2);
+    border-color: var(--ink-2);
+  }
+  body.dark .complete-btn {
+    color: var(--bg);
+  }
+  .complete-btn.completed {
+    background: transparent;
+    color: var(--ink-3);
+    border-color: var(--border-strong);
+  }
+  .complete-btn.completed:hover {
+    color: var(--ink);
+    border-color: var(--ink-3);
+  }
+  .complete-btn svg { width: 14px; height: 14px; }
+
+  /* ========== Writing Card ========== */
+  .writing-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .writing-card .right-hint {
+    font-size: 13px;
+    color: var(--ink-3);
+    margin: 0 0 18px;
+    line-height: 1.7;
+  }
+
+  /* Mode tabs (canvas / typing) */
+  .mode-tabs {
+    display: inline-flex;
+    padding: 3px;
+    background: var(--bg-subtle);
+    border-radius: 10px;
+    margin-bottom: 18px;
+    gap: 2px;
+  }
+  .mode-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: transparent;
+    border: none;
+    color: var(--ink-3);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 7px;
+    transition: all var(--dur) var(--ease);
+  }
+  .mode-tab:hover { color: var(--ink-2); }
+  .mode-tab.active {
+    background: var(--bg-elevated);
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+  }
+  .mode-tab svg { width: 13px; height: 13px; }
+
+  .write-pane[hidden] { display: none; }
+
+  /* Typing area */
+  .reference-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  body.dark .reference-block { background: var(--bg-subtle); }
+  .reference-block summary {
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    user-select: none;
+    list-style: none;
+    transition: background var(--dur) var(--ease);
+  }
+  .reference-block summary::-webkit-details-marker { display: none; }
+  .reference-block summary::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 8px;
+    transition: transform var(--dur) var(--ease);
+    color: var(--ink-3);
+    font-size: 10px;
+  }
+  .reference-block[open] summary::before {
+    transform: rotate(90deg);
+  }
+  .reference-block summary:hover { background: var(--bg-subtle); }
+  .reference-text {
+    padding: 4px 18px 16px;
+    font-family: var(--font-zh);
+    font-size: 16px;
+    color: var(--ink-2);
+    line-height: 1.9;
+    letter-spacing: 0.03em;
+    border-top: 1px solid var(--divider);
+  }
+
+  .typing-input {
+    width: 100%;
+    min-height: 280px;
+    padding: 16px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: var(--font-zh);
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+    resize: vertical;
+    transition: border-color var(--dur) var(--ease);
+  }
+  body.dark .typing-input { background: var(--bg-subtle); }
+  .typing-input:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+  .typing-input::placeholder {
+    color: var(--ink-4);
+    font-style: italic;
+  }
+
+  .char-count {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+  }
+  .char-count.complete { color: var(--accent); font-weight: 600; }
+
+  .typing-submode-tabs { margin-bottom: 10px; }
+  .dictation-card {
+    background: var(--bg-subtle);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 18px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .dictation-card .dictation-icon { font-size: 28px; line-height: 1; }
+  .dictation-card .dictation-msg {
+    flex: 1;
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    min-width: 180px;
+  }
+  body.dark .dictation-card { background: var(--bg-card); }
+
+  .diff-output {
+    margin-top: 14px;
+    padding: 16px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: var(--font-zh);
+    font-size: 16px;
+    line-height: 1.9;
+    letter-spacing: 0.03em;
+  }
+  body.dark .diff-output { background: var(--bg-subtle); }
+  .diff-output .diff-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 10px;
+    font-style: normal;
+  }
+  .diff-output .diff-summary {
+    display: inline-flex;
+    gap: 14px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--divider);
+    letter-spacing: 0.02em;
+    font-style: normal;
+  }
+  .diff-output .diff-summary strong {
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .diff-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .diff-line {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--divider);
+  }
+  body.dark .diff-line { background: var(--bg-subtle); }
+  .diff-line.is-ok { border-color: rgba(58, 158, 100, 0.35); background: rgba(58, 158, 100, 0.06); }
+  .diff-line.has-error { border-color: rgba(192, 57, 43, 0.30); background: rgba(192, 57, 43, 0.04); }
+  body.dark .diff-line.is-ok { background: rgba(58, 158, 100, 0.12); }
+  body.dark .diff-line.has-error { background: rgba(240, 133, 122, 0.10); }
+  .diff-line-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .diff-line-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+  }
+  .diff-line-status {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+  }
+  .diff-line-status.ok { color: #2f7a4d; background: rgba(58, 158, 100, 0.16); }
+  .diff-line-status.err { color: #c0392b; background: rgba(192, 57, 43, 0.12); }
+  body.dark .diff-line-status.ok { color: #7dd6a3; background: rgba(58, 158, 100, 0.24); }
+  body.dark .diff-line-status.err { color: #f0857a; background: rgba(240, 133, 122, 0.18); }
+  .diff-row-label {
+    display: inline-block;
+    min-width: 32px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    color: var(--ink-4);
+    margin-right: 8px;
+    letter-spacing: 0.06em;
+    vertical-align: middle;
+  }
+  .diff-line-orig {
+    color: var(--ink-3);
+    font-size: 14px;
+    margin-bottom: 6px;
+    line-height: 1.7;
+  }
+  .diff-line-typed {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    font-size: 16px;
+    line-height: 2;
+  }
+  .diff-row-body { display: inline; }
+  .diff-match { color: var(--ink); }
+  .diff-wrong {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1.05;
+    margin: 0 1px;
+    padding: 0 2px;
+    background: rgba(192, 57, 43, 0.08);
+    border-radius: 4px;
+  }
+  .diff-wrong .diff-typed-char {
+    color: #c0392b;
+    text-decoration: line-through;
+    text-decoration-color: rgba(192, 57, 43, 0.55);
+    font-size: 14px;
+  }
+  .diff-wrong .diff-expect-char {
+    color: #2f7a4d;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  body.dark .diff-wrong { background: rgba(240, 133, 122, 0.14); }
+  body.dark .diff-wrong .diff-typed-char { color: #f0857a; }
+  body.dark .diff-wrong .diff-expect-char { color: #7dd6a3; }
+  .diff-missing {
+    color: #c0392b;
+    background: rgba(192, 57, 43, 0.10);
+    border: 1px dashed rgba(192, 57, 43, 0.45);
+    border-radius: 4px;
+    padding: 0 3px;
+    margin: 0 1px;
+  }
+  body.dark .diff-missing {
+    color: #f0857a;
+    background: rgba(240, 133, 122, 0.12);
+    border-color: rgba(240, 133, 122, 0.45);
+  }
+  .diff-extra {
+    color: #c0392b;
+    text-decoration: line-through;
+    text-decoration-color: rgba(192, 57, 43, 0.6);
+  }
+  body.dark .diff-extra { color: #f0857a; }
+  .diff-empty {
+    color: var(--ink-4);
+    font-style: italic;
+    font-size: 13px;
+  }
+
+  .grid-tabs {
+    display: inline-flex;
+    padding: 3px;
+    background: var(--bg-subtle);
+    border-radius: 9px;
+    margin-bottom: 14px;
+    gap: 1px;
+  }
+  .grid-tab {
+    padding: 6px 14px;
+    background: transparent;
+    border: none;
+    color: var(--ink-3);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all var(--dur) var(--ease);
+  }
+  .grid-tab:hover { color: var(--ink-2); }
+  .grid-tab.active {
+    background: var(--bg-elevated);
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .writing-area {
+    flex: 1;
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    min-height: 480px;
+  }
+  body.dark .writing-area { background-color: var(--bg-subtle); }
+  .writing-area.tianzi {
+    background-image:
+      linear-gradient(to right, var(--divider) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--divider) 1px, transparent 1px),
+      repeating-linear-gradient(to right, transparent 0, transparent 39px, var(--accent-soft) 39px, var(--accent-soft) 41px, transparent 41px, transparent 80px),
+      repeating-linear-gradient(to bottom, transparent 0, transparent 39px, var(--accent-soft) 39px, var(--accent-soft) 41px, transparent 41px, transparent 80px);
+    background-size: 80px 80px;
+  }
+  .writing-area.grid {
+    background-image:
+      linear-gradient(to right, var(--divider) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--divider) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .writing-area.lined {
+    background-image:
+      repeating-linear-gradient(to bottom, transparent 0, transparent 47px, var(--divider) 47px, var(--divider) 48px);
+  }
+  .writing-area.blank { background-image: none; }
+
+  canvas {
+    display: block;
+    width: 100%;
+    background: transparent;
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  .canvas-controls {
+    display: flex;
+    gap: 6px;
+    margin-top: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .canvas-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 12px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--ink-2);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+  }
+  .canvas-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .canvas-btn svg { width: 12px; height: 12px; }
+  .brush-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+  .brush-control input[type="range"] {
+    accent-color: var(--accent);
+    width: 80px;
+  }
+
+  /* ========== Tone Colors ========== */
+  .t1 { color: var(--t1); }
+  .t2 { color: var(--t2); }
+  .t3 { color: var(--t3); }
+  .t4 { color: var(--t4); }
+  .t0 { color: var(--t0); }
+
+  /* ========== Footer ========== */
+  footer.site {
+    margin-top: 56px;
+    padding: 28px 0 0;
+    border-top: 1px solid var(--divider);
+    color: var(--ink-3);
+    font-size: 11.5px;
+    letter-spacing: 0.015em;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer.site .meta {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    padding-top: 14px;
+    margin-top: 4px;
+    border-top: 1px solid var(--divider);
+    font-size: 10.5px;
+    color: var(--ink-4);
+    letter-spacing: 0.02em;
+  }
+  footer.site .meta a { color: var(--ink-3); text-decoration: none; transition: color 0.2s ease; }
+  footer.site .meta a:hover { color: var(--accent); }
+  footer .legend {
+    display: inline-flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  footer .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  footer .legend i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    display: inline-block;
+  }
+  footer .keys {
+    color: var(--ink-4);
+  }
+  footer kbd {
+    display: inline-block;
+    padding: 1px 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-2);
+    margin: 0 1px;
+  }
+
+  /* ========== Page transition ========== */
+  .lesson-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+  }
+  .lesson-card.changing {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="site">
+    <div class="brand">
+      <h1>汉语日记<span class="sub">한국어판</span></h1>
+      <p>HSK 1~4 대응 · 하루 한 문단 트레이닝</p>
+    </div>
+    <div class="header-right">
+      <div class="progress-meta">
+        <div class="progress-numbers">
+          <span class="now" id="progress-now">0</span>
+          <span class="of" id="progress-of">/ 14</span>
+          <span class="label">완료</span>
+        </div>
+        <div class="progress-dots" id="progress-dots"></div>
+      </div>
+      <button class="icon-btn" id="theme-toggle" title="테마 전환 (D)" aria-label="테마 전환">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="voice-warning" id="voice-warning">
+    브라우저에 중국어(zh-CN) 음성이 없습니다. macOS:「시스템 설정 → 손쉬운 사용 → 음성 콘텐츠」/ Windows:「설정 → 시간 및 언어 → 언어 및 지역」에서 중국어(간체) 음성을 추가해 주세요.
+  </div>
+
+  <nav class="day-nav">
+    <button class="nav-btn" id="prev-day" title="이전 날 (←)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      이전
+    </button>
+    <div class="day-indicator">
+      <span class="num" id="day-num">1</span><span class="total" id="day-total">14</span>
+    </div>
+    <select class="day-jump" id="day-jump" title="날짜로 이동"></select>
+    <button class="nav-btn" id="next-day" title="다음 날 (→)">
+      다음
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <div class="toggle-group">
+      <button class="reset-link" id="reset-btn" title="진행 리셋">⟲ Reset</button>
+    </div>
+  </nav>
+
+  <main>
+    <article class="card lesson-card" id="lesson-card">
+      <div class="lesson-meta">
+        <span class="hsk-badge" id="hsk-badge"><i></i><span id="hsk-text">HSK 1</span></span>
+        <span class="theme-text">
+          <span class="zh" id="theme-zh">自我介绍</span>
+          <span class="sep">·</span>
+          <span id="theme-ja">자기소개</span>
+        </span>
+      </div>
+      <h2 class="lesson-title" id="lesson-title">认识一下吧</h2>
+      <p class="lesson-subtitle" id="lesson-subtitle">서로 알아 가요</p>
+
+      <div class="tip">
+        <span class="tip-label">Point</span>
+        <span id="tip-text"></span>
+      </div>
+
+      <div class="audio-bar">
+        <button class="play-btn" id="play-all-normal">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          전체 재생
+        </button>
+        <button class="play-btn ghost" id="play-all-slow">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          느리게
+        </button>
+        <button class="play-btn ghost" id="stop-audio" title="정지 (Esc)">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+          정지
+        </button>
+      </div>
+
+      <div class="display-toggles">
+        <button class="display-toggle active" id="pinyin-toggle" title="병음 표시 전환">
+          <span class="dt-dot"></span>
+          병음
+        </button>
+        <button class="display-toggle active" id="translation-toggle" title="한국어 번역 표시 전환">
+          <span class="dt-dot"></span>
+          번역
+        </button>
+        <div class="script-toggle" role="tablist" aria-label="문자 종류">
+          <button type="button" class="script-toggle-btn active" id="script-simp" role="tab" aria-selected="true">간체</button>
+          <button type="button" class="script-toggle-btn" id="script-trad" role="tab" aria-selected="false">번체</button>
+        </div>
+      </div>
+
+      <div class="passage" id="passage"></div>
+
+      <div class="vocab-section">
+        <div class="section-label" style="margin-bottom:10px;">단어</div>
+        <div class="vocab-grid" id="vocab-list"></div>
+      </div>
+
+      <div class="progress-block">
+        <div class="counter">
+          <span class="counter-label">낭독 · 5</span>
+          <span class="dots" id="read-dots"></span>
+        </div>
+        <div class="counter">
+          <span class="counter-label">쓰기 · 3</span>
+          <span class="dots" id="write-dots"></span>
+        </div>
+      </div>
+
+      <button class="complete-btn" id="complete-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="complete-text">오늘의 레슨을 완료하기</span>
+      </button>
+    </article>
+
+    <article class="card writing-card">
+      <div class="lesson-meta">
+        <span class="theme-text" style="color:var(--ink-3);">WRITE<span class="sep">·</span>쓰기</span>
+      </div>
+      <h2 class="lesson-title" style="font-size:22px;margin-bottom:6px;">나의 노트</h2>
+
+      <div class="mode-tabs" id="mode-tabs">
+        <button class="mode-tab" data-mode="canvas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+          손글씨
+        </button>
+        <button class="mode-tab active" data-mode="typing">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M7 16h10"/></svg>
+          타이핑
+        </button>
+      </div>
+
+      <div class="grid-tabs typing-submode-tabs" id="typing-submode-tabs">
+        <button class="grid-tab active" data-submode="original">원문 표시</button>
+        <button class="grid-tab" data-submode="dictation">받아쓰기</button>
+        <button class="grid-tab" data-submode="translation">번역 표시</button>
+      </div>
+
+      <p class="right-hint" id="typing-hint" hidden></p>
+
+      <details class="reference-block" id="reference-block" open>
+        <summary id="reference-summary">참고할 원문 표시</summary>
+        <div class="reference-text" id="reference-text"></div>
+      </details>
+
+      <div class="dictation-card" id="dictation-card" hidden>
+        <div class="dictation-icon">🔊</div>
+        <button class="canvas-btn" id="dictation-play-normal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          보통
+        </button>
+        <button class="canvas-btn" id="dictation-play-slow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          느리게
+        </button>
+        <button class="canvas-btn" id="dictation-stop">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+          정지
+        </button>
+      </div>
+
+      <div class="write-pane" id="canvas-pane" hidden>
+        <p class="right-hint">종이에 쓰는 것이 가장 좋지만, 이 캔버스에서도 연습할 수 있어요. 한자 연습에는 田字格(전자격)이 편리합니다.</p>
+
+        <div class="grid-tabs" id="grid-tabs">
+          <button class="grid-tab active" data-mode="tianzi">田字格</button>
+          <button class="grid-tab" data-mode="grid">모눈</button>
+          <button class="grid-tab" data-mode="lined">가로줄</button>
+          <button class="grid-tab" data-mode="blank">무지</button>
+        </div>
+
+        <div class="writing-area tianzi" id="writing-area">
+          <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="canvas-controls">
+          <button class="canvas-btn" id="clear-canvas">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14H7L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            지우기
+          </button>
+          <button class="canvas-btn" id="undo-canvas">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            한 획 되돌리기
+          </button>
+          <div class="brush-control">
+            굵기
+            <input type="range" id="brush-size" min="1" max="10" value="3">
+          </div>
+        </div>
+      </div>
+
+      <div class="write-pane" id="typing-pane">
+        <textarea class="typing-input" id="typing-input"
+                  placeholder="여기에 베껴 써 보세요…"
+                  spellcheck="false"></textarea>
+
+        <div class="canvas-controls">
+          <button class="canvas-btn" id="compare-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            원문과 비교
+          </button>
+          <button class="canvas-btn" id="clear-typing">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14H7L5 6"/></svg>
+            지우기
+          </button>
+          <span class="char-count" id="char-count">0 / 0 글자</span>
+        </div>
+
+        <div class="diff-output" id="diff-output" hidden></div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site">
+    <div class="legend">
+      <span class="t1"><i></i>제1성</span>
+      <span class="t2"><i></i>제2성</span>
+      <span class="t3"><i></i>제3성</span>
+      <span class="t4"><i></i>제4성</span>
+      <span class="t0"><i></i>경성</span>
+    </div>
+    <div class="meta">
+      <span>개인 취미 범위로 만들고 있습니다. 사소한 버그는 양해 부탁드립니다.</span>
+      <span>© 2026 mari · <a href="https://x.com/mmmmmmmari_" target="_blank" rel="noopener">@mmmmmmmari_</a></span>
+    </div>
+  </footer>
+</div>
+
+<script>
+const LESSONS = [
+  {
+    day: 1, hsk: 1,
+    theme: { zh: "自我介绍", ja: "자기소개" },
+    title: { zh: "认识一下吧", ja: "서로 알아 가요" },
+    tip: "「是 shì」는 영어의 be 동사. 「我是〜」로 「저는 ~입니다」. 형용사문에서는 「是」를 쓰지 않고 「我很忙」처럼 「很」을 넣는 것이 기본.",
+    sentences: [
+      { zh: "你好！我叫田中。", pinyin: "Nǐ hǎo! Wǒ jiào Tiánzhōng." },
+      { zh: "今年三十岁，是日本人。", pinyin: "Jīnnián sānshí suì, shì Rìběnrén." },
+      { zh: "我住在东京，每天去公司工作。", pinyin: "Wǒ zhù zài Dōngjīng, měi tiān qù gōngsī gōngzuò." },
+      { zh: "我很喜欢中国，所以现在学习中文。", pinyin: "Wǒ hěn xǐhuan Zhōngguó, suǒyǐ xiànzài xuéxí Zhōngwén." },
+      { zh: "请多关照！", pinyin: "Qǐng duō guānzhào!" }
+    ],
+    translation: "안녕하세요! 다나카라고 합니다. 올해 서른 살이고 일본인입니다. 도쿄에 살고 있으며, 매일 회사에 가서 일합니다. 중국을 아주 좋아해서 지금 중국어를 공부하고 있습니다. 잘 부탁드립니다!",
+    vocab: [
+      { zh: "住在", pinyin: "zhù zài", ja: "~에 살다" },
+      { zh: "每天", pinyin: "měi tiān", ja: "매일" },
+      { zh: "公司", pinyin: "gōngsī", ja: "회사" },
+      { zh: "所以", pinyin: "suǒyǐ", ja: "그래서" },
+      { zh: "请多关照", pinyin: "qǐng duō guānzhào", ja: "잘 부탁드립니다" }
+    ]
+  },
+  {
+    day: 2, hsk: 1,
+    theme: { zh: "家庭", ja: "가족" },
+    title: { zh: "我有一个温暖的家", ja: "나의 따뜻한 가족" },
+    tip: "「有 yǒu」(가지고 있다/있다)의 부정은 「不有」가 아니라 「没有 méiyǒu」. 중국어 학습의 첫 번째 함정. 「都 dōu」는 「모두·전부」를 나타내는 부사로 동사 앞에 둠.",
+    sentences: [
+      { zh: "我的家有四个人。", pinyin: "Wǒ de jiā yǒu sì ge rén." },
+      { zh: "爸爸是医生，妈妈是老师。", pinyin: "Bàba shì yīshēng, māma shì lǎoshī." },
+      { zh: "我有一个弟弟，他是大学生。", pinyin: "Wǒ yǒu yí ge dìdi, tā shì dàxuéshēng." },
+      { zh: "我们家有一只猫，叫小白。", pinyin: "Wǒmen jiā yǒu yì zhī māo, jiào Xiǎo Bái." },
+      { zh: "我们都很爱它，它也很喜欢我们。", pinyin: "Wǒmen dōu hěn ài tā, tā yě hěn xǐhuan wǒmen." }
+    ],
+    translation: "우리 가족은 네 명입니다. 아빠는 의사이고, 엄마는 선생님이에요. 남동생이 한 명 있는데, 대학생이에요. 우리 집에는 고양이가 한 마리 있는데, 이름은 샤오바이입니다. 우리 모두 그 고양이를 무척 사랑하고, 고양이도 우리를 무척 좋아해요.",
+    vocab: [
+      { zh: "医生", pinyin: "yīshēng", ja: "의사" },
+      { zh: "老师", pinyin: "lǎoshī", ja: "선생님" },
+      { zh: "弟弟", pinyin: "dìdi", ja: "남동생" },
+      { zh: "大学生", pinyin: "dàxuéshēng", ja: "대학생" },
+      { zh: "只", pinyin: "zhī", ja: "(동물의 양사)" },
+      { zh: "都", pinyin: "dōu", ja: "모두" },
+      { zh: "也", pinyin: "yě", ja: "~도" }
+    ]
+  },
+  {
+    day: 15, hsk: 1,
+    theme: { zh: "天气", ja: "날씨" },
+    title: { zh: "今天我很高兴", ja: "오늘은 매우 기뻐요" },
+    tip: "「高兴 gāoxìng」는 「기쁘다」. 형용사문에서는 「我很高兴」처럼 「很」을 넣는 것이 기본. 「也 yě」는 「~도」, 동사·형용사 앞에 둠.",
+    sentences: [
+      { zh: "今天天气很好。", pinyin: "Jīntiān tiānqì hěn hǎo." },
+      { zh: "我跟朋友一起去看电影。", pinyin: "Wǒ gēn péngyou yìqǐ qù kàn diànyǐng." },
+      { zh: "电影很好，我们都很高兴。", pinyin: "Diànyǐng hěn hǎo, wǒmen dōu hěn gāoxìng." },
+      { zh: "我吃了一个苹果，喝了一杯茶。", pinyin: "Wǒ chī le yí ge píngguǒ, hē le yì bēi chá." },
+      { zh: "我很喜欢今天。", pinyin: "Wǒ hěn xǐhuan jīntiān." }
+    ],
+    translation: "오늘은 날씨가 매우 좋습니다. 친구와 함께 영화를 보러 갔어요. 영화가 좋아서 우리 모두 매우 기뻤습니다. 저는 사과 한 개를 먹고, 차 한 잔을 마셨어요. 오늘이 정말 마음에 들었습니다.",
+    vocab: [
+      { zh: "天气", pinyin: "tiānqì", ja: "날씨" },
+      { zh: "朋友", pinyin: "péngyou", ja: "친구" },
+      { zh: "一起", pinyin: "yìqǐ", ja: "같이" },
+      { zh: "电影", pinyin: "diànyǐng", ja: "영화" },
+      { zh: "高兴", pinyin: "gāoxìng", ja: "기쁘다" },
+      { zh: "苹果", pinyin: "píngguǒ", ja: "사과" },
+      { zh: "杯", pinyin: "bēi", ja: "잔(양사)" }
+    ]
+  },
+  {
+    day: 16, hsk: 1,
+    theme: { zh: "购物", ja: "쇼핑" },
+    title: { zh: "我去商店", ja: "가게에 가요" },
+    tip: "「了 le」는 완료나 변화를 나타내는 조사. 「买了 mǎi le」＝「샀다」, 「没有钱了 méiyǒu qián le」＝「돈이 없어졌다」(변화).",
+    sentences: [
+      { zh: "今天我去商店。", pinyin: "Jīntiān wǒ qù shāngdiàn." },
+      { zh: "我买了一些东西。", pinyin: "Wǒ mǎi le yìxiē dōngxi." },
+      { zh: "我买了水、米饭和苹果。", pinyin: "Wǒ mǎi le shuǐ, mǐfàn hé píngguǒ." },
+      { zh: "苹果很大，也很好吃。", pinyin: "Píngguǒ hěn dà, yě hěn hǎochī." },
+      { zh: "我也想买茶，但是没有钱了。", pinyin: "Wǒ yě xiǎng mǎi chá, dànshì méiyǒu qián le." },
+      { zh: "明天我再去。", pinyin: "Míngtiān wǒ zài qù." }
+    ],
+    translation: "오늘은 가게에 갔습니다. 몇 가지 물건을 샀어요. 물, 쌀밥, 그리고 사과를 샀습니다. 사과는 크고 맛있었어요. 차도 사고 싶었지만 돈이 다 떨어졌습니다. 내일 또 갈 거예요.",
+    vocab: [
+      { zh: "商店", pinyin: "shāngdiàn", ja: "가게" },
+      { zh: "一些", pinyin: "yìxiē", ja: "약간의" },
+      { zh: "东西", pinyin: "dōngxi", ja: "물건" },
+      { zh: "米饭", pinyin: "mǐfàn", ja: "쌀밥" },
+      { zh: "但是", pinyin: "dànshì", ja: "그러나" },
+      { zh: "钱", pinyin: "qián", ja: "돈" },
+      { zh: "再", pinyin: "zài", ja: "다시·또" }
+    ]
+  },
+  {
+    day: 20, hsk: 1,
+    theme: { zh: "孩子", ja: "아이" },
+    title: { zh: "我的女儿", ja: "나의 딸" },
+    tip: "「在 + 장소 + 동사」＝「~에서 ~하다」(她在学校学习＝그녀는 학교에서 공부한다). 「也 yě」는 부사로 반드시 동사·형용사 앞에 둠.",
+    sentences: [
+      { zh: "我有一个女儿。", pinyin: "Wǒ yǒu yí ge nǚ'ér." },
+      { zh: "她今年八岁。", pinyin: "Tā jīnnián bā suì." },
+      { zh: "她在学校学习。", pinyin: "Tā zài xuéxiào xuéxí." },
+      { zh: "她喜欢吃米饭和苹果。", pinyin: "Tā xǐhuan chī mǐfàn hé píngguǒ." },
+      { zh: "她不喜欢喝茶。", pinyin: "Tā bù xǐhuan hē chá." },
+      { zh: "她说：\"我爱爸爸妈妈。\"", pinyin: "Tā shuō: \"Wǒ ài bàba māma.\"" }
+    ],
+    translation: "저에게는 딸이 한 명 있어요. 올해 여덟 살입니다. 학교에서 공부하고 있어요. 쌀밥과 사과 먹는 것을 좋아합니다. 차는 좋아하지 않아요. 딸은 “아빠 엄마, 사랑해요”라고 말합니다.",
+    vocab: [
+      { zh: "女儿", pinyin: "nǚ'ér", ja: "딸" },
+      { zh: "今年", pinyin: "jīnnián", ja: "올해" },
+      { zh: "岁", pinyin: "suì", ja: "~살" },
+      { zh: "学校", pinyin: "xuéxiào", ja: "학교" },
+      { zh: "学习", pinyin: "xuéxí", ja: "배우다·공부하다" },
+      { zh: "和", pinyin: "hé", ja: "~와" },
+      { zh: "爱", pinyin: "ài", ja: "사랑하다" }
+    ]
+  },
+  {
+    day: 21, hsk: 1,
+    theme: { zh: "时间", ja: "시간" },
+    title: { zh: "现在几点？", ja: "지금 몇 시?" },
+    tip: "「几 jǐ」는 10 이하의 수를 묻는 의문사(几点·几个·几岁). 「请 + 사람 + 동사」＝「사람을 초대해 ~하다 / ~해 주세요」(我请你吃饭＝제가 한턱낼게요).",
+    sentences: [
+      { zh: "现在几点？", pinyin: "Xiànzài jǐ diǎn?" },
+      { zh: "现在十二点。", pinyin: "Xiànzài shí'èr diǎn." },
+      { zh: "我饿了，我想吃饭。", pinyin: "Wǒ è le, wǒ xiǎng chī fàn." },
+      { zh: "你呢？你饿吗？", pinyin: "Nǐ ne? Nǐ è ma?" },
+      { zh: "我们一起去饭店。", pinyin: "Wǒmen yìqǐ qù fàndiàn." },
+      { zh: "我请你吃饭。", pinyin: "Wǒ qǐng nǐ chī fàn." }
+    ],
+    translation: "지금 몇 시? 지금 12시예요. 배가 고파요. 밥이 먹고 싶어요. 당신은요? 배 고프세요? 같이 식당에 가요. 제가 한턱낼게요.",
+    vocab: [
+      { zh: "现在", pinyin: "xiànzài", ja: "지금" },
+      { zh: "点", pinyin: "diǎn", ja: "~시" },
+      { zh: "饿", pinyin: "è", ja: "배가 고프다" },
+      { zh: "想", pinyin: "xiǎng", ja: "~하고 싶다" },
+      { zh: "呢", pinyin: "ne", ja: "~는?(의문 조사)" },
+      { zh: "一起", pinyin: "yìqǐ", ja: "같이" },
+      { zh: "饭店", pinyin: "fàndiàn", ja: "식당" },
+      { zh: "请", pinyin: "qǐng", ja: "초대하다·부디" }
+    ]
+  },
+  {
+    day: 22, hsk: 1,
+    theme: { zh: "学习", ja: "배움" },
+    title: { zh: "我学习汉语", ja: "중국어를 배우고 있어요" },
+    tip: "「会 huì」는 「(배워서) 할 수 있다」는 조동사. 「我会说汉语」＝「중국어를 할 수 있어요」. 타고난 능력에는 「能 néng」을 씀.",
+    sentences: [
+      { zh: "我是日本人。", pinyin: "Wǒ shì Rìběnrén." },
+      { zh: "我喜欢中国。", pinyin: "Wǒ xǐhuan Zhōngguó." },
+      { zh: "我学习汉语。", pinyin: "Wǒ xuéxí Hànyǔ." },
+      { zh: "我有一个老师，她是中国人。", pinyin: "Wǒ yǒu yí ge lǎoshī, tā shì Zhōngguórén." },
+      { zh: "她也会说日语。", pinyin: "Tā yě huì shuō Rìyǔ." },
+      { zh: "我们都很高兴。", pinyin: "Wǒmen dōu hěn gāoxìng." }
+    ],
+    translation: "저는 일본인입니다. 중국을 좋아해요. 중국어를 배우고 있어요. 선생님이 한 분 계시는데, 중국인이에요. 그분은 일본어도 할 줄 알아요. 우리 모두 매우 기쁩니다.",
+    vocab: [
+      { zh: "日本人", pinyin: "Rìběnrén", ja: "일본인" },
+      { zh: "中国", pinyin: "Zhōngguó", ja: "중국" },
+      { zh: "汉语", pinyin: "Hànyǔ", ja: "중국어" },
+      { zh: "老师", pinyin: "lǎoshī", ja: "선생님" },
+      { zh: "中国人", pinyin: "Zhōngguórén", ja: "중국인" },
+      { zh: "会", pinyin: "huì", ja: "~할 수 있다" },
+      { zh: "说", pinyin: "shuō", ja: "말하다" },
+      { zh: "日语", pinyin: "Rìyǔ", ja: "일본어" },
+      { zh: "都", pinyin: "dōu", ja: "모두" }
+    ]
+  },
+  {
+    day: 23, hsk: 1,
+    theme: { zh: "朋友", ja: "친구" },
+    title: { zh: "我的朋友", ja: "나의 친구" },
+    tip: "「동사 + 기간 + 了」＝「~한 지 ~ 기간이 됐다」(我们认识三年了＝알게 된 지 3년이 됩니다). 「了」는 변화·지속의 조사.",
+    sentences: [
+      { zh: "我有一个好朋友。", pinyin: "Wǒ yǒu yí ge hǎo péngyou." },
+      { zh: "她叫小李，是中国人。", pinyin: "Tā jiào Xiǎo Lǐ, shì Zhōngguórén." },
+      { zh: "她今年二十五岁。", pinyin: "Tā jīnnián èrshí wǔ suì." },
+      { zh: "她在北京工作。", pinyin: "Tā zài Běijīng gōngzuò." },
+      { zh: "她很漂亮，也很高兴。", pinyin: "Tā hěn piàoliang, yě hěn gāoxìng." },
+      { zh: "我们认识三年了。", pinyin: "Wǒmen rènshi sān nián le." }
+    ],
+    translation: "저에게는 친한 친구가 한 명 있어요. 그녀의 이름은 샤오리이고, 중국인입니다. 올해 스물다섯 살이에요. 베이징에서 일하고 있습니다. 매우 예쁘고 늘 밝아요. 알게 된 지 3년이 됩니다.",
+    vocab: [
+      { zh: "朋友", pinyin: "péngyou", ja: "친구" },
+      { zh: "叫", pinyin: "jiào", ja: "(이름이) ~이다" },
+      { zh: "北京", pinyin: "Běijīng", ja: "베이징" },
+      { zh: "工作", pinyin: "gōngzuò", ja: "일하다" },
+      { zh: "漂亮", pinyin: "piàoliang", ja: "예쁘다" },
+      { zh: "高兴", pinyin: "gāoxìng", ja: "밝다·기쁘다" },
+      { zh: "认识", pinyin: "rènshi", ja: "알다·알게 되다" },
+      { zh: "年", pinyin: "nián", ja: "년" }
+    ]
+  },
+  {
+    day: 24, hsk: 1,
+    theme: { zh: "出行", ja: "외출" },
+    title: { zh: "我们坐出租车", ja: "택시 타고 가요" },
+    tip: "「坐 + 교통수단」＝「~을 타다」(坐出租车·坐飞机·坐火车). 「숫자 + 分钟」＝「~분간」. 「跟 + 사람」＝「사람과」(跟妈妈＝엄마와).",
+    sentences: [
+      { zh: "今天我跟妈妈去商店。", pinyin: "Jīntiān wǒ gēn māma qù shāngdiàn." },
+      { zh: "妈妈说：\"我们坐出租车吧。\"", pinyin: "Māma shuō: \"Wǒmen zuò chūzūchē ba.\"" },
+      { zh: "出租车很快，五分钟到了。", pinyin: "Chūzūchē hěn kuài, wǔ fēnzhōng dào le." },
+      { zh: "商店很大，有很多东西。", pinyin: "Shāngdiàn hěn dà, yǒu hěn duō dōngxi." },
+      { zh: "妈妈买了米饭和苹果。", pinyin: "Māma mǎi le mǐfàn hé píngguǒ." },
+      { zh: "我们回家一起吃。", pinyin: "Wǒmen huí jiā yìqǐ chī." }
+    ],
+    translation: "오늘 엄마와 함께 가게에 갔습니다. 엄마가 “택시 타고 가자”라고 말씀하셨어요. 택시는 빨라서 5분 만에 도착했어요. 가게는 크고 여러 가지 물건이 있어요. 엄마는 쌀밥과 사과를 사셨어요. 집에 돌아와 함께 먹었습니다.",
+    vocab: [
+      { zh: "跟", pinyin: "gēn", ja: "~와" },
+      { zh: "出租车", pinyin: "chūzūchē", ja: "택시" },
+      { zh: "吧", pinyin: "ba", ja: "(제안의 조사)" },
+      { zh: "快", pinyin: "kuài", ja: "빠르다" },
+      { zh: "分钟", pinyin: "fēnzhōng", ja: "분간" },
+      { zh: "到", pinyin: "dào", ja: "도착하다" },
+      { zh: "东西", pinyin: "dōngxi", ja: "물건" },
+      { zh: "回家", pinyin: "huí jiā", ja: "집에 가다" }
+    ]
+  },
+  {
+    day: 25, hsk: 1,
+    theme: { zh: "做菜", ja: "요리" },
+    title: { zh: "我会做菜", ja: "요리할 줄 알아요" },
+    tip: "「请 + 사람 + 来 + 장소 + 동사」＝「사람을 ~에 초대해 ~하다」(请朋友来家里吃饭＝친구를 집으로 초대해 식사한다). 「会 + 동사」로 「~을 할 수 있다」.",
+    sentences: [
+      { zh: "我会做中国菜。", pinyin: "Wǒ huì zuò Zhōngguó cài." },
+      { zh: "我喜欢做饭。", pinyin: "Wǒ xǐhuan zuò fàn." },
+      { zh: "今天我请朋友来家里吃饭。", pinyin: "Jīntiān wǒ qǐng péngyou lái jiā lǐ chī fàn." },
+      { zh: "我做了米饭和菜。", pinyin: "Wǒ zuò le mǐfàn hé cài." },
+      { zh: "朋友说：\"很好吃！\"", pinyin: "Péngyou shuō: \"Hěn hǎochī!\"" },
+      { zh: "我很高兴。", pinyin: "Wǒ hěn gāoxìng." }
+    ],
+    translation: "저는 중국요리를 만들 줄 알아요. 요리하는 걸 좋아합니다. 오늘은 친구를 집에 초대해서 식사해요. 쌀밥과 반찬을 만들었어요. 친구가 “정말 맛있어!”라고 말했어요. 저는 매우 기쁩니다.",
+    vocab: [
+      { zh: "会", pinyin: "huì", ja: "~할 줄 알다" },
+      { zh: "做菜", pinyin: "zuò cài", ja: "요리하다" },
+      { zh: "中国菜", pinyin: "Zhōngguó cài", ja: "중국요리" },
+      { zh: "做饭", pinyin: "zuò fàn", ja: "밥을 짓다" },
+      { zh: "家里", pinyin: "jiā lǐ", ja: "집 안" },
+      { zh: "米饭", pinyin: "mǐfàn", ja: "쌀밥" },
+      { zh: "菜", pinyin: "cài", ja: "반찬·요리" },
+      { zh: "好吃", pinyin: "hǎochī", ja: "맛있다" }
+    ]
+  },
+  {
+    day: 3, hsk: 2,
+    theme: { zh: "日常生活", ja: "일상생활" },
+    title: { zh: "这就是我的一天", ja: "이것이 나의 하루" },
+    tip: "중국어 시간 표현은 「큰 단위 → 작은 단위」 순서(早上七点 = 아침 7시). 「然后 ránhòu」는 「그러고 나서」, 사건을 시간순으로 잇기에 편리.",
+    sentences: [
+      { zh: "我每天早上七点起床，七点半吃早饭。", pinyin: "Wǒ měi tiān zǎoshang qī diǎn qǐchuáng, qī diǎn bàn chī zǎofàn." },
+      { zh: "八点半坐地铁去公司。", pinyin: "Bā diǎn bàn zuò dìtiě qù gōngsī." },
+      { zh: "下午六点下班，回家。", pinyin: "Xiàwǔ liù diǎn xiàbān, huí jiā." },
+      { zh: "晚上跟家人一起吃饭，然后看一会儿电视。", pinyin: "Wǎnshang gēn jiārén yìqǐ chī fàn, ránhòu kàn yíhuìr diànshì." },
+      { zh: "十一点睡觉。这就是我的一天。", pinyin: "Shíyī diǎn shuìjiào. Zhè jiùshì wǒ de yì tiān." }
+    ],
+    translation: "저는 매일 아침 7시에 일어나 7시 반에 아침을 먹습니다. 8시 반에 지하철을 타고 회사에 가요. 오후 6시에 퇴근해서 집에 갑니다. 저녁에는 가족과 함께 식사하고, 그러고 나서 잠깐 텔레비전을 봅니다. 11시에 잠을 자요. 이것이 저의 하루입니다.",
+    vocab: [
+      { zh: "起床", pinyin: "qǐchuáng", ja: "일어나다" },
+      { zh: "早饭", pinyin: "zǎofàn", ja: "아침밥" },
+      { zh: "地铁", pinyin: "dìtiě", ja: "지하철" },
+      { zh: "下班", pinyin: "xiàbān", ja: "퇴근하다" },
+      { zh: "然后", pinyin: "ránhòu", ja: "그러고 나서" },
+      { zh: "一会儿", pinyin: "yíhuìr", ja: "잠시" },
+      { zh: "睡觉", pinyin: "shuìjiào", ja: "자다" }
+    ]
+  },
+  {
+    day: 4, hsk: 2,
+    theme: { zh: "饮食", ja: "음식" },
+    title: { zh: "我离不开中国菜", ja: "중국요리 없이는 못 살아요" },
+    tip: "「不太 bú tài」는 「별로 ~ 않다」의 편리한 표현. 「能 néng」은 조건·능력을 나타내는 「~할 수 있다」. 술을 마시는 양이나 몸 상태와 관련된 문맥에서 자주 사용.",
+    sentences: [
+      { zh: "我喜欢吃中国菜，特别是麻婆豆腐和饺子。", pinyin: "Wǒ xǐhuan chī Zhōngguó cài, tèbié shì mápó dòufu hé jiǎozi." },
+      { zh: "麻婆豆腐有点儿辣，但是很好吃。", pinyin: "Mápó dòufu yǒudiǎnr là, dànshì hěn hǎochī." },
+      { zh: "我也喜欢喝乌龙茶。", pinyin: "Wǒ yě xǐhuan hē wūlóng chá." },
+      { zh: "我不太能喝酒。", pinyin: "Wǒ bú tài néng hē jiǔ." },
+      { zh: "周末我常常自己做菜，请朋友来家里吃饭。", pinyin: "Zhōumò wǒ chángcháng zìjǐ zuò cài, qǐng péngyou lái jiā lǐ chī fàn." }
+    ],
+    translation: "저는 중국요리 먹는 것을 좋아하고, 특히 마파두부와 만두를 좋아합니다. 마파두부는 조금 맵지만 매우 맛있어요. 우롱차를 마시는 것도 좋아해요. 술은 별로 마시지 못해요. 주말에는 자주 직접 요리를 만들어 친구를 집에 초대해 식사합니다.",
+    vocab: [
+      { zh: "特别是", pinyin: "tèbié shì", ja: "특히" },
+      { zh: "辣", pinyin: "là", ja: "맵다" },
+      { zh: "不太", pinyin: "bú tài", ja: "별로 ~ 않다" },
+      { zh: "能", pinyin: "néng", ja: "~할 수 있다(능력·조건)" },
+      { zh: "周末", pinyin: "zhōumò", ja: "주말" },
+      { zh: "常常", pinyin: "chángcháng", ja: "자주 ~하다" },
+      { zh: "自己", pinyin: "zìjǐ", ja: "자신(이 직접)" }
+    ]
+  },
+  {
+    day: 17, hsk: 2,
+    theme: { zh: "周末", ja: "주말" },
+    title: { zh: "周末做什么", ja: "주말엔 뭘 할까" },
+    tip: "「所以 suǒyǐ」는 「그래서」로 결론을 이끔. 「因为 yīnwèi … 所以 suǒyǐ …」(~이므로 ~)의 형태로 조합하면 인과관계를 명확히 표현할 수 있음.",
+    sentences: [
+      { zh: "我每天工作很累。", pinyin: "Wǒ měi tiān gōngzuò hěn lèi." },
+      { zh: "所以周末我喜欢在家休息。", pinyin: "Suǒyǐ zhōumò wǒ xǐhuan zài jiā xiūxi." },
+      { zh: "有时候我跟朋友一起看电影。", pinyin: "Yǒu shíhou wǒ gēn péngyou yìqǐ kàn diànyǐng." },
+      { zh: "有时候我们一起吃中国菜。", pinyin: "Yǒu shíhou wǒmen yìqǐ chī Zhōngguó cài." },
+      { zh: "你周末做什么？", pinyin: "Nǐ zhōumò zuò shénme?" },
+      { zh: "我们下次一起玩，好吗？", pinyin: "Wǒmen xià cì yìqǐ wán, hǎo ma?" }
+    ],
+    translation: "저는 매일 일이 힘들기 때문에, 주말에는 집에서 쉬는 것을 좋아합니다. 가끔 친구와 함께 영화를 봐요. 가끔 같이 중국요리를 먹어요. 당신은 주말에 뭘 하세요? 다음에 함께 놀러 가요, 어때요?",
+    vocab: [
+      { zh: "累", pinyin: "lèi", ja: "피곤하다" },
+      { zh: "所以", pinyin: "suǒyǐ", ja: "그래서" },
+      { zh: "休息", pinyin: "xiūxi", ja: "쉬다" },
+      { zh: "有时候", pinyin: "yǒu shíhou", ja: "가끔" },
+      { zh: "下次", pinyin: "xià cì", ja: "다음번" },
+      { zh: "玩", pinyin: "wán", ja: "놀다" }
+    ]
+  },
+  {
+    day: 18, hsk: 2,
+    theme: { zh: "身体", ja: "몸 상태" },
+    title: { zh: "我有点不舒服", ja: "조금 컨디션이 안 좋아요" },
+    tip: "「有点儿 yǒudiǎnr + 형용사」로 「조금 ~다」. 부정적인 상태를 완곡하게 말할 때 편리(有点累·有点忙·有点饿). 「又 yòu」는 「또」, 과거의 일에 사용.",
+    sentences: [
+      { zh: "今天我有点不舒服。", pinyin: "Jīntiān wǒ yǒudiǎn bù shūfu." },
+      { zh: "头很疼，肚子也不好。", pinyin: "Tóu hěn téng, dùzi yě bù hǎo." },
+      { zh: "昨天我吃了太多东西。", pinyin: "Zuótiān wǒ chī le tài duō dōngxi." },
+      { zh: "晚上又喝了一点酒。", pinyin: "Wǎnshang yòu hē le yìdiǎn jiǔ." },
+      { zh: "所以今天早上起不来。", pinyin: "Suǒyǐ jīntiān zǎoshang qǐ bu lái." },
+      { zh: "我要好好休息。", pinyin: "Wǒ yào hǎohǎo xiūxi." }
+    ],
+    translation: "오늘은 조금 컨디션이 좋지 않습니다. 머리가 아프고, 배도 상태가 좋지 않아요. 어제 너무 많이 먹은 데다가 밤에 술도 조금 마셔 버렸어요. 그래서 오늘 아침엔 일어날 수가 없네요. 오늘은 푹 쉬려고 합니다.",
+    vocab: [
+      { zh: "有点(儿)", pinyin: "yǒudiǎn(r)", ja: "조금" },
+      { zh: "不舒服", pinyin: "bù shūfu", ja: "몸이 안 좋다" },
+      { zh: "头", pinyin: "tóu", ja: "머리" },
+      { zh: "疼", pinyin: "téng", ja: "아프다" },
+      { zh: "肚子", pinyin: "dùzi", ja: "배" },
+      { zh: "又", pinyin: "yòu", ja: "또" },
+      { zh: "酒", pinyin: "jiǔ", ja: "술" },
+      { zh: "起不来", pinyin: "qǐ bu lái", ja: "일어나지 못하다" },
+      { zh: "好好", pinyin: "hǎohǎo", ja: "푹·잘" }
+    ]
+  },
+  {
+    day: 5, hsk: 3,
+    theme: { zh: "兴趣爱好", ja: "취미" },
+    title: { zh: "我的小爱好", ja: "나의 소소한 취미" },
+    tip: "「一边A一边B」는 「A하면서 B」하는 동시 동작. 「……以后 yǐhòu」는 「~한 후에」. 동사나 명사에 바로 붙음.",
+    sentences: [
+      { zh: "我有很多爱好。", pinyin: "Wǒ yǒu hěn duō àihào." },
+      { zh: "最喜欢的是看电影，每个星期都看一两部。", pinyin: "Zuì xǐhuan de shì kàn diànyǐng, měi ge xīngqī dōu kàn yī liǎng bù." },
+      { zh: "我也喜欢听音乐，工作的时候，一边听音乐，一边看资料。", pinyin: "Wǒ yě xǐhuan tīng yīnyuè, gōngzuò de shíhou, yìbiān tīng yīnyuè, yìbiān kàn zīliào." },
+      { zh: "周末有时候去公园跑步。", pinyin: "Zhōumò yǒu shíhou qù gōngyuán pǎobù." },
+      { zh: "运动以后，我觉得心情很好，身体也很轻松。", pinyin: "Yùndòng yǐhòu, wǒ juéde xīnqíng hěn hǎo, shēntǐ yě hěn qīngsōng." }
+    ],
+    translation: "저에게는 취미가 많습니다. 가장 좋아하는 것은 영화 보기로, 매주 1~2편은 봐요. 음악 듣는 것도 좋아해서, 일할 때 음악을 들으면서 자료를 봐요. 주말에는 가끔 공원에 조깅하러 갑니다. 운동한 후에는 기분이 좋아지고, 몸도 매우 가볍게 느껴져요.",
+    vocab: [
+      { zh: "爱好", pinyin: "àihào", ja: "취미" },
+      { zh: "部", pinyin: "bù", ja: "(영화·책의 양사)" },
+      { zh: "……的时候", pinyin: "...de shíhou", ja: "~할 때" },
+      { zh: "一边A一边B", pinyin: "yìbiān A yìbiān B", ja: "A하면서 B" },
+      { zh: "有时候", pinyin: "yǒu shíhou", ja: "가끔" },
+      { zh: "跑步", pinyin: "pǎobù", ja: "조깅" },
+      { zh: "觉得", pinyin: "juéde", ja: "~라고 느끼다" },
+      { zh: "轻松", pinyin: "qīngsōng", ja: "홀가분한·편한" }
+    ]
+  },
+  {
+    day: 6, hsk: 3,
+    theme: { zh: "周末", ja: "주말" },
+    title: { zh: "慢慢的周末", ja: "느긋한 주말" },
+    tip: "「如果……就……」는 「만약 ~라면」의 가정 표현. 「让 ràng」은 「~하게 하다」, 감정을 일으키는 표현에서 자주 사용(让我觉得高兴＝나를 기쁘게 만들다).",
+    sentences: [
+      { zh: "周末我一般不工作。", pinyin: "Zhōumò wǒ yìbān bù gōngzuò." },
+      { zh: "星期六上午我去超市买菜，下午在家做家务，看一会儿书。", pinyin: "Xīngqīliù shàngwǔ wǒ qù chāoshì mǎi cài, xiàwǔ zài jiā zuò jiāwù, kàn yíhuìr shū." },
+      { zh: "星期天有时候跟朋友见面，一起吃饭，喝咖啡，聊聊天。", pinyin: "Xīngqītiān yǒu shíhou gēn péngyou jiànmiàn, yìqǐ chī fàn, hē kāfēi, liáoliao tiān." },
+      { zh: "如果天气好，我们也会去附近的公园散步。", pinyin: "Rúguǒ tiānqì hǎo, wǒmen yě huì qù fùjìn de gōngyuán sànbù." },
+      { zh: "这样的周末让我觉得很舒服。", pinyin: "Zhèyàng de zhōumò ràng wǒ juéde hěn shūfu." }
+    ],
+    translation: "주말에는 보통 일하지 않습니다. 토요일 오전에는 슈퍼마켓에 장을 보러 가고, 오후에는 집에서 집안일을 하거나 잠깐 책을 봐요. 일요일에는 가끔 친구를 만나서 같이 밥을 먹고 커피를 마시고 수다를 떨어요. 날씨가 좋으면 근처 공원에 산책도 갑니다. 이런 주말을 보내면 정말 편안하게 느껴져요.",
+    vocab: [
+      { zh: "一般", pinyin: "yìbān", ja: "보통" },
+      { zh: "超市", pinyin: "chāoshì", ja: "슈퍼마켓" },
+      { zh: "家务", pinyin: "jiāwù", ja: "집안일" },
+      { zh: "见面", pinyin: "jiànmiàn", ja: "만나다" },
+      { zh: "聊天", pinyin: "liáotiān", ja: "수다 떨다" },
+      { zh: "如果", pinyin: "rúguǒ", ja: "만약" },
+      { zh: "附近", pinyin: "fùjìn", ja: "근처" },
+      { zh: "散步", pinyin: "sànbù", ja: "산책하다" },
+      { zh: "让", pinyin: "ràng", ja: "~하게 하다" },
+      { zh: "舒服", pinyin: "shūfu", ja: "편안하다" }
+    ]
+  },
+  {
+    day: 7, hsk: 3,
+    theme: { zh: "城市", ja: "도시" },
+    title: { zh: "我爱东京", ja: "도쿄를 사랑해요" },
+    tip: "「去哪儿都……」는 「어디를 가도 ~」. 의문사 + 都/也로 「전부」의 의미가 되는 유용한 구문(什么都喜欢＝뭐든지 좋아한다).",
+    sentences: [
+      { zh: "我住在东京。", pinyin: "Wǒ zhù zài Dōngjīng." },
+      { zh: "东京是一个很大很热闹的城市，有很多人，也有很多好吃的东西。", pinyin: "Dōngjīng shì yí ge hěn dà hěn rènao de chéngshì, yǒu hěn duō rén, yě yǒu hěn duō hǎochī de dōngxi." },
+      { zh: "这里的交通很方便，去哪儿都可以坐地铁。", pinyin: "Zhèlǐ de jiāotōng hěn fāngbiàn, qù nǎr dōu kěyǐ zuò dìtiě." },
+      { zh: "我特别喜欢东京的春天，樱花开的时候，到处都是粉红色，非常漂亮。", pinyin: "Wǒ tèbié xǐhuan Dōngjīng de chūntiān, yīnghuā kāi de shíhou, dàochù dōu shì fěnhóngsè, fēicháng piàoliang." },
+      { zh: "我希望你有机会来玩。", pinyin: "Wǒ xīwàng nǐ yǒu jīhuì lái wán." }
+    ],
+    translation: "저는 도쿄에 살고 있습니다. 도쿄는 매우 크고 활기찬 도시여서 사람도 많고 맛있는 것도 많이 있어요. 이곳은 교통이 아주 편리해서, 어디를 가더라도 지하철로 갈 수 있어요. 특히 도쿄의 봄을 좋아하는데, 벚꽃이 필 때면 곳곳이 분홍빛이 되어 정말 예뻐요. 기회가 되면 꼭 놀러 오세요.",
+    vocab: [
+      { zh: "热闹", pinyin: "rènao", ja: "활기차다" },
+      { zh: "城市", pinyin: "chéngshì", ja: "도시" },
+      { zh: "交通", pinyin: "jiāotōng", ja: "교통" },
+      { zh: "方便", pinyin: "fāngbiàn", ja: "편리하다" },
+      { zh: "樱花", pinyin: "yīnghuā", ja: "벚꽃" },
+      { zh: "到处", pinyin: "dàochù", ja: "곳곳" },
+      { zh: "漂亮", pinyin: "piàoliang", ja: "예쁘다" },
+      { zh: "希望", pinyin: "xīwàng", ja: "바라다·~이길 바라다" },
+      { zh: "机会", pinyin: "jīhuì", ja: "기회" }
+    ]
+  },
+  {
+    day: 8, hsk: 3,
+    theme: { zh: "学习", ja: "배움" },
+    title: { zh: "慢慢来，不要急", ja: "조급해하지 말고 천천히" },
+    tip: "「已经……了」는 「이미 ~했다」, 변화나 완료를 강조. 「从……开始」는 「~부터 시작하다」, 「不要 bú yào」는 「~하지 마라」의 금지 표현.",
+    sentences: [
+      { zh: "我学中文已经有半年了。", pinyin: "Wǒ xué Zhōngwén yǐjīng yǒu bàn nián le." },
+      { zh: "开始的时候，发音很难，特别是声调，我常常说错。", pinyin: "Kāishǐ de shíhou, fāyīn hěn nán, tèbié shì shēngdiào, wǒ chángcháng shuōcuò." },
+      { zh: "但是每天坚持练习，慢慢就好了。", pinyin: "Dànshì měi tiān jiānchí liànxí, mànmàn jiù hǎo le." },
+      { zh: "我最喜欢的方法是看中国电影，一边看，一边记新词。", pinyin: "Wǒ zuì xǐhuan de fāngfǎ shì kàn Zhōngguó diànyǐng, yìbiān kàn, yìbiān jì xīn cí." },
+      { zh: "如果你也想学中文，我建议先从简单的句子开始，不要着急。", pinyin: "Rúguǒ nǐ yě xiǎng xué Zhōngwén, wǒ jiànyì xiān cóng jiǎndān de jùzi kāishǐ, bú yào zháojí." }
+    ],
+    translation: "중국어를 배우기 시작한 지 벌써 반년이 됐어요. 처음에는 발음이 어려웠고, 특히 성조를 자주 틀렸어요. 하지만 매일 꾸준히 연습했더니 점점 좋아졌어요. 가장 좋아하는 방법은 중국 영화를 보는 것이고, 보면서 새 단어를 외워요. 당신도 중국어를 배우고 싶다면, 먼저 쉬운 문장부터 시작하고 조급해하지 않는 것을 추천해요.",
+    vocab: [
+      { zh: "已经", pinyin: "yǐjīng", ja: "이미" },
+      { zh: "发音", pinyin: "fāyīn", ja: "발음" },
+      { zh: "声调", pinyin: "shēngdiào", ja: "성조" },
+      { zh: "坚持", pinyin: "jiānchí", ja: "꾸준히 하다" },
+      { zh: "慢慢", pinyin: "mànmàn", ja: "점점·천천히" },
+      { zh: "方法", pinyin: "fāngfǎ", ja: "방법" },
+      { zh: "建议", pinyin: "jiànyì", ja: "제안·추천하다" },
+      { zh: "简单", pinyin: "jiǎndān", ja: "간단하다" },
+      { zh: "着急", pinyin: "zháojí", ja: "조급해하다" }
+    ]
+  },
+  {
+    day: 9, hsk: 3,
+    theme: { zh: "旅行", ja: "여행" },
+    title: { zh: "北京真好玩", ja: "베이징은 정말 재미있었어요" },
+    tip: "「去了 qù le」는 「갔다」(완료의 了). 「累得不行 lèi de bù xíng」은 「너무 피곤하다」, 「형용사 + 得 + 보어」로 정도를 표현.",
+    sentences: [
+      { zh: "去年我跟朋友一起去了北京。", pinyin: "Qùnián wǒ gēn péngyou yìqǐ qù le Běijīng." },
+      { zh: "我们去了长城和故宫。", pinyin: "Wǒmen qù le Chángchéng hé Gùgōng." },
+      { zh: "长城非常长，爬上去的时候，我累得不行，但是站在上面看风景的时候，觉得一切都值得。", pinyin: "Chángchéng fēicháng cháng, pá shàngqù de shíhou, wǒ lèi de bù xíng, dànshì zhàn zài shàngmiàn kàn fēngjǐng de shíhou, juéde yíqiè dōu zhídé." },
+      { zh: "故宫也很大，里面有很多故事。", pinyin: "Gùgōng yě hěn dà, lǐmiàn yǒu hěn duō gùshi." },
+      { zh: "北京的烤鸭也很好吃，我们吃了三次！下次我还想去。", pinyin: "Běijīng de kǎoyā yě hěn hǎochī, wǒmen chī le sān cì! Xià cì wǒ hái xiǎng qù." }
+    ],
+    translation: "작년에 친구와 함께 베이징에 갔어요. 만리장성과 자금성에 갔습니다. 만리장성은 무척 길어서 올라갈 때는 녹초가 됐지만, 위에서 풍경을 바라봤을 때는 모든 게 그만한 가치가 있다고 느꼈어요. 자금성도 매우 크고 역사가 많이 담겨 있어요. 베이징 오리구이도 맛있어서 세 번이나 먹었어요! 다음에도 또 가고 싶어요.",
+    vocab: [
+      { zh: "去年", pinyin: "qùnián", ja: "작년" },
+      { zh: "长城", pinyin: "Chángchéng", ja: "만리장성" },
+      { zh: "故宫", pinyin: "Gùgōng", ja: "자금성" },
+      { zh: "爬", pinyin: "pá", ja: "오르다" },
+      { zh: "风景", pinyin: "fēngjǐng", ja: "풍경" },
+      { zh: "一切", pinyin: "yíqiè", ja: "모든 것" },
+      { zh: "值得", pinyin: "zhídé", ja: "가치가 있다" },
+      { zh: "烤鸭", pinyin: "kǎoyā", ja: "오리구이" },
+      { zh: "次", pinyin: "cì", ja: "회" }
+    ]
+  },
+  {
+    day: 10, hsk: 3,
+    theme: { zh: "健康", ja: "건강" },
+    title: { zh: "健康最重要", ja: "건강이 가장 중요해요" },
+    tip: "「比 bǐ」는 비교의 「~보다」. 「A 比 B + 형용사」 형태(我比他高＝그보다 키가 크다). 「多了 duō le」를 끝에 붙이면 「훨씬 ~」하다고 강조할 수 있음.",
+    sentences: [
+      { zh: "身体健康是最重要的。", pinyin: "Shēntǐ jiànkāng shì zuì zhòngyào de." },
+      { zh: "如果身体不好，工作和生活都会受影响。", pinyin: "Rúguǒ shēntǐ bù hǎo, gōngzuò hé shēnghuó dōu huì shòu yǐngxiǎng." },
+      { zh: "所以我每天早睡早起，注意吃饭。", pinyin: "Suǒyǐ wǒ měi tiān zǎo shuì zǎo qǐ, zhùyì chī fàn." },
+      { zh: "早饭一定要吃，多吃蔬菜和水果，少吃油的东西。", pinyin: "Zǎofàn yídìng yào chī, duō chī shūcài hé shuǐguǒ, shǎo chī yóu de dōngxi." },
+      { zh: "我每个星期跑步三次，一次三十分钟。运动以后，心情和身体都比以前好多了。", pinyin: "Wǒ měi ge xīngqī pǎobù sān cì, yí cì sānshí fēnzhōng. Yùndòng yǐhòu, xīnqíng hé shēntǐ dōu bǐ yǐqián hǎo duō le." }
+    ],
+    translation: "몸의 건강이 가장 중요합니다. 몸 상태가 좋지 않으면 일도 생활도 영향을 받아요. 그래서 저는 매일 일찍 자고 일찍 일어나고, 식사에도 신경 씁니다. 아침은 반드시 먹고, 채소와 과일을 많이 먹고, 기름진 것은 적게 먹어요. 매주 조깅을 세 번, 한 번에 30분 합니다. 운동 후에는 기분도 몸도 예전보다 훨씬 좋아졌어요.",
+    vocab: [
+      { zh: "健康", pinyin: "jiànkāng", ja: "건강" },
+      { zh: "重要", pinyin: "zhòngyào", ja: "중요하다" },
+      { zh: "受影响", pinyin: "shòu yǐngxiǎng", ja: "영향을 받다" },
+      { zh: "注意", pinyin: "zhùyì", ja: "신경 쓰다" },
+      { zh: "一定", pinyin: "yídìng", ja: "반드시" },
+      { zh: "蔬菜", pinyin: "shūcài", ja: "채소" },
+      { zh: "水果", pinyin: "shuǐguǒ", ja: "과일" },
+      { zh: "比", pinyin: "bǐ", ja: "~보다" },
+      { zh: "以前", pinyin: "yǐqián", ja: "예전" }
+    ]
+  },
+  {
+    day: 11, hsk: 3,
+    theme: { zh: "购物", ja: "쇼핑" },
+    title: { zh: "网上购物的好与坏", ja: "온라인 쇼핑의 장단점" },
+    tip: "「又A又B yòu A yòu B」는 「A이기도 하고 B이기도 하다」, 특징의 병렬에 편리. 「点一点 diǎn yi diǎn」처럼 동사를 중첩하면 「잠깐 ~하다」의 가벼운 의미가 됨.",
+    sentences: [
+      { zh: "现在很多人喜欢在网上买东西。", pinyin: "Xiànzài hěn duō rén xǐhuan zài wǎngshàng mǎi dōngxi." },
+      { zh: "我也是这样，因为又方便又便宜。", pinyin: "Wǒ yě shì zhèyàng, yīnwèi yòu fāngbiàn yòu piányi." },
+      { zh: "我常常买衣服、书和零食。", pinyin: "Wǒ chángcháng mǎi yīfu, shū hé língshí." },
+      { zh: "手机上点一点，第二天就到了。", pinyin: "Shǒujī shàng diǎn yi diǎn, dì-èr tiān jiù dào le." },
+      { zh: "但是网上的东西有时候和图片不一样，所以买的时候要看清楚说明和评价。", pinyin: "Dànshì wǎngshàng de dōngxi yǒu shíhou hé túpiàn bù yíyàng, suǒyǐ mǎi de shíhou yào kàn qīngchu shuōmíng hé píngjià." },
+      { zh: "如果不满意，可以退货。", pinyin: "Rúguǒ bù mǎnyì, kěyǐ tuìhuò." }
+    ],
+    translation: "요즘 많은 사람이 인터넷에서 쇼핑하는 것을 좋아합니다. 저도 그렇고, 편리하고 저렴하기 때문이에요. 자주 옷, 책, 간식을 사요. 스마트폰으로 몇 번 누르면 다음 날 도착해요. 다만 인터넷의 상품은 사진과 다를 때가 있어서, 살 때는 설명과 리뷰를 잘 봐야 해요. 마음에 들지 않으면 반품할 수 있어요.",
+    vocab: [
+      { zh: "网上", pinyin: "wǎngshàng", ja: "인터넷상" },
+      { zh: "因为", pinyin: "yīnwèi", ja: "~이기 때문" },
+      { zh: "又A又B", pinyin: "yòu A yòu B", ja: "A이기도 B이기도 하다" },
+      { zh: "零食", pinyin: "língshí", ja: "간식" },
+      { zh: "图片", pinyin: "túpiàn", ja: "사진·이미지" },
+      { zh: "清楚", pinyin: "qīngchu", ja: "또렷이" },
+      { zh: "评价", pinyin: "píngjià", ja: "리뷰·평가" },
+      { zh: "满意", pinyin: "mǎnyì", ja: "만족하다" },
+      { zh: "退货", pinyin: "tuìhuò", ja: "반품하다" }
+    ]
+  },
+  {
+    day: 12, hsk: 3,
+    theme: { zh: "朋友", ja: "친구" },
+    title: { zh: "有这样的朋友真好", ja: "이런 친구가 있어서 정말 좋아요" },
+    tip: "「给 gěi」는 「~에게」 상대를 나타내는 전치사(给我打电话＝나에게 전화하다). 「让 ràng」+ 사람 + 동사로 「사람을 ~하게 하다」(让我笑＝나를 웃게 하다).",
+    sentences: [
+      { zh: "我有一个最好的朋友，叫小张。", pinyin: "Wǒ yǒu yí ge zuì hǎo de péngyou, jiào Xiǎo Zhāng." },
+      { zh: "我们认识已经十年了。", pinyin: "Wǒmen rènshi yǐjīng shí nián le." },
+      { zh: "他是一个开朗的人，常常给我讲笑话，让我笑个不停。", pinyin: "Tā shì yí ge kāilǎng de rén, chángcháng gěi wǒ jiǎng xiàohua, ràng wǒ xiào ge bù tíng." },
+      { zh: "心情不好的时候，我会给他打电话。", pinyin: "Xīnqíng bù hǎo de shíhou, wǒ huì gěi tā dǎ diànhuà." },
+      { zh: "他总是耐心地听我说话，给我一些建议。", pinyin: "Tā zǒngshì nàixīn de tīng wǒ shuō huà, gěi wǒ yìxiē jiànyì." },
+      { zh: "有这样的朋友，我觉得自己很幸运。", pinyin: "Yǒu zhèyàng de péngyou, wǒ juéde zìjǐ hěn xìngyùn." }
+    ],
+    translation: "저에게는 가장 친한 친구가 있는데, 샤오장이라고 해요. 알게 된 지 벌써 10년이 됐어요. 그는 밝은 사람이라 자주 농담을 해서 저를 웃겨요. 기분이 좋지 않을 때는 그에게 전화해요. 그는 늘 인내심 있게 제 이야기를 들어 주고 조언을 해 줘요. 이런 친구가 있어서 저는 정말 운이 좋다고 생각합니다.",
+    vocab: [
+      { zh: "认识", pinyin: "rènshi", ja: "알게 되다" },
+      { zh: "开朗", pinyin: "kāilǎng", ja: "밝다·쾌활하다" },
+      { zh: "讲笑话", pinyin: "jiǎng xiàohua", ja: "농담하다" },
+      { zh: "打电话", pinyin: "dǎ diànhuà", ja: "전화하다" },
+      { zh: "总是", pinyin: "zǒngshì", ja: "늘" },
+      { zh: "耐心", pinyin: "nàixīn", ja: "인내심" },
+      { zh: "建议", pinyin: "jiànyì", ja: "조언" },
+      { zh: "幸运", pinyin: "xìngyùn", ja: "운이 좋다" }
+    ]
+  },
+  {
+    day: 13, hsk: 4,
+    theme: { zh: "季节", ja: "계절" },
+    title: { zh: "四季的美", ja: "사계절의 아름다움" },
+    tip: "「虽然……但是……」는 「~지만 ~」의 역접. 「不A不B」는 「A도 B도 아니다」(不冷不热＝춥지도 덥지도 않다), 딱 좋은 상태를 표현.",
+    sentences: [
+      { zh: "日本有四个季节，每个季节都很美。", pinyin: "Rìběn yǒu sì ge jìjié, měi ge jìjié dōu hěn měi." },
+      { zh: "春天樱花开，粉粉的非常浪漫。", pinyin: "Chūntiān yīnghuā kāi, fěnfěn de fēicháng làngmàn." },
+      { zh: "夏天虽然热，但是有海，有烟火大会。", pinyin: "Xiàtiān suīrán rè, dànshì yǒu hǎi, yǒu yānhuǒ dàhuì." },
+      { zh: "秋天最舒服，不冷不热，树叶变成红色和黄色。", pinyin: "Qiūtiān zuì shūfu, bù lěng bú rè, shùyè biàn chéng hóngsè hé huángsè." },
+      { zh: "冬天会下雪，山上可以滑雪。", pinyin: "Dōngtiān huì xià xuě, shān shàng kěyǐ huáxuě." },
+      { zh: "四个季节里，我最喜欢秋天。", pinyin: "Sì ge jìjié lǐ, wǒ zuì xǐhuan qiūtiān." }
+    ],
+    translation: "일본에는 사계절이 있고, 어느 계절이나 아름답습니다. 봄에는 벚꽃이 피어 분홍빛으로 물들어서 매우 낭만적이에요. 여름은 덥지만 바다도 있고 불꽃놀이 축제도 있어요. 가을은 가장 쾌적해서 춥지도 덥지도 않고 나뭇잎이 붉고 노랗게 물듭니다. 겨울에는 눈이 내리고 산에서 스키를 탈 수 있어요. 사계절 중에서 저는 가을을 가장 좋아합니다.",
+    vocab: [
+      { zh: "季节", pinyin: "jìjié", ja: "계절" },
+      { zh: "浪漫", pinyin: "làngmàn", ja: "낭만적" },
+      { zh: "虽然……但是", pinyin: "suīrán...dànshì", ja: "~이지만 ~" },
+      { zh: "烟火大会", pinyin: "yānhuǒ dàhuì", ja: "불꽃놀이 축제" },
+      { zh: "树叶", pinyin: "shùyè", ja: "나뭇잎" },
+      { zh: "变成", pinyin: "biàn chéng", ja: "~으로 변하다" },
+      { zh: "下雪", pinyin: "xià xuě", ja: "눈이 내리다" },
+      { zh: "滑雪", pinyin: "huáxuě", ja: "스키를 타다" }
+    ]
+  },
+  {
+    day: 14, hsk: 4,
+    theme: { zh: "目标与梦想", ja: "목표와 꿈" },
+    title: { zh: "一步一步走", ja: "한 걸음씩 나아가요" },
+    tip: "「只要……就……」는 「~만 하면」. 「对……重要」는 「~에게 중요하다」. 「一点儿一点儿地」처럼 형용사를 중첩하고 「地 de」를 붙이면 부사가 됨.",
+    sentences: [
+      { zh: "每个人都有自己的梦想。", pinyin: "Měi ge rén dōu yǒu zìjǐ de mèngxiǎng." },
+      { zh: "我的梦想不大，但是对我很重要。", pinyin: "Wǒ de mèngxiǎng bú dà, dànshì duì wǒ hěn zhòngyào." },
+      { zh: "我想用中文跟中国朋友自由地聊天。", pinyin: "Wǒ xiǎng yòng Zhōngwén gēn Zhōngguó péngyou zìyóu de liáotiān." },
+      { zh: "这不是一天能完成的事，需要每天一点儿一点儿地努力。", pinyin: "Zhè bú shì yì tiān néng wánchéng de shì, xūyào měi tiān yìdiǎnr yìdiǎnr de nǔlì." },
+      { zh: "可能有时候会累，会想放弃，但是只要坚持，一年以后的我，一定比现在的我厉害。", pinyin: "Kěnéng yǒu shíhou huì lèi, huì xiǎng fàngqì, dànshì zhǐyào jiānchí, yì nián yǐhòu de wǒ, yídìng bǐ xiànzài de wǒ lìhai." }
+    ],
+    translation: "누구에게나 자신의 꿈이 있어요. 제 꿈은 크지 않지만 저에게는 매우 소중합니다. 저는 중국어를 사용해 중국 친구들과 자유롭게 이야기하고 싶어요. 이것은 하루 만에 이룰 수 있는 일이 아니라, 매일 조금씩 노력해야 해요. 가끔은 지쳐서 포기하고 싶어질 수도 있지만, 꾸준히만 한다면 1년 후의 저는 지금의 저보다 분명 더 멋질 거예요.",
+    vocab: [
+      { zh: "梦想", pinyin: "mèngxiǎng", ja: "꿈" },
+      { zh: "对……重要", pinyin: "duì...zhòngyào", ja: "~에게 중요하다" },
+      { zh: "用", pinyin: "yòng", ja: "~을 사용해" },
+      { zh: "自由", pinyin: "zìyóu", ja: "자유롭게" },
+      { zh: "完成", pinyin: "wánchéng", ja: "이루다·완성하다" },
+      { zh: "需要", pinyin: "xūyào", ja: "필요하다" },
+      { zh: "努力", pinyin: "nǔlì", ja: "노력하다" },
+      { zh: "放弃", pinyin: "fàngqì", ja: "포기하다" },
+      { zh: "只要……就", pinyin: "zhǐyào...jiù", ja: "~만 하면" },
+      { zh: "厉害", pinyin: "lìhai", ja: "대단하다·실력이 늘다" }
+    ]
+  },
+  {
+    day: 19, hsk: 4,
+    theme: { zh: "人生观", ja: "인생관" },
+    title: { zh: "时间的意义", ja: "시간의 의미" },
+    tip: "「就算……也……」는 「설령 ~할지라도」의 양보 표현. 「更 gèng」은 「더욱」, 비교를 강조(A 比 B 更 + 형용사). 「过得 + 형용사」로 시간이 지나는 방식을 묘사.",
+    sentences: [
+      { zh: "人的一生不长，时间过得很快。", pinyin: "Rén de yìshēng bù cháng, shíjiān guò de hěn kuài." },
+      { zh: "有时候我会问自己：到底什么是最重要的？", pinyin: "Yǒu shíhou wǒ huì wèn zìjǐ: dàodǐ shénme shì zuì zhòngyào de?" },
+      { zh: "钱当然重要，但是钱不能买到所有东西。", pinyin: "Qián dāngrán zhòngyào, dànshì qián bù néng mǎi dào suǒyǒu dōngxi." },
+      { zh: "家人和朋友比钱更重要。", pinyin: "Jiārén hé péngyou bǐ qián gèng zhòngyào." },
+      { zh: "我希望多花一点时间陪伴他们。", pinyin: "Wǒ xīwàng duō huā yìdiǎn shíjiān péibàn tāmen." },
+      { zh: "就算工作再忙，也不能忘记这一点。", pinyin: "Jiùsuàn gōngzuò zài máng, yě bù néng wàngjì zhè yì diǎn." }
+    ],
+    translation: "인생은 그리 길지 않고, 시간은 순식간에 지나갑니다. 가끔 스스로에게 묻습니다. 도대체 무엇이 가장 중요한가, 하고. 돈은 물론 중요하지만, 돈으로 살 수 없는 것도 있습니다. 가족과 친구는 돈보다 훨씬 더 소중합니다. 그들과 함께 보내는 시간을 더 많이 만들고 싶어요. 일이 아무리 바빠도 이 점을 잊어서는 안 됩니다.",
+    vocab: [
+      { zh: "一生", pinyin: "yìshēng", ja: "일생" },
+      { zh: "过得", pinyin: "guò de", ja: "(시간이) 지나다" },
+      { zh: "到底", pinyin: "dàodǐ", ja: "도대체" },
+      { zh: "当然", pinyin: "dāngrán", ja: "물론" },
+      { zh: "所有", pinyin: "suǒyǒu", ja: "모든" },
+      { zh: "更", pinyin: "gèng", ja: "더욱" },
+      { zh: "花", pinyin: "huā", ja: "(시간을) 쓰다" },
+      { zh: "陪伴", pinyin: "péibàn", ja: "함께 있다" },
+      { zh: "就算……也", pinyin: "jiùsuàn...yě", ja: "설령 ~라도" },
+      { zh: "忘记", pinyin: "wàngjì", ja: "잊다" }
+    ]
+  }
+];
+
+const HSK_INFO = {
+  1: { label: "입문", target: 10, desc: "150단어 · 기본 인사와 자기소개" },
+  2: { label: "초급", target: 15, desc: "300단어 · 일상생활" },
+  3: { label: "중급", target: 25, desc: "600단어 · 복문·접속사" },
+  4: { label: "중상급", target: 30, desc: "1200단어 · 추상적 주제" }
+};
+
+// Compute levelNum (sequence within HSK level) and globalIndex for each lesson
+LESSONS.forEach((l, i) => {
+  l.globalIndex = i;
+  const sameLevelBefore = LESSONS.slice(0, i).filter(x => x.hsk === l.hsk).length;
+  l.levelNum = sameLevelBefore + 1;
+});
+
+const STORAGE_KEY = 'chinese-diary-progress-v5';
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+  catch { return {}; }
+}
+function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+let progress = loadProgress();
+let currentIdx = progress._currentIdx ?? 0;  // 0-based array index
+if (currentIdx < 0 || currentIdx >= LESSONS.length) currentIdx = 0;
+let showPinyin = progress._showPinyin !== false;
+let showTranslation = progress._showTranslation !== false;
+let gridMode = progress._gridMode || 'tianzi';
+let theme = progress._theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+let writeMode = progress._writeMode || 'typing';  // 'canvas' or 'typing'
+let typingSubMode = progress._typingSubMode || 'original';  // 'original' | 'dictation' | 'translation'
+let traditional = progress._traditional === true;  // false: 簡体字 / true: 繁体字
+
+// Simplified→Traditional helper. Display-only; underlying data stays simplified.
+function tx(s) {
+  if (!s) return s;
+  if (traditional && window.S2T) return window.S2T.convert(s);
+  return s;
+}
+
+function currentLesson() {
+  return LESSONS[currentIdx];
+}
+function lessonKey(lesson) {
+  return `lesson_${lesson.hsk}_${lesson.levelNum}`;
+}
+function getLessonProgress(lesson) {
+  return progress[lessonKey(lesson)] || { read: 0, written: 0, completed: false };
+}
+function setLessonProgress(lesson, data) {
+  progress[lessonKey(lesson)] = data;
+  saveProgress(progress);
+}
+
+// ===== Speech =====
+function pickZhVoice() {
+  const voices = speechSynthesis.getVoices();
+  return voices.find(v => v.lang === 'zh-CN')
+      || voices.find(v => v.lang && v.lang.toLowerCase().startsWith('zh'));
+}
+
+let playingSentenceEl = null;
+let activePlayBtn = null;
+
+function setActiveBtn(btn) {
+  if (activePlayBtn) activePlayBtn.classList.remove('playing');
+  activePlayBtn = btn;
+  if (btn) btn.classList.add('playing');
+}
+
+function speakSentence(text, rate, sentenceEl) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  u.rate = rate;
+  const v = pickZhVoice();
+  if (v) u.voice = v;
+  if (sentenceEl) {
+    if (playingSentenceEl) playingSentenceEl.classList.remove('playing');
+    sentenceEl.classList.add('playing');
+    playingSentenceEl = sentenceEl;
+  }
+  u.onend = () => {
+    if (sentenceEl) sentenceEl.classList.remove('playing');
+    if (playingSentenceEl === sentenceEl) playingSentenceEl = null;
+  };
+  speechSynthesis.speak(u);
+}
+
+// 听写 (dictation) playback supports pause/resume: stopping captures the
+// current sentence index, and the next play resumes from that point.
+let dictationResumeIdx = null;
+let dictationActiveIdx = null;
+let dictationToken = null;
+
+function speakAll(sentenceEls, rate, btn) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  // Cancel any in-flight dictation loop so onend doesn't fight this loop.
+  dictationActiveIdx = null;
+  dictationToken = null;
+  setActiveBtn(btn);
+  let i = 0;
+  const speakNext = () => {
+    if (i >= sentenceEls.length) {
+      setActiveBtn(null);
+      if (playingSentenceEl) { playingSentenceEl.classList.remove('playing'); playingSentenceEl = null; }
+      return;
+    }
+    const el = sentenceEls[i];
+    const u = new SpeechSynthesisUtterance(el.dataset.zh);
+    u.lang = 'zh-CN'; u.rate = rate;
+    const v = pickZhVoice(); if (v) u.voice = v;
+    if (playingSentenceEl) playingSentenceEl.classList.remove('playing');
+    el.classList.add('playing'); playingSentenceEl = el;
+    u.onend = () => { i++; speakNext(); };
+    speechSynthesis.speak(u);
+  };
+  speakNext();
+}
+
+function playDictation(rate) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  setActiveBtn(null);
+  if (playingSentenceEl) { playingSentenceEl.classList.remove('playing'); playingSentenceEl = null; }
+
+  const sentenceEls = document.querySelectorAll('.sentence');
+  if (sentenceEls.length === 0) return;
+
+  let startIdx = (dictationResumeIdx !== null && dictationResumeIdx < sentenceEls.length)
+    ? dictationResumeIdx
+    : 0;
+  dictationResumeIdx = null;
+
+  let i = startIdx;
+  dictationActiveIdx = i;
+  const myToken = Symbol('dictation');
+  dictationToken = myToken;
+
+  const speakNext = () => {
+    if (dictationToken !== myToken) return;
+    if (i >= sentenceEls.length) {
+      dictationActiveIdx = null;
+      if (playingSentenceEl) { playingSentenceEl.classList.remove('playing'); playingSentenceEl = null; }
+      return;
+    }
+    dictationActiveIdx = i;
+    const el = sentenceEls[i];
+    const u = new SpeechSynthesisUtterance(el.dataset.zh);
+    u.lang = 'zh-CN'; u.rate = rate;
+    const v = pickZhVoice(); if (v) u.voice = v;
+    if (playingSentenceEl) playingSentenceEl.classList.remove('playing');
+    el.classList.add('playing'); playingSentenceEl = el;
+    u.onend = () => {
+      if (dictationToken !== myToken) return;
+      i++;
+      speakNext();
+    };
+    speechSynthesis.speak(u);
+  };
+  speakNext();
+}
+
+function stopAudio() {
+  // If a dictation loop is mid-flight, remember where it was so the next
+  // dictation-play resumes there.
+  if (dictationActiveIdx !== null) {
+    dictationResumeIdx = dictationActiveIdx;
+    dictationActiveIdx = null;
+  }
+  dictationToken = null;
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  setActiveBtn(null);
+  if (playingSentenceEl) { playingSentenceEl.classList.remove('playing'); playingSentenceEl = null; }
+}
+
+function checkVoiceSupport() {
+  const has = !!pickZhVoice();
+  document.getElementById('voice-warning').style.display = has ? 'none' : 'block';
+}
+if (typeof speechSynthesis !== 'undefined') {
+  speechSynthesis.onvoiceschanged = checkVoiceSupport;
+  setTimeout(checkVoiceSupport, 300);
+}
+
+// ===== Tone =====
+const TONE_MAP = {
+  'ā':1,'á':2,'ǎ':3,'à':4,'ē':1,'é':2,'ě':3,'è':4,
+  'ī':1,'í':2,'ǐ':3,'ì':4,'ō':1,'ó':2,'ǒ':3,'ò':4,
+  'ū':1,'ú':2,'ǔ':3,'ù':4,'ǖ':1,'ǘ':2,'ǚ':3,'ǜ':4
+};
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function colorizePinyin(text) {
+  const tokens = text.match(/[A-Za-zĀ-žɑāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]+|[^A-Za-zĀ-žɑāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]+/g) || [];
+  return tokens.map(tok => {
+    if (!/[A-Za-zɑāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]/.test(tok)) return escapeHtml(tok);
+    let tone = 0;
+    for (const ch of tok) { if (TONE_MAP[ch]) { tone = TONE_MAP[ch]; break; } }
+    return `<span class="t${tone}">${escapeHtml(tok)}</span>`;
+  }).join('');
+}
+
+// ===== Render =====
+function renderProgress() {
+  const completed = LESSONS.filter(l => getLessonProgress(l).completed).length;
+  document.getElementById('progress-now').textContent = completed;
+  document.getElementById('progress-of').textContent = `/ ${LESSONS.length}`;
+  const dotsEl = document.getElementById('progress-dots');
+  dotsEl.innerHTML = '';
+  LESSONS.forEach((l, idx) => {
+    const i = document.createElement('i');
+    if (getLessonProgress(l).completed) i.classList.add('done');
+    else if (idx === currentIdx) i.classList.add('current');
+    i.title = `HSK ${l.hsk} · ${String(l.levelNum).padStart(2,'0')} — ${l.theme.ja}`;
+    dotsEl.appendChild(i);
+  });
+}
+
+function renderDayJump() {
+  const sel = document.getElementById('day-jump');
+  sel.innerHTML = '';
+  // Group by HSK level
+  [1, 2, 3, 4].forEach(hsk => {
+    const lessons = LESSONS.filter(l => l.hsk === hsk);
+    if (lessons.length === 0) return;
+    const og = document.createElement('optgroup');
+    og.label = `HSK ${hsk} · ${HSK_INFO[hsk].label}（${lessons.length} / ${HSK_INFO[hsk].target}）`;
+    lessons.forEach(l => {
+      const opt = document.createElement('option');
+      opt.value = l.globalIndex;
+      const check = getLessonProgress(l).completed ? '✓ ' : '   ';
+      opt.textContent = `${check}HSK ${l.hsk} · ${String(l.levelNum).padStart(2,'0')}  —  ${l.theme.ja}`;
+      og.appendChild(opt);
+    });
+    sel.appendChild(og);
+  });
+  sel.value = currentIdx;
+}
+
+function renderDay(animate = false) {
+  const lesson = currentLesson();
+  if (!lesson) return;
+  const card = document.getElementById('lesson-card');
+  if (animate) {
+    card.classList.add('changing');
+    setTimeout(() => { doRender(lesson); card.classList.remove('changing'); }, 200);
+  } else {
+    doRender(lesson);
+  }
+}
+
+function doRender(lesson) {
+  document.getElementById('day-num').textContent = String(lesson.levelNum).padStart(2, '0');
+  const avail = LESSONS.filter(l => l.hsk === lesson.hsk).length;
+  document.getElementById('day-total').textContent = avail;
+  document.getElementById('hsk-text').textContent = `HSK ${lesson.hsk} · ${HSK_INFO[lesson.hsk].label}`;
+  document.getElementById('theme-zh').textContent = lesson.theme.zh;
+  document.getElementById('theme-ja').textContent = lesson.theme.ja;
+  document.getElementById('lesson-title').textContent = lesson.title.zh;
+  document.getElementById('lesson-subtitle').textContent = lesson.title.ja;
+  document.getElementById('tip-text').textContent = lesson.tip;
+
+  const passage = document.getElementById('passage');
+  passage.innerHTML = '';
+
+  // 한국어 번역을 문말 기호로 나누고, 각 중국어 문장의 문말 기호 수에 맞춰 할당
+  const jaChunks = (lesson.translation || '')
+    .split(/(?<=[。！？!?])/)
+    .map(s => s.trim())
+    .filter(Boolean);
+  let jaIdx = 0;
+
+  lesson.sentences.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'sentence';
+    row.dataset.zh = s.zh;
+    const punctCount = Math.max(1, (s.zh.match(/[。！？!?]/g) || []).length);
+    const jaForRow = jaChunks.slice(jaIdx, jaIdx + punctCount).join('');
+    jaIdx += punctCount;
+    row.innerHTML = `
+      <p class="zh"></p>
+      <p class="pinyin">${colorizePinyin(s.pinyin)}</p>
+      <p class="sentence-ja"></p>
+      <div class="audio-pills">
+        <button class="audio-pill" data-rate="0.95">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          보통
+        </button>
+        <button class="audio-pill" data-rate="0.55">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          느리게
+        </button>
+      </div>
+    `;
+    row.querySelector('.zh').textContent = tx(s.zh);
+    const jaEl = row.querySelector('.sentence-ja');
+    jaEl.textContent = jaForRow;
+    if (!jaForRow) jaEl.style.display = 'none';
+    row.addEventListener('click', e => {
+      if (e.target.closest('.audio-pill')) return;
+      speakSentence(s.zh, 0.95, row);
+    });
+    row.querySelectorAll('.audio-pill').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        speakSentence(s.zh, parseFloat(btn.dataset.rate), row);
+      });
+    });
+    passage.appendChild(row);
+  });
+
+  const vlist = document.getElementById('vocab-list');
+  vlist.innerHTML = '';
+  lesson.vocab.forEach(v => {
+    const zh = document.createElement('div'); zh.className = 'vocab-zh'; zh.textContent = tx(v.zh);
+    const py = document.createElement('div'); py.className = 'vocab-py'; py.innerHTML = colorizePinyin(v.pinyin);
+    const ja = document.createElement('div'); ja.className = 'vocab-ja'; ja.textContent = v.ja;
+    vlist.appendChild(zh); vlist.appendChild(py); vlist.appendChild(ja);
+  });
+
+  const dp = getLessonProgress(lesson);
+  renderDots('read-dots', 5, dp.read, 'read');
+  renderDots('write-dots', 3, dp.written, 'written');
+
+  const btn = document.getElementById('complete-btn');
+  const btnText = document.getElementById('complete-text');
+  if (dp.completed) { btn.classList.add('completed'); btnText.textContent = '완료됨 (클릭해서 취소)'; }
+  else { btn.classList.remove('completed'); btnText.textContent = '오늘의 레슨을 완료하기'; }
+
+  document.getElementById('prev-day').disabled = currentIdx === 0;
+  document.getElementById('next-day').disabled = currentIdx === LESSONS.length - 1;
+  document.getElementById('day-jump').value = currentIdx;
+
+  renderProgress();
+}
+
+function renderDots(containerId, total, current, type) {
+  const c = document.getElementById(containerId);
+  c.innerHTML = '';
+  for (let i = 1; i <= total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i <= current ? ' filled' : '');
+    d.title = `${type === 'read' ? '音読' : '書写'} ${i}回目`;
+    d.addEventListener('click', () => {
+      const lesson = currentLesson();
+      const dp = getLessonProgress(lesson);
+      dp[type] = (dp[type] === i) ? i - 1 : i;
+      setLessonProgress(lesson, dp);
+      renderDay();
+    });
+    c.appendChild(d);
+  }
+}
+
+function applyTheme() {
+  document.body.classList.toggle('dark', theme === 'dark');
+}
+function toggleTheme() {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  progress._theme = theme;
+  saveProgress(progress);
+  applyTheme();
+}
+
+function applyPinyinVisibility() {
+  document.body.classList.toggle('hide-pinyin', !showPinyin);
+  document.getElementById('pinyin-toggle').classList.toggle('active', showPinyin);
+}
+
+function applyTranslationVisibility() {
+  document.body.classList.toggle('hide-translation', !showTranslation);
+  document.getElementById('translation-toggle').classList.toggle('active', showTranslation);
+}
+
+function goToIdx(n, animate = true) {
+  if (n < 0 || n >= LESSONS.length) return;
+  stopAudio();
+  dictationResumeIdx = null;
+  currentIdx = n;
+  progress._currentIdx = currentIdx;
+  saveProgress(progress);
+  renderDay(animate);
+  renderDayJump();
+  clearCanvas();
+  clearTyping();
+}
+
+document.getElementById('prev-day').addEventListener('click', () => goToIdx(currentIdx - 1));
+document.getElementById('next-day').addEventListener('click', () => goToIdx(currentIdx + 1));
+document.getElementById('day-jump').addEventListener('change', e => goToIdx(parseInt(e.target.value)));
+
+document.getElementById('complete-btn').addEventListener('click', () => {
+  const lesson = currentLesson();
+  const dp = getLessonProgress(lesson);
+  const wasCompleted = dp.completed;
+  dp.completed = !dp.completed;
+  // 완료로 전환했을 때만, 다음 실행 시 다음 레슨부터 시작되도록 저장 (마지막 레슨 제외)
+  if (!wasCompleted && currentIdx < LESSONS.length - 1) {
+    progress._currentIdx = currentIdx + 1;
+  }
+  setLessonProgress(lesson, dp);
+  renderDay();
+  renderDayJump();
+});
+
+document.getElementById('reset-btn').addEventListener('click', () => {
+  if (confirm('진행 상황을 모두 리셋하시겠습니까? (되돌릴 수 없습니다)')) {
+    localStorage.removeItem(STORAGE_KEY);
+    progress = {}; currentIdx = 0; showPinyin = true; showTranslation = true; gridMode = 'tianzi'; traditional = false;
+    applyPinyinVisibility(); applyTranslationVisibility(); applyScriptToggle(); applyGridMode(gridMode);
+    renderDay(); renderDayJump();
+  }
+});
+
+document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+document.getElementById('pinyin-toggle').addEventListener('click', () => {
+  showPinyin = !showPinyin;
+  progress._showPinyin = showPinyin;
+  saveProgress(progress);
+  applyPinyinVisibility();
+});
+
+document.getElementById('translation-toggle').addEventListener('click', () => {
+  showTranslation = !showTranslation;
+  progress._showTranslation = showTranslation;
+  saveProgress(progress);
+  applyTranslationVisibility();
+});
+
+function applyScriptToggle() {
+  const simp = document.getElementById('script-simp');
+  const trad = document.getElementById('script-trad');
+  simp.classList.toggle('active', !traditional);
+  simp.setAttribute('aria-selected', String(!traditional));
+  trad.classList.toggle('active', traditional);
+  trad.setAttribute('aria-selected', String(traditional));
+}
+function setScript(t) {
+  if (traditional === t) return;
+  traditional = t;
+  progress._traditional = traditional;
+  saveProgress(progress);
+  applyScriptToggle();
+  // Re-render anything that displays Chinese chars.
+  renderDay();
+  updateReferenceText();
+  updateCharCount();
+  // Re-render diff if it's currently shown.
+  if (diffOutput && !diffOutput.hidden && typingInput && typingInput.value.trim()) {
+    renderDiff();
+  }
+}
+document.getElementById('script-simp').addEventListener('click', () => setScript(false));
+document.getElementById('script-trad').addEventListener('click', () => setScript(true));
+
+document.getElementById('play-all-normal').addEventListener('click', e => {
+  speakAll(document.querySelectorAll('.sentence'), 0.95, e.currentTarget);
+});
+document.getElementById('play-all-slow').addEventListener('click', e => {
+  speakAll(document.querySelectorAll('.sentence'), 0.55, e.currentTarget);
+});
+document.getElementById('stop-audio').addEventListener('click', stopAudio);
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  switch (e.key) {
+    case 'ArrowLeft':  e.preventDefault(); goToIdx(currentIdx - 1); break;
+    case 'ArrowRight': e.preventDefault(); goToIdx(currentIdx + 1); break;
+    case ' ': e.preventDefault();
+      speakAll(document.querySelectorAll('.sentence'), 0.95, document.getElementById('play-all-normal'));
+      break;
+    case 'Escape': e.preventDefault(); stopAudio(); break;
+    case 'p': case 'P': e.preventDefault(); document.getElementById('pinyin-toggle').click(); break;
+    case 'd': case 'D': e.preventDefault(); toggleTheme(); break;
+  }
+});
+
+// ===== Canvas =====
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const writingArea = document.getElementById('writing-area');
+let drawing = false;
+let strokes = [];
+let currentStroke = [];
+
+function fitCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = writingArea.getBoundingClientRect();
+  const targetHeight = Math.max(480, rect.height);
+  canvas.width = rect.width * dpr;
+  canvas.height = targetHeight * dpr;
+  canvas.style.width = rect.width + 'px';
+  canvas.style.height = targetHeight + 'px';
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
+  redraw();
+}
+
+function redraw() {
+  const dpr = window.devicePixelRatio || 1;
+  ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+  const color = document.body.classList.contains('dark') ? '#f1ebde' : '#1a1611';
+  ctx.strokeStyle = color;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = parseInt(document.getElementById('brush-size').value);
+  strokes.forEach(stroke => {
+    if (stroke.length < 2) return;
+    ctx.beginPath();
+    ctx.moveTo(stroke[0].x, stroke[0].y);
+    for (let i = 1; i < stroke.length; i++) ctx.lineTo(stroke[i].x, stroke[i].y);
+    ctx.stroke();
+  });
+}
+
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  const cx = e.touches ? e.touches[0].clientX : e.clientX;
+  const cy = e.touches ? e.touches[0].clientY : e.clientY;
+  return { x: cx - rect.left, y: cy - rect.top };
+}
+
+function drawSegment(prev, cur) {
+  const color = document.body.classList.contains('dark') ? '#f1ebde' : '#1a1611';
+  ctx.strokeStyle = color;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = parseInt(document.getElementById('brush-size').value);
+  ctx.beginPath();
+  ctx.moveTo(prev.x, prev.y);
+  ctx.lineTo(cur.x, cur.y);
+  ctx.stroke();
+}
+
+function startStroke(e) { drawing = true; currentStroke = [getPos(e)]; }
+function moveStroke(e) {
+  if (!drawing) return;
+  const pos = getPos(e);
+  const prev = currentStroke[currentStroke.length - 1];
+  currentStroke.push(pos);
+  drawSegment(prev, pos);
+}
+function endStroke() {
+  if (drawing) {
+    if (currentStroke.length > 1) strokes.push(currentStroke);
+    drawing = false;
+  }
+}
+
+canvas.addEventListener('mousedown', startStroke);
+canvas.addEventListener('mousemove', moveStroke);
+canvas.addEventListener('mouseup', endStroke);
+canvas.addEventListener('mouseleave', endStroke);
+canvas.addEventListener('touchstart', e => { e.preventDefault(); startStroke(e); });
+canvas.addEventListener('touchmove', e => { e.preventDefault(); moveStroke(e); });
+canvas.addEventListener('touchend', e => { e.preventDefault(); endStroke(); });
+
+document.getElementById('clear-canvas').addEventListener('click', clearCanvas);
+document.getElementById('undo-canvas').addEventListener('click', () => { strokes.pop(); redraw(); });
+function clearCanvas() { strokes = []; redraw(); }
+
+function applyGridMode(mode) {
+  writingArea.classList.remove('tianzi', 'grid', 'lined', 'blank');
+  writingArea.classList.add(mode);
+  document.querySelectorAll('.grid-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.mode === mode);
+  });
+}
+document.querySelectorAll('.grid-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    gridMode = t.dataset.mode;
+    progress._gridMode = gridMode;
+    saveProgress(progress);
+    applyGridMode(gridMode);
+  });
+});
+
+// ===== Write mode (canvas / typing) =====
+function applyWriteMode(mode) {
+  document.getElementById('canvas-pane').hidden = (mode !== 'canvas');
+  document.getElementById('typing-pane').hidden = (mode !== 'typing');
+  document.querySelectorAll('.mode-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.mode === mode);
+  });
+  if (mode === 'canvas') {
+    requestAnimationFrame(fitCanvas);
+  } else {
+    updateReferenceText();
+    updateCharCount();
+  }
+}
+document.querySelectorAll('.mode-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    writeMode = t.dataset.mode;
+    progress._writeMode = writeMode;
+    saveProgress(progress);
+    applyWriteMode(writeMode);
+  });
+});
+
+// ===== Typing =====
+const typingInput = document.getElementById('typing-input');
+const charCount = document.getElementById('char-count');
+const diffOutput = document.getElementById('diff-output');
+
+function getLessonText() {
+  const lesson = currentLesson();
+  if (!lesson) return '';
+  return lesson.sentences.map(s => tx(s.zh)).join('\n');
+}
+
+function updateReferenceText() {
+  const lesson = currentLesson();
+  if (!lesson) return;
+  const refEl = document.getElementById('reference-text');
+  const summary = document.getElementById('reference-summary');
+  refEl.innerHTML = '';
+  if (typingSubMode === 'translation') {
+    // 한국어 번역을 문말 기호(。！？)로 나눠 원문과 같이 한 문장씩 줄바꿈으로 표시
+    const parts = (lesson.translation || '')
+      .split(/(?<=[。！？])/)
+      .map(s => s.trim())
+      .filter(Boolean);
+    parts.forEach(s => {
+      const p = document.createElement('p');
+      p.textContent = s;
+      p.style.margin = '0 0 4px';
+      refEl.appendChild(p);
+    });
+    if (summary) summary.textContent = '한국어 번역 표시';
+  } else {
+    lesson.sentences.forEach(s => {
+      const p = document.createElement('p');
+      p.textContent = tx(s.zh);
+      p.style.margin = '0 0 4px';
+      refEl.appendChild(p);
+    });
+    if (summary) summary.textContent = '참고할 원문 표시';
+  }
+}
+
+function applyTypingSubMode(mode) {
+  typingSubMode = mode;
+  const refBlock = document.getElementById('reference-block');
+  const dictCard = document.getElementById('dictation-card');
+  const hint = document.getElementById('typing-hint');
+  const input = document.getElementById('typing-input');
+  document.querySelectorAll('#typing-submode-tabs .grid-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.submode === mode);
+  });
+  if (mode === 'dictation') {
+    refBlock.hidden = true;
+    dictCard.hidden = false;
+    hint.hidden = false;
+    hint.textContent = '아래 버튼으로 듣고 받아써 봅시다. 원문과 번역은 표시되어 있지 않습니다.';
+    input.placeholder = '들은 문장을 적어 보세요…';
+  } else if (mode === 'translation') {
+    refBlock.hidden = false;
+    dictCard.hidden = true;
+    hint.hidden = true;
+    hint.textContent = '';
+    input.placeholder = '번역을 보고 중국어로 적어 보세요…';
+  } else {
+    refBlock.hidden = false;
+    dictCard.hidden = true;
+    hint.hidden = true;
+    hint.textContent = '';
+    input.placeholder = '여기에 베껴 써 보세요…';
+  }
+  updateReferenceText();
+}
+
+document.querySelectorAll('#typing-submode-tabs .grid-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    const m = t.dataset.submode;
+    progress._typingSubMode = m;
+    saveProgress(progress);
+    applyTypingSubMode(m);
+  });
+});
+
+document.getElementById('dictation-play-normal').addEventListener('click', () => {
+  playDictation(0.95);
+});
+document.getElementById('dictation-play-slow').addEventListener('click', () => {
+  playDictation(0.55);
+});
+document.getElementById('dictation-stop').addEventListener('click', stopAudio);
+
+const PUNCT_RE = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/;
+const PUNCT_RE_G = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/g;
+
+function updateCharCount() {
+  const typed = typingInput.value;
+  const original = getLessonText();
+  const typedCount = [...typed].filter(c => !PUNCT_RE.test(c)).length;
+  const originalCount = [...original].filter(c => !PUNCT_RE.test(c)).length;
+  charCount.textContent = `${typedCount} / ${originalCount} 文字`;
+  charCount.classList.toggle('complete', typedCount >= originalCount && typedCount > 0);
+}
+
+function clearTyping() {
+  if (typingInput) {
+    typingInput.value = '';
+    updateReferenceText();
+    updateCharCount();
+    diffOutput.hidden = true;
+    diffOutput.innerHTML = '';
+  }
+}
+
+function computeDiff(typed, original) {
+  // Strip whitespace/punctuation for comparison, but use LCS alignment so
+  // a single dropped char doesn't cascade into "everything after is wrong".
+  const t = [...typed.replace(PUNCT_RE_G, '')];
+  const o = [...original.replace(PUNCT_RE_G, '')];
+  const n = t.length, m = o.length;
+
+  if (n === 0 && m === 0) {
+    return { ops: [], match: 0, wrong: 0, missing: 0, extra: 0, total: 0 };
+  }
+
+  const dp = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+  for (let i = 1; i <= n; i++) {
+    for (let j = 1; j <= m; j++) {
+      if (t[i-1] === o[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+      else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+    }
+  }
+
+  const ops = [];
+  let i = n, j = m;
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && t[i-1] === o[j-1]) {
+      ops.push({ type: 'match', char: t[i-1], oi: j-1 });
+      i--; j--;
+    } else if (j > 0 && (i === 0 || dp[i][j-1] >= dp[i-1][j])) {
+      ops.push({ type: 'missing', char: o[j-1], oi: j-1 });
+      j--;
+    } else {
+      ops.push({ type: 'extra', char: t[i-1] });
+      i--;
+    }
+  }
+  ops.reverse();
+
+  // Pair adjacent missing+extra into a single "wrong" substitution.
+  const merged = [];
+  for (let k = 0; k < ops.length; k++) {
+    const a = ops[k], b = ops[k+1];
+    if (a.type === 'missing' && b && b.type === 'extra') {
+      merged.push({ type: 'wrong', char: b.char, expected: a.char, oi: a.oi });
+      k++;
+    } else if (a.type === 'extra' && b && b.type === 'missing') {
+      merged.push({ type: 'wrong', char: a.char, expected: b.char, oi: b.oi });
+      k++;
+    } else {
+      merged.push(a);
+    }
+  }
+
+  let match = 0, wrong = 0, missing = 0, extra = 0;
+  for (const op of merged) {
+    if (op.type === 'match') match++;
+    else if (op.type === 'wrong') wrong++;
+    else if (op.type === 'missing') missing++;
+    else if (op.type === 'extra') extra++;
+  }
+  return { ops: merged, match, wrong, missing, extra, total: m };
+}
+
+function splitOriginalSentences(original) {
+  // Split keeping the trailing punctuation with each sentence.
+  const sentences = [];
+  let cur = '';
+  for (const c of original) {
+    cur += c;
+    if (/[。！？!?]/.test(c)) {
+      sentences.push(cur);
+      cur = '';
+    }
+  }
+  if (cur.trim()) sentences.push(cur);
+  return sentences;
+}
+
+function renderDiff() {
+  const typed = typingInput.value;
+  const original = getLessonText();
+  if (!typed.trim()) {
+    diffOutput.hidden = false;
+    diffOutput.innerHTML = '<span class="diff-label">비교 결과</span><p style="color:var(--ink-3);font-size:13px;font-style:italic;">타이핑 영역에 문장을 입력한 뒤 비교하세요.</p>';
+    return;
+  }
+  const { ops, match, wrong, missing, extra, total } = computeDiff(typed, original);
+
+  // Split original into sentences; bucket ops by which sentence each op belongs to.
+  const sentences = splitOriginalSentences(original);
+  const sentenceLens = sentences.map(s => [...s.replace(PUNCT_RE_G, '')].length);
+  const cumLens = [];
+  { let acc = 0; for (const l of sentenceLens) { acc += l; cumLens.push(acc); } }
+
+  const buckets = sentences.map(() => []);
+  let lastBucket = 0;
+  for (const op of ops) {
+    let b;
+    if (op.type === 'match' || op.type === 'wrong' || op.type === 'missing') {
+      b = cumLens.findIndex(c => op.oi < c);
+      if (b === -1) b = sentences.length - 1;
+      lastBucket = b;
+    } else {
+      // 'extra' has no original index — attach to the bucket of the surrounding chars.
+      b = lastBucket;
+    }
+    buckets[b].push(op);
+  }
+
+  const linesHtml = sentences.map((origLine, idx) => {
+    const bucket = buckets[idx];
+    const hasErrors = bucket.length === 0 || bucket.some(op => op.type !== 'match');
+    const typedHtml = bucket.length === 0
+      ? '<span class="diff-empty">（未入力）</span>'
+      : bucket.map(op => {
+          if (op.type === 'match') return `<span class="diff-match">${escapeHtml(op.char)}</span>`;
+          if (op.type === 'wrong') return `<span class="diff-wrong"><span class="diff-typed-char">${escapeHtml(op.char)}</span><span class="diff-expect-char">${escapeHtml(op.expected)}</span></span>`;
+          if (op.type === 'missing') return `<span class="diff-missing">${escapeHtml(op.char)}</span>`;
+          if (op.type === 'extra') return `<span class="diff-extra">${escapeHtml(op.char)}</span>`;
+          return '';
+        }).join('');
+    const badge = hasErrors ? '<span class="diff-line-status err">확인 필요</span>' : '<span class="diff-line-status ok">✓ 정답</span>';
+    return `
+      <div class="diff-line ${hasErrors ? 'has-error' : 'is-ok'}">
+        <div class="diff-line-head"><span class="diff-line-label">第${idx + 1}文</span>${badge}</div>
+        <div class="diff-line-orig"><span class="diff-row-label">原文</span>${escapeHtml(origLine)}</div>
+        <div class="diff-line-typed"><span class="diff-row-label">入力</span><span class="diff-row-body">${typedHtml}</span></div>
+      </div>
+    `;
+  }).join('');
+
+  const accuracy = total > 0 ? Math.round((match / total) * 100) : 0;
+  diffOutput.hidden = false;
+  diffOutput.innerHTML = `
+    <span class="diff-label">비교 결과 · 정답률 ${accuracy}%</span>
+    <div class="diff-lines">${linesHtml}</div>
+    <div class="diff-summary">
+      <span>정답 <strong>${match}</strong></span>
+      <span>誤字 <strong>${wrong}</strong></span>
+      <span>누락 <strong>${missing}</strong></span>
+      <span>여분 <strong>${extra}</strong></span>
+    </div>
+  `;
+}
+
+if (typingInput) {
+  typingInput.addEventListener('input', updateCharCount);
+  document.getElementById('compare-btn').addEventListener('click', renderDiff);
+  document.getElementById('clear-typing').addEventListener('click', () => {
+    if (typingInput.value && !confirm('입력 내용을 지우시겠습니까?')) return;
+    clearTyping();
+  });
+}
+
+if ('ontouchstart' in window) {
+  document.body.classList.add('touch');
+}
+
+window.addEventListener('resize', fitCanvas);
+
+applyTheme();
+applyPinyinVisibility();
+applyTranslationVisibility();
+applyScriptToggle();
+applyGridMode(gridMode);
+applyWriteMode(writeMode);
+applyTypingSubMode(typingSubMode);
+renderDayJump();
+renderDay();
+updateReferenceText();
+updateCharCount();
+fitCanvas();
+</script>
+</body>
+</html>
