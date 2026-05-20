@@ -721,7 +721,7 @@
       requests: [{
         writing_guide: { writing_area_width: LOGICAL, writing_area_height: LOGICAL },
         pre_context: '',
-        max_num_results: 12,
+        max_num_results: 20,
         max_completions: 0,
         ink,
         language: 'zh_CN'
@@ -742,7 +742,11 @@
       const json = JSON.parse(cleaned);
       if (json[0] !== 'SUCCESS') throw new Error('API returned ' + json[0]);
       const candidates = (json[1] && json[1][0] && json[1][0][1]) || [];
-      renderCandidates(candidates);
+      // Keep only single CJK Hanzi candidates (drop multi-char predictions
+      // like "你是", and non-Chinese results like "/", "ㄧ", "～").
+      const HANZI = /^[㐀-䶿一-鿿豈-﫿]$/;
+      const filtered = candidates.filter(c => c.length === 1 && HANZI.test(c)).slice(0, 12);
+      renderCandidates(filtered);
     } catch (err) {
       if (seq !== recogSeq) return;
       statusEl.textContent = 'うまく取れませんでした。電波が悪いか、Googleの認識サーバーに繋がらないみたいです。少し待ってもう一度。';
