@@ -450,7 +450,9 @@
       <button type="button" data-act="marker">🖍 マーカー</button>
     `;
     document.body.appendChild(selToolbar);
+    // mouse / touch どちらでも tap した瞬間に selection を維持
     selToolbar.addEventListener("mousedown", (e) => e.preventDefault());
+    selToolbar.addEventListener("touchstart", (e) => e.preventDefault(), { passive: false });
     selToolbar.addEventListener("click", (e) => {
       const act = e.target.closest("button")?.dataset.act;
       if (act) handleSelectionAction(act);
@@ -463,8 +465,16 @@
     selToolbar.classList.add("visible");
     const tbW = selToolbar.offsetWidth;
     const tbH = selToolbar.offsetHeight;
-    let top = window.scrollY + rect.top - tbH - 8;
-    if (top < window.scrollY + 4) top = window.scrollY + rect.bottom + 8;
+    // モバイルでは iOS のネイティブ選択メニュー（上に出る）と被らないよう
+    // 選択範囲のやや下に置く。デスクトップは従来通り上が空いてれば上に。
+    const isTouch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    let top;
+    if (isTouch) {
+      top = window.scrollY + rect.bottom + 12;
+    } else {
+      top = window.scrollY + rect.top - tbH - 8;
+      if (top < window.scrollY + 4) top = window.scrollY + rect.bottom + 8;
+    }
     let left = window.scrollX + rect.left + rect.width / 2 - tbW / 2;
     left = Math.max(8, Math.min(left, window.scrollX + document.documentElement.clientWidth - tbW - 8));
     selToolbar.style.top = top + "px";
@@ -473,12 +483,18 @@
   function hideSelToolbar() { selToolbar?.classList.remove("visible"); }
 
   function handleSelectionAction(act) {
+    // 1) 生のセレクションを優先 / 2) 直近のキャッシュをフォールバック（タップで selection が消えるモバイル対策）
+    let text = "";
+    let anchor = null;
     const sel = window.getSelection();
-    if (!sel || !sel.rangeCount) { hideSelToolbar(); return; }
-    const text = sel.toString().trim();
+    if (sel && sel.rangeCount && !sel.isCollapsed && sel.toString().trim()) {
+      text = sel.toString().trim();
+      anchor = findAnchorElement(sel.getRangeAt(0).commonAncestorContainer);
+    } else if (lastSelection && lastSelection.text) {
+      text = lastSelection.text;
+      anchor = lastSelection.anchor;
+    }
     if (!text) { hideSelToolbar(); return; }
-    const range = sel.getRangeAt(0);
-    const anchor = findAnchorElement(range.commonAncestorContainer);
     const clip = {
       kind: "selection",
       tool: getToolId(),
@@ -498,7 +514,8 @@
       applyMarkerToElement(anchor, text, saved.id);
     }
     flashFab();
-    sel.removeAllRanges();
+    try { sel && sel.removeAllRanges(); } catch (e) {}
+    lastSelection = null;
     hideSelToolbar();
   }
 
@@ -574,6 +591,9 @@
   }
 
   /* ---------- Selection event flow ---------- */
+  // タップ後に native selection が解除されても押せるよう、最後の選択を保持
+  let lastSelection = null;
+
   function checkSelection() {
     const sel = window.getSelection();
     if (!sel || sel.isCollapsed) { hideSelToolbar(); return; }
@@ -590,6 +610,7 @@
     const anchor = findAnchorElement(range.commonAncestorContainer);
     const rect = range.getBoundingClientRect();
     if (rect.width < 1 && rect.height < 1) { hideSelToolbar(); return; }
+    lastSelection = { text, range: range.cloneRange(), anchor };
     showSelToolbar(rect, !!anchor);
   }
 
@@ -613,11 +634,23 @@
 
     document.addEventListener("mouseup", () => setTimeout(checkSelection, 30));
     document.addEventListener("keyup", (e) => { if (e.shiftKey || e.key === "Shift") setTimeout(checkSelection, 30); });
+    // モバイル: 指離した時 + 選択ハンドルでの調整時に確認
+    document.addEventListener("touchend", () => setTimeout(checkSelection, 80), { passive: true });
+    let selChangeTimer = null;
+    document.addEventListener("selectionchange", () => {
+      clearTimeout(selChangeTimer);
+      selChangeTimer = setTimeout(checkSelection, 220);
+    });
     document.addEventListener("mousedown", (e) => {
       if (selToolbar && selToolbar.contains(e.target)) return;
       if (e.target.closest("#clips-drawer, #clips-fab, .clip-mark-btn")) return;
       hideSelToolbar();
     });
+    document.addEventListener("touchstart", (e) => {
+      if (selToolbar && selToolbar.contains(e.target)) return;
+      if (e.target.closest && e.target.closest("#clips-drawer, #clips-fab, .clip-mark-btn")) return;
+      // タップ開始時にすぐ隠すと選択直後でも消えるので、selectionchange に任せる
+    }, { passive: true });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") { hideSelToolbar(); closeDrawer(); }
     });
