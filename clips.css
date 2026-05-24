@@ -272,24 +272,33 @@
   display: none;
   background: var(--ink, #1a1611);
   color: #fff;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 4px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.22);
   gap: 2px;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 .clips-sel-toolbar.visible { display: inline-flex; }
 .clips-sel-toolbar button {
   background: transparent;
   color: #fff;
   border: none;
-  padding: 6px 10px;
-  font-size: 12px;
-  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 13px;
+  border-radius: 6px;
   cursor: pointer;
   font-family: var(--font-ui, system-ui, sans-serif);
   white-space: nowrap;
+  min-height: 36px;
 }
-.clips-sel-toolbar button:hover { background: rgba(255,255,255,0.12); }
+.clips-sel-toolbar button:hover,
+.clips-sel-toolbar button:active { background: rgba(255,255,255,0.16); }
+@media (max-width: 480px) {
+  .clips-sel-toolbar button { padding: 10px 14px; font-size: 14px; min-height: 40px; }
+}
 
 /* ---------- Per-element clip button ---------- */
 .clip-target { position: relative; }
