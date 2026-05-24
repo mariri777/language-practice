@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>你好！중국어 아웃풋 연습</title>
+  <title>Daily 중국어 · 중국어 작문 드릴</title>
   <link rel="icon" type="image/svg+xml" href="favicon-zh.svg" />
   <link rel="apple-touch-icon" href="icons/favicon-zh-180.png" />
   <link rel="manifest" href="chinese-practice-ko.webmanifest" />
@@ -11,7 +11,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="你好！" />
+  <meta name="apple-mobile-web-app-title" content="Daily 중국어" />
   <script src="./s2t.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
@@ -689,6 +689,8 @@
       .btn { padding: 10px 16px; font-size: 12px; }
     }
   </style>
+<link rel="stylesheet" href="clips.css?v=6">
+<script src="clips.js?v=6" defer></script>
 </head>
 <body>
   <!-- 장식 레이어 (클릭 통과) -->
@@ -711,8 +713,8 @@
     <header class="header">
       <span class="header-eyebrow">Chinese Output Trainer</span>
       <h1 id="home-link" role="link" tabindex="0" title="홈으로 돌아가기">
-        Daily <span class="accent">중국어</span> Talk
-        <span class="zh-title">你好！每天一句中文输出</span>
+        Daily <span class="accent">중국어</span>
+        <span class="zh-title">중국어 작문 드릴</span>
       </h1>
     </header>
 
@@ -2436,20 +2438,24 @@
       showView("intro");
     }
 
-    function startPractice() {
+    function startPractice(forceSentIdx) {
       renderHeader();
       showView("practice");
-      // 진행 중 저장이 해당 코스용이면 그 문장부터 재개
       const ip = state.inProgress;
-      if (ip && ip.courseId === state.currentCourseId
+      let targetIdx = (typeof forceSentIdx === "number") ? forceSentIdx : null;
+      if (targetIdx == null
+          && ip && ip.courseId === state.currentCourseId
           && !masteredList(state.currentCourseId).includes(ip.sentIdx)) {
+        targetIdx = ip.sentIdx;
+      }
+      if (targetIdx != null) {
         const course = getCourse(state.currentCourseId);
-        if (course && course.sentences[ip.sentIdx]) {
-          currentSent = course.sentences[ip.sentIdx];
-          currentSentIdx = ip.sentIdx;
+        if (course && course.sentences[targetIdx]) {
+          currentSent = course.sentences[targetIdx];
+          currentSentIdx = targetIdx;
           checked = false;
           elQuestion.textContent = currentSent.ja;
-          elInput.value = ip.input || "";
+          elInput.value = (ip && ip.sentIdx === targetIdx ? (ip.input || "") : "");
           elInput.disabled = false;
           elCheckBtn.disabled = false;
           elInput.focus();
@@ -2707,6 +2713,8 @@
       const yourAnsHTML = (user && !isCorrect)
         ? `<div class="your-answer"><span style="color:var(--ink-mute);font-size:11px;">내 답안：</span><br>${cmp.diff || user}</div>` : "";
 
+      elResult.dataset.courseId = state.currentCourseId;
+      elResult.dataset.sentIdx = currentSentIdx;
       elResult.innerHTML = `
         <div class="result">
           ${verdictHTML}
@@ -2970,7 +2978,18 @@
     // ========================================================================
     renderStats();
     renderHome();
-    showView("home");
+
+    (function handleClipDeepLink() {
+      const m = location.hash.match(/^#c=(\d+)(?:&s=(\d+))?/);
+      if (!m) { showView("home"); return; }
+      const cid = parseInt(m[1], 10);
+      const sid = m[2] != null ? parseInt(m[2], 10) : null;
+      if (!COURSES[cid]) { showView("home"); return; }
+      state.currentCourseId = cid;
+      saveState();
+      const validSid = (sid != null && COURSES[cid].sentences[sid]) ? sid : undefined;
+      startPractice(validSid);
+    })();
   </script>
 </body>
 </html>

@@ -1,0 +1,388 @@
+/* ============================================================
+   Clips — 全ツール共通のクリップ／マーカー機能
+   ============================================================ */
+
+/* ---------- FAB (画面右下に常駐) ---------- */
+.clips-fab {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9000;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong, #cdc1a3);
+  background: var(--bg-elevated, #fffaf0);
+  color: var(--accent, #984a2e);
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 180ms cubic-bezier(0.2,0,0.2,1), box-shadow 180ms;
+}
+.clips-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.16), 0 4px 8px rgba(0,0,0,0.10);
+}
+.clips-fab svg { width: 22px; height: 22px; }
+.clips-fab.flash { animation: clipFabPulse 600ms ease-out; }
+@keyframes clipFabPulse {
+  0%   { transform: scale(1); box-shadow: 0 0 0 0 var(--accent-glow, rgba(152,74,46,0.4)); }
+  60%  { transform: scale(1.12); box-shadow: 0 0 0 14px transparent; }
+  100% { transform: scale(1); }
+}
+.clips-fab-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: var(--accent, #984a2e);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* ---------- Drawer ---------- */
+.clips-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 9100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms cubic-bezier(0.2,0,0.2,1);
+}
+.clips-overlay.open { opacity: 1; pointer-events: auto; }
+
+.clips-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(420px, 100vw);
+  background: var(--bg-card, #fffaf0);
+  color: var(--ink, #1a1611);
+  border-left: 1px solid var(--border, #e0d6bd);
+  z-index: 9200;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 280ms cubic-bezier(0.2,0,0.2,1);
+  box-shadow: -8px 0 30px rgba(0,0,0,0.10);
+  font-family: var(--font-ui, system-ui, sans-serif);
+}
+.clips-drawer.open { transform: translateX(0); }
+
+.clips-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--divider, #e8e0c8);
+}
+.clips-drawer-head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.clips-drawer-count {
+  font-size: 12px;
+  color: var(--ink-3, #82786b);
+  font-weight: 400;
+  margin-left: 4px;
+}
+.clips-drawer-actions { display: inline-flex; gap: 4px; }
+.clips-drawer-actions button {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-3, #82786b);
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms, color 150ms, border-color 150ms;
+}
+.clips-drawer-actions button:hover {
+  background: var(--bg-subtle, #f5efde);
+  color: var(--ink, #1a1611);
+  border-color: var(--border, #e0d6bd);
+}
+
+.clips-drawer-search {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--divider, #e8e0c8);
+}
+.clips-drawer-search input[type="search"] {
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border, #e0d6bd);
+  background: var(--bg, #fffaf0);
+  color: var(--ink, #1a1611);
+  font-family: inherit;
+  font-size: 12.5px;
+}
+.clips-drawer-search input[type="search"]:focus {
+  outline: none;
+  border-color: var(--accent, #984a2e);
+}
+.clips-drawer-search select {
+  padding: 7px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border, #e0d6bd);
+  background: var(--bg, #fffaf0);
+  color: var(--ink-2, #4a4239);
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.clips-drawer-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.clips-empty {
+  padding: 36px 18px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--ink-3, #82786b);
+  line-height: 1.6;
+}
+
+.clip-card {
+  background: var(--bg, #fffaf0);
+  border: 1px solid var(--border, #e0d6bd);
+  border-radius: 10px;
+  padding: 10px 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.clip-card-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  color: var(--ink-3, #82786b);
+  letter-spacing: 0.04em;
+  flex-wrap: wrap;
+}
+.clip-kind {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  background: var(--accent-soft, #f1e1d7);
+  color: var(--accent, #984a2e);
+  letter-spacing: 0.08em;
+}
+.clip-kind.kind-grammar { background: rgba(46, 130, 76, 0.12); color: #2d8a57; }
+.clip-kind.kind-tip     { background: rgba(201, 134, 36, 0.14); color: #b27a18; }
+.clip-kind.kind-selection { background: rgba(217, 184, 0, 0.20); color: #8a6b00; }
+.clip-kind.kind-answer  { background: rgba(47, 123, 209, 0.14); color: #2f7bd1; }
+.clip-source { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.clip-date { font-size: 10px; color: var(--ink-4, #b3a78f); }
+
+.clip-card-body { display: flex; flex-direction: column; gap: 3px; }
+.clip-main {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink, #1a1611);
+  font-family: var(--font-zh, sans-serif);
+  letter-spacing: 0.02em;
+  word-break: break-word;
+}
+.clip-pinyin {
+  font-size: 12px;
+  color: var(--ink-3, #82786b);
+  font-style: italic;
+  word-break: break-word;
+}
+.clip-trans {
+  font-size: 12.5px;
+  color: var(--ink-2, #4a4239);
+  line-height: 1.5;
+  padding-left: 8px;
+  border-left: 2px solid var(--divider, #e8e0c8);
+  word-break: break-word;
+}
+.clip-text {
+  font-size: 13.5px;
+  color: var(--ink, #1a1611);
+  line-height: 1.55;
+  word-break: break-word;
+  background: rgba(255, 230, 0, 0.18);
+  border-radius: 3px;
+  padding: 2px 4px;
+  align-self: flex-start;
+}
+.clip-note {
+  font-size: 11.5px;
+  color: var(--ink-3, #82786b);
+  font-style: italic;
+}
+
+.clip-card-foot {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--divider, #e8e0c8);
+}
+.clip-act {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border, #e0d6bd);
+  background: transparent;
+  color: var(--ink-2, #4a4239);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 140ms, border-color 140ms, color 140ms;
+}
+.clip-act:hover { border-color: var(--ink-3, #82786b); color: var(--ink, #1a1611); }
+.clip-act.danger:hover { border-color: #c0594a; color: #c0594a; background: rgba(192,89,74,0.06); }
+
+/* ---------- Selection floating toolbar ---------- */
+.clips-sel-toolbar {
+  position: absolute;
+  z-index: 9300;
+  display: none;
+  background: var(--ink, #1a1611);
+  color: #fff;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+  gap: 2px;
+}
+.clips-sel-toolbar.visible { display: inline-flex; }
+.clips-sel-toolbar button {
+  background: transparent;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--font-ui, system-ui, sans-serif);
+  white-space: nowrap;
+}
+.clips-sel-toolbar button:hover { background: rgba(255,255,255,0.12); }
+
+/* ---------- Per-element clip button ---------- */
+.clip-target { position: relative; }
+.clip-mark-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-4, #b3a78f);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 160ms, color 160ms, background 160ms, border-color 160ms, transform 160ms;
+  z-index: 5;
+}
+.clip-target:hover > .clip-mark-btn,
+.clip-target:focus-within > .clip-mark-btn,
+.clip-mark-btn:focus-visible {
+  opacity: 1;
+}
+.clip-mark-btn:hover {
+  color: var(--accent, #984a2e);
+  background: var(--bg-elevated, #fff);
+  border-color: var(--border, #e0d6bd);
+  transform: rotate(-10deg);
+}
+.clip-mark-btn svg { width: 14px; height: 14px; }
+@media (hover: none) {
+  .clip-mark-btn { opacity: 0.55; }
+}
+
+/* Some containers should keep button visible at left (text-block style) */
+.grammar-block.clip-target > .clip-mark-btn,
+.tip.clip-target > .clip-mark-btn {
+  top: 8px;
+  right: 8px;
+}
+.sentence.clip-target > .clip-mark-btn {
+  top: 8px;
+  right: 8px;
+}
+.word-item.clip-target > .clip-mark-btn,
+.vocab-zh.clip-target > .clip-mark-btn,
+.vocab-py.clip-target > .clip-mark-btn,
+.vocab-ja.clip-target > .clip-mark-btn {
+  top: 2px;
+  right: 2px;
+  width: 22px;
+  height: 22px;
+}
+.word-item.clip-target > .clip-mark-btn svg,
+.vocab-zh.clip-target > .clip-mark-btn svg,
+.vocab-py.clip-target > .clip-mark-btn svg,
+.vocab-ja.clip-target > .clip-mark-btn svg { width: 12px; height: 12px; }
+
+/* Flash after clip */
+.clip-flash {
+  animation: clipFlash 700ms ease-out;
+}
+@keyframes clipFlash {
+  0%   { box-shadow: 0 0 0 0 var(--accent-soft, rgba(152,74,46,0.30)); }
+  60%  { box-shadow: 0 0 0 8px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* ---------- Marker (永続ハイライト) ---------- */
+mark.clip-marker {
+  background: linear-gradient(transparent 55%, rgba(255, 226, 76, 0.75) 55%);
+  color: inherit;
+  padding: 0 1px;
+  border-radius: 1px;
+  -webkit-text-fill-color: currentColor; /* preserve tone colors via color */
+}
+body.dark mark.clip-marker {
+  background: linear-gradient(transparent 55%, rgba(255, 226, 76, 0.40) 55%);
+}
+
+/* Better for inline highlight on pinyin text (preserves tone colors) */
+mark.clip-marker > span.t1,
+mark.clip-marker > span.t2,
+mark.clip-marker > span.t3,
+mark.clip-marker > span.t4,
+mark.clip-marker > span.t0 { color: inherit; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .clips-fab { right: 14px; bottom: 14px; width: 48px; height: 48px; }
+  .clips-fab svg { width: 20px; height: 20px; }
+  .clips-drawer { width: 100vw; }
+}

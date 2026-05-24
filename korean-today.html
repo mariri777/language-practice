@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>今日の一句 · 한국어 — One a Day</title>
+<link rel="icon" type="image/svg+xml" href="favicon-ko.svg">
+<link rel="apple-touch-icon" href="icons/favicon-ko-180.png">
+<meta name="theme-color" content="#2d7d6a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="今日の一句 한국어">
+<script>
+  (function() {
+    var stored = localStorage.getItem('today-ko-theme');
+    if (stored === 'dark') document.documentElement.classList.add('dark');
+    else if (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>
+<style>
+  :root {
+    --bg: #f1ede2;
+    --bg-elevated: #f8f4e8;
+    --bg-card: #ffffff;
+    --bg-subtle: #e6e0cf;
+    --bg-deeper: #ddd6c0;
+
+    --ink: #14181a;
+    --ink-2: #3a4244;
+    --ink-3: #6f7a7c;
+    --ink-4: #a5adac;
+    --ink-5: #cdd1ca;
+
+    --accent: #2d7d6a;
+    --accent-2: #1e5c4e;
+    --accent-soft: #d8ebe3;
+    --accent-glow: rgba(45, 125, 106, 0.12);
+
+    --gold: #c79a4a;
+    --gold-soft: rgba(199, 154, 74, 0.12);
+
+    --border: #ddd5bd;
+    --border-strong: #c6bea0;
+    --divider: #e3dcc4;
+
+    --good: #b6843a;
+    --good-soft: rgba(182, 132, 58, 0.14);
+
+    --shadow-sm: 0 1px 2px rgba(20, 24, 26, 0.04);
+    --shadow: 0 1px 3px rgba(20, 24, 26, 0.04), 0 4px 16px rgba(20, 24, 26, 0.05);
+    --shadow-lg: 0 4px 16px rgba(20, 24, 26, 0.06), 0 24px 56px rgba(20, 24, 26, 0.08);
+
+    --ease: cubic-bezier(0.2, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+
+    --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text",
+               "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif;
+    --font-display: "SF Pro Display", "Inter", -apple-system, system-ui, sans-serif;
+    --font-ko: "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR",
+               "Malgun Gothic", sans-serif;
+    --font-ko-serif: "Apple SD Gothic Neo", "Source Han Serif K",
+                     "Noto Serif KR", "Nanum Myeongjo", serif;
+    --font-num: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+    --font-mono: "SF Mono", "JetBrains Mono", "Menlo", monospace;
+  }
+
+  html.dark {
+    --bg: #0e1413;
+    --bg-elevated: #161d1c;
+    --bg-card: #1a2220;
+    --bg-subtle: #1f2a27;
+    --bg-deeper: #25312d;
+
+    --ink: #e9eee9;
+    --ink-2: #c3ccc6;
+    --ink-3: #8a948f;
+    --ink-4: #545e58;
+    --ink-5: #353d39;
+
+    --accent: #59c6a8;
+    --accent-2: #74d4bb;
+    --accent-soft: rgba(89, 198, 168, 0.14);
+    --accent-glow: rgba(89, 198, 168, 0.22);
+
+    --gold: #e0b663;
+    --gold-soft: rgba(224, 182, 99, 0.14);
+
+    --border: #25302d;
+    --border-strong: #344038;
+    --divider: #1f2925;
+
+    --good: #e0b663;
+    --good-soft: rgba(224, 182, 99, 0.14);
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.4), 0 28px 56px rgba(0,0,0,0.3);
+  }
+
+  * { box-sizing: border-box; }
+  *:focus { outline: none; }
+  *:focus-visible {
+    outline: 1.5px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: -0.003em;
+    min-height: 100vh;
+    min-height: 100dvh;
+    transition: background 320ms var(--ease), color 320ms var(--ease);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  ::selection { background: var(--accent); color: #fff; }
+
+  /* ============ TOPBAR ============ */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 22px;
+    padding-top: calc(14px + env(safe-area-inset-top));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink-2);
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+  }
+  .brand-mark {
+    width: 28px; height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-ko-serif);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    transform: rotate(-4deg);
+    box-shadow: 0 4px 14px var(--accent-glow);
+    transition: transform 280ms var(--ease);
+  }
+  .brand:hover .brand-mark { transform: rotate(0) scale(1.08); }
+  .brand-text { line-height: 1; }
+  .brand-sep { color: var(--ink-4); margin: 0 6px; }
+
+  .topbar-actions { display: flex; gap: 8px; align-items: center; }
+  .icon-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--ink-2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 220ms var(--ease);
+  }
+  .icon-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .icon-btn svg { width: 14px; height: 14px; }
+  html.dark .icon-btn .moon { display: none; }
+  html.dark .icon-btn .sun { display: block; }
+  html:not(.dark) .icon-btn .sun { display: none; }
+  html:not(.dark) .icon-btn .moon { display: block; }
+
+  /* ============ STREAK ============ */
+  .streak-bar {
+    max-width: 720px;
+    margin: 28px auto 0;
+    padding: 0 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .streak-num {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .streak-num .u {
+    font-family: var(--font-display);
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-left: 6px;
+  }
+  .day-info {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-align: right;
+  }
+  .day-info .accent { color: var(--accent); }
+
+  /* ============ CARD ============ */
+  .card-wrap {
+    max-width: 720px;
+    margin: 24px auto;
+    padding: 0 22px;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 36px 32px 32px;
+    position: relative;
+    overflow: hidden;
+    animation: cardIn 600ms var(--ease-spring);
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--gold) 100%);
+  }
+  @media (max-width: 600px) {
+    .card { padding: 28px 20px 24px; border-radius: 12px; }
+  }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 28px;
+  }
+  .level-chip {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-2);
+    letter-spacing: 0.16em;
+  }
+  html.dark .level-chip { color: var(--accent); }
+
+  /* ============ SENTENCE ============ */
+  .sentence {
+    font-family: var(--font-ko-serif);
+    font-size: clamp(26px, 5.5vw, 36px);
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0 0 14px;
+    letter-spacing: -0.005em;
+    font-weight: 500;
+  }
+  .sentence .hl {
+    color: var(--accent);
+    background: linear-gradient(transparent 62%, var(--accent-soft) 62%);
+    padding: 0 2px;
+  }
+  .pinyin {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: clamp(15px, 2.2vw, 18px);
+    color: var(--ink-3);
+    margin: 0 0 14px;
+    letter-spacing: 0.01em;
+    transition: opacity 240ms var(--ease), filter 240ms var(--ease);
+  }
+  .pinyin.hidden, .translation.hidden {
+    filter: blur(6px);
+    opacity: 0.4;
+    cursor: pointer;
+  }
+  .translation {
+    font-family: var(--font-ui);
+    font-size: clamp(15px, 2vw, 17px);
+    color: var(--ink-2);
+    margin: 0 0 22px;
+    line-height: 1.55;
+    transition: opacity 240ms var(--ease), filter 240ms var(--ease);
+  }
+  .toggles {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .mini-btn {
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--ink-3);
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 200ms var(--ease);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mini-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .mini-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .mini-btn svg { width: 11px; height: 11px; }
+
+  /* ============ SECTIONS ============ */
+  .section {
+    border-top: 1px solid var(--divider);
+    padding-top: 22px;
+    margin-top: 22px;
+  }
+  .section-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::before {
+    content: "";
+    width: 12px;
+    height: 1.5px;
+    background: var(--gold);
+    display: inline-block;
+  }
+
+  .vocab {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .vocab-word {
+    font-family: var(--font-ko-serif);
+    font-size: 30px;
+    line-height: 1;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .vocab-pinyin {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-3);
+  }
+  .vocab-pos {
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .vocab-jp {
+    width: 100%;
+    margin-top: 8px;
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+
+  .grammar-pattern {
+    font-family: var(--font-ko-serif);
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .grammar-pattern .romaji {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-3);
+    margin-left: 8px;
+  }
+  .grammar-explain {
+    font-size: 14.5px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin: 6px 0 14px;
+  }
+  .examples {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .examples li {
+    padding: 10px 14px;
+    background: var(--bg-subtle);
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .examples .cn {
+    font-family: var(--font-ko-serif);
+    font-size: 17px;
+    color: var(--ink);
+    margin-right: 10px;
+  }
+  .examples .jp {
+    color: var(--ink-3);
+    font-size: 13px;
+    display: block;
+    margin-top: 3px;
+  }
+
+  /* ============ ACTIONS ============ */
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid var(--divider);
+    flex-wrap: wrap;
+  }
+  .btn {
+    flex: 1;
+    min-width: 140px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--ink-2);
+    transition: all 240ms var(--ease);
+  }
+  .btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .btn.primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 6px 18px var(--accent-glow);
+  }
+  .btn.primary:hover {
+    background: var(--accent-2);
+    color: #fff;
+    box-shadow: 0 10px 24px var(--accent-glow);
+  }
+  .btn.done {
+    background: var(--good-soft);
+    color: var(--good);
+    border-color: transparent;
+    pointer-events: none;
+  }
+
+  /* ============ REVIEW DRAWER ============ */
+  .review-section {
+    max-width: 720px;
+    margin: 0 auto 80px;
+    padding: 0 22px;
+  }
+  .review-empty {
+    text-align: center;
+    color: var(--ink-3);
+    font-size: 13px;
+    padding: 30px 0;
+  }
+  .review-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 32px 0 16px;
+    gap: 12px;
+  }
+  .review-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .review-title .accent { color: var(--accent); }
+  .review-toggle {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 0;
+  }
+  .review-toggle:hover { color: var(--accent-2); }
+  .review-list {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .review-list.open { display: flex; }
+  .review-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: all 200ms var(--ease);
+  }
+  .review-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+  }
+  .review-card-top {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin-bottom: 8px;
+  }
+  .review-card-sent {
+    font-family: var(--font-ko-serif);
+    font-size: 19px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .review-card-jp {
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+  .review-card.learned { border-color: var(--good-soft); }
+  .review-card.learned::after {
+    content: "✓";
+    color: var(--good);
+    float: right;
+    font-weight: 700;
+  }
+
+  /* ============ MODAL ============ */
+  .modal-back {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 50px 16px;
+  }
+  .modal-back.open { display: flex; }
+  .modal {
+    width: 100%;
+    max-width: 680px;
+    background: var(--bg);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--ink-2);
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .modal-close:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    text-align: center;
+    padding: 40px 22px 60px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .footer .sep { margin: 0 8px; color: var(--ink-5); }
+</style>
+<link rel="stylesheet" href="clips.css?v=6">
+<script src="clips.js?v=6" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="Home">
+    <span class="brand-mark">日</span>
+    <span class="brand-text">日々<span class="brand-sep">·</span>One a Day</span>
+  </a>
+  <div class="topbar-actions">
+    <button class="icon-btn" id="theme-toggle" aria-label="テーマ切り替え">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+</header>
+
+<section class="streak-bar">
+  <div class="streak-num" id="streak"><span class="n">0</span><span class="u">日連続</span></div>
+  <div class="day-info" id="day-info">DAY <span class="accent">001</span> · — · —</div>
+</section>
+
+<main class="card-wrap">
+  <article class="card" id="card"></article>
+</main>
+
+<section class="review-section">
+  <div class="review-head">
+    <div class="review-title">過去のカード · <span class="accent" id="learned-count">0</span> 覚えた</div>
+    <button class="review-toggle" id="review-toggle">表示 ▾</button>
+  </div>
+  <div class="review-list" id="review-list">
+    <div class="review-empty" id="review-empty">まだ過去カードはありません</div>
+  </div>
+</section>
+
+<div class="modal-back" id="modal-back">
+  <div class="modal" id="modal"></div>
+</div>
+
+<footer class="footer">
+  KOREAN <span class="sep">·</span> ONE A DAY <span class="sep">·</span> 日々
+</footer>
+
+<script>
+  /* ================================================================
+     CONTENT — 30日分の素材
+     ================================================================ */
+  const CARDS = [
+    // ============ DAY 1-10: TOPIK 1 基礎 ============
+    {
+      level: "TOPIK 1",
+      sentence: "안녕하세요, 저는 다나카입니다.",
+      hl: "입니다",
+      pinyin: "annyeonghaseyo, jeoneun danakaimnida.",
+      jp: "こんにちは、私は田中です。",
+      word: { w: "저", p: "jeo", pos: "代名詞", jp: "私 (謙譲)" },
+      grammar: {
+        pattern: "N + 입니다 / 입니까?",
+        explain: "「〜です」のかしこまった形(합니다体)。疑問は「입니까?」。日常では「이에요/예요」も多用される。",
+        examples: [
+          { cn: "저는 학생입니다.", jp: "私は学生です。" },
+          { cn: "이름이 뭐예요?", jp: "お名前は？" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "어디에 가요?",
+      hl: "에",
+      pinyin: "eodi-e gayo?",
+      jp: "どこに行きますか？",
+      word: { w: "어디", p: "eodi", pos: "疑問詞", jp: "どこ" },
+      grammar: {
+        pattern: "場所 + 에 가다 / 오다",
+        explain: "助詞「에」は方向・目的地を表す。「에서」(動作の場所) と区別すること。가다(行く)、오다(来る) とセット。",
+        examples: [
+          { cn: "학교에 가요.", jp: "学校に行きます。" },
+          { cn: "집에 와요.", jp: "家に来ます。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "책을 읽어요.",
+      hl: "을",
+      pinyin: "chaek-eul ilg-eoyo.",
+      jp: "本を読みます。",
+      word: { w: "읽다", p: "ilkda", pos: "動詞", jp: "読む" },
+      grammar: {
+        pattern: "N + 을/를 (目的格)",
+        explain: "目的語につける助詞。パッチムあり=을、なし=를。日本語の「を」と同じ位置。",
+        examples: [
+          { cn: "물을 마셔요.", jp: "水を飲みます。" },
+          { cn: "영화를 봐요.", jp: "映画を観ます。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "학교에서 공부해요.",
+      hl: "에서",
+      pinyin: "hakgyo-eseo gongbu-haeyo.",
+      jp: "学校で勉強します。",
+      word: { w: "공부하다", p: "gongbuhada", pos: "動詞", jp: "勉強する" },
+      grammar: {
+        pattern: "場所 + 에서 + 動詞",
+        explain: "動作が行われる場所には「에서」を使う。「에」(方向) との違いを意識: 「학교에 가요」(行く先)/「학교에서 공부해요」(動作の場所)。",
+        examples: [
+          { cn: "집에서 쉬어요.", jp: "家で休みます。" },
+          { cn: "카페에서 만나요.", jp: "カフェで会いましょう。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "친구하고 같이 가요.",
+      hl: "하고",
+      pinyin: "chingu-hago gachi gayo.",
+      jp: "友達と一緒に行きます。",
+      word: { w: "같이", p: "gachi", pos: "副詞", jp: "一緒に" },
+      grammar: {
+        pattern: "N + 하고 / 와 / 과",
+        explain: "「〜と」を表す助詞。「하고」は会話で最も自然。書き言葉ではパッチムなし=「와」、あり=「과」。",
+        examples: [
+          { cn: "엄마하고 영화를 봐요.", jp: "母と映画を観ます。" },
+          { cn: "친구와 같이 공부해요.", jp: "友達と一緒に勉強します。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "비가 와요.",
+      hl: "가",
+      pinyin: "bi-ga wayo.",
+      jp: "雨が降っています。",
+      word: { w: "비", p: "bi", pos: "名詞", jp: "雨" },
+      grammar: {
+        pattern: "N + 이/가 (主格)",
+        explain: "主語を表す助詞。パッチムあり=이、なし=가。「は」にあたる「은/는」とは違い、新情報・存在を提示するときに使う。",
+        examples: [
+          { cn: "눈이 와요.", jp: "雪が降っています。" },
+          { cn: "고양이가 있어요.", jp: "猫がいます。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "한국어를 배우고 있어요.",
+      hl: "고 있어요",
+      pinyin: "hangugeo-reul baeu-go isseoyo.",
+      jp: "韓国語を学んでいます。",
+      word: { w: "배우다", p: "baeuda", pos: "動詞", jp: "学ぶ" },
+      grammar: {
+        pattern: "V + 고 있다",
+        explain: "進行を表す。日本語の「〜している」に相当。完了の意味を含む「아/어 있다」と区別: 「앉아 있다」(座っている状態)。",
+        examples: [
+          { cn: "지금 자고 있어요.", jp: "今寝ています。" },
+          { cn: "책을 읽고 있어요.", jp: "本を読んでいます。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "사과를 좋아해요.",
+      hl: "좋아해요",
+      pinyin: "sagwa-reul joa-haeyo.",
+      jp: "りんごが好きです。",
+      word: { w: "좋아하다", p: "joahada", pos: "動詞", jp: "好む" },
+      grammar: {
+        pattern: "N + 을/를 좋아하다",
+        explain: "韓国語では「好き」を動詞で表すため、目的格「を」をとる。日本語の「が好き」と助詞が違う点に注意。",
+        examples: [
+          { cn: "커피를 좋아해요.", jp: "コーヒーが好きです。" },
+          { cn: "한국 노래를 좋아해요.", jp: "韓国の歌が好きです。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "지금 뭐 해요?",
+      hl: "뭐",
+      pinyin: "jigeum mwo haeyo?",
+      jp: "今、何してる？",
+      word: { w: "뭐", p: "mwo", pos: "疑問詞", jp: "何 (口語)" },
+      grammar: {
+        pattern: "疑問詞 + 動詞？",
+        explain: "韓国語の疑問詞は語順を変えず、聞きたい位置に置くだけ。「뭐」は「무엇」の口語形。",
+        examples: [
+          { cn: "이거 뭐예요?", jp: "これ何ですか？" },
+          { cn: "뭐 먹을래요?", jp: "何食べる？" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "한국에 가고 싶어요.",
+      hl: "고 싶어요",
+      pinyin: "hanguk-e ga-go sipeoyo.",
+      jp: "韓国に行きたいです。",
+      word: { w: "싶다", p: "sipda", pos: "補助形容詞", jp: "〜したい" },
+      grammar: {
+        pattern: "V + 고 싶다",
+        explain: "願望「〜したい」。3人称には使えず、その場合「-고 싶어하다」を使う: 그는 가고 싶어해요.",
+        examples: [
+          { cn: "쉬고 싶어요.", jp: "休みたいです。" },
+          { cn: "뭐 먹고 싶어요?", jp: "何食べたい？" }
+        ]
+      }
+    },
+
+    // ============ DAY 11-20: TOPIK 1 後半・過去・否定 ============
+    {
+      level: "TOPIK 1",
+      sentence: "영화를 봤어요.",
+      hl: "봤어요",
+      pinyin: "yeonghwa-reul bwasseoyo.",
+      jp: "映画を観ました。",
+      word: { w: "보다", p: "boda", pos: "動詞", jp: "見る/観る" },
+      grammar: {
+        pattern: "V + 았/었어요 (過去)",
+        explain: "過去形。母音陽性(ㅏ/ㅗ)=았어요、それ以外=었어요、하다=했어요。「ㅗ + 았」=「봤」のように縮約あり。",
+        examples: [
+          { cn: "친구를 만났어요.", jp: "友達に会いました。" },
+          { cn: "공부했어요.", jp: "勉強しました。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "시간이 없어요.",
+      hl: "없어요",
+      pinyin: "sigan-i eopseoyo.",
+      jp: "時間がありません。",
+      word: { w: "시간", p: "sigan", pos: "名詞", jp: "時間" },
+      grammar: {
+        pattern: "있다 / 없다",
+        explain: "「ある/いる」=있다、「ない/いない」=없다。存在と所有の両方を表す独立した動詞 (日本語のように動詞「ある」を否定して使わない)。",
+        examples: [
+          { cn: "돈이 있어요?", jp: "お金ありますか？" },
+          { cn: "친구가 없어요.", jp: "友達がいません。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "날씨가 추워요.",
+      hl: "추워요",
+      pinyin: "nalssi-ga chu-wo-yo.",
+      jp: "天気が寒いです。",
+      word: { w: "춥다", p: "chupda", pos: "形容詞", jp: "寒い" },
+      grammar: {
+        pattern: "ㅂ不規則",
+        explain: "語幹末の「ㅂ」が母音の前で「우」に変化: 춥다→추워요、덥다→더워요、쉽다→쉬워요。例外: 좁다(狭い)は変化しない。",
+        examples: [
+          { cn: "오늘 더워요.", jp: "今日暑いです。" },
+          { cn: "이거 어려워요.", jp: "これ難しいです。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "사진을 찍어 주세요.",
+      hl: "주세요",
+      pinyin: "sajin-eul jjik-eo juseyo.",
+      jp: "写真を撮ってください。",
+      word: { w: "찍다", p: "jjikda", pos: "動詞", jp: "撮る" },
+      grammar: {
+        pattern: "V + 아/어 주세요",
+        explain: "丁寧な依頼「〜してください」。「주세요」だけで「ください」、動詞をつけて「〜してください」になる。",
+        examples: [
+          { cn: "천천히 말해 주세요.", jp: "ゆっくり話してください。" },
+          { cn: "도와 주세요.", jp: "助けてください。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 1",
+      sentence: "비가 와서 안 갔어요.",
+      hl: "안",
+      pinyin: "bi-ga wa-seo an gass-eoyo.",
+      jp: "雨が降ったので行きませんでした。",
+      word: { w: "안", p: "an", pos: "副詞", jp: "〜ない" },
+      grammar: {
+        pattern: "안 + 動詞/形容詞",
+        explain: "否定の副詞。動詞の前に置くか、「하다」動詞は「공부 안 해요」のように分ける。「-지 않다」(書き言葉) と同じ意味。",
+        examples: [
+          { cn: "오늘 안 가요.", jp: "今日行きません。" },
+          { cn: "공부 안 했어요.", jp: "勉強しませんでした。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "지금 못 가요.",
+      hl: "못",
+      pinyin: "jigeum mot gayo.",
+      jp: "今、行けません。",
+      word: { w: "못", p: "mot", pos: "副詞", jp: "〜できない" },
+      grammar: {
+        pattern: "못 + 動詞",
+        explain: "不可能を表す。「안」が「したくない/しない」なのに対し、「못」は「条件的に〜できない」。「-지 못하다」と同義。",
+        examples: [
+          { cn: "한국어를 못 해요.", jp: "韓国語ができません。" },
+          { cn: "오늘은 못 만나요.", jp: "今日は会えません。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "만나서 반가워요.",
+      hl: "아서",
+      pinyin: "mannaseo ban-gaw-oyo.",
+      jp: "会えて嬉しいです。",
+      word: { w: "반갑다", p: "bangapda", pos: "形容詞", jp: "嬉しい (会えて)" },
+      grammar: {
+        pattern: "V + 아/어서 (理由・連結)",
+        explain: "原因や時間的連続を表す。「-니까」が話し手の主張なら、「-아서/어서」はより客観的・自然な流れ。命令文の理由には使えない。",
+        examples: [
+          { cn: "배가 고파서 먹었어요.", jp: "お腹が空いたので食べました。" },
+          { cn: "집에 가서 잤어요.", jp: "家に帰って寝ました。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "비싸지만 맛있어요.",
+      hl: "지만",
+      pinyin: "bissajiman masisseoyo.",
+      jp: "高いけどおいしいです。",
+      word: { w: "비싸다", p: "bissada", pos: "形容詞", jp: "(値段が)高い" },
+      grammar: {
+        pattern: "V/A + 지만",
+        explain: "逆接「〜だが/けど」。語幹に「지만」を直接つける。過去なら「-았/었지만」: 갔지만。",
+        examples: [
+          { cn: "어렵지만 재미있어요.", jp: "難しいけど面白い。" },
+          { cn: "추웠지만 즐거웠어요.", jp: "寒かったけど楽しかった。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "내일 같이 만날까요?",
+      hl: "ㄹ까요",
+      pinyin: "naeil gachi mannal-kkayo?",
+      jp: "明日一緒に会いましょうか？",
+      word: { w: "내일", p: "naeil", pos: "名詞", jp: "明日" },
+      grammar: {
+        pattern: "V + (으)ㄹ까요?",
+        explain: "提案や推量を表す。「一緒に〜しましょうか」のニュアンス。1人称(自分の推測)では「〜だろうか」。",
+        examples: [
+          { cn: "뭘 먹을까요?", jp: "何を食べましょうか？" },
+          { cn: "비가 올까요?", jp: "雨が降るかな？" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "시간이 있으면 같이 가요.",
+      hl: "으면",
+      pinyin: "sigan-i isseu-myeon gachi gayo.",
+      jp: "時間があれば、一緒に行きましょう。",
+      word: { w: "있다", p: "itda", pos: "動詞", jp: "ある/いる" },
+      grammar: {
+        pattern: "V/A + (으)면 (仮定)",
+        explain: "「〜なら/ば」。パッチムあり=으면、なし=면。「-(으)면 좋겠다」で願望「〜だといいな」も頻出。",
+        examples: [
+          { cn: "비가 오면 안 가요.", jp: "雨が降ったら行きません。" },
+          { cn: "한국에 가면 좋겠어요.", jp: "韓国に行けたらいいな。" }
+        ]
+      }
+    },
+
+    // ============ DAY 21-30: TOPIK 2 ============
+    {
+      level: "TOPIK 2",
+      sentence: "한국어를 할 줄 알아요.",
+      hl: "줄 알아요",
+      pinyin: "hangugeo-reul hal jul arayo.",
+      jp: "韓国語ができます。",
+      word: { w: "줄 알다", p: "jul alda", pos: "慣用", jp: "〜の仕方を知っている" },
+      grammar: {
+        pattern: "V + (으)ㄹ 줄 알다 / 모르다",
+        explain: "技能としての「〜できる/できない」。「-(으)ㄹ 수 있다」(条件的可能) との違い: 운전할 줄 알아요 (運転する技術がある) vs 운전할 수 있어요 (今運転できる状況)。",
+        examples: [
+          { cn: "수영할 줄 알아요.", jp: "泳げます (泳ぎ方を知っている)。" },
+          { cn: "피아노 칠 줄 몰라요.", jp: "ピアノが弾けません。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "가르쳐 주신 선생님이에요.",
+      hl: "주신",
+      pinyin: "gareuchyeo jusin seonsaengnim-ieyo.",
+      jp: "教えてくださった先生です。",
+      word: { w: "주시다", p: "jusida", pos: "補助動詞", jp: "〜してくださる" },
+      grammar: {
+        pattern: "V + 아/어 주시다",
+        explain: "「〜してくれる」(주다) の尊敬形「〜してくださる」。連体修飾の過去形「-신」と組み合わせて頻用。",
+        examples: [
+          { cn: "도와 주세요.", jp: "助けてください。" },
+          { cn: "선생님이 알려 주셨어요.", jp: "先生が教えてくださいました。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "한국어를 배운 지 일 년이 됐어요.",
+      hl: "ㄴ 지",
+      pinyin: "hangugeo-reul baeun ji il nyeon-i dwaesseoyo.",
+      jp: "韓国語を学んで1年になりました。",
+      word: { w: "년", p: "nyeon", pos: "依存名詞", jp: "〜年" },
+      grammar: {
+        pattern: "V + (으)ㄴ 지 + 期間 + 되다",
+        explain: "「〜してから(期間)が経った」。「지」の前は必ず過去連体形「-(으)ㄴ」。期間の後に「됐어요/지났어요」が来る。",
+        examples: [
+          { cn: "결혼한 지 5년 됐어요.", jp: "結婚して5年経ちました。" },
+          { cn: "온 지 얼마 안 됐어요.", jp: "来てまだ間もないです。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "내일 비가 올 것 같아요.",
+      hl: "ㄹ 것 같아요",
+      pinyin: "naeil bi-ga ol geot gatayo.",
+      jp: "明日雨が降りそうです。",
+      word: { w: "같다", p: "gatda", pos: "形容詞", jp: "〜のようだ" },
+      grammar: {
+        pattern: "V + (으)ㄹ/ㄴ 것 같다",
+        explain: "推量「〜しそう/〜ようだ」。未来=ㄹ 것 같다、現在/結果=ㄴ 것 같다、現在進行=는 것 같다、過去=았/었던 것 같다。",
+        examples: [
+          { cn: "맛있을 것 같아요.", jp: "おいしそうです。" },
+          { cn: "벌써 간 것 같아요.", jp: "もう行ったみたいです。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "한국에 가 본 적이 있어요.",
+      hl: "ㄴ 적이 있어요",
+      pinyin: "hanguk-e ga bon jeog-i isseoyo.",
+      jp: "韓国に行ったことがあります。",
+      word: { w: "적", p: "jeok", pos: "依存名詞", jp: "とき・経験" },
+      grammar: {
+        pattern: "V + (으)ㄴ 적이 있다/없다",
+        explain: "経験を表す「〜したことがある/ない」。よく「-아/어 보다」(試しに〜する) と組み合わせて「-아/어 본 적이 있다」になる。",
+        examples: [
+          { cn: "김치를 먹어 본 적이 있어요.", jp: "キムチを食べたことがあります。" },
+          { cn: "거기 가 본 적이 없어요.", jp: "そこ行ったことありません。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "공부하느라고 못 갔어요.",
+      hl: "느라고",
+      pinyin: "gongbu-haneurago mot gasseoyo.",
+      jp: "勉強していて行けませんでした。",
+      word: { w: "공부", p: "gongbu", pos: "名詞", jp: "勉強" },
+      grammar: {
+        pattern: "V + 느라고",
+        explain: "「〜のせいで(できなかった)」というネガティブな結果の理由。後ろには「못 〜」など否定的結果が来ることが多い。",
+        examples: [
+          { cn: "자느라고 전화를 못 받았어요.", jp: "寝ていて電話に出られませんでした。" },
+          { cn: "일하느라고 바빠요.", jp: "仕事で忙しいです。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "한국 음식 중에서 김치를 제일 좋아해요.",
+      hl: "중에서",
+      pinyin: "hanguk eumsik jung-eseo gimchi-reul jeil joa-haeyo.",
+      jp: "韓国料理の中でキムチが一番好きです。",
+      word: { w: "제일", p: "jeil", pos: "副詞", jp: "一番、最も" },
+      grammar: {
+        pattern: "N + 중에서 + 제일/가장 + 〜",
+        explain: "「〜の中で一番〜」。比較・最上級の頻出パターン。「가장」と「제일」はほぼ同義だが「제일」のほうが口語的。",
+        examples: [
+          { cn: "친구 중에서 그가 제일 친해요.", jp: "友達の中で彼が一番親しい。" },
+          { cn: "과일 중에서 사과가 가장 좋아요.", jp: "果物の中でりんごが一番好き。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 2",
+      sentence: "한국에 가려고 공부해요.",
+      hl: "려고",
+      pinyin: "hanguk-e garyeo-go gongbu-haeyo.",
+      jp: "韓国に行くために勉強しています。",
+      word: { w: "공부하다", p: "gongbuhada", pos: "動詞", jp: "勉強する" },
+      grammar: {
+        pattern: "V + (으)려고",
+        explain: "目的「〜しようと」。主語の意思的な目的に使う。「-기 위해서」(よりフォーマル) との使い分け。",
+        examples: [
+          { cn: "선물을 사려고 왔어요.", jp: "プレゼントを買おうと来ました。" },
+          { cn: "한국어를 배우려고 해요.", jp: "韓国語を学ぼうとしています。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 3",
+      sentence: "비가 오니까 우산을 가져가세요.",
+      hl: "니까",
+      pinyin: "bi-ga onikka usan-eul gajyeoga-seyo.",
+      jp: "雨が降っているので傘を持っていってください。",
+      word: { w: "우산", p: "usan", pos: "名詞", jp: "傘" },
+      grammar: {
+        pattern: "V/A + (으)니까",
+        explain: "理由を表す「〜なので」。「-아서/어서」と違い、後ろに命令・勧誘・提案を続けられる: 비가 오니까 가지 마세요 (雨だから行かないで)。",
+        examples: [
+          { cn: "추우니까 따뜻하게 입으세요.", jp: "寒いので暖かく着てください。" },
+          { cn: "시간이 없으니까 빨리 가요.", jp: "時間がないから早く行こう。" }
+        ]
+      }
+    },
+    {
+      level: "TOPIK 3",
+      sentence: "한국에 살게 됐어요.",
+      hl: "게 됐어요",
+      pinyin: "hanguk-e salge dwaesseoyo.",
+      jp: "韓国に住むことになりました。",
+      word: { w: "살다", p: "salda", pos: "動詞", jp: "住む/生きる" },
+      grammar: {
+        pattern: "V + 게 되다",
+        explain: "「〜することになる」。自分の意思とは別の流れで結果的にそうなった、というニュアンス。日本語の「〜することになった」とそっくり。",
+        examples: [
+          { cn: "그를 좋아하게 됐어요.", jp: "彼を好きになりました。" },
+          { cn: "회사를 그만두게 됐어요.", jp: "会社を辞めることになりました。" }
+        ]
+      }
+    }
+  ];
+
+  /* ================================================================
+     STATE
+     ================================================================ */
+  const STORAGE_KEY = 'today-ko-progress';
+  const THEME_KEY = 'today-ko-theme';
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return defaultState();
+      const s = JSON.parse(raw);
+      return Object.assign(defaultState(), s);
+    } catch (e) { return defaultState(); }
+  }
+  function defaultState() {
+    return { startDate: null, learned: {}, lastOpen: null, streak: 0 };
+  }
+  function saveState(s) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+  }
+
+  function todayStr() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+  function daysBetween(aStr, bStr) {
+    const a = new Date(aStr + 'T00:00:00');
+    const b = new Date(bStr + 'T00:00:00');
+    return Math.round((b - a) / 86400000);
+  }
+
+  let state = loadState();
+  const today = todayStr();
+
+  if (!state.startDate) {
+    state.startDate = today;
+    state.lastOpen = today;
+    state.streak = 1;
+  } else if (state.lastOpen !== today) {
+    const diff = daysBetween(state.lastOpen, today);
+    if (diff === 1) state.streak += 1;
+    else if (diff > 1) state.streak = 1;
+    state.lastOpen = today;
+  }
+  saveState(state);
+
+  const dayIndex = Math.min(daysBetween(state.startDate, today), CARDS.length - 1);
+  const card = CARDS[dayIndex];
+
+  /* ================================================================
+     RENDER
+     ================================================================ */
+  function highlightSentence(s, hl) {
+    if (!hl) return s;
+    return s.replaceAll(hl, `<span class="hl">${hl}</span>`);
+  }
+  function formatDateDisplay(d) {
+    const parts = d.split('-');
+    return `${parts[0]}.${parts[1]}.${parts[2]}`;
+  }
+  function renderCard(c, idx, container) {
+    container.innerHTML = `
+      <div class="card-meta">
+        <span>DAY ${String(idx + 1).padStart(3, '0')} · ${formatDateDisplay(today)}</span>
+        <span class="level-chip">${c.level}</span>
+      </div>
+      <p class="sentence">${highlightSentence(c.sentence, c.hl)}</p>
+      <p class="pinyin">${c.pinyin}</p>
+      <p class="translation">${c.jp}</p>
+      <div class="toggles">
+        <button class="mini-btn active" data-target=".pinyin">발음</button>
+        <button class="mini-btn active" data-target=".translation">和訳</button>
+        <button class="mini-btn" data-speak="${c.sentence}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          音声
+        </button>
+      </div>
+      <div class="section">
+        <div class="section-label">今日の単語</div>
+        <div class="vocab">
+          <span class="vocab-word">${c.word.w}</span>
+          <span class="vocab-pinyin">${c.word.p}</span>
+          <span class="vocab-pos">${c.word.pos}</span>
+          <div class="vocab-jp">${c.word.jp}</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">今日の文法</div>
+        <div class="grammar-pattern">${c.grammar.pattern}</div>
+        <p class="grammar-explain">${c.grammar.explain}</p>
+        <ul class="examples">
+          ${c.grammar.examples.map(ex =>
+            `<li><span class="cn">${ex.cn}</span><span class="jp">${ex.jp}</span></li>`
+          ).join('')}
+        </ul>
+      </div>
+    `;
+    wireToggles(container);
+  }
+
+  function wireToggles(container) {
+    container.querySelectorAll('.mini-btn[data-target]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = container.querySelector(btn.dataset.target);
+        if (!target) return;
+        target.classList.toggle('hidden');
+        btn.classList.toggle('active');
+      });
+    });
+    container.querySelectorAll('[data-speak]').forEach(btn => {
+      btn.addEventListener('click', () => speakKo(btn.dataset.speak));
+    });
+    container.querySelectorAll('.pinyin, .translation').forEach(el => {
+      el.addEventListener('click', () => {
+        if (el.classList.contains('hidden')) {
+          el.classList.remove('hidden');
+          const target = '.' + el.classList[0];
+          const btn = container.querySelector(`.mini-btn[data-target="${target}"]`);
+          if (btn) btn.classList.add('active');
+        }
+      });
+    });
+  }
+
+  function speakKo(text) {
+    if (!('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ko-KR';
+    u.rate = 0.85;
+    speechSynthesis.speak(u);
+  }
+
+  /* ================================================================
+     MAIN — wire today's card
+     ================================================================ */
+  const cardEl = document.getElementById('card');
+  renderCard(card, dayIndex, cardEl);
+
+  const actionsHTML = `
+    <div class="actions">
+      <button class="btn primary" id="btn-learned">${state.learned[dayIndex] ? '✓ 覚えた' : '覚えた'}</button>
+      <button class="btn" id="btn-review">復習する ↓</button>
+    </div>
+  `;
+  cardEl.insertAdjacentHTML('beforeend', actionsHTML);
+
+  if (state.learned[dayIndex]) {
+    const b = document.getElementById('btn-learned');
+    b.classList.add('done');
+  }
+
+  document.getElementById('btn-learned').addEventListener('click', () => {
+    state.learned[dayIndex] = Date.now();
+    saveState(state);
+    const b = document.getElementById('btn-learned');
+    b.classList.add('done');
+    b.textContent = '✓ 覚えた';
+    renderReviewList();
+  });
+
+  document.getElementById('btn-review').addEventListener('click', () => {
+    const list = document.getElementById('review-list');
+    list.classList.add('open');
+    document.getElementById('review-toggle').textContent = '隠す ▴';
+    list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  /* ============ Header ============ */
+  document.querySelector('#streak .n').textContent = state.streak;
+  document.getElementById('day-info').innerHTML =
+    `DAY <span class="accent">${String(dayIndex + 1).padStart(3, '0')}</span> · ${card.level} · ${formatDateDisplay(today)}`;
+
+  /* ============ Review section ============ */
+  function renderReviewList() {
+    const list = document.getElementById('review-list');
+    const past = [];
+    for (let i = 0; i < dayIndex; i++) past.push(i);
+    if (past.length === 0) {
+      list.innerHTML = '<div class="review-empty">まだ過去カードはありません。明日また会いましょう。</div>';
+      document.getElementById('learned-count').textContent = Object.keys(state.learned).length;
+      return;
+    }
+    list.innerHTML = past.reverse().map(i => {
+      const c = CARDS[i];
+      const learned = !!state.learned[i];
+      return `
+        <div class="review-card ${learned ? 'learned' : ''}" data-idx="${i}">
+          <div class="review-card-top">
+            <span>DAY ${String(i + 1).padStart(3, '0')}</span>
+            <span>${c.level}</span>
+          </div>
+          <div class="review-card-sent">${c.sentence}</div>
+          <div class="review-card-jp">${c.jp}</div>
+        </div>
+      `;
+    }).join('');
+    list.querySelectorAll('.review-card').forEach(el => {
+      el.addEventListener('click', () => openReviewModal(parseInt(el.dataset.idx, 10)));
+    });
+    document.getElementById('learned-count').textContent = Object.keys(state.learned).length;
+  }
+
+  document.getElementById('review-toggle').addEventListener('click', () => {
+    const list = document.getElementById('review-list');
+    const t = document.getElementById('review-toggle');
+    list.classList.toggle('open');
+    t.textContent = list.classList.contains('open') ? '隠す ▴' : '表示 ▾';
+  });
+
+  renderReviewList();
+
+  /* ============ Modal ============ */
+  const modalBack = document.getElementById('modal-back');
+  const modal = document.getElementById('modal');
+
+  function openReviewModal(idx) {
+    const c = CARDS[idx];
+    modal.innerHTML = `
+      <button class="modal-close" id="modal-close" aria-label="閉じる">✕</button>
+      <div class="card" style="border:none; box-shadow:none; border-radius:14px;"></div>
+    `;
+    const innerCard = modal.querySelector('.card');
+    renderCard(c, idx, innerCard);
+    modalBack.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+  }
+  function closeModal() {
+    modalBack.classList.remove('open');
+    document.body.style.overflow = '';
+    speechSynthesis.cancel();
+  }
+  modalBack.addEventListener('click', (e) => {
+    if (e.target === modalBack) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  /* ============ Theme ============ */
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const dark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+  });
+
+</script>
+</body>
+</html>
