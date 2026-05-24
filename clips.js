@@ -464,18 +464,19 @@
     ensureSelToolbar();
     selToolbar.querySelector('[data-act="marker"]').style.display = allowMarker ? "" : "none";
     selToolbar.classList.add("visible");
+    const isTouch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    if (isTouch) {
+      // タッチ: 画面下部に fixed 表示。iOS の選択ハンドル／ネイティブメニューと完全に分離する。
+      selToolbar.classList.add("touch-mode");
+      selToolbar.style.top = "";
+      selToolbar.style.left = "";
+      return;
+    }
+    selToolbar.classList.remove("touch-mode");
     const tbW = selToolbar.offsetWidth;
     const tbH = selToolbar.offsetHeight;
-    // モバイルでは iOS のネイティブ選択メニュー（上に出る）と被らないよう
-    // 選択範囲のやや下に置く。デスクトップは従来通り上が空いてれば上に。
-    const isTouch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
-    let top;
-    if (isTouch) {
-      top = window.scrollY + rect.bottom + 12;
-    } else {
-      top = window.scrollY + rect.top - tbH - 8;
-      if (top < window.scrollY + 4) top = window.scrollY + rect.bottom + 8;
-    }
+    let top = window.scrollY + rect.top - tbH - 8;
+    if (top < window.scrollY + 4) top = window.scrollY + rect.bottom + 8;
     let left = window.scrollX + rect.left + rect.width / 2 - tbW / 2;
     left = Math.max(8, Math.min(left, window.scrollX + document.documentElement.clientWidth - tbW - 8));
     selToolbar.style.top = top + "px";
@@ -640,7 +641,8 @@
     let selChangeTimer = null;
     document.addEventListener("selectionchange", () => {
       clearTimeout(selChangeTimer);
-      selChangeTimer = setTimeout(checkSelection, 220);
+      // タッチで toolbar をタップ → iOS が selection を消す → click 発火、の順序を待つために 350ms。
+      selChangeTimer = setTimeout(checkSelection, 350);
     });
     document.addEventListener("mousedown", (e) => {
       if (selToolbar && selToolbar.contains(e.target)) return;
