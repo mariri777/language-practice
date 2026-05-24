@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>汉语日记 · Chinese Diary</title>
+<title>Journal 中文 · 中国語の短文を書き写す</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="icons/favicon-180.png">
 <link rel="manifest" href="chinese-diary.webmanifest">
@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="汉语日记">
+<meta name="apple-mobile-web-app-title" content="Journal 中文">
 <script src="./s2t.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
@@ -1306,6 +1306,39 @@
   .t4 { color: var(--t4); }
   .t0 { color: var(--t0); }
 
+  /* ========== Tone Legend (inline) ========== */
+  .tone-legend {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin: 10px 0 14px;
+    padding: 8px 12px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+  }
+  .tone-legend-label {
+    color: var(--ink-3);
+    font-weight: 500;
+    margin-right: 2px;
+  }
+  .tone-legend span.tone-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .tone-legend i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    display: inline-block;
+  }
+  body.hide-pinyin .tone-legend { display: none; }
+
   /* ========== Footer ========== */
   footer.site {
     margin-top: 56px;
@@ -1380,12 +1413,14 @@
     transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
 </style>
+<link rel="stylesheet" href="clips.css?v=6">
+<script src="clips.js?v=6" defer></script>
 </head>
 <body>
 <div class="app">
   <header class="site">
     <div class="brand">
-      <h1>汉语日记<span class="sub">Chinese Diary</span></h1>
+      <h1>Journal 中文<span class="sub">中国語の短文を書き写す</span></h1>
       <p>HSK 1〜4対応・1日1パッセージのトレーニング</p>
     </div>
     <div class="header-right">
@@ -1472,6 +1507,15 @@
           <button type="button" class="script-toggle-btn active" id="script-simp" role="tab" aria-selected="true">簡体字</button>
           <button type="button" class="script-toggle-btn" id="script-trad" role="tab" aria-selected="false">繁体字</button>
         </div>
+      </div>
+
+      <div class="tone-legend" aria-label="拼音の声調による色分け">
+        <span class="tone-legend-label">拼音は声調で色分け</span>
+        <span class="tone-item t1"><i></i>第1声</span>
+        <span class="tone-item t2"><i></i>第2声</span>
+        <span class="tone-item t3"><i></i>第3声</span>
+        <span class="tone-item t4"><i></i>第4声</span>
+        <span class="tone-item t0"><i></i>軽声</span>
       </div>
 
       <div class="passage" id="passage"></div>
@@ -1597,13 +1641,6 @@
   </main>
 
   <footer class="site">
-    <div class="legend">
-      <span class="t1"><i></i>第1声</span>
-      <span class="t2"><i></i>第2声</span>
-      <span class="t3"><i></i>第3声</span>
-      <span class="t4"><i></i>第4声</span>
-      <span class="t0"><i></i>軽声</span>
-    </div>
     <div class="meta">
       <span>個人の趣味の範囲で作っています。細かいバグなどはご容赦ください。</span>
       <span>© 2026 mari · <a href="https://x.com/mmmmmmmari_" target="_blank" rel="noopener">@mmmmmmmari_</a></span>
@@ -2254,6 +2291,12 @@ function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
 
 let progress = loadProgress();
 let currentIdx = progress._currentIdx ?? 0;  // 0-based array index
+// クリップ「出典へ」用 deep link：#d=N でレッスン番号を上書き
+const _hashMatch = location.hash.match(/^#d=(\d+)/);
+if (_hashMatch) {
+  const _hashIdx = parseInt(_hashMatch[1], 10);
+  if (_hashIdx >= 0 && _hashIdx < LESSONS.length) currentIdx = _hashIdx;
+}
 if (currentIdx < 0 || currentIdx >= LESSONS.length) currentIdx = 0;
 let showPinyin = progress._showPinyin !== false;
 let showTranslation = progress._showTranslation !== false;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>汉语日记 · 한국어판</title>
+<title>Journal 중국어 · 중국어 단문 베껴쓰기</title>
 <link rel="icon" type="image/svg+xml" href="favicon-diary-ko.svg">
 <link rel="apple-touch-icon" href="icons/favicon-180.png">
 <link rel="manifest" href="chinese-diary-ko.webmanifest">
@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="汉语日记 KO">
+<meta name="apple-mobile-web-app-title" content="Journal 중국어">
 <script src="./s2t.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
@@ -1306,6 +1306,39 @@
   .t4 { color: var(--t4); }
   .t0 { color: var(--t0); }
 
+  /* ========== Tone Legend (inline) ========== */
+  .tone-legend {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin: 10px 0 14px;
+    padding: 8px 12px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+  }
+  .tone-legend-label {
+    color: var(--ink-3);
+    font-weight: 500;
+    margin-right: 2px;
+  }
+  .tone-legend span.tone-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .tone-legend i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    display: inline-block;
+  }
+  body.hide-pinyin .tone-legend { display: none; }
+
   /* ========== Footer ========== */
   footer.site {
     margin-top: 56px;
@@ -1380,12 +1413,14 @@
     transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
 </style>
+<link rel="stylesheet" href="clips.css?v=6">
+<script src="clips.js?v=6" defer></script>
 </head>
 <body>
 <div class="app">
   <header class="site">
     <div class="brand">
-      <h1>汉语日记<span class="sub">한국어판</span></h1>
+      <h1>Journal 중국어<span class="sub">중국어 단문 베껴쓰기</span></h1>
       <p>HSK 1~4 대응 · 하루 한 문단 트레이닝</p>
     </div>
     <div class="header-right">
@@ -1472,6 +1507,15 @@
           <button type="button" class="script-toggle-btn active" id="script-simp" role="tab" aria-selected="true">간체</button>
           <button type="button" class="script-toggle-btn" id="script-trad" role="tab" aria-selected="false">번체</button>
         </div>
+      </div>
+
+      <div class="tone-legend" aria-label="병음 성조별 색상 안내">
+        <span class="tone-legend-label">병음은 성조별로 색 구분</span>
+        <span class="tone-item t1"><i></i>제1성</span>
+        <span class="tone-item t2"><i></i>제2성</span>
+        <span class="tone-item t3"><i></i>제3성</span>
+        <span class="tone-item t4"><i></i>제4성</span>
+        <span class="tone-item t0"><i></i>경성</span>
       </div>
 
       <div class="passage" id="passage"></div>
@@ -1597,13 +1641,6 @@
   </main>
 
   <footer class="site">
-    <div class="legend">
-      <span class="t1"><i></i>제1성</span>
-      <span class="t2"><i></i>제2성</span>
-      <span class="t3"><i></i>제3성</span>
-      <span class="t4"><i></i>제4성</span>
-      <span class="t0"><i></i>경성</span>
-    </div>
     <div class="meta">
       <span>개인 취미 범위로 만들고 있습니다. 사소한 버그는 양해 부탁드립니다.</span>
       <span>© 2026 mari · <a href="https://x.com/mmmmmmmari_" target="_blank" rel="noopener">@mmmmmmmari_</a></span>
@@ -2254,6 +2291,12 @@ function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
 
 let progress = loadProgress();
 let currentIdx = progress._currentIdx ?? 0;  // 0-based array index
+// 클립 「출처로」용 deep link: #d=N 으로 레슨 번호 덮어쓰기
+const _hashMatch = location.hash.match(/^#d=(\d+)/);
+if (_hashMatch) {
+  const _hashIdx = parseInt(_hashMatch[1], 10);
+  if (_hashIdx >= 0 && _hashIdx < LESSONS.length) currentIdx = _hashIdx;
+}
 if (currentIdx < 0 || currentIdx >= LESSONS.length) currentIdx = 0;
 let showPinyin = progress._showPinyin !== false;
 let showTranslation = progress._showTranslation !== false;
