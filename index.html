@@ -156,6 +156,14 @@
     padding: 100px 40px 140px;
     text-align: center;
   }
+  @media (max-width: 720px) {
+    .hero {
+      min-height: 78vh;
+      padding: 84px 20px 56px;
+      justify-content: flex-start;
+      padding-top: 22vh;
+    }
+  }
   .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
   .hero-bg::before {
     content: "";
@@ -210,6 +218,10 @@
     transform: translate(-50%, 0) scaleX(0);
     animation: hairlineIn 700ms var(--ease-schwing) 1.4s forwards;
   }
+  @media (max-width: 720px) {
+    .hero-hairline.h-top { top: 14vh; width: 48px; }
+    .hero-hairline.h-bot { bottom: 12vh; width: 48px; }
+  }
   @keyframes hairlineIn { to { transform: translate(-50%, 0) scaleX(1); } }
 
   .hero-content { position: relative; z-index: 2; max-width: 1100px; }
@@ -227,6 +239,10 @@
     animation: rise 900ms var(--ease-soft) 0.5s forwards;
   }
   .hero-num .sep { color: var(--ink-4); margin: 0 10px; }
+  @media (max-width: 720px) {
+    .hero-num { font-size: 9.5px; letter-spacing: 0.26em; margin-bottom: 22px; }
+    .hero-num .sep { margin: 0 6px; }
+  }
 
   .hero-title {
     font-family: var(--font-mincho);
@@ -239,6 +255,9 @@
     display: flex;
     justify-content: center;
     align-items: baseline;
+  }
+  @media (max-width: 720px) {
+    .hero-title { font-size: 130px; line-height: 0.92; }
   }
   .hero-title .word {
     display: inline-block;
@@ -279,6 +298,10 @@
     opacity: 0;
     animation: fadeIn 900ms var(--ease) 1.7s forwards;
   }
+  @media (max-width: 720px) {
+    .hero-tagline { margin: 22px 0 6px; font-size: 15.5px; letter-spacing: 0.08em; }
+    .hero-sub { font-size: 12px; }
+  }
 
   @keyframes rise { to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { to { opacity: 1; } }
@@ -308,6 +331,10 @@
     width: 1px; height: 44px;
     background: linear-gradient(to bottom, var(--red), transparent);
     animation: pulse 2.2s ease-in-out infinite;
+  }
+  @media (max-width: 720px) {
+    .scroll-cue { bottom: 20px; font-size: 9px; letter-spacing: 0.26em; gap: 8px; }
+    .scroll-cue::after { height: 28px; }
   }
   @keyframes pulse {
     0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
