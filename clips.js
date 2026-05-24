@@ -301,12 +301,15 @@
           btn.textContent = "✓ コピーした";
           setTimeout(() => (btn.textContent = orig), 1200);
         } else if (act === "goto") {
-          // 同じパスで hash だけ違うと location.href への代入はリロードしないため、
-          // 明示的に hash をセットしてから reload する。
+          // 同じパス内 (hash 違い / 同じ URL も含む) では location.href / location.hash 経由だと
+          // ブラウザが「同一ページ内リンク」扱いしてリロードしてくれない。
+          // history.replaceState で URL を直接書き換えてから reload するのが一番確実。
           try {
             const target = new URL(clip.url, location.origin);
             if (target.pathname === location.pathname) {
-              if (target.hash && target.hash !== location.hash) location.hash = target.hash;
+              const newUrl = target.pathname + target.search + target.hash;
+              const curUrl = location.pathname + location.search + location.hash;
+              if (newUrl !== curUrl) history.replaceState(null, "", newUrl);
               location.reload();
             } else {
               location.href = clip.url;
