@@ -481,10 +481,41 @@
     selToolbar.classList.add("visible");
     const isTouch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
     if (isTouch) {
-      // タッチ: 画面下部に fixed 表示。iOS の選択ハンドル／ネイティブメニューと完全に分離する。
+      // タッチ: 選択範囲を起点に fixed 配置。
+      // ・上下に十分なギャップを取って iOS の選択ハンドル／ネイティブ callout を回避
+      // ・上下「安全帯」内にクランプし、Safari の上下 URL バー（Google 検索バー含む）と被らない
       selToolbar.classList.add("touch-mode");
-      selToolbar.style.top = "";
-      selToolbar.style.left = "";
+      // インラインで残っている可能性のある古い値をリセット
+      selToolbar.style.bottom = "auto";
+      selToolbar.style.transform = "none";
+
+      const tbH = selToolbar.offsetHeight || 48;
+      const tbW = selToolbar.offsetWidth || 200;
+      const vh = window.innerHeight;
+      const vw = document.documentElement.clientWidth;
+
+      const SAFE_TOP = 56;     // 上部ノッチ / URL バー回避
+      const SAFE_BOTTOM = 110; // iOS Safari 下部 URL バー（Google 検索）回避
+      const GAP_BELOW = 56;    // 選択範囲下端ハンドルを回避
+      const GAP_ABOVE = 96;    // 選択範囲上端ハンドル＋ネイティブ callout を回避
+
+      // 第一候補: 選択範囲の「下」に出す
+      let topVP = rect.bottom + GAP_BELOW;
+      // 下に収まらなければ「上」に出す
+      if (topVP + tbH > vh - SAFE_BOTTOM) {
+        topVP = rect.top - tbH - GAP_ABOVE;
+      }
+      // 上にも収まらなければ安全帯の上端に逃がす
+      if (topVP < SAFE_TOP) topVP = SAFE_TOP;
+      // 最終クランプ
+      topVP = Math.max(SAFE_TOP, Math.min(topVP, vh - SAFE_BOTTOM - tbH));
+
+      // 横位置: 選択範囲の水平中央。画面端から 8px 以上空ける
+      let leftVP = rect.left + rect.width / 2 - tbW / 2;
+      leftVP = Math.max(8, Math.min(leftVP, vw - tbW - 8));
+
+      selToolbar.style.top = topVP + "px";
+      selToolbar.style.left = leftVP + "px";
       return;
     }
     selToolbar.classList.remove("touch-mode");
