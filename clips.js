@@ -450,9 +450,10 @@
       <button type="button" data-act="marker">🖍 マーカー</button>
     `;
     document.body.appendChild(selToolbar);
-    // mouse / touch どちらでも tap した瞬間に selection を維持
+    // mousedown だけ preventDefault（マウスで選択維持）。
+    // touchstart で preventDefault すると iOS が後続の synthesized click を発火させないため、
+    // touch では preventDefault せず、selection が消えた場合は lastSelection キャッシュにフォールバック。
     selToolbar.addEventListener("mousedown", (e) => e.preventDefault());
-    selToolbar.addEventListener("touchstart", (e) => e.preventDefault(), { passive: false });
     selToolbar.addEventListener("click", (e) => {
       const act = e.target.closest("button")?.dataset.act;
       if (act) handleSelectionAction(act);
