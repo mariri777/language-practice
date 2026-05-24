@@ -150,21 +150,20 @@
   /* ============ Hero ============ */
   .hero {
     position: relative;
-    min-height: 100vh;
+    min-height: 52vh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 100px 40px 140px;
+    padding: 96px 40px 56px;
     text-align: center;
   }
   @media (max-width: 720px) {
     .hero {
-      min-height: 78vh;
-      padding: 84px 20px 56px;
-      justify-content: flex-start;
-      padding-top: 22vh;
+      min-height: 38vh;
+      padding: 80px 20px 32px;
+      justify-content: center;
     }
   }
   .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
@@ -190,14 +189,17 @@
     position: absolute;
     left: -10%; right: -10%;
     top: 56%;
-    height: 120px;
+    height: 80px;
     background: linear-gradient(90deg,
       transparent 0%, var(--red-soft) 12%, var(--red-glow) 50%, var(--red-soft) 88%, transparent 100%);
-    transform: translateY(-50%) skewY(-8deg);
+    transform: translateY(-50%) skewY(-7deg);
     opacity: 0;
     mix-blend-mode: multiply;
     animation: slashIn 1.4s var(--ease-schwing) 0.5s forwards;
     z-index: 0;
+  }
+  @media (max-width: 720px) {
+    .hero-slash { height: 56px; }
   }
   @keyframes slashIn {
     0% { opacity: 0; transform: translate(-40%, -50%) skewY(-8deg); }
@@ -212,18 +214,13 @@
     z-index: 1;
   }
   .hero-hairline.h-top {
-    top: 22%; width: 80px; height: 2px;
+    top: 18%; width: 56px; height: 2px;
     transform: translate(-50%, 0) scaleX(0);
     animation: hairlineIn 700ms var(--ease-schwing) 0.4s forwards;
   }
-  .hero-hairline.h-bot {
-    bottom: 22%; width: 80px; height: 2px;
-    transform: translate(-50%, 0) scaleX(0);
-    animation: hairlineIn 700ms var(--ease-schwing) 1.4s forwards;
-  }
+  .hero-hairline.h-bot { display: none; }
   @media (max-width: 720px) {
-    .hero-hairline.h-top { top: 14vh; width: 48px; }
-    .hero-hairline.h-bot { bottom: 12vh; width: 48px; }
+    .hero-hairline.h-top { top: 12%; width: 40px; }
   }
   @keyframes hairlineIn { to { transform: translate(-50%, 0) scaleX(1); } }
 
@@ -231,25 +228,25 @@
 
   .hero-num {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--red);
-    margin-bottom: 36px;
+    margin-bottom: 20px;
     opacity: 0;
     transform: translateY(16px);
     animation: rise 900ms var(--ease-soft) 0.5s forwards;
   }
-  .hero-num .sep { color: var(--ink-4); margin: 0 10px; }
+  .hero-num .sep { color: var(--ink-4); margin: 0 8px; }
   @media (max-width: 720px) {
-    .hero-num { font-size: 9.5px; letter-spacing: 0.26em; margin-bottom: 22px; }
-    .hero-num .sep { margin: 0 6px; }
+    .hero-num { font-size: 9px; letter-spacing: 0.24em; margin-bottom: 14px; }
+    .hero-num .sep { margin: 0 5px; }
   }
 
   .hero-title {
     font-family: var(--font-mincho);
-    font-size: clamp(120px, 22vw, 280px);
+    font-size: clamp(72px, 11vw, 140px);
     font-weight: 400;
     line-height: 0.9;
     letter-spacing: 0.02em;
@@ -260,7 +257,7 @@
     align-items: baseline;
   }
   @media (max-width: 720px) {
-    .hero-title { font-size: 130px; line-height: 0.92; }
+    .hero-title { font-size: 82px; line-height: 0.92; }
   }
   .hero-title .word {
     display: inline-block;
@@ -282,11 +279,11 @@
   @keyframes dotIn { to { opacity: 1; transform: translateY(0) scale(1); } }
 
   .hero-tagline {
-    margin: 32px 0 8px;
+    margin: 18px 0 6px;
     font-family: var(--font-mincho);
-    font-size: clamp(18px, 2.2vw, 24px);
+    font-size: clamp(15px, 1.8vw, 20px);
     color: var(--ink-2);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.10em;
     opacity: 0;
     transform: translateY(20px);
     animation: rise 900ms var(--ease-soft) 1.5s forwards;
@@ -295,50 +292,21 @@
     margin: 0;
     font-family: var(--font-num);
     font-style: italic;
-    font-size: clamp(13px, 1.4vw, 16px);
+    font-size: clamp(12px, 1.2vw, 14px);
     color: var(--ink-3);
     letter-spacing: 0.04em;
     opacity: 0;
     animation: fadeIn 900ms var(--ease) 1.7s forwards;
   }
   @media (max-width: 720px) {
-    .hero-tagline { margin: 22px 0 6px; font-size: 15.5px; letter-spacing: 0.08em; }
-    .hero-sub { font-size: 12px; }
+    .hero-tagline { margin: 14px 0 4px; font-size: 14px; letter-spacing: 0.06em; }
+    .hero-sub { font-size: 11px; }
   }
 
   @keyframes rise { to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { to { opacity: 1; } }
 
-  .scroll-cue {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    font-family: var(--font-display);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    opacity: 0;
-    animation: fadeIn 1.2s var(--ease) 2s forwards;
-    z-index: 2;
-    cursor: pointer;
-  }
-  .scroll-cue::after {
-    content: "";
-    width: 1px; height: 44px;
-    background: linear-gradient(to bottom, var(--red), transparent);
-    animation: pulse 2.2s ease-in-out infinite;
-  }
-  @media (max-width: 720px) {
-    .scroll-cue { bottom: 20px; font-size: 9px; letter-spacing: 0.26em; gap: 8px; }
-    .scroll-cue::after { height: 28px; }
-  }
+  .scroll-cue { display: none; }
   @keyframes pulse {
     0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
     50%      { opacity: 1; transform: scaleY(1); }
@@ -449,10 +417,10 @@
     position: relative;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 80px 40px 120px;
-    min-height: 60vh;
+    padding: 40px 40px 100px;
+    min-height: 50vh;
   }
-  @media (max-width: 720px) { .panel-wrap { padding: 48px 18px 80px; } }
+  @media (max-width: 720px) { .panel-wrap { padding: 28px 18px 64px; } }
 
   .panel { display: none; opacity: 0; transform: translateY(20px); }
   .panel.active {
@@ -464,10 +432,11 @@
   .panel-head {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    margin-bottom: 56px;
+    gap: 12px;
+    margin-bottom: 32px;
     max-width: 720px;
   }
+  @media (max-width: 720px) { .panel-head { margin-bottom: 22px; gap: 8px; } }
   .kicker {
     display: inline-flex;
     align-items: center;
