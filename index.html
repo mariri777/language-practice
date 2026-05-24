@@ -132,13 +132,16 @@
     width: 28px; height: 28px;
     background: var(--red);
     color: #fff;
-    font-family: var(--font-mincho);
-    font-size: 14px;
-    font-weight: 500;
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 400;
     border-radius: 4px;
     transform: rotate(-4deg);
     box-shadow: 0 4px 14px var(--red-glow);
     transition: transform 280ms var(--ease);
+    line-height: 1;
+    padding-bottom: 2px;
   }
   .brand:hover .brand-mark { transform: rotate(0deg) scale(1.08); }
   .brand-dot { color: var(--ink-4); margin: 0 6px; }
@@ -729,8 +732,11 @@
     align-items: center;
     justify-content: center;
     border-radius: 4px;
-    font-family: var(--font-mincho);
-    font-size: 13px;
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1;
+    padding-bottom: 2px;
     transform: rotate(-3deg);
   }
   footer a {
@@ -772,7 +778,7 @@
 
 <header class="topbar">
   <a href="#" class="brand">
-    <span class="brand-mark">语</span>
+    <span class="brand-mark">&amp;</span>
     <span class="brand-text">A Language Collection<span class="brand-dot">·</span>2026</span>
   </a>
 </header>
@@ -994,13 +1000,13 @@
 
 <footer class="site">
   <div class="left">
-    <span class="seal">语</span>
+    <span class="seal">&amp;</span>
     Data stays in your browser
   </div>
   <a href="https://github.com/mariri777/language-practice" target="_blank" rel="noopener">View on GitHub →</a>
   <div class="meta-foot">
-    <span>個人の趣味の範囲で作っています。細かいバグなどはご容赦ください。</span>
-    <span>© 2026 mari · <a href="https://x.com/mmmmmmmari_" target="_blank" rel="noopener">@mmmmmmmari_</a></span>
+    <span>個人の趣味の範囲で作っています。細かいバグはご容赦ください。商用利用はご遠慮ください。</span>
+    <span>© 2026 mariri777 · <a href="https://x.com/mmmmmmmari_" target="_blank" rel="noopener">@mmmmmmmari_</a></span>
   </div>
 </footer>
 
