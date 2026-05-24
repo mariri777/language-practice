@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Language Collection · 中文 한국어</title>
+<title>日々. — A Language Collection · 中文 한국어 日本語</title>
 <link rel="icon" type="image/svg+xml" href="favicon-home.svg">
 <link rel="apple-touch-icon" href="icons/favicon-home-180.png">
 <link rel="manifest" href="index.webmanifest">
-<meta name="theme-color" content="#7a2c3a">
+<meta name="theme-color" content="#f1e8d2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -21,570 +21,663 @@
 </script>
 <style>
   :root {
-    --bg: #f3efe5;
-    --bg-card: #faf6ec;
-    --bg-pure: #ffffff;
-    --bg-subtle: #e9e2cf;
-    --bg-deeper: #ddd4be;
+    --bg: #f1e8d2;
+    --bg-elevated: #faf2dc;
+    --bg-tile: #f6ecd2;
+    --bg-deep: #e3d7b5;
 
-    --ink: #0c0b09;
-    --ink-2: #36312a;
-    --ink-3: #7a7065;
-    --ink-4: #aea493;
-    --ink-5: #cfc6b3;
+    --ink: #14100a;
+    --ink-2: #2c2317;
+    --ink-3: #6a604e;
+    --ink-4: #a59881;
+    --ink-5: #cabe9f;
 
-    --accent: #7a2c3a;
-    --accent-2: #5e1f29;
-    --accent-soft: rgba(122, 44, 58, 0.08);
-    --accent-glow: rgba(122, 44, 58, 0.16);
+    --red: #8a2438;
+    --red-deep: #5a1622;
+    --red-bright: #b53048;
+    --red-glow: rgba(138, 36, 56, 0.20);
+    --red-soft: rgba(138, 36, 56, 0.08);
 
-    --rule: #c2b9a5;
-    --divider: #d8d0bd;
+    --gold: #b6843a;
+    --gold-soft: rgba(182, 132, 58, 0.10);
 
-    --ease: cubic-bezier(0.2, 0, 0.2, 1);
-    --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
-    --dur: 320ms;
-    --dur-slow: 700ms;
-
-    --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI",
-               "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", system-ui, sans-serif;
-    --font-display: -apple-system, "SF Pro Display", "Inter", "Hiragino Sans", sans-serif;
-    --font-zh: "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", "SimSun", "宋体", serif;
-    --font-ko: "Apple SD Gothic Neo", "Nanum Myeongjo", "Noto Serif KR", "Source Han Serif K", serif;
-    --font-num: "Cormorant Garamond", "Iowan Old Style", "Charter", Georgia, serif;
-    --font-mono: "SF Mono", "JetBrains Mono", "Menlo", "Consolas", monospace;
+    --rule: #c1b491;
+    --hairline: rgba(20, 16, 10, 0.10);
   }
 
-  body.dark {
-    --bg: #0d0c0a;
-    --bg-card: #15130f;
-    --bg-pure: #1a1814;
-    --bg-subtle: #1f1b16;
-    --bg-deeper: #28221c;
+  :root {
+    --ease: cubic-bezier(0.2, 0, 0.2, 1);
+    --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-schwing: cubic-bezier(0.77, 0, 0.18, 1);
+    --ease-power: cubic-bezier(0.85, 0, 0.15, 1);
 
-    --ink: #f3eddf;
-    --ink-2: #c8baa3;
-    --ink-3: #948675;
-    --ink-4: #5e5448;
-    --ink-5: #38322a;
-
-    --accent: #d68088;
-    --accent-2: #e29ea4;
-    --accent-soft: rgba(214, 128, 136, 0.12);
-    --accent-glow: rgba(214, 128, 136, 0.20);
-
-    --rule: #36302a;
-    --divider: #28221c;
+    --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text",
+               "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI",
+               "Noto Sans JP", system-ui, sans-serif;
+    --font-display: "SF Pro Display", "Inter", -apple-system, system-ui, sans-serif;
+    --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho",
+                   "Source Han Serif JP", "Noto Serif JP",
+                   "Songti SC", "STSong", serif;
+    --font-num: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+    --font-ko: "Apple SD Gothic Neo", "Source Han Serif K", "Noto Serif KR", serif;
+    --font-zh: "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", serif;
   }
 
   * { box-sizing: border-box; }
   *:focus { outline: none; }
   *:focus-visible {
-    outline: 1.5px solid var(--accent);
-    outline-offset: 4px;
+    outline: 2px solid var(--red);
+    outline-offset: 3px;
     border-radius: 2px;
   }
 
-  html {
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    scroll-behavior: smooth;
-  }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
 
   body {
     margin: 0;
-    font-family: var(--font-ui);
-    color: var(--ink);
-    line-height: 1.65;
     background: var(--bg);
-    min-height: 100vh;
+    color: var(--ink);
+    font-family: var(--font-ui);
     font-size: 15px;
-    letter-spacing: -0.005em;
-    transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+    line-height: 1.6;
+    letter-spacing: -0.003em;
+    min-height: 100vh;
     overflow-x: hidden;
+    transition: background 320ms var(--ease), color 320ms var(--ease);
   }
 
-  ::selection {
-    background: var(--ink);
-    color: var(--bg);
-  }
+  ::selection { background: var(--red); color: #fff; }
 
-  /* ============ Top Bar ============ */
+  /* ============ Topbar ============ */
   .topbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     z-index: 100;
-    padding: 22px 40px;
+    padding: 20px 36px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     pointer-events: none;
   }
   .topbar > * { pointer-events: auto; }
-  @media (max-width: 720px) {
-    .topbar { padding: 16px 20px; }
-  }
+  @media (max-width: 720px) { .topbar { padding: 14px 18px; } }
 
-  .top-mark {
+  .topbar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--bg) 60%, transparent);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 240ms var(--ease);
+  }
+  body.scrolled .topbar::before { opacity: 1; }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-family: var(--font-display);
     font-size: 11px;
-    font-weight: 600;
-    color: var(--ink-2);
-    letter-spacing: 0.18em;
+    font-weight: 700;
+    letter-spacing: 0.20em;
     text-transform: uppercase;
-  }
-  .top-mark span { color: var(--ink-4); margin: 0 8px; }
-
-  .theme-toggle {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 1px solid var(--rule);
-    background: var(--bg);
     color: var(--ink-2);
-    cursor: pointer;
-    display: flex;
+    text-decoration: none;
+  }
+  .brand-mark {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--dur) var(--ease);
-    backdrop-filter: blur(8px);
+    width: 28px; height: 28px;
+    background: var(--red);
+    color: #fff;
+    font-family: var(--font-mincho);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    transform: rotate(-4deg);
+    box-shadow: 0 4px 14px var(--red-glow);
+    transition: transform 280ms var(--ease);
   }
-  .theme-toggle:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-  }
-  .theme-toggle svg { width: 14px; height: 14px; }
-  body:not(.dark) .theme-toggle .moon { display: block; }
-  body:not(.dark) .theme-toggle .sun { display: none; }
-  body.dark .theme-toggle .moon { display: none; }
-  body.dark .theme-toggle .sun { display: block; }
+  .brand:hover .brand-mark { transform: rotate(0deg) scale(1.08); }
+  .brand-dot { color: var(--ink-4); margin: 0 6px; }
+
 
   /* ============ Hero ============ */
   .hero {
+    position: relative;
     min-height: 100vh;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 80px 40px 80px;
+    padding: 100px 40px 140px;
     text-align: center;
-    position: relative;
-    overflow: hidden;
   }
-
-  .hero::before {
+  .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .hero-bg::before {
     content: "";
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 70% 60% at 50% 30%, var(--accent-soft), transparent 70%),
-      radial-gradient(circle at 20% 90%, var(--bg-subtle), transparent 50%);
+      radial-gradient(ellipse 80% 60% at 50% 40%, var(--red-soft), transparent 70%),
+      radial-gradient(circle at 12% 90%, var(--gold-soft), transparent 50%);
+  }
+  .hero-bg::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, var(--hairline) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 70% 70% at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at center, black 30%, transparent 80%);
+    opacity: 0.6;
+  }
+  .hero-slash {
+    position: absolute;
+    left: -10%; right: -10%;
+    top: 56%;
+    height: 120px;
+    background: linear-gradient(90deg,
+      transparent 0%, var(--red-soft) 12%, var(--red-glow) 50%, var(--red-soft) 88%, transparent 100%);
+    transform: translateY(-50%) skewY(-8deg);
+    opacity: 0;
+    mix-blend-mode: multiply;
+    animation: slashIn 1.4s var(--ease-schwing) 0.5s forwards;
     z-index: 0;
-    pointer-events: none;
+  }
+  @keyframes slashIn {
+    0% { opacity: 0; transform: translate(-40%, -50%) skewY(-8deg); }
+    100% { opacity: 1; transform: translate(0, -50%) skewY(-8deg); }
   }
 
-  .hero-inner {
-    position: relative;
+  .hero-hairline {
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    background: var(--red);
+    transform-origin: left;
     z-index: 1;
-    max-width: 980px;
   }
+  .hero-hairline.h-top {
+    top: 22%; width: 80px; height: 2px;
+    transform: translate(-50%, 0) scaleX(0);
+    animation: hairlineIn 700ms var(--ease-schwing) 0.4s forwards;
+  }
+  .hero-hairline.h-bot {
+    bottom: 22%; width: 80px; height: 2px;
+    transform: translate(-50%, 0) scaleX(0);
+    animation: hairlineIn 700ms var(--ease-schwing) 1.4s forwards;
+  }
+  @keyframes hairlineIn { to { transform: translate(-50%, 0) scaleX(1); } }
 
-  .hero-eyebrow {
+  .hero-content { position: relative; z-index: 2; max-width: 1100px; }
+
+  .hero-num {
     font-family: var(--font-display);
     font-size: 11px;
-    font-weight: 600;
-    color: var(--accent);
+    font-weight: 700;
     letter-spacing: 0.32em;
     text-transform: uppercase;
-    margin-bottom: 40px;
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
+    color: var(--red);
+    margin-bottom: 36px;
     opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 1s var(--ease-out-soft) 0.2s forwards;
+    transform: translateY(16px);
+    animation: rise 900ms var(--ease-soft) 0.5s forwards;
   }
-  .hero-eyebrow::before,
-  .hero-eyebrow::after {
-    content: "";
-    width: 32px;
-    height: 1px;
-    background: currentColor;
-  }
+  .hero-num .sep { color: var(--ink-4); margin: 0 10px; }
 
   .hero-title {
-    font-family: var(--font-zh);
-    font-size: clamp(72px, 14vw, 160px);
+    font-family: var(--font-mincho);
+    font-size: clamp(120px, 22vw, 280px);
     font-weight: 400;
-    line-height: 0.95;
-    letter-spacing: 0.04em;
-    margin: 0 0 12px;
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    margin: 0;
     color: var(--ink);
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+  }
+  .hero-title .word {
+    display: inline-block;
     opacity: 0;
-    transform: translateY(40px);
-    animation: fadeInUp 1.2s var(--ease-out-soft) 0.4s forwards;
+    transform: translateY(80px);
+    animation: rise 1.2s var(--ease-soft) 0.7s forwards;
   }
-  .hero-title .x {
+  .hero-title .dot {
+    color: var(--red);
     font-family: var(--font-num);
     font-style: italic;
-    font-weight: 300;
-    color: var(--accent);
-    margin: 0 0.15em;
-    vertical-align: 0.06em;
-    font-size: 0.65em;
+    font-size: 0.45em;
+    margin-left: 0.02em;
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(80px) scale(0.3);
+    animation: dotIn 900ms var(--ease-soft) 1.3s forwards;
   }
-  .hero-title .ko {
-    font-family: var(--font-ko);
-    font-weight: 500;
-  }
+  @keyframes dotIn { to { opacity: 1; transform: translateY(0) scale(1); } }
 
-  .hero-sub {
-    font-family: var(--font-num);
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(20px, 2.4vw, 26px);
+  .hero-tagline {
+    margin: 32px 0 8px;
+    font-family: var(--font-mincho);
+    font-size: clamp(18px, 2.2vw, 24px);
     color: var(--ink-2);
-    margin: 24px 0 8px;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.12em;
     opacity: 0;
     transform: translateY(20px);
-    animation: fadeInUp 1s var(--ease-out-soft) 0.7s forwards;
+    animation: rise 900ms var(--ease-soft) 1.5s forwards;
   }
-
-  .hero-desc {
-    font-size: 15px;
+  .hero-sub {
+    margin: 0;
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: clamp(13px, 1.4vw, 16px);
     color: var(--ink-3);
-    max-width: 480px;
-    margin: 28px auto 0;
-    line-height: 1.85;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.04em;
     opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 1s var(--ease-out-soft) 0.9s forwards;
+    animation: fadeIn 900ms var(--ease) 1.7s forwards;
   }
 
-  .hero-meta {
-    margin-top: 64px;
-    font-family: var(--font-display);
-    font-size: 10.5px;
-    font-weight: 600;
-    color: var(--ink-3);
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fadeIn 1s var(--ease) 1.2s forwards;
-  }
-  .hero-meta span { color: var(--ink-4); margin: 0 14px; }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { to { opacity: 1; } }
 
-  .scroll-indicator {
+  .scroll-cue {
     position: absolute;
-    bottom: 36px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    color: var(--ink-4);
-    font-family: var(--font-display);
-    font-size: 9.5px;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fadeIn 1.4s var(--ease) 1.6s forwards;
-  }
-  .scroll-line {
-    width: 1px;
-    height: 48px;
-    background: linear-gradient(to bottom, transparent, var(--ink-4));
-    animation: scrollPulse 2.4s ease-in-out infinite;
-  }
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; transform: scaleY(0.7); transform-origin: top; }
-    50% { opacity: 1; transform: scaleY(1); }
-  }
-
-  @keyframes fadeInUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-
-  /* ============ Tools Section ============ */
-  .tools {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 80px 40px 120px;
-  }
-  @media (max-width: 720px) {
-    .tools { padding: 40px 20px 80px; }
-  }
-
-  .section-head {
-    text-align: center;
-    margin-bottom: 88px;
-  }
-  .section-head .label {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-size: 10.5px;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    margin-bottom: 18px;
-  }
-  .section-head h2 {
-    font-family: var(--font-zh);
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 400;
-    margin: 0;
-    letter-spacing: 0.05em;
-    color: var(--ink);
-  }
-  .section-head .em {
-    font-family: var(--font-num);
-    font-style: italic;
-    font-weight: 400;
-    color: var(--accent);
-  }
-
-  .tool-row {
-    display: grid;
-    grid-template-columns: 110px 1fr auto;
-    gap: 56px;
-    padding: 64px 0;
-    border-bottom: 1px solid var(--rule);
-    position: relative;
-    text-decoration: none;
-    color: inherit;
-    align-items: center;
-    transition: padding var(--dur) var(--ease);
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  .tool-row.visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 1s var(--ease-out-soft), transform 1s var(--ease-out-soft);
-  }
-  .tool-row:first-child { border-top: 1px solid var(--rule); }
-  .tool-row:last-child { border-bottom: 1px solid var(--rule); }
-
-  .tool-row:hover {
-    padding-left: 12px;
-  }
-  .tool-row:hover .tool-char {
-    transform: scale(1.05) rotate(-2deg);
-    color: var(--accent);
-  }
-  .tool-row:hover .cta {
-    color: var(--accent);
-    letter-spacing: 0.18em;
-  }
-  .tool-row:hover .cta-line {
-    background: var(--accent);
-    transform: scaleX(1.15);
-  }
-
-  @media (max-width: 880px) {
-    .tool-row {
-      grid-template-columns: 56px 1fr;
-      gap: 24px;
-      padding: 44px 0;
-    }
-    .tool-row .tool-char-wrap { display: none; }
-  }
-
-  .tool-num {
-    font-family: var(--font-num);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(56px, 7vw, 88px);
-    color: var(--ink-4);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    transition: color var(--dur) var(--ease);
-  }
-  .tool-row:hover .tool-num {
-    color: var(--ink);
-  }
-
-  .tool-body {
-    max-width: 580px;
-  }
-
-  .tool-tag {
     font-family: var(--font-display);
     font-size: 10px;
-    font-weight: 600;
-    color: var(--ink-3);
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .tool-tag .new {
-    padding: 2px 8px;
-    background: var(--accent);
-    color: var(--bg);
-    border-radius: 999px;
-    font-size: 8.5px;
-    letter-spacing: 0.12em;
     font-weight: 700;
-  }
-  body.dark .tool-tag .new { color: var(--bg); }
-
-  .tool-title {
-    font-family: var(--font-zh);
-    font-size: clamp(34px, 4.5vw, 52px);
-    font-weight: 400;
-    color: var(--ink);
-    margin: 0 0 4px;
-    letter-spacing: 0.04em;
-    line-height: 1.05;
-  }
-  .tool-title .ko {
-    font-family: var(--font-ko);
-    font-weight: 500;
-  }
-
-  .tool-sub {
-    font-family: var(--font-num);
-    font-style: italic;
-    font-size: 18px;
-    color: var(--ink-2);
-    margin: 0 0 18px;
-    font-weight: 400;
-    letter-spacing: 0.005em;
-  }
-
-  .tool-desc {
-    font-size: 14.5px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
     color: var(--ink-3);
-    line-height: 1.85;
-    margin: 0 0 22px;
-    max-width: 540px;
+    opacity: 0;
+    animation: fadeIn 1.2s var(--ease) 2s forwards;
+    z-index: 2;
+    cursor: pointer;
+  }
+  .scroll-cue::after {
+    content: "";
+    width: 1px; height: 44px;
+    background: linear-gradient(to bottom, var(--red), transparent);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
+    50%      { opacity: 1; transform: scaleY(1); }
   }
 
-  .tool-meta {
+  /* ============ Tab Nav ============ */
+  .tab-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border-bottom: 1px solid var(--hairline);
+    padding-top: 60px;
+  }
+  @media (max-width: 720px) { .tab-nav { padding-top: 52px; } }
+
+  .tab-track {
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-track::-webkit-scrollbar { display: none; }
+  @media (max-width: 720px) { .tab-track { padding: 0 18px; } }
+
+  .tab {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 22px 28px;
+    background: transparent;
+    border: 0;
+    color: var(--ink-3);
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: color 240ms var(--ease);
+    position: relative;
+  }
+  @media (max-width: 720px) { .tab { padding: 16px 18px; } }
+
+  .tab-num {
     font-family: var(--font-display);
-    font-size: 11px;
-    color: var(--ink-3);
-    letter-spacing: 0.06em;
-    margin-bottom: 28px;
-  }
-  .tool-meta span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
     color: var(--ink-4);
-    margin: 0 8px;
+    transition: color 240ms var(--ease);
+  }
+  .tab-label {
+    font-family: var(--font-mincho);
+    font-size: clamp(17px, 1.8vw, 22px);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--ink-2);
+    transition: color 240ms var(--ease);
+    line-height: 1;
+  }
+  .tab-label.ko { font-family: var(--font-ko); font-weight: 500; }
+  .tab-label.zh { font-family: var(--font-zh); }
+  .tab-meta {
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    transition: opacity 240ms var(--ease);
+  }
+  .tab:hover { color: var(--ink); }
+  .tab:hover .tab-num { color: var(--red); }
+  .tab:hover .tab-label { color: var(--ink); }
+  .tab.active .tab-num { color: var(--red); }
+  .tab.active .tab-label { color: var(--ink); }
+  .tab.active .tab-meta { color: var(--ink-3); }
+
+  .tab-underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--red);
+    transition: transform 500ms var(--ease-schwing), width 500ms var(--ease-schwing);
+    pointer-events: none;
+  }
+  .tab-underline::after {
+    content: "";
+    position: absolute;
+    left: -8px; right: -8px;
+    top: -1px;
+    height: 6px;
+    background: var(--red);
+    filter: blur(8px);
+    opacity: 0.6;
   }
 
-  .cta {
+  /* ============ Panel ============ */
+  .panel-wrap {
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 80px 40px 120px;
+    min-height: 60vh;
+  }
+  @media (max-width: 720px) { .panel-wrap { padding: 48px 18px 80px; } }
+
+  .panel { display: none; opacity: 0; transform: translateY(20px); }
+  .panel.active {
+    display: block;
+    animation: panelIn 600ms var(--ease-soft) forwards;
+  }
+  @keyframes panelIn { to { opacity: 1; transform: translateY(0); } }
+
+  .panel-head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 56px;
+    max-width: 720px;
+  }
+  .kicker {
     display: inline-flex;
     align-items: center;
     gap: 14px;
-    color: var(--ink);
     font-family: var(--font-display);
-    font-size: 11.5px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    transition: all var(--dur) var(--ease);
+    color: var(--red);
   }
-  .cta-line {
-    display: inline-block;
-    width: 40px;
-    height: 1px;
-    background: var(--ink);
-    transition: all var(--dur) var(--ease);
-    transform-origin: left;
+  .kicker::before {
+    content: "";
+    width: 36px; height: 2px;
+    background: var(--red);
   }
-
-  .tool-char-wrap {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .tool-char {
-    font-family: var(--font-zh);
-    font-size: 220px;
+  .panel-title {
+    font-family: var(--font-mincho);
+    font-size: clamp(36px, 5.5vw, 64px);
     font-weight: 400;
-    color: var(--ink-5);
-    line-height: 0.8;
-    transition: all var(--dur-slow) var(--ease-out-soft);
-    user-select: none;
-    pointer-events: none;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    margin: 0;
+    color: var(--ink);
   }
-  .tool-char.ko {
-    font-family: var(--font-ko);
-    font-weight: 500;
-    font-size: 180px;
-  }
-
-  /* ============ Stats / Bottom info ============ */
-  .stats {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 80px 40px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    border-top: 1px solid var(--rule);
-  }
-  @media (max-width: 720px) {
-    .stats {
-      grid-template-columns: 1fr;
-      gap: 32px;
-      padding: 48px 20px;
-    }
-  }
-  .stat {
-    text-align: center;
-  }
-  .stat .num {
+  .panel-title .ko { font-family: var(--font-ko); font-weight: 500; }
+  .panel-title .em {
     font-family: var(--font-num);
     font-style: italic;
-    font-weight: 400;
-    font-size: clamp(40px, 5vw, 56px);
-    color: var(--accent);
+    color: var(--red);
+  }
+  .panel-title .sm {
+    display: block;
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 0.40em;
+    color: var(--ink-3);
+    margin-top: 14px;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+  .panel-desc {
+    font-size: 14.5px;
+    color: var(--ink-3);
+    line-height: 1.85;
+    max-width: 620px;
+    margin: 4px 0 0;
+  }
+
+  /* ============ Tiles (no big char watermark) ============ */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  @media (max-width: 720px) {
+    .tiles { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  }
+  @media (max-width: 360px) {
+    .tiles { grid-template-columns: 1fr; }
+  }
+
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 170px;
+    padding: 22px 22px 20px;
+    background: var(--bg-tile);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 360ms var(--ease-soft),
+                border-color 240ms var(--ease),
+                box-shadow 240ms var(--ease),
+                background 240ms var(--ease);
+    opacity: 0;
+    transform: translateY(28px);
+    animation: tileIn 700ms var(--ease-soft) forwards;
+  }
+  @media (max-width: 720px) {
+    .tile { padding: 16px 16px 14px; min-height: 150px; }
+  }
+  .panel.active .tile { animation-delay: calc(var(--i, 0) * 80ms + 250ms); }
+  @keyframes tileIn { to { opacity: 1; transform: translateY(0); } }
+
+  .tile::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(115deg,
+      transparent 30%, var(--red-soft) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 800ms var(--ease-schwing);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .tile:hover::before { transform: translateX(120%); }
+
+  .tile::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 3px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 500ms var(--ease-schwing);
+    z-index: 2;
+  }
+  .tile:hover {
+    border-color: var(--red);
+    background: var(--bg-elevated);
+    transform: translateY(-6px);
+    box-shadow: 0 1px 0 var(--red),
+                0 22px 50px -20px var(--red-glow),
+                0 4px 16px -8px rgba(0,0,0,0.30);
+  }
+  .tile:hover::after { transform: scaleX(1); }
+
+  .tile-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+  }
+  .tile-num {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink-4);
+    font-weight: 300;
     line-height: 1;
-    margin-bottom: 10px;
+    transition: color 240ms var(--ease);
     letter-spacing: -0.01em;
   }
-  .stat .num .small {
-    font-size: 0.4em;
-    color: var(--ink-3);
-    margin-left: 8px;
-    font-style: normal;
+  .tile:hover .tile-num { color: var(--red); }
+  .tile-tag {
     font-family: var(--font-display);
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    vertical-align: 0.3em;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-align: right;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.4;
   }
-  .stat .label {
+  .tile-tag .new,
+  .tile-tag .soon {
+    padding: 3px 7px;
+    border-radius: 3px;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  .tile-tag .new { background: var(--red); color: #fff; }
+  .tile-tag .soon { background: transparent; color: var(--ink-4); border: 1px solid var(--rule); }
+
+  .tile-bottom {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    padding-top: 32px;
+  }
+  .tile-name {
+    margin: 0;
+    font-family: var(--font-mincho);
+    font-size: clamp(18px, 2.4vw, 26px);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  @media (max-width: 720px) {
+    .tile-name { font-size: 17px; letter-spacing: 0.01em; }
+  }
+  .tile-name .ko { font-family: var(--font-ko); font-weight: 500; }
+  .tile-name .ja { font-family: var(--font-ui); font-weight: 600; }
+  .tile-sub {
+    margin: 4px 0 14px;
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.01em;
+  }
+  .tile-sub.ko { font-family: var(--font-ko); font-style: normal; font-weight: 500; }
+  .tile-sub.ja { font-family: var(--font-ui); font-style: normal; font-weight: 500; }
+
+  .tile-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-family: var(--font-display);
     font-size: 11px;
-    color: var(--ink-3);
-    letter-spacing: 0.2em;
+    font-weight: 700;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    font-weight: 600;
+    color: var(--ink);
+    transition: color 240ms var(--ease);
   }
+  .tile-cta .arrow {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 17px;
+    transition: transform 400ms var(--ease-schwing);
+  }
+  .tile:hover .tile-cta { color: var(--red); }
+  .tile:hover .tile-cta .arrow { transform: translateX(7px); }
+
+  .tile.soon {
+    cursor: default;
+    border-style: dashed;
+    background: transparent;
+  }
+  .tile.soon .tile-name { color: var(--ink-3); }
+  .tile.soon .tile-cta { color: var(--ink-4); }
+  .tile.soon:hover {
+    background: transparent;
+    border-color: var(--rule);
+    box-shadow: none;
+    transform: none;
+  }
+  .tile.soon:hover::after { transform: scaleX(0); }
+  .tile.soon:hover::before { transform: translateX(-120%); }
+  .tile.soon:hover .tile-cta { color: var(--ink-4); }
+  .tile.soon:hover .tile-cta .arrow { transform: none; }
 
   /* ============ Footer ============ */
   footer.site {
-    max-width: 1180px;
+    border-top: 1px solid var(--hairline);
+    padding: 32px 40px 44px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 32px 40px 56px;
-    border-top: 1px solid var(--rule);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -595,216 +688,384 @@
     color: var(--ink-3);
     letter-spacing: 0.06em;
   }
-  @media (max-width: 720px) {
-    footer.site { padding: 24px 20px 32px; }
-  }
-  footer .meta {
-    flex-basis: 100%;
-    display: flex;
-    justify-content: space-between;
+  @media (max-width: 720px) { footer.site { padding: 24px 18px 32px; } }
+  footer .left {
+    display: inline-flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 10px 18px;
-    padding-top: 14px;
-    margin-top: 4px;
-    border-top: 1px solid var(--divider);
-    font-size: 10.5px;
-    text-transform: none;
-    letter-spacing: 0.03em;
-    color: var(--ink-4);
+    gap: 12px;
   }
-  footer .meta a { color: var(--ink-3); text-decoration: none; transition: color var(--dur) var(--ease); }
-  footer .meta a:hover { color: var(--accent); }
-  footer .left { display: inline-flex; align-items: center; gap: 14px; }
   footer .left .seal {
+    width: 24px; height: 24px;
+    background: var(--red);
+    color: #fff;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 26px;
-    height: 26px;
-    background: var(--accent);
-    color: var(--bg);
-    font-family: var(--font-zh);
-    font-size: 13px;
-    font-weight: 500;
     border-radius: 4px;
+    font-family: var(--font-mincho);
+    font-size: 13px;
     transform: rotate(-3deg);
   }
-  body.dark footer .left .seal { color: var(--bg); }
   footer a {
     color: var(--ink-3);
     text-decoration: none;
-    transition: color var(--dur) var(--ease);
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 700;
+    transition: color 240ms var(--ease);
   }
-  footer a:hover { color: var(--accent); }
+  footer a:hover { color: var(--red); }
+  footer .meta-foot {
+    flex-basis: 100%;
+    padding-top: 14px;
+    margin-top: 4px;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    font-size: 10.5px;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    color: var(--ink-4);
+  }
+  footer .meta-foot a { color: var(--ink-3); text-transform: none; letter-spacing: 0.02em; font-weight: 500; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="top-mark">A Language Collection<span>·</span>2026</div>
-  <button class="theme-toggle" id="theme-toggle" aria-label="テーマ切替">
-    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-  </button>
-</div>
+<header class="topbar">
+  <a href="#" class="brand">
+    <span class="brand-mark">语</span>
+    <span class="brand-text">A Language Collection<span class="brand-dot">·</span>2026</span>
+  </a>
+</header>
 
 <section class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Three Tools · Two Languages</div>
+  <div class="hero-bg"></div>
+  <div class="hero-slash"></div>
+  <div class="hero-hairline h-top"></div>
+  <div class="hero-hairline h-bot"></div>
+  <div class="hero-content">
+    <div class="hero-num">VOL. I<span class="sep">·</span>MMXXVI<span class="sep">·</span>THREE TONGUES</div>
     <h1 class="hero-title">
-      中文<span class="x">&amp;</span><span class="ko">한국어</span>
+      <span class="word">日々</span><span class="dot">.</span>
     </h1>
-    <p class="hero-sub">A daily practice, written by hand.</p>
-    <p class="hero-desc">パッセージの書写・音読、級別の作文ドリル。<br>毎日続けるための、静かで丁寧な学習ツール集。</p>
-    <div class="hero-meta">Chinese<span>·</span>Korean<span>·</span>HSK<span>·</span>Daily Practice</div>
+    <p class="hero-tagline">ことばを、すこしずつ、毎日。</p>
+    <p class="hero-sub">A daily language collection — Chinese · Korean · Japanese.</p>
   </div>
-  <div class="scroll-indicator">
-    <span>Scroll</span>
-    <span class="scroll-line"></span>
-  </div>
+  <div class="scroll-cue">Select your channel</div>
 </section>
 
-<section class="tools">
-  <div class="section-head">
-    <div class="label">The Collection</div>
-    <h2>五つの<span class="em">教材</span></h2>
+<nav class="tab-nav" id="tab-nav" aria-label="Audience selector">
+  <div class="tab-track">
+    <button class="tab active" data-audience="ja" aria-label="For Japanese learners">
+      <span class="tab-num">01 / CH</span>
+      <span class="tab-label">日本語ユーザー</span>
+      <span class="tab-meta">For Japanese · learn CN · KR</span>
+    </button>
+    <button class="tab" data-audience="ko" aria-label="For Korean learners">
+      <span class="tab-num">02 / CH</span>
+      <span class="tab-label ko">한국어 사용자</span>
+      <span class="tab-meta">For Korean · learn CN · JP</span>
+    </button>
+    <button class="tab" data-audience="zh" aria-label="For Chinese learners">
+      <span class="tab-num">03 / CH</span>
+      <span class="tab-label zh">中文用户</span>
+      <span class="tab-meta">For Chinese · learn KR · JP</span>
+    </button>
+    <div class="tab-underline" id="tab-underline"></div>
   </div>
+</nav>
 
-  <a href="chinese-diary.html" class="tool-row" data-reveal>
-    <span class="tool-num">01</span>
-    <div class="tool-body">
-      <div class="tool-tag">Chinese · Daily Passage<span class="new">NEW</span></div>
-      <h3 class="tool-title">汉语日记</h3>
-      <p class="tool-sub">Chinese Diary</p>
-      <p class="tool-desc">
-        HSK 1〜4のレベルに沿った日記風の短文を、聞いて、読んで、書き写す。
-        書写と音読の反復で、記憶に静かに定着させていく日々のトレーニング。
-      </p>
-      <div class="tool-meta">HSK 1–4<span>·</span>Audio<span>·</span>田字格<span>·</span>Typing Diff</div>
-      <span class="cta">Begin the diary<span class="cta-line"></span></span>
+<main class="panel-wrap">
+
+  <!-- ① For Japanese learners -->
+  <section class="panel active" data-panel="ja" aria-labelledby="ja-title">
+    <div class="panel-head">
+      <div class="kicker">Channel 01 · Now playing</div>
+      <h2 class="panel-title" id="ja-title">
+        日本語で<span class="em">学ぶ</span>
+        <span class="sm">Tools explained in Japanese — for learners of Chinese & Korean</span>
+      </h2>
+      <p class="panel-desc">中国語と韓国語を、日本語の解説で。</p>
     </div>
-    <div class="tool-char-wrap"><span class="tool-char">汉</span></div>
-  </a>
 
-  <a href="chinese-practice.html" class="tool-row" data-reveal>
-    <span class="tool-num">02</span>
-    <div class="tool-body">
-      <div class="tool-tag">Chinese · Output Drill</div>
-      <h3 class="tool-title">你好！</h3>
-      <p class="tool-sub">中国語アウトプット練習</p>
-      <p class="tool-desc">
-        日本語から中国語へ作文するアウトプット型ドリル。
-        級別のコースを反復することで、表現が口から自然に出てくるようになるまで。
-      </p>
-      <div class="tool-meta">HSK Courses<span>·</span>Drill<span>·</span>Favourites</div>
-      <span class="cta">Open the drill<span class="cta-line"></span></span>
+    <div class="tiles">
+      <a href="chinese-practice.html" class="tile" style="--i:0">
+        <div class="tile-top">
+          <span class="tile-num">01</span>
+          <span class="tile-tag">CN · Talk</span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Daily 中国語</h3>
+          <p class="tile-sub">中国語の作文ドリル</p>
+          <span class="tile-cta">Open<span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="korean-practice.html" class="tile" style="--i:1">
+        <div class="tile-top">
+          <span class="tile-num">02</span>
+          <span class="tile-tag">KR · Talk</span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Daily 한국어</h3>
+          <p class="tile-sub">韓国語の作文ドリル</p>
+          <span class="tile-cta">Open<span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="chinese-diary.html" class="tile" style="--i:2">
+        <div class="tile-top">
+          <span class="tile-num">03</span>
+          <span class="tile-tag">CN · Journal<span class="new">NEW</span></span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Journal 中文</h3>
+          <p class="tile-sub">中国語の短文を書き写す</p>
+          <span class="tile-cta">Open<span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="chinese-lookup.html" class="tile" style="--i:3">
+        <div class="tile-top">
+          <span class="tile-num">04</span>
+          <span class="tile-tag">CN · Tool<span class="new">NEW</span></span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Lookup 中文</h3>
+          <p class="tile-sub">手書きで漢字を検索</p>
+          <span class="tile-cta">Open<span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <div class="tile soon" style="--i:4">
+        <div class="tile-top">
+          <span class="tile-num">05</span>
+          <span class="tile-tag">KR · Journal<span class="soon">SOON</span></span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Journal 한국어</h3>
+          <p class="tile-sub">韓国語の短文を書き写す（準備中）</p>
+          <span class="tile-cta">Coming soon</span>
+        </div>
+      </div>
     </div>
-    <div class="tool-char-wrap"><span class="tool-char">练</span></div>
-  </a>
+  </section>
 
-  <a href="korean-practice.html" class="tool-row" data-reveal>
-    <span class="tool-num">03</span>
-    <div class="tool-body">
-      <div class="tool-tag">Korean · Output Drill</div>
-      <h3 class="tool-title"><span class="ko">안녕！</span></h3>
-      <p class="tool-sub">韓国語アウトプット練習</p>
-      <p class="tool-desc">
-        日本語から韓国語への作文ドリル。級別の表現を反復しながら、
-        ハングルの読み書きと口に出すリズムを身につける。
-      </p>
-      <div class="tool-meta">TOPIK Courses<span>·</span>Drill<span>·</span>Favourites</div>
-      <span class="cta">Open the drill<span class="cta-line"></span></span>
+  <!-- ② For Korean learners -->
+  <section class="panel" data-panel="ko" aria-labelledby="ko-title">
+    <div class="panel-head">
+      <div class="kicker">Channel 02 · Now playing</div>
+      <h2 class="panel-title" id="ko-title">
+        <span class="ko">한국어로 배우다</span>
+        <span class="sm">Tools explained in Korean — for learners of Chinese & Japanese</span>
+      </h2>
+      <p class="panel-desc">중국어와 일본어를, 한국어 해설로.</p>
     </div>
-    <div class="tool-char-wrap"><span class="tool-char ko">한</span></div>
-  </a>
 
-  <a href="chinese-practice-ko.html" class="tool-row" data-reveal>
-    <span class="tool-num">04</span>
-    <div class="tool-body">
-      <div class="tool-tag">Chinese · Output Drill (for Korean speakers)</div>
-      <h3 class="tool-title">你好！<span class="ko">(한국어판)</span></h3>
-      <p class="tool-sub">한국어 학습자용 중국어 아웃풋 연습</p>
-      <p class="tool-desc">
-        한국어에서 중국어로 작문하는 아웃풋 드릴. HSK 1을 한국어로 학습할 수 있습니다.
-        (For Korean learners — Korean-to-Chinese output practice.)
-      </p>
-      <div class="tool-meta">HSK 1<span>·</span>Drill<span>·</span>한국어</div>
-      <span class="cta">시작하기<span class="cta-line"></span></span>
+    <div class="tiles">
+      <a href="chinese-practice-ko.html" class="tile" style="--i:0">
+        <div class="tile-top">
+          <span class="tile-num">01</span>
+          <span class="tile-tag">CN · Talk</span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Daily 중국어</h3>
+          <p class="tile-sub ko">중국어 작문 드릴</p>
+          <span class="tile-cta">시작<span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="chinese-diary-ko.html" class="tile" style="--i:1">
+        <div class="tile-top">
+          <span class="tile-num">02</span>
+          <span class="tile-tag">CN · Journal<span class="new">NEW</span></span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Journal 중국어</h3>
+          <p class="tile-sub ko">중국어 단문 베껴쓰기</p>
+          <span class="tile-cta">시작<span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <div class="tile soon" style="--i:2">
+        <div class="tile-top">
+          <span class="tile-num">03</span>
+          <span class="tile-tag">JP · Talk<span class="soon">SOON</span></span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Daily 일본어</h3>
+          <p class="tile-sub ko">일본어 작문 드릴（준비중）</p>
+          <span class="tile-cta">Coming soon</span>
+        </div>
+      </div>
+
+      <div class="tile soon" style="--i:3">
+        <div class="tile-top">
+          <span class="tile-num">04</span>
+          <span class="tile-tag">JP · Journal<span class="soon">SOON</span></span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Journal 일본어</h3>
+          <p class="tile-sub ko">일본어 단문 베껴쓰기（준비중）</p>
+          <span class="tile-cta">Coming soon</span>
+        </div>
+      </div>
     </div>
-    <div class="tool-char-wrap"><span class="tool-char ko">韩</span></div>
-  </a>
+  </section>
 
-  <a href="chinese-lookup.html" class="tool-row" data-reveal>
-    <span class="tool-num">05</span>
-    <div class="tool-body">
-      <div class="tool-tag">Chinese · Utility<span class="new">NEW</span></div>
-      <h3 class="tool-title">手写查字</h3>
-      <p class="tool-sub">Handwriting Lookup</p>
-      <p class="tool-desc">
-        知らない漢字を指で書くだけ。拼音と意味がすぐ出て、Plecoや辞書にそのまま渡せる。
-        Simejiから手書きキーボードに切り替えるより速い、読書のお供。
-      </p>
-      <div class="tool-meta">Pinyin<span>·</span>Pleco<span>·</span>Translate</div>
-      <span class="cta">Look up a character<span class="cta-line"></span></span>
+  <!-- ③ For Chinese learners -->
+  <section class="panel" data-panel="zh" aria-labelledby="zh-title">
+    <div class="panel-head">
+      <div class="kicker">Channel 03 · Coming soon</div>
+      <h2 class="panel-title" id="zh-title">
+        <span class="zh">用中文学习</span>
+        <span class="sm">Tools explained in Chinese — for learners of Korean & Japanese · 即将推出</span>
+      </h2>
+      <p class="panel-desc">用中文学习韩语与日语。</p>
     </div>
-    <div class="tool-char-wrap"><span class="tool-char">查</span></div>
-  </a>
-</section>
 
-<section class="stats">
-  <div class="stat">
-    <div class="num">25<span class="small">/80</span></div>
-    <div class="label">Chinese Diary Lessons</div>
-  </div>
-  <div class="stat">
-    <div class="num">240<span class="small">sentences</span></div>
-    <div class="label">Output Drill Bank</div>
-  </div>
-  <div class="stat">
-    <div class="num">2<span class="small">languages</span></div>
-    <div class="label">Chinese &amp; Korean</div>
-  </div>
-</section>
+    <div class="tiles">
+      <div class="tile soon" style="--i:0">
+        <div class="tile-top">
+          <span class="tile-num">01</span>
+          <span class="tile-tag">KR · Talk<span class="soon">SOON</span></span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Daily 韩语</h3>
+          <p class="tile-sub">韩语作文练习（即将推出）</p>
+          <span class="tile-cta">即将推出</span>
+        </div>
+      </div>
+
+      <div class="tile soon" style="--i:1">
+        <div class="tile-top">
+          <span class="tile-num">02</span>
+          <span class="tile-tag">JP · Talk<span class="soon">SOON</span></span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Daily 日语</h3>
+          <p class="tile-sub">日语作文练习（即将推出）</p>
+          <span class="tile-cta">即将推出</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <footer class="site">
   <div class="left">
-    <span class="seal">汉</span>
+    <span class="seal">语</span>
     Data stays in your browser
   </div>
   <a href="https://github.com/mariri777/language-practice" target="_blank" rel="noopener">View on GitHub →</a>
-  <div class="meta">
+  <div class="meta-foot">
     <span>個人の趣味の範囲で作っています。細かいバグなどはご容赦ください。</span>
     <span>© 2026 mari · <a href="https://x.com/mmmmmmmari_" target="_blank" rel="noopener">@mmmmmmmari_</a></span>
   </div>
 </footer>
 
 <script>
-  // Theme toggle
-  const STORE = 'language-collection-theme';
-  let theme = localStorage.getItem(STORE) || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  const apply = () => document.body.classList.toggle('dark', theme === 'dark');
-  apply();
-  document.getElementById('theme-toggle').addEventListener('click', () => {
-    theme = theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem(STORE, theme);
-    apply();
-  });
+  // Tab switching with sliding underline
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  const underline = document.getElementById('tab-underline');
+  const track = document.querySelector('.tab-track');
 
-  // Scroll-reveal
-  const reveals = document.querySelectorAll('[data-reveal]');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+  function moveUnderline(tab) {
+    if (!tab) return;
+    const tabRect = tab.getBoundingClientRect();
+    const trackRect = track.getBoundingClientRect();
+    const left = tabRect.left - trackRect.left + track.scrollLeft;
+    underline.style.width = tabRect.width + 'px';
+    underline.style.transform = `translateX(${left}px)`;
+  }
+
+  function activate(target, opts = {}) {
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.audience === target));
+    panels.forEach(p => {
+      const match = p.dataset.panel === target;
+      if (match) {
+        p.classList.remove('active');
+        void p.offsetWidth;
+        p.classList.add('active');
+      } else {
+        p.classList.remove('active');
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
-  reveals.forEach(el => observer.observe(el));
+    moveUnderline(document.querySelector('.tab.active'));
+    if (opts.scroll) {
+      const nav = document.getElementById('tab-nav');
+      const navTop = nav.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: navTop, behavior: 'smooth' });
+    }
+  }
+
+  tabs.forEach(t => {
+    t.addEventListener('click', () => activate(t.dataset.audience, { scroll: true }));
+  });
+
+  // Smart default audience: hash → localStorage → browser-lang → ja
+  function pickDefaultAudience() {
+    const params = new URLSearchParams(location.search);
+    const fromQ = params.get('tab') || (location.hash || '').replace('#', '');
+    if (['ja','ko','zh'].includes(fromQ)) return fromQ;
+    const stored = localStorage.getItem('lc-audience');
+    if (['ja','ko','zh'].includes(stored)) return stored;
+    const lang = (navigator.language || navigator.languages?.[0] || '').toLowerCase();
+    if (lang.startsWith('ko')) return 'ko';
+    if (lang.startsWith('zh')) return 'zh';
+    return 'ja';
+  }
+  const initial = pickDefaultAudience();
+  if (initial !== 'ja') {
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.audience === initial));
+    panels.forEach(p => p.classList.toggle('active', p.dataset.panel === initial));
+  }
+  tabs.forEach(t => {
+    t.addEventListener('click', () => localStorage.setItem('lc-audience', t.dataset.audience));
+  });
+
+  function placeInitial() {
+    const active = document.querySelector('.tab.active');
+    moveUnderline(active);
+    if (active && track.scrollWidth > track.clientWidth) {
+      track.scrollTo({ left: active.offsetLeft - 16, behavior: 'instant' });
+    }
+  }
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(placeInitial);
+  } else {
+    window.addEventListener('load', placeInitial);
+  }
+  window.addEventListener('resize', () => moveUnderline(document.querySelector('.tab.active')));
+
+  // Scroll-cue
+  document.querySelector('.scroll-cue').addEventListener('click', () => {
+    const nav = document.getElementById('tab-nav');
+    const top = nav.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+
+  // Body.scrolled class
+  let lastScroll = -1;
+  window.addEventListener('scroll', () => {
+    const s = window.scrollY > 40;
+    if (s !== (lastScroll > 0)) {
+      document.body.classList.toggle('scrolled', s);
+      lastScroll = window.scrollY;
+    }
+  }, { passive: true });
 </script>
 </body>
 </html>
