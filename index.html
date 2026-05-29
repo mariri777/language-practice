@@ -150,19 +150,19 @@
   /* ============ Hero ============ */
   .hero {
     position: relative;
-    min-height: 52vh;
+    min-height: 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 96px 40px 56px;
+    padding: 82px 40px 24px;
     text-align: center;
   }
   @media (max-width: 720px) {
     .hero {
-      min-height: 38vh;
-      padding: 80px 20px 32px;
+      min-height: 0;
+      padding: 60px 20px 18px;
       justify-content: center;
     }
   }
@@ -233,7 +233,7 @@
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--red);
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     opacity: 0;
     transform: translateY(16px);
     animation: rise 900ms var(--ease-soft) 0.5s forwards;
@@ -246,7 +246,7 @@
 
   .hero-title {
     font-family: var(--font-mincho);
-    font-size: clamp(72px, 11vw, 140px);
+    font-size: clamp(54px, 7vw, 96px);
     font-weight: 400;
     line-height: 0.9;
     letter-spacing: 0.02em;
@@ -257,7 +257,7 @@
     align-items: baseline;
   }
   @media (max-width: 720px) {
-    .hero-title { font-size: 82px; line-height: 0.92; }
+    .hero-title { font-size: 60px; line-height: 0.92; }
   }
   .hero-title .word {
     display: inline-block;
@@ -279,7 +279,7 @@
   @keyframes dotIn { to { opacity: 1; transform: translateY(0) scale(1); } }
 
   .hero-tagline {
-    margin: 18px 0 6px;
+    margin: 10px 0 4px;
     font-family: var(--font-mincho);
     font-size: clamp(15px, 1.8vw, 20px);
     color: var(--ink-2);
@@ -854,6 +854,167 @@
   }
   .updates-more:hover { color: var(--red-bright); }
 
+  /* ============ Daily deck (resume + today) + record ============ */
+  .daily {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 8px 40px 4px;
+  }
+  @media (max-width: 720px) { .daily { padding: 4px 18px 0; } }
+
+  .deck {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 720px) { .deck { gap: 10px; } }
+
+  .deck-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 96px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    transition: transform 360ms var(--ease-soft), box-shadow 240ms var(--ease), border-color 240ms var(--ease);
+  }
+  @media (max-width: 720px) { .deck-card { min-height: 82px; padding: 12px 15px; } }
+  .deck-card:hover { transform: translateY(-4px); }
+
+  /* primary: resume */
+  .deck-card.resume {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-deep) 100%);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 18px 40px -22px var(--red-glow), 0 4px 14px -8px rgba(0,0,0,.3);
+  }
+  .deck-card.resume:hover { box-shadow: 0 24px 52px -20px rgba(138,36,56,.45), 0 6px 18px -8px rgba(0,0,0,.35); }
+
+  /* secondary: today */
+  .deck-card.today { background: var(--bg-elevated); }
+  .deck-card.today:hover { border-color: var(--gold); box-shadow: 0 18px 40px -24px var(--gold-soft); }
+
+  .deck-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .deck-card.resume .deck-kicker { color: rgba(255,255,255,.78); }
+  .deck-card.today .deck-kicker { color: var(--gold); }
+  .deck-kicker .ico { font-size: 12px; }
+
+  .deck-title {
+    margin: 0;
+    font-family: var(--font-mincho);
+    font-size: clamp(17px, 2vw, 21px);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+  .deck-card.today .deck-title { font-family: var(--font-zh); }
+  .deck-sub {
+    margin: 3px 0 0;
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+  }
+  .deck-card.resume .deck-sub { color: rgba(255,255,255,.72); }
+  .deck-card.today .deck-sub { color: var(--ink-3); font-family: var(--font-num); font-style: italic; font-size: 13px; }
+
+  .deck-go {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .deck-card.today .deck-go { color: var(--ink-2); }
+  .deck-go .arrow { font-family: var(--font-num); font-style: italic; font-size: 16px; transition: transform 400ms var(--ease-schwing); }
+  .deck-card:hover .deck-go .arrow { transform: translateX(6px); }
+
+  /* record strip */
+  .record {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 18px 40px 6px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 720px) { .record { padding: 14px 18px 2px; gap: 16px 22px; } }
+
+  .rec-stat { display: inline-flex; align-items: baseline; gap: 7px; }
+  .rec-num {
+    font-family: var(--font-num);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+  @media (max-width: 720px) { .rec-num { font-size: 22px; } }
+  .rec-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .rec-sep { width: 1px; align-self: stretch; background: var(--hairline); }
+  @media (max-width: 720px) { .rec-sep { display: none; } }
+
+  .rec-streak .rec-num { color: var(--red); }
+  .rec-streak .ico { font-size: 16px; }
+
+  .rec-cal {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-left: auto;
+  }
+  @media (max-width: 720px) { .rec-cal { margin-left: 0; flex-basis: 100%; gap: 12px; } }
+  .rec-cal-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    flex-shrink: 0;
+  }
+  .cal-dots { display: flex; gap: 5px; flex-wrap: wrap; }
+  .cal-dots i {
+    width: 9px; height: 9px;
+    border-radius: 2.5px;
+    background: var(--bg-deep);
+    display: inline-block;
+  }
+  .cal-dots i.on { background: var(--red); }
+  .cal-dots i.today { outline: 2px solid var(--gold); outline-offset: 1px; }
+
+  .daily-divider {
+    max-width: 1280px;
+    margin: 14px auto 0;
+    padding: 0 40px;
+  }
+  @media (max-width: 720px) { .daily-divider { padding: 0 18px; } }
+  .daily-divider hr { border: 0; border-top: 1px solid var(--hairline); margin: 0; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.001ms !important;
@@ -889,6 +1050,30 @@
   </div>
   <div class="scroll-cue">Select your channel</div>
 </section>
+
+<!-- Daily deck: つづきから（2枚目は構想中の新ツールと融合する予定のため一旦保留） -->
+<div class="daily">
+  <div class="deck">
+    <a class="deck-card resume" id="resume-card" href="chinese-diary.html">
+      <div class="deck-kicker"><span class="ico">▶</span> <span id="resume-kicker">つづきから</span></div>
+      <div>
+        <h3 class="deck-title" id="resume-title">Journal 中文</h3>
+        <p class="deck-sub" id="resume-sub">第7課 ・ 我喜欢做菜</p>
+      </div>
+      <span class="deck-go" id="resume-go">続ける<span class="arrow">→</span></span>
+    </a>
+  </div>
+
+  <div class="record">
+    <div class="rec-stat rec-streak" id="rec-streak" hidden><span class="ico">🔥</span><span class="rec-num" id="streak-num">0</span><span class="rec-label">日連続</span></div>
+    <div class="rec-cal">
+      <span class="rec-cal-label">今月</span>
+      <div class="cal-dots" id="cal-dots"></div>
+    </div>
+  </div>
+
+  <div class="daily-divider"><hr></div>
+</div>
 
 <nav class="tab-nav" id="tab-nav" aria-label="Audience selector">
   <div class="tab-track">
@@ -1023,17 +1208,17 @@
         </div>
       </a>
 
-      <div class="tile soon" style="--i:2">
+      <a href="japanese-practice-ko.html" class="tile" style="--i:2">
         <div class="tile-top">
           <span class="tile-num">03</span>
-          <span class="tile-tag">JP · Talk<span class="soon">SOON</span></span>
+          <span class="tile-tag">JP · Talk</span>
         </div>
         <div class="tile-bottom">
           <h3 class="tile-name">Daily 일본어</h3>
-          <p class="tile-sub ko">일본어 작문 드릴（준비중）</p>
-          <span class="tile-cta">Coming soon</span>
+          <p class="tile-sub ko">일본어 작문 드릴 · JLPT N5</p>
+          <span class="tile-cta">시작<span class="arrow">→</span></span>
         </div>
-      </div>
+      </a>
 
       <div class="tile soon" style="--i:3">
         <div class="tile-top">
@@ -1110,7 +1295,61 @@
   </div>
 </footer>
 
+<script src="daily.js?v=1"></script>
 <script>
+  // ---- Daily deck: real data from daily.js (LC) ----
+  (function renderDailyDeck() {
+    if (!window.LC) return;
+    const now = new Date();
+
+    // つづきから — 最後に開いたツール
+    const last = LC.getLast();
+    if (last && last.href) {
+      const card = document.getElementById('resume-card');
+      if (card) card.setAttribute('href', last.href);
+      const titleEl = document.getElementById('resume-title');
+      if (titleEl && last.label) titleEl.textContent = last.label;
+      const subEl = document.getElementById('resume-sub');
+      if (subEl) {
+        if (last.sub) { subEl.textContent = last.sub; subEl.hidden = false; }
+        else { subEl.hidden = true; }
+      }
+    } else {
+      // まだ何も無い人向け：はじめてみる
+      document.getElementById('resume-kicker').textContent = 'はじめてみる';
+      document.getElementById('resume-title').textContent = 'Journal 中文';
+      document.getElementById('resume-sub').textContent = '第1課からはじめる';
+      document.getElementById('resume-go').firstChild.textContent = 'はじめる';
+    }
+
+    // 連続日数
+    const n = LC.streak();
+    const streakWrap = document.getElementById('rec-streak');
+    if (n >= 1) {
+      document.getElementById('streak-num').textContent = n;
+      streakWrap.hidden = false;
+    } else {
+      streakWrap.hidden = true;
+    }
+
+    // 今月カレンダー（活動日に点）
+    const el = document.getElementById('cal-dots');
+    if (el) {
+      const active = new Set(LC.getActivity());
+      const y = now.getFullYear(), m = now.getMonth();
+      const daysInMonth = new Date(y, m + 1, 0).getDate();
+      const todayDate = now.getDate();
+      const p = x => String(x).padStart(2, '0');
+      el.innerHTML = '';
+      for (let d = 1; d <= daysInMonth; d++) {
+        const i = document.createElement('i');
+        if (active.has(`${y}-${p(m + 1)}-${p(d)}`)) i.classList.add('on');
+        if (d === todayDate) i.classList.add('today');
+        el.appendChild(i);
+      }
+    }
+  })();
+
   // Tab switching with sliding underline
   const tabs = document.querySelectorAll('.tab');
   const panels = document.querySelectorAll('.panel');
@@ -1219,6 +1458,24 @@
   const UPDATE_VISIBLE     = 5;    // 折りたたまず表示する件数
 
   const updates = [
+    {
+      date: "2026-05-30",
+      tag:  { ja: "한국어 · Talk", ko: "한국어 · Talk", zh: "韩语 · Talk" },
+      text: {
+        ja: "Daily 한국어を大幅に拡充しました。各コース10問に増やし、TOPIK 1〜4を各6コース・全24コース（計240問）に。連体形・間接話法・受身使役・談話語尾なども新たに網羅しています。",
+        ko: "Daily 한국어를 대폭 확충했어요. 코스당 10문제로 늘리고 TOPIK 1~4를 각 6코스·총 24코스(240문제)로 구성했어요. 관형형·간접화법·피동사동·종결어미까지 새로 망라했어요.",
+        zh: "大幅扩充了 Daily 한국어。每个课程增至 10 题，TOPIK 1~4 各 6 课、共 24 课（240 题），新增了定语形、间接引语、被动使役、话语语尾等内容。"
+      }
+    },
+    {
+      date: "2026-05-30",
+      tag:  { ja: "日本語 · Talk", ko: "일본어 · Talk", zh: "日语 · Talk" },
+      text: {
+        ja: "韓国語ユーザー向けの新ツール「Daily 일본어（JLPT N5）」を公開しました。한일 대조の文法ノート付きで、N5の文法・語彙を全14コースで網羅しています。",
+        ko: "한국어 사용자를 위한 새 도구 ‘Daily 일본어(JLPT N5)’를 공개했어요. 한일 대조 문법 노트와 함께 N5 문법·어휘를 전 14코스로 망라했어요.",
+        zh: "面向韩语用户的新工具「Daily 일본어（JLPT N5）」上线了，附韩日对照语法说明，14 个课程覆盖 N5 语法与词汇。"
+      }
+    },
     {
       date: "2026-05-30",
       tag:  { ja: "中文 · Talk", ko: "중국어 · Talk", zh: "中文 · Talk" },

@@ -656,6 +656,7 @@
   </style>
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
+<script src="daily.js?v=1"></script>
 </head>
 <body>
   <!-- 装飾レイヤー（クリック透過） -->
@@ -855,6 +856,75 @@
             ],
             g: "<code>뭐</code>＝書き言葉の <code>무엇</code> の口語形。<strong>「N이/가 뭐예요?」</strong>で「Nは何ですか?」。フォーマル: <code>성함이 어떻게 되세요?</code>（お名前は何と仰います?）。",
             alts: ["이름이 무엇이에요?"]
+          },
+          {
+            ja: "はじめまして。", ko: "처음 뵙겠습니다.", roman: "cheoeum boepgesseumnida.",
+            w: [
+              { ko: "처음", roman: "cheoeum", ja: "初めて" },
+              { ko: "뵙다", roman: "boepda", ja: "お目にかかる（보다の謙譲）" },
+              { ko: "-겠습니다", roman: "-gesseumnida", ja: "意志・丁寧の語尾（합쇼体）" }
+            ],
+            g: "初対面の決まり文句。<strong>謙譲語</strong> <code>뵙다</code>（＝お目にかかる）に意志を表す <code>-겠-</code> が付いた定型表現で、丸ごと覚えます。<br>くだけた場では <code>반가워요</code>（お会いできてうれしいです）もよく使います。",
+            alts: ["처음 뵙겠습니다", "반갑습니다", "만나서 반갑습니다"]
+          },
+          {
+            ja: "私は日本から来ました。", ko: "저는 일본에서 왔어요.", roman: "jeoneun ilbon-eseo wasseoyo.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "私（謙譲）" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "일본", roman: "ilbon", ja: "日本" },
+              { ko: "-에서", roman: "-eseo", ja: "起点「〜から」" },
+              { ko: "왔어요", roman: "wasseoyo", ja: "来ました（오다の過去）" }
+            ],
+            g: "出身を言う型 <code>N에서 왔어요</code>（〜から来ました）。場所の起点を表す <strong>-에서</strong> を使います。<br>同じ「〜で」でも単なる存在の場所には <code>-에</code> を使い分けます（例 <code>집에 있어요</code>）。",
+            alts: ["저는 일본에서 왔습니다", "일본에서 왔어요"]
+          },
+          {
+            ja: "趣味は何ですか？", ko: "취미가 뭐예요?", roman: "chwimi-ga mwoyeyo?",
+            w: [
+              { ko: "취미", roman: "chwimi", ja: "趣味" },
+              { ko: "-가", roman: "-ga", ja: "主格助詞（パッチム無）" },
+              { ko: "뭐", roman: "mwo", ja: "何（疑問詞）" },
+              { ko: "-예요", roman: "-yeyo", ja: "〜です（パッチム無）" }
+            ],
+            g: "疑問詞 <strong>뭐</strong>（何）を使う質問。名詞にパッチムが無いので主格は <code>-가</code>、指定詞は <code>-예요</code> になります。<br>パッチム有りなら <code>이름이 뭐예요?</code> のように <code>-이</code> と <code>-이에요</code> 側を使います。",
+            alts: ["취미가 뭐예요", "취미가 뭡니까?"]
+          },
+          {
+            ja: "私は歌手ではありません。", ko: "저는 가수가 아니에요.", roman: "jeoneun gasu-ga anieyo.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "私（謙譲）" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "가수", roman: "gasu", ja: "歌手" },
+              { ko: "-가", roman: "-ga", ja: "補語の助詞" },
+              { ko: "아니에요", roman: "anieyo", ja: "〜ではありません" }
+            ],
+            g: "名詞の否定は <strong>N이/가 아니에요</strong>（〜ではありません）。肯定 <code>-이에요/예요</code> の対になる形です。<br>否定したい名詞には主格 <code>-이/가</code> が付く点に注意（<code>가수가 아니에요</code>）。",
+            alts: ["저는 가수가 아닙니다", "저는 가수가 아니에요"]
+          },
+          {
+            ja: "韓国語を少し勉強しています。", ko: "한국어를 조금 공부해요.", roman: "han-gugeo-reul jogeum gongbuhaeyo.",
+            w: [
+              { ko: "한국어", roman: "han-gugeo", ja: "韓国語" },
+              { ko: "-를", roman: "-reul", ja: "目的格助詞「を」" },
+              { ko: "조금", roman: "jogeum", ja: "少し" },
+              { ko: "공부하다", roman: "gongbuhada", ja: "勉強する" },
+              { ko: "-해요", roman: "-haeyo", ja: "해요体（하다の語尾）" }
+            ],
+            g: "<strong>하다動詞</strong>の해요体は <code>하다 → 해요</code> と不規則に変化します（공부하다→공부해요）。<br>目的語にはパッチム有りで <code>-을</code>、無しで <code>-를</code>。<code>한국어</code> は母音終わりなので <code>-를</code> です。",
+            alts: ["한국어를 조금 공부합니다", "한국어를 조금 배워요"]
+          },
+          {
+            ja: "私は二十歳です。", ko: "저는 스무 살이에요.", roman: "jeoneun seumu sal-ieyo.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "私（謙譲）" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "스무", roman: "seumu", ja: "20（固有数詞・連体形）" },
+              { ko: "살", roman: "sal", ja: "〜歳（助数詞）" },
+              { ko: "-이에요", roman: "-ieyo", ja: "〜です（パッチム有）" }
+            ],
+            g: "年齢は<strong>固有数詞＋<code>살</code></strong>で言います。「20」は単独だと <code>스물</code> ですが、助数詞の前では <code>스무 살</code> と形が変わります。<br>同様に <code>하나→한, 둘→두, 셋→세</code> も連体形になります（例 <code>한 살</code>）。",
+            alts: ["저는 스무 살입니다", "스무 살이에요"]
           }
         ]
       },
@@ -898,6 +968,77 @@
               { ko: "있다", roman: "itda", ja: "いる／ある" }
             ],
             g: "<strong>量詞</strong>：<code>명/사람</code>（人）、<code>개</code>（個）、<code>마리</code>（動物）、<code>권</code>（冊）。「N이/가 있어요」で存在表現。"
+          },
+          {
+            ja: "今2時30分です。", ko: "지금 두 시 삼십 분이에요.", roman: "jigeum du si samsip bun-ieyo.",
+            w: [
+              { ko: "지금", roman: "jigeum", ja: "今" },
+              { ko: "두", roman: "du", ja: "2（固有数詞・冠形形）" },
+              { ko: "시", roman: "si", ja: "〜時" },
+              { ko: "삼십", roman: "samsip", ja: "30（漢字数詞）" },
+              { ko: "분", roman: "bun", ja: "〜分" }
+            ],
+            g: "<strong>時刻は「時＝固有数詞＋시」「分＝漢字数詞＋분」の混合</strong>。<code>두 시</code>（固有）＋<code>삼십 분</code>（漢字）。<br><code>둘 → 두</code> と「시」の前で形が変わる点に注意。",
+            alts: ["지금 두 시 삼십 분입니다", "지금 2시 30분이에요"]
+          },
+          {
+            ja: "コーヒーを2杯ください。", ko: "커피 두 잔 주세요.", roman: "keopi du jan juseyo.",
+            w: [
+              { ko: "커피", roman: "keopi", ja: "コーヒー" },
+              { ko: "두", roman: "du", ja: "2（固有数詞・冠形形）" },
+              { ko: "잔", roman: "jan", ja: "杯（量詞）" },
+              { ko: "주세요", roman: "juseyo", ja: "ください" }
+            ],
+            g: "<strong>飲み物の量詞</strong>：<code>잔</code>（杯）、<code>병</code>（瓶/本）。語順は「名詞＋固有数詞＋量詞」で <code>커피 두 잔</code>。<br>注文表現 <code>주세요</code>（〜ください）も覚える。",
+            alts: ["커피 두 잔 부탁해요", "커피 두 잔 주실래요?"]
+          },
+          {
+            ja: "りんごが3個あります。", ko: "사과가 세 개 있어요.", roman: "sagwaga se gae isseoyo.",
+            w: [
+              { ko: "사과", roman: "sagwa", ja: "りんご" },
+              { ko: "가", roman: "ga", ja: "〜が（主格助詞）" },
+              { ko: "세", roman: "se", ja: "3（固有数詞・冠形形）" },
+              { ko: "개", roman: "gae", ja: "個（量詞）" },
+              { ko: "있어요", roman: "isseoyo", ja: "あります" }
+            ],
+            g: "<strong>物を数える量詞は 개（個）</strong>。固有数詞は量詞の前で縮約する（<code>하나→한</code>、<code>둘→두</code>、<code>셋→세</code>、<code>넷→네</code>）。",
+            alts: ["사과가 세 개 있습니다", "사과 세 개가 있어요"]
+          },
+          {
+            ja: "犬が2匹います。", ko: "개가 두 마리 있어요.", roman: "gaega du mari isseoyo.",
+            w: [
+              { ko: "개", roman: "gae", ja: "犬" },
+              { ko: "가", roman: "ga", ja: "〜が（主格助詞）" },
+              { ko: "두", roman: "du", ja: "2（固有数詞・冠形形）" },
+              { ko: "마리", roman: "mari", ja: "匹／頭（動物の量詞）" },
+              { ko: "있어요", roman: "isseoyo", ja: "います" }
+            ],
+            g: "<strong>動物の量詞は 마리</strong>。人は <code>명</code>、物は <code>개</code> と使い分ける。<br>「犬」<code>개</code> と「個」<code>개</code> は同じ綴りだが文脈で区別する。",
+            alts: ["개가 두 마리 있습니다", "강아지가 두 마리 있어요"]
+          },
+          {
+            ja: "これは三千ウォンです。", ko: "이건 삼천 원이에요.", roman: "igeon samcheon won-ieyo.",
+            w: [
+              { ko: "이건", roman: "igeon", ja: "これは（이것은の縮約）" },
+              { ko: "삼천", roman: "samcheon", ja: "3000（漢字数詞）" },
+              { ko: "원", roman: "won", ja: "ウォン（通貨）" },
+              { ko: "이에요", roman: "ieyo", ja: "〜です" }
+            ],
+            g: "<strong>値段は漢字数詞＋원</strong>。千＝<code>천</code>、万＝<code>만</code>（1万は <code>일만</code> でなく <code>만</code>）。<br>会話では <code>이것은 → 이건</code> と縮約されることが多い。",
+            alts: ["이것은 삼천 원이에요", "이건 삼천 원입니다", "이건 3천 원이에요"]
+          },
+          {
+            ja: "私の誕生日は6月15日です。", ko: "제 생일은 유월 십오 일이에요.", roman: "je saeng-il-eun yuwol sibo il-ieyo.",
+            w: [
+              { ko: "제", roman: "je", ja: "私の" },
+              { ko: "생일", roman: "saeng-il", ja: "誕生日" },
+              { ko: "은", roman: "eun", ja: "〜は（主題助詞）" },
+              { ko: "유월", roman: "yuwol", ja: "6月（例外読み）" },
+              { ko: "십오", roman: "sibo", ja: "15（漢字数詞）" },
+              { ko: "일", roman: "il", ja: "〜日" }
+            ],
+            g: "<strong>日付は漢字数詞＋월（月）/일（日）</strong>。例外：6月＝<code>유월</code>、10月＝<code>시월</code>（<code>육월/십월</code> とは言わない）。<br>主題助詞は <code>은</code>（パッチム後）。",
+            alts: ["제 생일은 유월 십오 일입니다", "제 생일은 6월 15일이에요"]
           }
         ]
       },
@@ -944,6 +1085,74 @@
             ],
             g: "指示代名詞：<code>이</code>（これ・近称）／<code>그</code>（それ・中称）／<code>저</code>（あれ・遠称）。「私の」は <code>저의 → 제</code>、「あなたの」は <code>너의 → 네</code>。口語では「이거／그거／저거」も多用。",
             alts: ["이거 제 책이에요"]
+          },
+          {
+            ja: "私もコーヒーが飲みたいです。", ko: "저도 커피를 마시고 싶어요.", roman: "jeodo keopireul masigo sipeoyo.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "私（謙譲）" },
+              { ko: "-도", roman: "-do", ja: "〜も（添加）" },
+              { ko: "커피", roman: "keopi", ja: "コーヒー" },
+              { ko: "-를", roman: "-reul", ja: "目的格（パッチム無）" },
+              { ko: "마시고 싶다", roman: "masigo sipda", ja: "飲みたい" }
+            ],
+            g: "<strong>添加の <code>-도</code></strong>（〜も）は主格 <code>-가/이</code> や主題 <code>-는</code> を置き換える：<code>저는→저도</code>（×저는도）。<br>パッチムの有無に関わらず形は <code>-도</code> のまま。",
+            alts: ["저도 커피를 마시고 싶습니다", "나도 커피를 마시고 싶어요"]
+          },
+          {
+            ja: "私はキムチだけ食べます。", ko: "저는 김치만 먹어요.", roman: "jeoneun gimchiman meogeoyo.",
+            w: [
+              { ko: "김치", roman: "gimchi", ja: "キムチ" },
+              { ko: "-만", roman: "-man", ja: "〜だけ（限定）" },
+              { ko: "먹다", roman: "meokda", ja: "食べる" }
+            ],
+            g: "<strong>限定の <code>-만</code></strong>（〜だけ）。目的格 <code>-을/를</code> は普通省いて <code>김치만</code> とする（×김치를만）。<br>해요体は陰母音 <code>먹다 → 먹어요</code>。",
+            alts: ["저는 김치만 먹습니다"]
+          },
+          {
+            ja: "友達にプレゼントをあげます。", ko: "친구에게 선물을 줘요.", roman: "chingu-ege seonmureul jwoyo.",
+            w: [
+              { ko: "친구", roman: "chingu", ja: "友達" },
+              { ko: "-에게", roman: "-ege", ja: "〜に（人・与格）" },
+              { ko: "선물", roman: "seonmul", ja: "プレゼント" },
+              { ko: "주다", roman: "juda", ja: "あげる" }
+            ],
+            g: "<strong>与格 <code>-에게</code></strong>（人に）。口語では <code>-한테</code>、目上には <code>-께</code>。物・場所の「に」は <code>-에</code> で区別する。<br><code>주다 → 줘요</code>（주어요の縮約）。",
+            alts: ["친구한테 선물을 줘요", "친구에게 선물을 줍니다"]
+          },
+          {
+            ja: "あの人は私の先生です。", ko: "저 사람은 제 선생님이에요.", roman: "jeo saram-eun je seonsaengnim-ieyo.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "あの（遠称）" },
+              { ko: "사람", roman: "saram", ja: "人" },
+              { ko: "-은", roman: "-eun", ja: "主題（パッチム有）" },
+              { ko: "제", roman: "je", ja: "私の" },
+              { ko: "선생님", roman: "seonsaengnim", ja: "先生" }
+            ],
+            g: "<strong>指示の冠形詞 <code>저</code></strong>（あの）は名詞の前に置く：<code>저 사람</code>。指示代名詞 <code>저것</code>（あれ）とは別品詞。<br>「〜です」は <code>이에요</code>（パッチム有）／<code>예요</code>（パッチム無）。",
+            alts: ["저 사람은 제 선생님입니다"]
+          },
+          {
+            ja: "私はその映画が見たくないです。", ko: "저는 그 영화를 보고 싶지 않아요.", roman: "jeoneun geu yeonghwareul bogo sipji anayo.",
+            w: [
+              { ko: "그", roman: "geu", ja: "その（中称）" },
+              { ko: "영화", roman: "yeonghwa", ja: "映画" },
+              { ko: "보다", roman: "boda", ja: "見る" },
+              { ko: "-고 싶지 않다", roman: "-go sipji anta", ja: "〜したくない" }
+            ],
+            g: "<strong>願望の否定</strong>は <code>-고 싶다</code> を <code>-고 싶지 않다</code> とするのが自然。<br>前置否定の <code>안 보고 싶어요</code> も可だが、長形否定 <code>-지 않아요</code> の方が落ち着いた言い方。",
+            alts: ["저는 그 영화를 보고 싶지 않습니다", "저는 그 영화는 안 보고 싶어요"]
+          },
+          {
+            ja: "弟は学校に行きません。", ko: "동생은 학교에 안 가요.", roman: "dongsaeng-eun hakgyo-e an gayo.",
+            w: [
+              { ko: "동생", roman: "dongsaeng", ja: "弟・妹" },
+              { ko: "학교", roman: "hakgyo", ja: "学校" },
+              { ko: "-에", roman: "-e", ja: "〜に（場所・方向）" },
+              { ko: "안", roman: "an", ja: "〜ない（否定）" },
+              { ko: "가다", roman: "gada", ja: "行く" }
+            ],
+            g: "<strong>前置否定 <code>안</code></strong> は用言の直前に置く：<code>안 가요</code>。場所・方向の「に」は <code>-에</code>（人の <code>-에게</code> と区別）。<br><code>가다</code> は陽母音なので <code>가 + 아요 → 가요</code> と縮約する。",
+            alts: ["동생은 학교에 안 갑니다", "동생은 학교에 가지 않아요"]
           }
         ]
       },
@@ -987,6 +1196,72 @@
             ],
             g: "<code>벌써</code>（予想より早い「もう」）と <code>이미</code>（時点強調の「既に」）は近いが微妙に違う。<code>벌써</code> には驚きのニュアンスがある。",
             alts: ["이미 먹었어요"]
+          },
+          {
+            ja: "昨日は宿題をしませんでした。", ko: "어제는 숙제를 안 했어요.", roman: "eojeneun sukje-reul an haesseoyo.",
+            w: [
+              { ko: "어제", roman: "eoje", ja: "昨日" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "숙제", roman: "sukje", ja: "宿題" },
+              { ko: "안", roman: "an", ja: "〜しない（否定）" },
+              { ko: "하다", roman: "hada", ja: "する" }
+            ],
+            g: "<strong>過去の否定</strong>は<code>안</code>を動詞の前に置き、動詞を過去形に。<code>안 했어요</code>＝「しなかった」。<br>能力的にできなかった場合は<code>못 했어요</code>を使う。",
+            alts: ["어제는 숙제를 하지 않았어요.", "어제는 숙제를 안 했습니다."]
+          },
+          {
+            ja: "昨日の夜は何をしましたか？", ko: "어젯밤에 뭐 했어요?", roman: "eojetbam-e mwo haesseoyo?",
+            w: [
+              { ko: "어젯밤", roman: "eojetbam", ja: "昨夜" },
+              { ko: "-에", roman: "-e", ja: "〜に（時間）" },
+              { ko: "뭐", roman: "mwo", ja: "何（口語）" },
+              { ko: "하다", roman: "hada", ja: "する" }
+            ],
+            g: "<strong>過去の疑問</strong>は語尾<code>-았/었어요?</code>を上げ調子で言うだけ。語順・形は平叙文と同じ。<br><code>무엇을</code>は口語で<code>뭐</code>に縮約され、助詞<code>-을</code>も省略されやすい。",
+            alts: ["어젯밤에 무엇을 했어요?", "어젯밤에 뭐 했습니까?"]
+          },
+          {
+            ja: "今ご飯を作っている最中です。", ko: "지금 밥을 만드는 중이에요.", roman: "jigeum bab-eul mandeuneun jung-ieyo.",
+            w: [
+              { ko: "밥", roman: "bap", ja: "ご飯" },
+              { ko: "만들다", roman: "mandeulda", ja: "作る" },
+              { ko: "-는 중이다", roman: "-neun jung-ida", ja: "〜している最中だ" }
+            ],
+            g: "<strong><code>V-는 중이다</code></strong>＝「〜している最中だ」。進行を強調する言い方で<code>-고 있다</code>より「まさに今」感が強い。<br><code>만들다</code>はㄹ語幹で、<code>-는</code>の前でㄹが脱落し<code>만드는</code>になる。",
+            alts: ["지금 밥을 만들고 있어요."]
+          },
+          {
+            ja: "さっき友達に会いました。", ko: "아까 친구를 만났어요.", roman: "akka chingu-reul mannasseoyo.",
+            w: [
+              { ko: "아까", roman: "akka", ja: "さっき" },
+              { ko: "친구", roman: "chingu", ja: "友達" },
+              { ko: "-를", roman: "-reul", ja: "目的語助詞「を」" },
+              { ko: "만나다", roman: "mannada", ja: "会う" }
+            ],
+            g: "<strong>「会う」は<code>만나다</code></strong>で、助詞は<code>-를</code>（「を」）を取る。日本語の「に会う」につられて<code>-에게</code>としないよう注意。<br><code>아까</code>は「少し前のさっき」、より直近なら<code>방금</code>。",
+            alts: ["아까 친구를 만났습니다."]
+          },
+          {
+            ja: "たった今先生から電話が来ました。", ko: "방금 선생님한테서 전화가 왔어요.", roman: "banggeum seonsaengnim-hanteseo jeonhwa-ga wasseoyo.",
+            w: [
+              { ko: "방금", roman: "banggeum", ja: "たった今" },
+              { ko: "선생님", roman: "seonsaengnim", ja: "先生" },
+              { ko: "-한테서", roman: "-hanteseo", ja: "〜から（人・口語）" },
+              { ko: "전화가 오다", roman: "jeonhwa-ga oda", ja: "電話が来る" }
+            ],
+            g: "<strong><code>방금</code></strong>＝「たった今」で直前の出来事を指す。<code>아까</code>より時間がさらに近い。<br>人を起点にする「〜から」は口語で<code>-한테서</code>、書き言葉では<code>-에게서</code>。",
+            alts: ["방금 선생님에게서 전화가 왔어요.", "방금 선생님한테서 전화가 왔습니다."]
+          },
+          {
+            ja: "雨が降っていたので家にいました。", ko: "비가 와서 집에 있었어요.", roman: "bi-ga waseo jib-e isseosseoyo.",
+            w: [
+              { ko: "비가 오다", roman: "bi-ga oda", ja: "雨が降る" },
+              { ko: "-아서", roman: "-aseo", ja: "〜なので（理由）" },
+              { ko: "집", roman: "jip", ja: "家" },
+              { ko: "있다", roman: "itda", ja: "いる／ある" }
+            ],
+            g: "<strong>理由の<code>-아서/어서</code></strong>。前節は時制を付けず<strong>常に基本形</strong>で、過去でも<code>왔어서</code>とは言わず<code>와서</code>。過去の意味は後節の<code>있었어요</code>が担う。<br>「雨が降る」は<code>비가 오다</code>または<code>비가 내리다</code>。",
+            alts: ["비가 와서 집에 있었습니다.", "비가 내려서 집에 있었어요."]
           }
         ]
       },
@@ -1028,6 +1303,73 @@
               { ko: "-아/어 주세요", roman: "-a/eo juseyo", ja: "〜してください（依頼）" }
             ],
             g: "<strong>「V-아/어 주세요」</strong>で丁寧な依頼。<code>-아/어 주다</code> は「(相手のために)〜してあげる/くれる」の意味で、依頼の <code>주세요</code> はその尊敬命令形。"
+          },
+          {
+            ja: "私はピアノを弾けます。", ko: "저는 피아노를 칠 줄 알아요.", roman: "jeoneun piano-reul chil jul arayo.",
+            w: [
+              { ko: "피아노", roman: "piano", ja: "ピアノ" },
+              { ko: "-를", roman: "-reul", ja: "目的語助詞「を」" },
+              { ko: "치다", roman: "chida", ja: "（楽器を）弾く" },
+              { ko: "-ㄹ 줄 알다", roman: "-l jul alda", ja: "〜できる（技能を知っている）" }
+            ],
+            g: "<strong>「V-(으)ㄹ 줄 알다」</strong>＝習得した技能「（やり方を知っていて）〜できる」。否定は <code>-(으)ㄹ 줄 몰라요</code>。状況的可能の <code>칠 수 있어요</code> とも言えるが、技能の有無は <code>줄 알다</code> が自然。",
+            alts: ["저는 피아노를 칠 수 있어요.", "전 피아노를 칠 줄 알아요."]
+          },
+          {
+            ja: "運転できないので、地下鉄で行きます。", ko: "운전할 줄 몰라서 지하철로 가요.", roman: "unjeonhal jul mollaseo jihacheollo gayo.",
+            w: [
+              { ko: "운전하다", roman: "unjeonhada", ja: "運転する" },
+              { ko: "-ㄹ 줄 모르다", roman: "-l jul moreuda", ja: "〜できない（やり方を知らない）" },
+              { ko: "-아서", roman: "-aseo", ja: "〜なので（理由）" },
+              { ko: "-로", roman: "-ro", ja: "〜で（手段）" }
+            ],
+            g: "<strong>「V-(으)ㄹ 줄 모르다」</strong>は技能の欠如。<code>모르다</code> は르不規則で <code>몰라서</code> となる（르→ㄹㄹ）。<br>手段の助詞は母音・ㄹ語幹に <code>-로</code>、それ以外の子音に <code>-으로</code>。",
+            alts: ["운전을 할 줄 몰라서 지하철로 가요.", "운전을 못 해서 지하철로 가요."]
+          },
+          {
+            ja: "この店のコーヒーがいちばんおいしいです。", ko: "이 가게 커피가 제일 맛있어요.", roman: "i gage keopiga jeil masisseoyo.",
+            w: [
+              { ko: "가게", roman: "gage", ja: "店" },
+              { ko: "커피", roman: "keopi", ja: "コーヒー" },
+              { ko: "제일", roman: "jeil", ja: "いちばん（最上級）" },
+              { ko: "맛있다", roman: "masitda", ja: "おいしい" }
+            ],
+            g: "<strong>最上級「제일／가장 + 形容詞」</strong>で「いちばん〜だ」。<code>제일</code> は口語的で <code>가장</code> はやや硬い書き言葉寄り。範囲を示すときは <code>-에서（중에서）</code> を添える。",
+            alts: ["이 가게 커피가 가장 맛있어요.", "이 가게 커피가 제일 맛있습니다."]
+          },
+          {
+            ja: "果物の中ではいちごがいちばん好きです。", ko: "과일 중에서 딸기를 제일 좋아해요.", roman: "gwail jung-eseo ttalgireul jeil joahaeyo.",
+            w: [
+              { ko: "과일", roman: "gwail", ja: "果物" },
+              { ko: "중에서", roman: "jung-eseo", ja: "〜の中で（範囲）" },
+              { ko: "딸기", roman: "ttalgi", ja: "いちご" },
+              { ko: "제일", roman: "jeil", ja: "いちばん" },
+              { ko: "좋아하다", roman: "joahada", ja: "好む（好きだ）" }
+            ],
+            g: "<strong>「〜の中でいちばん…」</strong>は <code>중에서 + 제일/가장</code>。「好きだ」は他動詞 <code>좋아하다</code> なので対象は <code>-를/을</code>。形容詞 <code>좋다</code>（〜がよい）とは助詞が異なる点に注意。",
+            alts: ["과일 중에서 딸기를 가장 좋아해요.", "과일 중에 딸기를 제일 좋아해요."]
+          },
+          {
+            ja: "すみませんが、ちょっと手伝ってください。", ko: "죄송하지만 좀 도와주세요.", roman: "joesonghajiman jom dowajuseyo.",
+            w: [
+              { ko: "죄송하지만", roman: "joesonghajiman", ja: "すみませんが" },
+              { ko: "좀", roman: "jom", ja: "ちょっと（依頼を和らげる）" },
+              { ko: "돕다", roman: "dopda", ja: "手伝う" },
+              { ko: "-아/어 주세요", roman: "-a/eo juseyo", ja: "〜してください（依頼）" }
+            ],
+            g: "<strong>「좀 + V-아/어 주세요」</strong>の <code>좀</code> は依頼を柔らかくするクッション語。<code>돕다</code> はㅂ不規則で <code>도와요・도와주세요</code> となる（ㅂ→오/우）。",
+            alts: ["죄송하지만 좀 도와주시겠어요?", "미안하지만 좀 도와주세요."]
+          },
+          {
+            ja: "窓を開けてくれますか。", ko: "창문을 열어 줄 수 있어요?", roman: "changmuneul yeoreo jul su isseoyo?",
+            w: [
+              { ko: "창문", roman: "changmun", ja: "窓" },
+              { ko: "열다", roman: "yeolda", ja: "開ける" },
+              { ko: "-아/어 주다", roman: "-a/eo juda", ja: "〜してあげる／くれる" },
+              { ko: "-ㄹ 수 있다", roman: "-l su itda", ja: "〜できる（可能）" }
+            ],
+            g: "<strong>依頼＋可能「V-아/어 줄 수 있어요?」</strong>＝「〜してもらえますか」と柔らかく頼む形。<code>열다</code> はㄹ語幹で <code>-(으)ㄹ</code> の前ではㄹが脱落し <code>열 수</code> となるが、ここは <code>주다</code> に付くため <code>줄 수</code>。",
+            alts: ["창문 좀 열어 주세요.", "창문을 열어 주시겠어요?"]
           }
         ]
       },
@@ -1072,6 +1414,72 @@
             ],
             g: "<strong>否定の2形態</strong>：①<code>안 + V</code>（短形・口語）／②<code>V -지 않다</code>（長形・書面）。意味はほぼ同じだが、<code>안</code> の方が日常的。<code>오다 → 안 와요 / 오지 않아요</code>。",
             alts: ["왜 오지 않아요?"]
+          },
+          {
+            ja: "今日はとても忙しいです。", ko: "오늘은 너무 바빠요.", roman: "oneureun neomu bappayo.",
+            w: [
+              { ko: "오늘", roman: "oneul", ja: "今日" },
+              { ko: "-은", roman: "-eun", ja: "主題助詞「は」" },
+              { ko: "너무", roman: "neomu", ja: "とても/〜すぎる" },
+              { ko: "바쁘다", roman: "bappeuda", ja: "忙しい" }
+            ],
+            g: "<strong>으탈락＋程度副詞</strong>：<code>바쁘다 → 바빠요</code>（語幹「으」が脱落し「아요」と結合）。<code>너무</code> は本来「〜すぎる」だが口語では「とても」の強調にも使う。<br>より中立的な強調は <code>아주</code>。",
+            alts: ["오늘은 아주 바빠요", "오늘 너무 바빠요"]
+          },
+          {
+            ja: "水を少しだけください。", ko: "물 좀 주세요.", roman: "mul jom juseyo.",
+            w: [
+              { ko: "물", roman: "mul", ja: "水" },
+              { ko: "좀", roman: "jom", ja: "ちょっと（조금の口語）" },
+              { ko: "주세요", roman: "juseyo", ja: "ください" }
+            ],
+            g: "<strong>조금 → 좀</strong>：「少し/ちょっと」。依頼の <code>좀</code> は量を表すと同時に語調をやわらげる役割もある。<br>量をはっきり言うなら <code>조금만 주세요</code>（少しだけください）。",
+            alts: ["물 조금만 주세요", "물 좀 주실래요?"]
+          },
+          {
+            ja: "このカバンは少し高いです。", ko: "이 가방은 좀 비싸요.", roman: "i gabang-eun jom bissayo.",
+            w: [
+              { ko: "가방", roman: "gabang", ja: "カバン" },
+              { ko: "-은", roman: "-eun", ja: "主題助詞「は」" },
+              { ko: "좀", roman: "jom", ja: "少し" },
+              { ko: "비싸다", roman: "bissada", ja: "（値段が）高い" }
+            ],
+            g: "値段が高い＝<strong><code>비싸다</code></strong>（背が高いの <code>높다</code> とは別語）。反対は <code>싸다</code>（安い）。<br><code>좀</code> は批判をやわらげる緩衝表現としてもよく使う。",
+            alts: ["이 가방 좀 비싸요", "이 가방은 조금 비싸요"]
+          },
+          {
+            ja: "その言葉の意味がわかりません。", ko: "그 말의 뜻을 몰라요.", roman: "geu marui tteuseul mollayo.",
+            w: [
+              { ko: "그", roman: "geu", ja: "その" },
+              { ko: "말", roman: "mal", ja: "言葉" },
+              { ko: "-의", roman: "-ui", ja: "連体助詞「の」" },
+              { ko: "뜻", roman: "tteut", ja: "意味" },
+              { ko: "-을", roman: "-eul", ja: "目的助詞「を」" },
+              { ko: "모르다", roman: "moreuda", ja: "知らない/わからない" }
+            ],
+            g: "<strong>르変則</strong>：<code>모르다</code> は母音語尾の前で「르」が「ㄹㄹ」に変化し <code>몰라요</code>。同類に <code>빠르다 → 빨라요</code>、<code>다르다 → 달라요</code>。<br>「わかる」は <code>알다 → 알아요</code>。",
+            alts: ["그 말 뜻을 몰라요", "그 말 뜻을 모르겠어요"]
+          },
+          {
+            ja: "私は毎日30分歩きます。", ko: "저는 매일 삼십 분 걸어요.", roman: "jeoneun maeil samsip bun georeoyo.",
+            w: [
+              { ko: "매일", roman: "maeil", ja: "毎日" },
+              { ko: "삼십 분", roman: "samsip bun", ja: "30分（漢数詞）" },
+              { ko: "걷다", roman: "geotda", ja: "歩く" }
+            ],
+            g: "<strong>ㄷ変則</strong>：<code>걷다</code> は母音語尾の前で語幹末「ㄷ」が「ㄹ」に変わり <code>걸어요</code>。同類に <code>듣다 → 들어요</code>。<br>ただし <code>받다 → 받아요</code>、<code>닫다 → 닫아요</code> は規則活用なので注意。",
+            alts: ["저는 매일 삼십 분씩 걸어요", "전 매일 30분 걸어요"]
+          },
+          {
+            ja: "りんごを3つください。", ko: "사과 세 개 주세요.", roman: "sagwa se gae juseyo.",
+            w: [
+              { ko: "사과", roman: "sagwa", ja: "りんご" },
+              { ko: "세", roman: "se", ja: "3（固有数詞・冠形形）" },
+              { ko: "개", roman: "gae", ja: "〜個（助数詞）" },
+              { ko: "주세요", roman: "juseyo", ja: "ください" }
+            ],
+            g: "<strong>固有数詞＋助数詞「개」</strong>（個）。数詞は助数詞の前で冠形形に：<code>한 개／두 개／세 개／네 개</code>。<br>人数を数えるときは <code>명</code> または丁寧な <code>분</code>（한 분/두 분）。",
+            alts: ["사과 세 개 주실래요?", "사과 세 개 살게요"]
           }
         ]
       },
@@ -1118,6 +1526,79 @@
             ],
             g: "期間を表すときは<strong>「漢字数詞＋년/개월/일＋동안」</strong>。<code>동안</code> は省略可で <code>삼 년 배웠어요</code> も自然。<strong>年・月・日は漢字数詞</strong>、<strong>時間・歳は固有数詞</strong>。",
             alts: ["한국어를 삼 년 배웠어요", "한국어를 3년 동안 공부했어요"]
+          },
+          {
+            ja: "週末、一緒に映画を見ましょうか?", ko: "주말에 같이 영화를 볼까요?", roman: "jumar-e gachi yeonghwareul bolkkayo?",
+            w: [
+              { ko: "주말", roman: "jumal", ja: "週末" },
+              { ko: "-에", roman: "-e", ja: "時間助詞「に」" },
+              { ko: "같이", roman: "gachi", ja: "一緒に" },
+              { ko: "영화", roman: "yeonghwa", ja: "映画" },
+              { ko: "보다", roman: "boda", ja: "見る" },
+              { ko: "-(으)ㄹ까요?", roman: "-(eu)lkkayo?", ja: "〜しましょうか?（勧誘）" }
+            ],
+            g: "<strong>「V-(으)ㄹ까요?」</strong>は主語が「私たち」のとき勧誘「〜しましょうか?」。返事は<code>네, 봅시다 / 좋아요</code>など。<br>同じ形でも三人称が主語なら推量「〜でしょうか?」になる点に注意。",
+            alts: ["주말에 같이 영화 볼까요?", "주말에 같이 영화 볼래요?"]
+          },
+          {
+            ja: "ここに名前を書けばいいですか?", ko: "여기에 이름을 쓰면 돼요?", roman: "yeogi-e ireumeul sseumyeon dwaeyo?",
+            w: [
+              { ko: "여기", roman: "yeogi", ja: "ここ" },
+              { ko: "이름", roman: "ireum", ja: "名前" },
+              { ko: "쓰다", roman: "sseuda", ja: "書く" },
+              { ko: "-(으)면 되다", roman: "-(eu)myeon doeda", ja: "〜すればよい" }
+            ],
+            g: "<strong>「V-(으)면 되다」</strong>＝「〜すればよい」。条件を満たせば十分だという表現。疑問形<code>-면 돼요?</code>で「〜すればいいですか?」。<br>反対の「〜してはいけない」は<code>-(으)면 안 되다</code>。",
+            alts: ["여기에 이름을 적으면 돼요?", "여기에 이름을 쓰면 됩니까?"]
+          },
+          {
+            ja: "明日は来なくてもいいですよ。", ko: "내일은 안 와도 돼요.", roman: "naeireun an wado dwaeyo.",
+            w: [
+              { ko: "내일", roman: "naeil", ja: "明日" },
+              { ko: "-은", roman: "-eun", ja: "主題助詞「は」" },
+              { ko: "오다", roman: "oda", ja: "来る" },
+              { ko: "-아/어도 되다", roman: "-a/eodo doeda", ja: "〜してもよい" }
+            ],
+            g: "<strong>「V-아/어도 되다」</strong>＝許可「〜してもよい」。否定と組むと<code>안 와도 돼요</code>「来なくてもよい」となる。<br>より明示的に<code>오지 않아도 돼요</code>とも言える。陽母音は<code>-아도</code>、それ以外は<code>-어도</code>。",
+            alts: ["내일은 오지 않아도 돼요.", "내일은 안 와도 괜찮아요."]
+          },
+          {
+            ja: "頭が痛いなら、薬を飲んだらどうですか?", ko: "머리가 아프면 약을 먹지 그래요?", roman: "meoriga apeumyeon yageul meokji geuraeyo?",
+            w: [
+              { ko: "머리", roman: "meori", ja: "頭" },
+              { ko: "아프다", roman: "apeuda", ja: "痛い" },
+              { ko: "-(으)면", roman: "-(eu)myeon", ja: "〜なら（条件）" },
+              { ko: "약", roman: "yak", ja: "薬" },
+              { ko: "먹다", roman: "meokda", ja: "（薬を）飲む・食べる" },
+              { ko: "-지 그래요?", roman: "-ji geuraeyo?", ja: "〜したらどう?（助言）" }
+            ],
+            g: "<strong>「V-지 그래요?」</strong>は相手に行動を勧める柔らかい助言「〜したらどう?」。<br>韓国語では薬は<code>마시다</code>でなく<code>먹다</code>を使う点に注意。過去形<code>-지 그럈어요?</code>は「〜すればよかったのに」。",
+            alts: ["머리가 아프면 약을 먹는 게 어때요?", "머리가 아프면 약을 드시지 그래요?"]
+          },
+          {
+            ja: "時間があれば、私が手伝いましょう。", ko: "시간이 있으면 제가 도와줄게요.", roman: "sigani isseumyeon jega dowajulgeyo.",
+            w: [
+              { ko: "시간", roman: "sigan", ja: "時間" },
+              { ko: "있다", roman: "itda", ja: "ある" },
+              { ko: "-(으)면", roman: "-(eu)myeon", ja: "〜なら（条件）" },
+              { ko: "제가", roman: "jega", ja: "私が" },
+              { ko: "돕다", roman: "dopta", ja: "手伝う（ㅂ不規則）" },
+              { ko: "-아/어 줄게요", roman: "-a/eo julgeyo", ja: "〜してあげます（意志・約束）" }
+            ],
+            g: "<strong>「V-(으)ㄹ게요」</strong>は話し手の意志・約束「〜します（ね）」。聞き手を意識した柔らかい宣言。<br><code>돕다</code>はㅂ不規則で<code>도와요・도와줄게요</code>と変化する。単なる予定の<code>-(으)ㄹ 거예요</code>より約束のニュアンスが強い。",
+            alts: ["시간 되면 제가 도와줄게요.", "시간이 있으면 제가 도와드릴게요."]
+          },
+          {
+            ja: "天気が良ければ、海に行くつもりです。", ko: "날씨가 좋으면 바다에 갈 거예요.", roman: "nalssiga joeumyeon bada-e gal geoyeyo.",
+            w: [
+              { ko: "날씨", roman: "nalssi", ja: "天気" },
+              { ko: "좋다", roman: "jota", ja: "良い" },
+              { ko: "-(으)면", roman: "-(eu)myeon", ja: "〜なら（条件）" },
+              { ko: "바다", roman: "bada", ja: "海" },
+              { ko: "-(으)ㄹ 거예요", roman: "-(eu)l geoyeyo", ja: "〜するつもり" }
+            ],
+            g: "<strong>「-(으)면 …-(으)ㄹ 거예요」</strong>で「〜なら〜するつもり」と条件＋予定をつなぐ。<br><code>좋다</code>の発音は[조타]。場所「〜へ」は<code>-에 가다</code>、手段の「〜で」<code>-로</code>とは別なので混同しない。",
+            alts: ["날씨가 좋으면 바다에 가려고 해요.", "날씨가 좋으면 바다에 갈 생각이에요."]
           }
         ]
       },
@@ -1161,6 +1642,71 @@
               { ko: "-고 오다", roman: "-go oda", ja: "〜してくる" }
             ],
             g: "<strong>「V-고 오다/가다」</strong>で「〜してくる/〜していく」。直訳「置いてきた」が韓国語では自然。<code>잊다</code>（忘れる）より <code>두고 왔다</code> が口語的。"
+          },
+          {
+            ja: "このボタンは押さないでください。", ko: "이 버튼은 누르지 마세요.", roman: "i beoteuneun nureuji maseyo.",
+            w: [
+              { ko: "이", roman: "i", ja: "この(指示)" },
+              { ko: "버튼", roman: "beoteun", ja: "ボタン" },
+              { ko: "-은", roman: "-eun", ja: "主題助詞「は」" },
+              { ko: "누르지 마세요", roman: "nureuji maseyo", ja: "押さないでください(禁止)" }
+            ],
+            g: "<strong>-지 마세요</strong>は禁止「～しないでください」。動詞語幹に付く。<br>不規則注意: <code>누르다</code>は<strong>르不規則</strong>だが、<code>-지</code>の前では語幹そのまま<code>누르지</code>になる(<code>눌러요</code>と混同しない)。",
+            alts: ["이 버튼은 누르지 마십시오.", "이 버튼을 누르지 마세요."]
+          },
+          {
+            ja: "週末は本を読んだり、映画を見たりします。", ko: "주말에는 책을 읽거나 영화를 보거나 해요.", roman: "jumareneun chaegeul ilkkeona yeonghwareul bogeona haeyo.",
+            w: [
+              { ko: "주말", roman: "jumal", ja: "週末" },
+              { ko: "-에는", roman: "-eneun", ja: "～には(時+主題)" },
+              { ko: "읽거나", roman: "ilkkeona", ja: "読んだり(選択)" },
+              { ko: "보거나 해요", roman: "bogeona haeyo", ja: "見たりします" }
+            ],
+            g: "<strong>-거나</strong>は動詞・形容詞をつないで「～したり/～か」の選択を表す。<br>「～したり～したりする」と複数並べる時は<code>-거나 -거나 해요</code>の形が自然。名詞同士の選択には<code>(이)나</code>を使う(例: <code>커피나 차</code>)。",
+            alts: ["주말에는 책을 읽거나 영화를 봐요.", "주말에는 책을 읽거나 영화를 보거나 합니다."]
+          },
+          {
+            ja: "ご飯を食べた後で、薬を飲んでください。", ko: "밥을 먹은 후에 약을 드세요.", roman: "babeul meogeun hue yageul deuseyo.",
+            w: [
+              { ko: "밥을 먹다", roman: "babeul meokda", ja: "ご飯を食べる" },
+              { ko: "-은 후에", roman: "-eun hue", ja: "～した後で" },
+              { ko: "약", roman: "yak", ja: "薬" },
+              { ko: "드세요", roman: "deuseyo", ja: "召し上がってください(먹다の尊敬)" }
+            ],
+            g: "<strong>-(으)ㄴ 후에</strong>は「～した後で」。動詞語幹に付き、母音/ㄹ語幹は<code>-ㄴ</code>、子音語幹は<code>-은</code>(例: <code>먹은 후에</code>)。<br><code>후에</code>は<code>다음에</code>・<code>뒤에</code>に置き換え可。「薬を飲む」は韓国語では動詞<code>먹다</code>(食べる)を使う。",
+            alts: ["밥을 먹은 후에 약을 드십시오.", "밥을 먹은 다음에 약을 드세요.", "밥을 먹은 후에 약을 먹어요."]
+          },
+          {
+            ja: "出かける前に、窓を閉めてください。", ko: "나가기 전에 창문을 닫으세요.", roman: "nagagi jeone changmuneul dadeuseyo.",
+            w: [
+              { ko: "나가다", roman: "nagada", ja: "出かける・出ていく" },
+              { ko: "-기 전에", roman: "-gi jeone", ja: "～する前に" },
+              { ko: "창문", roman: "changmun", ja: "窓" },
+              { ko: "닫으세요", roman: "dadeuseyo", ja: "閉めてください" }
+            ],
+            g: "<strong>-기 전에</strong>は「～する前に」。動詞語幹に常に<code>-기</code>を付け、時制変化しない(後ろが過去でも<code>나가기 전에</code>)。<br>反意の<code>-(으)ㄴ 후에</code>(～した後で)とセットで覚える。名詞には<code>전에</code>のみ(例: <code>식사 전에</code>)。",
+            alts: ["나가기 전에 창문을 닫으십시오.", "외출하기 전에 창문을 닫으세요."]
+          },
+          {
+            ja: "電話で話しながら歩かないでください。", ko: "전화하면서 걷지 마세요.", roman: "jeonhwahamyeonseo geotji maseyo.",
+            w: [
+              { ko: "전화하다", roman: "jeonhwahada", ja: "電話する" },
+              { ko: "-(으)면서", roman: "-myeonseo", ja: "～しながら(同時動作)" },
+              { ko: "걷지 마세요", roman: "geotji maseyo", ja: "歩かないでください" }
+            ],
+            g: "<strong>-(으)면서</strong>(同時動作)と<strong>-지 마세요</strong>(禁止)の合わせ技。主語は同一人物。<br><code>걷다</code>は<strong>ㄷ不規則</strong>で<code>-어요</code>では<code>걸어요</code>になるが、子音で始まる<code>-지</code>の前ではパッチムそのまま<code>걷지</code>。",
+            alts: ["전화하면서 걷지 마십시오.", "통화하면서 걷지 마세요."]
+          },
+          {
+            ja: "彼女は若いけれど、とても賢いです。", ko: "그녀는 어리지만 아주 똑똑해요.", roman: "geunyeoneun eorijiman aju ttokttokaeyo.",
+            w: [
+              { ko: "그녀", roman: "geunyeo", ja: "彼女" },
+              { ko: "어리다", roman: "eorida", ja: "幼い・年が若い" },
+              { ko: "-지만", roman: "-jiman", ja: "～だけれど(逆接)" },
+              { ko: "똑똑해요", roman: "ttokttokaeyo", ja: "賢いです" }
+            ],
+            g: "<strong>-지만</strong>は逆接「～だけれど」。動詞・形容詞の語幹に直接付き、母音/子音を問わず形は同じ(<code>어리지만</code>/<code>좋지만</code>)。<br>過去には<code>-았/었지만</code>(例: <code>어렸지만</code>)。<code>어리다</code>(年が幼い・若い)と<code>젊다</code>(年若い・若々しい)はニュアンスが違う点にも注意。",
+            alts: ["그녀는 어리지만 아주 똑똑합니다.", "그녀는 어리지만 매우 똑똑해요.", "그녀는 나이는 어리지만 아주 똑똑해요."]
           }
         ]
       },
@@ -1201,6 +1747,71 @@
               { ko: "-아/어 보이다", roman: "-a/eo boida", ja: "〜に見える／そうだ" }
             ],
             g: "<strong>「A-아/어 보이다」</strong>で「〜に見える／〜そうだ」（視覚に基づく推量）。<code>맛있어 보이다</code>（美味しそう）、<code>예뻐 보이다</code>（きれいに見える）、<code>피곤해 보이다</code>（疲れて見える）。"
+          },
+          {
+            ja: "韓国の会社で働くことになりました。", ko: "한국 회사에서 일하게 됐어요.", roman: "hanguk hoesa-eseo ilhage dwaesseoyo.",
+            w: [
+              { ko: "회사", roman: "hoesa", ja: "会社" },
+              { ko: "-에서", roman: "-eseo", ja: "〜で（場所）" },
+              { ko: "일하다", roman: "ilhada", ja: "働く" },
+              { ko: "-게 되다", roman: "-ge doeda", ja: "〜することになる（成り行き）" }
+            ],
+            g: "<strong>「V-게 되다」</strong>＝外的要因・成り行きによる変化「〜することになる」。自分の意志ではなく状況でそうなった含み。<br>過去形は <code>-게 됐어요</code>（=되었어요）。",
+            alts: ["한국 회사에서 일하게 되었어요.", "한국 회사에서 일하게 됐습니다."]
+          },
+          {
+            ja: "二人はもう仲直りしたようです。", ko: "두 사람은 벌써 화해한 것 같아요.", roman: "du saram-eun beolsseo hwahaehan geot gatayo.",
+            w: [
+              { ko: "두 사람", roman: "du saram", ja: "二人" },
+              { ko: "벌써", roman: "beolsseo", ja: "もう／すでに" },
+              { ko: "화해하다", roman: "hwahaehada", ja: "仲直りする" },
+              { ko: "-(으)ㄴ 것 같다", roman: "-(eu)n geot gatda", ja: "〜したようだ（過去推量）" }
+            ],
+            g: "<strong>「V-(으)ㄴ 것 같다」</strong>＝過去の出来事に対する推量「〜したようだ」。<code>화해하다 → 화해한 것 같다</code>。<br>動詞の現在推量は <code>-는 것 같다</code>（例: <code>가는 것 같다</code>＝行くようだ）と区別。",
+            alts: ["두 사람은 벌써 화해한 것 같습니다."]
+          },
+          {
+            ja: "薬を飲んだら、だいぶ良くなりました。", ko: "약을 먹으니까 많이 좋아졌어요.", roman: "yag-eul meogeunikka mani joajyeosseoyo.",
+            w: [
+              { ko: "약", roman: "yak", ja: "薬" },
+              { ko: "-을/를", roman: "-eul/reul", ja: "目的語助詞「を」" },
+              { ko: "-(으)니까", roman: "-(eu)nikka", ja: "〜したら／〜ので" },
+              { ko: "좋다", roman: "jota", ja: "良い" },
+              { ko: "-아/어지다", roman: "-a/eojida", ja: "〜くなる（変化）" }
+            ],
+            g: "<strong>「A-아/어지다」</strong>で状態変化。<code>좋다 → 좋아지다</code>（良くなる）。<br><strong>「-(으)니까」</strong>は発見・きっかけ「〜したら」も表す。",
+            alts: ["약을 먹으니까 많이 좋아졌습니다.", "약을 먹으니까 훨씬 좋아졌어요."]
+          },
+          {
+            ja: "彼はとても忙しそうに見えます。", ko: "그는 아주 바빠 보여요.", roman: "geuneun aju bappa boyeoyo.",
+            w: [
+              { ko: "아주", roman: "aju", ja: "とても" },
+              { ko: "바쁘다", roman: "bappeuda", ja: "忙しい" },
+              { ko: "-아/어 보이다", roman: "-a/eo boida", ja: "〜そうに見える（視覚推量）" }
+            ],
+            g: "<strong>「A-아/어 보이다」</strong>＝視覚に基づく推量。<code>바쁘다</code> は<strong>으変則</strong>で語幹のㅡが脱落し <code>바빠</code> となる（바쁘+아→바빠）。<br>類例: <code>예쁘다 → 예뻐 보이다</code>。",
+            alts: ["그는 아주 바빠 보입니다.", "그는 굉장히 바빠 보여요."]
+          },
+          {
+            ja: "あの店はもう閉まったと思っていました。", ko: "저 가게는 벌써 문을 닫은 줄 알았어요.", roman: "jeo gageneun beolsseo mun-eul dadeun jul arasseoyo.",
+            w: [
+              { ko: "가게", roman: "gage", ja: "店" },
+              { ko: "문을 닫다", roman: "mun-eul datda", ja: "閉店する／閉まる" },
+              { ko: "-(으)ㄴ 줄 알다", roman: "-(eu)n jul alda", ja: "〜したと思い込む" }
+            ],
+            g: "<strong>「-(으)ㄴ 줄 알았다」</strong>＝過去の出来事への思い込み「〜したと思っていた」（実際は違った）。<code>닫다 → 닫은 줄</code>。<br>未来・現在の思い込みは <code>-는 줄 / -(으)ㄹ 줄 알았다</code> と使い分ける。",
+            alts: ["저 가게는 벌써 문을 닫은 줄 알았습니다."]
+          },
+          {
+            ja: "この荷物は地下鉄で送りました。", ko: "이 짐은 지하철로 보냈어요.", roman: "i jim-eun jihacheollo bonaesseoyo.",
+            w: [
+              { ko: "짐", roman: "jim", ja: "荷物" },
+              { ko: "지하철", roman: "jihacheol", ja: "地下鉄" },
+              { ko: "-로/으로", roman: "-ro/euro", ja: "〜で（手段）" },
+              { ko: "보내다", roman: "bonaeda", ja: "送る" }
+            ],
+            g: "<strong>手段の助詞 <code>-(으)로</code></strong>。母音終わり・ㄹパッチムの語には <code>-로</code> が付く: <code>지하철 + 로 → 지하철로</code>。<br>その他の子音終わりは <code>-으로</code>（例: <code>손으로</code>＝手で）。",
+            alts: ["이 짐은 지하철로 보냈습니다.", "이 짐은 지하철로 부쳤어요."]
           }
         ]
       },
@@ -1248,6 +1859,77 @@
               { ko: "-고 가다", roman: "-go gada", ja: "〜していく" }
             ],
             g: "<strong>「-(으)니까」</strong>は主観的な理由「〜だから」。<strong>命令・勧誘文と相性が良い</strong>（<code>-아/어서</code> は命令・勧誘と一緒に使えない）。"
+          },
+          {
+            ja: "この食堂は味がいいだけでなく、値段も安いです。", ko: "이 식당은 맛이 좋을 뿐만 아니라 값도 싸요.", roman: "i sikdangeun masi joeul ppunman anira gapdo ssayo.",
+            w: [
+              { ko: "이 식당은", roman: "i sikdangeun", ja: "この食堂は" },
+              { ko: "맛이 좋을", roman: "masi joeul", ja: "味がいい(連体形)" },
+              { ko: "뿐만 아니라", roman: "ppunman anira", ja: "~だけでなく(累加)" },
+              { ko: "값도", roman: "gapdo", ja: "値段も" },
+              { ko: "싸요", roman: "ssayo", ja: "安いです" }
+            ],
+            g: "用言に付く累加は<strong>-(으)ㄹ 뿐만 아니라</strong>。<code>좋다→좋을 뿐만 아니라</code>のように連体形語尾を取ります。<br>名詞には<code>한국어뿐만 아니라</code>のように直接<code>뿐만 아니라</code>を付け、形が違う点に注意。",
+            alts: ["이 식당은 맛이 좋을 뿐만 아니라 값도 쌉니다.", "이 식당은 맛도 좋고 값도 싸요."]
+          },
+          {
+            ja: "彼は遅刻しました。したがって試験を受けられませんでした。", ko: "그는 지각했어요. 따라서 시험을 볼 수 없었어요.", roman: "geuneun jigakaesseoyo. ttaraseo siheomeul bol su eopseosseoyo.",
+            w: [
+              { ko: "그는", roman: "geuneun", ja: "彼は" },
+              { ko: "지각했어요", roman: "jigakaesseoyo", ja: "遅刻しました" },
+              { ko: "따라서", roman: "ttaraseo", ja: "したがって" },
+              { ko: "시험을", roman: "siheomeul", ja: "試験を" },
+              { ko: "볼 수 없었어요", roman: "bol su eopseosseoyo", ja: "受けられなかった" }
+            ],
+            g: "<strong>따라서</strong>は根拠から結論を導く硬い接続詞「したがって」。論述・文章でよく使います。<br>会話的な<code>그래서</code>とほぼ同義ですが、<code>따라서/그러므로</code>はより改まった響きです。",
+            alts: ["그는 지각했습니다. 따라서 시험을 볼 수 없었습니다.", "그는 지각했어요. 그러므로 시험을 볼 수 없었어요."]
+          },
+          {
+            ja: "携帯電話を通じていつでも連絡できます。", ko: "휴대폰을 통해 언제든지 연락할 수 있어요.", roman: "hyudaeponeul tonghae eonjedeunji yeollakal su isseoyo.",
+            w: [
+              { ko: "휴대폰을", roman: "hyudaeponeul", ja: "携帯電話を" },
+              { ko: "통해", roman: "tonghae", ja: "~を通じて(手段)" },
+              { ko: "언제든지", roman: "eonjedeunji", ja: "いつでも" },
+              { ko: "연락할 수 있어요", roman: "yeollakal su isseoyo", ja: "連絡できます" }
+            ],
+            g: "<strong>N을/를 통해</strong>は手段・経路の「~を通じて」。<code>통하다</code>由来で<code>통해서</code>とも言えます。<br>「人や組織を介して」の意味でも使え、<code>친구를 통해 알았어요</code>(友人を通じて知った)のように応用できます。",
+            alts: ["휴대폰을 통해서 언제든지 연락할 수 있어요.", "휴대폰을 통해 언제든지 연락할 수 있습니다."]
+          },
+          {
+            ja: "ただ待っているよりは、直接聞きに行くほうがましです。", ko: "그냥 기다리느니 직접 물어보러 가는 게 나아요.", roman: "geunyang gidarineuni jikjeop mureoboreo ganeun ge naayo.",
+            w: [
+              { ko: "그냥", roman: "geunyang", ja: "ただ" },
+              { ko: "기다리느니", roman: "gidarineuni", ja: "待つくらいなら" },
+              { ko: "직접", roman: "jikjeop", ja: "直接" },
+              { ko: "물어보러 가는 게", roman: "mureoboreo ganeun ge", ja: "聞きに行くほうが" },
+              { ko: "나아요", roman: "naayo", ja: "ましです" }
+            ],
+            g: "<strong>-느니 -는 게 낫다</strong>は二者を比べ「~するくらいならむしろ~するほうがましだ」。どちらも気乗りしない選択肢から相対的に良い方を選ぶ表現です。<br><code>낫다</code>はㅅ不規則で<code>나아요</code>(×낫아요)になる点に注意。",
+            alts: ["그냥 기다리느니 직접 물어보러 가는 게 낫지요.", "그냥 기다리느니 직접 물어보러 가는 게 낫습니다."]
+          },
+          {
+            ja: "この本は内容が難しいです。おまけに分量も多いです。", ko: "이 책은 내용이 어려워요. 게다가 분량도 많아요.", roman: "i chaegeun naeyongi eoryeowoyo. gedaga bullyangdo manayo.",
+            w: [
+              { ko: "이 책은", roman: "i chaegeun", ja: "この本は" },
+              { ko: "내용이", roman: "naeyongi", ja: "内容が" },
+              { ko: "어려워요", roman: "eoryeowoyo", ja: "難しいです" },
+              { ko: "게다가", roman: "gedaga", ja: "おまけに" },
+              { ko: "분량도 많아요", roman: "bullyangdo manayo", ja: "分量も多いです" }
+            ],
+            g: "<strong>게다가</strong>は前文に情報を上乗せする「おまけに・しかも」。文頭に置いて累加します。<br>一文内で累加する<code>-(으)ㄹ 뿐만 아니라</code>と違い、<code>게다가</code>は独立した文をつなぐ点が異なります。",
+            alts: ["이 책은 내용이 어려울 뿐만 아니라 분량도 많아요.", "이 책은 내용이 어렵습니다. 게다가 분량도 많습니다."]
+          },
+          {
+            ja: "長い間悩んだ末、ついに留学を決心しました。", ko: "오랫동안 고민한 끝에 드디어 유학을 결심했어요.", roman: "oraetdongan gominhan kkeute deudieo yuhageul gyeolsimaesseoyo.",
+            w: [
+              { ko: "오랫동안", roman: "oraetdongan", ja: "長い間" },
+              { ko: "고민한 끝에", roman: "gominhan kkeute", ja: "悩んだ末に" },
+              { ko: "드디어", roman: "deudieo", ja: "ついに" },
+              { ko: "유학을", roman: "yuhageul", ja: "留学を" },
+              { ko: "결심했어요", roman: "gyeolsimaesseoyo", ja: "決心しました" }
+            ],
+            g: "<strong>드디어/마침내</strong>は待ち望んだ結果が実現する「ついに」。肯定的な達成に使います。<br><code>-(으)ㄴ 끝에</code>は「~した末に」と長い過程の結末を表し、<code>드디어</code>と相性が良い組み合わせです。",
+            alts: ["오랫동안 고민한 끝에 마침내 유학을 결심했어요.", "오랫동안 고민한 끝에 드디어 유학을 결심했습니다."]
           }
         ]
       },
@@ -1293,6 +1975,74 @@
               { ko: "-(으)ㄹ 것 같다", roman: "-(eu)l geot gatda", ja: "〜しそうだ" }
             ],
             g: "<strong>「V-(으)ㄹ 것 같다」</strong>で推量「〜しそうだ／だろう」。否定は <code>-지 않을 것 같다</code>。能動 <code>해결하다</code> ↔ 受動 <code>해결되다</code>。"
+          },
+          {
+            ja: "先生は明日までに宿題を出せと言いました。", ko: "선생님이 내일까지 숙제를 내라고 하셨어요.", roman: "seonsaengnim-i naeilkkaji sukje-reul naerago hasyeosseoyo.",
+            w: [
+              { ko: "선생님", roman: "seonsaengnim", ja: "先生" },
+              { ko: "-까지", roman: "-kkaji", ja: "〜まで（期限）" },
+              { ko: "숙제", roman: "sukje", ja: "宿題" },
+              { ko: "내다", roman: "naeda", ja: "出す" },
+              { ko: "-(으)라고 하다", roman: "-(eu)rago hada", ja: "〜しろと言う（命令の伝聞）" }
+            ],
+            g: "<strong>間接話法（命令）</strong>：命令文の伝達は <code>-(으)라고 하다</code>。直接の命令 <code>-(으)세요</code> とは別形で、元が敬語でも引用部は <code>내라고</code> と基本形になる。<br>否定は <code>-지 말라고 하다</code>（例：<code>가지 말라고 했어요</code>）。",
+            alts: ["선생님이 내일까지 숙제를 내라고 했어요", "선생님이 내일까지 숙제를 내라고 하셨습니다"]
+          },
+          {
+            ja: "友だちが週末に何をするのかと聞きました。", ko: "친구가 주말에 뭐 하냐고 물어봤어요.", roman: "chingu-ga jumal-e mwo hanyago mureobwasseoyo.",
+            w: [
+              { ko: "주말", roman: "jumal", ja: "週末" },
+              { ko: "뭐", roman: "mwo", ja: "何" },
+              { ko: "-(느)냐고 하다", roman: "-(neu)nyago hada", ja: "〜かと聞く（疑問の伝聞）" },
+              { ko: "물어보다", roman: "mureoboda", ja: "尋ねる" }
+            ],
+            g: "<strong>間接話法（疑問）</strong>：疑問文の伝達は <code>-냐고 하다/묻다</code>。現代口語では動詞・形容詞ともに <code>하냐고／좋냐고</code> が一般的。<br>伝達動詞は <code>하다</code> のほか <code>묻다・물어보다</code> もよく使う。",
+            alts: ["친구가 주말에 뭐 하냐고 했어요", "친구가 주말에 뭐 하느냐고 물어봤어요"]
+          },
+          {
+            ja: "明日から日本に行くんですってね？", ko: "내일부터 일본에 간다면서요?", roman: "naeilbuteo ilbon-e gandamyeonseoyo?",
+            w: [
+              { ko: "-부터", roman: "-buteo", ja: "〜から（起点）" },
+              { ko: "일본", roman: "ilbon", ja: "日本" },
+              { ko: "가다", roman: "gada", ja: "行く" },
+              { ko: "-ㄴ/는다면서요?", roman: "-n/neundamyeonseoyo?", ja: "〜だそうですね？（確認）" }
+            ],
+            g: "<strong>「-ㄴ/는다면서요?」</strong>は聞いた情報を相手に確認する「〜だそうですね／〜なんですって？」。動詞現在は <code>간다면서요</code>、形容詞は <code>-다면서요</code>、名詞は <code>-(이)라면서요</code>。<br>縮約形 <code>-ㄴ/는다며?</code> はパンマル。",
+            alts: ["내일부터 일본에 간다면서요", "내일부터 일본 간다면서요?"]
+          },
+          {
+            ja: "二人はもう仲直りしたみたいです。", ko: "두 사람은 벌써 화해했나 봐요.", roman: "du saram-eun beolsseo hwahaehaenna bwayo.",
+            w: [
+              { ko: "두 사람", roman: "du saram", ja: "二人" },
+              { ko: "벌써", roman: "beolsseo", ja: "もう・すでに" },
+              { ko: "화해하다", roman: "hwahaehada", ja: "仲直りする" },
+              { ko: "-았/었나 보다", roman: "-ass/eonna boda", ja: "〜したらしい（推量）" }
+            ],
+            g: "<strong>「-나 보다」</strong>は目に見える根拠からの推量「〜らしい・〜のようだ」。動詞は <code>하나 봐요</code>、過去は <code>했나 봐요</code>、形容詞は <code>-(으)ㄴ가 보다</code>（例：<code>바쁜가 봐요</code>）。<br>自分のことには使えず、その場合は <code>-(으)ㄹ 것 같다</code> を使う。",
+            alts: ["두 사람은 벌써 화해한 것 같아요", "두 사람은 벌써 화해했나 봅니다"]
+          },
+          {
+            ja: "いくら高くても、これは買うつもりです。", ko: "아무리 비싸도 이건 살게요.", roman: "amuri bissado igeon salgeyo.",
+            w: [
+              { ko: "아무리", roman: "amuri", ja: "どんなに" },
+              { ko: "비싸다", roman: "bissada", ja: "高い（値段）" },
+              { ko: "-아/어도", roman: "-a/eodo", ja: "〜ても（譲歩）" },
+              { ko: "이건", roman: "igeon", ja: "これは（이것은の縮約）" },
+              { ko: "-(으)ㄹ게요", roman: "-(eu)lgeyo", ja: "〜します（意志）" }
+            ],
+            g: "<strong>「아무리 A-아/어도」</strong>で極端な譲歩「どんなにAでも」。<strong>「-(으)ㄹ게요」</strong>は話者の意志・決意。<br><code>이건</code> は <code>이것은</code> の口語縮約。母音語幹 <code>사다</code> はパッチムがないので <code>살게요</code>。",
+            alts: ["아무리 비싸도 이건 살 거예요", "아무리 비싸도 이것은 살게요"]
+          },
+          {
+            ja: "説明書に書いてある通りに作ればいいです。", ko: "설명서에 쓰여 있는 대로 만들면 돼요.", roman: "seolmyeongseo-e sseuyeo inneun daero mandeulmyeon dwaeyo.",
+            w: [
+              { ko: "설명서", roman: "seolmyeongseo", ja: "説明書" },
+              { ko: "쓰여 있다", roman: "sseuyeo itda", ja: "書いてある" },
+              { ko: "-는 대로", roman: "-neun daero", ja: "〜する通りに" },
+              { ko: "-(으)면 되다", roman: "-(eu)myeon doeda", ja: "〜すればよい" }
+            ],
+            g: "<strong>「V-는 대로」</strong>は動詞に付いて「〜する通りに・〜するままに」。名詞には <code>N대로</code>（例：<code>설명서대로</code>）。<br><code>-는 대로</code> には「〜し次第」（例：<code>도착하는 대로</code>）の用法もある。",
+            alts: ["설명서에 쓰여 있는 대로 만들면 됩니다", "설명서대로 만들면 돼요"]
           }
         ]
       },
@@ -1338,6 +2088,1551 @@
             ],
             g: "<strong>「N에 + 形容詞」</strong>で対象「Nに対して〜だ」。<code>매우</code>（書面・口語両用）≈ <code>아주</code>（口語的）≈ <code>되게</code>（くだけた口語）。",
             alts: ["그는 일에 아주 성실해요"]
+          },
+          {
+            ja: "考えれば考えるほど分からなくなります。", ko: "생각하면 할수록 모르겠어요.", roman: "saenggakamyeon halsurok moreugesseoyo.",
+            w: [
+              { ko: "생각하면", roman: "saenggakamyeon", ja: "考えると" },
+              { ko: "할수록", roman: "halsurok", ja: "するほど" },
+              { ko: "모르겠어요", roman: "moreugesseoyo", ja: "分からなくなります" }
+            ],
+            g: "<strong>-(으)ㄹ수록</strong>は「〜すればするほど」。<code>-(으)면 -(으)ㄹ수록</code>と前に<code>-(으)면</code>を添えて強調する形が定番です。<br><code>모르겠어요</code>は「分からない」を婉曲に言う頻出表現。",
+            alts: ["생각할수록 더 모르겠어요."]
+          },
+          {
+            ja: "この店の料理は値段の割においしいほうです。", ko: "이 가게 음식은 가격에 비해 맛있는 편이에요.", roman: "i gage eumsigeun gagyeoge bihae masinneun pyeonieyo.",
+            w: [
+              { ko: "이 가게 음식은", roman: "i gage eumsigeun", ja: "この店の料理は" },
+              { ko: "가격에 비해", roman: "gagyeoge bihae", ja: "値段の割に" },
+              { ko: "맛있는", roman: "masinneun", ja: "おいしい" },
+              { ko: "편이에요", roman: "pyeonieyo", ja: "ほうです" }
+            ],
+            g: "<strong>-(으)ㄴ/는 편이다</strong>は「どちらかといえば〜なほうだ」と断定をやわらげる傾向表現。<br><code>N에 비해</code>は「〜に比べて・〜の割に」という比較の表現です。",
+            alts: ["이 가게 음식은 값에 비해 맛있는 편이에요."]
+          },
+          {
+            ja: "誰でも初めは失敗するものです。", ko: "누구나 처음에는 실수하기 마련이에요.", roman: "nuguna cheoeumeneun silsuhagi maryeonieyo.",
+            w: [
+              { ko: "누구나", roman: "nuguna", ja: "誰でも" },
+              { ko: "처음에는", roman: "cheoeumeneun", ja: "初めは" },
+              { ko: "실수하기", roman: "silsuhagi", ja: "失敗するの" },
+              { ko: "마련이에요", roman: "maryeonieyo", ja: "ものです" }
+            ],
+            g: "<strong>-기 마련이다</strong>は「〜するのが当然だ・〜するものだ」という道理・必然を表します。<br><code>누구나</code>は「誰でも」、<code>처음에는</code>は「最初は」。一般論を述べる文と相性がよいです。",
+            alts: ["누구나 처음에는 실수하게 마련이에요."]
+          },
+          {
+            ja: "この映画は一度見てみる価値があります。", ko: "이 영화는 한번 볼 만해요.", roman: "i yeonghwaneun hanbeon bol manhaeyo.",
+            w: [
+              { ko: "이 영화는", roman: "i yeonghwaneun", ja: "この映画は" },
+              { ko: "한번", roman: "hanbeon", ja: "一度" },
+              { ko: "볼", roman: "bol", ja: "見る" },
+              { ko: "만해요", roman: "manhaeyo", ja: "価値があります" }
+            ],
+            g: "<strong>-(으)ㄹ 만하다</strong>は「〜する価値がある・〜するに足る」。動詞の語幹に付き<code>볼 만하다</code>「見る価値がある」のように使います。<br>「試しに一度」の<code>한번</code>は副詞的でつなげて書きます。",
+            alts: ["이 영화는 한번 볼 만한 가치가 있어요."]
+          },
+          {
+            ja: "最近、環境問題に関心を持つようになりました。", ko: "요즘 환경 문제에 관심을 갖게 됐어요.", roman: "yojeum hwan-gyeong munjee gwansimeul gatge dwaesseoyo.",
+            w: [
+              { ko: "요즘", roman: "yojeum", ja: "最近" },
+              { ko: "환경 문제에", roman: "hwan-gyeong munjee", ja: "環境問題に" },
+              { ko: "관심을 갖게", roman: "gwansimeul gatge", ja: "関心を持つように" },
+              { ko: "됐어요", roman: "dwaesseoyo", ja: "なりました" }
+            ],
+            g: "<strong>N에 관심을 갖다</strong>は「〜に関心を持つ」。状態の<code>관심이 있다</code>に対し、こちらは動作で<code>-게 되다</code>と合わせ「持つようになる」と変化を表せます。",
+            alts: ["요즘 환경 문제에 관심이 생겼어요."]
+          },
+          {
+            ja: "彼女は人前でも全く緊張しないほうです。", ko: "그녀는 사람들 앞에서도 전혀 긴장하지 않는 편이에요.", roman: "geunyeoneun saramdeul apeseodo jeonhyeo ginjanghaji anneun pyeonieyo.",
+            w: [
+              { ko: "그녀는", roman: "geunyeoneun", ja: "彼女は" },
+              { ko: "사람들 앞에서도", roman: "saramdeul apeseodo", ja: "人前でも" },
+              { ko: "전혀", roman: "jeonhyeo", ja: "全く" },
+              { ko: "긴장하지 않는", roman: "ginjanghaji anneun", ja: "緊張しない" },
+              { ko: "편이에요", roman: "pyeonieyo", ja: "ほうです" }
+            ],
+            g: "<strong>-지 않는 편이다</strong>は動詞の否定+傾向で「あまり〜しないほうだ」。<code>전혀</code>「全く」は否定と呼応します。<br>動詞現在の連体形は<code>않는</code>のように<code>-는</code>を使います。",
+            alts: ["그녀는 사람들 앞에서도 별로 긴장하지 않는 편이에요."]
+          }
+        ]
+      },
+      {
+        topik: 1, num: 4, title: "場所・移動・日常動作",
+        sentences: [
+          {
+            ja: "私は家にいます。", ko: "저는 집에 있어요.", roman: "jeoneun jib-e isseoyo.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "私（謙譲）" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "집", roman: "jip", ja: "家" },
+              { ko: "-에", roman: "-e", ja: "存在の場所助詞「に」" },
+              { ko: "있어요", roman: "isseoyo", ja: "あります／います" }
+            ],
+            g: "<strong>存在の「-에」</strong>＝「（場所）に」。<code>있다（ある・いる）/없다（ない・いない）</code>とともに使う。<br>動作の場所を表す<code>-에서</code>とは別物。存在・所在には必ず<code>-에</code>。",
+            alts: ["저는 집에 있습니다.", "나는 집에 있어요."]
+          },
+          {
+            ja: "学校に行きます。", ko: "학교에 가요.", roman: "hakgyo-e gayo.",
+            w: [
+              { ko: "학교", roman: "hakgyo", ja: "学校" },
+              { ko: "-에", roman: "-e", ja: "方向の助詞「に・へ」" },
+              { ko: "가요", roman: "gayo", ja: "行きます（가다）" }
+            ],
+            g: "<strong>方向の「-에」</strong>＝移動の行き先「〜に・〜へ」。<code>가다（行く）/오다（来る）</code>の到達点に付く。<br>動作の場所の<code>-에서</code>とは違い、移動の到達点は<code>-에</code>を使う。",
+            alts: ["학교에 갑니다."]
+          },
+          {
+            ja: "友だちが家に来ます。", ko: "친구가 집에 와요.", roman: "chinguga jib-e wayo.",
+            w: [
+              { ko: "친구", roman: "chingu", ja: "友だち" },
+              { ko: "-가", roman: "-ga", ja: "主格助詞「が」（母音後）" },
+              { ko: "집", roman: "jip", ja: "家" },
+              { ko: "-에", roman: "-e", ja: "方向の助詞「に」" },
+              { ko: "와요", roman: "wayo", ja: "来ます（오다）" }
+            ],
+            g: "<strong>오다（来る）</strong>の해요体は<code>오+아요→와요</code>と縮約する。<br>主格助詞はパッチム無→<code>-가</code>、パッチム有→<code>-이</code>（例：<code>선생님이</code>）。",
+            alts: ["친구가 집에 옵니다."]
+          },
+          {
+            ja: "食堂でご飯を食べます。", ko: "식당에서 밥을 먹어요.", roman: "sikdang-eseo bab-eul meogeoyo.",
+            w: [
+              { ko: "식당", roman: "sikdang", ja: "食堂" },
+              { ko: "-에서", roman: "-eseo", ja: "動作の場所「で」" },
+              { ko: "밥", roman: "bap", ja: "ご飯" },
+              { ko: "-을", roman: "-eul", ja: "目的格助詞「を」（パッチム有）" },
+              { ko: "먹어요", roman: "meogeoyo", ja: "食べます（먹다）" }
+            ],
+            g: "<strong>動作の場所の「-에서」</strong>＝「（場所）で」。<code>먹다・공부하다</code>など動作動詞とともに使う。<br>存在の<code>-에</code>と混同しないこと。「食堂にいる」なら<code>식당에 있어요</code>。",
+            alts: ["식당에서 밥을 먹습니다.", "식당에서 밥 먹어요."]
+          },
+          {
+            ja: "図書館で勉強します。", ko: "도서관에서 공부해요.", roman: "doseogwan-eseo gongbuhaeyo.",
+            w: [
+              { ko: "도서관", roman: "doseogwan", ja: "図書館" },
+              { ko: "-에서", roman: "-eseo", ja: "動作の場所「で」" },
+              { ko: "공부해요", roman: "gongbuhaeyo", ja: "勉強します（공부하다）" }
+            ],
+            g: "<strong>하다動詞</strong>の해요体は<code>하+여요→해요</code>。<code>공부하다→공부해요</code>、<code>일하다→일해요</code>。<br>勉強する場所なので動作の<code>-에서</code>を使う。",
+            alts: ["도서관에서 공부합니다."]
+          },
+          {
+            ja: "私は会社に通っています。", ko: "저는 회사에 다녀요.", roman: "jeoneun hoesa-e danyeoyo.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "私" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "회사", roman: "hoesa", ja: "会社" },
+              { ko: "-에", roman: "-e", ja: "方向の助詞「に」" },
+              { ko: "다녀요", roman: "danyeoyo", ja: "通います（다니다）" }
+            ],
+            g: "<strong>다니다（通う）</strong>＝学校・会社などへ定期的に行き来すること。해요体は<code>다니+어요→다녀요</code>。<br>一回の移動の<code>가다</code>と違い、習慣的な通勤・通学を表す。",
+            alts: ["저는 회사에 다닙니다.", "저는 회사에 다니고 있어요."]
+          },
+          {
+            ja: "昼ご飯を食べに食堂へ行きます。", ko: "점심을 먹으러 식당에 가요.", roman: "jeomsim-eul meogeureo sikdang-e gayo.",
+            w: [
+              { ko: "점심", roman: "jeomsim", ja: "昼ご飯" },
+              { ko: "-을", roman: "-eul", ja: "目的格助詞「を」" },
+              { ko: "먹으러", roman: "meogeureo", ja: "食べに（먹다＋-으러）" },
+              { ko: "식당", roman: "sikdang", ja: "食堂" },
+              { ko: "-에", roman: "-e", ja: "方向の助詞「に」" },
+              { ko: "가요", roman: "gayo", ja: "行きます" }
+            ],
+            g: "<strong>-(으)러 가다/오다</strong>＝「〜しに行く／来る」（目的）。子音語幹→<code>-으러</code>、母音語幹→<code>-러</code>（例：<code>보러 가요</code>）。<br>到達点は方向の<code>-에 가다</code>で表す。",
+            alts: ["점심 먹으러 식당에 가요.", "점심을 먹으러 식당에 갑니다."]
+          },
+          {
+            ja: "カバンは机の上にあります。", ko: "가방은 책상 위에 있어요.", roman: "gabang-eun chaeksang wi-e isseoyo.",
+            w: [
+              { ko: "가방", roman: "gabang", ja: "カバン" },
+              { ko: "-은", roman: "-eun", ja: "主題助詞「は」（パッチム有）" },
+              { ko: "책상", roman: "chaeksang", ja: "机" },
+              { ko: "위", roman: "wi", ja: "上（方位名詞）" },
+              { ko: "-에", roman: "-e", ja: "存在の場所助詞「に」" },
+              { ko: "있어요", roman: "isseoyo", ja: "あります" }
+            ],
+            g: "<strong>方位名詞</strong>は<code>N 위에（上に）</code>のように「名詞＋方位名詞＋-에」で位置を表す。<code>위/아래/앞/뒤/옆/안/밖</code>。<br>日本語の「机の」の「の」は不要で、<code>책상 위</code>と並べる。",
+            alts: ["가방은 책상 위에 있습니다.", "가방이 책상 위에 있어요."]
+          },
+          {
+            ja: "猫が椅子の下で寝ています。", ko: "고양이가 의자 아래에서 자요.", roman: "goyangiga uija arae-eseo jayo.",
+            w: [
+              { ko: "고양이", roman: "goyangi", ja: "猫" },
+              { ko: "-가", roman: "-ga", ja: "主格助詞「が」" },
+              { ko: "의자", roman: "uija", ja: "椅子" },
+              { ko: "아래", roman: "arae", ja: "下（方位名詞）" },
+              { ko: "-에서", roman: "-eseo", ja: "動作の場所「で」" },
+              { ko: "자요", roman: "jayo", ja: "寝ます（자다）" }
+            ],
+            g: "<strong>方位名詞＋-에서</strong>＝そこで動作をする場合。「寝る（자다）」は動作なので<code>아래에서</code>。<br>もし「下にいる」なら存在の<code>의자 아래에 있어요</code>と<code>-에</code>になる。<code>아래</code>は<code>밑</code>とも言える。",
+            alts: ["고양이가 의자 밑에서 자요.", "고양이가 의자 아래에서 잡니다."]
+          },
+          {
+            ja: "家から学校まで友だちと一緒に通っています。", ko: "집에서 학교까지 친구하고 같이 다녀요.", roman: "jib-eseo hakgyo-kkaji chinguhago gachi danyeoyo.",
+            w: [
+              { ko: "집", roman: "jip", ja: "家" },
+              { ko: "-에서", roman: "-eseo", ja: "起点「（場所）から」" },
+              { ko: "학교", roman: "hakgyo", ja: "学校" },
+              { ko: "-까지", roman: "-kkaji", ja: "到達点「まで」" },
+              { ko: "친구", roman: "chingu", ja: "友だち" },
+              { ko: "-하고", roman: "-hago", ja: "「〜と」（口語）" },
+              { ko: "같이", roman: "gachi", ja: "一緒に" },
+              { ko: "다녀요", roman: "danyeoyo", ja: "通います（다니다）" }
+            ],
+            g: "<strong>-에서 ~까지</strong>＝場所の「〜から〜まで」。起点は動作の<code>-에서</code>、到達点は<code>-까지</code>。<br>時間の「〜から」は<code>-부터</code>（例：<code>아침부터</code>）と使い分ける。<code>같이</code>の発音は［가치］。",
+            alts: ["집에서 학교까지 친구하고 같이 다닙니다.", "집에서 학교까지 친구랑 같이 다녀요.", "집에서 학교까지 친구와 같이 다녀요."]
+          }
+        ]
+      },
+      {
+        topik: 1, num: 5, title: "否定・疑問詞・形容詞",
+        sentences: [
+          {
+            ja: "今日は行きません。", ko: "오늘은 안 가요.", roman: "oneureun an gayo.",
+            w: [
+              { ko: "오늘", roman: "oneul", ja: "今日" },
+              { ko: "-은", roman: "-eun", ja: "主題助詞「は」（パッチム有）" },
+              { ko: "안", roman: "an", ja: "〜しない（短形否定）" },
+              { ko: "가요", roman: "gayo", ja: "行きます（가다）" }
+            ],
+            g: "<strong>短形否定「안＋用言」</strong>＝「〜しない」。用言の<strong>直前</strong>に <code>안</code> を置く。<br>長形否定 <code>가지 않아요</code> も同じ意味だが、会話では短形が一般的。",
+            alts: ["오늘은 안 갑니다", "오늘은 가지 않아요"]
+          },
+          {
+            ja: "私はお酒を飲みません。", ko: "저는 술을 안 마셔요.", roman: "jeoneun sureul an masyeoyo.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "私（謙譲）" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "술", roman: "sul", ja: "お酒" },
+              { ko: "-을", roman: "-eul", ja: "目的格助詞「を」" },
+              { ko: "안", roman: "an", ja: "〜しない" },
+              { ko: "마셔요", roman: "masyeoyo", ja: "飲みます（마시다）" }
+            ],
+            g: "<strong>안</strong> は活用した用言の前に入れる（<code>안 마셔요</code>）。語幹の前ではなく해요体の形の前に置く点に注意。<br>「飲みたくない」という意志否定もこの形でカバーできる。",
+            alts: ["저는 술을 마시지 않아요", "저는 술 안 마셔요"]
+          },
+          {
+            ja: "辛い物は食べられません。", ko: "매운 건 못 먹어요.", roman: "maeun geon mot meogeoyo.",
+            w: [
+              { ko: "매운", roman: "maeun", ja: "辛い（맵다の冠形形）" },
+              { ko: "건", roman: "geon", ja: "物は（것은の縮約）" },
+              { ko: "못", roman: "mot", ja: "〜できない（不可能）" },
+              { ko: "먹어요", roman: "meogeoyo", ja: "食べます（먹다）" }
+            ],
+            g: "<strong>不可能の「못＋動詞」</strong>＝「〜できない」。能力・状況的にできないことを表す。<br><code>안 먹어요</code>（食べない＝意志）との違いに注意。発音は［몬머거요］と鼻音化する。",
+            alts: ["매운 것은 못 먹어요", "매운 음식은 못 먹어요"]
+          },
+          {
+            ja: "これは誰の本ですか？", ko: "이건 누구 책이에요?", roman: "igeon nugu chaegieyo?",
+            w: [
+              { ko: "이건", roman: "igeon", ja: "これは（이것은の縮約）" },
+              { ko: "누구", roman: "nugu", ja: "誰" },
+              { ko: "책", roman: "chaek", ja: "本" },
+              { ko: "-이에요", roman: "-ieyo", ja: "〜です（パッチム有）" }
+            ],
+            g: "<strong>疑問詞「누구」</strong>＝「誰」。「誰の」は <code>누구 책</code> のように助詞なしで名詞を続けるか <code>누구의</code> とも言える。<br>主格では <code>누가</code>（誰が）と形が変わる（누구＋가→누가）。",
+            alts: ["이것은 누구 책이에요?", "이건 누구 책입니까?"]
+          },
+          {
+            ja: "明日どこへ行きますか？", ko: "내일 어디에 가요?", roman: "naeil eodie gayo?",
+            w: [
+              { ko: "내일", roman: "naeil", ja: "明日" },
+              { ko: "어디", roman: "eodi", ja: "どこ" },
+              { ko: "-에", roman: "-e", ja: "方向・場所の助詞「へ／に」" },
+              { ko: "가요", roman: "gayo", ja: "行きます" }
+            ],
+            g: "<strong>疑問詞「어디」</strong>＝「どこ」。移動先には <code>어디에</code>（口語では <code>어디</code> 単独も可）。<br>存在の場所は <code>어디에 있어요?</code>（どこにありますか）と同じ <code>-에</code> を使う。",
+            alts: ["내일 어디 가요?", "내일 어디에 갑니까?"]
+          },
+          {
+            ja: "なぜ韓国語を勉強しますか？", ko: "왜 한국어를 공부해요?", roman: "wae hangugeoreul gongbuhaeyo?",
+            w: [
+              { ko: "왜", roman: "wae", ja: "なぜ" },
+              { ko: "한국어", roman: "hangugeo", ja: "韓国語" },
+              { ko: "-를", roman: "-reul", ja: "目的格助詞「を」" },
+              { ko: "공부해요", roman: "gongbuhaeyo", ja: "勉強します（공부하다）" }
+            ],
+            g: "<strong>疑問詞「왜」</strong>＝「なぜ・どうして」。理由を尋ねる。<br>答えには <code>그래서</code>（だから）ではなく <code>왜냐하면</code>（なぜなら）で始めることが多い。",
+            alts: ["왜 한국어를 공부합니까?"]
+          },
+          {
+            ja: "この鞄はとても高いです。", ko: "이 가방은 너무 비싸요.", roman: "i gabangeun neomu bissayo.",
+            w: [
+              { ko: "이", roman: "i", ja: "この" },
+              { ko: "가방", roman: "gabang", ja: "鞄" },
+              { ko: "-은", roman: "-eun", ja: "主題助詞「は」" },
+              { ko: "너무", roman: "neomu", ja: "とても・〜すぎる" },
+              { ko: "비싸요", roman: "bissayo", ja: "高いです（비싸다）" }
+            ],
+            g: "<strong>形容詞述語文</strong>：形容詞がそのまま述語になる（<code>비싸요</code>＝高いです）。「〜です」の <code>이에요</code> は不要。<br>反対語は <code>싸요</code>（安いです）。<code>너무</code> は元来「〜すぎる」だが口語では「とても」の意味でも使う。",
+            alts: ["이 가방은 너무 비쌉니다", "이 가방은 아주 비싸요"]
+          },
+          {
+            ja: "この店は安くて、しかも美味しいです。", ko: "이 가게는 싸요. 그리고 맛있어요.", roman: "i gageneun ssayo. geurigo masisseoyo.",
+            w: [
+              { ko: "가게", roman: "gage", ja: "店" },
+              { ko: "싸요", roman: "ssayo", ja: "安いです（싸다）" },
+              { ko: "그리고", roman: "geurigo", ja: "そして（添加の接続）" },
+              { ko: "맛있어요", roman: "masisseoyo", ja: "美味しいです" }
+            ],
+            g: "<strong>接続詞「그리고」</strong>＝「そして・それから」。情報を並べて付け加える。<br>文頭に置いて二文をつなぐ。一文内でつなぐなら <code>싸고 맛있어요</code>（語幹＋고）も使える。",
+            alts: ["이 가게는 싸고 맛있어요", "이 가게는 쌉니다. 그리고 맛있습니다"]
+          },
+          {
+            ja: "今日は天気が悪いです。だから出かけません。", ko: "오늘은 날씨가 나빠요. 그래서 안 나가요.", roman: "oneureun nalssiga nappayo. geuraeseo an nagayo.",
+            w: [
+              { ko: "날씨", roman: "nalssi", ja: "天気" },
+              { ko: "-가", roman: "-ga", ja: "主格助詞「が」" },
+              { ko: "나빠요", roman: "nappayo", ja: "悪いです（나쁘다）" },
+              { ko: "그래서", roman: "geuraeseo", ja: "だから（因果の接続）" },
+              { ko: "안 나가요", roman: "an nagayo", ja: "出かけません" }
+            ],
+            g: "<strong>接続詞「그래서」</strong>＝「だから・それで」。前文が原因、後文が結果。<br><code>나쁘다</code> は語幹末の「ㅡ」が脱落して <code>나빠요</code> となる（으変則）。短形否定 <code>안 나가요</code> と組み合わせている。",
+            alts: ["오늘은 날씨가 나빠요. 그래서 안 나갑니다", "오늘은 날씨가 안 좋아요. 그래서 안 나가요"]
+          },
+          {
+            ja: "値段は高いですが、品質はそんなに良くありません。", ko: "값은 비싸요. 그렇지만 품질은 별로 안 좋아요.", roman: "gapseun bissayo. geureochiman pumjireun byeollo an joayo.",
+            w: [
+              { ko: "값", roman: "gap", ja: "値段" },
+              { ko: "-은", roman: "-eun", ja: "主題助詞「は」" },
+              { ko: "그렇지만", roman: "geureochiman", ja: "しかし（逆接の接続）" },
+              { ko: "품질", roman: "pumjil", ja: "品質" },
+              { ko: "별로", roman: "byeollo", ja: "あまり（否定と呼応）" },
+              { ko: "안 좋아요", roman: "an joayo", ja: "良くありません" }
+            ],
+            g: "<strong>接続詞「그렇지만」</strong>＝「しかし・だが」（逆接）。<code>하지만</code> とほぼ同義でやや口語的。<br><code>별로</code>（あまり）は必ず否定 <code>안 좋아요</code> と呼応する。<code>좋다 → 좋아요</code> は規則活用。",
+            alts: ["값은 비싸지만 품질은 별로 안 좋아요", "값은 비쌉니다. 그렇지만 품질은 별로 좋지 않아요"]
+          }
+        ]
+      },
+      {
+        topik: 1, num: 6, title: "丁寧体（합쇼体）と日付・家族",
+        sentences: [
+          {
+            ja: "私は会社員です。", ko: "저는 회사원입니다.", roman: "jeoneun hoesawonimnida.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "私（謙譲）" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "회사원", roman: "hoesawon", ja: "会社員" },
+              { ko: "-입니다", roman: "-imnida", ja: "〜です（합쇼体・名詞）" }
+            ],
+            g: "名詞文の<strong>합쇼体</strong>は<code>名詞+입니다</code>。해요体の<code>-이에요/예요</code>より格式が高く、自己紹介や公式の場で使う。<br>해요体なら<code>저는 회사원이에요.</code>",
+            alts: ["저는 회사원이에요."]
+          },
+          {
+            ja: "私は韓国語を勉強します。", ko: "저는 한국어를 공부합니다.", roman: "jeoneun hangugeoreul gongbuhamnida.",
+            w: [
+              { ko: "한국어", roman: "hangugeo", ja: "韓国語" },
+              { ko: "-를", roman: "-reul", ja: "目的格助詞「を」" },
+              { ko: "공부하다", roman: "gongbuhada", ja: "勉強する" },
+              { ko: "-ㅂ니다", roman: "-mnida", ja: "〜します（합쇼体・母音語幹）" }
+            ],
+            g: "母音で終わる語幹（<code>하-</code>など）には<strong>-ㅂ니다</strong>が付く。<code>공부하다→공부합니다</code>。<br>해요体は<code>공부해요</code>。",
+            alts: ["저는 한국어를 공부해요."]
+          },
+          {
+            ja: "今日は本を読みます。", ko: "오늘은 책을 읽습니다.", roman: "oneureun chaegeul ikseumnida.",
+            w: [
+              { ko: "오늘", roman: "oneul", ja: "今日" },
+              { ko: "책", roman: "chaek", ja: "本" },
+              { ko: "-을", roman: "-eul", ja: "目的格助詞「を」" },
+              { ko: "읽다", roman: "ikda", ja: "読む" },
+              { ko: "-습니다", roman: "-seumnida", ja: "〜します（합쇼体・子音語幹）" }
+            ],
+            g: "子音で終わる語幹には<strong>-습니다</strong>が付く。<code>읽다→읽습니다</code>。<br>例外的に<code>ㄹ</code>語幹は<code>ㄹ</code>が脱落して<code>-ㅂ니다</code>：<code>살다→삽니다</code>。",
+            alts: ["오늘은 책을 읽어요."]
+          },
+          {
+            ja: "あなたはどこに住んでいますか？", ko: "어디에 삽니까?", roman: "eodie samnikka?",
+            w: [
+              { ko: "어디", roman: "eodi", ja: "どこ" },
+              { ko: "-에", roman: "-e", ja: "場所助詞「に」" },
+              { ko: "살다", roman: "salda", ja: "住む（ㄹ語幹）" },
+              { ko: "-ㅂ니까?", roman: "-mnikka?", ja: "〜ますか（합쇼体の疑問）" }
+            ],
+            g: "<strong>합쇼体の疑問形</strong>は<code>-ㅂ니까?/습니까?</code>。<code>ㄹ</code>語幹は<code>ㄹ</code>が落ちて<code>삽니까?</code>となる。<br>해요体なら平叙も疑問も<code>어디에 살아요?</code>と同形。",
+            alts: ["어디에 살아요?", "어디에서 삽니까?"]
+          },
+          {
+            ja: "今日は何曜日ですか？", ko: "오늘은 무슨 요일입니까?", roman: "oneureun museun yoirimnikka?",
+            w: [
+              { ko: "무슨", roman: "museun", ja: "何の／どんな" },
+              { ko: "요일", roman: "yoil", ja: "曜日" },
+              { ko: "-입니까?", roman: "-imnikka?", ja: "〜ですか（합쇼体・名詞）" }
+            ],
+            g: "<strong>曜日</strong>は<code>월요일·화요일·수요일·목요일·금요일·토요일·일요일</code>。「何曜日」は<code>무슨 요일</code>と言い、<code>몇 요일</code>とは言わない。<br>名詞疑問の합쇼体は<code>-입니까?</code>。",
+            alts: ["오늘은 무슨 요일이에요?"]
+          },
+          {
+            ja: "今日は金曜日です。", ko: "오늘은 금요일입니다.", roman: "oneureun geumyoirimnida.",
+            w: [
+              { ko: "금요일", roman: "geumyoil", ja: "金曜日" },
+              { ko: "-입니다", roman: "-imnida", ja: "〜です（합쇼体）" }
+            ],
+            g: "<strong>曜日の語彙</strong>：金曜日は<code>금요일</code>。漢字「金（금）」＋「曜日（요일）」。<br>「〜曜日に」と時を表すときは<code>금요일에</code>のように<code>-에</code>を付ける。",
+            alts: ["오늘은 금요일이에요."]
+          },
+          {
+            ja: "私の誕生日は10月3日です。", ko: "제 생일은 시월 삼 일입니다.", roman: "je saengireun siwol sam irimnida.",
+            w: [
+              { ko: "제", roman: "je", ja: "私の" },
+              { ko: "생일", roman: "saengil", ja: "誕生日" },
+              { ko: "시월", roman: "siwol", ja: "10月" },
+              { ko: "삼 일", roman: "sam il", ja: "3日" }
+            ],
+            g: "<strong>日付</strong>は漢字数詞＋<code>년/월/일</code>で読む。注意すべき例外は<code>6월＝유월</code>、<code>10월＝시월</code>（<code>육월·십월</code>とは言わない）。<br>日は<code>일</code>を後ろに付け、<code>3일＝삼 일</code>。",
+            alts: ["제 생일은 시월 삼 일이에요.", "제 생일은 10월 3일입니다."]
+          },
+          {
+            ja: "私は兄と姉がいます。", ko: "저는 형하고 누나가 있습니다.", roman: "jeoneun hyeonghago nunaga itseumnida.",
+            w: [
+              { ko: "형", roman: "hyeong", ja: "兄（弟から見た）" },
+              { ko: "-하고", roman: "-hago", ja: "並列「〜と」（口語的）" },
+              { ko: "누나", roman: "nuna", ja: "姉（弟から見た）" },
+              { ko: "-가", roman: "-ga", ja: "主格助詞「が」" },
+              { ko: "있다", roman: "itda", ja: "いる／ある" }
+            ],
+            g: "<strong>並列の「-하고」</strong>はパッチムの有無に関係なく名詞に付き、「〜と」を表す。<br><strong>家族の呼称は話者の性別で変わる</strong>：男性は兄<code>형</code>・姉<code>누나</code>、女性は兄<code>오빠</code>・姉<code>언니</code>。",
+            alts: ["저는 형하고 누나가 있어요.", "저는 형과 누나가 있습니다."]
+          },
+          {
+            ja: "父と母は釜山に住んでいます。", ko: "아버지와 어머니는 부산에 삽니다.", roman: "abeojiwa eomeonineun busane samnida.",
+            w: [
+              { ko: "아버지", roman: "abeoji", ja: "父" },
+              { ko: "-와", roman: "-wa", ja: "並列「〜と」（母音終わり）" },
+              { ko: "어머니", roman: "eomeoni", ja: "母" },
+              { ko: "부산", roman: "busan", ja: "釜山（地名）" }
+            ],
+            g: "<strong>並列の와/과</strong>はやや格式があり、<strong>母音終わりは<code>와</code>、子音終わりは<code>과</code></strong>。<code>아버지와</code>／<code>동생과</code>。<br>口語の<code>-하고</code>や<code>-(이)랑</code>に置き換え可。",
+            alts: ["아버지와 어머니는 부산에 살아요.", "아버지하고 어머니는 부산에 삽니다."]
+          },
+          {
+            ja: "私は弟にプレゼントをあげます。", ko: "저는 동생에게 선물을 줍니다.", roman: "jeoneun dongsaengege seonmureul jumnida.",
+            w: [
+              { ko: "동생", roman: "dongsaeng", ja: "弟・妹（年下のきょうだい）" },
+              { ko: "-에게", roman: "-ege", ja: "相手助詞「〜に」（書き言葉的）" },
+              { ko: "선물", roman: "seonmul", ja: "プレゼント" },
+              { ko: "주다", roman: "juda", ja: "あげる（母音語幹→줍니다）" }
+            ],
+            g: "<strong>相手助詞「〜に」</strong>は人・動物に使う<code>-에게</code>（やや書き言葉）と、口語の<code>-한테</code>がある。物・場所には<code>-에</code>。<br>尊敬すべき相手には<code>-께</code>を使う：<code>할아버지께</code>。",
+            alts: ["저는 동생한테 선물을 줍니다.", "저는 동생에게 선물을 줘요."]
+          }
+        ]
+      },
+      {
+        topik: 2, num: 4, title: "連結語尾と理由",
+        sentences: [
+          {
+            ja: "朝ごはんを食べて、学校に行きます。", ko: "아침을 먹고 학교에 가요.", roman: "achimeul meokgo hakgyoe gayo.",
+            w: [
+              { ko: "아침", roman: "achim", ja: "朝／朝食" },
+              { ko: "-을", roman: "-eul", ja: "目的格助詞「を」" },
+              { ko: "먹다", roman: "meokda", ja: "食べる" },
+              { ko: "-고", roman: "-go", ja: "〜して(並列・先行動作)" },
+              { ko: "학교", roman: "hakgyo", ja: "学校" },
+              { ko: "-에", roman: "-e", ja: "方向「へ／に」" },
+              { ko: "가요", roman: "gayo", ja: "行きます" }
+            ],
+            g: "<strong>-고</strong>は二つの動作を順につなぐ連結語尾「〜して」。<code>먹고 가요</code>のように動詞語幹に直接付き、語幹の母音や있다/없다に関係なく形は変わりません。<br>「食べてから行く」という<strong>先行動作</strong>の意味で、必ずしも前の動作の影響で後が起こるわけではない点が<code>-아서</code>との違いです。",
+            alts: ["아침을 먹고 학교에 갑니다.", "아침 먹고 학교에 가요."]
+          },
+          {
+            ja: "この部屋は広くて、明るいです。", ko: "이 방은 넓고 밝아요.", roman: "i bangeun neolkko balgayo.",
+            w: [
+              { ko: "이", roman: "i", ja: "この" },
+              { ko: "방", roman: "bang", ja: "部屋" },
+              { ko: "-은", roman: "-eun", ja: "主題助詞「は」(パッチム有)" },
+              { ko: "넓다", roman: "neolda", ja: "広い" },
+              { ko: "-고", roman: "-go", ja: "〜くて(並列)" },
+              { ko: "밝아요", roman: "balgayo", ja: "明るいです" }
+            ],
+            g: "<strong>-고</strong>は形容詞にも使え、性質を並べる「〜くて、〜で」になります。<code>넓고 밝아요</code>のように語幹へそのまま付けます。<br>並列の<code>-고</code>は前後に優劣や理由関係がなく、単に二つの性質を列挙するだけです。",
+            alts: ["이 방은 넓고 밝습니다."]
+          },
+          {
+            ja: "韓国語は難しいですが、面白いです。", ko: "한국어는 어렵지만 재미있어요.", roman: "hangugeoneun eoryeopjiman jaemiisseoyo.",
+            w: [
+              { ko: "한국어", roman: "hangugeo", ja: "韓国語" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "어렵다", roman: "eoryeopda", ja: "難しい" },
+              { ko: "-지만", roman: "-jiman", ja: "〜だが(逆接)" },
+              { ko: "재미있어요", roman: "jaemiisseoyo", ja: "面白いです" }
+            ],
+            g: "<strong>-지만</strong>は前後が対立する逆接「〜だが、〜けれど」。動詞・形容詞の語幹に直接付き、<code>어렵지만</code>のように形は変わりません。<br>過去のことには<code>-았/었지만</code>(例: <code>봤지만</code>)、名詞には<code>-(이)지만</code>を使います。",
+            alts: ["한국어는 어렵지만 재미있습니다."]
+          },
+          {
+            ja: "昨日は忙しかったですが、今日は暇です。", ko: "어제는 바빴지만 오늘은 한가해요.", roman: "eojeneun babwatjiman oneureun hangahaeyo.",
+            w: [
+              { ko: "어제", roman: "eoje", ja: "昨日" },
+              { ko: "바쁘다", roman: "bappeuda", ja: "忙しい" },
+              { ko: "-았지만", roman: "-atjiman", ja: "〜だったが(過去+逆接)" },
+              { ko: "오늘", roman: "oneul", ja: "今日" },
+              { ko: "한가해요", roman: "hangahaeyo", ja: "暇です" }
+            ],
+            g: "<strong>-지만</strong>は過去形と組み合わせて<code>-았/었지만</code>「〜だったが」となります。<code>바쁘다</code>は「ㅡ」が脱落する<strong>으変則</strong>で、過去は<code>바빴-</code>になります。<br>逆接は<code>-지만</code>のほか<code>-는데</code>でも表せますが、<code>-지만</code>の方が対立がはっきりします。",
+            alts: ["어제는 바빴지만 오늘은 한가합니다."]
+          },
+          {
+            ja: "おなかがすいたので、ごはんを食べました。", ko: "배가 고파서 밥을 먹었어요.", roman: "baega gopaseo babeul meogeosseoyo.",
+            w: [
+              { ko: "배", roman: "bae", ja: "おなか" },
+              { ko: "-가", roman: "-ga", ja: "主格助詞「が」" },
+              { ko: "고프다", roman: "gopeuda", ja: "(おなかが)すく" },
+              { ko: "-아서", roman: "-aseo", ja: "〜なので(理由)" },
+              { ko: "밥", roman: "bap", ja: "ごはん" },
+              { ko: "먹었어요", roman: "meogeosseoyo", ja: "食べました" }
+            ],
+            g: "<strong>-아서/어서</strong>は理由「〜なので」を表す連結語尾。陽母音(ㅏ/ㅗ)語幹は<code>-아서</code>、それ以外は<code>-어서</code>です。<code>고프다</code>は으変則で<code>고파서</code>。<br>重要な制約として、<strong>前節に過去・命令・勧誘は付けられません</strong>。理由が過去でも<code>먹어서</code>のように現在形のまま使います。",
+            alts: ["배가 고파서 밥을 먹었습니다."]
+          },
+          {
+            ja: "風邪をひいたので、会社を休みました。", ko: "감기에 걸려서 회사를 쉬었어요.", roman: "gamgie geollyeoseo hoesareul swieosseoyo.",
+            w: [
+              { ko: "감기", roman: "gamgi", ja: "風邪" },
+              { ko: "-에 걸리다", roman: "-e geollida", ja: "(病気に)かかる" },
+              { ko: "-어서", roman: "-eoseo", ja: "〜なので(理由・継起)" },
+              { ko: "회사", roman: "hoesa", ja: "会社" },
+              { ko: "쉬었어요", roman: "swieosseoyo", ja: "休みました" }
+            ],
+            g: "<strong>-아서/어서</strong>は「風邪をひいて、その流れで休んだ」のように<strong>理由と継起</strong>の両方を表します。<code>걸리다</code>は<code>걸리+어서→걸려서</code>と縮約します。<br>ここでも前節は<code>걸려서</code>と現在形で、過去の<code>걸렸어서</code>とは言いません。",
+            alts: ["감기에 걸려서 회사를 쉬었습니다.", "감기에 걸려서 회사에 못 갔어요."]
+          },
+          {
+            ja: "時間がないから、急ぎましょう。", ko: "시간이 없으니까 서두릅시다.", roman: "sigani eopseunikka seodureupsida.",
+            w: [
+              { ko: "시간", roman: "sigan", ja: "時間" },
+              { ko: "-이", roman: "-i", ja: "主格助詞「が」" },
+              { ko: "없다", roman: "eopda", ja: "ない" },
+              { ko: "-으니까", roman: "-eunikka", ja: "〜だから(理由)" },
+              { ko: "서두릅시다", roman: "seodureupsida", ja: "急ぎましょう" }
+            ],
+            g: "<strong>-(으)니까</strong>は理由「〜だから」。パッチム有は<code>-으니까</code>、無は<code>-니까</code>です。<br>最重要ポイント: 後ろが<strong>命令(-(으)세요)や勧誘(-(으)ㅂ시다/-자)</strong>のときは<code>-아서</code>は使えず、必ず<code>-(으)니까</code>を使います(×<code>없어서 서두릅시다</code>)。",
+            alts: ["시간이 없으니까 빨리 갑시다.", "시간이 없으니까 서두르세요."]
+          },
+          {
+            ja: "危ないから、ここに座らないでください。", ko: "위험하니까 여기에 앉지 마세요.", roman: "wiheomhanikka yeogie anjji maseyo.",
+            w: [
+              { ko: "위험하다", roman: "wiheomhada", ja: "危険だ" },
+              { ko: "-니까", roman: "-nikka", ja: "〜だから(理由)" },
+              { ko: "여기", roman: "yeogi", ja: "ここ" },
+              { ko: "앉다", roman: "anda", ja: "座る" },
+              { ko: "-지 마세요", roman: "-ji maseyo", ja: "〜しないでください(禁止命令)" }
+            ],
+            g: "後ろが<strong>禁止命令</strong><code>-지 마세요</code>なので、理由は<code>-아서</code>ではなく<code>-(으)니까</code>を使います。<code>위험하다</code>はパッチムがないので<code>위험하니까</code>。<br>命令・勧誘の理由づけ=<code>-(으)니까</code>と覚えましょう。",
+            alts: ["위험하니까 여기 앉지 마세요.", "위험하니까 여기에 앉지 마십시오."]
+          },
+          {
+            ja: "明日試験があるんですが、一緒に勉強しませんか？", ko: "내일 시험이 있는데 같이 공부할래요?", roman: "naeil siheomi inneunde gachi gongbuhallaeyo?",
+            w: [
+              { ko: "내일", roman: "naeil", ja: "明日" },
+              { ko: "시험", roman: "siheom", ja: "試験" },
+              { ko: "있다", roman: "itda", ja: "ある" },
+              { ko: "-는데", roman: "-neunde", ja: "〜だが／前置き" },
+              { ko: "같이", roman: "gachi", ja: "一緒に" },
+              { ko: "공부할래요?", roman: "gongbuhallaeyo?", ja: "勉強しませんか？" }
+            ],
+            g: "<strong>-는데</strong>は本題の前に状況を述べる<strong>前置き</strong>「〜だが、〜なんだけど」。動詞や있다/없다には<code>-는데</code>を付け、<code>있다→있는데</code>(発音は[인는데])となります。<br>提案や質問の導入によく使われ、対比の意味になることもあります。",
+            alts: ["내일 시험이 있는데 같이 공부할까요?", "내일 시험이 있는데 같이 공부 안 할래요?"]
+          },
+          {
+            ja: "値段は安いのに、品質はとても良いです。", ko: "값은 싼데 품질은 아주 좋아요.", roman: "gapseun ssande pumjireun aju joayo.",
+            w: [
+              { ko: "값", roman: "gap", ja: "値段" },
+              { ko: "싸다", roman: "ssada", ja: "安い" },
+              { ko: "-ㄴ데", roman: "-nde", ja: "〜のに(対比・形容詞)" },
+              { ko: "품질", roman: "pumjil", ja: "品質" },
+              { ko: "아주", roman: "aju", ja: "とても" },
+              { ko: "좋아요", roman: "joayo", ja: "良いです" }
+            ],
+            g: "<strong>形容詞</strong>に付くときは<code>-는데</code>ではなく<strong>-(으)ㄴ데</strong>。パッチム無は<code>-ㄴ데</code>(<code>싸다→싼데</code>)、有は<code>-은데</code>(<code>좋다→좋은데</code>)です。<br>ここでは「安いのに良い」という<strong>対比</strong>の意味。動詞の<code>-는데</code>と活用が分かれる点に注意しましょう。",
+            alts: ["값은 싼데 품질은 아주 좋습니다.", "가격은 싼데 품질은 아주 좋아요."]
+          }
+        ]
+      },
+      {
+        topik: 2, num: 5, title: "意志・予定・勧誘",
+        sentences: [
+          {
+            ja: "私が連絡します。", ko: "제가 연락할게요.", roman: "jega yeollakhalgeyo.",
+            w: [
+              { ko: "제가", roman: "jega", ja: "私が（저+가の縮約）" },
+              { ko: "연락하다", roman: "yeollakhada", ja: "連絡する" },
+              { ko: "-ㄹ게요", roman: "-lgeyo", ja: "意志・約束「〜します」" }
+            ],
+            g: "<strong>-(으)ㄹ게요</strong>は話し手の意志・約束を表す「（私が）〜します」。聞き手に向けた発話で主語は必ず一人称。パッチム有は <code>-을게요</code>（<code>먹을게요</code>）。発音は[ㄹ께요]だが表記は ㄹ게요。",
+            alts: ["내가 연락할게요"]
+          },
+          {
+            ja: "私が先に行きますね。", ko: "제가 먼저 갈게요.", roman: "jega meonjeo galgeyo.",
+            w: [
+              { ko: "먼저", roman: "meonjeo", ja: "先に" },
+              { ko: "가다", roman: "gada", ja: "行く" },
+              { ko: "-ㄹ게요", roman: "-lgeyo", ja: "意志・約束「〜します」" }
+            ],
+            g: "<strong>-(으)ㄹ게요</strong>は相手を意識した「私の意志」。単なる未来予測の <code>-(으)ㄹ 거예요</code>（〜でしょう／〜するつもり）と違い、聞き手への配慮・約束のニュアンスがある。<br>疑問文には使えない（×갈게요?）。"
+          },
+          {
+            ja: "コーヒー飲みますか？（あなたは）", ko: "커피 마실래요?", roman: "keopi masillaeyo?",
+            w: [
+              { ko: "커피", roman: "keopi", ja: "コーヒー" },
+              { ko: "마시다", roman: "masida", ja: "飲む" },
+              { ko: "-ㄹ래요?", roman: "-llaeyo?", ja: "意向を尋ねる「〜しますか?」" }
+            ],
+            g: "<strong>-(으)ㄹ래요?</strong>は相手の意向を尋ねる柔らかい打診・勧誘「〜しませんか?」。平叙文 <code>마실래요</code> なら自分の意向「飲みたい・飲みます」。パッチム有は <code>-을래요</code>（<code>먹을래요?</code>）。",
+            alts: ["커피 마실래요"]
+          },
+          {
+            ja: "今日は家で休みたいです。", ko: "오늘은 집에서 쉴래요.", roman: "oneureun jib-eseo swillaeyo.",
+            w: [
+              { ko: "오늘", roman: "oneul", ja: "今日" },
+              { ko: "-에서", roman: "-eseo", ja: "場所「〜で」（動作）" },
+              { ko: "쉬다", roman: "swida", ja: "休む" },
+              { ko: "-ㄹ래요", roman: "-llaeyo", ja: "意向「〜したい・〜する」" }
+            ],
+            g: "平叙の<strong>-(으)ㄹ래요</strong>は話し手の意向・希望「〜したい／〜する」。やや自己主張的なので、丁寧な約束には <code>-(으)ㄹ게요</code> の方が無難。場所の <code>-에서</code> は動作の場所、<code>-에</code> は存在・到着点。",
+            alts: ["오늘은 집에서 쉬고 싶어요"]
+          },
+          {
+            ja: "一緒に昼ごはんを食べましょう。", ko: "같이 점심 먹읍시다.", roman: "gachi jeomsim meogeupsida.",
+            w: [
+              { ko: "같이", roman: "gachi", ja: "一緒に（発音は가치）" },
+              { ko: "점심", roman: "jeomsim", ja: "昼食" },
+              { ko: "먹다", roman: "meokda", ja: "食べる" },
+              { ko: "-읍시다", roman: "-eupsida", ja: "勧誘「〜しましょう」（フォーマル）" }
+            ],
+            g: "<strong>-(으)ㅂ시다</strong>はフォーマルな勧誘「〜しましょう」。パッチム無は <code>-ㅂ시다</code>（<code>갑시다</code>）、有は <code>-읍시다</code>。<br>注意: 目上には命令的に響くことがあり、その場合は <code>-(으)실래요?</code> や <code>-(으)시죠</code> の方が丁寧。",
+            alts: ["같이 점심 먹어요"]
+          },
+          {
+            ja: "私たち、もう行こう。", ko: "우리 이제 가자.", roman: "uri ije gaja.",
+            w: [
+              { ko: "우리", roman: "uri", ja: "私たち" },
+              { ko: "이제", roman: "ije", ja: "もう・そろそろ" },
+              { ko: "가다", roman: "gada", ja: "行く" },
+              { ko: "-자", roman: "-ja", ja: "勧誘「〜しよう」（パンマル）" }
+            ],
+            g: "<strong>-자</strong>はパンマル（タメ口）の勧誘「〜しよう」。<code>-(으)ㅂ시다</code> のくだけた形で、親しい間柄や同年下に使う。否定の誘いは <code>-지 말자</code>（〜するのはやめよう）。"
+          },
+          {
+            ja: "明日、友だちに会おうと思います。", ko: "내일 친구를 만나려고 해요.", roman: "naeil chingu-reul mannaryeogo haeyo.",
+            w: [
+              { ko: "내일", roman: "naeil", ja: "明日" },
+              { ko: "친구", roman: "chingu", ja: "友だち" },
+              { ko: "-를", roman: "-reul", ja: "目的格助詞「を」" },
+              { ko: "만나다", roman: "mannada", ja: "会う" },
+              { ko: "-려고 해요", roman: "-ryeogo haeyo", ja: "意図「〜しようと思う」" }
+            ],
+            g: "<strong>-(으)려고 하다</strong>は意図・予定「〜しようと思う」。パッチム有は <code>-으려고</code>（<code>먹으려고</code>）。<br>注意: 「会う」は <code>친구를 만나다</code> と目的格 <code>-를</code> を取る（×친구에게 만나다）。この後に命令・勧誘は続けられない。",
+            alts: ["내일 친구를 만나려고 합니다"]
+          },
+          {
+            ja: "来月から運動を始めようと思っています。", ko: "다음 달부터 운동을 시작하려고 해요.", roman: "da-eum dal-buteo undong-eul sijakaryeogo haeyo.",
+            w: [
+              { ko: "다음 달", roman: "da-eum dal", ja: "来月" },
+              { ko: "-부터", roman: "-buteo", ja: "起点「〜から」（時間）" },
+              { ko: "운동", roman: "undong", ja: "運動" },
+              { ko: "시작하다", roman: "sijakada", ja: "始める" },
+              { ko: "-려고 해요", roman: "-ryeogo haeyo", ja: "意図「〜しようと思う」" }
+            ],
+            g: "<strong>-(으)려고 하다</strong>は現時点の意図・計画を表す。時間の起点は <code>-부터</code>（〜から）、場所の起点は <code>-에서</code>。<br>未確定の意図には -(으)려고、確定した予定には次の <code>-기로 하다</code> が向く。",
+            alts: ["다음 달부터 운동을 시작하려고 합니다"]
+          },
+          {
+            ja: "私たちは来週、引っ越すことにしました。", ko: "우리는 다음 주에 이사하기로 했어요.", roman: "urineun da-eum ju-e isahagiro haesseoyo.",
+            w: [
+              { ko: "다음 주", roman: "da-eum ju", ja: "来週" },
+              { ko: "-에", roman: "-e", ja: "時間「〜に」" },
+              { ko: "이사하다", roman: "isahada", ja: "引っ越す" },
+              { ko: "-기로 했어요", roman: "-giro haesseoyo", ja: "決定「〜することにした」" }
+            ],
+            g: "<strong>-기로 하다</strong>は決定・約束「〜することにする」。すでに決めたことは過去形 <code>-기로 했어요</code> で表すのが自然。<br>約束「〜する約束をする」の意でも使う: <code>같이 가기로 했어요</code>（一緒に行く約束をした）。",
+            alts: ["우리는 다음 주에 이사하기로 했습니다"]
+          },
+          {
+            ja: "暑いですね。窓を開けましょうか？", ko: "더워요. 창문을 열까요?", roman: "deowoyo. changmun-eul yeolkkayo?",
+            w: [
+              { ko: "덥다", roman: "deopda", ja: "暑い（ㅂ変則）" },
+              { ko: "창문", roman: "changmun", ja: "窓" },
+              { ko: "-을", roman: "-eul", ja: "目的格助詞「を」" },
+              { ko: "열다", roman: "yeolda", ja: "開ける" },
+              { ko: "-ㄹ까요?", roman: "-lkkayo?", ja: "申し出・相談「〜しましょうか?」" }
+            ],
+            g: "<strong>-(으)ㄹ까요?</strong>は相手への申し出・相談「〜しましょうか?」。返事は <code>-(으)ㅂ시다／-아요</code>（しましょう）や <code>네, 여세요</code>（ええ、開けてください）。<br>注意: 語幹末 <code>ㄹ</code> は脱落して <code>열까요</code>。形容詞 <code>덥다</code> はㅂ変則で <code>더워요</code>。",
+            alts: ["더워요. 창문 열까요?"]
+          }
+        ]
+      },
+      {
+        topik: 2, num: 6, title: "経験・試み・授受",
+        sentences: [
+          {
+            ja: "このキムチを食べてみてください。", ko: "이 김치를 먹어 보세요.", roman: "i gimchireul meogeo boseyo.",
+            w: [
+              { ko: "이", roman: "i", ja: "この" },
+              { ko: "김치", roman: "gimchi", ja: "キムチ" },
+              { ko: "-를", roman: "-reul", ja: "目的格助詞「を」" },
+              { ko: "먹어 보다", roman: "meogeo boda", ja: "食べてみる" },
+              { ko: "-세요", roman: "-seyo", ja: "〜してください(丁寧命令)" }
+            ],
+            g: "<strong>-아/어 보다</strong>は「〜してみる」と試みを表します。語幹の母音が陽母音(ㅏ/ㅗ)なら<code>-아 보다</code>、それ以外は<code>-어 보다</code>。<br>勧める時は<code>먹어 보세요</code>(食べてみてください)の形が定番です。",
+            alts: ["이 김치 한번 드셔 보세요", "이 김치를 한번 먹어 봐요"]
+          },
+          {
+            ja: "私は韓国に行ってみたいです。", ko: "저는 한국에 가 보고 싶어요.", roman: "jeoneun hanguge ga bogo sipeoyo.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "私(謙譲)" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "한국", roman: "hanguk", ja: "韓国" },
+              { ko: "-에", roman: "-e", ja: "方向の助詞「に」" },
+              { ko: "가 보다", roman: "ga boda", ja: "行ってみる" },
+              { ko: "-고 싶어요", roman: "-go sipeoyo", ja: "〜したいです" }
+            ],
+            g: "<strong>-아/어 보고 싶다</strong>で「〜してみたい」。試みの<code>-아/어 보다</code>に願望の<code>-고 싶다</code>が付いた形です。<br>母音語幹<code>가다</code>は<code>가 보다</code>と縮約され、<code>가아 보다</code>とは言いません。",
+            alts: ["저는 한국에 가 보고 싶습니다", "한국에 한번 가 보고 싶어요"]
+          },
+          {
+            ja: "私は済州島に行ったことがあります。", ko: "저는 제주도에 가 본 적이 있어요.", roman: "jeoneun jejudoe ga bon jeogi isseoyo.",
+            w: [
+              { ko: "제주도", roman: "jejudo", ja: "済州島" },
+              { ko: "-에", roman: "-e", ja: "方向の助詞「に」" },
+              { ko: "가 보다", roman: "ga boda", ja: "行ってみる" },
+              { ko: "-ㄴ 적이 있다", roman: "-n jeogi itda", ja: "〜したことがある(経験)" }
+            ],
+            g: "<strong>-아/어 본 적이 있다</strong>は経験「〜したことがある」。<code>보다</code>を過去連体形<code>본</code>にし、<code>적(こと)</code>+<code>이 있다</code>を続けます。<br>単に<code>간 적이 있다</code>でも経験を表せますが、<code>가 본 적이 있다</code>は「試しに行った経験」のニュアンスです。",
+            alts: ["저는 제주도에 가 본 적이 있습니다", "제주도에 간 적이 있어요"]
+          },
+          {
+            ja: "私はまだ生牡蠣を食べたことがありません。", ko: "저는 아직 생굴을 먹어 본 적이 없어요.", roman: "jeoneun ajik saenggureul meogeo bon jeogi eopseoyo.",
+            w: [
+              { ko: "아직", roman: "ajik", ja: "まだ" },
+              { ko: "생굴", roman: "saenggul", ja: "生牡蠣" },
+              { ko: "-을", roman: "-eul", ja: "目的格助詞「を」" },
+              { ko: "먹어 보다", roman: "meogeo boda", ja: "食べてみる" },
+              { ko: "-ㄴ 적이 없다", roman: "-n jeogi eopda", ja: "〜したことがない" }
+            ],
+            g: "経験の否定は<strong>-아/어 본 적이 없다</strong>「〜したことがない」。<code>있다↔없다</code>で肯定・否定を切り替えます。<br><code>아직(まだ)</code>と組むと未経験が自然に伝わります。",
+            alts: ["저는 아직 생굴을 먹어 본 적이 없습니다", "아직 생굴을 안 먹어 봤어요"]
+          },
+          {
+            ja: "友達に誕生日のプレゼントをあげました。", ko: "친구에게 생일 선물을 줬어요.", roman: "chinguege saeng-il seonmureul jwosseoyo.",
+            w: [
+              { ko: "친구", roman: "chingu", ja: "友達" },
+              { ko: "-에게", roman: "-ege", ja: "〜に(相手)" },
+              { ko: "생일 선물", roman: "saeng-il seonmul", ja: "誕生日プレゼント" },
+              { ko: "-을", roman: "-eul", ja: "目的格助詞「を」" },
+              { ko: "주다", roman: "juda", ja: "あげる/くれる" }
+            ],
+            g: "<strong>주다</strong>は「あげる・くれる」。受け手は<code>-에게/한테</code>(〜に)で示します。<br>過去形は<code>주었어요</code>の縮約<code>줬어요</code>。会話では<code>한테</code>がより口語的です。",
+            alts: ["친구에게 생일 선물을 주었어요", "친구한테 생일 선물을 줬어요"]
+          },
+          {
+            ja: "私は先生からメールをもらいました。", ko: "저는 선생님에게서 이메일을 받았어요.", roman: "jeoneun seonsaengnimegeseo imeireul badasseoyo.",
+            w: [
+              { ko: "선생님", roman: "seonsaengnim", ja: "先生" },
+              { ko: "-에게서", roman: "-egeseo", ja: "〜から(出どころ)" },
+              { ko: "이메일", roman: "imeil", ja: "メール" },
+              { ko: "-을", roman: "-eul", ja: "目的格助詞「を」" },
+              { ko: "받다", roman: "batda", ja: "もらう/受け取る" }
+            ],
+            g: "<strong>받다</strong>は「もらう・受け取る」。出どころは<code>-에게서/한테서</code>(〜から)で示します。<br><code>주다</code>の相手が<code>-에게</code>なのに対し、<code>받다</code>は<code>-에게서</code>と方向が逆になる点に注意。目上には<code>-께</code>(〜から)も使えます。",
+            alts: ["저는 선생님한테서 이메일을 받았어요", "선생님께 이메일을 받았어요"]
+          },
+          {
+            ja: "妹がコーヒーを淹れてくれました。", ko: "동생이 커피를 타 줬어요.", roman: "dongsaeng-i keopireul ta jwosseoyo.",
+            w: [
+              { ko: "동생", roman: "dongsaeng", ja: "弟・妹(年下のきょうだい)" },
+              { ko: "-이", roman: "-i", ja: "主格助詞「が」" },
+              { ko: "커피", roman: "keopi", ja: "コーヒー" },
+              { ko: "-를", roman: "-reul", ja: "目的格助詞「を」" },
+              { ko: "타 주다", roman: "ta juda", ja: "淹れてくれる" }
+            ],
+            g: "<strong>-아/어 주다</strong>は恩恵「〜してあげる/くれる」。動詞語幹に<code>주다</code>を付けます。<code>타다(淹れる)</code>+<code>주다→타 주다</code>。<br>誰のための行為かを表し、単なる<code>탔어요</code>より相手への恩恵が明確になります。",
+            alts: ["동생이 커피를 타 주었어요", "동생이 커피를 타 줬습니다"]
+          },
+          {
+            ja: "私が荷物を持って差し上げます。", ko: "제가 짐을 들어 드릴게요.", roman: "jega jimeul deureo deurilgeyo.",
+            w: [
+              { ko: "제가", roman: "jega", ja: "私が(저+가の形)" },
+              { ko: "짐", roman: "jim", ja: "荷物" },
+              { ko: "-을", roman: "-eul", ja: "目的格助詞「を」" },
+              { ko: "들어 드리다", roman: "deureo deurida", ja: "持って差し上げる" },
+              { ko: "-ㄹ게요", roman: "-lgeyo", ja: "〜します(意志・約束)" }
+            ],
+            g: "目上への恩恵は<strong>-아/어 드리다</strong>「〜して差し上げる」。<code>주다</code>の謙譲語が<code>드리다</code>です。<br><code>들다(持つ)</code>+<code>드리다→들어 드리다</code>。<code>도와 드릴게요</code>(お手伝いします)も頻出表現です。",
+            alts: ["제가 짐을 들어 드리겠습니다", "짐을 들어 드릴게요"]
+          },
+          {
+            ja: "おじいさんが椅子に座っています。", ko: "할아버지가 의자에 앉아 있어요.", roman: "harabeojiga uijae anja isseoyo.",
+            w: [
+              { ko: "할아버지", roman: "harabeoji", ja: "おじいさん" },
+              { ko: "-가", roman: "-ga", ja: "主格助詞「が」" },
+              { ko: "의자", roman: "uija", ja: "椅子" },
+              { ko: "-에", roman: "-e", ja: "位置の助詞「に」" },
+              { ko: "앉아 있다", roman: "anja itda", ja: "座っている(状態)" }
+            ],
+            g: "<strong>-아/어 있다</strong>は動作後の状態の持続「〜ている」。<code>앉다(座る)→앉아 있다(座っている)</code>。<br>進行の<code>앉고 있다</code>とは違い、座り終えてその状態が続くことを表します。目上には<code>앉아 계세요</code>と높임을 씁니다。",
+            alts: ["할아버지가 의자에 앉아 계세요", "할아버지께서 의자에 앉아 계세요"]
+          },
+          {
+            ja: "窓が開いていて、部屋の灯りもついています。", ko: "창문이 열려 있고 방에 불도 켜져 있어요.", roman: "changmuni yeollyeo itgo bange buldo kyeojyeo isseoyo.",
+            w: [
+              { ko: "창문", roman: "changmun", ja: "窓" },
+              { ko: "열려 있다", roman: "yeollyeo itda", ja: "開いている(状態)" },
+              { ko: "-고", roman: "-go", ja: "〜て(並列)" },
+              { ko: "불", roman: "bul", ja: "灯り・明かり" },
+              { ko: "-도", roman: "-do", ja: "〜も" },
+              { ko: "켜져 있다", roman: "kyeojyeo itda", ja: "ついている(状態)" }
+            ],
+            g: "自動詞+<strong>-아/어 있다</strong>で結果状態を表します。<code>열리다(開く)→열려 있다</code>、<code>켜지다(つく)→켜져 있다</code>。<br>他動詞<code>열다(開ける)</code>には使えず、自動詞形にしてから付けるのがポイント。並列は<code>-고</code>でつなぎます。",
+            alts: ["창문이 열려 있고 방에 불도 켜져 있습니다", "창문이 열려 있고 방 불도 켜져 있어요"]
+          }
+        ]
+      },
+      {
+        topik: 3, num: 4, title: "連体形と関係節",
+        sentences: [
+          {
+            ja: "これは私が今読んでいる本です。", ko: "이것은 제가 지금 읽는 책이에요.", roman: "igeoseun jega jigeum ingneun chaegieyo.",
+            w: [
+              { ko: "이것", roman: "igeot", ja: "これ" },
+              { ko: "-은", roman: "-eun", ja: "主題助詞「は」" },
+              { ko: "제가", roman: "jega", ja: "私が（謙譲）" },
+              { ko: "읽-", roman: "ilg-", ja: "読む（語幹）" },
+              { ko: "-는", roman: "-neun", ja: "動詞・現在連体形語尾" },
+              { ko: "책", roman: "chaek", ja: "本" }
+            ],
+            g: "<strong>動詞の現在連体形</strong>は語幹に <code>-는</code> を付けて名詞を修飾します。パッチムの有無に関わらず常に <code>-는</code>（例: <code>가는</code>, <code>먹는</code>）。<br>発音は <code>읽는</code>→[잉는] と鼻音化します。",
+            alts: ["이것은 제가 지금 읽는 책입니다."]
+          },
+          {
+            ja: "きれいな花がたくさん咲いています。", ko: "예쁜 꽃이 많이 피어 있어요.", roman: "yeppeun kkochi mani pieo isseoyo.",
+            w: [
+              { ko: "예쁘-", roman: "yeppeu-", ja: "きれいだ（語幹）" },
+              { ko: "-ㄴ", roman: "-n", ja: "形容詞・現在連体形語尾" },
+              { ko: "꽃", roman: "kkot", ja: "花" },
+              { ko: "많이", roman: "mani", ja: "たくさん" },
+              { ko: "피어 있어요", roman: "pieo isseoyo", ja: "咲いています" }
+            ],
+            g: "<strong>形容詞の連体形</strong>は <code>-(으)ㄴ</code>。母音語幹・ㄹ語幹は <code>-ㄴ</code>（<code>예쁜</code>, <code>긴</code>）、パッチム有は <code>-은</code>（<code>좋은</code>）。<br><code>예쁘다</code> は으脱落して <code>예쁜</code> になります。",
+            alts: ["예쁜 꽃이 많이 피어 있습니다.", "예쁜 꽃이 많이 피었어요."]
+          },
+          {
+            ja: "昨日食べたケーキはとてもおいしかったです。", ko: "어제 먹은 케이크는 정말 맛있었어요.", roman: "eoje meogeun keikeuneun jeongmal masisseosseoyo.",
+            w: [
+              { ko: "어제", roman: "eoje", ja: "昨日" },
+              { ko: "먹-", roman: "meog-", ja: "食べる（語幹）" },
+              { ko: "-은", roman: "-eun", ja: "動詞・過去連体形語尾" },
+              { ko: "케이크", roman: "keikeu", ja: "ケーキ" },
+              { ko: "맛있었어요", roman: "masisseosseoyo", ja: "おいしかったです" }
+            ],
+            g: "<strong>動詞の過去連体形</strong>は <code>-(으)ㄴ</code>。パッチム有は <code>-은</code>（<code>먹은</code>）、母音語幹は <code>-ㄴ</code>（<code>본</code>）。<br>形は形容詞の現在連体形と同じですが、動詞に付くと「〜した」の過去の意味になります。",
+            alts: ["어제 먹은 케이크는 정말 맛있었습니다."]
+          },
+          {
+            ja: "明日会う人はとても親切な方です。", ko: "내일 만날 사람은 아주 친절한 분이에요.", roman: "naeil mannal sarameun aju chinjeolhan bunieyo.",
+            w: [
+              { ko: "내일", roman: "naeil", ja: "明日" },
+              { ko: "만나-", roman: "manna-", ja: "会う（語幹）" },
+              { ko: "-ㄹ", roman: "-l", ja: "動詞・未来連体形語尾" },
+              { ko: "사람", roman: "saram", ja: "人" },
+              { ko: "친절하-", roman: "chinjeolha-", ja: "親切だ（語幹）" },
+              { ko: "-ㄴ", roman: "-n", ja: "形容詞・連体形語尾" }
+            ],
+            g: "<strong>未来連体形</strong> <code>-(으)ㄹ</code> は「これから〜する／〜すべき」を表します。母音語幹は <code>-ㄹ</code>（<code>만날</code>）、パッチム有は <code>-을</code>（<code>먹을</code>）。<br><code>친절한</code> は하다形容詞の連体形 <code>-한</code>。",
+            alts: ["내일 만날 사람은 아주 친절한 분입니다."]
+          },
+          {
+            ja: "子供のころよく遊んだ公園に行ってみました。", ko: "어렸을 때 자주 놀던 공원에 가 봤어요.", roman: "eoryeosseul ttae jaju noldeon gongwone ga bwasseoyo.",
+            w: [
+              { ko: "어렸을 때", roman: "eoryeosseul ttae", ja: "幼かったころ" },
+              { ko: "자주", roman: "jaju", ja: "よく・頻繁に" },
+              { ko: "놀-", roman: "nol-", ja: "遊ぶ（語幹）" },
+              { ko: "-던", roman: "-deon", ja: "回想連体形（過去の習慣）" },
+              { ko: "공원", roman: "gongwon", ja: "公園" },
+              { ko: "가 봤어요", roman: "ga bwasseoyo", ja: "行ってみました" }
+            ],
+            g: "<strong>回想の連体形</strong> <code>-던</code> は過去に繰り返した・継続していた行為を回想します。例: <code>자주 놀던 곳</code>（よく遊んだ場所）。<br><code>어렸을 때</code> は <code>-(으)ㄹ 때</code>（〜のとき）の慣用表現。<code>놀다</code> はㄹ語幹ですが <code>-던</code> の前ではㄹは脱落しません（<code>놀던</code>）。",
+            alts: ["어렸을 때 자주 놀던 공원에 가 봤습니다.", "어렸을 때 자주 놀던 공원에 갔다 왔어요."]
+          },
+          {
+            ja: "あんなに静かだったあの町が今は本当に変わりました。", ko: "그렇게 조용했던 그 동네가 지금은 정말 변했어요.", roman: "geureoke joyonghaetdeon geu dongnega jigeumeun jeongmal byeonhaesseoyo.",
+            w: [
+              { ko: "그렇게", roman: "geureoke", ja: "あんなに" },
+              { ko: "조용하-", roman: "joyongha-", ja: "静かだ（語幹）" },
+              { ko: "-했던", roman: "-haetdeon", ja: "回想連体形（-었던、完了・今は違う）" },
+              { ko: "동네", roman: "dongne", ja: "町・近所" },
+              { ko: "변했어요", roman: "byeonhaesseoyo", ja: "変わりました" }
+            ],
+            g: "<strong>-았/었던</strong>は過去に完了し「今はもうそうでない」状態を回想します。<code>조용했던 동네</code>（昔は静かだった＝今は違う町）。<br><code>-던</code>（継続・習慣）との対比がポイント。形容詞では <code>-았/었던</code> がよく使われます。",
+            alts: ["그렇게 조용했던 그 동네가 지금은 정말 변했습니다."]
+          },
+          {
+            ja: "テーブルの上にあるものは全部食べてもいいです。", ko: "식탁 위에 있는 것은 다 먹어도 돼요.", roman: "siktak wie inneun geoseun da meogeodo dwaeyo.",
+            w: [
+              { ko: "식탁 위", roman: "siktak wi", ja: "テーブルの上" },
+              { ko: "있-", roman: "it-", ja: "ある（語幹）" },
+              { ko: "-는", roman: "-neun", ja: "存在詞の現在連体形" },
+              { ko: "것", roman: "geot", ja: "もの・こと（依存名詞）" },
+              { ko: "먹어도 돼요", roman: "meogeodo dwaeyo", ja: "食べてもいいです" }
+            ],
+            g: "<strong>連体形＋것</strong>で「〜もの／〜こと」を表します。<code>것</code>は単独で使えない依存名詞で、連体形が必須。<br><code>있다/없다</code> は存在詞で、連体形は動詞と同じ <code>-는</code>（<code>있는</code>, <code>없는</code>）を使います。",
+            alts: ["식탁 위에 있는 것은 다 먹어도 됩니다.", "식탁 위에 있는 건 다 먹어도 돼요."]
+          },
+          {
+            ja: "私は韓国語を話すことができます。", ko: "저는 한국어를 할 수 있어요.", roman: "jeoneun hangugeoreul hal su isseoyo.",
+            w: [
+              { ko: "한국어", roman: "hangugeo", ja: "韓国語" },
+              { ko: "하-", roman: "ha-", ja: "する（語幹）" },
+              { ko: "-ㄹ", roman: "-l", ja: "未来連体形語尾" },
+              { ko: "수", roman: "su", ja: "可能性（依存名詞）" },
+              { ko: "있어요", roman: "isseoyo", ja: "あります＝できます" }
+            ],
+            g: "<strong>-(으)ㄹ 수 있다/없다</strong>で「〜できる／できない」を表します。<code>수</code>は未来連体形 <code>-(으)ㄹ</code> としか結びつかない依存名詞。<br>否定は <code>할 수 없어요</code>。",
+            alts: ["저는 한국어를 할 수 있습니다.", "저는 한국어를 말할 수 있어요."]
+          },
+          {
+            ja: "私はキムチを作ったことがあります。", ko: "저는 김치를 만든 적이 있어요.", roman: "jeoneun gimchireul mandeun jeogi isseoyo.",
+            w: [
+              { ko: "김치", roman: "gimchi", ja: "キムチ" },
+              { ko: "만들-", roman: "mandeul-", ja: "作る（ㄹ語幹）" },
+              { ko: "-ㄴ", roman: "-n", ja: "過去連体形語尾" },
+              { ko: "적", roman: "jeok", ja: "経験・とき（依存名詞）" },
+              { ko: "있어요", roman: "isseoyo", ja: "あります" }
+            ],
+            g: "<strong>-(으)ㄴ 적이 있다/없다</strong>は「〜した経験がある／ない」。過去連体形＋依存名詞 <code>적</code> の構文。<br>ㄹ語幹 <code>만들다</code> は <code>-ㄴ</code> の前でㄹが脱落し <code>만든</code> になります（ㄹ脱落）。",
+            alts: ["저는 김치를 만든 적이 있습니다.", "저는 김치를 만들어 본 적이 있어요."]
+          },
+          {
+            ja: "私は彼がもう来たと思っていましたが、まだ来ていませんでした。", ko: "저는 그가 벌써 온 줄 알았는데 아직 안 왔어요.", roman: "jeoneun geuga beolsseo on jul aratneunde ajik an wasseoyo.",
+            w: [
+              { ko: "그가", roman: "geuga", ja: "彼が" },
+              { ko: "벌써", roman: "beolsseo", ja: "もう・すでに" },
+              { ko: "오-", roman: "o-", ja: "来る（語幹）" },
+              { ko: "-ㄴ", roman: "-n", ja: "過去連体形語尾" },
+              { ko: "줄 알았는데", roman: "jul aratneunde", ja: "と思っていたが（依存名詞 줄）" },
+              { ko: "안 왔어요", roman: "an wasseoyo", ja: "来ませんでした" }
+            ],
+            g: "<strong>-(으)ㄴ/-는/-(으)ㄹ 줄 알다</strong>で「〜と思い込む（実際は違う）」。依存名詞 <code>줄</code> は時制で意味が変化。<br>同じ <code>줄</code> でも <code>-(으)ㄹ 줄 알다</code> は「〜の仕方を知っている＝できる」の意味になり、文脈で区別します。",
+            alts: ["저는 그가 벌써 온 줄 알았는데 아직 안 왔습니다.", "저는 그가 벌써 온 줄 알았는데 아직 오지 않았어요."]
+          }
+        ]
+      },
+      {
+        topik: 3, num: 5, title: "間接話法（伝聞・引用）",
+        sentences: [
+          {
+            ja: "ミナさんは明日来ると言っています。", ko: "미나 씨는 내일 온다고 해요.", roman: "mina ssineun naeil ondago haeyo.",
+            w: [
+              { ko: "미나 씨", roman: "mina ssi", ja: "ミナさん" },
+              { ko: "-는", roman: "-neun", ja: "主題助詞「は」" },
+              { ko: "내일", roman: "naeil", ja: "明日" },
+              { ko: "오다", roman: "oda", ja: "来る" },
+              { ko: "-ㄴ다고 해요", roman: "-ndago haeyo", ja: "〜と言う（動詞の伝聞）" }
+            ],
+            g: "<strong>動詞の平叙文の間接話法</strong>は<code>-ㄴ/는다고 하다</code>。母音語幹は<code>-ㄴ다고</code>（<code>오다→온다고</code>）、子音語幹は<code>-는다고</code>（<code>먹다→먹는다고</code>）。<br>直接話法<code>\"내일 와요\"라고 해요</code>と違い、現在形を<code>온다</code>に変える点に注意。",
+            alts: ["미나 씨는 내일 온다고 합니다."]
+          },
+          {
+            ja: "今日は天気がとても寒いそうです。", ko: "오늘은 날씨가 아주 춥다고 해요.", roman: "oneuleun nalssiga aju chupdago haeyo.",
+            w: [
+              { ko: "오늘", roman: "oneul", ja: "今日" },
+              { ko: "날씨", roman: "nalssi", ja: "天気" },
+              { ko: "아주", roman: "aju", ja: "とても" },
+              { ko: "춥다", roman: "chupda", ja: "寒い（形容詞）" },
+              { ko: "-다고 해요", roman: "-dago haeyo", ja: "〜と言う（形容詞の伝聞）" }
+            ],
+            g: "<strong>形容詞の間接話法</strong>は語幹にそのまま<code>-다고 하다</code>を付ける。動詞のような<code>-ㄴ/는다</code>変化はしない（<code>춥다→춥다고</code>、<code>예쁘다→예쁘다고</code>）。<br>動詞<code>온다고</code>との違いを対比して覚える。",
+            alts: ["오늘은 날씨가 아주 춥다고 합니다."]
+          },
+          {
+            ja: "あの人は医者だと言いました。", ko: "저 사람은 의사라고 했어요.", roman: "jeo sarameun uisarago haesseoyo.",
+            w: [
+              { ko: "저 사람", roman: "jeo saram", ja: "あの人" },
+              { ko: "의사", roman: "uisa", ja: "医者" },
+              { ko: "-라고 했어요", roman: "-rago haesseoyo", ja: "〜だと言った（名詞の伝聞）" }
+            ],
+            g: "<strong>名詞の間接話法</strong>は指定詞이다を使い<code>-(이)라고 하다</code>。母音終わりは<code>-라고</code>（<code>의사라고</code>）、子音終わりは<code>-이라고</code>（<code>학생이라고</code>）。<br>形容詞の<code>-다고</code>と混同しやすいので注意。",
+            alts: ["저 사람은 의사라고 말했어요.", "저 사람은 의사라고 합니다."]
+          },
+          {
+            ja: "弟はまだ宿題を終えていないと言っています。", ko: "동생은 아직 숙제를 안 끝냈다고 해요.", roman: "dongsaengeun ajik sukjereul an kkeunnaetdago haeyo.",
+            w: [
+              { ko: "동생", roman: "dongsaeng", ja: "弟・妹" },
+              { ko: "아직", roman: "ajik", ja: "まだ" },
+              { ko: "숙제", roman: "sukje", ja: "宿題" },
+              { ko: "끝내다", roman: "kkeutnaeda", ja: "終える" },
+              { ko: "-았/었다고 해요", roman: "-at/eotdago haeyo", ja: "〜したと言う（過去の伝聞）" }
+            ],
+            g: "<strong>過去の間接話法</strong>は動詞・形容詞ともに<code>-았/었다고 하다</code>。現在の動詞だけが特殊で<code>-ㄴ/는다고</code>になるが、過去は規則的に<code>-었다고</code>（<code>끝냈다고</code>）。<br>否定<code>안</code>は動詞の直前に置く。",
+            alts: ["동생은 아직 숙제를 끝내지 않았다고 해요."]
+          },
+          {
+            ja: "友達がいつ出発するのかと聞きました。", ko: "친구가 언제 출발하냐고 물어봤어요.", roman: "chinguga eonje chulbalhanyago mureobwasseoyo.",
+            w: [
+              { ko: "친구", roman: "chingu", ja: "友達" },
+              { ko: "언제", roman: "eonje", ja: "いつ" },
+              { ko: "출발하다", roman: "chulbalhada", ja: "出発する" },
+              { ko: "-냐고", roman: "-nyago", ja: "〜かと（疑問の引用）" },
+              { ko: "물어보다", roman: "mureoboda", ja: "尋ねる" }
+            ],
+            g: "<strong>疑問文の間接話法</strong>は<code>-(느)냐고 하다/묻다</code>。本来は動詞<code>-느냐고</code>だが、現代口語では動詞・形容詞ともに<code>-냐고</code>が一般的（<code>가냐고</code>、<code>춥냐고</code>）。<br>引用動詞は<code>묻다/물어보다</code>がよく合う。",
+            alts: ["친구가 언제 출발하냐고 물었어요.", "친구가 언제 출발하느냐고 물어봤어요."]
+          },
+          {
+            ja: "母は早く起きなさいと言いました。", ko: "엄마는 일찍 일어나라고 했어요.", roman: "eommaneun iljjik ireonarago haesseoyo.",
+            w: [
+              { ko: "엄마", roman: "eomma", ja: "母" },
+              { ko: "일찍", roman: "iljjik", ja: "早く" },
+              { ko: "일어나다", roman: "ireonada", ja: "起きる" },
+              { ko: "-(으)라고 했어요", roman: "-(eu)rago haesseoyo", ja: "〜しろと言った（命令の引用）" }
+            ],
+            g: "<strong>命令文の間接話法</strong>は<code>-(으)라고 하다</code>。母音語幹は<code>-라고</code>（<code>일어나라고</code>）、子音語幹は<code>-으라고</code>（<code>읽다→읽으라고</code>）。<br>直接の命令<code>일어나라/일어나세요</code>とは形が変わる点に注意。",
+            alts: ["엄마는 일찍 일어나라고 말했어요.", "엄마는 일찍 일어나라고 하셨어요."]
+          },
+          {
+            ja: "私たちは一緒に映画を見ようと言いました。", ko: "우리는 같이 영화를 보자고 했어요.", roman: "urineun gachi yeonghwareul bojago haesseoyo.",
+            w: [
+              { ko: "우리", roman: "uri", ja: "私たち" },
+              { ko: "같이", roman: "gachi", ja: "一緒に" },
+              { ko: "영화", roman: "yeonghwa", ja: "映画" },
+              { ko: "보다", roman: "boda", ja: "見る" },
+              { ko: "-자고 했어요", roman: "-jago haesseoyo", ja: "〜しようと言った（勧誘の引用）" }
+            ],
+            g: "<strong>勧誘文の間接話法</strong>は語幹に<code>-자고 하다</code>（<code>보자고</code>、<code>가자고</code>）。元の勧誘<code>같이 봐요/보자</code>から変化させる。<br>引用助詞<strong>-고</strong>が「〜と」に当たり、後ろに하다・말하다などを置く構造。",
+            alts: ["우리는 같이 영화를 보자고 말했어요."]
+          },
+          {
+            ja: "ジホさんは週末にとても忙しいんですって。", ko: "지호 씨는 주말에 아주 바쁘대요.", roman: "jiho ssineun jumare aju bappeudaeyo.",
+            w: [
+              { ko: "지호 씨", roman: "jiho ssi", ja: "ジホさん" },
+              { ko: "주말", roman: "jumal", ja: "週末" },
+              { ko: "-에", roman: "-e", ja: "時の助詞「に」" },
+              { ko: "바쁘다", roman: "bappeuda", ja: "忙しい" },
+              { ko: "-대요", roman: "-daeyo", ja: "〜だそうです（-다고 해요の縮約）" }
+            ],
+            g: "<strong>縮約形 -대요</strong>は<code>-다고 해요</code>の縮約で、伝聞「〜だそうです・〜なんだって」。会話で多用。<br>動詞も同様に<code>온다고 해요→온대요</code>と縮む（<code>-ㄴ/는대요</code>）。",
+            alts: ["지호 씨는 주말에 아주 바쁘다고 해요."]
+          },
+          {
+            ja: "先生がどうして遅れたのかとお尋ねです。", ko: "선생님이 왜 늦었냬요.", roman: "seonsaengnimi wae neujeotnaeyo.",
+            w: [
+              { ko: "선생님", roman: "seonsaengnim", ja: "先生" },
+              { ko: "왜", roman: "wae", ja: "なぜ" },
+              { ko: "늦다", roman: "neutda", ja: "遅れる" },
+              { ko: "-었-", roman: "-eot-", ja: "過去" },
+              { ko: "-냬요", roman: "-naeyo", ja: "〜かと聞いています（-냐고 해요の縮約）" }
+            ],
+            g: "<strong>縮約形 -냬요</strong>は疑問の引用<code>-(느)냐고 해요</code>の縮約で「〜かと聞いている」。過去は<code>늦었냬요</code>。<br>伝聞の<code>-대요</code>と一字違いなので、聞き分け・書き分けに注意。",
+            alts: ["선생님이 왜 늦었냐고 하세요.", "선생님이 왜 늦었냐고 물어보세요."]
+          },
+          {
+            ja: "彼が、今日は疲れたから家で休もうって。", ko: "그가 오늘은 피곤하니까 집에서 쉬재요.", roman: "geuga oneuleun pigonhanikka jibeseo swijaeyo.",
+            w: [
+              { ko: "그", roman: "geu", ja: "彼" },
+              { ko: "피곤하다", roman: "pigonhada", ja: "疲れている" },
+              { ko: "-(으)니까", roman: "-(eu)nikka", ja: "〜だから（理由）" },
+              { ko: "집에서", roman: "jibeseo", ja: "家で" },
+              { ko: "쉬다", roman: "swida", ja: "休む" },
+              { ko: "-재요", roman: "-jaeyo", ja: "〜しようと言っている（-자고 해요の縮約）" }
+            ],
+            g: "<strong>縮約形 -재요</strong>は勧誘の引用<code>-자고 해요</code>の縮約で「〜しようって（言っている）」。<code>쉬자고 해요→쉬재요</code>。<br>命令の<code>-(으)라고 해요</code>も<code>-(으)래요</code>に縮む（例<code>쉬라고 해요→쉬래요</code>）ので併せて整理。",
+            alts: ["그가 오늘은 피곤하니까 집에서 쉬자고 해요.", "그가 오늘은 피곤하니까 집에서 쉬자고 했어요."]
+          }
+        ]
+      },
+      {
+        topik: 3, num: 6, title: "義務・許可・推測",
+        sentences: [
+          {
+            ja: "明日は早く起きなければなりません。", ko: "내일은 일찍 일어나야 해요.", roman: "naeireun iljjik ireonaya haeyo.",
+            w: [
+              { ko: "내일", roman: "naeil", ja: "明日" },
+              { ko: "-은", roman: "-eun", ja: "主題助詞「は」" },
+              { ko: "일찍", roman: "iljjik", ja: "早く" },
+              { ko: "일어나다", roman: "ireonada", ja: "起きる" },
+              { ko: "-아야 해요", roman: "-aya haeyo", ja: "〜しなければならない" }
+            ],
+            g: "<strong>義務「V-아/어야 하다」</strong>＝「〜しなければならない」。陽母音語幹は <code>-아야</code>、陰母音は <code>-어야</code>、하다動詞は <code>-여야(해야)</code>。<br><code>하다</code> の代わりに <code>되다</code> も使え、口語では <code>-아/어야 돼요</code> の方が自然です。",
+            alts: ["내일은 일찍 일어나야 돼요.", "내일은 일찍 일어나야 합니다."]
+          },
+          {
+            ja: "ここでは写真を撮ってもいいですか？", ko: "여기에서 사진을 찍어도 돼요?", roman: "yeogieseo sajineul jjigeodo dwaeyo?",
+            w: [
+              { ko: "여기", roman: "yeogi", ja: "ここ" },
+              { ko: "-에서", roman: "-eseo", ja: "場所助詞「で」" },
+              { ko: "사진", roman: "sajin", ja: "写真" },
+              { ko: "-을", roman: "-eul", ja: "目的格助詞" },
+              { ko: "찍다", roman: "jjikda", ja: "撮る" },
+              { ko: "-어도 돼요", roman: "-eodo dwaeyo", ja: "〜してもいい" }
+            ],
+            g: "<strong>許可「V-아/어도 되다」</strong>＝「〜してもいい」。<code>되다</code> の해요体は縮約して <code>돼요</code> になります（되어요 → 돼요）。<br>許可を求める疑問文にもそのまま使え、答えは <code>네, 돼요.</code> となります。",
+            alts: ["여기에서 사진을 찍어도 괜찮아요?", "여기서 사진 찍어도 돼요?"]
+          },
+          {
+            ja: "ここでタバコを吸ってはいけません。", ko: "여기에서 담배를 피우면 안 돼요.", roman: "yeogieseo dambaereul piumyeon an dwaeyo.",
+            w: [
+              { ko: "담배", roman: "dambae", ja: "タバコ" },
+              { ko: "-를", roman: "-reul", ja: "目的格助詞" },
+              { ko: "피우다", roman: "piuda", ja: "吸う" },
+              { ko: "-면 안 돼요", roman: "-myeon an dwaeyo", ja: "〜してはいけない" }
+            ],
+            g: "<strong>禁止「V-(으)면 안 되다」</strong>＝「〜してはいけない」。許可 <code>-아/어도 되다</code> のちょうど反対の表現です。<br>子音語幹は <code>-으면</code>、母音語幹・ㄹ語幹は <code>-면</code>。<code>안</code> は <code>되다</code> の直前に置きます。",
+            alts: ["여기에서 담배를 피우면 안 됩니다."]
+          },
+          {
+            ja: "明日は会社に行かなくてもいいです。", ko: "내일은 회사에 안 가도 돼요.", roman: "naeireun hoesae an gado dwaeyo.",
+            w: [
+              { ko: "회사", roman: "hoesa", ja: "会社" },
+              { ko: "-에", roman: "-e", ja: "方向・場所助詞「に」" },
+              { ko: "안", roman: "an", ja: "否定（〜ない）" },
+              { ko: "가다", roman: "gada", ja: "行く" },
+              { ko: "-아도 돼요", roman: "-ado dwaeyo", ja: "〜してもいい" }
+            ],
+            g: "<strong>不要「안 V-아/어도 되다」</strong>＝「〜しなくてもいい」。許可表現の前に否定の <code>안</code> を付けた形です。<br>同義で長い否定を使った <code>V-지 않아도 되다</code> もあり、こちらはやや書面的です。",
+            alts: ["내일은 회사에 가지 않아도 돼요.", "내일은 회사에 안 가도 괜찮아요."]
+          },
+          {
+            ja: "薬を飲んだので、もう病院に行かなくても大丈夫です。", ko: "약을 먹어서 이제 병원에 가지 않아도 돼요.", roman: "yageul meogeoseo ije byeongwone gaji anado dwaeyo.",
+            w: [
+              { ko: "약", roman: "yak", ja: "薬" },
+              { ko: "먹다", roman: "meokda", ja: "飲む・食べる" },
+              { ko: "-어서", roman: "-eoseo", ja: "理由「〜ので」" },
+              { ko: "이제", roman: "ije", ja: "もう・今は" },
+              { ko: "병원", roman: "byeongwon", ja: "病院" },
+              { ko: "-지 않아도 돼요", roman: "-ji anado dwaeyo", ja: "〜しなくてもいい" }
+            ],
+            g: "<strong>不要「V-지 않아도 되다」</strong>＝「〜しなくてもいい」。長い否定 <code>-지 않다</code> に <code>-아도 되다</code> が付いた形で、口語の <code>안 ~아도 되다</code> と同義です。<br>理由の <code>-아/어서</code> は前後の主語が同じで、後ろに命令・勧誘が来られない点に注意。",
+            alts: ["약을 먹어서 이제 병원에 안 가도 돼요.", "약을 먹었으니까 이제 병원에 안 가도 돼요."]
+          },
+          {
+            ja: "空が暗いですね。雨が降りそうです。", ko: "하늘이 어둡네요. 비가 오겠어요.", roman: "haneuri eodumneyo. biga ogesseoyo.",
+            w: [
+              { ko: "하늘", roman: "haneul", ja: "空" },
+              { ko: "어둡다", roman: "eodupda", ja: "暗い" },
+              { ko: "비", roman: "bi", ja: "雨" },
+              { ko: "오다", roman: "oda", ja: "降る・来る" },
+              { ko: "-겠어요", roman: "-gesseoyo", ja: "〜しそうだ（推測）" }
+            ],
+            g: "<strong>推測「-겠-」</strong>＝その場の状況から判断した「〜しそうだ・〜だろう」。目の前の根拠に基づく即時的な推量に使います。<br>意志「〜します」(<code>제가 하겠어요</code>)の用法もあり、主語が一人称か三人称・自然現象かで判別します。",
+            alts: ["하늘이 어둡네요. 비가 올 것 같아요."]
+          },
+          {
+            ja: "彼は今頃もう家に着いているでしょう。", ko: "그는 지금쯤 벌써 집에 도착했을 거예요.", roman: "geuneun jigeumjjeum beolsseo jibe dochakaesseul geoyeyo.",
+            w: [
+              { ko: "그", roman: "geu", ja: "彼" },
+              { ko: "지금쯤", roman: "jigeumjjeum", ja: "今頃" },
+              { ko: "벌써", roman: "beolsseo", ja: "もう・すでに" },
+              { ko: "도착하다", roman: "dochakada", ja: "到着する" },
+              { ko: "-했을 거예요", roman: "-haesseul geoyeyo", ja: "〜しただろう（過去推量）" }
+            ],
+            g: "<strong>推測「-(으)ㄹ 것이다」</strong>＝「〜だろう」。해요体は <code>-(으)ㄹ 거예요</code>。過去の推量は <code>-았/었을 거예요</code> の形になります。<br><code>-겠-</code> がその場の即時判断なのに対し、<code>-(으)ㄹ 거예요</code> は根拠に基づく一般的な推量で、未来の予定にも使えます。",
+            alts: ["그는 지금쯤 벌써 집에 도착했을 겁니다."]
+          },
+          {
+            ja: "電気が消えていますね。みんな出かけたようです。", ko: "불이 꺼져 있네요. 다들 나갔나 봐요.", roman: "buri kkeojyeo inneyo. dadeul naganna bwayo.",
+            w: [
+              { ko: "불", roman: "bul", ja: "電気・明かり" },
+              { ko: "꺼지다", roman: "kkeojida", ja: "消える" },
+              { ko: "-어 있네요", roman: "-eo inneyo", ja: "〜している（状態）" },
+              { ko: "다들", roman: "dadeul", ja: "みんな" },
+              { ko: "나가다", roman: "nagada", ja: "出かける" },
+              { ko: "-았나 봐요", roman: "-anna bwayo", ja: "〜したようだ（推測）" }
+            ],
+            g: "<strong>推測「V-나 보다」</strong>＝根拠を見て判断する「〜のようだ・〜らしい」。<strong>動詞</strong>に付き、過去は <code>-았/었나 보다</code>。<br>形容詞・名詞には <code>-(으)ㄴ가 보다</code>（例 <code>바쁜가 봐요</code>）を使う点が分かれ目です。",
+            alts: ["불이 꺼져 있네요. 다들 나갔나 봐."]
+          },
+          {
+            ja: "予約をしないと入れないので、必ず先に電話しなければなりません。", ko: "예약을 안 하면 못 들어가니까 꼭 먼저 전화해야 돼요.", roman: "yeyageul an hamyeon mot deureoganikka kkok meonjeo jeonhwahaeya dwaeyo.",
+            w: [
+              { ko: "예약", roman: "yeyak", ja: "予約" },
+              { ko: "-면", roman: "-myeon", ja: "条件「〜たら」" },
+              { ko: "못 들어가다", roman: "mot deureogada", ja: "入れない（不可能）" },
+              { ko: "-니까", roman: "-nikka", ja: "理由「〜から」" },
+              { ko: "꼭", roman: "kkok", ja: "必ず" },
+              { ko: "-해야 돼요", roman: "-haeya dwaeyo", ja: "〜しなければならない" }
+            ],
+            g: "<strong>義務「V-아/어야 되다」</strong>を理由 <code>-(으)니까</code> と組み合わせた複文です。<code>-(으)니까</code> は主観的な理由で、後ろに命令・勧誘も置けます。<br>不可能の <code>못 + V</code>（못 들어가다）と禁止の <code>-(으)면 안 되다</code> は意味が異なるので区別しましょう。",
+            alts: ["예약을 안 하면 못 들어가니까 꼭 먼저 전화해야 해요.", "예약을 하지 않으면 못 들어가니까 꼭 먼저 전화해야 돼요."]
+          },
+          {
+            ja: "ここでは靴を脱がなくてもいいですが、大きな声で話してはいけません。", ko: "여기에서는 신발을 안 벗어도 되지만 큰 소리로 말하면 안 돼요.", roman: "yeogieseoneun sinbareul an beoseodo doejiman keun soriro malhamyeon an dwaeyo.",
+            w: [
+              { ko: "신발", roman: "sinbal", ja: "靴" },
+              { ko: "벗다", roman: "beotda", ja: "脱ぐ" },
+              { ko: "-어도 되지만", roman: "-eodo doejiman", ja: "〜してもいいが" },
+              { ko: "큰 소리로", roman: "keun soriro", ja: "大きな声で" },
+              { ko: "말하다", roman: "malhada", ja: "話す" },
+              { ko: "-면 안 돼요", roman: "-myeon an dwaeyo", ja: "〜してはいけない" }
+            ],
+            g: "不要・許可の <strong>「안 V-아/어도 되다」</strong>と禁止の <strong>「V-(으)면 안 되다」</strong>を逆接 <code>-지만</code> で一文にまとめた総まとめです。<br>許可 <code>-아/어도 되다</code> に <code>-지만</code> が付くと <code>-아/어도 되지만</code>。手段の <code>-(으)로</code> は「큰 소리로（大きな声で）」のように方法を表します。",
+            alts: ["여기에서는 신발을 벗지 않아도 되지만 큰 소리로 말하면 안 돼요.", "여기서는 신발을 안 벗어도 되지만 큰 소리로 말하면 안 됩니다."]
+          }
+        ]
+      },
+      {
+        topik: 4, num: 4, title: "受身・使役",
+        sentences: [
+          {
+            ja: "遠くに山が見えます。", ko: "멀리 산이 보여요.", roman: "meolli san-i boyeoyo.",
+            w: [
+              { ko: "멀리", roman: "meolli", ja: "遠くに" },
+              { ko: "산", roman: "san", ja: "山" },
+              { ko: "-이", roman: "-i", ja: "主格助詞" },
+              { ko: "보여요", roman: "boyeoyo", ja: "見える（보이다）" }
+            ],
+            g: "<strong>被動接尾辞 -이-</strong>。能動の <code>보다</code>（見る）に <code>-이-</code> が付いて <code>보이다</code>（見える）になります。動作主ではなく見える対象が主語で、助詞は <code>-이/가</code> を使います。<br><code>나는 산을 봐요</code>（私は山を見る）との対比で覚えましょう。",
+            alts: ["멀리 산이 보입니다."]
+          },
+          {
+            ja: "どこかから音楽が聞こえます。", ko: "어디선가 음악이 들려요.", roman: "eodiseon-ga eumagi deullyeoyo.",
+            w: [
+              { ko: "어디선가", roman: "eodiseon-ga", ja: "どこからか" },
+              { ko: "음악", roman: "eumak", ja: "音楽" },
+              { ko: "-이", roman: "-i", ja: "主格助詞" },
+              { ko: "들려요", roman: "deullyeoyo", ja: "聞こえる（들리다）" }
+            ],
+            g: "<strong>被動接尾辞 -리-</strong>。<code>듣다</code>（聞く、ㄷ不規則）が <code>들리다</code>（聞こえる）になります。<code>듣다</code>は活用で語幹末が <code>ㄹ</code> に変わる点にも注意。<br>同形 <code>들리다</code> は使役「聞かせる」にもなり、文脈で判断します。",
+            alts: ["어디선가 음악이 들립니다."]
+          },
+          {
+            ja: "風でドアが開きました。", ko: "바람에 문이 열렸어요.", roman: "baram-e mun-i yeollyeosseoyo.",
+            w: [
+              { ko: "바람", roman: "baram", ja: "風" },
+              { ko: "-에", roman: "-e", ja: "原因の「で」" },
+              { ko: "문", roman: "mun", ja: "ドア" },
+              { ko: "-이", roman: "-i", ja: "主格助詞" },
+              { ko: "열렸어요", roman: "yeollyeosseoyo", ja: "開いた（열리다）" }
+            ],
+            g: "<strong>被動接尾辞 -리-</strong>。<code>열다</code>（開ける）→ <code>열리다</code>（開く・開けられる）。原因は <code>-에</code> で表します。<br>能動 <code>제가 문을 열었어요</code>（私がドアを開けた）と比べると、主語と助詞の違いが分かります。",
+            alts: ["바람에 문이 열렸습니다."]
+          },
+          {
+            ja: "犯人がついに警察に捕まりました。", ko: "범인이 드디어 경찰에게 잡혔어요.", roman: "beomini deudieo gyeongcharege japyeosseoyo.",
+            w: [
+              { ko: "범인", roman: "beomin", ja: "犯人" },
+              { ko: "드디어", roman: "deudieo", ja: "ついに" },
+              { ko: "경찰", roman: "gyeongchal", ja: "警察" },
+              { ko: "-에게", roman: "-ege", ja: "動作主の「に」" },
+              { ko: "잡혔어요", roman: "japyeosseoyo", ja: "捕まった（잡히다）" }
+            ],
+            g: "<strong>被動接尾辞 -히-</strong>。<code>잡다</code>（捕まえる）→ <code>잡히다</code>（捕まる）。被動文で動作主は <code>-에게/한테</code>（人）で示します。<br>能動 <code>경찰이 범인을 잡았어요</code> と対比すると、目的語が主語に昇格しています。",
+            alts: ["범인이 드디어 경찰한테 잡혔어요.", "범인이 드디어 경찰에게 잡혔습니다."]
+          },
+          {
+            ja: "この料理は天然の材料で作られています。", ko: "이 요리는 천연 재료로 만들어져요.", roman: "i yorineun cheonyeon jaeryoro mandeureojyeoyo.",
+            w: [
+              { ko: "요리", roman: "yori", ja: "料理" },
+              { ko: "천연 재료", roman: "cheonyeon jaeryo", ja: "天然の材料" },
+              { ko: "-로", roman: "-ro", ja: "手段「で」" },
+              { ko: "만들어져요", roman: "mandeureojyeoyo", ja: "作られる（만들어지다）" }
+            ],
+            g: "<strong>-아/어지다（被動）</strong>。接尾辞被動を持たない動詞は <code>-아/어지다</code> で受身を作ります。<code>만들다→만들어지다</code>（作られる）。<br><code>만들다</code> は語幹末の母音が陰母音（ㅡ）なので <code>-어지다</code> が付き <code>만들어지다</code> となります。",
+            alts: ["이 요리는 천연 재료로 만들어집니다."]
+          },
+          {
+            ja: "運動を始めてから体調が良くなりました。", ko: "운동을 시작한 후로 몸이 좋아졌어요.", roman: "undong-eul sijakhan huro momi joajyeosseoyo.",
+            w: [
+              { ko: "운동", roman: "undong", ja: "運動" },
+              { ko: "시작한 후로", roman: "sijakhan huro", ja: "始めてから" },
+              { ko: "몸", roman: "mom", ja: "体" },
+              { ko: "-이", roman: "-i", ja: "主格助詞" },
+              { ko: "좋아졌어요", roman: "joajyeosseoyo", ja: "良くなった（좋아지다）" }
+            ],
+            g: "<strong>形容詞＋-아/어지다（自然変化）</strong>。形容詞に付くと「〜くなる」という状態変化を表します。<code>좋다→좋아지다</code>（良くなる）。<br>動詞被動の <code>-아/어지다</code> と形は同じですが、形容詞では「変化」の意味になります。",
+            alts: ["운동을 시작한 후로 몸이 좋아졌습니다.", "운동을 시작한 뒤로 몸이 좋아졌어요."]
+          },
+          {
+            ja: "母が赤ちゃんにご飯を食べさせています。", ko: "엄마가 아기에게 밥을 먹이고 있어요.", roman: "eommaga agi-ege babeul meogigo isseoyo.",
+            w: [
+              { ko: "엄마", roman: "eomma", ja: "母" },
+              { ko: "아기", roman: "agi", ja: "赤ちゃん" },
+              { ko: "-에게", roman: "-ege", ja: "対象「に」" },
+              { ko: "밥", roman: "bap", ja: "ご飯" },
+              { ko: "먹이고 있어요", roman: "meogigo isseoyo", ja: "食べさせている（먹이다）" }
+            ],
+            g: "<strong>使役接尾辞 -이-</strong>。<code>먹다</code>（食べる）→ <code>먹이다</code>（食べさせる・与える）。使役の対象（食べる人）は <code>-에게/한테</code> で示します。<br>同形語に <code>보이다</code>（被動「見える」／使役「見せる」）があり、接尾辞は被動・使役で重なることがあります。",
+            alts: ["엄마가 아기에게 밥을 먹이고 있습니다.", "엄마가 아기한테 밥을 먹이고 있어요."]
+          },
+          {
+            ja: "寒いので子どもに厚いコートを着せました。", ko: "추워서 아이에게 두꺼운 코트를 입혔어요.", roman: "chuwoseo ai-ege dukkeoun koteureul iphyeosseoyo.",
+            w: [
+              { ko: "추워서", roman: "chuwoseo", ja: "寒いので" },
+              { ko: "아이", roman: "ai", ja: "子ども" },
+              { ko: "두꺼운 코트", roman: "dukkeoun koteu", ja: "厚いコート" },
+              { ko: "입혔어요", roman: "iphyeosseoyo", ja: "着せた（입히다）" }
+            ],
+            g: "<strong>使役接尾辞 -히-</strong>。<code>입다</code>（着る）→ <code>입히다</code>（着せる）。「〜に〜を着せる」は <code>-에게 -을/를 입히다</code> の形になります。<br>能動 <code>아이가 코트를 입어요</code>（子どもがコートを着る）と比べると主語と動作主の関係が逆転します。",
+            alts: ["추워서 아이에게 두꺼운 코트를 입혔습니다.", "추워서 아이한테 두꺼운 코트를 입혔어요."]
+          },
+          {
+            ja: "先生は学生たちに本をたくさん読ませます。", ko: "선생님은 학생들에게 책을 많이 읽게 해요.", roman: "seonsaengnimeun haksaengdeul-ege chaegeul mani ilkke haeyo.",
+            w: [
+              { ko: "선생님", roman: "seonsaengnim", ja: "先生" },
+              { ko: "학생들", roman: "haksaengdeul", ja: "学生たち" },
+              { ko: "-에게", roman: "-ege", ja: "対象「に」" },
+              { ko: "책", roman: "chaek", ja: "本" },
+              { ko: "읽게 해요", roman: "ilkke haeyo", ja: "読ませる（읽게 하다）" }
+            ],
+            g: "<strong>-게 하다（使役）</strong>。あらゆる用言に付く生産的な使役で「（強制・許可して）〜させる」。<code>읽다→읽게 하다</code>（読ませる）。<br>接尾辞使役 <code>읽히다</code>（読ませる）も可能ですが、<code>-게 하다</code> はより明示的に「させる」意図を表します。",
+            alts: ["선생님은 학생들에게 책을 많이 읽게 합니다.", "선생님은 학생들에게 책을 많이 읽힙니다."]
+          },
+          {
+            ja: "部長は新入社員に毎日資料を準備させます。", ko: "부장님은 신입 사원에게 매일 자료를 준비시켜요.", roman: "bujangnimeun sinip sawon-ege maeil jaryoreul junbisikyeoyo.",
+            w: [
+              { ko: "부장님", roman: "bujangnim", ja: "部長" },
+              { ko: "신입 사원", roman: "sinip sawon", ja: "新入社員" },
+              { ko: "매일", roman: "maeil", ja: "毎日" },
+              { ko: "자료", roman: "jaryo", ja: "資料" },
+              { ko: "준비시켜요", roman: "junbisikyeoyo", ja: "準備させる（준비시키다）" }
+            ],
+            g: "<strong>漢字語＋시키다（使役）</strong>。<code>名詞＋하다</code> 動詞は <code>하다</code> を <code>시키다</code> に替えて使役にします。<code>준비하다→준비시키다</code>（準備させる）。<br>注意：<code>준비하게 하다</code> も可能ですが、定着した語は <code>시키다</code> が自然。<code>준비되다</code>（準備される＝被動）と混同しないこと。",
+            alts: ["부장님은 신입 사원에게 매일 자료를 준비시킵니다.", "부장님은 신입 사원에게 매일 자료를 준비하게 해요."]
+          }
+        ]
+      },
+      {
+        topik: 4, num: 5, title: "談話・ニュアンス語尾",
+        sentences: [
+          {
+            ja: "今日はちょっと忙しいんですよ。", ko: "오늘은 좀 바쁘거든요.", roman: "oneureun jom bappeugeodeunyo.",
+            w: [
+              { ko: "오늘은", roman: "oneureun", ja: "今日は" },
+              { ko: "좀", roman: "jom", ja: "ちょっと" },
+              { ko: "바쁘다", roman: "bappeuda", ja: "忙しい" },
+              { ko: "-거든요", roman: "-geodeunyo", ja: "〜なんですよ(理由・前提)" }
+            ],
+            g: "<strong>-거든요</strong>は相手がまだ知らない理由や前提を「実は〜なんですよ」と差し出す終結語尾。形容詞・動詞の語幹に付く(<code>바쁘다→바쁘거든요</code>)。<br>名詞には<code>이다</code>を介して<code>학생이거든요</code>のようにする。"
+          },
+          {
+            ja: "あの店、有名じゃないですか。", ko: "저 가게 유명하잖아요.", roman: "jeo gage yumyeonghajanayo.",
+            w: [
+              { ko: "저", roman: "jeo", ja: "あの" },
+              { ko: "가게", roman: "gage", ja: "店" },
+              { ko: "유명하다", roman: "yumyeonghada", ja: "有名だ" },
+              { ko: "-잖아요", roman: "-janayo", ja: "〜じゃないですか(既知の確認)" }
+            ],
+            g: "<strong>-잖아요</strong>は相手も知っているはずの事実を「〜じゃないですか」と確認・念押しする。<code>유명하다→유명하잖아요</code>。<br>新情報を出す<strong>-거든요</strong>と対照的で、こちらは<strong>既に共有された情報</strong>を指す。",
+            alts: ["저 가게, 유명하잖아요."]
+          },
+          {
+            ja: "昨日その映画を見たんですよ。", ko: "어제 그 영화를 봤거든요.", roman: "eoje geu yeonghwareul bwatgeodeunyo.",
+            w: [
+              { ko: "어제", roman: "eoje", ja: "昨日" },
+              { ko: "그 영화를", roman: "geu yeonghwareul", ja: "その映画を" },
+              { ko: "보다", roman: "boda", ja: "見る" },
+              { ko: "-았/었-", roman: "-at/eot-", ja: "過去" },
+              { ko: "-거든요", roman: "-geodeunyo", ja: "〜なんですよ(前提提示)" }
+            ],
+            g: "過去の出来事を後の話の<strong>前提</strong>として持ち出すときも<strong>-거든요</strong>を使う。過去形<code>봤-</code>に付いて<code>봤거든요</code>。<br>この後に「だから〜」と話が続く含みを残すのが典型。",
+            alts: ["어제 그 영화 봤거든요."]
+          },
+          {
+            ja: "行ってみたら、人がすごく多かったんですよ。", ko: "가 보니까 사람이 정말 많더라고요.", roman: "ga bonikka sarami jeongmal manteoragoyo.",
+            w: [
+              { ko: "가 보다", roman: "ga boda", ja: "行ってみる" },
+              { ko: "-니까", roman: "-nikka", ja: "〜したら(きっかけ)" },
+              { ko: "사람이", roman: "sarami", ja: "人が" },
+              { ko: "많다", roman: "manta", ja: "多い" },
+              { ko: "-더라고요", roman: "-deoragoyo", ja: "〜だったんですよ(体験の気づき)" }
+            ],
+            g: "<strong>-더라고요</strong>は過去に自分が直接体験して気づいたことの報告。<code>많다→많더라고요</code>。<br>主語は原則<strong>他者・物事</strong>で、自分の意志的行動(私が行った等)には付けにくい点に注意。",
+            alts: ["가 보니까 사람이 정말 많더라고요."]
+          },
+          {
+            ja: "わあ、ここ景色が本当にきれいですね。", ko: "와, 여기 경치가 정말 예쁘네요.", roman: "wa, yeogi gyeongchiga jeongmal yeppeuneyo.",
+            w: [
+              { ko: "와", roman: "wa", ja: "わあ" },
+              { ko: "여기", roman: "yeogi", ja: "ここ" },
+              { ko: "경치가", roman: "gyeongchiga", ja: "景色が" },
+              { ko: "예쁘다", roman: "yeppeuda", ja: "きれいだ" },
+              { ko: "-네요", roman: "-neyo", ja: "〜ですね(その場の感嘆)" }
+            ],
+            g: "<strong>-네요</strong>はその場で初めて気づいたことへの驚き・感嘆。<code>예쁘다→예쁘네요</code>。<br>納得を伴う<strong>-군요</strong>「なるほど〜なんですね」とは微妙に違い、-네요はより直感的な反応。",
+            alts: ["와, 여기 경치가 정말 예쁘군요."]
+          },
+          {
+            ja: "ああ、それであなたが遅れたんですね。", ko: "아, 그래서 늦으셨군요.", roman: "a, geuraeseo neujeusyeotgunyo.",
+            w: [
+              { ko: "아", roman: "a", ja: "ああ" },
+              { ko: "그래서", roman: "geuraeseo", ja: "それで" },
+              { ko: "늦다", roman: "neutda", ja: "遅れる" },
+              { ko: "-시-", roman: "-si-", ja: "尊敬" },
+              { ko: "-군요", roman: "-gunyo", ja: "〜なんですね(納得)" }
+            ],
+            g: "<strong>-군요</strong>は理由を聞いて<strong>納得</strong>した「なるほど〜なんですね」。形容詞・過去形は<code>-군요</code>、動詞現在は<code>-는군요</code>(<code>가는군요</code>)。<br>その場の素直な驚きは<strong>-네요</strong>を使うと自然。",
+            alts: ["아, 그래서 늦으셨네요."]
+          },
+          {
+            ja: "昨日その食堂に行ってみたんですけど、結構おいしかったですよ。", ko: "어제 그 식당에 가 봤는데, 꽤 맛있던데요.", roman: "eoje geu sikdange ga bwanneunde, kkwae masitdeondeyo.",
+            w: [
+              { ko: "식당에", roman: "sikdange", ja: "食堂に" },
+              { ko: "가 보다", roman: "ga boda", ja: "行ってみる" },
+              { ko: "-는데", roman: "-neunde", ja: "〜したが(前置き)" },
+              { ko: "맛있다", roman: "masitda", ja: "おいしい" },
+              { ko: "-던데요", roman: "-deondeyo", ja: "〜でしたよ(回想前置き)" }
+            ],
+            g: "<strong>-던데요</strong>は過去に見聞きしたことを回想しつつ前置きし、相手の反応を促したり軽い感嘆・含みを残す。<code>맛있다→맛있던데요</code>。<br>体験の単なる報告<strong>-더라고요</strong>より、相手の反応や逆接を期待するニュアンスが強い。",
+            alts: ["어제 그 식당에 가 봤는데, 꽤 맛있더라고요."]
+          },
+          {
+            ja: "今の時間なら、彼はたぶんもう家に着いているでしょうよ。", ko: "이 시간이면 그 사람은 아마 벌써 집에 도착했을걸요.", roman: "i siganimyeon geu sarameun ama beolsseo jibe dochakaesseulgeollyo.",
+            w: [
+              { ko: "이 시간이면", roman: "i siganimyeon", ja: "この時間なら" },
+              { ko: "아마", roman: "ama", ja: "たぶん" },
+              { ko: "벌써", roman: "beolsseo", ja: "もう" },
+              { ko: "도착하다", roman: "dochakada", ja: "到着する" },
+              { ko: "-았/었-", roman: "-at/eot-", ja: "過去" },
+              { ko: "-(으)ㄹ걸요", roman: "-(eu)lgeollyo", ja: "〜でしょうよ(推量)" }
+            ],
+            g: "<strong>-(으)ㄹ걸요</strong>は確信の薄い推量「〜でしょうよ」。語尾を上げて言う。過去推量は<code>도착했을걸요</code>。<br>同じ形でも語尾を<strong>下げる-(으)ㄹ걸</strong>は「〜すればよかった」と軽い後悔を表す別用法。",
+            alts: ["이 시간이면 그 사람은 아마 벌써 집에 도착했을 거예요."]
+          },
+          {
+            ja: "無理に誘わない方がいいですよ。あの人、人混みが嫌いじゃないですか。", ko: "억지로 부르지 마세요. 그 사람 사람 많은 데 싫어하잖아요.", roman: "eokjiro bureuji maseyo. geu saram saram maneun de sireohajanayo.",
+            w: [
+              { ko: "억지로", roman: "eokjiro", ja: "無理に" },
+              { ko: "부르다", roman: "bureuda", ja: "呼ぶ・誘う" },
+              { ko: "-지 마세요", roman: "-ji maseyo", ja: "〜しないでください" },
+              { ko: "싫어하다", roman: "sireohada", ja: "嫌う" },
+              { ko: "-잖아요", roman: "-janayo", ja: "〜じゃないですか(既知)" }
+            ],
+            g: "理由を述べる際、相手も承知のはずの事実なら<strong>-잖아요</strong>で「〜じゃないですか」と念押しする。<br>もし相手が知らない新情報として理由を出すなら<code>싫어하거든요</code>(<strong>-거든요</strong>)になり、ニュアンスが入れ替わる。",
+            alts: ["억지로 부르지 마세요. 그 사람 사람 많은 데 싫어하거든요."]
+          },
+          {
+            ja: "その時はわからなかったけど、後で考えたら彼の言葉が正しかったんだと気づいたんですよ。", ko: "그때는 몰랐는데, 나중에 생각해 보니까 그 사람 말이 맞더라고요.", roman: "geuttaeneun mollanneunde, najunge saenggakae bonikka geu saram mari matdeoragoyo.",
+            w: [
+              { ko: "그때는", roman: "geuttaeneun", ja: "その時は" },
+              { ko: "모르다", roman: "moreuda", ja: "わからない" },
+              { ko: "나중에", roman: "najunge", ja: "後で" },
+              { ko: "생각해 보다", roman: "saenggakae boda", ja: "考えてみる" },
+              { ko: "맞다", roman: "matda", ja: "正しい・合う" },
+              { ko: "-더라고요", roman: "-deoragoyo", ja: "〜と気づいた(体験)" }
+            ],
+            g: "後から振り返って<strong>気づいた</strong>事実の報告は<strong>-더라고요</strong>。<code>맞다→맞더라고요</code>で「正しかったんだと気づいた」。<br>前置きの<code>-는데</code>(過去は<code>몰랐는데</code>)と組むと、回想の流れが自然につながる。",
+            alts: ["그때는 몰랐는데, 나중에 생각해 보니까 그 사람 말이 맞던데요."]
+          }
+        ]
+      },
+      {
+        topik: 4, num: 6, title: "書き言葉・接続副詞・慣用表現",
+        sentences: [
+          {
+            ja: "彼女は察しが速くて、すぐ気づきます。", ko: "그 사람은 눈치가 빨라서 금방 알아차려요.", roman: "geu saram-eun nunchiga ppallaseo geumbang aracharyeoyo.",
+            w: [
+              { ko: "눈치", roman: "nunchi", ja: "勘・空気を読む力" },
+              { ko: "-가 빠르다", roman: "-ga ppareuda", ja: "〜が速い（慣用：察しがいい）" },
+              { ko: "-아서", roman: "-aseo", ja: "〜なので（理由）" },
+              { ko: "금방", roman: "geumbang", ja: "すぐ" },
+              { ko: "알아차리다", roman: "aracharida", ja: "気づく" }
+            ],
+            g: "<strong>慣用句</strong> <code>눈치가 빠르다</code>は「察しがいい・気が利く」。直訳の「目つきが速い」ではなく決まり文句。<br>反対は<code>눈치가 없다</code>（空気が読めない）。<code>빠르다</code>は<strong>르不規則</strong>で<code>빨라서</code>になる点に注意。"
+          },
+          {
+            ja: "彼は顔が広くて、知り合いが多いです。", ko: "그는 발이 넓어서 아는 사람이 많아요.", roman: "geuneun bar-i neolbeoseo aneun saram-i manayo.",
+            w: [
+              { ko: "발", roman: "bal", ja: "足（体の部位）" },
+              { ko: "-이 넓다", roman: "-i neolbda", ja: "〜が広い（慣用：顔が広い）" },
+              { ko: "-어서", roman: "-eoseo", ja: "〜なので" },
+              { ko: "아는 사람", roman: "aneun saram", ja: "知り合い" },
+              { ko: "많다", roman: "manta", ja: "多い" }
+            ],
+            g: "<strong>慣用句</strong> <code>발이 넓다</code>は「交友関係が広い＝顔が広い」。日本語と違い「顔」ではなく「足（발）」を使う。<br><code>넓다</code>の発音は<code>[널따]</code>、活用形<code>넓어서</code>は<code>[널버서]</code>。"
+          },
+          {
+            ja: "母は気前がよくて、いつもたくさん作ります。", ko: "어머니는 손이 커서 항상 많이 만들어요.", roman: "eomeonineun son-i keoseo hangsang mani mandeureoyo.",
+            w: [
+              { ko: "손", roman: "son", ja: "手" },
+              { ko: "-이 크다", roman: "-i keuda", ja: "〜が大きい（慣用：気前がいい）" },
+              { ko: "-어서", roman: "-eoseo", ja: "〜なので" },
+              { ko: "항상", roman: "hangsang", ja: "いつも" },
+              { ko: "만들다", roman: "mandeulda", ja: "作る" }
+            ],
+            g: "<strong>慣用句</strong> <code>손이 크다</code>は「金遣いや量が太っ腹＝気前がいい」。<br><code>크다</code>は<strong>으不規則</strong>で語尾の前で<code>으</code>が脱落し<code>커서</code>となる（<code>크+어서→커서</code>）。"
+          },
+          {
+            ja: "私は毎朝コーヒーを飲み、新聞を読みます。", ko: "저는 매일 아침 커피를 마시며 신문을 읽어요.", roman: "jeoneun maeil achim keopireul masimyeo sinmun-eul ilgeoyo.",
+            w: [
+              { ko: "매일 아침", roman: "maeil achim", ja: "毎朝" },
+              { ko: "마시다", roman: "masida", ja: "飲む" },
+              { ko: "-며", roman: "-myeo", ja: "〜しながら／〜し（並列・書面）" },
+              { ko: "신문", roman: "sinmun", ja: "新聞" },
+              { ko: "읽다", roman: "ikda", ja: "読む" }
+            ],
+            g: "<strong>-(으)며</strong>は二つの動作・状態を並べる<strong>書き言葉</strong>の語尾。母音・ㄹ語幹は<code>-며</code>、子音語幹は<code>-으며</code>。<br>話し言葉の<code>-고</code>とほぼ同義だが、より硬く文章向き。<code>마시고→마시며</code>。",
+            alts: ["저는 매일 아침 커피를 마시고 신문을 읽어요."]
+          },
+          {
+            ja: "この製品は値段が高い反面、品質がとても良いです。", ko: "이 제품은 값이 비싼 반면에 품질이 아주 좋아요.", roman: "i jepum-eun gaps-i bissan banmyeon-e pumjir-i aju joayo.",
+            w: [
+              { ko: "제품", roman: "jepum", ja: "製品" },
+              { ko: "값이 비싸다", roman: "gaps-i bissada", ja: "値段が高い" },
+              { ko: "-(으)ㄴ 반면에", roman: "-(eu)n banmyeon-e", ja: "〜である反面（対照）" },
+              { ko: "품질", roman: "pumjil", ja: "品質" },
+              { ko: "좋다", roman: "jota", ja: "良い" }
+            ],
+            g: "<strong>-(으)ㄴ/는 반면(에)</strong>は「〜の反面・一方で」と二つを対比する表現。<br><strong>形容詞</strong>は<code>-(으)ㄴ 반면</code>（<code>비싼 반면</code>）、<strong>動詞の現在</strong>は<code>-는 반면</code>（<code>일하는 반면</code>）と使い分ける。",
+            alts: ["이 제품은 값이 비싼 반면 품질이 아주 좋아요."]
+          },
+          {
+            ja: "彼はよく勉強する反面、運動は全くしません。", ko: "그는 공부는 열심히 하는 반면에 운동은 전혀 안 해요.", roman: "geuneun gongbuneun yeolsimi haneun banmyeon-e undong-eun jeonhyeo an haeyo.",
+            w: [
+              { ko: "공부하다", roman: "gongbuhada", ja: "勉強する" },
+              { ko: "열심히", roman: "yeolsimi", ja: "一生懸命" },
+              { ko: "-는 반면에", roman: "-neun banmyeon-e", ja: "〜する反面（動詞）" },
+              { ko: "운동", roman: "undong", ja: "運動" },
+              { ko: "전혀 안", roman: "jeonhyeo an", ja: "全く〜ない" }
+            ],
+            g: "<strong>動詞</strong>に付く対照表現は<code>-는 반면(에)</code>（前文の形容詞例<code>비싼 반면</code>と対比）。<br><code>전혀</code>は必ず否定<code>안/-지 않다</code>と呼応する副詞。"
+          },
+          {
+            ja: "彼は一生懸命準備したにもかかわらず、試験に落ちました。", ko: "그는 열심히 준비했음에도 불구하고 시험에서 미역국을 먹었어요.", roman: "geuneun yeolsimi junbihaesseum-edo bulguhago siheom-eseo miyeokguk-eul meogeosseoyo.",
+            w: [
+              { ko: "준비하다", roman: "junbihada", ja: "準備する" },
+              { ko: "-았/었음에도 불구하고", roman: "-ass/eosseum-edo bulguhago", ja: "〜したにもかかわらず" },
+              { ko: "시험", roman: "siheom", ja: "試験" },
+              { ko: "미역국을 먹다", roman: "miyeokguk-eul meokda", ja: "わかめスープを飲む（慣用：試験に落ちる）" }
+            ],
+            g: "<strong>-(으)ㅁ에도 불구하고</strong>は「〜にもかかわらず」の硬い書き言葉。名詞化<code>-(으)ㅁ</code>＋<code>에도 불구하고</code>。過去は<code>-았/었음에도</code>。<br>慣用句<code>미역국을 먹다</code>は「試験に落ちる」。誕生日に飲むスープを試験当日は避ける俗習から。",
+            alts: ["그는 열심히 준비했음에도 불구하고 시험에 떨어졌어요."]
+          },
+          {
+            ja: "天気はとても寒かった。しかし、彼らは登山を続けた。", ko: "날씨가 무척 추웠다. 그러나 그들은 등산을 계속했다.", roman: "nalssiga mucheok chuwotda. geureona geudeur-eun deungsan-eul gyesokaetda.",
+            w: [
+              { ko: "무척", roman: "mucheok", ja: "とても" },
+              { ko: "춥다", roman: "chupda", ja: "寒い（ㅂ不規則）" },
+              { ko: "그러나", roman: "geureona", ja: "しかし（逆接・書面）" },
+              { ko: "등산", roman: "deungsan", ja: "登山" },
+              { ko: "계속하다", roman: "gyesokada", ja: "続ける" }
+            ],
+            g: "<strong>接続副詞</strong> <code>그러나</code>は「しかし」の<strong>書き言葉</strong>。話し言葉の<code>하지만/그런데</code>より硬い。<br>例文は<strong>-다体（書き言葉・記述体）</strong>。<code>춥다</code>はㅂ不規則で<code>추웠다</code>。",
+            alts: ["날씨가 무척 추웠다. 하지만 그들은 등산을 계속했다."]
+          },
+          {
+            ja: "原料費が上がった。したがって、価格も引き上げざるを得ない。", ko: "원료비가 올랐다. 따라서 가격도 올릴 수밖에 없다.", roman: "wollyobiga ollatda. ttaraseo gagyeokdo ollil subakk-e eopda.",
+            w: [
+              { ko: "원료비", roman: "wollyobi", ja: "原料費" },
+              { ko: "오르다", roman: "oreuda", ja: "上がる（르不規則）" },
+              { ko: "따라서", roman: "ttaraseo", ja: "したがって（結論・書面）" },
+              { ko: "-(으)ㄹ 수밖에 없다", roman: "-(eu)l subakk-e eopda", ja: "〜せざるを得ない" },
+              { ko: "올리다", roman: "ollida", ja: "引き上げる" }
+            ],
+            g: "<strong>接続副詞</strong> <code>따라서</code>は「したがって」で論理的な結論を導く硬い書き言葉。話し言葉の<code>그래서</code>に相当。<br>同義の<code>그러므로</code>も使える。<code>오르다</code>は르不規則で<code>올랐다</code>。<code>수밖에</code>は依存名詞<code>수</code>に助詞<code>밖에</code>が付いた形で続けて書く。",
+            alts: ["원료비가 올랐다. 그러므로 가격도 올릴 수밖에 없다."]
+          },
+          {
+            ja: "この都市は物価が安く交通も便利であり、その上気候まで温暖だ。したがって移住者が増えている。", ko: "이 도시는 물가가 싸며 교통도 편리하고, 게다가 기후까지 온화하다. 따라서 이주자가 늘고 있다.", roman: "i dosineun mulgaga ssamyeo gyotongdo pyeollihago, gedaga gihukkaji onhwahada. ttaraseo ijujaga neulgo itda.",
+            w: [
+              { ko: "물가", roman: "mulga", ja: "物価" },
+              { ko: "-(으)며", roman: "-(eu)myeo", ja: "〜であり（並列・書面）" },
+              { ko: "편리하다", roman: "pyeollihada", ja: "便利だ" },
+              { ko: "게다가", roman: "gedaga", ja: "その上（添加）" },
+              { ko: "온화하다", roman: "onhwahada", ja: "温暖だ" },
+              { ko: "따라서", roman: "ttaraseo", ja: "したがって（結論）" }
+            ],
+            g: "<strong>総合</strong>：並列<code>-(으)며</code>（<code>싸며</code>）、添加の接続副詞<code>게다가</code>、結論の<code>따라서</code>を組み合わせた書き言葉。<br>これらは<strong>文語表現</strong>。会話では<code>-고／그리고／그래서</code>に置き換わる。",
+            alts: ["이 도시는 물가가 싸고 교통도 편리하며, 게다가 기후까지 온화하다. 그러므로 이주자가 늘고 있다."]
           }
         ]
       }
@@ -1349,47 +3644,83 @@
     const COURSE_INTROS = [
       // TOPIK 1 - C1 あいさつ・自己紹介
       { overview: "韓国語で最も基本のあいさつと自己紹介の表現。「Nです」構文・尊敬の語尾・疑問詞の語順といった、これから先すべての土台を確認します。",
-        points: ["<strong>-(으)세요</strong> 尊敬の丁寧語尾（안녕하세요）","<strong>-ㅂ니다／-습니다</strong> フォーマルな합쇼体","「N + 이에요/예요」＝「Nです」（パッチム有無で使い分け）","謙譲の <code>저</code> vs タメ口の <code>나</code>","疑問詞 <code>뭐</code>（무엇の口語形）の使い方"] },
+        points: ["<strong>-(으)세요</strong> 尊敬の丁寧語尾（안녕하세요）","<strong>-ㅂ니다／-습니다</strong> フォーマルな합쇼体","「N + 이에요/예요」＝「Nです」（パッチム有無で使い分け）","謙譲の <code>저</code> vs タメ口の <code>나</code>","疑問詞 <code>뭐</code>（무엇の口語形）の使い方", "<strong>出身の言い方</strong>：「〜から来ました」は <code>-에서 왔어요</code>。国名＋<code>사람</code>で「〜人」を表す（例 <code>한국 사람</code>）。", "<strong>パッチムの有無で変わる指定詞</strong>：名詞末にパッチムが無ければ <code>-예요</code>、有れば <code>-이에요</code>（例 <code>가수예요</code> / <code>학생이에요</code>）。", "<strong>年齢の助数詞</strong>：固有数詞＋<code>살</code>で年齢を言う。「20歳」は <code>스무 살</code> と形が変わる点に注意。"] },
       // TOPIK 1 - C2 数字・時間・存在
       { overview: "数字・時刻・年齢・人数といった、日常会話に欠かせない数量と存在の表現。固有数詞と漢字数詞の使い分けがポイントです。",
-        points: ["<strong>年齢は固有数詞＋살</strong>（한/두/세/네/스무 の冠形形）","時刻は<strong>固有数詞＋시</strong>＋<strong>漢字数詞＋분</strong>の混合","存在動詞 <code>있다 ↔ 없다</code>（いる/ある ↔ いない/ない）","場所助詞 <code>-에</code>（〜に）","量詞 <code>명/사람</code>（人）、<code>개</code>、<code>마리</code>、<code>권</code>"] },
+        points: ["<strong>年齢は固有数詞＋살</strong>（한/두/세/네/스무 の冠形形）","時刻は<strong>固有数詞＋시</strong>＋<strong>漢字数詞＋분</strong>の混合","存在動詞 <code>있다 ↔ 없다</code>（いる/ある ↔ いない/ない）","場所助詞 <code>-에</code>（〜に）","量詞 <code>명/사람</code>（人）、<code>개</code>、<code>마리</code>、<code>권</code>", "<strong>値段・電話番号は漢字数詞</strong>を桁ごとに読む。値段は <code>원</code>（ウォン）を付け、千は <code>천</code>、万は <code>만</code>（<code>일만</code> ではなく <code>만</code>）。", "<strong>日付は漢字数詞＋월/일</strong>。例外として 6月＝<code>유월</code>、10月＝<code>시월</code> と読み、<code>육월/십월</code> とは言わない。", "<strong>飲み物・物・動物の量詞</strong>：<code>잔</code>（杯）・<code>병</code>（本/瓶）・<code>개</code>（個）・<code>마리</code>（匹）。「名詞＋固有数詞（冠形形）＋量詞」の語順で <code>커피 두 잔</code>。"] },
       // TOPIK 1 - C3 助詞・希望・指示
       { overview: "主格・目的格・主題助詞、希望の「〜したい」、指示代名詞といった基本パーツ。文を組み立てるための骨組みを揃えます。",
-        points: ["<strong>主格助詞</strong> <code>-이/-가</code>（パッチム有無）","<strong>目的格</strong> <code>-을/-를</code> と他動詞 <code>좋아하다</code>","<strong>「V-고 싶다」</strong>＝「〜したい」（一人称）／三人称は <code>-고 싶어하다</code>","해요体の活用（陽母音 → -아요、陰母音 → -어요）","指示代名詞 <code>이／그／저</code> と所有の <code>제／네</code>"] },
+        points: ["<strong>主格助詞</strong> <code>-이/-가</code>（パッチム有無）","<strong>目的格</strong> <code>-을/-를</code> と他動詞 <code>좋아하다</code>","<strong>「V-고 싶다」</strong>＝「〜したい」（一人称）／三人称は <code>-고 싶어하다</code>","해요体の活用（陽母音 → -아요、陰母音 → -어요）","指示代名詞 <code>이／그／저</code> と所有の <code>제／네</code>", "<strong>限定の助詞</strong>：<code>-도</code>（〜も／パッチム有無で形は不変）と <code>-만</code>（〜だけ）。<code>-만</code> は主格・目的格を押しのけて単独で使うのが普通：<code>물만 마셔요</code>（×물을만）。", "<strong>与格助詞</strong>「〜に（人）」：書き言葉・丁寧な <code>-에게</code>、口語の <code>-한테</code>、目上には <code>-께</code>。物・場所の「〜に」は <code>-에</code> で別物。", "<strong>否定</strong>：動詞・形容詞の前に <code>안</code> を置く前置否定が口語の基本：<code>안 가요</code>。「〜したくない」は <code>안 -고 싶어요</code> より <code>-고 싶지 않아요</code> が自然。"] },
       // TOPIK 2 - C4 過去と進行
       { overview: "韓国語の時制の中心、過去形と進行形。陽母音／陰母音／하다語幹で変わる過去語尾と「〜している」表現を一気に押さえます。",
-        points: ["<strong>過去形 <code>-았/-었/-였-</code></strong>（陽母音／陰母音／하다）","<strong>「V-고 있다」</strong>＝進行「〜している」（書面語は <code>-는 중이다</code>）","時刻の助詞 <code>-에</code>（〜に）","<code>벌써</code>（予想より早い「もう」）と <code>이미</code>（時点強調）","語順は「主語＋時間詞＋動詞」"] },
+        points: ["<strong>過去形 <code>-았/-었/-였-</code></strong>（陽母音／陰母音／하다）","<strong>「V-고 있다」</strong>＝進行「〜している」（書面語は <code>-는 중이다</code>）","時刻の助詞 <code>-에</code>（〜に）","<code>벌써</code>（予想より早い「もう」）と <code>이미</code>（時点強調）","語順は「主語＋時間詞＋動詞」", "<strong>過去否定</strong>：<code>안 V-았/었어요</code>（意志的にしなかった）と <code>못 V-았/었어요</code>（できなかった）を区別する。", "<strong><code>V-는 중이다</code></strong>＝「〜している最中だ」。<code>-고 있다</code>より「まさに進行中」のニュアンスを強調する。", "<strong>理由の<code>-아서/어서</code></strong>：前節には過去・未来の時制を付けず基本形のまま用い、時制は後節で表す。"] },
       // TOPIK 2 - C5 比較・能力・依頼
       { overview: "「〜できる」「〜より〜」「〜してください」など、会話で頻出の対人表現。可能・比較・勧誘・依頼を1コースで網羅します。",
-        points: ["<strong>「V-(으)ㄹ 수 있다/없다」</strong>＝可能／不可能","比較構文「<strong>A는 B보다 + 形容詞</strong>」","해요体の万能語尾（平叙／疑問／勧誘／命令を兼ねる）","<strong>「V-아/어 주세요」</strong>＝丁寧な依頼","ㄹ語幹の <code>만들다</code> の活用（만들 수 있다）"] },
+        points: ["<strong>「V-(으)ㄹ 수 있다/없다」</strong>＝可能／不可能","比較構文「<strong>A는 B보다 + 形容詞</strong>」","해요体の万能語尾（平叙／疑問／勧誘／命令を兼ねる）","<strong>「V-아/어 주세요」</strong>＝丁寧な依頼","ㄹ語幹の <code>만들다</code> の活用（만들 수 있다）", "<strong>「V-(으)ㄹ 줄 알다/모르다」</strong>＝技能・方法を「知っている/知らない」。<code>운전할 줄 알아요</code>（運転できる）。<code>-(으)ㄹ 수 있다</code>が状況的可能も含むのに対し、これは習得した技能に使う。", "<strong>最上級「제일／가장 + 形容詞」</strong>＝「いちばん〜」。範囲は <code>-에서</code>、人や物の集合なら <code>중에서</code> で示す。<code>제일</code>は口語的、<code>가장</code>はやや硬い。", "<strong>「좀 + V-아/어 주세요」</strong>の <code>좀</code> は依頼を和らげるクッション語。<code>돕다→도와</code>（ㅂ不規則）、<code>모르다→몰라</code>（르不規則）など不規則活用にも注意。"] },
       // TOPIK 2 - C6 活用変則・程度・量詞
       { overview: "으탈락・固有数詞の冠形形・否定の2形態など、中級に進むために避けて通れない変則活用と細かい使い分けをまとめます。",
-        points: ["<strong>으탈락活用</strong>：<code>예쁘다→예뻐요、바쁘다→바빠요、크다→커요</code>","「얼마」で値段・数量を尋ねる","存在文「<code>場所-에 + N-이/가 있다</code>」と固有数詞の冠形形","<strong>否定の2形態</strong>：<code>안 + V</code>（短形）／<code>V -지 않다</code>（長形）","指示詞の口語形 <code>이거／그거／저거</code>"] },
+        points: ["<strong>으탈락活用</strong>：<code>예쁘다→예뻐요、바쁘다→바빠요、크다→커요</code>","「얼마」で値段・数量を尋ねる","存在文「<code>場所-에 + N-이/가 있다</code>」と固有数詞の冠形形","<strong>否定の2形態</strong>：<code>안 + V</code>（短形）／<code>V -지 않다</code>（長形）","指示詞の口語形 <code>이거／그거／저거</code>", "<strong>르変則</strong>：語幹末「르」が母音語尾の前で「ㄹㄹ」に変化。<code>모르다 → 몰라요</code>、<code>빠르다 → 빨라요</code>、<code>다르다 → 달라요</code>。", "<strong>ㄷ変則</strong>：一部の動詞は母音語尾の前で語幹末「ㄷ」が「ㄹ」に変わる。<code>걷다 → 걸어요</code>、<code>듣다 → 들어요</code>。ただし <code>받다 → 받아요</code>、<code>닫다 → 닫아요</code> は規則活用。", "<strong>固有数詞＋助数詞</strong>：個数は <code>개</code>、人数は丁寧な <code>분</code>。直前で数詞が冠形形に：<code>한 개／두 개</code>、<code>한 분／두 분</code>。"] },
       // TOPIK 3 - C7 仮定・意志・忠告
       { overview: "「もし〜なら」「〜した方がいい」「〜年間〜した」など、未来予測・助言・期間表現を整理。条件文と婉曲な提案が中心です。",
-        points: ["<strong>「V-(으)면」</strong>条件「〜たら/〜なら」","<strong>「V-(으)ㄹ 거예요」</strong>未来・推量「〜だろう」","<strong>「V-는 게 좋다」</strong>＝「〜した方がいい」（婉曲）","<code>재미있다/재미없다</code> の形容詞的振る舞い","期間表現「<strong>漢字数詞＋년/개월/일＋동안</strong>」"] },
+        points: ["<strong>「V-(으)면」</strong>条件「〜たら/〜なら」","<strong>「V-(으)ㄹ 거예요」</strong>未来・推量「〜だろう」","<strong>「V-는 게 좋다」</strong>＝「〜した方がいい」（婉曲）","<code>재미있다/재미없다</code> の形容詞的振る舞い","期間表現「<strong>漢字数詞＋년/개월/일＋동안</strong>」", "<strong>「V-(으)ㄹ까요?」</strong>＝主語が「私たち」なら勧誘「〜しましょうか?」、主語が三人称・天気などなら推量「〜でしょうか?」。例: <code>같이 갈까요?</code>（一緒に行きましょうか?）／<code>비가 올까요?</code>（雨が降るでしょうか?）。", "<strong>「V-(으)면 되다」</strong>＝「〜すればよい/〜すれば大丈夫」。条件を満たせば十分だという意味。否定の<strong>「V-지 않아도 되다 / 안 V-아/어도 되다」</strong>は「〜しなくてもよい」。", "<strong>「V-지 그래요?」</strong>＝相手に行動を促す柔らかい助言「〜したらどう?」。過去形<code>-지 그럈어요?</code>は「〜すればよかったのに」と過ぎたことへの惜しみ。"] },
       // TOPIK 3 - C8 譲歩・禁止・同時動作
       { overview: "逆接・禁止命令・同時動作・複合動詞といった文の組み立てパーツ。複文を作る基本セットを習得します。",
-        points: ["<strong>「-지만」</strong>＝逆接「〜けれども」（書面語は <code>-(으)나</code>）","<strong>「V-지 마세요」</strong>＝禁止「〜しないでください」","<strong>「V-(으)면서」</strong>＝同時並行「〜ながら」（主語同一）","<strong>「V-고 오다/가다」</strong>＝「〜してくる／〜していく」","<code>아직</code>（まだ）vs <code>벌써</code>（もう）の対比"] },
+        points: ["<strong>「-지만」</strong>＝逆接「〜けれども」（書面語は <code>-(으)나</code>）","<strong>「V-지 마세요」</strong>＝禁止「〜しないでください」","<strong>「V-(으)면서」</strong>＝同時並行「〜ながら」（主語同一）","<strong>「V-고 오다/가다」</strong>＝「〜してくる／〜していく」","<code>아직</code>（まだ）vs <code>벌써</code>（もう）の対比", "<strong>-(を)ん/は 후에</strong>(～した後で)と<strong>-기 전에</strong>(～する前に): 後ろの動作には<code>-(으)ㄴ 후에</code>、前の動作には常に<code>-기 전에</code>(時制変化なし)。例: <code>밥을 먹은 후에</code> / <code>자기 전에</code>。", "<strong>-거나</strong>(～したり/～か): 動詞・形容詞をつなぐ選択。名詞の選択は<code>(이)나</code>を使う。例: <code>커피나 차</code> vs <code>읽거나 보거나</code>。"] },
       // TOPIK 3 - C9 手段・思い込み・変化
       { overview: "手段の助詞、誤った思い込み、状態変化、視覚に基づく推量。中級ならではの抽象的なニュアンスを表現する文型を扱います。",
-        points: ["<strong>手段の助詞 <code>-(으)로</code></strong>（自전거로／버스로）","<strong>「-는/(으)ㄴ 줄 알았다」</strong>＝「〜だと思っていた」（事実と違う思い込み）","<strong>「A-아/어지다」</strong>＝状態変化「〜くなる」","<strong>「A-아/어 보이다」</strong>＝視覚に基づく推量「〜そうだ」","ㅂ変則：<code>춥다 → 추워지다</code>"] },
+        points: ["<strong>手段の助詞 <code>-(으)로</code></strong>（自전거로／버스로）","<strong>「-는/(으)ㄴ 줄 알았다」</strong>＝「〜だと思っていた」（事実と違う思い込み）","<strong>「A-아/어지다」</strong>＝状態変化「〜くなる」","<strong>「A-아/어 보이다」</strong>＝視覚に基づく推量「〜そうだ」","ㅂ変則：<code>춥다 → 추워지다</code>", "<strong>「V-게 되다」</strong>＝成り行き・外的要因による変化「〜することになる／〜するようになる」。自分の意志ではなく状況でそうなったニュアンス。例: <code>한국에서 살게 됐어요</code>（韓国に住むことになった）。", "<strong>「-(으)ㄴ/는 것 같다」</strong>＝根拠のある推量「〜のようだ／〜みたいだ」。動詞現在 <code>-는</code>、形容詞・名詞現在 <code>-(으)ㄴ</code>、過去 <code>-(으)ㄴ</code>、未来・推測 <code>-(으)ㄹ</code>。"] },
       // TOPIK 4 - C10 高度な接続詞・並列
       { overview: "「〜を通じて」「〜だけでなく」「〜よりむしろ」「〜だから」など、論述・スピーチで活きる接続表現をまとめて習得します。",
-        points: ["<strong>「N을/를 통해(서)」</strong>＝手段・経路「〜を通じて」","<strong>「N뿐(만) 아니라 N도」</strong>＝「〜だけでなく〜も」","<strong>「V-느니」＋「-는 게 낫다」</strong>＝「〜するよりむしろ〜の方がいい」","<strong>「-(으)니까」</strong>＝主観的な理由（命令・勧誘と相性◎）","副詞 <code>마침내／드디어</code>（ついに）の使い分け"] },
+        points: ["<strong>「N을/를 통해(서)」</strong>＝手段・経路「〜を通じて」","<strong>「N뿐(만) 아니라 N도」</strong>＝「〜だけでなく〜も」","<strong>「V-느니」＋「-는 게 낫다」</strong>＝「〜するよりむしろ〜の方がいい」","<strong>「-(으)니까」</strong>＝主観的な理由（命令・勧誘と相性◎）","副詞 <code>마침내／드디어</code>（ついに）の使い分け", "<strong>-(으)ㄹ 뿐만 아니라</strong>: 動詞・形容詞に付く累加。「～なだけでなく」。名詞には <code>뿐만 아니라</code>、用言には <code>-(으)ㄹ 뿐만 아니라</code> を使い分けます。例: <code>맛있을 뿐만 아니라 싸요</code>。", "<strong>그러므로/따라서</strong>: 論理的帰結を導く硬めの接続詞「したがって」。会話的な <code>그래서</code> より文章・論述向きで、根拠→結論の流れで使います。", "<strong>게다가</strong>: 前の内容に情報を上乗せする「おまけに・しかも」。<code>뿐만 아니라</code> が一文内の累加なのに対し、<code>게다가</code> は文頭で前文に付け足します。"] },
       // TOPIK 4 - C11 譲歩・伝聞・印象
       { overview: "極端な譲歩、間接話法（伝聞）、推量「〜しそうだ」など、話者の判断・態度を示すフォーマル寄りの表現を集めました。",
-        points: ["<strong>「아무리 A-아/어도」</strong>＝「どんなにAでも」（譲歩）","<strong>「-(으)ㄹ게요」</strong>＝意志・約束「〜しますね」","<strong>「N대로」</strong>＝「〜の通り／〜のままに」","<strong>間接話法</strong> <code>-ㄴ/는다고 하다</code>（伝聞）と縮約 <code>-대요</code>","<strong>「V-(으)ㄹ 것 같다」</strong>＝推量「〜しそうだ／だろう」"] },
+        points: ["<strong>「아무리 A-아/어도」</strong>＝「どんなにAでも」（譲歩）","<strong>「-(으)ㄹ게요」</strong>＝意志・約束「〜しますね」","<strong>「N대로」</strong>＝「〜の通り／〜のままに」","<strong>間接話法</strong> <code>-ㄴ/는다고 하다</code>（伝聞）と縮約 <code>-대요</code>","<strong>「V-(으)ㄹ 것 같다」</strong>＝推量「〜しそうだ／だろう」", "<strong>間接話法（命令）</strong>：他者への命令を伝えるときは <code>-(으)라고 하다</code>。例：<code>오라고 했어요</code>（来いと言った）。否定命令は <code>-지 말라고 하다</code>。", "<strong>「-나 보다 / -(으)ㄴ가 보다」</strong>で根拠に基づく推量「〜らしい・〜のようだ」。動詞は <code>-나 보다</code>、形容詞は <code>-(으)ㄴ가 보다</code>。自分のことには使えない点が <code>-(으)ㄹ 것 같다</code> と異なる。"] },
       // TOPIK 4 - C12 程度・抽象・状態
       { overview: "「〜するほど」「〜する価値がある」「〜に関心がある」など、抽象度の高い程度・対象・評価の表現で仕上げ。中上級らしい言い回しを身につけます。",
-        points: ["<strong>「V-(으)ㄹ수록」</strong>＝「〜するほど」（比例的変化）","<strong>「V-(으)ㄹ 만하다」</strong>＝「〜する価値がある」","<strong>「N에 관심이 있다」</strong>＝「〜に関心がある」","<strong>「N에 + 形容詞」</strong>＝対象「Nに対して〜だ」","程度副詞 <code>매우 ≈ 아주 ≈ 되게</code> の使い分け","慣用句「<code>나이가 들다</code>」（年を取る）"] }
+        points: ["<strong>「V-(으)ㄹ수록」</strong>＝「〜するほど」（比例的変化）","<strong>「V-(으)ㄹ 만하다」</strong>＝「〜する価値がある」","<strong>「N에 관심이 있다」</strong>＝「〜に関心がある」","<strong>「N에 + 形容詞」</strong>＝対象「Nに対して〜だ」","程度副詞 <code>매우 ≈ 아주 ≈ 되게</code> の使い分け","慣用句「<code>나이가 들다</code>」（年を取る）", "<strong>-(으)ㄴ/는 편이다</strong>は「どちらかといえば〜なほうだ」と程度をやわらげる表現。形容詞は<code>좋은 편이에요</code>、動詞・現在は<code>늦는 편이에요</code>のように使い分けます。", "<strong>-기 마련이다</strong>は「〜するのが当然だ・〜するものだ」という一般的な道理を表します。<code>실수하기 마련이에요</code>のように動詞の語幹に付けます。"] },
+      // TOPIK 1 - C4 場所・移動・日常動作
+      { overview: "場所・方向を表す助詞「-에」と動作の場所を表す「-에서」を中心に、가다・오다・다니다などの移動動詞や「-(으)러 가다」、日常の基本動詞、方位名詞、起点「-에서 ~까지」までを学びます。日常生活の移動と動作を韓国語で言えるようになる初級コースです。",
+        points: ["<strong>-에</strong>＝存在・方向の助詞。場所＋<code>있다/없다</code>や<code>가다/오다</code>の行き先に付く（例：<code>집에 있어요</code>／<code>학교에 가요</code>）。", "<strong>-에서</strong>＝動作が行われる場所。<code>먹다・공부하다</code>など動作動詞とともに使う（例：<code>식당에서 먹어요</code>）。存在の<code>-에</code>との違いに注意。", "移動動詞 <strong>가다（行く）・오다（来る）・다니다（通う）</strong>。<code>다니다</code>は学校・会社へ定期的に通う意味。", "目的の <strong>-(으)러 가다/오다</strong>＝「〜しに行く／来る」。母音語幹は<code>-러</code>、子音語幹は<code>-으러</code>（例：<code>밥 먹으러 가요</code>）。", "方位名詞 <strong>위・아래・앞・뒤・옆・안・밖</strong>。「Nの上に」は<code>N 위에</code>のように位置＋<code>-에</code>で表す。", "起点と終点 <strong>-에서 ~까지</strong>＝「〜から〜まで」。場所の起点は<code>-에서</code>、到達点は<code>-까지</code>（例：<code>집에서 학교까지</code>）。"] },
+      // TOPIK 1 - C5 否定・疑問詞・形容詞
+      { overview: "短形否定（안・못）と疑問詞、そして基本形容詞の해요体を学ぶコースです。形容詞述語文と「그리고・그래서・그렇지만」の接続も練習し、簡単な意見や説明ができるようになります。",
+        points: ["<strong>短形否定</strong>：用言の前に <code>안</code> を置く（<code>안 가요</code>＝行きません）。意志・単純否定。", "<strong>不可能の否定</strong>：<code>못</code>＋動詞（<code>못 가요</code>＝行けません）。能力・状況による不可能を表す。", "<strong>疑問詞</strong>：<code>누구</code>（誰）・<code>어디</code>（どこ）・<code>언제</code>（いつ）・<code>왜</code>（なぜ）・<code>어떻게</code>（どう）・<code>무슨</code>（何の）・<code>어느</code>（どの）。", "<strong>基本形容詞の해요体</strong>：<code>좋아요/나빠요</code>・<code>커요/작아요</code>・<code>많아요/적어요</code>・<code>비싸요/싸요</code>。", "<strong>形容詞述語文</strong>：形容詞がそのまま述語になる（<code>날씨가 좋아요</code>）。日本語の「〜い／〜だ」に当たる。", "<strong>接続表現</strong>：<code>그리고</code>（そして）・<code>그래서</code>（だから）・<code>그렇지만</code>（しかし）で文をつなぐ。"] },
+      // TOPIK 1 - C6 丁寧体（합쇼体）と日付・家族
+      { overview: "フォーマルな丁寧体（합쇼体）の文末「-ㅂ니다/습니다」「-ㅂ니까/습니까」を軸に、曜日・日付（漢字数詞＋년/월/일）・家族の語彙を学びます。並列「-하고」「와/과」、相手助詞「-에게/한테」も扱い、해요体との違いを確認します。",
+        points: ["<strong>합쇼体</strong>：母音/ㄹ語幹は<code>-ㅂ니다</code>、子音語幹は<code>-습니다</code>。改まった場で使う。", "<strong>疑問形</strong>は<code>-ㅂ니까?/습니까?</code>、名詞文は<code>-입니다/입니까?</code>。해요体は平叙も疑問も同形。", "<strong>曜日</strong>は<code>월·화·수·목·금·토·일</code>＋<code>요일</code>。「何曜日」は<code>무슨 요일</code>。", "<strong>日付</strong>は漢字数詞＋<code>년/월/일</code>。例外読み：<code>6월=유월</code>、<code>10월=시월</code>。", "<strong>家族</strong>は話者の性別で変化：兄<code>형/오빠</code>、姉<code>누나/언니</code>、ほか<code>아버지·어머니·할아버지·할머니·동생</code>。", "<strong>並列</strong>は<code>-하고</code>／<code>와(母音)·과(子音)</code>、<strong>相手助詞</strong>「〜に」は<code>-에게/한테</code>、尊敬は<code>-께</code>。"] },
+      // TOPIK 2 - C4 連結語尾と理由
+      { overview: "韓国語の連結語尾を体系的に学ぶコースです。-고、-지만、-아서/어서、-(으)니까、-는데/(으)ㄴ데を取り上げ、特に理由を表す-아서と-(으)니까の使い分け(命令・勧誘では-(으)니까)に注目します。",
+        points: ["<strong>-고</strong>: 動詞・形容詞をつなぐ並列「〜して、〜くて」。時間順の先行動作にも使う。例: <code>밥을 먹고 학교에 가요</code>。", "<strong>-지만</strong>: 逆接「〜だが、〜けれど」。過去形には<code>-았/었지만</code>のように付ける。", "<strong>-아서/어서</strong>: 理由「〜なので」と継起「〜して(その流れで)」。陽母音は<code>-아서</code>、陰母音は<code>-어서</code>、하다は<code>해서</code>。前節に過去・命令・勧誘は付けられない。", "<strong>-(으)니까</strong>: 理由「〜だから」と発見「〜したら(〜だった)」。パッチム有は<code>-으니까</code>、無は<code>-니까</code>。", "<strong>-아서 と -(으)니까 の使い分け</strong>: 命令・勧誘(<code>-(으)세요 / -(으)ㅂ시다 / -자</code>)の理由には必ず<code>-(으)니까</code>を使い、<code>-아서</code>は使えない。", "<strong>-는데/(으)ㄴ데</strong>: 前置き・対比・状況説明。動詞・있다/없다は<code>-는데</code>、形容詞はパッチム有<code>-은데</code>・無<code>-ㄴ데</code>。"] },
+      // TOPIK 2 - C5 意志・予定・勧誘
+      { overview: "「〜します（約束）」「〜しましょう」「〜するつもりです」など、自分の意志や予定、相手への勧誘・申し出を伝える表現を学ぶコースです。-(으)ㄹ게요／-(으)ㄹ래요／-(으)ㅂ시다／-(으)려고 하다／-기로 하다／-(으)ㄹ까요? を、似た形との違いに注意しながら順に身につけます。",
+        points: ["<strong>-(으)ㄹ게요</strong>＝話し手の意志・約束「（私が）〜します」。聞き手を意識した発話で、相手への約束に使う", "<strong>-(으)ㄹ래요</strong>＝意向「〜したい・〜する」。疑問形 <code>-(으)ㄹ래요?</code> は柔らかい勧誘・打診「〜しませんか?」", "<strong>-(으)ㅂ시다</strong>（フォーマル）／<strong>-자</strong>（パンマル）＝勧誘「〜しましょう」。目上には -(으)ㅂ시다 は失礼になりうる点に注意", "<strong>-(으)려고 하다</strong>＝意図・予定「〜しようと思う」。直後に勧誘・命令は続けられない", "<strong>-기로 하다</strong>＝決定・約束「〜することにする」。すでに決めたことには過去形 <code>-기로 했어요</code>", "<strong>-(으)ㄹ까요?</strong>＝相談・申し出「〜しましょうか?」。返事は多く <code>-(으)ㅂ시다 / -아요</code> や <code>-(으)세요</code>"] },
+      // TOPIK 2 - C6 経験・試み・授受
+      { overview: "「経験(〜してみたことがある)・試み(〜してみる)・授受(あげる/もらう、〜してあげる/差し上げる)・状態の持続(〜ている)」を扱うTOPIK2の作文ドリルです。日常の会話でよく使う恩恵表現と状態描写を、やさしい順に身につけます。",
+        points: ["<strong>経験</strong>: <code>-아/어 본 적이 있다/없다</code>で「〜したことがある/ない」。過去の経験を表します。", "<strong>試み</strong>: <code>-아/어 보다</code>で「〜してみる」。<code>먹어 보다</code>のように動詞語幹に付けます。", "<strong>授受動詞</strong>: あげる/くれる=<code>주다</code>、もらう=<code>받다</code>。<code>받다</code>の相手は<code>-에게서/한테서</code>(〜から)で示します。", "<strong>恩恵の -아/어 주다</strong>で「〜してあげる/くれる」。目上には<strong>-아/어 드리다</strong>(〜して差し上げる)を使います。", "<strong>状態の持続</strong>: <code>-아/어 있다</code>は<code>앉아 있다</code>(座っている)・<code>열려 있다</code>(開いている)など結果状態を表します。", "動作の進行<code>-고 있다</code>(食べている)と、状態の<code>-아/어 있다</code>(立っている)の違いに注意。"] },
+      // TOPIK 3 - C4 連体形と関係節
+      { overview: "韓国語の連体形を体系的に学ぶコースです。動詞・形容詞を名詞修飾に変える語尾（現在・過去・未来・回想）と、連体形に続く依存名詞（것・때・수・적・줄）の使い方を、日本語の連体修飾と対応させながら習得します。",
+        points: ["<strong>動詞の現在連体形</strong>は語幹に <code>-는</code>（<code>가는</code>, <code>먹는</code>）。パッチムの有無に関わらず常に <code>-는</code>。", "<strong>動詞の過去連体形</strong>は <code>-(으)ㄴ</code>（<code>본</code>, <code>먹은</code>）。<strong>未来連体形</strong>は <code>-(으)ㄹ</code>（<code>갈</code>, <code>먹을</code>）。", "<strong>形容詞の連体形</strong>は現在でも <code>-(으)ㄴ</code>（<code>예쁜</code>, <code>좋은</code>）。動詞の過去形と同形なので品詞で判断する。", "<strong>回想の連体形</strong> <code>-던</code> は過去の継続・習慣を、<code>-았/었던</code> は「今はもう違う」完了した状態を回想する。", "<strong>連体形＋依存名詞</strong>：<code>것</code>（もの/こと）、<code>때</code>（とき）、<code>수</code>（可能 〜할 수 있다）、<code>적</code>（経験 〜ㄴ 적이 있다）、<code>줄</code>（〜と思う/〜の仕方）。", "ㄹ語幹は <code>-ㄴ/-ㄹ</code> の前でㄹが脱落（<code>만들다→만든/만들</code>、<code>놀다→논/놀</code>）。ただし <code>-던</code> の前ではㄹは残る（<code>놀던</code>）。日本語の連体修飾「〜する本／〜した人」にほぼ対応する。"] },
+      // TOPIK 3 - C5 間接話法（伝聞・引用）
+      { overview: "他人の発言を伝える「間接話法（伝聞・引用）」をまとめて学ぶコースです。平叙・疑問・命令・勧誘の各文型と引用助詞 -고、そして会話で多用される縮約形 -대요/-냬요/-래요/-재요 までを、直接話法との違いを意識しながら段階的に練習します。",
+        points: ["<strong>平叙文の引用</strong>: 動詞は <code>-ㄴ/는다고 하다</code>（가+ㄴ다고＝<code>간다고</code>、먹+는다고＝<code>먹는다고</code>）、形容詞は <code>-다고 하다</code>（<code>춥다고</code>）、過去は <code>-았/었다고</code>。", "<strong>名詞の引用</strong>は指定詞 이다 を使い <code>-(이)라고 하다</code>（学生だと言う＝<code>학생이라고 해요</code>、의사だ＝<code>의사라고 해요</code>）。 -다고 ではない点に注意。", "<strong>疑問文の引用</strong>は <code>-(느)냐고 하다/묻다</code>。動詞は <code>-느냐고</code>→現代口語では <code>-냐고</code> が普通（<code>가냐고</code>、<code>먹냐고</code>、形容詞 <code>춥냐고</code>）。", "<strong>命令文の引用</strong>は <code>-(으)라고 하다</code>（<code>가라고</code>、<code>읽으라고</code>）。元の命令 <code>-아/어라</code> とは形が変わる。<strong>勧誘文の引用</strong>は <code>-자고 하다</code>（<code>가자고</code>）。", "<strong>引用助詞 -고</strong>が「〜と」に当たり、後ろに 하다・말하다・묻다・생각하다 などを置く。<code>\"간다\"+고+하다</code> の構造で覚える。", "<strong>縮約形</strong>: <code>-다고 해요→-대요</code>、<code>-냐고 해요→-냬요</code>、<code>-(으)라고 해요→-(으)래요</code>、<code>-자고 해요→-재요</code>。日常会話で頻出。"] },
+      // TOPIK 3 - C6 義務・許可・推測
+      { overview: "義務「〜しなければならない」、許可「〜してもいい」、禁止「〜してはいけない」、不要「〜しなくてもいい」、推測「〜だろう・〜らしい」を一気に整理するコースです。日常のルールや判断を表す中級の必須文型を、易しい肯定文から推測の使い分けまで段階的に習得します。",
+        points: ["<strong>義務「V-아/어야 하다／되다」</strong>＝「〜しなければならない」（하다は書面寄り、되다は口語的）", "<strong>許可「V-아/어도 되다」</strong>＝「〜してもいい」（돼요と縮約）", "<strong>禁止「V-(으)면 안 되다」</strong>＝「〜してはいけない」（許可の否定）", "<strong>不要「V-지 않아도 되다／안 V-아도 되다」</strong>＝「〜しなくてもいい」", "<strong>推測「-겠-」</strong>（その場の判断）と <strong>「-(으)ㄹ 것이다」</strong>（〜だろう）の使い分け", "<strong>「-나 보다／-(으)ㄴ가 보다」</strong>＝根拠に基づく推測「〜らしい・〜のようだ」（動詞は -나 보다、形容詞は -(으)ㄴ가 보다）"] },
+      // TOPIK 4 - C4 受身・使役
+      { overview: "韓国語の受身（被動）と使役の表現を体系的に学びます。接尾辞 -이/히/리/기- や -아/어지다、使役の -이/히/리/기/우- と -게 하다、漢字語＋시키다 を、能動文との対比を通して整理します。",
+        points: ["<strong>被動接尾辞</strong> <code>-이/히/리/기-</code>：動詞語幹に付いて「〜される」を表す。<code>보다→보이다</code>（見える）、<code>듣다→들리다</code>（聞こえる）、<code>열다→열리다</code>（開く）、<code>잡다→잡히다</code>（捕まる）。どの接尾辞が付くかは動詞ごとに決まり、丸暗記が必要。", "<strong>-아/어지다</strong>：受身・自然な状態変化を表す。<code>만들다→만들어지다</code>（作られる）、<code>켜다→켜지다</code>（つく）。形容詞に付くと<code>좋아지다</code>（良くなる）のように「〜くなる」の変化を表す。", "<strong>使役接尾辞</strong> <code>-이/히/리/기/우-</code>：「〜させる／〜してやる」。<code>먹다→먹이다</code>（食べさせる）、<code>입다→입히다</code>（着せる）、<code>울다→울리다</code>（泣かせる）、<code>웃다→웃기다</code>（笑わせる）、<code>깨다→깨우다</code>（起こす）。", "<strong>被動と使役が同形</strong>のものに注意。<code>보이다</code>は「見える（被動）」と「見せる（使役）」、<code>들리다</code>は「聞こえる」と「聞かせる」の両義。文脈と助詞で判断する。", "<strong>-게 하다</strong>：あらゆる用言に付く生産的な使役。<code>먹게 하다</code>（食べさせる）、<code>가게 하다</code>（行かせる）。接尾辞使役より「強制・許可」のニュアンスが出やすく、対象は<code>-에게/한테</code>または<code>-을/를</code>で示す。", "<strong>漢字語＋시키다</strong>：<code>名詞＋하다</code>動詞を使役化する。<code>공부하다→공부시키다</code>（勉強させる）、<code>준비하다→준비시키다</code>（準備させる）、<code>입원하다→입원시키다</code>（入院させる）。"] },
+      // TOPIK 4 - C5 談話・ニュアンス語尾
+      { overview: "話し言葉でこそ生きる終結語尾を集中的に学ぶコース。-거든요・-잖아요・-더라고요・-던데요・-네요/-군요・-(으)ㄹ걸요の使い分けと微妙なニュアンスの違いを、会話の場面ごとに身につけます。",
+        points: ["<strong>-거든요</strong>: 相手が知らない理由・前提を「実は〜なんですよ」と差し出す。例 <code>오늘 좀 바쁘거든요</code>。動詞・形容詞の語幹+거든요、名詞は<code>이거든요</code>。", "<strong>-잖아요</strong>: 相手も既に知っている事実を「〜じゃないですか」と確認・念押しする。-거든요が新情報なのに対し、-잖아요は<strong>既知の共有情報</strong>を指す点が対照的。", "<strong>-더라고요</strong>: 過去に自分が直接体験して気づいたことの報告。<code>가 보니까 사람이 많더라고요</code>。主語は原則<strong>他者・物事</strong>で、自分の意志的行動には使いにくい。", "<strong>-던데요</strong>: 過去に見聞きした事を回想しつつ前置きし、相手の反応や逆接の含みを残す。<code>어제 봤는데 괜찮던데요</code>のように軽い感嘆・反論にも。", "<strong>-네요</strong>はその場で初めて気づいた驚き、<strong>-군요/-는군요</strong>は納得を伴う「なるほど〜なんですね」。動詞現在は<code>-는군요</code>、形容詞は<code>-군요</code>。", "<strong>-(으)ㄹ걸요</strong>: 確信は薄い推量「〜でしょうよ」。語尾を上げる。同形で<strong>-(으)ㄹ걸</strong>(下げ)は「〜すればよかった」と軽い後悔を表す別用法。"] },
+      // TOPIK 4 - C6 書き言葉・接続副詞・慣用表現
+      { overview: "書き言葉でよく使う上級の接続表現と慣用句をまとめて学ぶコースです。-(으)며や-(으)ㄴ/는 반면(에)などの文語的な接続語尾、그러나・따라서などの接続副詞、そして눈치가 빠르다のような慣用句を、易しい例文から徐々に難しい文へと積み上げて練習します。",
+        points: ["<strong>並列の-(으)며</strong>：書き言葉で二つの動作・状態を並べる。母音/ㄹ語幹は<code>-며</code>、子音語幹は<code>-으며</code>。話し言葉の<code>-고</code>に対応する文語形。", "<strong>対照の-(으)ㄴ/는 반면(에)</strong>：「〜である一方で」。動詞現在は<code>-는 반면</code>、形容詞・過去は<code>-(으)ㄴ 반면</code>を使い分ける。", "<strong>譲歩の-(으)ㅁ에도 불구하고</strong>：「〜にもかかわらず」。名詞化語尾<code>-(으)ㅁ</code>に<code>에도 불구하고</code>が付いた硬い表現。名詞には<code>에도 불구하고</code>を直接付ける。", "<strong>接続副詞</strong>：逆接<code>그러나/하지만</code>、結論<code>따라서/그러므로</code>、添加<code>게다가</code>。文頭に置き文と文をつなぐ。", "<strong>慣用句</strong>：<code>눈치가 빠르다</code>(察しがいい)、<code>발이 넓다</code>(顔が広い)、<code>손이 크다</code>(気前がいい)、<code>미역국을 먹다</code>(試験に落ちる)など、直訳できない決まり文句。", "書き言葉では<code>-며</code>・<code>따라서</code>・<code>그러므로</code>などを好み、話し言葉の<code>-고</code>・<code>그래서</code>と register を区別することが重要。"] }
     ];
 
     // ========================================================================
     // STATE & STORAGE
     // ========================================================================
     const STORAGE_KEY = "ko-practice-v2";
-    const TOTAL_COURSES_PLANNED = 12;
+    const TOTAL_COURSES_PLANNED = 24;
 
     const defaultState = {
       streak: 0, lastDate: "",
@@ -1522,7 +3853,7 @@
         return `
           <button class="${cls}" data-course-id="${i}">
             <div class="cc-head">
-              <span class="cc-num">Course ${i + 1}</span>
+              <span class="cc-num">Course ${c.num}</span>
               <span class="cc-status ${done ? 'done' : ''}">${status}</span>
             </div>
             <div class="cc-title">${c.title}</div>
@@ -1545,9 +3876,11 @@
       state.currentCourseId = courseId;
       saveState();
       const c = COURSES[courseId];
+      // ホームの「つづきから」「連続日数」へ記録
+      if (window.LC) LC.record({ href: 'korean-practice.html', label: 'Daily 한국어', sub: `TOPIK${c.topik} ・ ${c.title}` });
       const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
       elIntroTopik.textContent = c.topik;
-      elIntroNum.textContent = courseId + 1;
+      elIntroNum.textContent = c.num;
       elIntroTitle.textContent = c.title;
       elIntroOverview.textContent = intro.overview;
       elIntroPoints.innerHTML = intro.points.map(p => `<li>${p}</li>`).join("");
@@ -1648,6 +3981,21 @@
     // CORE LOGIC
     // ========================================================================
     function getCourse(id) { return COURSES[id]; }
+    // New courses are appended to COURSES, so array order != study order.
+    // Return the index of the next course in (topik, num) order, or -1 if none.
+    function nextCourseId(id) {
+      const cur = COURSES[id];
+      if (!cur) return -1;
+      let best = -1, bestT = Infinity, bestN = Infinity;
+      COURSES.forEach((c, i) => {
+        const after = c.topik > cur.topik || (c.topik === cur.topik && c.num > cur.num);
+        if (!after) return;
+        if (c.topik < bestT || (c.topik === bestT && c.num < bestN)) {
+          best = i; bestT = c.topik; bestN = c.num;
+        }
+      });
+      return best;
+    }
     function masteredList(id) { return state.mastered[id] || []; }
     function isCompleted(id) {
       const c = getCourse(id);
@@ -1742,7 +4090,7 @@
       const course = getCourse(state.currentCourseId);
       if (!course) return;
       elCourseTopik.textContent = course.topik;
-      elCourseNum.textContent = state.currentCourseId + 1;
+      elCourseNum.textContent = course.num;
       elCourseTitle.textContent = course.title;
       const mc = masteredList(state.currentCourseId).length;
       const total = course.sentences.length;
@@ -1912,7 +4260,7 @@
     });
 
     function showCompleteModal() {
-      const isLast = state.currentCourseId === COURSES.length - 1;
+      const isLast = nextCourseId(state.currentCourseId) === -1;
       elNextCourseBtn.textContent = isLast ? "🌸 ホームへ戻る" : "次のコースへ →";
       openModal(elCompleteModal);
     }
@@ -1920,8 +4268,9 @@
     // 完了モーダル: 次のコースへ → 次コースのIntro画面
     elNextCourseBtn.addEventListener("click", () => {
       closeModal(elCompleteModal);
-      if (state.currentCourseId < COURSES.length - 1) {
-        renderIntroView(state.currentCourseId + 1);
+      const next = nextCourseId(state.currentCourseId);
+      if (next !== -1) {
+        renderIntroView(next);
       } else {
         renderHome();
         showView("home");
