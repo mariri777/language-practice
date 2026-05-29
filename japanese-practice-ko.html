@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily 일본어 · 일본어 작문 드릴</title>
+  <meta name="theme-color" content="#e76b8a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Daily 일본어" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff5f7; --bg-soft: #ffe7ee; --pink-light: #ffd0dd;
+      --pink: #ff8fa9; --pink-deep: #e76b8a; --pink-darker: #c84d6e;
+      --cream: #fffaf9; --white: #ffffff;
+      --ink: #4a2f3a; --ink-soft: #8a6a76; --ink-mute: #b69aa3;
+      --line: #f3d9d3;
+      --green: #6db99e; --green-soft: #d8f0e6;
+      --red: #e76b6b; --red-soft: #fde2e2;
+      --yellow: #f5c46b; --yellow-soft: #fbecc7;
+      --shadow: 0 14px 30px -18px rgba(231,107,138,.45);
+      --shadow-lg: 0 26px 60px -28px rgba(231,107,138,.55);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Plus Jakarta Sans", -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, #fff0f6 0%, #ffe1ec 25%, #fff6fa 50%, #ffd9e6 75%, #fff0f6 100%);
+      background-size: 400% 400%;
+      animation: bgShift 22s ease-in-out infinite;
+      background-attachment: fixed;
+      min-height: 100vh; line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      position: relative; overflow-x: hidden;
+    }
+    @keyframes bgShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* 부드럽게 빛나는 핑크 bokeh 레이어 */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,170,196,.55) 0%, transparent 30%),
+        radial-gradient(circle at 82% 18%, rgba(255,195,215,.5) 0%, transparent 32%),
+        radial-gradient(circle at 28% 82%, rgba(255,160,190,.45) 0%, transparent 30%),
+        radial-gradient(circle at 78% 78%, rgba(255,205,220,.5) 0%, transparent 34%),
+        radial-gradient(circle at 50% 50%, rgba(255,225,235,.35) 0%, transparent 45%);
+      filter: blur(2px);
+      animation: bokehDrift 16s ease-in-out infinite alternate;
+    }
+    @keyframes bokehDrift {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(-12px, 10px, 0) scale(1.05); }
+      100% { transform: translate3d(8px, -14px, 0) scale(1.02); }
+    }
+
+    /* 반짝이는 별빛 레이어 (CSS만으로 표현한 도트 패턴) */
+    body::after {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 12% 18%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.5px 1.5px at 84% 14%, rgba(255,220,235,.9), transparent 60%),
+        radial-gradient(2px 2px at 24% 64%, rgba(255,255,255,.8), transparent 60%),
+        radial-gradient(1.2px 1.2px at 62% 32%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.8px 1.8px at 92% 60%, rgba(255,235,245,.85), transparent 60%),
+        radial-gradient(1.5px 1.5px at 8% 88%, rgba(255,255,255,.85), transparent 60%),
+        radial-gradient(1.3px 1.3px at 46% 80%, rgba(255,220,235,.85), transparent 60%),
+        radial-gradient(2px 2px at 72% 90%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.4px 1.4px at 36% 8%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(1.6px 1.6px at 58% 56%, rgba(255,240,247,.85), transparent 60%);
+      animation: twinkle 4s ease-in-out infinite;
+      opacity: .85;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: .35; }
+      50%      { opacity: .95; }
+    }
+
+    .zh { font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", "Plus Jakarta Sans", sans-serif; }
+
+    /* 떠다니는 꽃잎·하트·반짝임 */
+    .deco { position: fixed; pointer-events: none; z-index: 0; will-change: transform; }
+    .deco.petal  { animation: floatA 14s ease-in-out infinite; opacity: .6; }
+    .deco.heart  { animation: floatB 18s ease-in-out infinite; opacity: .55; }
+    .deco.spark  { animation: sparkle 3.6s ease-in-out infinite; opacity: .8; }
+    .deco.ribbon { animation: floatC 22s ease-in-out infinite; opacity: .5; }
+
+    .deco.p1 { top: 6%;  left: 4%;  font-size: 24px; animation-delay: 0s; }
+    .deco.p2 { top: 18%; right: 6%; font-size: 20px; animation-delay: -3s; }
+    .deco.p3 { bottom: 14%; left: 7%;  font-size: 26px; animation-delay: -6s; }
+    .deco.p4 { bottom: 24%; right: 5%; font-size: 18px; animation-delay: -9s; }
+    .deco.p5 { top: 48%; left: 2%;  font-size: 16px; animation-delay: -4s; }
+    .deco.p6 { top: 62%; right: 3%; font-size: 22px; animation-delay: -7s; }
+    .deco.h1d { top: 12%; left: 50%; font-size: 16px; animation-delay: -2s; }
+    .deco.h2d { bottom: 8%; right: 36%; font-size: 18px; animation-delay: -10s; }
+    .deco.s1 { top: 28%; left: 28%; font-size: 14px; animation-delay: 0s; }
+    .deco.s2 { top: 36%; right: 22%; font-size: 12px; animation-delay: -1.2s; }
+    .deco.s3 { bottom: 36%; left: 32%; font-size: 13px; animation-delay: -2.4s; }
+    .deco.s4 { bottom: 18%; right: 26%; font-size: 15px; animation-delay: -.8s; }
+    .deco.s5 { top: 70%; left: 18%; font-size: 11px; animation-delay: -1.8s; }
+    .deco.r1 { top: 40%; right: 10%; font-size: 18px; animation-delay: -5s; }
+
+    @keyframes floatA {
+      0%, 100% { transform: translateY(0)   rotate(0deg); }
+      50%      { transform: translateY(-22px) rotate(18deg); }
+    }
+    @keyframes floatB {
+      0%, 100% { transform: translate(0, 0)    rotate(-6deg) scale(1); }
+      50%      { transform: translate(-14px, -18px) rotate(8deg) scale(1.12); }
+    }
+    @keyframes floatC {
+      0%, 100% { transform: translateY(0) rotate(-12deg); opacity: .35; }
+      50%      { transform: translateY(-30px) rotate(10deg); opacity: .65; }
+    }
+    @keyframes sparkle {
+      0%, 100% { transform: scale(.6) rotate(0); opacity: .3; }
+      50%      { transform: scale(1.2) rotate(180deg); opacity: 1; }
+    }
+
+    /* 모션을 줄이고 싶은 사용자를 위한 설정 */
+    @media (prefers-reduced-motion: reduce) {
+      body, body::before, body::after, .deco { animation: none !important; }
+    }
+
+    .container { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    .header {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; margin-bottom: 22px;
+    }
+    .header-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--pink-deep); background: var(--white); padding: 7px 14px;
+      border-radius: 999px; box-shadow: var(--shadow); margin-bottom: 14px;
+    }
+    .header-eyebrow::before, .header-eyebrow::after { content: "✿"; font-size: 13px; }
+    .header h1 {
+      font-family: "Fraunces", serif; font-weight: 600;
+      font-size: clamp(28px, 5vw, 42px); line-height: 1.1; letter-spacing: -.02em;
+      text-align: center;
+      cursor: pointer; display: inline-block;
+      transition: transform .15s ease, color .15s ease, text-shadow .3s ease;
+      text-shadow: 0 2px 18px rgba(231,107,138,.15);
+    }
+    .header h1:hover { transform: translateY(-1px); text-shadow: 0 4px 22px rgba(231,107,138,.3); }
+    .header h1:hover .accent { color: var(--pink); }
+    .header h1:active { transform: translateY(0); }
+    .header h1 .accent { color: var(--pink-deep); font-style: italic; font-weight: 500; }
+    .header h1 .zh-title {
+      display: block; font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", serif; font-weight: 500;
+      font-size: .55em; color: var(--pink); margin-top: 4px; letter-spacing: .04em;
+      text-align: center;
+    }
+
+    .stats { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 18px 0 20px; }
+    .stat-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--white); padding: 9px 14px; border-radius: 999px;
+      box-shadow: var(--shadow); font-size: 12px; color: var(--ink-soft);
+    }
+    .stat-pill .icon { font-size: 14px; }
+    .stat-pill .value {
+      font-family: "JetBrains Mono", monospace; font-weight: 600;
+      color: var(--pink-darker); font-size: 13px;
+    }
+    .stat-pill .goal-met { color: var(--green); }
+
+    /* ---- Script (간체/번체) toggle ---- */
+    .script-toggle {
+      display: inline-flex;
+      padding: 3px;
+      background: var(--white);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      margin: 0 0 18px;
+    }
+    .script-toggle-row {
+      display: flex;
+      justify-content: center;
+      margin: -8px 0 8px;
+    }
+    .script-toggle-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.04em;
+      transition: background 0.15s, color 0.15s;
+    }
+    .script-toggle-btn.active {
+      background: var(--pink);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(231, 107, 138, 0.3);
+    }
+    .script-toggle-btn:not(.active):hover { color: var(--pink-deep); }
+
+    /* ---- Course banner ---- */
+    .course-banner {
+      background: linear-gradient(135deg, #fff 0%, #fff5f7 100%);
+      border: 1px solid var(--line); border-radius: 22px;
+      padding: 18px 22px; box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    .course-info { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .hsk-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      color: var(--white); background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .hsk-tag::before { content: "🌸"; }
+    .course-label {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      color: var(--ink-mute); letter-spacing: .05em;
+    }
+    .course-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 20px; color: var(--ink); margin-bottom: 12px;
+    }
+    .course-progress { display: flex; align-items: center; gap: 12px; }
+    .progress-track {
+      flex: 1; height: 8px; background: var(--bg-soft);
+      border-radius: 999px; overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%; background: linear-gradient(90deg, #ffc6a8, var(--pink));
+      border-radius: 999px; transition: width .5s cubic-bezier(.2,.8,.2,1); width: 0%;
+    }
+    .progress-text {
+      font-family: "JetBrains Mono", monospace; font-size: 12px;
+      color: var(--ink-soft); white-space: nowrap;
+    }
+    .progress-text .mn { color: var(--pink-darker); font-weight: 600; }
+    .course-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .mini-btn {
+      font-family: inherit; font-size: 12px; font-weight: 600;
+      padding: 6px 12px; border-radius: 999px; cursor: pointer;
+      background: var(--white); color: var(--ink-soft); border: 1px solid var(--line);
+      transition: all .2s ease;
+    }
+    .mini-btn:hover { border-color: var(--pink); color: var(--pink-deep); }
+
+    /* ---- Card ---- */
+    .card {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 28px; padding: 32px 28px;
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ""; position: absolute; top: -60px; right: -60px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, #ffd6dd 0%, transparent 70%);
+      border-radius: 50%; opacity: .55; pointer-events: none;
+    }
+    .card::after {
+      content: ""; position: absolute; bottom: -50px; left: -50px;
+      width: 130px; height: 130px;
+      background: radial-gradient(circle, #ffe4ec 0%, transparent 70%);
+      border-radius: 50%; opacity: .5; pointer-events: none;
+    }
+
+    .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: relative; z-index: 1; }
+    .q-num {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      color: var(--ink-mute); letter-spacing: .08em;
+    }
+    .q-num .now { color: var(--pink-darker); font-weight: 600; }
+    .fav-btn {
+      background: transparent; border: none; cursor: pointer; font-size: 22px;
+      transition: transform .2s ease; filter: grayscale(.8); opacity: .5;
+    }
+    .fav-btn:hover { transform: scale(1.15); }
+    .fav-btn.active { filter: none; opacity: 1; animation: pop .3s ease; }
+    @keyframes pop { 0%{transform:scale(1);} 50%{transform:scale(1.3);} 100%{transform:scale(1);} }
+
+    .question-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px;
+    }
+    .question-ja {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: clamp(20px, 4vw, 26px);
+      line-height: 1.5; color: var(--ink); margin-bottom: 22px;
+      position: relative; z-index: 1;
+    }
+
+    .input-wrap { position: relative; z-index: 1; }
+    .answer-input {
+      width: 100%; font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+      font-size: 20px; padding: 16px 18px;
+      border: 2px solid var(--line); border-radius: 18px;
+      background: var(--cream); color: var(--ink);
+      resize: vertical; min-height: 76px;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .answer-input::placeholder { color: var(--ink-mute); font-family: inherit; font-size: 14px; }
+    .answer-input:focus { outline: none; border-color: var(--pink); background: var(--white); }
+    .answer-input:disabled { opacity: .7; cursor: not-allowed; }
+
+    .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .btn {
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      padding: 11px 20px; border-radius: 999px; border: none;
+      cursor: pointer; transition: all .2s ease;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+      color: var(--white); box-shadow: 0 8px 20px -8px rgba(231,107,138,.6);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(231,107,138,.7); }
+    .btn-primary:disabled { background: var(--ink-mute); cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-ghost { background: var(--white); color: var(--ink-soft); border: 1.5px solid var(--line); }
+    .btn-ghost:hover { border-color: var(--pink); color: var(--pink-deep); }
+    .btn-next {
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-darker));
+      color: var(--white); box-shadow: 0 8px 20px -8px rgba(200,77,110,.6);
+    }
+    .btn-next:hover { transform: translateY(-2px); }
+
+    .hint {
+      margin-top: 12px; padding: 11px 14px;
+      background: var(--yellow-soft); border-radius: 14px;
+      font-size: 13px; color: #8a6a26; position: relative; z-index: 1;
+    }
+    .hint::before { content: "💡 "; }
+
+    /* ---- Result ---- */
+    .result { margin-top: 26px; position: relative; z-index: 1; animation: fadeUp .4s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+
+    .verdict {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 16px; border-radius: 16px;
+      font-size: 15px; font-weight: 600; margin-bottom: 18px;
+    }
+    .verdict-correct { background: var(--green-soft); color: #2f7c5e; }
+    .verdict-partial { background: var(--yellow-soft); color: #8a6a26; }
+    .verdict-wrong { background: var(--red-soft); color: #a23838; }
+    .verdict .emoji { font-size: 22px; }
+    .verdict-correct .mastered-badge {
+      margin-left: auto; font-size: 11px; padding: 4px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.6); color: #2f7c5e; font-weight: 700;
+    }
+
+    .answer-block {
+      background: var(--bg-soft); border-radius: 18px;
+      padding: 18px 20px; margin-bottom: 16px;
+    }
+    .answer-block .label {
+      font-size: 11px; font-weight: 700; letter-spacing: .18em;
+      color: var(--pink-deep); text-transform: uppercase; margin-bottom: 6px;
+    }
+    .answer-zh {
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 24px; font-weight: 500;
+      color: var(--ink); line-height: 1.4;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .answer-pinyin {
+      font-style: italic; color: var(--pink-darker); font-size: 14px;
+      margin-top: 4px; font-family: "Plus Jakarta Sans", serif;
+    }
+    .speak-btn {
+      background: var(--white); border: 1.5px solid var(--line);
+      width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; font-size: 15px;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: all .2s ease;
+    }
+    .speak-btn:hover { background: var(--pink); color: var(--white); border-color: var(--pink); transform: scale(1.08); }
+    .your-answer {
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 17px;
+      color: var(--ink-soft); margin-top: 4px;
+    }
+
+    .section-title {
+      font-size: 12px; font-weight: 700; letter-spacing: .12em;
+      color: var(--pink-deep); text-transform: uppercase;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+    }
+    .section-title::before { content: ""; width: 6px; height: 6px; background: var(--pink); border-radius: 50%; }
+
+    .grammar-block {
+      background: linear-gradient(135deg, #fff5f7 0%, #fff 100%);
+      border: 1px solid var(--line); border-left: 4px solid var(--pink);
+      border-radius: 14px; padding: 15px 17px;
+      font-size: 14px; line-height: 1.8; color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .grammar-block strong { color: var(--pink-darker); font-weight: 700; }
+    .grammar-block code {
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", "JetBrains Mono", monospace;
+      background: var(--bg-soft); padding: 1px 6px;
+      border-radius: 4px; color: var(--pink-darker); font-size: .95em;
+    }
+    .grammar-block .pat {
+      display: inline-block; background: var(--white); border: 1px dashed var(--pink-light);
+      padding: 2px 8px; border-radius: 6px; margin: 2px 0; font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+    }
+
+    .words-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 10px; margin-bottom: 18px;
+    }
+    .word-item {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 14px; padding: 11px 13px;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .word-item:hover { transform: translateY(-2px); box-shadow: 0 8px 16px -8px rgba(231,107,138,.3); }
+    .word-zh { font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 19px; font-weight: 600; color: var(--ink); }
+    .word-pinyin { font-style: italic; color: var(--pink-darker); font-size: 12px; margin-top: 2px; }
+    .word-ja { font-size: 12px; color: var(--ink-soft); margin-top: 3px; line-height: 1.45; }
+
+    .next-wrap { margin-top: 20px; display: flex; justify-content: center; }
+
+    /* ---- Modal ---- */
+    .modal {
+      position: fixed; inset: 0; background: rgba(74,47,58,.5);
+      display: none; align-items: center; justify-content: center;
+      z-index: 100; padding: 20px; backdrop-filter: blur(4px);
+    }
+    .modal.open { display: flex; animation: fadeIn .25s ease; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    .modal-content {
+      background: var(--white); border-radius: 24px;
+      padding: 26px 24px; max-width: 520px; width: 100%;
+      max-height: 85vh; overflow-y: auto; position: relative;
+      box-shadow: var(--shadow-lg); animation: slideUp .3s cubic-bezier(.2,.8,.2,1);
+    }
+    @keyframes slideUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+    .modal-close {
+      position: absolute; top: 12px; right: 14px;
+      background: var(--bg-soft); border: none;
+      width: 32px; height: 32px; border-radius: 50%;
+      font-size: 18px; color: var(--ink-soft); cursor: pointer;
+      transition: all .2s ease;
+    }
+    .modal-close:hover { background: var(--pink); color: var(--white); }
+    .modal h3 {
+      font-family: "Fraunces", serif; font-weight: 500;
+      font-size: 22px; color: var(--ink); margin-bottom: 4px;
+    }
+    .modal-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; }
+
+    .course-list { display: flex; flex-direction: column; gap: 10px; }
+    .course-list-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; border-radius: 14px;
+      border: 1.5px solid var(--line); background: var(--white);
+      cursor: pointer; transition: all .2s ease;
+    }
+    .course-list-item:hover { border-color: var(--pink); transform: translateX(2px); }
+    .course-list-item.current {
+      background: linear-gradient(135deg, #fff 0%, var(--bg-soft) 100%);
+      border-color: var(--pink);
+    }
+    .course-list-item.done { background: var(--green-soft); border-color: var(--green); }
+    .cli-hsk {
+      font-size: 10px; font-weight: 700; letter-spacing: .05em;
+      color: var(--white); background: var(--pink-deep);
+      padding: 3px 7px; border-radius: 6px; flex-shrink: 0;
+    }
+    .cli-meta { flex: 1; }
+    .cli-num { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--ink-mute); }
+    .cli-title { font-size: 14px; color: var(--ink); font-weight: 500; margin-top: 1px; }
+    .cli-prog {
+      font-family: "JetBrains Mono", monospace; font-size: 12px;
+      color: var(--pink-darker); font-weight: 600; flex-shrink: 0;
+    }
+    .cli-prog.complete { color: var(--green); }
+
+    /* Course complete modal */
+    .complete-content { text-align: center; padding: 36px 24px; }
+    .complete-emoji { font-size: 54px; margin-bottom: 8px; animation: pop .6s ease; }
+    .complete-content h3 { font-size: 26px; margin-bottom: 6px; }
+    .complete-content p { color: var(--ink-soft); margin-bottom: 20px; }
+    .complete-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    .footer { margin-top: 48px; text-align: center; font-size: 12px; color: var(--ink-mute); }
+    .footer .footer-meta { margin-top: 14px; font-size: 11px; opacity: 0.85; }
+    .footer .footer-copy { margin-top: 4px; font-size: 11px; }
+    .footer a { color: var(--pink-deep); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+    .footer .heart { color: var(--pink-deep); }
+
+    .diff-correct { color: var(--green); font-weight: 600; }
+    .diff-wrong { color: var(--red); text-decoration: line-through; }
+    .diff-missing { color: var(--pink-darker); font-weight: 600; background: var(--bg-soft); padding: 0 4px; border-radius: 3px; }
+
+    /* ---- Views (home / level / intro / practice) ---- */
+    .view[hidden] { display: none !important; }
+
+    .view-title {
+      font-family: "Fraunces", serif; font-weight: 500;
+      font-size: 22px; color: var(--ink); text-align: center;
+      margin: 8px 0 22px;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      color: var(--pink-deep); background: var(--white);
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: 8px 14px; cursor: pointer; margin-bottom: 16px;
+      transition: all .2s ease;
+    }
+    .back-link:hover { background: var(--bg-soft); transform: translateX(-2px); }
+
+    /* HSK level cards */
+    .hsk-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px; margin-bottom: 20px;
+    }
+    .hsk-card {
+      position: relative; display: flex; flex-direction: column; gap: 6px;
+      padding: 22px 20px; text-align: left;
+      background: var(--white); border: 1.5px solid var(--line);
+      border-radius: 22px; cursor: pointer; box-shadow: var(--shadow);
+      transition: all .25s cubic-bezier(.2,.8,.2,1);
+      overflow: hidden; font-family: inherit;
+    }
+    .hsk-card::before {
+      content: ""; position: absolute; top: -30px; right: -30px;
+      width: 90px; height: 90px;
+      background: radial-gradient(circle, var(--pink-light) 0%, transparent 70%);
+      border-radius: 50%; opacity: .7; transition: transform .4s ease;
+    }
+    .hsk-card:hover {
+      transform: translateY(-4px); border-color: var(--pink);
+      box-shadow: var(--shadow-lg);
+    }
+    .hsk-card:hover::before { transform: scale(1.4); }
+    .hsk-card-num {
+      font-family: "Fraunces", serif; font-weight: 600;
+      font-size: 26px; color: var(--pink-darker);
+      letter-spacing: -.01em; position: relative; z-index: 1;
+    }
+    .hsk-card-label {
+      font-size: 12px; color: var(--ink-soft); position: relative; z-index: 1;
+    }
+    .hsk-card-progress {
+      margin-top: 6px; font-family: "JetBrains Mono", monospace;
+      font-size: 12px; color: var(--pink-deep); font-weight: 600;
+      position: relative; z-index: 1;
+    }
+    .hsk-card-progress .done-tag {
+      display: inline-block; margin-left: 6px;
+      font-size: 10px; color: var(--green); font-weight: 700;
+    }
+
+    /* Course list (level view) */
+    .course-cards {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .course-card {
+      display: flex; flex-direction: column; gap: 8px;
+      padding: 18px 20px; text-align: left;
+      background: var(--white); border: 1.5px solid var(--line);
+      border-radius: 18px; cursor: pointer; box-shadow: var(--shadow);
+      transition: all .2s ease; font-family: inherit;
+    }
+    .course-card:hover { transform: translateX(4px); border-color: var(--pink); }
+    .course-card.done { background: linear-gradient(135deg, #fff 0%, var(--green-soft) 100%); border-color: var(--green); }
+    .course-card.current { border-color: var(--pink); border-width: 2px; }
+    .cc-head {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .cc-num {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      font-weight: 600; color: var(--pink-darker);
+      background: var(--bg-soft); padding: 3px 9px; border-radius: 6px;
+    }
+    .course-card.done .cc-num { background: rgba(255,255,255,.8); color: var(--green); }
+    .cc-status {
+      margin-left: auto; font-size: 11px; font-weight: 700;
+      color: var(--ink-mute); font-family: "JetBrains Mono", monospace;
+    }
+    .cc-status.done { color: var(--green); }
+    .cc-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 18px; color: var(--ink);
+    }
+    .cc-bar-wrap { display: flex; align-items: center; gap: 10px; }
+    .cc-track {
+      flex: 1; height: 6px; background: var(--bg-soft);
+      border-radius: 999px; overflow: hidden;
+    }
+    .cc-bar {
+      height: 100%; background: linear-gradient(90deg, #ffc6a8, var(--pink));
+      border-radius: 999px; transition: width .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .course-card.done .cc-bar { background: var(--green); }
+
+    /* Intro view */
+    .intro-card {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 24px; padding: 28px 24px;
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+    }
+    .intro-card::before {
+      content: ""; position: absolute; top: -60px; right: -60px;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, #ffd6dd 0%, transparent 70%);
+      border-radius: 50%; opacity: .5; pointer-events: none;
+    }
+    .intro-meta {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px; position: relative; z-index: 1;
+    }
+    .intro-title {
+      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
+      font-weight: 500; font-size: 24px; line-height: 1.3;
+      color: var(--ink); margin-bottom: 14px;
+      position: relative; z-index: 1;
+    }
+    .intro-overview {
+      font-size: 14px; line-height: 1.85; color: var(--ink-soft);
+      margin-bottom: 22px; position: relative; z-index: 1;
+    }
+    .intro-section-title {
+      font-size: 12px; font-weight: 700; letter-spacing: .15em;
+      color: var(--pink-deep); text-transform: uppercase;
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+      position: relative; z-index: 1;
+    }
+    .intro-section-title::before {
+      content: "🌸"; font-size: 14px;
+    }
+    .intro-points {
+      list-style: none; padding: 0; margin: 0 0 24px;
+      display: flex; flex-direction: column; gap: 10px;
+      position: relative; z-index: 1;
+    }
+    .intro-points li {
+      padding: 12px 14px 12px 38px; position: relative;
+      background: var(--bg-soft); border-radius: 12px;
+      font-size: 14px; line-height: 1.7; color: var(--ink);
+    }
+    .intro-points li::before {
+      content: "✿"; position: absolute; left: 14px; top: 12px;
+      color: var(--pink); font-size: 14px;
+    }
+    .intro-points code {
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", "JetBrains Mono", monospace;
+      background: var(--white); padding: 1px 6px;
+      border-radius: 4px; color: var(--pink-darker); font-size: .95em;
+    }
+    .intro-points strong { color: var(--pink-darker); font-weight: 700; }
+    .intro-start {
+      width: 100%; justify-content: center; padding: 14px 20px !important;
+      font-size: 15px !important; position: relative; z-index: 1;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 14px 56px; }
+      .card { padding: 22px 18px; border-radius: 20px; }
+      .course-banner { padding: 14px 16px; border-radius: 18px; }
+      .question-ja { font-size: 18px; }
+      .answer-zh { font-size: 21px; }
+      .answer-input { font-size: 18px; }
+      .stat-pill { padding: 7px 11px; font-size: 11px; }
+      .btn { padding: 10px 16px; font-size: 12px; }
+    }
+  </style>
+<link rel="stylesheet" href="clips.css?v=13">
+<script src="clips.js?v=13" defer></script>
+</head>
+<body>
+  <!-- 장식 레이어 (클릭 통과) -->
+  <span class="deco petal p1">🌸</span>
+  <span class="deco petal p2">🌷</span>
+  <span class="deco petal p3">🌸</span>
+  <span class="deco petal p4">🌼</span>
+  <span class="deco petal p5">🌷</span>
+  <span class="deco petal p6">🌸</span>
+  <span class="deco heart h1d">💗</span>
+  <span class="deco heart h2d">💕</span>
+  <span class="deco spark s1">✨</span>
+  <span class="deco spark s2">⭐</span>
+  <span class="deco spark s3">✨</span>
+  <span class="deco spark s4">⭐</span>
+  <span class="deco spark s5">✦</span>
+  <span class="deco ribbon r1">🎀</span>
+
+  <div class="container">
+    <header class="header">
+      <span class="header-eyebrow">Japanese Output Trainer</span>
+      <h1 id="home-link" role="link" tabindex="0" title="홈으로 돌아가기">
+        Daily <span class="accent">일본어</span>
+        <span class="zh-title">일본어 작문 드릴 · JLPT 기준</span>
+      </h1>
+    </header>
+
+    <div class="stats">
+      <span class="stat-pill"><span class="icon">🔥</span>연속 <span class="value" id="streak">0</span> 일</span>
+      <span class="stat-pill"><span class="icon">🌸</span>오늘 <span class="value" id="today-count">0</span> / 10</span>
+      <span class="stat-pill"><span class="icon">✨</span>완료 <span class="value" id="done-courses">0</span> 코스</span>
+      <span class="stat-pill"><span class="icon">📚</span>누적 <span class="value" id="total">0</span> 문장</span>
+    </div>
+
+    <!-- ============ HOME VIEW ============ -->
+    <div class="view view-home" id="view-home">
+      <h2 class="view-title">배우고 싶은 레벨을 선택하세요 ✿</h2>
+      <div class="hsk-cards">
+        <button class="hsk-card" data-hsk="5">
+          <span class="hsk-card-num">JLPT N5</span>
+          <span class="hsk-card-label">입문 · 약 800단어</span>
+          <span class="hsk-card-progress" data-hsk-progress="5">14 코스</span>
+        </button>
+        <div class="hsk-card" style="opacity:.5;pointer-events:none">
+          <span class="hsk-card-num">JLPT N4</span>
+          <span class="hsk-card-label">초급 · 약 1500단어</span>
+          <span class="hsk-card-progress">준비 중</span>
+        </div>
+        <div class="hsk-card" style="opacity:.5;pointer-events:none">
+          <span class="hsk-card-num">JLPT N3</span>
+          <span class="hsk-card-label">중급</span>
+          <span class="hsk-card-progress">준비 중</span>
+        </div>
+        <div class="hsk-card" style="opacity:.5;pointer-events:none">
+          <span class="hsk-card-num">JLPT N2·N1</span>
+          <span class="hsk-card-label">중상급 · 상급</span>
+          <span class="hsk-card-progress">준비 중</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ LEVEL VIEW ============ -->
+    <div class="view view-level" id="view-level" hidden>
+      <button class="back-link" data-back="home">← 레벨 선택으로</button>
+      <h2 class="view-title">JLPT N<span id="level-num">5</span> 코스 목록</h2>
+      <div class="course-cards" id="level-courses"></div>
+    </div>
+
+    <!-- ============ INTRO VIEW ============ -->
+    <div class="view view-intro" id="view-intro" hidden>
+      <button class="back-link" data-back="level">← 코스 목록으로</button>
+      <div class="intro-card">
+        <div class="intro-meta">
+          <span class="hsk-tag">JLPT N<span id="intro-hsk">5</span></span>
+          <span class="course-label">Course <span id="intro-num">1</span></span>
+        </div>
+        <h2 class="intro-title" id="intro-title">코스 이름</h2>
+        <p class="intro-overview" id="intro-overview"></p>
+        <div class="intro-section-title">이 코스에서 배울 내용</div>
+        <ul class="intro-points" id="intro-points"></ul>
+        <button class="btn btn-primary intro-start" id="intro-start-btn">10문제 도전 ✿</button>
+      </div>
+    </div>
+
+    <!-- ============ PRACTICE VIEW ============ -->
+    <div class="view view-practice" id="view-practice" hidden>
+      <button class="back-link" data-back="level">← 코스 목록으로</button>
+
+      <div class="course-banner">
+        <div class="course-info">
+          <span class="hsk-tag">JLPT N<span id="course-hsk">5</span></span>
+          <span class="course-label">Course <span id="course-num">1</span> / <span id="total-courses">14</span></span>
+        </div>
+        <h2 class="course-title" id="course-title">로딩 중…</h2>
+        <div class="course-progress">
+          <div class="progress-track"><div class="progress-bar" id="course-bar"></div></div>
+          <span class="progress-text"><span class="mn" id="mastered-count">0</span> / 10 마스터</span>
+        </div>
+        <div class="course-actions">
+          <button class="mini-btn" id="open-intro-btn">📖 포인트 다시 보기</button>
+          <button class="mini-btn" id="reset-course-btn">↺ 이 코스 리셋</button>
+        </div>
+      </div>
+
+      <main class="card">
+        <div class="card-head">
+          <span class="q-num">Question <span class="now" id="q-progress">1</span> / 10</span>
+          <button class="fav-btn" id="fav-btn" title="즐겨찾기">☆</button>
+        </div>
+
+        <div class="question-label">Translate to Japanese</div>
+        <div class="question-ja" id="question-ja">로딩 중…</div>
+
+        <div class="input-wrap">
+          <textarea class="answer-input zh" id="answer-input"
+            placeholder="여기에 일본어로 입력 (예: 私は学生です)"
+            autocomplete="off" spellcheck="false"></textarea>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="check-btn">✿ 정답 확인</button>
+          <button class="btn btn-ghost" id="hint-btn">💡 힌트</button>
+          <button class="btn btn-ghost" id="skip-btn">⤴ 스킵</button>
+        </div>
+
+        <div id="hint-area"></div>
+        <div id="result-area"></div>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <p>がんばって！<span class="heart">♡</span> 毎日一文、こつこつと</p>
+      <p class="footer-meta">개인 취미 범위로 만들고 있습니다. 사소한 버그는 양해 부탁드립니다.</p>
+      <p class="footer-copy">© 2026 mari · <a href="https://x.com/mmmmmmmari_" target="_blank" rel="noopener">@mmmmmmmari_</a></p>
+    </footer>
+  </div>
+
+  <!-- Course complete modal -->
+  <div class="modal" id="complete-modal">
+    <div class="modal-content complete-content">
+      <div class="complete-emoji">🌸✨🌸</div>
+      <h3>코스 완료!</h3>
+      <p>10문제 모두 마스터했습니다! やったね！</p>
+      <div class="complete-actions">
+        <button class="btn btn-next" id="next-course-btn">다음 코스로 →</button>
+        <button class="btn btn-ghost" id="replay-course-btn">다시 한 번</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========================================================================
+    // COURSES DATA
+    // ========================================================================
+    const COURSES = [
+      // ============ JLPT N5 ============
+      {
+        hsk: 5, num: 1, title: "인사·자기소개 (です・は・の)",
+        sentences: [
+          { ja:"처음 뵙겠습니다. 잘 부탁드립니다.", zh:"はじめまして。どうぞよろしくおねがいします。", py:"はじめまして。どうぞよろしくおねがいします。",
+            g:"첫 만남의 정형 인사 세트. 한국어 「처음 뵙겠습니다＋잘 부탁드립니다」와 거의 1:1로 대응. <code>どうぞ</code>＝「부디·아무쪼록」.",
+            w:[{z:"はじめまして",p:"はじめまして",j:"처음 뵙겠습니다"},{z:"どうぞ",p:"どうぞ",j:"부디"},{z:"よろしく",p:"よろしく",j:"잘"}] },
+          { ja:"저는 한국인입니다.", zh:"私は韓国人です。", py:"わたしはかんこくじんです。",
+            g:"「N＋は＋N＋です」＝「~은/는 ~입니다」. 주제 조사 <code>は</code>는 한국어 「은/는」과 거의 같지만 발음은 「와(wa)」. <code>です</code>＝정중한 단정 「~입니다」.",
+            w:[{z:"私",p:"わたし",j:"나"},{z:"は",p:"は",j:"은/는"},{z:"韓国人",p:"かんこくじん",j:"한국인"},{z:"です",p:"です",j:"입니다"}] },
+          { ja:"다나카 씨는 학생입니까?", zh:"田中さんは学生ですか。", py:"たなかさんはがくせいですか。",
+            g:"문장 끝에 <code>か</code>를 붙이면 의문문. 한국어와 달리 어순은 그대로 두고 <code>か</code>만 추가(물음표는 생략 가능). <code>〜さん</code>＝「~씨」(남녀 공통 경칭).",
+            w:[{z:"さん",p:"さん",j:"~씨"},{z:"学生",p:"がくせい",j:"학생"},{z:"ですか",p:"ですか",j:"입니까"}] },
+          { ja:"아니요, 학생이 아닙니다.", zh:"いいえ、学生じゃありません。", py:"いいえ、がくせいじゃありません。",
+            g:"<code>です</code>의 부정은 <code>じゃありません</code>(＝ではありません, 회화체). 한국어 「~이/가 아닙니다」에 대응. 더 정중하게는 <code>ではありません</code>.",
+            w:[{z:"いいえ",p:"いいえ",j:"아니요"},{z:"じゃありません",p:"じゃありません",j:"이/가 아닙니다"}], alts:["学生ではありません。"] },
+          { ja:"이것은 책입니다.", zh:"これは本です。", py:"これはほんです。",
+            g:"<code>これ</code>＝「이것」(사물 지시대명사). 한국어 「이것」과 동일하게 사물 자체를 가리킴. (명사 앞 「이 ~」는 <code>この</code>로 형태가 달라짐 — 다음 코스).",
+            w:[{z:"これ",p:"これ",j:"이것"},{z:"本",p:"ほん",j:"책"}] },
+          { ja:"저 사람은 누구입니까?", zh:"あの人は誰ですか。", py:"あのひとはだれですか。",
+            g:"의문사 <code>誰(だれ)</code>＝「누구」. 의문사가 들어가도 어순은 평서문 그대로, 끝에 <code>か</code>. <code>あの人</code>＝「저 사람」.",
+            w:[{z:"あの",p:"あの",j:"저"},{z:"人",p:"ひと",j:"사람"},{z:"誰",p:"だれ",j:"누구"}] },
+          { ja:"저도 회사원입니다.", zh:"私も会社員です。", py:"わたしもかいしゃいんです。",
+            g:"<code>も</code>＝「~도」(첨가). <code>は</code> 자리를 <code>も</code>로 바꾸면 「~도」가 됨. 한국어 「저도」와 동일한 감각.",
+            w:[{z:"も",p:"も",j:"도"},{z:"会社員",p:"かいしゃいん",j:"회사원"}] },
+          { ja:"다나카 씨는 일본인이고, 의사입니다.", zh:"田中さんは日本人で、医者です。", py:"たなかさんはにほんじんで、いしゃです。",
+            g:"명사를 나열·연결할 때 <code>です</code>의 중지형은 <code>で</code>＝「~이고/~이며」. 한국어 연결어미 「~이고」에 해당.",
+            w:[{z:"日本人",p:"にほんじん",j:"일본인"},{z:"で",p:"で",j:"이고"},{z:"医者",p:"いしゃ",j:"의사"}] },
+          { ja:"야마다 씨는 선생님이었습니다.", zh:"山田さんは先生でした。", py:"やまださんはせんせいでした。",
+            g:"<code>です</code>의 과거형은 <code>でした</code>＝「~이었습니다」. 부정 과거는 <code>じゃありませんでした</code>(＝ではありませんでした).",
+            w:[{z:"先生",p:"せんせい",j:"선생님"},{z:"でした",p:"でした",j:"이었습니다"}] },
+          { ja:"이것은 제 가방입니다.", zh:"これは私のかばんです。", py:"これはわたしのかばんです。",
+            g:"<code>の</code>＝소유·소속의 「~의」. 「A の B」＝「A의 B」. 한국어와 달리 <code>の</code>는 거의 생략하지 않음(한국어 「제 가방」처럼 생략 불가).",
+            w:[{z:"私の",p:"わたしの",j:"나의"},{z:"かばん",p:"かばん",j:"가방"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 2, title: "지시사 これ・この・ここ + の",
+        sentences: [
+          { ja:"그것은 무엇입니까?", zh:"それは何ですか。", py:"それはなんですか。",
+            g:"<code>それ</code>＝「그것」(상대 쪽). <code>何</code>는 뒤에 오는 음에 따라 <code>なん</code>/<code>なに</code>로 읽힘 — <code>です</code> 앞에서는 <code>なん</code>.",
+            w:[{z:"それ",p:"それ",j:"그것"},{z:"何",p:"なん",j:"무엇"}] },
+          { ja:"저것은 제 차입니다.", zh:"あれは私の車です。", py:"あれはわたしのくるまです。",
+            g:"지시사 3계열: <code>これ</code>(이것·화자 쪽)/<code>それ</code>(그것·청자 쪽)/<code>あれ</code>(저것·둘 다에서 멂)/<code>どれ</code>(어느 것). 한국어 「이/그/저/어느」와 정확히 대응.",
+            w:[{z:"あれ",p:"あれ",j:"저것"},{z:"車",p:"くるま",j:"차"}] },
+          { ja:"이 책은 재미있습니다.", zh:"この本は面白いです。", py:"このほんはおもしろいです。",
+            g:"명사를 직접 꾸밀 때는 <code>これ</code>가 아니라 <code>この＋명사</code>＝「이 ~」. 한국어 「이것」(이)과 「이 책」(この)의 구별과 똑같음.",
+            w:[{z:"この",p:"この",j:"이"},{z:"面白い",p:"おもしろい",j:"재미있다"}] },
+          { ja:"그 가방은 누구의 것입니까?", zh:"そのかばんは誰のですか。", py:"そのかばんはだれのですか。",
+            g:"<code>誰の</code>의 <code>の</code>는 「~의 것」(소유대명사). 뒤 명사를 생략하고 <code>の</code>만으로 「~의 것」을 나타냄. 한국어 「누구의 것」.",
+            w:[{z:"その",p:"その",j:"그"},{z:"誰の",p:"だれの",j:"누구의 것"}] },
+          { ja:"화장실은 어디입니까?", zh:"トイレはどこですか。", py:"トイレはどこですか。",
+            g:"장소 지시: <code>ここ</code>(여기)/<code>そこ</code>(거기)/<code>あそこ</code>(저기)/<code>どこ</code>(어디). 「~은 어디입니까?」는 위치를 묻는 정형 표현.",
+            w:[{z:"トイレ",p:"トイレ",j:"화장실"},{z:"どこ",p:"どこ",j:"어디"}] },
+          { ja:"여기는 교실입니다.", zh:"ここは教室です。", py:"ここはきょうしつです。",
+            g:"<code>ここ</code>＝「여기」. 정중한 장소 지시로는 <code>こちら</code>(이쪽)도 있음(<code>こちら/そちら/あちら/どちら</code>).",
+            w:[{z:"ここ",p:"ここ",j:"여기"},{z:"教室",p:"きょうしつ",j:"교실"}] },
+          { ja:"저분은 어느 분이십니까?", zh:"あの方はどなたですか。", py:"あのかたはどなたですか。",
+            g:"<code>どなた</code>는 <code>誰</code>의 존댓말 「어느 분」, <code>方(かた)</code>는 <code>人</code>의 높임 「분」. 한국어 「저분/어느 분」의 높임과 대응.",
+            w:[{z:"方",p:"かた",j:"분"},{z:"どなた",p:"どなた",j:"어느 분"}] },
+          { ja:"이것은 일본어로 무엇입니까?", zh:"これは日本語で何ですか。", py:"これはにほんごでなんですか。",
+            g:"<code>で</code>는 여기서 수단·방법 「~(으)로」. 「일본어로」＝<code>日本語で</code>. 모르는 단어를 물을 때 쓰는 정형.",
+            w:[{z:"日本語",p:"にほんご",j:"일본어"},{z:"で",p:"で",j:"으로"}] },
+          { ja:"그 시계는 얼마입니까?", zh:"その時計はいくらですか。", py:"そのとけいはいくらですか。",
+            g:"<code>いくら</code>＝「얼마」(가격). 가격을 묻는 정형. 대답은 「〜円(えん)です」.",
+            w:[{z:"時計",p:"とけい",j:"시계"},{z:"いくら",p:"いくら",j:"얼마"}] },
+          { ja:"이것은 일본 차입니다.", zh:"これは日本の車です。", py:"これはにほんのくるまです。",
+            g:"<code>の</code>는 소유뿐 아니라 「소속·산지·종류」도 연결 「일본의 차→일본 차」. 한국어에서 「의」가 자연스럽게 생략되는 곳도 일본어는 <code>の</code>가 필요.",
+            w:[{z:"日本",p:"にほん",j:"일본"},{z:"の",p:"の",j:"의"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 3, title: "조사① は・が・を",
+        sentences: [
+          { ja:"저는 매일 커피를 마십니다.", zh:"私は毎日コーヒーを飲みます。", py:"わたしはまいにちコーヒーをのみます。",
+            g:"<code>を</code>＝타동사의 목적어 「~을/를」. 한국어 「을/를」과 거의 동일. <code>飲みます</code>는 「마십니다」(ます형 정중체).",
+            w:[{z:"毎日",p:"まいにち",j:"매일"},{z:"コーヒー",p:"コーヒー",j:"커피"},{z:"を",p:"を",j:"을/를"},{z:"飲みます",p:"のみます",j:"마십니다"}] },
+          { ja:"오늘은 날씨가 좋습니다.", zh:"今日は天気がいいです。", py:"きょうはてんきがいいです。",
+            g:"<code>は</code>(주제)와 <code>が</code>(주어)의 공존: 「오늘은(주제) 날씨가(주어) 좋다」. 한국어도 「오늘은 날씨가」로 똑같이 이중 표현이 가능해 감각이 비슷.",
+            w:[{z:"今日",p:"きょう",j:"오늘"},{z:"天気",p:"てんき",j:"날씨"},{z:"が",p:"が",j:"이/가"},{z:"いい",p:"いい",j:"좋다"}] },
+          { ja:"누가 옵니까?", zh:"誰が来ますか。", py:"だれがきますか。",
+            g:"의문사가 주어일 때는 반드시 <code>が</code>(<code>誰は</code>×). 한국어도 「누가」이지 「누는」이 아닌 것과 같은 원리.",
+            w:[{z:"誰",p:"だれ",j:"누구"},{z:"が",p:"が",j:"이/가"},{z:"来ます",p:"きます",j:"옵니다"}] },
+          { ja:"저는 초밥을 먹지 않습니다.", zh:"私はすしを食べません。", py:"わたしはすしをたべません。",
+            g:"<code>ます</code>의 부정은 <code>ません</code>＝「~지 않습니다」. <code>食べます→食べません</code>. 목적어 표시 <code>を</code>는 그대로.",
+            w:[{z:"すし",p:"すし",j:"초밥"},{z:"食べません",p:"たべません",j:"먹지 않습니다"}] },
+          { ja:"친구가 요리를 만듭니다.", zh:"友達が料理を作ります。", py:"ともだちがりょうりをつくります。",
+            g:"새로 등장하는 주어·정보의 초점에는 <code>が</code>. 이미 화제가 된 것에는 <code>は</code>. 「누가?」에 답할 땐 <code>が</code>.",
+            w:[{z:"友達",p:"ともだち",j:"친구"},{z:"料理",p:"りょうり",j:"요리"},{z:"作ります",p:"つくります",j:"만듭니다"}] },
+          { ja:"이 가게는 채소가 쌉니다.", zh:"この店は野菜が安いです。", py:"このみせはやさいがやすいです。",
+            g:"「A は B が ~」(A는 B가 ~) 구문. 큰 주제(店)＋그 안의 초점(野菜). 한국어 「이 가게는 채소가 싸다」와 완전히 같은 구조.",
+            w:[{z:"店",p:"みせ",j:"가게"},{z:"野菜",p:"やさい",j:"채소"},{z:"安い",p:"やすい",j:"싸다"}] },
+          { ja:"저는 음악을 듣습니다.", zh:"私は音楽を聞きます。", py:"わたしはおんがくをききます。",
+            g:"<code>聞きます</code>＝「듣습니다」. 「~을 듣다」의 <code>を</code>. 「(사람에게) 묻다」도 <code>聞く</code>지만 그때는 상대에 <code>に</code>를 씀.",
+            w:[{z:"音楽",p:"おんがく",j:"음악"},{z:"聞きます",p:"ききます",j:"듣습니다"}] },
+          { ja:"저는 영화를 봅니다.", zh:"私は映画を見ます。", py:"わたしはえいがをみます。",
+            g:"<code>見ます</code>＝「봅니다」. 「TV를 보다」<code>テレビを見る</code>. 보는 대상은 <code>を</code>.",
+            w:[{z:"映画",p:"えいが",j:"영화"},{z:"見ます",p:"みます",j:"봅니다"}] },
+          { ja:"그녀는 일본어를 압니다.", zh:"彼女は日本語が分かります。", py:"かのじょはにほんごがわかります。",
+            g:"<strong>주의</strong>: <code>分かる</code>(알다·이해되다)는 한국어 「~을 알다」와 달리 조사 <code>が</code>를 씀(<code>日本語を分かる</code>는 부자연). 가능·이해의 대상은 <code>が</code>.",
+            w:[{z:"彼女",p:"かのじょ",j:"그녀"},{z:"分かります",p:"わかります",j:"압니다"}] },
+          { ja:"당신은 무엇을 삽니까?", zh:"あなたは何を買いますか。", py:"あなたはなにをかいますか。",
+            g:"목적어를 묻는 의문사 <code>何(なに)</code>＋<code>を</code>. <code>何</code>는 <code>を</code> 앞에서는 <code>なに</code>로 읽음. <code>買います</code>＝「삽니다」.",
+            w:[{z:"あなた",p:"あなた",j:"당신"},{z:"何",p:"なに",j:"무엇"},{z:"買います",p:"かいます",j:"삽니다"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 4, title: "조사② に・で・へ・と",
+        sentences: [
+          { ja:"저는 7시에 일어납니다.", zh:"私は7時に起きます。", py:"わたしはしちじにおきます。",
+            g:"시각·요일·날짜 등 시간점에는 <code>に</code>＝「~에」. 한국어 「7시에」와 대응. 단 「오늘·내일·지금」 등 상대 시간엔 <code>に</code>를 붙이지 않음.",
+            w:[{z:"7時",p:"しちじ",j:"7시"},{z:"に",p:"に",j:"에"},{z:"起きます",p:"おきます",j:"일어납니다"}] },
+          { ja:"학교에 갑니다.", zh:"学校へ行きます。", py:"がっこうへいきます。",
+            g:"이동의 방향에는 <code>へ</code>(발음 「에」)＝「~(으)로/에」. 같은 자리에 <code>に</code>도 가능(<code>学校に行く</code>). <code>へ</code>는 방향, <code>に</code>는 도착점을 강조하는 뉘앙스 차.",
+            w:[{z:"学校",p:"がっこう",j:"학교"},{z:"へ",p:"へ",j:"로/에"},{z:"行きます",p:"いきます",j:"갑니다"}] },
+          { ja:"도서관에서 책을 읽습니다.", zh:"図書館で本を読みます。", py:"としょかんでほんをよみます。",
+            g:"동작이 일어나는 장소에는 <code>で</code>＝「~에서」. <strong>주의</strong>: 존재 장소의 「~에」<code>に</code>와 구별 — 동작이면 <code>で</code>, 존재면 <code>に</code>.",
+            w:[{z:"図書館",p:"としょかん",j:"도서관"},{z:"で",p:"で",j:"에서"},{z:"読みます",p:"よみます",j:"읽습니다"}] },
+          { ja:"버스로 회사에 갑니다.", zh:"バスで会社に行きます。", py:"バスでかいしゃにいきます。",
+            g:"수단·교통수단의 <code>で</code>＝「~(으)로」. 「버스로」<code>バスで</code>. 도착점의 <code>に</code>와 함께 자주 등장.",
+            w:[{z:"バス",p:"バス",j:"버스"},{z:"で",p:"で",j:"로"},{z:"会社",p:"かいしゃ",j:"회사"},{z:"に",p:"に",j:"에"}] },
+          { ja:"친구와 영화를 봅니다.", zh:"友達と映画を見ます。", py:"ともだちとえいがをみます。",
+            g:"<code>と</code>＝「~와/과」(동반·열거). 한국어 「와/과」와 대응. 「혼자서」는 <code>一人で</code>.",
+            w:[{z:"友達",p:"ともだち",j:"친구"},{z:"と",p:"と",j:"와/과"}] },
+          { ja:"펜으로 이름을 씁니다.", zh:"ペンで名前を書きます。", py:"ペンでなまえをかきます。",
+            g:"도구·재료의 <code>で</code>＝「~(으)로」. 「펜으로 쓰다」. 수단의 <code>で</code>는 교통·도구·언어·재료에 두루 쓰임.",
+            w:[{z:"ペン",p:"ペン",j:"펜"},{z:"名前",p:"なまえ",j:"이름"},{z:"書きます",p:"かきます",j:"씁니다"}] },
+          { ja:"집에 친구가 옵니다.", zh:"家に友達が来ます。", py:"うちにともだちがきます。",
+            g:"도착점·귀착점의 <code>に</code>. 「~에 오다/들어가다/타다」는 <code>に</code>. <code>家(うち/いえ)</code>는 「우리집」 뉘앙스면 <code>うち</code>.",
+            w:[{z:"家",p:"うち",j:"집"},{z:"に",p:"に",j:"에"},{z:"来ます",p:"きます",j:"옵니다"}] },
+          { ja:"어머니에게 전화를 겁니다.", zh:"母に電話をかけます。", py:"ははにでんわをかけます。",
+            g:"동작이 향하는 상대(여격)의 <code>に</code>＝「~에게」. 한국어 「~에게/한테」와 대응. <code>母</code>는 자기 어머니(남의 어머니는 <code>お母さん</code>).",
+            w:[{z:"母",p:"はは",j:"어머니"},{z:"に",p:"に",j:"에게"},{z:"電話",p:"でんわ",j:"전화"},{z:"かけます",p:"かけます",j:"겁니다"}] },
+          { ja:"가족과 일본에 갑니다.", zh:"家族と日本へ行きます。", py:"かぞくとにほんへいきます。",
+            g:"<code>と</code>(동반)＋<code>へ</code>(방향)의 조합. 「~와 함께 ~로 가다」. 조사를 겹쳐 정보를 더함.",
+            w:[{z:"家族",p:"かぞく",j:"가족"},{z:"日本",p:"にほん",j:"일본"}] },
+          { ja:"오후 3시부터 5시까지 일합니다.", zh:"午後3時から5時まで働きます。", py:"ごごさんじからごじまではたらきます。",
+            g:"<code>から</code>(~부터)〜<code>まで</code>(~까지)＝시간·장소의 범위. 한국어 「부터/까지」와 1:1 대응. <code>働きます</code>＝「일합니다」.",
+            w:[{z:"午後",p:"ごご",j:"오후"},{z:"から",p:"から",j:"부터"},{z:"まで",p:"まで",j:"까지"},{z:"働きます",p:"はたらきます",j:"일합니다"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 5, title: "동사 ます형 (현재·과거·부정)",
+        sentences: [
+          { ja:"매일 아침 빵을 먹습니다.", zh:"毎朝パンを食べます。", py:"まいあさパンをたべます。",
+            g:"<code>ます</code>형은 현재·미래·습관을 모두 나타냄(시제가 한국어보다 폭넓음). 「먹습니다/먹겠습니다」 둘 다 <code>食べます</code>.",
+            w:[{z:"毎朝",p:"まいあさ",j:"매일 아침"},{z:"パン",p:"パン",j:"빵"},{z:"食べます",p:"たべます",j:"먹습니다"}] },
+          { ja:"어제 영화를 봤습니다.", zh:"昨日映画を見ました。", py:"きのうえいがをみました。",
+            g:"정중한 과거는 <code>ました</code>＝「~했습니다」. <code>見ます→見ました</code>. 한국어 「봤습니다」.",
+            w:[{z:"昨日",p:"きのう",j:"어제"},{z:"見ました",p:"みました",j:"봤습니다"}] },
+          { ja:"내일은 일을 하지 않습니다.", zh:"明日は仕事をしません。", py:"あしたはしごとをしません。",
+            g:"부정 <code>ません</code>＝「~지 않습니다」. <code>します(하다)→しません</code>. <code>する</code>는 불규칙 동사로 자주 등장.",
+            w:[{z:"明日",p:"あした",j:"내일"},{z:"仕事",p:"しごと",j:"일"},{z:"しません",p:"しません",j:"하지 않습니다"}] },
+          { ja:"지난주에 일본에 가지 않았습니다.", zh:"先週日本へ行きませんでした。", py:"せんしゅうにほんへいきませんでした。",
+            g:"과거 부정 <code>ませんでした</code>＝「~지 않았습니다」. ます형 4활용: <code>ます/ました/ません/ませんでした</code>가 기본 세트.",
+            w:[{z:"先週",p:"せんしゅう",j:"지난주"},{z:"行きませんでした",p:"いきませんでした",j:"가지 않았습니다"}] },
+          { ja:"매일 밤 목욕을 합니다.", zh:"毎晩お風呂に入ります。", py:"まいばんおふろにはいります。",
+            g:"<code>お風呂に入る</code>＝「목욕하다」(직역: 욕조에 들어가다). 「들어가다」<code>入る</code>의 도착점은 <code>に</code>. 일상 빈출 표현.",
+            w:[{z:"毎晩",p:"まいばん",j:"매일 밤"},{z:"お風呂",p:"おふろ",j:"목욕·욕조"},{z:"入ります",p:"はいります",j:"들어갑니다"}] },
+          { ja:"몇 시에 잡니까?", zh:"何時に寝ますか。", py:"なんじにねますか。",
+            g:"<code>何時(なんじ)</code>＝「몇 시」. 시각을 묻는 정형. <code>寝ます</code>＝「잡니다」. 시간점 <code>に</code>.",
+            w:[{z:"何時",p:"なんじ",j:"몇 시"},{z:"寝ます",p:"ねます",j:"잡니다"}] },
+          { ja:"오늘 아침 커피를 마시지 않았습니다.", zh:"今朝コーヒーを飲みませんでした。", py:"けさコーヒーをのみませんでした。",
+            g:"<code>今朝(けさ)</code>＝「오늘 아침」, <code>今晩(こんばん)</code>＝「오늘 밤」 등 특수 읽기 시간어. 과거부정 <code>飲みませんでした</code>.",
+            w:[{z:"今朝",p:"けさ",j:"오늘 아침"},{z:"飲みませんでした",p:"のみませんでした",j:"마시지 않았습니다"}] },
+          { ja:"내년에 일본에서 일합니다.", zh:"来年日本で働きます。", py:"らいねんにほんではたらきます。",
+            g:"<code>来年(らいねん)</code>＝「내년」. ます형은 미래도 나타내므로 「일하겠습니다」의 의미. 동작 장소 <code>で</code>.",
+            w:[{z:"来年",p:"らいねん",j:"내년"},{z:"働きます",p:"はたらきます",j:"일합니다"}] },
+          { ja:"매일 일본어를 공부합니다.", zh:"毎日日本語を勉強します。", py:"まいにちにほんごをべんきょうします。",
+            g:"「명사＋する」형 동사: <code>勉強する</code>(공부하다)＝<code>勉強します</code>. 한자어＋する 구조는 한국어 「공부하다(한자어＋하다)」와 똑 닮음.",
+            w:[{z:"勉強します",p:"べんきょうします",j:"공부합니다"}] },
+          { ja:"무엇을 했습니까?", zh:"何をしましたか。", py:"なにをしましたか。",
+            g:"<code>しました</code>＝「했습니다」(する의 과거). 의문사 <code>何を</code>＋과거 의문. 회화 빈출.",
+            w:[{z:"何",p:"なに",j:"무엇"},{z:"しました",p:"しました",j:"했습니다"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 6, title: "존재 あります・います + 위치",
+        sentences: [
+          { ja:"책상 위에 책이 있습니다.", zh:"机の上に本があります。", py:"つくえのうえにほんがあります。",
+            g:"무생물의 존재는 <code>あります</code>＝「있습니다」. 「장소に 물건が あります」. 위치 명사는 「N の 上/下/前」처럼 <code>の</code>로 연결.",
+            w:[{z:"机",p:"つくえ",j:"책상"},{z:"上",p:"うえ",j:"위"},{z:"に",p:"に",j:"에"},{z:"あります",p:"あります",j:"있습니다"}] },
+          { ja:"방에 고양이가 있습니다.", zh:"部屋に猫がいます。", py:"へやにねこがいます。",
+            g:"<strong>한일 차이 주의</strong>: 사람·동물 등 생물의 존재는 <code>います</code>, 무생물은 <code>あります</code>로 동사가 갈림(한국어는 둘 다 「있다」). 생물＝います를 꼭 기억.",
+            w:[{z:"部屋",p:"へや",j:"방"},{z:"猫",p:"ねこ",j:"고양이"},{z:"います",p:"います",j:"있습니다"}] },
+          { ja:"은행은 역 앞에 있습니다.", zh:"銀行は駅の前にあります。", py:"ぎんこうはえきのまえにあります。",
+            g:"「A は 장소に あります」＝주제가 어디 있는지 설명. 위치명사 <code>前(앞)/後ろ(뒤)/隣(옆)/中(안)</code>. <code>駅の前</code>＝역 앞.",
+            w:[{z:"銀行",p:"ぎんこう",j:"은행"},{z:"駅",p:"えき",j:"역"},{z:"前",p:"まえ",j:"앞"}] },
+          { ja:"테이블 아래에 개가 있습니다.", zh:"テーブルの下に犬がいます。", py:"テーブルのしたにいぬがいます。",
+            g:"<code>下(した)</code>＝「아래」. 생물 <code>犬</code>이므로 <code>います</code>. 위치명사＋に＋생물が＋います 패턴.",
+            w:[{z:"下",p:"した",j:"아래"},{z:"犬",p:"いぬ",j:"개"}] },
+          { ja:"가방 안에 지갑이 있습니다.", zh:"かばんの中に財布があります。", py:"かばんのなかにさいふがあります。",
+            g:"<code>中(なか)</code>＝「안/속」. 무생물 <code>財布</code>＝<code>あります</code>. 「~의 안에」<code>〜の中に</code>.",
+            w:[{z:"中",p:"なか",j:"안"},{z:"財布",p:"さいふ",j:"지갑"}] },
+          { ja:"교실에 학생이 없습니다.", zh:"教室に学生がいません。", py:"きょうしつにがくせいがいません。",
+            g:"<code>います</code>의 부정은 <code>いません</code>＝「없습니다」(생물). 무생물 부정은 <code>ありません</code>. 한국어 「없다」도 둘로 갈림에 주의.",
+            w:[{z:"教室",p:"きょうしつ",j:"교실"},{z:"いません",p:"いません",j:"없습니다"}] },
+          { ja:"집 근처에 편의점이 있습니다.", zh:"家の近くにコンビニがあります。", py:"いえのちかくにコンビニがあります。",
+            g:"<code>近く(ちかく)</code>＝「근처」. <code>コンビニ</code>＝편의점(외래어). 위치 설명 정형.",
+            w:[{z:"近く",p:"ちかく",j:"근처"},{z:"コンビニ",p:"コンビニ",j:"편의점"}] },
+          { ja:"책상 위에 무엇이 있습니까?", zh:"机の上に何がありますか。", py:"つくえのうえになにがありますか。",
+            g:"무생물을 묻는 <code>何が＋あります</code>. 사람을 물으면 <code>誰がいますか</code>(누가 있습니까). 의문사＋が＋존재동사.",
+            w:[{z:"何",p:"なに",j:"무엇"},{z:"ありますか",p:"ありますか",j:"있습니까"}] },
+          { ja:"야마다 씨는 지금 어디에 있습니까?", zh:"山田さんは今どこにいますか。", py:"やまださんはいまどこにいますか。",
+            g:"사람의 소재를 묻는 「~は どこに いますか」. 생물이므로 <code>います</code>. <code>今(いま)</code>＝지금(<code>に</code> 안 붙임).",
+            w:[{z:"今",p:"いま",j:"지금"},{z:"どこに",p:"どこに",j:"어디에"},{z:"いますか",p:"いますか",j:"있습니까"}] },
+          { ja:"상자 안에 아무것도 없습니다.", zh:"箱の中に何もありません。", py:"はこのなかになにもありません。",
+            g:"<code>何も＋부정</code>＝「아무것도 ~않다」. 「의문사＋も＋부정」으로 전면 부정(誰も＝아무도, どこも＝어디도). 한국어 「아무것도」와 대응.",
+            w:[{z:"箱",p:"はこ",j:"상자"},{z:"何も",p:"なにも",j:"아무것도"},{z:"ありません",p:"ありません",j:"없습니다"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 7, title: "い형용사 (현재·과거·부정·수식)",
+        sentences: [
+          { ja:"이 요리는 맛있습니다.", zh:"この料理はおいしいです。", py:"このりょうりはおいしいです。",
+            g:"い형용사는 <code>〜い＋です</code>로 정중하게. <strong>주의</strong>: 명사처럼 <code>だ/です</code>로 단정하지 않고 형용사 자체가 술어(<code>おいしいだ</code>×). 한국어 「맛있다」가 그대로 술어인 것과 같음.",
+            w:[{z:"料理",p:"りょうり",j:"요리"},{z:"おいしい",p:"おいしい",j:"맛있다"}] },
+          { ja:"오늘은 춥지 않습니다.", zh:"今日は寒くないです。", py:"きょうはさむくないです。",
+            g:"い형용사 부정은 어미 <code>い→く＋ない</code>＝「~지 않다」. <code>寒い→寒くない</code>. <code>〜くありません</code>도 같은 뜻(더 격식).",
+            w:[{z:"寒い",p:"さむい",j:"춥다"},{z:"寒くない",p:"さむくない",j:"춥지 않다"}], alts:["今日は寒くありません。"] },
+          { ja:"어제 영화는 재미있었습니다.", zh:"昨日の映画は面白かったです。", py:"きのうのえいがはおもしろかったです。",
+            g:"い형용사 과거는 <code>い→かった</code>＝「~었다」. <code>面白い→面白かった</code>. <strong>주의</strong>: <code>面白いでした</code>×(です를 과거로 바꾸지 않음).",
+            w:[{z:"面白い",p:"おもしろい",j:"재미있다"},{z:"面白かった",p:"おもしろかった",j:"재미있었다"}] },
+          { ja:"이 가게는 별로 비싸지 않았습니다.", zh:"この店はあまり高くなかったです。", py:"このみせはあまりたかくなかったです。",
+            g:"과거 부정은 <code>く＋なかった</code>＝「~지 않았다」. <code>あまり〜ない</code>＝「별로 ~않다」(한국어와 동일하게 부정과 호응).",
+            w:[{z:"高い",p:"たかい",j:"비싸다"},{z:"高くなかった",p:"たかくなかった",j:"비싸지 않았다"},{z:"あまり",p:"あまり",j:"별로"}] },
+          { ja:"큰 가방을 삽니다.", zh:"大きいかばんを買います。", py:"おおきいかばんをかいます。",
+            g:"명사 수식은 い형용사를 그대로 명사 앞에 둠 <code>大きい＋かばん</code>＝「큰 가방」. 한국어 「큰」(관형형)과 달리 형태 변화 없음.",
+            w:[{z:"大きい",p:"おおきい",j:"크다"},{z:"かばん",p:"かばん",j:"가방"}] },
+          { ja:"이 방은 넓고 밝습니다.", zh:"この部屋は広くて明るいです。", py:"このへやはひろくてあかるいです。",
+            g:"い형용사 연결은 <code>い→くて</code>＝「~고/~어서」. <code>広い→広くて</code>. 한국어 「넓고」처럼 형용사를 이어줌.",
+            w:[{z:"広い",p:"ひろい",j:"넓다"},{z:"広くて",p:"ひろくて",j:"넓고"},{z:"明るい",p:"あかるい",j:"밝다"}] },
+          { ja:"좋은 날씨네요.", zh:"いい天気ですね。", py:"いいてんきですね。",
+            g:"<code>いい</code>(좋다)는 불규칙: 부정·과거는 <code>よい</code>를 활용해 <code>よくない/よかった</code>가 됨(<code>いくない</code>×). <code>ね</code>＝「~네요」(공감).",
+            w:[{z:"いい",p:"いい",j:"좋다"},{z:"天気",p:"てんき",j:"날씨"},{z:"ね",p:"ね",j:"네요"}] },
+          { ja:"오늘은 매우 덥습니다.", zh:"今日はとても暑いです。", py:"きょうはとてもあついです。",
+            g:"<code>とても</code>＝「매우」(긍정 강조). 동음이의 주의: <code>暑い</code>(날씨가 덥다)/<code>熱い</code>(물건이 뜨겁다)/<code>厚い</code>(두껍다) — 모두 <code>あつい</code>.",
+            w:[{z:"とても",p:"とても",j:"매우"},{z:"暑い",p:"あつい",j:"덥다"}] },
+          { ja:"이 문제는 어렵지 않습니다.", zh:"この問題は難しくないです。", py:"このもんだいはむずかしくないです。",
+            g:"<code>難しい(むずかしい)</code>＝「어렵다」, 반대는 <code>易しい/簡単</code>. 부정 <code>難しくない</code>.",
+            w:[{z:"問題",p:"もんだい",j:"문제"},{z:"難しい",p:"むずかしい",j:"어렵다"}] },
+          { ja:"새 신발을 샀습니다.", zh:"新しい靴を買いました。", py:"あたらしいくつをかいました。",
+            g:"<code>新しい</code>＝「새로운/새」. 명사 수식＋과거 문장. 반대말 <code>古い(ふるい)</code>(낡은).",
+            w:[{z:"新しい",p:"あたらしい",j:"새롭다"},{z:"靴",p:"くつ",j:"신발"},{z:"買いました",p:"かいました",j:"샀습니다"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 8, title: "な형용사 + 好き・上手 (が)",
+        sentences: [
+          { ja:"이 동네는 조용합니다.", zh:"この町は静かです。", py:"このまちはしずかです。",
+            g:"な형용사는 명사처럼 <code>です</code>로 단정. <code>静か＋です</code>. い형용사와 달리 어미에 <code>い</code>가 없음(<code>静かいです</code>×).",
+            w:[{z:"町",p:"まち",j:"동네"},{z:"静か",p:"しずか",j:"조용함"}] },
+          { ja:"여기는 별로 번화하지 않습니다.", zh:"ここはあまり賑やかじゃありません。", py:"ここはあまりにぎやかじゃありません。",
+            g:"な형용사 부정은 명사와 똑같이 <code>じゃありません</code>(＝ではありません). い형용사(〜くない)와 활용이 다름에 주의.",
+            w:[{z:"賑やか",p:"にぎやか",j:"번화함"},{z:"じゃありません",p:"じゃありません",j:"하지 않습니다"}] },
+          { ja:"어제는 한가했습니다.", zh:"昨日は暇でした。", py:"きのうはひまでした。",
+            g:"な형용사 과거는 <code>でした</code>(명사와 동일). <code>暇</code>(한가함)→<code>暇でした</code>. 과거부정은 <code>暇じゃありませんでした</code>.",
+            w:[{z:"暇",p:"ひま",j:"한가함"},{z:"でした",p:"でした",j:"했습니다"}] },
+          { ja:"그는 유명한 가수입니다.", zh:"彼は有名な歌手です。", py:"かれはゆうめいなかしゅです。",
+            g:"<strong>な형용사가 명사를 꾸밀 때는 <code>な</code></strong>를 붙임 <code>有名な＋歌手</code>＝「유명한 가수」. 이것이 「な형용사」라는 이름의 유래. い형용사는 <code>な</code> 불필요.",
+            w:[{z:"彼",p:"かれ",j:"그"},{z:"有名",p:"ゆうめい",j:"유명함"},{z:"な",p:"な",j:"한"},{z:"歌手",p:"かしゅ",j:"가수"}] },
+          { ja:"저는 일본 요리를 좋아합니다.", zh:"私は日本の料理が好きです。", py:"わたしはにほんのりょうりがすきです。",
+            g:"<strong>한일 차이 핵심</strong>: <code>好き</code>(좋아함)는 な형용사라서 대상에 <code>を</code>가 아니라 <code>が</code>! 한국어 「~을 좋아하다」에 끌려 <code>を</code>를 쓰면 오류(<code>料理を好き</code>×).",
+            w:[{z:"好き",p:"すき",j:"좋아함"},{z:"が",p:"が",j:"이/가"}] },
+          { ja:"채소를 싫어합니다.", zh:"野菜が嫌いです。", py:"やさいがきらいです。",
+            g:"<code>嫌い</code>(싫어함)도 な형용사＋<code>が</code>. 형태는 <code>〜い</code>로 끝나지만 <strong>예외적으로 な형용사</strong>(<code>嫌いな人</code>). <code>好き/嫌い/上手/下手</code>는 모두 が를 동반.",
+            w:[{z:"野菜",p:"やさい",j:"채소"},{z:"嫌い",p:"きらい",j:"싫어함"}] },
+          { ja:"다나카 씨는 영어를 잘합니다.", zh:"田中さんは英語が上手です。", py:"たなかさんはえいごがじょうずです。",
+            g:"「~을 잘하다」는 <code>〜が上手だ</code>(<code>を</code> 아님!). <code>上手(じょうず)</code>＝능숙함. 능력의 대상은 が. 한국어 「영어를」과 조사가 다름에 주의.",
+            w:[{z:"英語",p:"えいご",j:"영어"},{z:"上手",p:"じょうず",j:"잘함·능숙함"}] },
+          { ja:"저는 요리를 못합니다.", zh:"私は料理が下手です。", py:"わたしはりょうりがへたです。",
+            g:"<code>下手(へた)</code>＝서투름(못함). <code>上手</code>의 반대. 역시 <code>が</code>. 「잘 못하는」 겸손 표현으로는 <code>あまり上手じゃない</code>도 자주 씀.",
+            w:[{z:"下手",p:"へた",j:"못함·서투름"}] },
+          { ja:"활기찬 아이네요.", zh:"元気な子供ですね。", py:"げんきなこどもですね。",
+            g:"<code>元気</code>(건강함·활기참)＋명사는 <code>元気な子供</code>. 인사 <code>お元気ですか</code>(잘 지내세요?)로도 빈출.",
+            w:[{z:"元気",p:"げんき",j:"활기참"},{z:"子供",p:"こども",j:"아이"}] },
+          { ja:"이 방은 깨끗하고 조용합니다.", zh:"この部屋はきれいで静かです。", py:"このへやはきれいでしずかです。",
+            g:"な형용사 연결은 <code>で</code>＝「~고」(<code>きれいで</code>). い형용사의 <code>くて</code>와 형태가 다름. <code>きれい</code>는 「예쁨·깨끗함」 둘 다 의미하는 な형용사.",
+            w:[{z:"きれい",p:"きれい",j:"깨끗함·예쁨"},{z:"で",p:"で",j:"고"},{z:"静か",p:"しずか",j:"조용함"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 9, title: "수·시간·날짜·조수사",
+        sentences: [
+          { ja:"귤을 세 개 주세요.", zh:"みかんを三つください。", py:"みかんをみっつください。",
+            g:"고유수사(つ): <code>一つ/二つ/三つ…</code>(ひとつ/ふたつ/みっつ). 1〜9의 범용 개수에 사용. <code>ください</code>＝「주세요」.",
+            w:[{z:"みかん",p:"みかん",j:"귤"},{z:"三つ",p:"みっつ",j:"세 개"},{z:"ください",p:"ください",j:"주세요"}] },
+          { ja:"맥주를 두 병 마셨습니다.", zh:"ビールを2本飲みました。", py:"ビールをにほんのみました。",
+            g:"<code>〜本(ほん/ぼん/ぽん)</code>＝가늘고 긴 것(병·우산·펜)의 조수사. 발음 변화: 1本(いっぽん)/2本(にほん)/3本(さんぼん). 한국어 「병/자루」에 해당.",
+            w:[{z:"ビール",p:"ビール",j:"맥주"},{z:"2本",p:"にほん",j:"두 병"}] },
+          { ja:"우표를 세 장 샀습니다.", zh:"切手を3枚買いました。", py:"きってをさんまいかいました。",
+            g:"<code>〜枚(まい)</code>＝얇고 평평한 것(종이·표·접시)의 조수사＝「~장」. 한국어 「장」과 대응.",
+            w:[{z:"切手",p:"きって",j:"우표"},{z:"3枚",p:"さんまい",j:"세 장"}] },
+          { ja:"노트를 두 권 주세요.", zh:"ノートを2冊ください。", py:"ノートをにさつください。",
+            g:"<code>〜冊(さつ)</code>＝책·노트의 조수사＝「~권」. 한국어 「권」에 대응.",
+            w:[{z:"ノート",p:"ノート",j:"노트"},{z:"2冊",p:"にさつ",j:"두 권"}] },
+          { ja:"오늘은 5월 5일입니다.", zh:"今日は5月5日です。", py:"きょうはごがついつかです。",
+            g:"날짜는 「월→일」 순(한국어와 동일). 단 1〜10일은 특수 읽기: <code>ついたち/ふつか/みっか/よっか/いつか…</code>. <code>5日＝いつか</code>.",
+            w:[{z:"5月",p:"ごがつ",j:"5월"},{z:"5日",p:"いつか",j:"5일"}] },
+          { ja:"생일은 4월 20일입니다.", zh:"誕生日は4月20日です。", py:"たんじょうびはしがつはつかです。",
+            g:"특수 읽기 날짜: <code>20日＝はつか</code>(にじゅうにち가 아님). 14日(じゅうよっか)·24日(にじゅうよっか)도 주의.",
+            w:[{z:"誕生日",p:"たんじょうび",j:"생일"},{z:"4月",p:"しがつ",j:"4월"},{z:"20日",p:"はつか",j:"20일"}] },
+          { ja:"회의는 오전 9시부터입니다.", zh:"会議は午前9時からです。", py:"かいぎはごぜんくじからです。",
+            g:"시각 읽기 주의: 4時(よじ)·7時(しちじ)·9時(くじ). <code>午前(ごぜん)</code>오전/<code>午後(ごご)</code>오후. 「~부터입니다」＝<code>〜からです</code>.",
+            w:[{z:"会議",p:"かいぎ",j:"회의"},{z:"午前",p:"ごぜん",j:"오전"},{z:"9時",p:"くじ",j:"9시"}] },
+          { ja:"오늘은 무슨 요일입니까?", zh:"今日は何曜日ですか。", py:"きょうはなんようびですか。",
+            g:"요일: <code>月火水木金土日＋曜日</code>(げつ/か/すい/もく/きん/ど/にち ようび). 「무슨 요일」<code>何曜日(なんようび)</code>.",
+            w:[{z:"何曜日",p:"なんようび",j:"무슨 요일"}] },
+          { ja:"전부 해서 얼마입니까?", zh:"全部でいくらですか。", py:"ぜんぶでいくらですか。",
+            g:"<code>全部で</code>＝「전부 해서/합쳐서」(<code>で</code>는 합계 범위). 가격 <code>いくら</code>. 대답 「〜円(えん)です」.",
+            w:[{z:"全部",p:"ぜんぶ",j:"전부"},{z:"で",p:"で",j:"해서"},{z:"いくら",p:"いくら",j:"얼마"}] },
+          { ja:"100엔짜리 우표를 다섯 장 주세요.", zh:"100円の切手を5枚ください。", py:"ひゃくえんのきってをごまいください。",
+            g:"「수량＋ください」 어순: 「N を 수량 ください」. 가격＋の＋명사로 「~짜리 ~」. <code>5枚</code>＝다섯 장.",
+            w:[{z:"100円",p:"ひゃくえん",j:"100엔"},{z:"5枚",p:"ごまい",j:"다섯 장"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 10, title: "願望·誘い 〜たい・ましょう・ほしい",
+        sentences: [
+          { ja:"물을 마시고 싶습니다.", zh:"水が飲みたいです。", py:"みずがのみたいです。",
+            g:"「ます형 어간＋たい」＝「~고 싶다」(희망). <code>飲みます→飲みたい</code>. 희망의 대상은 <code>を</code> 대신 <code>が</code>도 자주 씀(水が飲みたい). 한국어 「~고 싶다」와 대응.",
+            w:[{z:"水",p:"みず",j:"물"},{z:"飲みたい",p:"のみたい",j:"마시고 싶다"}], alts:["水を飲みたいです。"] },
+          { ja:"주말에 어디에 가고 싶습니까?", zh:"週末どこへ行きたいですか。", py:"しゅうまつどこへいきたいですか。",
+            g:"<code>〜たい</code>는 い형용사처럼 활용: 부정 <code>行きたくない</code>, 과거 <code>行きたかった</code>. <strong>주의</strong>: 본인·상대의 희망에만 사용(제3자엔 <code>〜たがる</code>).",
+            w:[{z:"週末",p:"しゅうまつ",j:"주말"},{z:"行きたい",p:"いきたい",j:"가고 싶다"}] },
+          { ja:"같이 점심을 먹지 않을래요?", zh:"一緒に昼ご飯を食べませんか。", py:"いっしょにひるごはんをたべませんか。",
+            g:"<code>〜ませんか</code>＝「~지 않을래요?」(권유). 부정 의문 형태지만 한국어처럼 부드러운 제안. <code>一緒に</code>＝「같이/함께」.",
+            w:[{z:"一緒に",p:"いっしょに",j:"같이"},{z:"昼ご飯",p:"ひるごはん",j:"점심"},{z:"食べませんか",p:"たべませんか",j:"먹지 않을래요"}] },
+          { ja:"좀 쉽시다.", zh:"少し休みましょう。", py:"すこしやすみましょう。",
+            g:"<code>〜ましょう</code>＝「~합시다」(권유·의지). <code>休みます→休みましょう</code>. <code>少し</code>＝「조금/좀」.",
+            w:[{z:"少し",p:"すこし",j:"조금"},{z:"休みましょう",p:"やすみましょう",j:"쉽시다"}] },
+          { ja:"무엇을 먹을까요?", zh:"何を食べましょうか。", py:"なにをたべましょうか。",
+            g:"<code>〜ましょうか</code>＝「~할까요?」(상대 의향을 묻거나 제안). 「제가 ~할까요?」의 호의 제안으로도 씀(<code>手伝いましょうか</code> 도와드릴까요).",
+            w:[{z:"食べましょうか",p:"たべましょうか",j:"먹을까요"}] },
+          { ja:"새 신발을 갖고 싶습니다.", zh:"新しい靴がほしいです。", py:"あたらしいくつがほしいです。",
+            g:"<code>〜がほしい</code>＝「~을 갖고 싶다」(물건에 대한 욕구). 대상은 <code>が</code>. <code>ほしい</code>는 い형용사 활용(<code>ほしくない</code>). <code>〜たい</code>(동작)와 구별: ほしい＝물건.",
+            w:[{z:"靴",p:"くつ",j:"신발"},{z:"ほしい",p:"ほしい",j:"갖고 싶다"}] },
+          { ja:"영화를 보러 가지 않을래요?", zh:"映画を見に行きませんか。", py:"えいがをみにいきませんか。",
+            g:"「ます형 어간＋に行く」＝「~하러 가다」(목적). <code>見ます→見に行く</code>. 목적의 <code>に</code>. 한국어 「~하러」와 대응.",
+            w:[{z:"映画",p:"えいが",j:"영화"},{z:"見に行きます",p:"みにいきます",j:"보러 갑니다"}] },
+          { ja:"같이 돌아갑시다.", zh:"一緒に帰りましょう。", py:"いっしょにかえりましょう。",
+            g:"<code>帰ります</code>＝「(집·고향으로) 돌아가다」. <code>ましょう</code>로 권유. <strong>주의</strong>: <code>帰る</code>는 형태는 る로 끝나도 1류(5단)동사.",
+            w:[{z:"帰りましょう",p:"かえりましょう",j:"돌아갑시다"}] },
+          { ja:"여름방학에 무엇을 하고 싶습니까?", zh:"夏休みに何をしたいですか。", py:"なつやすみになにをしたいですか。",
+            g:"<code>したい</code>＝<code>します</code>의 희망형(하고 싶다). <code>夏休み</code>＝여름방학. 시간점 <code>に</code>.",
+            w:[{z:"夏休み",p:"なつやすみ",j:"여름방학"},{z:"したい",p:"したい",j:"하고 싶다"}] },
+          { ja:"커피는 어떠세요?", zh:"コーヒーはいかがですか。", py:"コーヒーはいかがですか。",
+            g:"<code>いかが</code>＝<code>どう</code>의 정중형 「어떠십니까」. 권유·의향을 정중히 물음. 한국어 「어떠세요」에 대응.",
+            w:[{z:"いかが",p:"いかが",j:"어떠함"},{z:"ですか",p:"ですか",j:"십니까"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 11, title: "て형 — 依頼・進行・許可・禁止",
+        sentences: [
+          { ja:"잠깐 기다려 주세요.", zh:"ちょっと待ってください。", py:"ちょっとまってください。",
+            g:"<code>て형＋ください</code>＝「~해 주세요」(의뢰). <code>待つ→待って</code>. て형은 동사 활용의 핵심으로, 의뢰·진행·허가 등에 두루 쓰임.",
+            w:[{z:"ちょっと",p:"ちょっと",j:"잠깐"},{z:"待ってください",p:"まってください",j:"기다려 주세요"}] },
+          { ja:"여기에 이름을 써 주세요.", zh:"ここに名前を書いてください。", py:"ここになまえをかいてください。",
+            g:"<code>書く→書いて</code>(く로 끝나는 동사는 <code>いて</code>). <strong>예외</strong>: <code>行く→行って</code>. 도착점·기입 위치의 <code>に</code>.",
+            w:[{z:"名前",p:"なまえ",j:"이름"},{z:"書いてください",p:"かいてください",j:"써 주세요"}] },
+          { ja:"지금 밥을 먹고 있습니다.", zh:"今ご飯を食べています。", py:"いまごはんをたべています。",
+            g:"<code>て형＋います</code>＝「~고 있다」(진행). 한국어 「~고 있다」와 거의 동일. <code>食べる→食べて</code>(2류동사는 る→て).",
+            w:[{z:"ご飯",p:"ごはん",j:"밥"},{z:"食べています",p:"たべています",j:"먹고 있습니다"}] },
+          { ja:"다나카 씨는 결혼했습니다.", zh:"田中さんは結婚しています。", py:"たなかさんはけっこんしています。",
+            g:"<strong>한일 차이 주의</strong>: <code>結婚しています</code>는 「결혼한 상태(기혼)」를 나타냄. 진행이 아니라 <strong>결과 상태</strong>. <code>住む(살다)/知る(알다)</code>도 <code>〜ています</code>로 상태를 표현.",
+            w:[{z:"結婚",p:"けっこん",j:"결혼"},{z:"しています",p:"しています",j:"한 상태입니다"}] },
+          { ja:"여기서 사진을 찍어도 됩니까?", zh:"ここで写真を撮ってもいいですか。", py:"ここでしゃしんをとってもいいですか。",
+            g:"<code>て형＋もいいです</code>＝「~해도 됩니다」(허가). 의문으로 「~해도 돼요?」. <code>撮る→撮って</code>(る로 끝나는 1류). 동작 장소 <code>で</code>.",
+            w:[{z:"写真",p:"しゃしん",j:"사진"},{z:"撮ってもいいですか",p:"とってもいいですか",j:"찍어도 됩니까"}] },
+          { ja:"여기서 담배를 피우면 안 됩니다.", zh:"ここでタバコを吸ってはいけません。", py:"ここでタバコをすってはいけません。",
+            g:"<code>て형＋はいけません</code>＝「~면 안 됩니다」(금지). <code>吸う→吸って</code>(う로 끝나는 1류는 <code>って</code>). 허가(てもいい)의 반대.",
+            w:[{z:"タバコ",p:"タバコ",j:"담배"},{z:"吸ってはいけません",p:"すってはいけません",j:"피우면 안 됩니다"}] },
+          { ja:"신문을 읽고, 커피를 마십니다.", zh:"新聞を読んで、コーヒーを飲みます。", py:"しんぶんをよんで、コーヒーをのみます。",
+            g:"て형은 동작의 <strong>나열·순서</strong>도 나타냄 「~하고」. <code>読む→読んで</code>(む/ぶ/ぬ로 끝나는 1류는 <code>んで</code>). 한국어 「~고」와 대응.",
+            w:[{z:"新聞",p:"しんぶん",j:"신문"},{z:"読んで",p:"よんで",j:"읽고"}] },
+          { ja:"여기에 앉지 마세요.", zh:"ここに座らないでください。", py:"ここにすわらないでください。",
+            g:"<code>ない형＋でください</code>＝「~지 마세요」(부정 의뢰·금지). <code>座る→座らない→座らないで</code>. <code>〜てください</code>의 부정판.",
+            w:[{z:"座らないでください",p:"すわらないでください",j:"앉지 마세요"}] },
+          { ja:"불을 꺼 주세요.", zh:"電気を消してください。", py:"でんきをけしてください。",
+            g:"<code>消す→消して</code>(す로 끝나는 1류는 <code>して</code>). て형 음편 정리: く→いて, ぐ→いで, う·つ·る→って, ぬ·ぶ·む→んで, す→して.",
+            w:[{z:"電気",p:"でんき",j:"불·전기"},{z:"消してください",p:"けしてください",j:"꺼 주세요"}] },
+          { ja:"창문을 열어도 됩니까?", zh:"窓を開けてもいいですか。", py:"まどをあけてもいいですか。",
+            g:"<code>開ける→開けて</code>(2류). 허가를 구하는 정형. 대답: 「はい、いいですよ」/「すみません、ちょっと…」(완곡한 거절).",
+            w:[{z:"窓",p:"まど",j:"창문"},{z:"開けてもいいですか",p:"あけてもいいですか",j:"열어도 됩니까"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 12, title: "의문사 なに・だれ・いつ・どこ",
+        sentences: [
+          { ja:"실례합니다, 지금 몇 시입니까?", zh:"すみません、今何時ですか。", py:"すみません、いまなんじですか。",
+            g:"<code>何時(なんじ)</code>＝몇 시. <code>すみません</code>은 「실례합니다/죄송합니다/고맙습니다」 다용도. 의문사 <code>何</code>의 읽기(なん/なに)는 뒤 음으로 결정.",
+            w:[{z:"すみません",p:"すみません",j:"실례합니다"},{z:"今",p:"いま",j:"지금"},{z:"何時",p:"なんじ",j:"몇 시"}] },
+          { ja:"생일은 언제입니까?", zh:"誕生日はいつですか。", py:"たんじょうびはいつですか。",
+            g:"<code>いつ</code>＝「언제」(시간). 의문사 <code>いつ</code>에는 <code>に</code>를 붙이지 않음(<code>いつに</code>×). 한국어 「언제」와 대응.",
+            w:[{z:"誕生日",p:"たんじょうび",j:"생일"},{z:"いつ",p:"いつ",j:"언제"}] },
+          { ja:"회사는 어디입니까?", zh:"会社はどこですか。", py:"かいしゃはどこですか。",
+            g:"<code>どこ</code>＝「어디」. 정중형 <code>どちら</code>(어느 쪽/어디). 「어느 나라 분이세요?」<code>お国はどちらですか</code>.",
+            w:[{z:"会社",p:"かいしゃ",j:"회사"},{z:"どこ",p:"どこ",j:"어디"}] },
+          { ja:"이 우산은 누구의 것입니까?", zh:"この傘は誰のですか。", py:"このかさはだれのですか。",
+            g:"<code>誰(だれ)</code>＝누구, <code>誰の</code>＝누구의 것. 사람·소유를 물음. 정중형 <code>どなた</code>.",
+            w:[{z:"傘",p:"かさ",j:"우산"},{z:"誰の",p:"だれの",j:"누구의 것"}] },
+          { ja:"역까지 어떻게 갑니까?", zh:"駅までどうやって行きますか。", py:"えきまでどうやっていきますか。",
+            g:"<code>どうやって</code>＝「어떻게(수단·방법)」. 단순히 「어때?」는 <code>どう</code>. <code>〜まで</code>(까지)＋이동.",
+            w:[{z:"どうやって",p:"どうやって",j:"어떻게"},{z:"行きますか",p:"いきますか",j:"갑니까"}] },
+          { ja:"일본어 공부는 어떻습니까?", zh:"日本語の勉強はどうですか。", py:"にほんごのべんきょうはどうですか。",
+            g:"<code>どう</code>＝「어떻게/어때」(상태·감상). 정중형 <code>いかが</code>. 의견·상황을 폭넓게 물음.",
+            w:[{z:"勉強",p:"べんきょう",j:"공부"},{z:"どう",p:"どう",j:"어떻게"}] },
+          { ja:"왜 일본어를 공부합니까?", zh:"どうして日本語を勉強しますか。", py:"どうしてにほんごをべんきょうしますか。",
+            g:"<code>どうして／なぜ</code>＝「왜」(이유). 회화에서는 <code>どうして</code>가 더 부드럽고 <code>なぜ</code>는 다소 딱딱·문어적. 대답은 <code>〜から</code>(~니까).",
+            w:[{z:"どうして",p:"どうして",j:"왜"},{z:"勉強します",p:"べんきょうします",j:"공부합니다"}] },
+          { ja:"어느 것이 당신의 가방입니까?", zh:"どれがあなたのかばんですか。", py:"どれがあなたのかばんですか。",
+            g:"<code>どれ</code>＝「어느 것」(3개 이상 중 선택). 2개 중에서는 <code>どちら</code>. 의문사 주어라서 <code>が</code>.",
+            w:[{z:"どれ",p:"どれ",j:"어느 것"},{z:"かばん",p:"かばん",j:"가방"}] },
+          { ja:"어떤 음악을 좋아합니까?", zh:"どんな音楽が好きですか。", py:"どんなおんがくがすきですか。",
+            g:"<code>どんな＋명사</code>＝「어떤 ~」(성질·종류). <code>どの＋명사</code>(어느 ~, 특정 중 선택)와 구별. <code>好き</code>라서 대상은 <code>が</code>.",
+            w:[{z:"どんな",p:"どんな",j:"어떤"},{z:"音楽",p:"おんがく",j:"음악"},{z:"好き",p:"すき",j:"좋아함"}] },
+          { ja:"귤은 몇 개 있습니까?", zh:"みかんはいくつありますか。", py:"みかんはいくつありますか。",
+            g:"<code>いくつ</code>＝「몇 개」(고유수사 개수)·「몇 살」(나이). 「몇 개?」의 범용 의문. 비슷한 <code>何個(なんこ)</code>도 가능.",
+            w:[{z:"いくつ",p:"いくつ",j:"몇 개"},{z:"ありますか",p:"ありますか",j:"있습니까"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 13, title: "비교·정도 より・一番・あまり",
+        sentences: [
+          { ja:"전철은 버스보다 빠릅니다.", zh:"電車はバスより速いです。", py:"でんしゃはバスよりはやいです。",
+            g:"<code>〜より</code>＝「~보다」(비교 기준). 「A は B より ~」＝「A는 B보다 ~」. 한국어 「보다」와 어순·의미가 동일.",
+            w:[{z:"電車",p:"でんしゃ",j:"전철"},{z:"バス",p:"バス",j:"버스"},{z:"より",p:"より",j:"보다"},{z:"速い",p:"はやい",j:"빠르다"}] },
+          { ja:"커피보다 차를 더 좋아합니다.", zh:"コーヒーよりお茶のほうが好きです。", py:"コーヒーよりおちゃのほうがすきです。",
+            g:"<code>〜のほうが</code>＝「~쪽이/~가 더」(선택된 쪽). 「BよりAのほうが」＝B보다 A가 더. <code>好き</code>라서 <code>が</code>.",
+            w:[{z:"お茶",p:"おちゃ",j:"차"},{z:"ほう",p:"ほう",j:"쪽"},{z:"が",p:"が",j:"가"}] },
+          { ja:"일본과 한국 중 어느 쪽이 가깝습니까?", zh:"日本と韓国とどちらが近いですか。", py:"にほんとかんこくとどちらがちかいですか。",
+            g:"둘 중 비교 의문은 「A と B と どちらが ~ですか」＝「A와 B 중 어느 쪽이 ~?」. 답은 「Bのほうが~」. <code>どちら</code>＝어느 쪽.",
+            w:[{z:"と",p:"と",j:"과"},{z:"どちら",p:"どちら",j:"어느 쪽"},{z:"近い",p:"ちかい",j:"가깝다"}] },
+          { ja:"과일 중에서 사과를 가장 좋아합니다.", zh:"果物の中でりんごが一番好きです。", py:"くだもののなかでりんごがいちばんすきです。",
+            g:"최상급은 <code>一番(いちばん)＋형용사</code>＝「가장/제일」. 범위는 <code>〜の中で</code>(~중에서). <code>一番</code>은 「1번」이자 「제일」.",
+            w:[{z:"果物",p:"くだもの",j:"과일"},{z:"中で",p:"なかで",j:"중에서"},{z:"一番",p:"いちばん",j:"가장"}] },
+          { ja:"오늘은 어제보다 시원합니다.", zh:"今日は昨日より涼しいです。", py:"きょうはきのうよりすずしいです。",
+            g:"<code>より</code>로 두 시점·대상을 비교. <code>涼しい</code>(시원하다)↔<code>暑い</code>(덥다). 날씨 표현 빈출.",
+            w:[{z:"涼しい",p:"すずしい",j:"시원하다"},{z:"より",p:"より",j:"보다"}] },
+          { ja:"이 가방은 조금 비쌉니다.", zh:"このかばんは少し高いです。", py:"このかばんはすこしたかいです。",
+            g:"정도 부사: <code>少し</code>(조금)＜<code>とても</code>(매우). <code>ちょっと</code>는 <code>少し</code>의 회화체. 형용사 앞에 두어 정도를 조절.",
+            w:[{z:"少し",p:"すこし",j:"조금"},{z:"高い",p:"たかい",j:"비싸다"}] },
+          { ja:"더 싼 것은 있습니까?", zh:"もっと安いのはありますか。", py:"もっとやすいのはありますか。",
+            g:"<code>もっと</code>＝「더/더욱」(비교 증가). <code>安いの</code>의 <code>の</code>＝「~인 것」(명사 대용). 쇼핑 빈출 표현.",
+            w:[{z:"もっと",p:"もっと",j:"더"},{z:"安い",p:"やすい",j:"싸다"},{z:"の",p:"の",j:"것"}] },
+          { ja:"이 영화는 별로 재미있지 않습니다.", zh:"この映画はあまり面白くないです。", py:"このえいがはあまりおもしろくないです。",
+            g:"<code>あまり〜ない</code>＝「별로 ~않다」. 반드시 부정과 호응(한국어와 동일). 완전 부정은 <code>全然〜ない</code>(전혀 ~않다).",
+            w:[{z:"あまり",p:"あまり",j:"별로"},{z:"面白くない",p:"おもしろくない",j:"재미없다"}] },
+          { ja:"한자는 전혀 모릅니다.", zh:"漢字は全然分かりません。", py:"かんじはぜんぜんわかりません。",
+            g:"<code>全然(ぜんぜん)〜ない</code>＝「전혀 ~않다」(강한 부정). <code>分かりません</code>＝모릅니다. <code>あまり</code>보다 강한 부정.",
+            w:[{z:"漢字",p:"かんじ",j:"한자"},{z:"全然",p:"ぜんぜん",j:"전혀"},{z:"分かりません",p:"わかりません",j:"모릅니다"}] },
+          { ja:"야마다 씨는 반에서 키가 가장 큽니다.", zh:"山田さんはクラスで一番背が高いです。", py:"やまださんはクラスでいちばんせがたかいです。",
+            g:"범위가 장소·집단이면 <code>〜で</code>(<code>クラスで</code>＝반에서). <code>背が高い</code>＝「키가 크다」(관용). 최상급 <code>一番</code>.",
+            w:[{z:"クラス",p:"クラス",j:"반"},{z:"背",p:"せ",j:"키"},{z:"高い",p:"たかい",j:"크다·높다"}] }
+        ]
+      },
+      {
+        hsk: 5, num: 14, title: "접속·이유·목적 + でしょう",
+        sentences: [
+          { ja:"비싸니까, 사지 않습니다.", zh:"高いですから、買いません。", py:"たかいですから、かいません。",
+            g:"<code>〜から</code>＝「~니까/~므로」(이유). 이유＋から＋결과 순(한국어와 동일). 정중체에서는 <code>ですから/ますから</code>로 접속.",
+            w:[{z:"高い",p:"たかい",j:"비싸다"},{z:"から",p:"から",j:"니까"},{z:"買いません",p:"かいません",j:"사지 않습니다"}] },
+          { ja:"일본어는 어렵지만, 재미있습니다.", zh:"日本語は難しいですが、面白いです。", py:"にほんごはむずかしいですが、おもしろいです。",
+            g:"<code>〜が</code>＝「~지만」(역접). 문장 끝의 <code>が</code>는 「하지만」. <code>けど/けれども</code>도 같은 뜻(더 회화체).",
+            w:[{z:"難しい",p:"むずかしい",j:"어렵다"},{z:"が",p:"が",j:"지만"},{z:"面白い",p:"おもしろい",j:"재미있다"}] },
+          { ja:"내일은 비가 오겠지요.", zh:"明日は雨でしょう。", py:"あしたはあめでしょう。",
+            g:"<code>でしょう</code>＝「~겠지요/~일 것입니다」(추측). <code>です</code>의 추측형. 일기예보·완곡한 단정에 빈출. 한국어 「~겠지요」.",
+            w:[{z:"雨",p:"あめ",j:"비"},{z:"でしょう",p:"でしょう",j:"겠지요"}] },
+          { ja:"피곤하니까, 일찍 잡니다.", zh:"疲れましたから、早く寝ます。", py:"つかれましたから、はやくねます。",
+            g:"동사 과거＋<code>から</code>로도 이유. <code>疲れました</code>(피곤합니다). <code>早く</code>＝い형용사 <code>早い</code>의 부사형(い→く)＝「일찍/빨리」.",
+            w:[{z:"疲れました",p:"つかれました",j:"피곤합니다"},{z:"早く",p:"はやく",j:"일찍"},{z:"寝ます",p:"ねます",j:"잡니다"}] },
+          { ja:"백화점에 쇼핑하러 갑니다.", zh:"デパートへ買い物に行きます。", py:"デパートへかいものにいきます。",
+            g:"「명사＋に行く」도 목적 「~하러 가다」(<code>買い物に行く</code>＝쇼핑하러 가다). 동작성 명사(買い物·散歩·旅行)에 <code>に</code>.",
+            w:[{z:"デパート",p:"デパート",j:"백화점"},{z:"買い物",p:"かいもの",j:"쇼핑"},{z:"に",p:"に",j:"하러"}] },
+          { ja:"오늘은 바쁩니다. 그리고 내일도 바쁩니다.", zh:"今日は忙しいです。それから、明日も忙しいです。", py:"きょうはいそがしいです。それから、あしたもいそがしいです。",
+            g:"<code>それから</code>＝「그리고/그 다음에」(추가·순서). 문장과 문장을 잇는 접속사. <code>そして</code>도 「그리고」.",
+            w:[{z:"忙しい",p:"いそがしい",j:"바쁘다"},{z:"それから",p:"それから",j:"그리고"}] },
+          { ja:"초밥을 좋아합니다. 하지만 비쌉니다.", zh:"すしが好きです。でも、高いです。", py:"すしがすきです。でも、たかいです。",
+            g:"<code>でも</code>＝「하지만/그래도」(역접 접속사). 문두에서 앞 문장을 뒤집음. 문중의 <code>が/けど</code>와 역할이 비슷.",
+            w:[{z:"でも",p:"でも",j:"하지만"},{z:"高い",p:"たかい",j:"비싸다"}] },
+          { ja:"비가 오고 있으니까, 외출하지 않습니다.", zh:"雨が降っていますから、出かけません。", py:"あめがふっていますから、でかけません。",
+            g:"<code>〜ていますから</code>＝상태·진행＋이유. <code>降る→降っています</code>(비가 오고 있다). <code>出かける</code>＝외출하다.",
+            w:[{z:"降っています",p:"ふっています",j:"오고 있습니다"},{z:"出かけません",p:"でかけません",j:"외출하지 않습니다"}] },
+          { ja:"이 가게는 쌉니다. 그래서 사람이 많습니다.", zh:"この店は安いです。だから、人が多いです。", py:"このみせはやすいです。だから、ひとがおおいです。",
+            g:"<code>だから</code>＝「그래서/그러니까」(인과 접속사). 문두에서 이유→결과를 이음. <code>多い</code>(많다)는 <strong>명사 수식 시 <code>多くの</code></strong>로 형태가 바뀜에 주의.",
+            w:[{z:"だから",p:"だから",j:"그래서"},{z:"人",p:"ひと",j:"사람"},{z:"多い",p:"おおい",j:"많다"}] },
+          { ja:"아마 그도 오겠지요.", zh:"たぶん彼も来るでしょう。", py:"たぶんかれもくるでしょう。",
+            g:"<code>たぶん〜でしょう</code>＝「아마 ~겠지요」(추측 호응). 동사 보통형＋<code>でしょう</code>로 추측. <code>来る(くる)</code>는 불규칙 동사.",
+            w:[{z:"たぶん",p:"たぶん",j:"아마"},{z:"彼",p:"かれ",j:"그"},{z:"来る",p:"くる",j:"오다"},{z:"でしょう",p:"でしょう",j:"겠지요"}] }
+        ]
+      }
+    ];
+
+    // ========================================================================
+    // COURSE INTROS (each course's learning points)
+    // ========================================================================
+    const COURSE_INTROS = [
+      // N5 - C1
+      { overview: "일본어의 가장 기본인 「N은 N입니다(です)」 구문과 그 부정·과거·의문을 익힙니다. 주제 조사 は와 소유의 の도 함께 배웁니다.",
+        points: ["「N＋は＋N＋です」＝~은/는 ~입니다 / 부정 <code>じゃありません</code>","의문 <code>か</code>(어순 그대로 끝에 추가)","과거 <code>でした</code> / 명사 연결 <code>で</code>(~이고)","첨가 <code>も</code>(~도), 소유 <code>の</code>(~의)","주제 <code>は</code>는 발음이 「와」, 경칭 <code>〜さん</code>"] },
+      // N5 - C2
+      { overview: "「이것·그것·저것」(これ系)과 명사를 꾸미는 「이·그·저」(この系), 장소의 「여기·거기·저기」(ここ系)를 정리. 소유·명사 대용의 の도 확장합니다.",
+        points: ["사물 <code>これ/それ/あれ/どれ</code>(이/그/저/어느 것)","명사 수식 <code>この/その/あの/どの＋명사</code>","장소 <code>ここ/そこ/あそこ/どこ</code>","높임 <code>こちら / 方(かた) / どなた</code>","<code>誰の</code>＝누구의 것(の의 명사 대용), 가격 <code>いくら</code>"] },
+      // N5 - C3
+      { overview: "문장의 뼈대가 되는 세 조사 は(주제)·が(주어)·を(목적어)를 집중적으로. 한국어 「을/를」과 다른 が의 용법(分かる·好き 등)이 핵심입니다.",
+        points: ["<code>を</code>＝목적어 「~을/를」(타동사)","<code>は</code>(주제) vs <code>が</code>(주어·초점)의 구분","의문사 주어에는 반드시 <code>が</code>","「A は B が ~」(A는 B가 ~) 구문","<strong>주의</strong>: <code>分かる</code>의 대상은 <code>が</code>(を 아님)"] },
+      // N5 - C4
+      { overview: "장소·시간·방향·수단·상대를 나타내는 조사 に·で·へ·と와 범위의 から〜まで를 익힙니다. 「동작은 で, 존재·도착은 に」 구분이 관건.",
+        points: ["시간점·도착점·상대의 <code>に</code>(~에/~에게)","동작 장소·수단의 <code>で</code>(~에서/~으로)","방향의 <code>へ</code>(발음 「에」)","동반·열거의 <code>と</code>(~와/과)","범위 <code>から〜まで</code>(~부터 ~까지)"] },
+      // N5 - C5
+      { overview: "정중체 동사 ます형의 4활용(ます/ました/ません/ませんでした)을 시간 표현과 함께. 한자어＋する 동사도 등장합니다.",
+        points: ["현재·미래·습관을 모두 나타내는 <code>ます</code>","과거 <code>ました</code> / 부정 <code>ません</code>","과거부정 <code>ませんでした</code>","불규칙 <code>する→します</code>, 한자어＋する","시간점 <code>に</code>, 특수 읽기 <code>今朝(けさ)</code> 등"] },
+      // N5 - C6
+      { overview: "존재를 나타내는 あります(무생물)·います(생물)와 위치명사(上·下·前·中·近く 등)를 익힙니다. 한국어는 둘 다 「있다」라서 특히 주의가 필요합니다.",
+        points: ["<strong>무생물=<code>あります</code> / 생물=<code>います</code></strong>","「장소に Nが あります/います」","위치명사 <code>上/下/前/後ろ/隣/中/近く</code>","부정 <code>ありません / いません</code>","전면 부정 <code>何も〜ない</code>(아무것도 ~없다)"] },
+      // N5 - C7
+      { overview: "い형용사의 정중형·부정(くない)·과거(かった)·과거부정(くなかった)과 명사 수식·연결(くて)을 익힙니다. です를 과거로 바꾸지 않는 점이 핵심.",
+        points: ["<code>〜い＋です</code>(형용사 자체가 술어)","부정 <code>〜くない</code> / 과거 <code>〜かった</code>","<strong>주의</strong>: <code>面白いでした</code>×","연결 <code>〜くて</code>(~고), 명사 수식은 그대로","불규칙 <code>いい→よくない/よかった</code>"] },
+      // N5 - C8
+      { overview: "な형용사의 활용(です·じゃありません·でした·な+명사)과, 한국어와 조사가 다른 好き·嫌い·上手·下手(が)를 집중적으로 다룹니다.",
+        points: ["な형용사는 명사처럼 <code>です/でした/じゃありません</code>","명사 수식은 <code>〜な＋명사</code>(有名な人)","연결은 <code>〜で</code>(きれいで)","<strong>핵심</strong>: <code>好き/嫌い/上手/下手</code>의 대상은 <code>が</code>","<code>嫌い</code>는 い로 끝나도 な형용사(예외)"] },
+      // N5 - C9
+      { overview: "고유수사(つ)·조수사(本·枚·冊 등)와 날짜·요일·시각의 특수 읽기를 한꺼번에. 「20일＝はつか」 등 불규칙 읽기가 포인트입니다.",
+        points: ["고유수사 <code>一つ〜九つ</code>(ひとつ…)","조수사 <code>〜本/枚/冊/個</code>와 발음 변화","날짜 특수 읽기 <code>ついたち/ふつか/はつか</code>","시각 <code>4時(よじ)/7時(しちじ)/9時(くじ)</code>","가격 <code>いくら / 〜円</code>, 「N を 수량 ください」"] },
+      // N5 - C10
+      { overview: "희망·권유·제안 표현을 모았습니다. 동작 희망 〜たい, 물건 욕구 〜がほしい, 권유 ましょう/ませんか, 목적의 〜に行く를 구분합니다.",
+        points: ["동작 희망 <code>ます형＋たい</code>(い형용사 활용)","물건 욕구 <code>〜がほしい</code>","권유 <code>〜ましょう / ましょうか</code>","부드러운 권유 <code>〜ませんか</code>","목적 <code>ます형＋に行く</code>(~하러 가다), 정중 <code>いかが</code>"] },
+      // N5 - C11
+      { overview: "동사 활용의 핵심 て형으로 의뢰(てください)·진행/상태(ています)·허가(てもいい)·금지(てはいけない)·부정 의뢰(ないでください)를 만듭니다.",
+        points: ["て형 음편: く→いて, う·つ·る→って, ぬ·ぶ·む→んで, す→して","의뢰 <code>〜てください</code> / 금지 <code>〜ないでください</code>","진행·상태 <code>〜ています</code>(結婚しています＝기혼)","허가 <code>〜てもいいですか</code>","금지 <code>〜てはいけません</code>"] },
+      // N5 - C12
+      { overview: "なに·だれ·いつ·どこ·どう·どうして·どれ·どんな·いくつ 등 N5 의문사를 망라. 일본어는 의문사가 들어가도 어순을 바꾸지 않습니다.",
+        points: ["사물 <code>何(なに/なん)</code>, 사람 <code>誰/どなた</code>","시간 <code>いつ</code>(に 안 붙임), 장소 <code>どこ/どちら</code>","방법 <code>どう/どうやって</code>, 이유 <code>どうして/なぜ</code>","선택 <code>どれ/どちら</code>, 성질 <code>どんな</code>","수량 <code>いくつ</code>, 가격 <code>いくら</code>"] },
+      // N5 - C13
+      { overview: "비교 구문 より·のほうが·どちら, 최상급 一番, 정도 부사 とても·少し·もっと·あまり·全然을 익힙니다. 부정과 호응하는 부사가 포인트.",
+        points: ["비교 <code>A は B より ~</code>(~보다)","선택 <code>〜のほうが</code>, 둘 중 <code>どちらが</code>","최상급 <code>〜の中で 一番 ~</code>","정도 <code>とても/少し/もっと/ちょっと</code>","<code>あまり/全然＋부정</code>(별로/전혀 ~않다)"] },
+      // N5 - C14
+      { overview: "문장을 잇는 から(이유)·が(역접)와 접속사 そして·それから·でも·だから, 추측의 でしょう, 목적의 〜に行く를 정리하며 N5를 마무리합니다.",
+        points: ["이유 <code>〜から</code> / 역접 <code>〜が(けど)</code>","추측 <code>〜でしょう</code>(たぶん과 호응)","추가 <code>そして/それから</code>","역접 <code>でも</code> / 인과 <code>だから</code>","목적 <code>명사＋に行く</code>(買い物に行く)"] }
+    ];
+
+    // ========================================================================
+    // STATE & STORAGE
+    // ========================================================================
+    const STORAGE_KEY = "jp-practice-ko-v1";
+    const TOTAL_COURSES_PLANNED = 14;
+
+    const defaultState = {
+      streak: 0, lastDate: "",
+      todayCount: 0, total: 0,
+      currentCourseId: 0,
+      mastered: {},        // { courseId: [sentIdx, ...] }
+      completedCourses: [],
+      favorites: [],       // ["courseId-sentIdx"]
+      recentInCourse: {},  // { courseId: [sentIdx, ...] } (avoid immediate repeats)
+      inProgress: null     // { courseId, sentIdx, input }
+    };
+
+    // 표시용 패스스루(중국어판의 간↔번 변환 자리). 일본어판은 변환 없음.
+    function tx(s) { return s; }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { ...defaultState };
+        return { ...defaultState, ...JSON.parse(raw) };
+      } catch { return { ...defaultState }; }
+    }
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+    const state = loadState();
+
+    function todayStr() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    }
+    function yesterdayStr() {
+      const d = new Date(); d.setDate(d.getDate()-1);
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    }
+    function rollDayIfNeeded() {
+      const today = todayStr();
+      if (state.lastDate !== today) state.todayCount = 0;
+    }
+    rollDayIfNeeded();
+
+    if (state.currentCourseId >= COURSES.length) state.currentCourseId = COURSES.length - 1;
+
+    // ========================================================================
+    // DOM
+    // ========================================================================
+    const $ = (s) => document.querySelector(s);
+    const elStreak = $("#streak");
+    const elTodayCount = $("#today-count");
+    const elDoneCourses = $("#done-courses");
+    const elTotal = $("#total");
+    const elCourseHsk = $("#course-hsk");
+    const elCourseNum = $("#course-num");
+    const elTotalCourses = $("#total-courses");
+    const elCourseTitle = $("#course-title");
+    const elCourseBar = $("#course-bar");
+    const elMasteredCount = $("#mastered-count");
+    const elQProgress = $("#q-progress");
+    const elQuestion = $("#question-ja");
+    const elInput = $("#answer-input");
+    const elCheckBtn = $("#check-btn");
+    const elHintBtn = $("#hint-btn");
+    const elSkipBtn = $("#skip-btn");
+    const elHintArea = $("#hint-area");
+    const elResult = $("#result-area");
+    const elFavBtn = $("#fav-btn");
+    const elCompleteModal = $("#complete-modal");
+    const elOpenIntroBtn = $("#open-intro-btn");
+    const elResetCourseBtn = $("#reset-course-btn");
+    const elNextCourseBtn = $("#next-course-btn");
+    const elReplayCourseBtn = $("#replay-course-btn");
+
+    // Views
+    const views = {
+      home: $("#view-home"),
+      level: $("#view-level"),
+      intro: $("#view-intro"),
+      practice: $("#view-practice")
+    };
+    const elLevelNum = $("#level-num");
+    const elLevelCourses = $("#level-courses");
+    const elIntroHsk = $("#intro-hsk");
+    const elIntroNum = $("#intro-num");
+    const elIntroTitle = $("#intro-title");
+    const elIntroOverview = $("#intro-overview");
+    const elIntroPoints = $("#intro-points");
+    const elIntroStartBtn = $("#intro-start-btn");
+
+    elTotalCourses.textContent = COURSES.length; // actual count
+
+    // ========================================================================
+    // VIEW MANAGEMENT
+    // ========================================================================
+    let currentView = "home";
+    let selectedLevel = 1;
+
+    function showView(name) {
+      Object.entries(views).forEach(([k, el]) => {
+        if (k === name) el.removeAttribute("hidden");
+        else el.setAttribute("hidden", "");
+      });
+      currentView = name;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderHome() {
+      [5, 4, 3, 2, 1].forEach(hsk => {
+        const total = COURSES.filter(c => c.hsk === hsk).length;
+        if (total === 0) return; // 준비 중 카드는 그대로
+        const done = COURSES.reduce((acc, c, i) => {
+          return acc + (c.hsk === hsk && masteredList(i).length >= c.sentences.length ? 1 : 0);
+        }, 0);
+        const el = document.querySelector(`[data-hsk-progress="${hsk}"]`);
+        if (!el) return;
+        const doneTag = done > 0 ? ` <span class="done-tag">✓ ${done}</span>` : "";
+        el.innerHTML = `${total} 코스${doneTag}`;
+      });
+    }
+
+    function renderLevelView(hsk) {
+      selectedLevel = hsk;
+      elLevelNum.textContent = hsk;
+      const items = COURSES.map((c, i) => ({ c, i })).filter(x => x.c.hsk === hsk);
+      const html = items.map(({ c, i }) => {
+        const mc = masteredList(i).length;
+        const total = c.sentences.length;
+        const done = mc >= total;
+        const isCurrent = i === state.currentCourseId;
+        const cls = ["course-card", done ? "done" : "", isCurrent ? "current" : ""].filter(Boolean).join(" ");
+        const pct = (mc / total) * 100;
+        const status = done ? "✓ 완료" : `${mc} / ${total}`;
+        return `
+          <button class="${cls}" data-course-id="${i}">
+            <div class="cc-head">
+              <span class="cc-num">Course ${i + 1}</span>
+              <span class="cc-status ${done ? 'done' : ''}">${status}</span>
+            </div>
+            <div class="cc-title">${c.title}</div>
+            <div class="cc-bar-wrap">
+              <div class="cc-track"><div class="cc-bar" style="width:${pct}%"></div></div>
+            </div>
+          </button>
+        `;
+      }).join("");
+      elLevelCourses.innerHTML = html;
+      elLevelCourses.querySelectorAll("[data-course-id]").forEach(el => {
+        el.addEventListener("click", () => {
+          const id = parseInt(el.dataset.courseId);
+          renderIntroView(id);
+        });
+      });
+    }
+
+    function renderIntroView(courseId) {
+      state.currentCourseId = courseId;
+      saveState();
+      const c = COURSES[courseId];
+      const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
+      elIntroHsk.textContent = c.hsk;
+      elIntroNum.textContent = courseId + 1;
+      elIntroTitle.textContent = c.title;
+      elIntroOverview.textContent = intro.overview;
+      elIntroPoints.innerHTML = intro.points.map(p => `<li>${tx(p)}</li>`).join("");
+      const mc = masteredList(courseId).length;
+      const total = c.sentences.length;
+      const done = mc >= total;
+      elIntroStartBtn.textContent = done ? "🌸 다시 도전" : (mc > 0 ? "이어서 도전 ✿" : "10문제 도전 ✿");
+      showView("intro");
+    }
+
+    function startPractice(forceSentIdx) {
+      renderHeader();
+      showView("practice");
+      const ip = state.inProgress;
+      let targetIdx = (typeof forceSentIdx === "number") ? forceSentIdx : null;
+      if (targetIdx == null
+          && ip && ip.courseId === state.currentCourseId
+          && !masteredList(state.currentCourseId).includes(ip.sentIdx)) {
+        targetIdx = ip.sentIdx;
+      }
+      if (targetIdx != null) {
+        const course = getCourse(state.currentCourseId);
+        if (course && course.sentences[targetIdx]) {
+          currentSent = course.sentences[targetIdx];
+          currentSentIdx = targetIdx;
+          checked = false;
+          elQuestion.textContent = currentSent.ja;
+          elInput.value = (ip && ip.sentIdx === targetIdx ? (ip.input || "") : "");
+          elInput.disabled = false;
+          elCheckBtn.disabled = false;
+          elInput.focus();
+          elHintArea.innerHTML = "";
+          elResult.innerHTML = "";
+          renderFav();
+          renderHeader();
+          return;
+        }
+      }
+      pickNext();
+    }
+
+    let currentSent = null;
+    let currentSentIdx = -1;
+    let checked = false;
+
+    // 연습 중인 진행 상태를 저장 (미응답 문장 + 입력 중인 텍스트)
+    function saveInProgress() {
+      if (currentView !== "practice") return;
+      if (!currentSent || currentSentIdx < 0) return;
+      if (checked) return; // 채점 완료된 문장은 진행 중으로 취급하지 않음
+      state.inProgress = {
+        courseId: state.currentCourseId,
+        sentIdx: currentSentIdx,
+        input: elInput.value || ""
+      };
+      saveState();
+    }
+
+    // ========================================================================
+    // TTS
+    // ========================================================================
+    let jaVoice = null;
+    function pickJaVoice() {
+      if (!window.speechSynthesis) return;
+      const voices = window.speechSynthesis.getVoices();
+      if (!voices || !voices.length) return;
+      const preferred = ["Kyoko","O-ren","Otoya","Hattori",
+        "Microsoft Nanami","Microsoft Ayumi","Microsoft Haruka",
+        "Google 日本語"];
+      jaVoice =
+        voices.find(v => /^ja[-_]JP/i.test(v.lang) && preferred.some(n => v.name.includes(n))) ||
+        voices.find(v => /^ja[-_]JP/i.test(v.lang)) ||
+        voices.find(v => /^ja/i.test(v.lang)) || null;
+    }
+    if (window.speechSynthesis) {
+      pickJaVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickJaVoice);
+    }
+    function speak(text) {
+      try {
+        const synth = window.speechSynthesis;
+        if (!synth) return;
+        synth.cancel();
+        if (!jaVoice) pickJaVoice();
+        const u = new SpeechSynthesisUtterance(text);
+        if (jaVoice) { u.voice = jaVoice; u.lang = jaVoice.lang; }
+        else u.lang = "ja-JP";
+        u.rate = 0.9;
+        synth.speak(u);
+      } catch (e) {}
+    }
+
+    // ========================================================================
+    // CORE LOGIC
+    // ========================================================================
+    function getCourse(id) { return COURSES[id]; }
+    function masteredList(id) { return state.mastered[id] || []; }
+    function isCompleted(id) {
+      const c = getCourse(id);
+      return c && masteredList(id).length >= c.sentences.length;
+    }
+    function markMastered(courseId, sentIdx) {
+      if (!state.mastered[courseId]) state.mastered[courseId] = [];
+      if (!state.mastered[courseId].includes(sentIdx)) {
+        state.mastered[courseId].push(sentIdx);
+      }
+      if (isCompleted(courseId) && !state.completedCourses.includes(courseId)) {
+        state.completedCourses.push(courseId);
+      }
+    }
+    function favKey(courseId, sentIdx) { return `${courseId}-${sentIdx}`; }
+    function isFavorite(courseId, sentIdx) {
+      return state.favorites.includes(favKey(courseId, sentIdx));
+    }
+    function toggleFavorite() {
+      if (currentSentIdx === -1) return;
+      const key = favKey(state.currentCourseId, currentSentIdx);
+      const idx = state.favorites.indexOf(key);
+      if (idx >= 0) state.favorites.splice(idx, 1);
+      else state.favorites.push(key);
+      saveState();
+      renderFav();
+    }
+    function renderFav() {
+      const on = isFavorite(state.currentCourseId, currentSentIdx);
+      elFavBtn.classList.toggle("active", on);
+      elFavBtn.textContent = on ? "⭐" : "☆";
+    }
+
+    function pickNext() {
+      const course = getCourse(state.currentCourseId);
+      if (!course) return;
+
+      // 다른 문장으로 이동하므로 이전 진행 중 저장은 폐기
+      state.inProgress = null;
+
+      const mastered = masteredList(state.currentCourseId);
+      if (mastered.length >= course.sentences.length) {
+        showCompleteModal();
+        return;
+      }
+
+      const unmastered = course.sentences
+        .map((s, i) => ({ s, i }))
+        .filter(({ i }) => !mastered.includes(i));
+
+      const recent = state.recentInCourse[state.currentCourseId] || [];
+      const fresh = unmastered.filter(({ i }) => !recent.includes(i));
+      const pool = fresh.length > 0 ? fresh : unmastered;
+
+      const choice = pool[Math.floor(Math.random() * pool.length)];
+      currentSent = choice.s;
+      currentSentIdx = choice.i;
+      checked = false;
+
+      if (!state.recentInCourse[state.currentCourseId]) state.recentInCourse[state.currentCourseId] = [];
+      state.recentInCourse[state.currentCourseId].push(currentSentIdx);
+      const maxRecent = Math.min(3, Math.max(1, course.sentences.length - mastered.length - 1));
+      while (state.recentInCourse[state.currentCourseId].length > maxRecent) {
+        state.recentInCourse[state.currentCourseId].shift();
+      }
+      saveState();
+
+      elQuestion.textContent = currentSent.ja;
+      elInput.value = "";
+      elInput.disabled = false;
+      elCheckBtn.disabled = false;
+      elInput.focus();
+      elHintArea.innerHTML = "";
+      elResult.innerHTML = "";
+      renderFav();
+      renderHeader();
+    }
+
+    // Retry the SAME sentence without picking a new one
+    function retryCurrent() {
+      if (!currentSent) return;
+      checked = false;
+      elInput.value = "";
+      elInput.disabled = false;
+      elCheckBtn.disabled = false;
+      elHintArea.innerHTML = "";
+      elResult.innerHTML = "";
+      elInput.focus();
+    }
+
+    function renderHeader() {
+      const course = getCourse(state.currentCourseId);
+      if (!course) return;
+      elCourseHsk.textContent = course.hsk;
+      elCourseNum.textContent = state.currentCourseId + 1;
+      elCourseTitle.textContent = course.title;
+      const mc = masteredList(state.currentCourseId).length;
+      const total = course.sentences.length;
+      elMasteredCount.textContent = mc;
+      elCourseBar.style.width = `${(mc / total) * 100}%`;
+      elQProgress.textContent = mc + 1 > total ? total : (mc + 1);
+    }
+
+    function renderStats() {
+      elStreak.textContent = state.streak;
+      elTodayCount.textContent = state.todayCount;
+      elDoneCourses.textContent = state.completedCourses.length;
+      elTotal.textContent = state.total;
+      elTodayCount.classList.toggle("goal-met", state.todayCount >= 10);
+    }
+
+    // ========================================================================
+    // CHECK ANSWER
+    // ========================================================================
+    function normalize(s) {
+      return (s || "")
+        .replace(/[\s　]/g, "")
+        .replace(/[，。．、！？!?,.;:；：]/g, "")
+        .trim();
+    }
+    // 매칭용 정규화(공백·구두점 제거).
+    function canonical(s) {
+      return normalize(s);
+    }
+    function checkAlternatives(user) {
+      const u = canonical(user);
+      if (canonical(currentSent.zh) === u) return true;
+      if (currentSent.alts) return currentSent.alts.some(a => canonical(a) === u);
+      return false;
+    }
+    function compareAnswer(user, correct) {
+      const u = normalize(user), c = normalize(correct);
+      if (u === c) return { verdict: "correct" };
+      if (u.length === 0) return { verdict: "wrong", diff: "（입력 없음）" };
+      const m = u.length, n = c.length;
+      const dp = Array.from({length: m+1}, () => new Array(n+1).fill(0));
+      for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) {
+        if (u[i-1] === c[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+        else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+      }
+      const lcs = dp[m][n];
+      const similarity = (2*lcs)/(m+n);
+      let i = m, j = n; const ops = [];
+      while (i > 0 && j > 0) {
+        if (u[i-1] === c[j-1]) { ops.push({type:"ok",ch:c[j-1]}); i--; j--; }
+        else if (dp[i-1][j] >= dp[i][j-1]) { ops.push({type:"extra",ch:u[i-1]}); i--; }
+        else { ops.push({type:"miss",ch:c[j-1]}); j--; }
+      }
+      while (i > 0) { ops.push({type:"extra",ch:u[i-1]}); i--; }
+      while (j > 0) { ops.push({type:"miss",ch:c[j-1]}); j--; }
+      ops.reverse();
+      const diff = ops.map(op => {
+        if (op.type === "ok") return `<span class="diff-correct">${op.ch}</span>`;
+        if (op.type === "miss") return `<span class="diff-missing">${op.ch}</span>`;
+        return `<span class="diff-wrong">${op.ch}</span>`;
+      }).join("");
+      return { verdict: similarity > 0.7 ? "partial" : "wrong", diff, similarity };
+    }
+
+    function renderResult(user) {
+      const cmp = compareAnswer(user, currentSent.zh);
+      const isCorrect = checkAlternatives(user) || cmp.verdict === "correct";
+
+      let alreadyMastered = masteredList(state.currentCourseId).includes(currentSentIdx);
+      let verdictHTML;
+      if (isCorrect) {
+        const badge = alreadyMastered ? "" : `<span class="mastered-badge">✿ +1 마스터</span>`;
+        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">🌸</span>완벽해요！正解！${badge}</div>`;
+      } else if (cmp.verdict === "partial") {
+        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">🌷</span>아쉬워요！이 문장을 다시 도전해 보세요</div>`;
+      } else {
+        verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">💭</span>모범 답안을 외우고 다시 도전</div>`;
+      }
+
+      const wordsHTML = currentSent.w.map(w => `
+        <div class="word-item">
+          <div class="word-zh zh">${tx(w.z)}</div>
+          <div class="word-pinyin">${w.p}</div>
+          <div class="word-ja">${w.j}</div>
+        </div>
+      `).join("");
+
+      const yourAnsHTML = (user && !isCorrect)
+        ? `<div class="your-answer"><span style="color:var(--ink-mute);font-size:11px;">내 답안：</span><br>${cmp.diff || user}</div>` : "";
+
+      elResult.dataset.courseId = state.currentCourseId;
+      elResult.dataset.sentIdx = currentSentIdx;
+      elResult.innerHTML = `
+        <div class="result">
+          ${verdictHTML}
+          <div class="answer-block">
+            <div class="label">모범 답안</div>
+            <div class="answer-zh zh">
+              <span>${tx(currentSent.zh)}</span>
+              <button class="speak-btn" id="speak-btn" title="발음 듣기">🔊</button>
+            </div>
+            <div class="answer-pinyin">${currentSent.py}</div>
+            ${yourAnsHTML}
+          </div>
+          <div class="section-title">문법 포인트</div>
+          <div class="grammar-block">${tx(currentSent.g)}</div>
+          <div class="section-title">단어</div>
+          <div class="words-grid">${wordsHTML}</div>
+          <div class="next-wrap">
+            <button class="btn btn-next" id="next-btn">${isCorrect ? "다음 문제 ✿" : "다시 도전 →"}</button>
+          </div>
+        </div>
+      `;
+      $("#speak-btn").addEventListener("click", () => speak(currentSent.zh));
+      $("#next-btn").addEventListener("click", () => {
+        if (isCorrect) {
+          pickNext();
+        } else {
+          retryCurrent();
+        }
+      });
+
+      if (!checked) {
+        const today = todayStr();
+        if (state.lastDate === today) {
+          state.todayCount += 1;
+        } else {
+          if (state.lastDate === yesterdayStr()) state.streak += 1;
+          else state.streak = 1;
+          state.lastDate = today;
+          state.todayCount = 1;
+        }
+        state.total += 1;
+        if (isCorrect && !alreadyMastered) {
+          markMastered(state.currentCourseId, currentSentIdx);
+        }
+        // 채점했으므로 진행 중 저장을 클리어
+        state.inProgress = null;
+        renderStats();
+        renderHeader();
+        saveState();
+
+        if (isCompleted(state.currentCourseId) && isCorrect && !alreadyMastered) {
+          setTimeout(showCompleteModal, 900);
+        }
+      }
+      checked = true;
+      elCheckBtn.disabled = true;
+      elInput.disabled = true;
+      setTimeout(() => speak(currentSent.zh), 350);
+    }
+
+    // ========================================================================
+    // MODALS
+    // ========================================================================
+    function openModal(modal) { modal.classList.add("open"); }
+    function closeModal(modal) { modal.classList.remove("open"); }
+    document.addEventListener("click", (e) => {
+      if (e.target.dataset.close !== undefined) {
+        e.target.closest(".modal").classList.remove("open");
+      } else if (e.target.classList.contains("modal")) {
+        e.target.classList.remove("open");
+      }
+    });
+
+    function showCompleteModal() {
+      const isLast = state.currentCourseId === COURSES.length - 1;
+      elNextCourseBtn.textContent = isLast ? "🌸 홈으로 돌아가기" : "다음 코스로 →";
+      openModal(elCompleteModal);
+    }
+
+    // 완료 모달: 다음 코스로 → 다음 코스의 Intro 화면
+    elNextCourseBtn.addEventListener("click", () => {
+      closeModal(elCompleteModal);
+      if (state.currentCourseId < COURSES.length - 1) {
+        renderIntroView(state.currentCourseId + 1);
+      } else {
+        renderHome();
+        showView("home");
+      }
+    });
+
+    // 완료 모달: 다시 한 번 → 현재 코스를 리셋하고 재개
+    elReplayCourseBtn.addEventListener("click", () => {
+      closeModal(elCompleteModal);
+      state.mastered[state.currentCourseId] = [];
+      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+      saveState();
+      renderHeader();
+      pickNext();
+    });
+
+    // 연습 화면 → 포인트 다시 보기 (Intro 화면으로 돌아감)
+    elOpenIntroBtn.addEventListener("click", () => {
+      renderIntroView(state.currentCourseId);
+    });
+
+    // 연습 화면 → 이 코스를 리셋
+    elResetCourseBtn.addEventListener("click", () => {
+      if (!confirm("이 코스의 진도를 리셋하시겠습니까？")) return;
+      state.mastered[state.currentCourseId] = [];
+      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+      saveState();
+      renderHeader();
+      pickNext();
+    });
+
+    // HSK 카드 클릭 → 해당 HSK의 코스 목록으로
+    document.querySelectorAll(".hsk-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const hsk = parseInt(card.dataset.hsk);
+        renderLevelView(hsk);
+        showView("level");
+      });
+    });
+
+    // 타이틀 클릭 → 톱(HOME)으로 (진행 중인 경우 기록을 저장)
+    function goHome() {
+      saveInProgress();
+      renderHome();
+      renderStats();
+      showView("home");
+    }
+    const elHomeLink = document.getElementById("home-link");
+    if (elHomeLink) {
+      elHomeLink.addEventListener("click", goHome);
+      elHomeLink.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goHome(); }
+      });
+    }
+
+    // 뒤로 가기 버튼
+    document.querySelectorAll(".back-link").forEach(btn => {
+      btn.addEventListener("click", () => {
+        saveInProgress();
+        const target = btn.dataset.back;
+        if (target === "home") {
+          renderHome();
+          showView("home");
+        } else if (target === "level") {
+          const hsk = currentView === "practice"
+            ? COURSES[state.currentCourseId].hsk
+            : (COURSES[state.currentCourseId] ? COURSES[state.currentCourseId].hsk : selectedLevel);
+          renderLevelView(hsk);
+          showView("level");
+        }
+      });
+    });
+
+    // 입력 중인 텍스트 변경도 저장 (즉시 너무 자주 쓰지 않도록 가볍게 디바운스)
+    let _ipSaveTimer = null;
+    elInput.addEventListener("input", () => {
+      if (!currentSent || checked) return;
+      clearTimeout(_ipSaveTimer);
+      _ipSaveTimer = setTimeout(saveInProgress, 400);
+    });
+
+    // 탭을 닫거나 떠날 때에도 저장
+    window.addEventListener("beforeunload", saveInProgress);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") saveInProgress();
+    });
+
+    // Intro画面 → 練習開始
+    elIntroStartBtn.addEventListener("click", startPractice);
+
+    // ========================================================================
+    // HINT
+    // ========================================================================
+    function showHint() {
+      if (!currentSent) return;
+      const w0 = (currentSent.w && currentSent.w[0]) ? currentSent.w[0] : null;
+      const firstWord = w0 ? w0.z : currentSent.zh.slice(0, 1);
+      const firstYomi = w0 ? w0.p : "";
+      const charCount = currentSent.zh.replace(/[\s。、，．・！？!?,.;:：；「」『』（）()　]/g, "").length;
+      elHintArea.innerHTML = `<div class="hint">첫 단어는 <strong class="zh">${firstWord}</strong>（${firstYomi}）, 총 ${charCount} 글자</div>`;
+    }
+
+    // ========================================================================
+    // EVENT LISTENERS
+    // ========================================================================
+    elCheckBtn.addEventListener("click", () => {
+      if (!currentSent || checked) return;
+      renderResult(elInput.value);
+    });
+    elHintBtn.addEventListener("click", showHint);
+    elSkipBtn.addEventListener("click", pickNext);
+    // Enter로 정답 확인 (Shift+Enter는 줄바꿈). IME 변환 중에는 무시.
+    // 채점에 사용된 Enter가 그대로 「다음」으로 흘러가지 않도록,
+    // 한 번 키를 떼고 나서 (keyup을 거친 후가 아니면) 「다음」을 발화시키지 않음.
+    let enterArmedForNext = false;
+
+    elInput.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.shiftKey) return; // 줄바꿈은 Shift+Enter
+      if (checked) return;
+      e.preventDefault();
+      e.stopPropagation();
+      enterArmedForNext = false; // 채점 직후는 disarmed
+      elCheckBtn.click();
+    });
+
+    // 채점 후 (input이 disabled) Enter로 「다음/다시 한 번」
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.shiftKey || e.metaKey || e.ctrlKey) return;
+      if (currentView !== "practice") return;
+      if (!checked) return;
+      if (!enterArmedForNext) return; // 한 번 keyup을 거치지 않으면 무시
+      const nb = document.getElementById("next-btn");
+      if (nb) { e.preventDefault(); nb.click(); enterArmedForNext = false; }
+    });
+
+    // Enter를 뗀 시점에 「다음」을 arm 함 (키 리피트로 인한 관통 방지)
+    document.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") enterArmedForNext = true;
+    });
+    elFavBtn.addEventListener("click", toggleFavorite);
+
+    // ========================================================================
+    // START
+    // ========================================================================
+    renderStats();
+    renderHome();
+
+    (function handleClipDeepLink() {
+      const m = location.hash.match(/^#c=(\d+)(?:&s=(\d+))?/);
+      if (!m) { showView("home"); return; }
+      const cid = parseInt(m[1], 10);
+      const sid = m[2] != null ? parseInt(m[2], 10) : null;
+      if (!COURSES[cid]) { showView("home"); return; }
+      state.currentCourseId = cid;
+      saveState();
+      const validSid = (sid != null && COURSES[cid].sentences[sid]) ? sid : undefined;
+      startPractice(validSid);
+    })();
+  </script>
+</body>
+</html>
