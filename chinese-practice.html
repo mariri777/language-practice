@@ -691,6 +691,7 @@
   </style>
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
+<script src="daily.js?v=1"></script>
 </head>
 <body>
   <!-- 装飾レイヤー（クリック透過） -->
@@ -2425,6 +2426,8 @@
       state.currentCourseId = courseId;
       saveState();
       const c = COURSES[courseId];
+      // ホームの「つづきから」「連続日数」へ記録
+      if (window.LC) LC.record({ href: 'chinese-practice.html', label: 'Daily 中国語', sub: `HSK${c.hsk} ・ ${c.title}` });
       const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
       elIntroHsk.textContent = c.hsk;
       elIntroNum.textContent = courseId + 1;

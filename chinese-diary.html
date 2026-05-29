@@ -1415,6 +1415,7 @@
 </style>
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
+<script src="daily.js?v=1"></script>
 </head>
 <body>
 <div class="app">
@@ -2529,6 +2530,14 @@ function renderDay(animate = false) {
 }
 
 function doRender(lesson) {
+  // ホームの「つづきから」「連続日数」へ、今このレッスンを開いていることを記録
+  if (window.LC) {
+    LC.record({
+      href:  'chinese-diary.html',
+      label: 'Journal 中文',
+      sub:   `第${lesson.levelNum}課 ・ ${lesson.title.zh}`
+    });
+  }
   document.getElementById('day-num').textContent = String(lesson.levelNum).padStart(2, '0');
   const avail = LESSONS.filter(l => l.hsk === lesson.hsk).length;
   document.getElementById('day-total').textContent = avail;
