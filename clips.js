@@ -7,6 +7,80 @@
 
   const STORAGE_KEY = "language-clips-v1";
 
+  /* ---------- i18n ----------
+     ページの <html lang="..."> を見て切り替える。
+     端末の言語設定ではなく「ツールがどの母国語ユーザー向けに作られたか」に揃える方針。
+     （韓国語ユーザーが日本人向けツールを使うケースなどに整合性を保つため） */
+  const I18N = {
+    ja: {
+      clip: "クリップ", marker: "マーカー",
+      btnClip: "📎 クリップ", btnMarker: "🖍 マーカー",
+      openList: "クリップ一覧を開く", clipList: "クリップ一覧",
+      exportTxt: "テキスト出力", clearAll: "全削除", close: "閉じる",
+      searchPh: "検索...",
+      filterAll: "すべて",
+      kindSentence: "文", kindGrammar: "文法ポイント", kindTip: "Point",
+      kindAnswer: "模範解答", kindWord: "単語", kindSelection: "マーカー / 選択",
+      kindSelectionShort: "マーカー",
+      confirmClear: "すべてのクリップを削除しますか？（マーカーも消えます）",
+      emptyAll: "まだクリップがありません。<br>文や文法ポイントの右上に出る 📎 を押すか、テキストをドラッグして選択するとクリップできます。",
+      emptyMatch: "一致するクリップはありません。",
+      empty: "(空)",
+      gotoSource: "出典へ", copy: "コピー", del: "削除",
+      copied: "✓ コピーした",
+      noClips: "クリップがありません",
+      dateLocale: "ja-JP",
+    },
+    ko: {
+      clip: "클립", marker: "마커",
+      btnClip: "📎 클립", btnMarker: "🖍 마커",
+      openList: "클립 목록 열기", clipList: "클립 목록",
+      exportTxt: "텍스트 내보내기", clearAll: "모두 삭제", close: "닫기",
+      searchPh: "검색...",
+      filterAll: "전체",
+      kindSentence: "문장", kindGrammar: "문법 포인트", kindTip: "Point",
+      kindAnswer: "모범 답안", kindWord: "단어", kindSelection: "마커 / 선택",
+      kindSelectionShort: "마커",
+      confirmClear: "모든 클립을 삭제하시겠습니까? (마커도 함께 사라집니다)",
+      emptyAll: "아직 클립이 없습니다.<br>문장이나 문법 포인트의 오른쪽 위에 나오는 📎를 누르거나, 텍스트를 드래그해 선택하면 클립할 수 있습니다.",
+      emptyMatch: "일치하는 클립이 없습니다.",
+      empty: "(비어 있음)",
+      gotoSource: "원문으로", copy: "복사", del: "삭제",
+      copied: "✓ 복사함",
+      noClips: "클립이 없습니다",
+      dateLocale: "ko-KR",
+    },
+    zh: {
+      // 将来の Chinese-learner UI 用の骨組み（現時点では未使用）
+      clip: "剪藏", marker: "标记",
+      btnClip: "📎 剪藏", btnMarker: "🖍 标记",
+      openList: "打开剪藏列表", clipList: "剪藏列表",
+      exportTxt: "导出文本", clearAll: "全部删除", close: "关闭",
+      searchPh: "搜索...",
+      filterAll: "全部",
+      kindSentence: "句子", kindGrammar: "语法点", kindTip: "Point",
+      kindAnswer: "参考答案", kindWord: "单词", kindSelection: "标记 / 选择",
+      kindSelectionShort: "标记",
+      confirmClear: "确定要删除所有剪藏吗？（标记也会一起消失）",
+      emptyAll: "还没有剪藏。<br>点击句子或语法点右上角的 📎，或拖选文本即可剪藏。",
+      emptyMatch: "没有匹配的剪藏。",
+      empty: "(空)",
+      gotoSource: "查看原文", copy: "复制", del: "删除",
+      copied: "✓ 已复制",
+      noClips: "没有剪藏",
+      dateLocale: "zh-CN",
+    },
+  };
+  function getLocale() {
+    const raw = (document.documentElement.lang || "").toLowerCase();
+    if (raw.startsWith("ko")) return "ko";
+    if (raw.startsWith("zh")) return "zh";
+    return "ja";
+  }
+  const LOCALE = getLocale();
+  const T = I18N[LOCALE] || I18N.ja;
+  function t(key) { return T[key] != null ? T[key] : (I18N.ja[key] || key); }
+
   /* ---------- storage ---------- */
   function loadClips() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
@@ -140,8 +214,8 @@
     btn.id = "clips-fab";
     btn.className = "clips-fab";
     btn.type = "button";
-    btn.setAttribute("aria-label", "クリップ一覧を開く");
-    btn.title = "クリップ";
+    btn.setAttribute("aria-label", t("openList"));
+    btn.title = t("clip");
     btn.innerHTML = `${PAPERCLIP_SVG}<span class="clips-fab-badge" id="clips-fab-badge">0</span>`;
     btn.addEventListener("click", toggleDrawer);
     document.body.appendChild(btn);
@@ -175,26 +249,26 @@
     drawer.id = "clips-drawer";
     drawer.className = "clips-drawer";
     drawer.setAttribute("role", "dialog");
-    drawer.setAttribute("aria-label", "クリップ一覧");
+    drawer.setAttribute("aria-label", t("clipList"));
     drawer.innerHTML = `
       <div class="clips-drawer-head">
-        <h2>クリップ<span class="clips-drawer-count" id="clips-drawer-count"></span></h2>
+        <h2>${escHtml(t("clip"))}<span class="clips-drawer-count" id="clips-drawer-count"></span></h2>
         <div class="clips-drawer-actions">
-          <button type="button" id="clips-export" title="テキスト出力">⇩</button>
-          <button type="button" id="clips-clear" title="全削除">⌫</button>
-          <button type="button" id="clips-close" title="閉じる" aria-label="閉じる">✕</button>
+          <button type="button" id="clips-export" title="${escHtml(t("exportTxt"))}">⇩</button>
+          <button type="button" id="clips-clear" title="${escHtml(t("clearAll"))}">⌫</button>
+          <button type="button" id="clips-close" title="${escHtml(t("close"))}" aria-label="${escHtml(t("close"))}">✕</button>
         </div>
       </div>
       <div class="clips-drawer-search">
-        <input type="search" id="clips-search" placeholder="検索..." />
+        <input type="search" id="clips-search" placeholder="${escHtml(t("searchPh"))}" />
         <select id="clips-filter">
-          <option value="">すべて</option>
-          <option value="sentence">文</option>
-          <option value="grammar">文法ポイント</option>
-          <option value="tip">Point</option>
-          <option value="answer">模範解答</option>
-          <option value="word">単語</option>
-          <option value="selection">マーカー / 選択</option>
+          <option value="">${escHtml(t("filterAll"))}</option>
+          <option value="sentence">${escHtml(t("kindSentence"))}</option>
+          <option value="grammar">${escHtml(t("kindGrammar"))}</option>
+          <option value="tip">${escHtml(t("kindTip"))}</option>
+          <option value="answer">${escHtml(t("kindAnswer"))}</option>
+          <option value="word">${escHtml(t("kindWord"))}</option>
+          <option value="selection">${escHtml(t("kindSelection"))}</option>
         </select>
       </div>
       <div class="clips-drawer-list" id="clips-drawer-list"></div>
@@ -204,7 +278,7 @@
     document.getElementById("clips-close").addEventListener("click", closeDrawer);
     document.getElementById("clips-clear").addEventListener("click", () => {
       if (!loadClips().length) return;
-      if (confirm("すべてのクリップを削除しますか？（マーカーも消えます）")) {
+      if (confirm(t("confirmClear"))) {
         loadClips().forEach((c) => {
           document.querySelectorAll(`mark.clip-marker[data-clip-id="${cssEsc(c.id)}"]`).forEach(unwrapMark);
         });
@@ -252,15 +326,17 @@
     const list = document.getElementById("clips-drawer-list");
     if (!filtered.length) {
       list.innerHTML = `<div class="clips-empty">${
-        all.length === 0
-          ? "まだクリップがありません。<br>文や文法ポイントの右上に出る 📎 を押すか、テキストをドラッグして選択するとクリップできます。"
-          : "一致するクリップはありません。"
+        all.length === 0 ? t("emptyAll") : t("emptyMatch")
       }</div>`;
       return;
     }
-    const kindLabel = { sentence: "文", grammar: "文法ポイント", tip: "Point", vocab: "単語", word: "単語", selection: "マーカー", answer: "模範解答" };
+    const kindLabel = {
+      sentence: t("kindSentence"), grammar: t("kindGrammar"), tip: t("kindTip"),
+      vocab: t("kindWord"), word: t("kindWord"),
+      selection: t("kindSelectionShort"), answer: t("kindAnswer"),
+    };
     list.innerHTML = filtered.map((c) => {
-      const date = new Date(c.createdAt).toLocaleDateString("ja-JP", { month: "short", day: "numeric" });
+      const date = new Date(c.createdAt).toLocaleDateString(t("dateLocale"), { month: "short", day: "numeric" });
       const co = c.content || {};
       let body = "";
       if (co.main) body += `<div class="clip-main">${escHtml(co.main)}</div>`;
@@ -275,11 +351,11 @@
             <span class="clip-source">${escHtml(c.sourceLabel || "")}</span>
             <span class="clip-date">${date}</span>
           </header>
-          <div class="clip-card-body">${body || '<div class="clip-text">(空)</div>'}</div>
+          <div class="clip-card-body">${body || `<div class="clip-text">${escHtml(t("empty"))}</div>`}</div>
           <footer class="clip-card-foot">
-            ${c.url ? `<button class="clip-act" data-act="goto">出典へ</button>` : ""}
-            <button class="clip-act" data-act="copy">コピー</button>
-            <button class="clip-act danger" data-act="delete">削除</button>
+            ${c.url ? `<button class="clip-act" data-act="goto">${escHtml(t("gotoSource"))}</button>` : ""}
+            <button class="clip-act" data-act="copy">${escHtml(t("copy"))}</button>
+            <button class="clip-act danger" data-act="delete">${escHtml(t("del"))}</button>
           </footer>
         </article>
       `;
@@ -298,7 +374,7 @@
         } else if (act === "copy") {
           copyClip(clip);
           const orig = btn.textContent;
-          btn.textContent = "✓ コピーした";
+          btn.textContent = t("copied");
           setTimeout(() => (btn.textContent = orig), 1200);
         } else if (act === "goto") {
           // 同じパス内 (hash 違い / 同じ URL も含む) では location.href / location.hash 経由だと
@@ -328,11 +404,15 @@
   }
   function exportClips() {
     const all = loadClips();
-    if (!all.length) { alert("クリップがありません"); return; }
-    const kindLabel = { sentence: "文", grammar: "文法ポイント", tip: "Point", vocab: "単語", word: "単語", selection: "マーカー", answer: "模範解答" };
+    if (!all.length) { alert(t("noClips")); return; }
+    const kindLabel = {
+      sentence: t("kindSentence"), grammar: t("kindGrammar"), tip: t("kindTip"),
+      vocab: t("kindWord"), word: t("kindWord"),
+      selection: t("kindSelectionShort"), answer: t("kindAnswer"),
+    };
     const lines = all.map((c) => {
       const co = c.content || {};
-      const date = new Date(c.createdAt).toLocaleString("ja-JP");
+      const date = new Date(c.createdAt).toLocaleString(t("dateLocale"));
       return `[${kindLabel[c.kind] || c.kind}] ${c.sourceLabel || ""} (${date})\n${[co.main, co.pinyin, co.translation, co.text, c.note].filter(Boolean).join("\n")}\n`;
     }).join("\n---\n\n");
     const blob = new Blob([lines], { type: "text/plain;charset=utf-8" });
@@ -427,8 +507,8 @@
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "clip-mark-btn";
-    btn.setAttribute("aria-label", "クリップ");
-    btn.title = "クリップ";
+    btn.setAttribute("aria-label", t("clip"));
+    btn.title = t("clip");
     btn.innerHTML = PAPERCLIP_SVG;
     btn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -461,8 +541,8 @@
     selToolbar.id = "clips-sel-toolbar";
     selToolbar.className = "clips-sel-toolbar";
     selToolbar.innerHTML = `
-      <button type="button" data-act="clip">📎 クリップ</button>
-      <button type="button" data-act="marker">🖍 マーカー</button>
+      <button type="button" data-act="clip">${escHtml(t("btnClip"))}</button>
+      <button type="button" data-act="marker">${escHtml(t("btnMarker"))}</button>
     `;
     document.body.appendChild(selToolbar);
     // mousedown だけ preventDefault（マウスで選択維持）。

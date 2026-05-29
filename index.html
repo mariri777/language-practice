@@ -733,6 +733,127 @@
   }
   footer .meta-foot a { color: var(--ink-3); text-transform: none; letter-spacing: 0.02em; font-weight: 500; }
 
+  /* ============ Hero latest pill ============ */
+  .hero-latest {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 22px;
+    padding: 7px 15px 7px 12px;
+    border: 1px solid var(--hairline);
+    border-radius: 100px;
+    background: color-mix(in srgb, var(--bg-elevated) 70%, transparent);
+    text-decoration: none;
+    max-width: min(440px, 86vw);
+    opacity: 0;
+    animation: fadeIn 900ms var(--ease) 1.9s forwards;
+    transition: border-color 240ms var(--ease), background 240ms var(--ease), transform 240ms var(--ease);
+  }
+  .hero-latest:hover { border-color: var(--red); transform: translateY(-1px); }
+  .hl-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+    animation: hlPulse 2.4s var(--ease) infinite;
+  }
+  @keyframes hlPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(138, 36, 56, 0.40); }
+    50%      { box-shadow: 0 0 0 6px rgba(138, 36, 56, 0); }
+  }
+  .hl-label {
+    font-family: var(--font-display);
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--red);
+    flex-shrink: 0;
+  }
+  .hl-text {
+    font-size: 12.5px;
+    color: var(--ink-2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (max-width: 720px) {
+    .hero-latest { margin-top: 18px; padding: 6px 13px 6px 11px; }
+    .hl-text { font-size: 11.5px; }
+  }
+
+  /* ============ Updates / Changelog ============ */
+  .updates {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .updates-inner {
+    max-width: 720px;
+    padding: 8px 40px 24px;
+  }
+  @media (max-width: 720px) { .updates-inner { padding: 4px 18px 16px; } }
+  .updates-title {
+    font-family: var(--font-mincho);
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    margin: 10px 0 26px;
+    color: var(--ink);
+  }
+  .update-list { list-style: none; margin: 0; padding: 0; }
+  .update-item {
+    display: flex;
+    gap: 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .update-item:first-child { border-top: 0; padding-top: 4px; }
+  @media (max-width: 720px) { .update-item { gap: 14px; padding: 14px 0; } }
+  .update-date {
+    flex-shrink: 0;
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-4);
+    padding-top: 1px;
+    min-width: 86px;
+    letter-spacing: 0.02em;
+  }
+  @media (max-width: 720px) { .update-date { min-width: 62px; font-size: 13px; } }
+  .update-body { flex: 1; min-width: 0; }
+  .update-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .update-tag {
+    font-family: var(--font-display);
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .update-new {
+    background: var(--red); color: #fff;
+    font-family: var(--font-display);
+    font-size: 8px; font-weight: 700;
+    letter-spacing: 0.14em;
+    padding: 3px 7px; border-radius: 3px;
+  }
+  .update-text {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-2);
+  }
+  .update-item.extra { display: none; }
+  .updates.expanded .update-item.extra { display: flex; }
+  .updates-more {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 16px 0 0;
+    background: transparent; border: 0;
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--red); cursor: pointer;
+    padding: 8px 0;
+    transition: color 240ms var(--ease);
+  }
+  .updates-more:hover { color: var(--red-bright); }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.001ms !important;
@@ -740,8 +861,8 @@
     }
   }
 </style>
-<link rel="stylesheet" href="clips.css?v=12">
-<script src="clips.js?v=12" defer></script>
+<link rel="stylesheet" href="clips.css?v=13">
+<script src="clips.js?v=13" defer></script>
 </head>
 <body>
 
@@ -764,6 +885,7 @@
     </h1>
     <p class="hero-tagline">ことばを、すこしずつ、毎日。</p>
     <p class="hero-sub">A daily language collection — Chinese · Korean · Japanese.</p>
+    <a class="hero-latest" id="hero-latest" href="#updates" hidden></a>
   </div>
   <div class="scroll-cue">Select your channel</div>
 </section>
@@ -967,6 +1089,15 @@
 
 </main>
 
+<section class="updates" id="updates" hidden aria-labelledby="updates-title">
+  <div class="updates-inner">
+    <div class="kicker" id="updates-kicker">Changelog</div>
+    <h2 class="updates-title" id="updates-title">更新履歴</h2>
+    <ol class="update-list" id="update-list"></ol>
+    <button class="updates-more" id="updates-more" type="button" hidden></button>
+  </div>
+</section>
+
 <footer class="site">
   <div class="left">
     <span class="seal">&amp;</span>
@@ -1008,6 +1139,7 @@
       }
     });
     moveUnderline(document.querySelector('.tab.active'));
+    renderUpdates(target);
     if (opts.scroll) {
       const nav = document.getElementById('tab-nav');
       const navTop = nav.getBoundingClientRect().top + window.scrollY;
