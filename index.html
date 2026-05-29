@@ -1202,6 +1202,193 @@
       lastScroll = window.scrollY;
     }
   }, { passive: true });
+
+  /* ============================================================
+     更新履歴 / Changelog
+     ------------------------------------------------------------
+     更新を追記するには updates の先頭に1行足すだけ。
+       date : "YYYY-MM-DD"（必須）
+       tag  : 短いラベル。言語別に。無ければ ja を流用
+       text : 更新内容。言語別に。ko / zh は無ければ ja を表示
+     ・最新5件を表示し、6件目以降は「もっと見る」で展開
+     ・14日以内は NEW バッジ
+     ・30日より古い更新はリストから自動で消える
+     ============================================================ */
+  const UPDATE_WINDOW_DAYS = 30;   // この日数を過ぎた更新は自動で非表示
+  const UPDATE_NEW_DAYS    = 14;   // NEW バッジを付ける日数
+  const UPDATE_VISIBLE     = 5;    // 折りたたまず表示する件数
+
+  const updates = [
+    {
+      date: "2026-05-30",
+      tag:  { ja: "全般",  ko: "공통",   zh: "通用" },
+      text: {
+        ja: "文章を選んだときのツールバーを、iPhoneで押しやすい位置に調整しました。",
+        ko: "문장을 선택했을 때 나오는 툴바를 아이폰에서 누르기 쉬운 위치로 조정했어요.",
+        zh: "调整了选中句子时工具栏的位置，iPhone 上更易点按。"
+      }
+    },
+    {
+      date: "2026-05-28",
+      tag:  { ja: "トップ", ko: "홈",     zh: "首页" },
+      text: {
+        ja: "このトップページに「更新履歴」を追加しました。最近の更新がここに並びます。",
+        ko: "이 홈 화면에 ‘업데이트 내역’을 추가했어요. 최근 업데이트가 여기에 표시돼요.",
+        zh: "在首页新增了「更新记录」，最近的更新会显示在这里。"
+      }
+    },
+    {
+      date: "2026-05-24",
+      tag:  { ja: "中文 · Journal", ko: "중국어 · Journal", zh: "中文 · Journal" },
+      text: {
+        ja: "Journal 中文に出典リンクを追加しました。例文の元ページへ飛べます。",
+        ko: "Journal 중국어에 출처 링크를 추가했어요. 예문의 원문 페이지로 이동할 수 있어요.",
+        zh: "为 Journal 中文添加了出处链接，可跳转到例句的原始页面。"
+      }
+    },
+    {
+      date: "2026-05-20",
+      tag:  { ja: "中文 · Tool", ko: "중국어 · Tool", zh: "中文 · Tool" },
+      text: {
+        ja: "Lookup 中文（手書きで漢字を検索）を公開しました。",
+        ko: "Lookup 중국어(손글씨로 한자 검색)를 공개했어요.",
+        zh: "上线了 Lookup 中文（手写查汉字）。"
+      }
+    },
+    {
+      date: "2026-05-15",
+      tag:  { ja: "中文 · Journal", ko: "중국어 · Journal", zh: "中文 · Journal" },
+      text: {
+        ja: "Journal 中文（中国語の短文を書き写す）を公開しました。",
+        ko: "Journal 중국어(중국어 단문 베껴쓰기)를 공개했어요.",
+        zh: "上线了 Journal 中文（抄写中文短句）。"
+      }
+    },
+    {
+      date: "2026-05-10",
+      tag:  { ja: "全般", ko: "공통", zh: "通用" },
+      text: {
+        ja: "スマートフォンでのレイアウトを全体的に見直しました。",
+        ko: "스마트폰에서의 레이아웃을 전반적으로 손봤어요.",
+        zh: "整体优化了手机端的布局。"
+      }
+    }
+  ];
+
+  const UPDATE_UI = {
+    ja: { kicker: "Changelog", title: "更新履歴",        more: "もっと見る", less: "とじる", latest: "最新" },
+    ko: { kicker: "Changelog", title: "업데이트 내역",   more: "더 보기",    less: "접기",   latest: "최신" },
+    zh: { kicker: "Changelog", title: "更新记录",        more: "查看更多",   less: "收起",   latest: "最新" }
+  };
+
+  const DAY_MS = 86400000;
+  function pickLang(obj, lang) { return obj ? (obj[lang] || obj.ja || '') : ''; }
+  function fmtUpdateDate(ts) {
+    const d = new Date(ts);
+    const p = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}.${p(d.getMonth() + 1)}.${p(d.getDate())}`;
+  }
+
+  const updatesEl  = document.getElementById('updates');
+  const moreBtn    = document.getElementById('updates-more');
+  const heroLatest = document.getElementById('hero-latest');
+
+  function renderUpdates(lang) {
+    const t = UPDATE_UI[lang] || UPDATE_UI.ja;
+    const now = Date.now();
+    const live = updates
+      .map(u => ({ ...u, ts: Date.parse(u.date + 'T00:00:00') }))
+      .filter(u => !isNaN(u.ts) && (now - u.ts) <= UPDATE_WINDOW_DAYS * DAY_MS)
+      .sort((a, b) => b.ts - a.ts);
+
+    document.getElementById('updates-kicker').textContent = t.kicker;
+    document.getElementById('updates-title').textContent  = t.title;
+
+    if (!live.length) {
+      updatesEl.hidden = true;
+      heroLatest.hidden = true;
+      return;
+    }
+    updatesEl.hidden = false;
+    updatesEl.classList.remove('expanded');
+
+    const list = document.getElementById('update-list');
+    list.innerHTML = '';
+    live.forEach((u, i) => {
+      const li = document.createElement('li');
+      li.className = 'update-item' + (i >= UPDATE_VISIBLE ? ' extra' : '');
+
+      const time = document.createElement('time');
+      time.className = 'update-date';
+      time.dateTime = u.date;
+      time.textContent = fmtUpdateDate(u.ts);
+
+      const body = document.createElement('div');
+      body.className = 'update-body';
+
+      const meta = document.createElement('div');
+      meta.className = 'update-meta';
+      const tag = pickLang(u.tag, lang);
+      if (tag) {
+        const tagEl = document.createElement('span');
+        tagEl.className = 'update-tag';
+        tagEl.textContent = tag;
+        meta.appendChild(tagEl);
+      }
+      if ((now - u.ts) <= UPDATE_NEW_DAYS * DAY_MS) {
+        const newEl = document.createElement('span');
+        newEl.className = 'update-new';
+        newEl.textContent = 'NEW';
+        meta.appendChild(newEl);
+      }
+
+      const text = document.createElement('p');
+      text.className = 'update-text';
+      text.textContent = pickLang(u.text, lang);
+
+      if (meta.childNodes.length) body.appendChild(meta);
+      body.appendChild(text);
+      li.appendChild(time);
+      li.appendChild(body);
+      list.appendChild(li);
+    });
+
+    const extras = live.length - UPDATE_VISIBLE;
+    if (extras > 0) {
+      moreBtn.hidden = false;
+      moreBtn.dataset.more = t.more;
+      moreBtn.dataset.less = t.less;
+      moreBtn.dataset.count = extras;
+      moreBtn.textContent = `${t.more} (${extras})`;
+    } else {
+      moreBtn.hidden = true;
+    }
+
+    const latest = live[0];
+    heroLatest.hidden = false;
+    heroLatest.innerHTML = '';
+    const dot = document.createElement('span'); dot.className = 'hl-dot';
+    const lab = document.createElement('span'); lab.className = 'hl-label'; lab.textContent = t.latest;
+    const txt = document.createElement('span'); txt.className = 'hl-text'; txt.textContent = pickLang(latest.text, lang);
+    heroLatest.appendChild(dot);
+    heroLatest.appendChild(lab);
+    heroLatest.appendChild(txt);
+  }
+
+  moreBtn.addEventListener('click', () => {
+    const expanded = updatesEl.classList.toggle('expanded');
+    moreBtn.textContent = expanded
+      ? moreBtn.dataset.less
+      : `${moreBtn.dataset.more} (${moreBtn.dataset.count})`;
+  });
+
+  heroLatest.addEventListener('click', (e) => {
+    e.preventDefault();
+    const top = updatesEl.getBoundingClientRect().top + window.scrollY - 24;
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+
+  renderUpdates(document.querySelector('.tab.active')?.dataset.audience || 'ja');
 </script>
 </body>
 </html>
