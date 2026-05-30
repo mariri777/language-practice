@@ -417,7 +417,7 @@
         ]
       },
       {
-        topik: 1, num: 3, title: "助詞・希望・指示",
+        topik: 1, num: 3, title: "助詞・希望・指示", mode: "template", template: "particle",
         sentences: [
           {
             ja: "今日は天気がいいです。", ko: "오늘 날씨가 좋아요.", roman: "oneul nalssiga joayo.",
@@ -3023,7 +3023,7 @@
       { overview: "数字・時刻・年齢・人数といった、日常会話に欠かせない数量と存在の表現。固有数詞と漢字数詞の使い分けがポイントです。【🔄 このコースは挑戦するたびに数や語が入れ替わり、毎回ちがう10問が出ます】",
         points: ["<strong>年齢は固有数詞＋살</strong>（한/두/세/네/스무 の冠形形）","時刻は<strong>固有数詞＋시</strong>＋<strong>漢字数詞＋분</strong>の混合","存在動詞 <code>있다 ↔ 없다</code>（いる/ある ↔ いない/ない）","場所助詞 <code>-에</code>（〜に）","量詞 <code>명/사람</code>（人）、<code>개</code>、<code>마리</code>、<code>권</code>", "<strong>値段・電話番号は漢字数詞</strong>を桁ごとに読む。値段は <code>원</code>（ウォン）を付け、千は <code>천</code>、万は <code>만</code>（<code>일만</code> ではなく <code>만</code>）。", "<strong>日付は漢字数詞＋월/일</strong>。例外として 6月＝<code>유월</code>、10月＝<code>시월</code> と読み、<code>육월/십월</code> とは言わない。", "<strong>飲み物・物・動物の量詞</strong>：<code>잔</code>（杯）・<code>병</code>（本/瓶）・<code>개</code>（個）・<code>마리</code>（匹）。「名詞＋固有数詞（冠形形）＋量詞」の語順で <code>커피 두 잔</code>。"] },
       // TOPIK 1 - C3 助詞・希望・指示
-      { overview: "主格・目的格・主題助詞、希望の「〜したい」、指示代名詞といった基本パーツ。文を組み立てるための骨組みを揃えます。",
+      { overview: "主格・目的格・主題助詞、希望の「〜したい」、指示代名詞といった基本パーツ。文を組み立てるための骨組みを揃えます。【🔄 このコースは挑戦するたびに助詞・希望・指示の語が入れ替わり、毎回ちがう10問が出ます】",
         points: ["<strong>主格助詞</strong> <code>-이/-가</code>（パッチム有無）","<strong>目的格</strong> <code>-을/-를</code> と他動詞 <code>좋아하다</code>","<strong>「V-고 싶다」</strong>＝「〜したい」（一人称）／三人称は <code>-고 싶어하다</code>","해요体の活用（陽母音 → -아요、陰母音 → -어요）","指示代名詞 <code>이／그／저</code> と所有の <code>제／네</code>", "<strong>限定の助詞</strong>：<code>-도</code>（〜も／パッチム有無で形は不変）と <code>-만</code>（〜だけ）。<code>-만</code> は主格・目的格を押しのけて単独で使うのが普通：<code>물만 마셔요</code>（×물을만）。", "<strong>与格助詞</strong>「〜に（人）」：書き言葉・丁寧な <code>-에게</code>、口語の <code>-한테</code>、目上には <code>-께</code>。物・場所の「〜に」は <code>-에</code> で別物。", "<strong>否定</strong>：動詞・形容詞の前に <code>안</code> を置く前置否定が口語の基本：<code>안 가요</code>。「〜したくない」は <code>안 -고 싶어요</code> より <code>-고 싶지 않아요</code> が自然。"] },
       // TOPIK 2 - C4 過去と進行
       { overview: "韓国語の時制の中心、過去形と進行形。陽母音／陰母音／하다語幹で変わる過去語尾と「〜している」表現を一気に押さえます。【🔄 このコースは挑戦するたびに動詞・時間表現が入れ替わり、毎回ちがう10問が出ます】",
@@ -4051,6 +4051,186 @@
         };
       }
 
+      // ====== #3「助詞・希望・指示」用バンク（助詞のパッチム別形・活用は検証済みで事前格納）======
+      // 希望 -고 싶다 / -고 싶지 않다（目的格はパッチム別に確定。-고は変則なし）
+      const WISHV = [
+        {obj:"물을",objR:"mureul",noun:"물",nounR:"mul",nounJa:"水",op:"-을",opR:"-eul",vgo:"마시고",vgoR:"masigo",dict:"마시다",dictR:"masida",baseJa:"飲む",jaWant:"水が飲みたいです。",jaNo:"水は飲みたくないです。"},
+        {obj:"커피를",objR:"keopireul",noun:"커피",nounR:"keopi",nounJa:"コーヒー",op:"-를",opR:"-reul",vgo:"마시고",vgoR:"masigo",dict:"마시다",dictR:"masida",baseJa:"飲む",jaWant:"コーヒーが飲みたいです。",jaNo:"コーヒーは飲みたくないです。"},
+        {obj:"불고기를",objR:"bulgogireul",noun:"불고기",nounR:"bulgogi",nounJa:"プルコギ",op:"-를",opR:"-reul",vgo:"먹고",vgoR:"meokgo",dict:"먹다",dictR:"meokda",baseJa:"食べる",jaWant:"プルコギが食べたいです。",jaNo:"プルコギは食べたくないです。"},
+        {obj:"영화를",objR:"yeonghwareul",noun:"영화",nounR:"yeonghwa",nounJa:"映画",op:"-를",opR:"-reul",vgo:"보고",vgoR:"bogo",dict:"보다",dictR:"boda",baseJa:"見る",jaWant:"映画が見たいです。",jaNo:"映画は見たくないです。"},
+        {obj:"친구를",objR:"chingureul",noun:"친구",nounR:"chingu",nounJa:"友達",op:"-를",opR:"-reul",vgo:"만나고",vgoR:"mannago",dict:"만나다",dictR:"mannada",baseJa:"会う",jaWant:"友達に会いたいです。",jaNo:"友達には会いたくないです。"},
+        {obj:"한국어를",objR:"hangugeoreul",noun:"한국어",nounR:"hangugeo",nounJa:"韓国語",op:"-를",opR:"-reul",vgo:"배우고",vgoR:"baeugo",dict:"배우다",dictR:"baeuda",baseJa:"習う",jaWant:"韓国語が習いたいです。",jaNo:"韓国語は習いたくないです。"},
+        {obj:"옷을",objR:"oseul",noun:"옷",nounR:"ot",nounJa:"服",op:"-을",opR:"-eul",vgo:"사고",vgoR:"sago",dict:"사다",dictR:"sada",baseJa:"買う",jaWant:"服が買いたいです。",jaNo:"服は買いたくないです。"}
+      ];
+      function fWish() {
+        const v = pick(WISHV), neg = rnd(2) === 0;
+        return {
+          ja: neg ? v.jaNo : v.jaWant,
+          ko: neg ? `${v.obj} ${v.vgo} 싶지 않아요.` : `${v.obj} ${v.vgo} 싶어요.`,
+          roman: neg ? `${v.objR} ${v.vgoR} sipji anayo.` : `${v.objR} ${v.vgoR} sipeoyo.`,
+          w: [
+            {ko:v.noun,roman:v.nounR,ja:v.nounJa},
+            {ko:v.op,roman:v.opR,ja:"目的格助詞（を/に）"},
+            {ko:v.dict,roman:v.dictR,ja:v.baseJa},
+            neg ? {ko:"-고 싶지 않다",roman:"-go sipji anta",ja:"〜したくない"} : {ko:"-고 싶다",roman:"-go sipda",ja:"〜したい"}
+          ],
+          g: `<strong>「V-고 싶다」</strong>＝願望「〜したい」(一人称)。否定は<code>-고 싶지 않다</code>が自然（前置否定<code>안 V-고 싶다</code>も可）。三人称は<code>-고 싶어하다</code>。`,
+          alts: neg ? [`${v.obj} ${v.vgo} 싶지 않습니다.`] : [`${v.obj} ${v.vgo} 싶습니다.`]
+        };
+      }
+      // 添加 -도（〜も）/ 限定 -만（〜だけ）。해요体・합쇼体を確定格納
+      const PMV = [
+        {noun:"커피",nounR:"keopi",op:"-를",opR:"-reul",obj:"커피를",objR:"keopireul",v:"마셔요",vR:"masyeoyo",vF:"마십니다",vFR:"masimnida",dict:"마시다",dictR:"masida",baseJa:"飲む",jaV:"飲みます",nounJa:"コーヒー"},
+        {noun:"김치",nounR:"gimchi",op:"-를",opR:"-reul",obj:"김치를",objR:"gimchireul",v:"먹어요",vR:"meogeoyo",vF:"먹습니다",vFR:"meokseumnida",dict:"먹다",dictR:"meokda",baseJa:"食べる",jaV:"食べます",nounJa:"キムチ"},
+        {noun:"한국어",nounR:"hangugeo",op:"-를",opR:"-reul",obj:"한국어를",objR:"hangugeoreul",v:"공부해요",vR:"gongbuhaeyo",vF:"공부합니다",vFR:"gongbuhamnida",dict:"공부하다",dictR:"gongbuhada",baseJa:"勉強する",jaV:"勉強します",nounJa:"韓国語"},
+        {noun:"영화",nounR:"yeonghwa",op:"-를",opR:"-reul",obj:"영화를",objR:"yeonghwareul",v:"봐요",vR:"bwayo",vF:"봅니다",vFR:"bomnida",dict:"보다",dictR:"boda",baseJa:"見る",jaV:"見ます",nounJa:"映画"},
+        {noun:"빵",nounR:"ppang",op:"-을",opR:"-eul",obj:"빵을",objR:"ppang-eul",v:"먹어요",vR:"meogeoyo",vF:"먹습니다",vFR:"meokseumnida",dict:"먹다",dictR:"meokda",baseJa:"食べる",jaV:"食べます",nounJa:"パン"},
+        {noun:"물",nounR:"mul",op:"-을",opR:"-eul",obj:"물을",objR:"mureul",v:"마셔요",vR:"masyeoyo",vF:"마십니다",vFR:"masimnida",dict:"마시다",dictR:"masida",baseJa:"飲む",jaV:"飲みます",nounJa:"水"}
+      ];
+      function fParticle() {
+        const p = pick(PMV), man = rnd(2) === 0;
+        if (man) {
+          return {
+            ja: `私は${p.nounJa}だけ${p.jaV}。`,
+            ko: `저는 ${p.noun}만 ${p.v}.`,
+            roman: `jeoneun ${p.nounR}man ${p.vR}.`,
+            w: [
+              {ko:"저",roman:"jeo",ja:"私（謙譲）"},
+              {ko:"-는",roman:"-neun",ja:"主題助詞「は」"},
+              {ko:p.noun,roman:p.nounR,ja:p.nounJa},
+              {ko:"-만",roman:"-man",ja:"〜だけ（限定）"},
+              {ko:p.dict,roman:p.dictR,ja:p.baseJa}
+            ],
+            g: `<strong>限定の <code>-만</code></strong>（〜だけ）。目的格 <code>-을/를</code> は普通省く（×<code>${p.noun}를만</code>→<code>${p.noun}만</code>）。`,
+            alts: [`저는 ${p.noun}만 ${p.vF}.`]
+          };
+        }
+        return {
+          ja: `私も${p.nounJa}を${p.jaV}。`,
+          ko: `저도 ${p.obj} ${p.v}.`,
+          roman: `jeodo ${p.objR} ${p.vR}.`,
+          w: [
+            {ko:"저",roman:"jeo",ja:"私（謙譲）"},
+            {ko:"-도",roman:"-do",ja:"〜も（添加）"},
+            {ko:p.noun,roman:p.nounR,ja:p.nounJa},
+            {ko:p.op,roman:p.opR,ja:"目的格助詞「を」"},
+            {ko:p.dict,roman:p.dictR,ja:p.baseJa}
+          ],
+          g: `<strong>添加の <code>-도</code></strong>（〜も）は主格・主題を置き換える（<code>저는→저도</code>、×<code>저는도</code>）。パッチムの有無で形は不変。`,
+          alts: [`저도 ${p.obj} ${p.vF}.`]
+        };
+      }
+      // 指示 이것/그것/저것 + (소유) + 名詞 + 이에요/예요（コピュラはパッチム別に確定）
+      const DEMO_DEM = [
+        {ko:"이것",r:"igeot",eun:"이것은",eunR:"igeoseun",ja:"これ"},
+        {ko:"그것",r:"geugeot",eun:"그것은",eunR:"geugeoseun",ja:"それ"},
+        {ko:"저것",r:"jeogeot",eun:"저것은",eunR:"jeogeoseun",ja:"あれ"}
+      ];
+      const DEMO_N = [
+        {base:"책",baseR:"chaek",cop:"이에요",copR:"-ieyo",fullKo:"책이에요",fullR:"chaeg-ieyo",ja:"本"},
+        {base:"가방",baseR:"gabang",cop:"이에요",copR:"-ieyo",fullKo:"가방이에요",fullR:"gabang-ieyo",ja:"カバン"},
+        {base:"우산",baseR:"usan",cop:"이에요",copR:"-ieyo",fullKo:"우산이에요",fullR:"usan-ieyo",ja:"傘"},
+        {base:"시계",baseR:"sigye",cop:"예요",copR:"-yeyo",fullKo:"시계예요",fullR:"sigye-yeyo",ja:"時計"},
+        {base:"의자",baseR:"uija",cop:"예요",copR:"-yeyo",fullKo:"의자예요",fullR:"uija-yeyo",ja:"椅子"},
+        {base:"모자",baseR:"moja",cop:"예요",copR:"-yeyo",fullKo:"모자예요",fullR:"moja-yeyo",ja:"帽子"}
+      ];
+      const POSS = [
+        {ko:"",r:"",ja:""}, {ko:"제 ",r:"je ",ja:"私の"}, {ko:"친구 ",r:"chingu ",ja:"友達の"}
+      ];
+      function fThing() {
+        const d = pick(DEMO_DEM), n = pick(DEMO_N), p = pick(POSS);
+        return {
+          ja: `${d.ja}は${p.ja}${n.ja}です。`,
+          ko: `${d.eun} ${p.ko}${n.fullKo}.`,
+          roman: `${d.eunR} ${p.r}${n.fullR}.`,
+          w: [
+            {ko:d.ko,roman:d.r,ja:d.ja},
+            {ko:"-은",roman:"-eun",ja:"主題助詞「は」"},
+            ...(p.ko ? [{ko:p.ko.trim(),roman:p.r.trim(),ja:p.ja}] : []),
+            {ko:n.base,roman:n.baseR,ja:n.ja},
+            {ko:n.cop,roman:n.copR,ja:"〜です（指定詞）"}
+          ],
+          g: `<strong>指示代名詞</strong>：<code>이것</code>（これ）／<code>그것</code>（それ）／<code>저것</code>（あれ）。「私の」は<code>저의→제</code>。「〜です」はパッチム有<code>이에요</code>／無<code>예요</code>。口語では<code>이거/그거/저거</code>も多用。`,
+          alts: [`${d.eun} ${p.ko}${n.base}입니다.`]
+        };
+      }
+      // 与格 -에게/-한테（人に）＋ 주다。物・場所の -에 と区別
+      const RECIP = [
+        {ko:"친구",r:"chingu",ja:"友達"}, {ko:"동생",r:"dongsaeng",ja:"弟・妹"},
+        {ko:"엄마",r:"eomma",ja:"お母さん"}, {ko:"형",r:"hyeong",ja:"兄"}
+      ];
+      const GOBJ = [
+        {base:"선물",baseR:"seonmul",op:"-을",opR:"-eul",obj:"선물을",objR:"seonmureul",ja:"プレゼント"},
+        {base:"꽃",baseR:"kkot",op:"-을",opR:"-eul",obj:"꽃을",objR:"kkoch-eul",ja:"花"},
+        {base:"책",baseR:"chaek",op:"-을",opR:"-eul",obj:"책을",objR:"chaeg-eul",ja:"本"},
+        {base:"편지",baseR:"pyeonji",op:"-를",opR:"-reul",obj:"편지를",objR:"pyeonjireul",ja:"手紙"}
+      ];
+      function fGive() {
+        const r = pick(RECIP), o = pick(GOBJ), hante = rnd(2) === 0;
+        const dat = hante ? {ko:"한테",r:"-hante"} : {ko:"에게",r:"-ege"};
+        return {
+          ja: `${r.ja}に${o.ja}をあげます。`,
+          ko: `${r.ko}${dat.ko} ${o.obj} 줘요.`,
+          roman: `${r.r}${dat.r} ${o.objR} jwoyo.`,
+          w: [
+            {ko:r.ko,roman:r.r,ja:r.ja},
+            {ko:`-${dat.ko}`,roman:dat.r,ja:"〜に（人・与格）"},
+            {ko:o.base,roman:o.baseR,ja:o.ja},
+            {ko:o.op,roman:o.opR,ja:"目的格助詞「を」"},
+            {ko:"주다",roman:"juda",ja:"あげる"}
+          ],
+          g: `<strong>与格 <code>-에게/-한테</code></strong>（人に）。<code>-한테</code>は口語的、目上には<code>-께</code>。物・場所の「に」は<code>-에</code>で区別。<code>주다→줘요</code>（주어요の縮約）。`,
+          alts: [`${r.ko}${hante?"에게":"한테"} ${o.obj} 줘요.`, `${r.ko}${dat.ko} ${o.obj} 줍니다.`]
+        };
+      }
+      // 主格 -이/가 ＋ 形容詞、および 좋다（N이/가）と 좋아하다（N을/를）の使い分け
+      const SUBJADJ = [
+        {subj:"날씨가",subjR:"nalssiga",noun:"날씨",nounR:"nalssi",part:"-가",partR:"-ga",adj:"좋아요",adjR:"joayo",adjF:"좋습니다",adjFR:"joseumnida",dict:"좋다",ja:"天気",adjJa:"いいです"},
+        {subj:"가방이",subjR:"gabang-i",noun:"가방",nounR:"gabang",part:"-이",partR:"-i",adj:"비싸요",adjR:"bissayo",adjF:"비쌉니다",adjFR:"bissamnida",dict:"비싸다",ja:"カバン",adjJa:"高いです"},
+        {subj:"음식이",subjR:"eumsig-i",noun:"음식",nounR:"eumsik",part:"-이",partR:"-i",adj:"맛있어요",adjR:"masisseoyo",adjF:"맛있습니다",adjFR:"masitseumnida",dict:"맛있다",ja:"料理",adjJa:"おいしいです"},
+        {subj:"방이",subjR:"bang-i",noun:"방",nounR:"bang",part:"-이",partR:"-i",adj:"커요",adjR:"keoyo",adjF:"큽니다",adjFR:"keumnida",dict:"크다",ja:"部屋",adjJa:"大きいです"},
+        {subj:"꽃이",subjR:"kkochi",noun:"꽃",nounR:"kkot",part:"-이",partR:"-i",adj:"예뻐요",adjR:"yeppeoyo",adjF:"예쁩니다",adjFR:"yeppeumnida",dict:"예쁘다",ja:"花",adjJa:"きれいです"}
+      ];
+      const LIKE = [
+        {ko:"사과",r:"sagwa",op:"-를",opR:"-reul",obj:"사과를",objR:"sagwareul",subj:"사과가",subjR:"sagwaga",ja:"りんご"},
+        {ko:"커피",r:"keopi",op:"-를",opR:"-reul",obj:"커피를",objR:"keopireul",subj:"커피가",subjR:"keopiga",ja:"コーヒー"},
+        {ko:"강아지",r:"gangaji",op:"-를",opR:"-reul",obj:"강아지를",objR:"gangajireul",subj:"강아지가",subjR:"gangajiga",ja:"子犬"},
+        {ko:"음악",r:"eumak",op:"-을",opR:"-eul",obj:"음악을",objR:"eumag-eul",subj:"음악이",subjR:"eumag-i",ja:"音楽"},
+        {ko:"여행",r:"yeohaeng",op:"-을",opR:"-eul",obj:"여행을",objR:"yeohaeng-eul",subj:"여행이",subjR:"yeohaeng-i",ja:"旅行"}
+      ];
+      function fSubject() {
+        if (rnd(2) === 0) {
+          const a = pick(SUBJADJ);
+          return {
+            ja: `${a.ja}が${a.adjJa}。`,
+            ko: `${a.subj} ${a.adj}.`,
+            roman: `${a.subjR} ${a.adjR}.`,
+            w: [
+              {ko:a.noun,roman:a.nounR,ja:a.ja},
+              {ko:a.part,roman:a.partR,ja:"主格助詞（が）"},
+              {ko:a.adj,roman:a.adjR,ja:`${a.adjJa}（${a.dict}）`}
+            ],
+            g: `<strong>主格助詞</strong>：パッチム有→<code>-이</code>、無→<code>-가</code>（<code>날씨가</code>／<code>음식이</code>）。形容詞も해요体で活用する。`,
+            alts: [`${a.subj} ${a.adjF}.`]
+          };
+        }
+        const L = pick(LIKE);
+        return {
+          ja: `私は${L.ja}が好きです。`,
+          ko: `저는 ${L.obj} 좋아해요.`,
+          roman: `jeoneun ${L.objR} joahaeyo.`,
+          w: [
+            {ko:"저",roman:"jeo",ja:"私（謙譲）"},
+            {ko:"-는",roman:"-neun",ja:"主題助詞「は」"},
+            {ko:L.ko,roman:L.r,ja:L.ja},
+            {ko:L.op,roman:L.opR,ja:"目的格助詞「を」"},
+            {ko:"좋아하다",roman:"joahada",ja:"好む（他動詞）"}
+          ],
+          g: `「好き」は<strong>他動詞 <code>좋아하다</code></strong>＝<code>N을/를 좋아하다</code>。形容詞<code>좋다</code>を使うと<code>N이/가 좋다</code>（感情的・×を）。行為的な좋아하다と助詞が変わる。`,
+          alts: [`저는 ${L.subj} 좋아요.`, `저는 ${L.obj} 좋아합니다.`]
+        };
+      }
+
       const SETS = {
         numbers:   [fTime, fAge, fExist, fPrice, fDate, fWeekday],
         place:     [fMove, fActivity, fPurpose, fPosition],
@@ -4058,7 +4238,8 @@
         polite:    [fFormalNoun, fFormalVerb, fFamilyExist, fFamilyAge, fFormalDate, fFormalWeekday],
         past:      [fPast, fPastNeg, fProgressive, fOngoing, fPastQuestion, fReason],
         irregular: [fIrregularAdj, fIrregularVerb, fCounter, fDegree, fRequest],
-        compare:   [fAbility, fSkill, fCompare, fSuperlative, fActRequest]
+        compare:   [fAbility, fSkill, fCompare, fSuperlative, fActRequest],
+        particle:  [fWish, fParticle, fThing, fGive, fSubject]
       };
       function generate(key, count) {
         if (typeof key === "number") { count = key; key = "numbers"; } // 後方互換
