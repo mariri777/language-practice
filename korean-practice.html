@@ -1665,7 +1665,7 @@
         ]
       },
       {
-        topik: 1, num: 5, title: "否定・疑問詞・形容詞",
+        topik: 1, num: 5, title: "否定・疑問詞・形容詞", mode: "template", template: "negqa",
         sentences: [
           {
             ja: "今日は行きません。", ko: "오늘은 안 가요.", roman: "oneureun an gayo.",
@@ -3062,7 +3062,7 @@
       { overview: "場所・方向を表す助詞「-에」と動作の場所を表す「-에서」を中心に、가다・오다・다니다などの移動動詞や「-(으)러 가다」、日常の基本動詞、方位名詞、起点「-에서 ~까지」までを学びます。日常生活の移動と動作を韓国語で言えるようになる初級コースです。【🔄 このコースは挑戦するたびに場所や動作が入れ替わり、毎回ちがう10問が出ます】",
         points: ["<strong>-에</strong>＝存在・方向の助詞。場所＋<code>있다/없다</code>や<code>가다/오다</code>の行き先に付く（例：<code>집에 있어요</code>／<code>학교에 가요</code>）。", "<strong>-에서</strong>＝動作が行われる場所。<code>먹다・공부하다</code>など動作動詞とともに使う（例：<code>식당에서 먹어요</code>）。存在の<code>-에</code>との違いに注意。", "移動動詞 <strong>가다（行く）・오다（来る）・다니다（通う）</strong>。<code>다니다</code>は学校・会社へ定期的に通う意味。", "目的の <strong>-(으)러 가다/오다</strong>＝「〜しに行く／来る」。母音語幹は<code>-러</code>、子音語幹は<code>-으러</code>（例：<code>밥 먹으러 가요</code>）。", "方位名詞 <strong>위・아래・앞・뒤・옆・안・밖</strong>。「Nの上に」は<code>N 위에</code>のように位置＋<code>-에</code>で表す。", "起点と終点 <strong>-에서 ~까지</strong>＝「〜から〜まで」。場所の起点は<code>-에서</code>、到達点は<code>-까지</code>（例：<code>집에서 학교까지</code>）。"] },
       // TOPIK 1 - C5 否定・疑問詞・形容詞
-      { overview: "短形否定（안・못）と疑問詞、そして基本形容詞の해요体を学ぶコースです。形容詞述語文と「그리고・그래서・그렇지만」の接続も練習し、簡単な意見や説明ができるようになります。",
+      { overview: "短形否定（안・못）と疑問詞、そして基本形容詞の해요体を学ぶコースです。形容詞述語文と「그리고・그래서・그렇지만」の接続も練習し、簡単な意見や説明ができるようになります。【🔄 このコースは挑戦するたびに語が入れ替わり、毎回ちがう10問が出ます】",
         points: ["<strong>短形否定</strong>：用言の前に <code>안</code> を置く（<code>안 가요</code>＝行きません）。意志・単純否定。", "<strong>不可能の否定</strong>：<code>못</code>＋動詞（<code>못 가요</code>＝行けません）。能力・状況による不可能を表す。", "<strong>疑問詞</strong>：<code>누구</code>（誰）・<code>어디</code>（どこ）・<code>언제</code>（いつ）・<code>왜</code>（なぜ）・<code>어떻게</code>（どう）・<code>무슨</code>（何の）・<code>어느</code>（どの）。", "<strong>基本形容詞の해요体</strong>：<code>좋아요/나빠요</code>・<code>커요/작아요</code>・<code>많아요/적어요</code>・<code>비싸요/싸요</code>。", "<strong>形容詞述語文</strong>：形容詞がそのまま述語になる（<code>날씨가 좋아요</code>）。日本語の「〜い／〜だ」に当たる。", "<strong>接続表現</strong>：<code>그리고</code>（そして）・<code>그래서</code>（だから）・<code>그렇지만</code>（しかし）で文をつなぐ。"] },
       // TOPIK 1 - C6 丁寧体（합쇼体）と日付・家族
       { overview: "フォーマルな丁寧体（합쇼体）の文末「-ㅂ니다/습니다」「-ㅂ니까/습니까」を軸に、曜日・日付（漢字数詞＋년/월/일）・家族の語彙を学びます。並列「-하고」「와/과」、相手助詞「-에게/한테」も扱い、해요体との違いを確認します。",
@@ -3402,9 +3402,106 @@
         };
       }
 
+      // ====== #5「否定・疑問詞・形容詞」用バンク（活用形は検証済みで事前格納）======
+      const ADJ = {
+        good:     {ko:"좋아요",r:"joayo",dict:"좋다",glossJa:"良い",jaP:"いいです"},
+        bad:      {ko:"나빠요",r:"nappayo",dict:"나쁘다",glossJa:"悪い",jaP:"悪いです"},
+        hot:      {ko:"더워요",r:"deowoyo",dict:"덥다",glossJa:"暑い",jaP:"暑いです"},
+        cold:     {ko:"추워요",r:"chuwoyo",dict:"춥다",glossJa:"寒い",jaP:"寒いです"},
+        expensive:{ko:"비싸요",r:"bissayo",dict:"비싸다",glossJa:"（値段が）高い",jaP:"高いです"},
+        cheap:    {ko:"싸요",r:"ssayo",dict:"싸다",glossJa:"安い",jaP:"安いです"},
+        pretty:   {ko:"예뻐요",r:"yeppeoyo",dict:"예쁘다",glossJa:"きれいだ",jaP:"きれいです"},
+        big:      {ko:"커요",r:"keoyo",dict:"크다",glossJa:"大きい",jaP:"大きいです"},
+        small:    {ko:"작아요",r:"jagayo",dict:"작다",glossJa:"小さい",jaP:"小さいです"},
+        delicious:{ko:"맛있어요",r:"masisseoyo",dict:"맛있다",glossJa:"おいしい",jaP:"おいしいです"},
+        many:     {ko:"많아요",r:"manayo",dict:"많다",glossJa:"多い",jaP:"多いです"},
+        few:      {ko:"적어요",r:"jeogeoyo",dict:"적다",glossJa:"少ない",jaP:"少ないです"},
+        far:      {ko:"멀어요",r:"meoreoyo",dict:"멀다",glossJa:"遠い",jaP:"遠いです"},
+        near:     {ko:"가까워요",r:"gakkawoyo",dict:"가깝다",glossJa:"近い",jaP:"近いです"}
+      };
+      const NOUN_ADJ = [
+        {subj:"날씨가",subjR:"nalssiga",ja:"天気",adjs:["good","bad","hot","cold"]},
+        {subj:"가방이",subjR:"gabang-i",ja:"カバン",adjs:["expensive","cheap","pretty","big","small"]},
+        {subj:"방이",subjR:"bang-i",ja:"部屋",adjs:["big","small"]},
+        {subj:"음식이",subjR:"eumsig-i",ja:"料理",adjs:["delicious","expensive","cheap"]},
+        {subj:"사람이",subjR:"saram-i",ja:"人",adjs:["many","few"]},
+        {subj:"학교가",subjR:"hakgyoga",ja:"学校",adjs:["far","near"]},
+        {subj:"꽃이",subjR:"kkoch-i",ja:"花",adjs:["pretty"]}
+      ];
+      function fAdjective() {
+        const n = pick(NOUN_ADJ), adj = ADJ[pick(n.adjs)];
+        return {
+          ja: `${n.ja}が${adj.jaP}。`,
+          ko: `${n.subj} ${adj.ko}.`,
+          roman: `${n.subjR} ${adj.r}.`,
+          w: [
+            {ko:n.subj,roman:n.subjR,ja:`${n.ja}＋主格助詞`},
+            {ko:adj.ko,roman:adj.r,ja:`${adj.glossJa}（形容詞・해요体）`}
+          ],
+          g: `<strong>形容詞述語文</strong>：「N이/가 [形容詞]」。形容詞も해요体で活用（<code>${adj.dict}→${adj.ko}</code>）。陽母音→<code>-아요</code>、陰母音→<code>-어요</code>、하다→<code>해요</code>、으は脱落（<code>예쁘다→예뻐요</code>）。`,
+          alts: []
+        };
+      }
+      const NSUBJ = [
+        {topic:"저는",topicR:"jeoneun",ja:"私"},
+        {topic:"동생은",topicR:"dongsaeng-eun",ja:"弟（妹）"},
+        {topic:"친구는",topicR:"chinguneun",ja:"友達"},
+        {topic:"오빠는",topicR:"oppaneun",ja:"お兄さん"}
+      ];
+      const NEGV = [
+        {obj:"커피를",objR:"keopireul",objJa:"コーヒー",anKo:"안 마셔요",anR:"an masyeoyo",motKo:"못 마셔요",motR:"mot masyeoyo",jaAn:"コーヒーを飲みません",jaMot:"コーヒーを飲めません"},
+        {obj:"밥을",objR:"bab-eul",objJa:"ご飯",anKo:"안 먹어요",anR:"an meogeoyo",motKo:"못 먹어요",motR:"mot meogeoyo",jaAn:"ご飯を食べません",jaMot:"ご飯を食べられません"},
+        {obj:"책을",objR:"chaeg-eul",objJa:"本",anKo:"안 읽어요",anR:"an ilgeoyo",motKo:"못 읽어요",motR:"mot ilgeoyo",jaAn:"本を読みません",jaMot:"本を読めません"},
+        {obj:"운동을",objR:"undong-eul",objJa:"運動",anKo:"안 해요",anR:"an haeyo",motKo:"못 해요",motR:"mot haeyo",jaAn:"運動をしません",jaMot:"運動ができません"},
+        {obj:"수영을",objR:"suyeong-eul",objJa:"水泳",anKo:"안 해요",anR:"an haeyo",motKo:"못 해요",motR:"mot haeyo",jaAn:"水泳をしません",jaMot:"水泳ができません"},
+        {obj:"선생님을",objR:"seonsaengnim-eul",objJa:"先生",anKo:"안 만나요",anR:"an mannayo",motKo:"못 만나요",motR:"mot mannayo",jaAn:"先生に会いません",jaMot:"先生に会えません"}
+      ];
+      function fNegation() {
+        const s = pick(NSUBJ), v = pick(NEGV), useMot = rnd(2) === 0;
+        const neg = useMot ? {ko:v.motKo,r:v.motR,ja:v.jaMot} : {ko:v.anKo,r:v.anR,ja:v.jaAn};
+        const verbOnly = neg.ko.replace(/^(안|못) /, "");
+        const verbOnlyR = neg.r.replace(/^(an|mot) /, "");
+        return {
+          ja: `${s.ja}は${neg.ja}。`,
+          ko: `${s.topic} ${v.obj} ${neg.ko}.`,
+          roman: `${s.topicR} ${v.objR} ${neg.r}.`,
+          w: [
+            {ko:s.topic,roman:s.topicR,ja:`${s.ja}＋主題助詞`},
+            {ko:v.obj,roman:v.objR,ja:`${v.objJa}＋目的格`},
+            {ko: useMot?"못":"안", roman: useMot?"mot":"an", ja: useMot?"〜できない（不可能）":"〜しない（短形否定）"},
+            {ko:verbOnly,roman:verbOnlyR,ja:"動詞・해요体"}
+          ],
+          g: useMot
+            ? `<strong>不可能の <code>못</code></strong>：能力・状況的に「〜できない」。動詞の前に置く。하다動詞は「名詞＋못 해요」と分ける（<code>운동을 못 해요</code>）。`
+            : `<strong>短形否定 <code>안</code></strong>：意志的な「〜しない」。動詞の前に置く（長形は <code>-지 않다</code>）。하다動詞は「名詞＋안 해요」と分ける（<code>운동을 안 해요</code>）。`,
+          alts: []
+        };
+      }
+      const QUESTIONS = [
+        {ko:"어디에 가요?",r:"eodi-e gayo?",ja:"どこへ行きますか？",qw:"어디",qwJa:"どこ",w:[{ko:"어디",roman:"eodi",ja:"どこ"},{ko:"-에",roman:"-e",ja:"〜へ"},{ko:"가요",roman:"gayo",ja:"行きます"}]},
+        {ko:"누구를 만나요?",r:"nugureul mannayo?",ja:"誰に会いますか？",qw:"누구",qwJa:"誰",w:[{ko:"누구",roman:"nugu",ja:"誰"},{ko:"-를",roman:"-reul",ja:"〜に（目的格）"},{ko:"만나요",roman:"mannayo",ja:"会います"}]},
+        {ko:"언제 와요?",r:"eonje wayo?",ja:"いつ来ますか？",qw:"언제",qwJa:"いつ",w:[{ko:"언제",roman:"eonje",ja:"いつ"},{ko:"와요",roman:"wayo",ja:"来ます"}]},
+        {ko:"왜 안 와요?",r:"wae an wayo?",ja:"なぜ来ないのですか？",qw:"왜",qwJa:"なぜ",w:[{ko:"왜",roman:"wae",ja:"なぜ"},{ko:"안",roman:"an",ja:"〜しない"},{ko:"와요",roman:"wayo",ja:"来ます"}]},
+        {ko:"어떻게 가요?",r:"eotteoke gayo?",ja:"どうやって行きますか？",qw:"어떻게",qwJa:"どうやって",w:[{ko:"어떻게",roman:"eotteoke",ja:"どうやって"},{ko:"가요",roman:"gayo",ja:"行きます"}]},
+        {ko:"무슨 음식을 좋아해요?",r:"museun eumsig-eul joahaeyo?",ja:"どんな食べ物が好きですか？",qw:"무슨",qwJa:"何の・どんな",w:[{ko:"무슨",roman:"museun",ja:"何の・どんな"},{ko:"음식을",roman:"eumsig-eul",ja:"食べ物を"},{ko:"좋아해요",roman:"joahaeyo",ja:"好みます"}]},
+        {ko:"어느 나라 사람이에요?",r:"eoneu nara saram-ieyo?",ja:"どの国の人ですか？",qw:"어느",qwJa:"どの",w:[{ko:"어느",roman:"eoneu",ja:"どの"},{ko:"나라",roman:"nara",ja:"国"},{ko:"사람이에요",roman:"saram-ieyo",ja:"人ですか"}]},
+        {ko:"무슨 영화를 봐요?",r:"museun yeonghwareul bwayo?",ja:"どんな映画を見ますか？",qw:"무슨",qwJa:"何の・どんな",w:[{ko:"무슨",roman:"museun",ja:"何の・どんな"},{ko:"영화를",roman:"yeonghwareul",ja:"映画を"},{ko:"봐요",roman:"bwayo",ja:"見ます"}]},
+        {ko:"누가 와요?",r:"nuga wayo?",ja:"誰が来ますか？",qw:"누구",qwJa:"誰（が）",w:[{ko:"누가",roman:"nuga",ja:"誰が（누구+가）"},{ko:"와요",roman:"wayo",ja:"来ます"}]},
+        {ko:"언제 만나요?",r:"eonje mannayo?",ja:"いつ会いますか？",qw:"언제",qwJa:"いつ",w:[{ko:"언제",roman:"eonje",ja:"いつ"},{ko:"만나요",roman:"mannayo",ja:"会います"}]}
+      ];
+      function fQuestion() {
+        const q = pick(QUESTIONS);
+        return {
+          ja: q.ja, ko: q.ko, roman: q.r, w: q.w,
+          g: `<strong>疑問詞 <code>${q.qw}</code>（${q.qwJa}）</strong>：韓国語は疑問詞を平叙文と同じ位置にそのまま置く（英語のように前へ出さない）。文末を <code>-요?</code> で上げて疑問にする。`,
+          alts: []
+        };
+      }
+
       const SETS = {
         numbers: [fTime, fAge, fExist, fPrice, fDate, fWeekday],
-        place:   [fMove, fActivity, fPurpose, fPosition]
+        place:   [fMove, fActivity, fPurpose, fPosition],
+        negqa:   [fAdjective, fNegation, fQuestion]
       };
       function generate(key, count) {
         if (typeof key === "number") { count = key; key = "numbers"; } // 後方互換
