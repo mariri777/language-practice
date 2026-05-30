@@ -40,14 +40,21 @@
     --accent-glow: rgba(45, 125, 106, 0.12);
 
     --gold: #c79a4a;
-    --gold-soft: rgba(199, 154, 74, 0.12);
+    --gold-soft: rgba(199, 154, 74, 0.14);
+
+    --teal: #5a8aa8;
+    --teal-soft: rgba(90, 138, 168, 0.14);
 
     --border: #ddd5bd;
     --border-strong: #c6bea0;
     --divider: #e3dcc4;
 
-    --good: #b6843a;
-    --good-soft: rgba(182, 132, 58, 0.14);
+    --good: #4a8a64;
+    --good-soft: rgba(74, 138, 100, 0.14);
+    --warn: #c79a4a;
+    --warn-soft: rgba(199, 154, 74, 0.14);
+    --bad: #b8552a;
+    --bad-soft: rgba(184, 85, 42, 0.12);
 
     --shadow-sm: 0 1px 2px rgba(20, 24, 26, 0.04);
     --shadow: 0 1px 3px rgba(20, 24, 26, 0.04), 0 4px 16px rgba(20, 24, 26, 0.05);
@@ -88,12 +95,19 @@
     --gold: #e0b663;
     --gold-soft: rgba(224, 182, 99, 0.14);
 
+    --teal: #82b4d4;
+    --teal-soft: rgba(130, 180, 212, 0.14);
+
     --border: #25302d;
     --border-strong: #344038;
     --divider: #1f2925;
 
-    --good: #e0b663;
-    --good-soft: rgba(224, 182, 99, 0.14);
+    --good: #6dc996;
+    --good-soft: rgba(109, 201, 150, 0.14);
+    --warn: #f0bb6a;
+    --warn-soft: rgba(240, 187, 106, 0.14);
+    --bad: #ec9b73;
+    --bad-soft: rgba(236, 155, 115, 0.14);
 
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
     --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
@@ -125,10 +139,12 @@
     min-height: 100vh;
     min-height: 100dvh;
     transition: background 320ms var(--ease), color 320ms var(--ease);
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: calc(env(safe-area-inset-bottom) + 90px);
   }
 
   ::selection { background: var(--accent); color: #fff; }
+
+  input, textarea, button { font-family: inherit; color: inherit; }
 
   /* ============ TOPBAR ============ */
   .topbar {
@@ -197,49 +213,41 @@
   html:not(.dark) .icon-btn .sun { display: none; }
   html:not(.dark) .icon-btn .moon { display: block; }
 
-  /* ============ STREAK ============ */
-  .streak-bar {
+  /* ============ STATS BAR ============ */
+  .stats-bar {
     max-width: 720px;
     margin: 28px auto 0;
     padding: 0 22px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: baseline;
-    gap: 16px;
+    gap: 28px;
+    flex-wrap: wrap;
   }
-  .streak-num {
+  .stat { display: flex; align-items: baseline; gap: 7px; }
+  .stat-num {
     font-family: var(--font-num);
     font-style: italic;
-    font-size: 32px;
+    font-size: 28px;
     line-height: 1;
-    color: var(--accent);
     font-weight: 500;
   }
-  .streak-num .u {
+  .stat-num.streak { color: var(--accent); }
+  .stat-num.stock { color: var(--gold); }
+  .stat-num.due { color: var(--teal); }
+  .stat-lbl {
     font-family: var(--font-display);
-    font-style: normal;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    margin-left: 6px;
-  }
-  .day-info {
-    font-family: var(--font-display);
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 700;
     letter-spacing: 0.20em;
     text-transform: uppercase;
     color: var(--ink-3);
-    text-align: right;
   }
-  .day-info .accent { color: var(--accent); }
 
   /* ============ CARD ============ */
   .card-wrap {
     max-width: 720px;
-    margin: 24px auto;
+    margin: 22px auto;
     padding: 0 22px;
   }
   .card {
@@ -247,24 +255,29 @@
     border: 1px solid var(--border);
     border-radius: 14px;
     box-shadow: var(--shadow);
-    padding: 36px 32px 32px;
+    padding: 36px 32px 28px;
     position: relative;
     overflow: hidden;
     animation: cardIn 600ms var(--ease-spring);
   }
-  @keyframes cardIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  .card.is-builtin::before {
+    background: linear-gradient(90deg, var(--teal) 0%, var(--gold) 100%);
+  }
+  .card.is-user::before {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--gold) 100%);
   }
   .card::before {
     content: "";
     position: absolute;
     inset: 0 0 auto 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--accent) 0%, var(--gold) 100%);
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   @media (max-width: 600px) {
-    .card { padding: 28px 20px 24px; border-radius: 12px; }
+    .card { padding: 28px 20px 22px; border-radius: 12px; }
   }
 
   .card-meta {
@@ -278,66 +291,235 @@
     letter-spacing: 0.20em;
     text-transform: uppercase;
     color: var(--ink-3);
-    margin-bottom: 28px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
   }
-  .level-chip {
+  .source-chip {
     padding: 4px 10px;
     border-radius: 999px;
-    background: var(--accent-soft);
-    color: var(--accent-2);
     letter-spacing: 0.16em;
   }
-  html.dark .level-chip { color: var(--accent); }
+  .source-chip.user { background: var(--accent-soft); color: var(--accent-2); }
+  .source-chip.builtin { background: var(--teal-soft); color: var(--teal); }
+  html.dark .source-chip.user { color: var(--accent); }
 
-  /* ============ SENTENCE ============ */
-  .sentence {
+  .type-chip {
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--ink-3);
+    letter-spacing: 0.16em;
+  }
+
+  .quiz-text {
     font-family: var(--font-ko-serif);
     font-size: clamp(26px, 5.5vw, 36px);
-    line-height: 1.5;
+    line-height: 1.45;
     color: var(--ink);
-    margin: 0 0 14px;
+    margin: 0 0 18px;
     letter-spacing: -0.005em;
     font-weight: 500;
+    word-break: break-word;
   }
-  .sentence .hl {
-    color: var(--accent);
-    background: linear-gradient(transparent 62%, var(--accent-soft) 62%);
-    padding: 0 2px;
-  }
-  .pinyin {
-    font-family: var(--font-num);
-    font-style: italic;
-    font-size: clamp(15px, 2.2vw, 18px);
+  .quiz-hint {
     color: var(--ink-3);
-    margin: 0 0 14px;
-    letter-spacing: 0.01em;
-    transition: opacity 240ms var(--ease), filter 240ms var(--ease);
+    font-size: 13px;
+    margin: 14px 0 0;
+    font-style: italic;
   }
-  .pinyin.hidden, .translation.hidden {
-    filter: blur(6px);
-    opacity: 0.4;
-    cursor: pointer;
+
+  .reveal-zone {
+    margin-top: 18px;
+    border-top: 1px dashed var(--border);
+    padding-top: 18px;
+    display: none;
   }
-  .translation {
-    font-family: var(--font-ui);
-    font-size: clamp(15px, 2vw, 17px);
+  .reveal-zone.open { display: block; }
+  .reveal-row {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 10px 16px;
+    align-items: baseline;
+    margin-bottom: 12px;
+  }
+  .reveal-label {
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    padding-top: 2px;
+  }
+  .reveal-val { color: var(--ink-2); font-size: 15.5px; line-height: 1.55; }
+  .reveal-val.pinyin { font-family: var(--font-num); font-style: italic; color: var(--ink-3); font-size: 17px; }
+  .reveal-val.jp { color: var(--ink-2); }
+  .reveal-val.note { color: var(--ink-3); font-size: 14px; border-left: 2px solid var(--gold); padding-left: 12px; }
+  .reveal-examples {
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .reveal-examples li {
+    padding: 9px 12px;
+    background: var(--bg-subtle);
+    border-radius: 6px;
+    font-size: 13.5px;
+  }
+  .reveal-examples .ex-zh {
+    font-family: var(--font-ko-serif);
+    font-size: 16px;
+    color: var(--ink);
+    margin-right: 10px;
+  }
+  .reveal-examples .ex-jp {
+    color: var(--ink-3);
+    font-size: 12.5px;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ============ ACTIONS ============ */
+  .reveal-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    background: var(--bg-subtle);
+    border: 1px dashed var(--border-strong);
     color: var(--ink-2);
-    margin: 0 0 22px;
-    line-height: 1.55;
-    transition: opacity 240ms var(--ease), filter 240ms var(--ease);
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 220ms var(--ease);
   }
-  .toggles {
+  .reveal-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .rate-row {
     display: flex;
     gap: 10px;
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px solid var(--divider);
     flex-wrap: wrap;
-    margin-bottom: 24px;
   }
-  .mini-btn {
+  .rate-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 13px 12px;
+    border-radius: 10px;
     border: 1px solid var(--border);
     background: var(--bg-elevated);
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: all 220ms var(--ease);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .rate-btn .lbl-jp { font-size: 13px; font-weight: 600; }
+  .rate-btn:hover { transform: translateY(-1px); }
+  .rate-btn.bad:hover { border-color: var(--bad); color: var(--bad); background: var(--bad-soft); }
+  .rate-btn.warn:hover { border-color: var(--warn); color: var(--warn); background: var(--warn-soft); }
+  .rate-btn.good:hover { border-color: var(--good); color: var(--good); background: var(--good-soft); }
+  .rate-btn .interval {
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    color: var(--ink-4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .add-stock-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px solid var(--divider);
+    flex-wrap: wrap;
+  }
+  .stock-btn {
+    flex: 1;
+    min-width: 130px;
+    padding: 13px 16px;
+    border-radius: 10px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 220ms var(--ease);
+  }
+  .stock-btn.add {
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent);
+    box-shadow: 0 6px 18px var(--accent-glow);
+  }
+  .stock-btn.add:hover { background: var(--accent-2); }
+  .stock-btn.skip {
+    background: var(--bg-elevated);
     color: var(--ink-3);
-    padding: 7px 13px;
+    border: 1px solid var(--border);
+  }
+  .stock-btn.skip:hover { color: var(--accent); border-color: var(--accent); }
+
+  .done-message {
+    text-align: center;
+    padding: 24px 0;
+    color: var(--ink-3);
+    font-size: 14px;
+  }
+  .done-message .accent { color: var(--accent); font-weight: 700; }
+
+  /* ============ COLLECTION ============ */
+  .col-section {
+    max-width: 720px;
+    margin: 40px auto 0;
+    padding: 0 22px;
+  }
+  .col-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 18px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .col-title {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .col-title .count {
+    color: var(--accent);
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 20px;
+    margin-left: 4px;
+    letter-spacing: 0;
+  }
+  .col-filters { display: flex; gap: 6px; }
+  .filter-chip {
+    background: none;
+    border: 1px solid var(--border);
+    padding: 5px 11px;
     border-radius: 999px;
+    color: var(--ink-3);
     font-family: var(--font-display);
     font-size: 10px;
     font-weight: 700;
@@ -345,263 +527,101 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: all 200ms var(--ease);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
   }
-  .mini-btn:hover { color: var(--accent); border-color: var(--accent); }
-  .mini-btn.active {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-  }
-  .mini-btn svg { width: 11px; height: 11px; }
+  .filter-chip:hover { color: var(--accent); border-color: var(--accent); }
+  .filter-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-  /* ============ SECTIONS ============ */
-  .section {
-    border-top: 1px solid var(--divider);
-    padding-top: 22px;
-    margin-top: 22px;
-  }
-  .section-label {
-    font-family: var(--font-display);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-label::before {
-    content: "";
-    width: 12px;
-    height: 1.5px;
-    background: var(--gold);
-    display: inline-block;
-  }
-
-  .vocab {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-  .vocab-word {
-    font-family: var(--font-ko-serif);
-    font-size: 30px;
-    line-height: 1;
-    color: var(--accent);
-    font-weight: 500;
-  }
-  .vocab-pinyin {
-    font-family: var(--font-num);
-    font-style: italic;
-    font-size: 16px;
-    color: var(--ink-3);
-  }
-  .vocab-pos {
-    font-family: var(--font-display);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-4);
-    padding: 3px 8px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-  }
-  .vocab-jp {
-    width: 100%;
-    margin-top: 8px;
-    font-size: 15px;
-    color: var(--ink-2);
-  }
-
-  .grammar-pattern {
-    font-family: var(--font-ko-serif);
-    font-size: 22px;
-    color: var(--ink);
-    margin-bottom: 6px;
-    font-weight: 500;
-  }
-  .grammar-pattern .romaji {
-    font-family: var(--font-num);
-    font-style: italic;
-    font-size: 16px;
-    color: var(--ink-3);
-    margin-left: 8px;
-  }
-  .grammar-explain {
-    font-size: 14.5px;
-    color: var(--ink-2);
-    line-height: 1.65;
-    margin: 6px 0 14px;
-  }
-  .examples {
-    list-style: none;
-    padding: 0;
-    margin: 12px 0 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .examples li {
-    padding: 10px 14px;
-    background: var(--bg-subtle);
-    border-radius: 8px;
-    font-size: 14px;
-  }
-  .examples .cn {
-    font-family: var(--font-ko-serif);
-    font-size: 17px;
-    color: var(--ink);
-    margin-right: 10px;
-  }
-  .examples .jp {
-    color: var(--ink-3);
-    font-size: 13px;
-    display: block;
-    margin-top: 3px;
-  }
-
-  /* ============ ACTIONS ============ */
-  .actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 30px;
-    padding-top: 24px;
-    border-top: 1px solid var(--divider);
-    flex-wrap: wrap;
-  }
-  .btn {
-    flex: 1;
-    min-width: 140px;
-    padding: 14px 18px;
-    border-radius: 10px;
-    font-family: var(--font-display);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: 1px solid var(--border);
+  .col-list { display: flex; flex-direction: column; gap: 8px; }
+  .col-item {
     background: var(--bg-elevated);
-    color: var(--ink-2);
-    transition: all 240ms var(--ease);
-  }
-  .btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-1px);
-  }
-  .btn.primary {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-    box-shadow: 0 6px 18px var(--accent-glow);
-  }
-  .btn.primary:hover {
-    background: var(--accent-2);
-    color: #fff;
-    box-shadow: 0 10px 24px var(--accent-glow);
-  }
-  .btn.done {
-    background: var(--good-soft);
-    color: var(--good);
-    border-color: transparent;
-    pointer-events: none;
-  }
-
-  /* ============ REVIEW DRAWER ============ */
-  .review-section {
-    max-width: 720px;
-    margin: 0 auto 80px;
-    padding: 0 22px;
-  }
-  .review-empty {
-    text-align: center;
-    color: var(--ink-3);
-    font-size: 13px;
-    padding: 30px 0;
-  }
-  .review-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin: 32px 0 16px;
-    gap: 12px;
-  }
-  .review-title {
-    font-family: var(--font-display);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
-  .review-title .accent { color: var(--accent); }
-  .review-toggle {
-    background: none;
-    border: none;
-    color: var(--accent);
-    font-family: var(--font-display);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    cursor: pointer;
-    padding: 6px 0;
-  }
-  .review-toggle:hover { color: var(--accent-2); }
-  .review-list {
-    display: none;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .review-list.open { display: flex; }
-  .review-card {
-    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 18px 20px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
     cursor: pointer;
     transition: all 200ms var(--ease);
   }
-  .review-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow);
+  .col-item:hover { border-color: var(--accent); transform: translateX(2px); }
+  .col-item-type {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-ko-serif);
+    font-size: 13px;
+    color: var(--ink-3);
+    background: var(--bg-subtle);
+    flex-shrink: 0;
   }
-  .review-card-top {
-    display: flex;
-    justify-content: space-between;
+  .col-item.word .col-item-type { background: var(--accent-soft); color: var(--accent-2); }
+  .col-item.grammar .col-item-type { background: var(--gold-soft); color: var(--gold); }
+  .col-item.sentence .col-item-type { background: var(--teal-soft); color: var(--teal); }
+  html.dark .col-item.word .col-item-type { color: var(--accent); }
+  .col-item-body { flex: 1; min-width: 0; }
+  .col-item-text {
+    font-family: var(--font-ko-serif);
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .col-item-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+  .col-item-meta {
     font-family: var(--font-display);
-    font-size: 9px;
+    font-size: 9.5px;
     font-weight: 700;
-    letter-spacing: 0.20em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    color: var(--ink-4);
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .col-item-meta .due { color: var(--teal); }
+  .col-item-meta .overdue { color: var(--accent); }
+
+  .col-empty {
+    text-align: center;
+    padding: 40px 16px;
+    color: var(--ink-3);
+    background: var(--bg-elevated);
+    border-radius: 10px;
+    border: 1px dashed var(--border);
+  }
+  .col-empty-icon {
+    font-family: var(--font-ko-serif);
+    font-size: 36px;
     color: var(--ink-4);
     margin-bottom: 8px;
   }
-  .review-card-sent {
-    font-family: var(--font-ko-serif);
-    font-size: 19px;
-    color: var(--ink);
-    margin-bottom: 4px;
+
+  /* ============ FAB ============ */
+  .fab {
+    position: fixed;
+    right: 22px;
+    bottom: calc(22px + env(safe-area-inset-bottom));
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 28px var(--accent-glow), 0 2px 8px rgba(0,0,0,0.18);
+    font-size: 28px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 60;
+    transition: all 220ms var(--ease);
   }
-  .review-card-jp {
-    font-size: 12.5px;
-    color: var(--ink-3);
-  }
-  .review-card.learned { border-color: var(--good-soft); }
-  .review-card.learned::after {
-    content: "✓";
-    color: var(--good);
-    float: right;
-    font-weight: 700;
+  .fab:hover {
+    background: var(--accent-2);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 12px 36px var(--accent-glow), 0 4px 12px rgba(0,0,0,0.22);
   }
 
   /* ============ MODAL ============ */
@@ -612,43 +632,170 @@
     backdrop-filter: blur(4px);
     z-index: 200;
     display: none;
-    align-items: flex-start;
+    align-items: flex-end;
     justify-content: center;
     overflow-y: auto;
-    padding: 50px 16px;
+  }
+  @media (min-width: 600px) {
+    .modal-back { align-items: center; padding: 50px 16px; }
   }
   .modal-back.open { display: flex; }
   .modal {
     width: 100%;
-    max-width: 680px;
+    max-width: 560px;
     background: var(--bg);
-    border-radius: 14px;
+    border-radius: 18px 18px 0 0;
     overflow: hidden;
     box-shadow: var(--shadow-lg);
     position: relative;
+    animation: modalUp 380ms var(--ease-spring);
+  }
+  @media (min-width: 600px) { .modal { border-radius: 16px; } }
+  @keyframes modalUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
   }
   .modal-close {
     position: absolute;
-    top: 14px;
-    right: 14px;
+    top: 12px;
+    right: 12px;
     width: 32px; height: 32px;
     border-radius: 50%;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    color: var(--ink-2);
+    background: transparent;
+    border: none;
+    color: var(--ink-3);
     cursor: pointer;
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 18px;
   }
-  .modal-close:hover { color: var(--accent); border-color: var(--accent); }
+  .modal-close:hover { color: var(--accent); background: var(--bg-elevated); }
+
+  .modal-body { padding: 32px 28px 28px; }
+  @media (max-width: 600px) { .modal-body { padding: 26px 22px 24px; } }
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 22px;
+  }
+
+  /* ============ FORMS ============ */
+  .type-row { display: flex; gap: 8px; margin-bottom: 18px; }
+  .type-pill {
+    flex: 1;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 8px;
+    color: var(--ink-3);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 220ms var(--ease);
+  }
+  .type-pill:hover { color: var(--accent); border-color: var(--accent); }
+  .type-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .form-field { margin-bottom: 14px; }
+  .form-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 6px;
+  }
+  .form-input, .form-textarea {
+    width: 100%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.4;
+    transition: border-color 220ms var(--ease);
+  }
+  .form-input.zh, .form-textarea.zh {
+    font-family: var(--font-ko-serif);
+    font-size: 19px;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+  .form-textarea { resize: vertical; min-height: 64px; }
+  .form-input.small { font-size: 14px; padding: 9px 12px; }
+
+  .form-detail-toggle {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 8px 0 14px;
+  }
+  .form-details {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .form-details.open { display: flex; }
+
+  .form-actions { display: flex; gap: 10px; margin-top: 18px; }
+  .form-btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 10px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--ink-2);
+    transition: all 220ms var(--ease);
+  }
+  .form-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .form-btn.primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 6px 18px var(--accent-glow);
+  }
+  .form-btn.primary:hover { background: var(--accent-2); color: #fff; }
+
+  .form-danger-row { margin-top: 18px; text-align: center; }
+  .form-danger {
+    background: none;
+    border: none;
+    color: var(--bad);
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 8px 12px;
+  }
+  .form-danger:hover { text-decoration: underline; }
 
   /* ============ FOOTER ============ */
   .footer {
     text-align: center;
-    padding: 40px 22px 60px;
+    padding: 40px 22px 30px;
     font-family: var(--font-display);
     font-size: 10px;
     font-weight: 700;
@@ -658,8 +805,8 @@
   }
   .footer .sep { margin: 0 8px; color: var(--ink-5); }
 </style>
-<link rel="stylesheet" href="clips.css?v=6">
-<script src="clips.js?v=6" defer></script>
+<link rel="stylesheet" href="clips.css?v=13">
+<script src="clips.js?v=13" defer></script>
 </head>
 <body>
 
@@ -676,27 +823,76 @@
   </div>
 </header>
 
-<section class="streak-bar">
-  <div class="streak-num" id="streak"><span class="n">0</span><span class="u">日連続</span></div>
-  <div class="day-info" id="day-info">DAY <span class="accent">001</span> · — · —</div>
+<section class="stats-bar">
+  <div class="stat"><span class="stat-num streak" id="s-streak">0</span><span class="stat-lbl">日連続</span></div>
+  <div class="stat"><span class="stat-num stock" id="s-stock">0</span><span class="stat-lbl">ストック</span></div>
+  <div class="stat"><span class="stat-num due" id="s-due">0</span><span class="stat-lbl">復習待ち</span></div>
 </section>
 
 <main class="card-wrap">
   <article class="card" id="card"></article>
 </main>
 
-<section class="review-section">
-  <div class="review-head">
-    <div class="review-title">過去のカード · <span class="accent" id="learned-count">0</span> 覚えた</div>
-    <button class="review-toggle" id="review-toggle">表示 ▾</button>
+<section class="col-section">
+  <div class="col-head">
+    <div class="col-title">MY COLLECTION<span class="count" id="c-count">0</span></div>
+    <div class="col-filters">
+      <button class="filter-chip active" data-filter="all">すべて</button>
+      <button class="filter-chip" data-filter="due">復習</button>
+      <button class="filter-chip" data-filter="mastered">習得</button>
+    </div>
   </div>
-  <div class="review-list" id="review-list">
-    <div class="review-empty" id="review-empty">まだ過去カードはありません</div>
-  </div>
+  <div class="col-list" id="c-list"></div>
 </section>
 
-<div class="modal-back" id="modal-back">
-  <div class="modal" id="modal"></div>
+<button class="fab" id="fab" aria-label="新しく追加">＋</button>
+
+<div class="modal-back" id="add-back">
+  <div class="modal">
+    <button class="modal-close" id="add-close" aria-label="閉じる">✕</button>
+    <div class="modal-body">
+      <h3 class="modal-title">今日の学びを追加</h3>
+      <div class="type-row" id="type-row">
+        <button class="type-pill active" data-type="word">単語</button>
+        <button class="type-pill" data-type="grammar">文法</button>
+        <button class="type-pill" data-type="sentence">フレーズ</button>
+      </div>
+      <div class="form-field">
+        <label class="form-label" id="add-main-label">単語 (한국어)</label>
+        <textarea class="form-textarea zh" id="add-text" placeholder="잠깐만요" autocomplete="off"></textarea>
+      </div>
+      <button class="form-detail-toggle" id="add-toggle">▾ 詳細を追加 (任意)</button>
+      <div class="form-details" id="add-details">
+        <div class="form-field" style="margin:0">
+          <label class="form-label">読み (発音)</label>
+          <input class="form-input small" id="add-pinyin" placeholder="jamkkanmanyo">
+        </div>
+        <div class="form-field" style="margin:0">
+          <label class="form-label">意味 (日本語)</label>
+          <input class="form-input small" id="add-jp" placeholder="ちょっと待ってください">
+        </div>
+        <div class="form-field" style="margin:0">
+          <label class="form-label">メモ</label>
+          <textarea class="form-textarea" id="add-note" style="min-height:54px" placeholder="「잠깐만」より少し丁寧"></textarea>
+        </div>
+        <div class="form-field" style="margin:0">
+          <label class="form-label">例文 (1行=1例 · 한국어 | 日本語)</label>
+          <textarea class="form-textarea" id="add-examples" style="min-height:54px" placeholder="잠깐만요, 곧 갈게요 | ちょっと待って、すぐ行きます"></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="form-btn" id="add-cancel">キャンセル</button>
+        <button class="form-btn primary" id="add-save">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-back" id="detail-back">
+  <div class="modal">
+    <button class="modal-close" id="detail-close" aria-label="閉じる">✕</button>
+    <div class="modal-body" id="detail-body"></div>
+  </div>
 </div>
 
 <footer class="footer">
@@ -704,743 +900,711 @@
 </footer>
 
 <script>
-  /* ================================================================
-     CONTENT — 30日分の素材
-     ================================================================ */
-  const CARDS = [
-    // ============ DAY 1-10: TOPIK 1 基礎 ============
-    {
-      level: "TOPIK 1",
-      sentence: "안녕하세요, 저는 다나카입니다.",
-      hl: "입니다",
-      pinyin: "annyeonghaseyo, jeoneun danakaimnida.",
-      jp: "こんにちは、私は田中です。",
-      word: { w: "저", p: "jeo", pos: "代名詞", jp: "私 (謙譲)" },
-      grammar: {
-        pattern: "N + 입니다 / 입니까?",
-        explain: "「〜です」のかしこまった形(합니다体)。疑問は「입니까?」。日常では「이에요/예요」も多用される。",
-        examples: [
-          { cn: "저는 학생입니다.", jp: "私は学生です。" },
-          { cn: "이름이 뭐예요?", jp: "お名前は？" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "어디에 가요?",
-      hl: "에",
-      pinyin: "eodi-e gayo?",
-      jp: "どこに行きますか？",
-      word: { w: "어디", p: "eodi", pos: "疑問詞", jp: "どこ" },
-      grammar: {
-        pattern: "場所 + 에 가다 / 오다",
-        explain: "助詞「에」は方向・目的地を表す。「에서」(動作の場所) と区別すること。가다(行く)、오다(来る) とセット。",
-        examples: [
-          { cn: "학교에 가요.", jp: "学校に行きます。" },
-          { cn: "집에 와요.", jp: "家に来ます。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "책을 읽어요.",
-      hl: "을",
-      pinyin: "chaek-eul ilg-eoyo.",
-      jp: "本を読みます。",
-      word: { w: "읽다", p: "ilkda", pos: "動詞", jp: "読む" },
-      grammar: {
-        pattern: "N + 을/를 (目的格)",
-        explain: "目的語につける助詞。パッチムあり=을、なし=를。日本語の「を」と同じ位置。",
-        examples: [
-          { cn: "물을 마셔요.", jp: "水を飲みます。" },
-          { cn: "영화를 봐요.", jp: "映画を観ます。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "학교에서 공부해요.",
-      hl: "에서",
-      pinyin: "hakgyo-eseo gongbu-haeyo.",
-      jp: "学校で勉強します。",
-      word: { w: "공부하다", p: "gongbuhada", pos: "動詞", jp: "勉強する" },
-      grammar: {
-        pattern: "場所 + 에서 + 動詞",
-        explain: "動作が行われる場所には「에서」を使う。「에」(方向) との違いを意識: 「학교에 가요」(行く先)/「학교에서 공부해요」(動作の場所)。",
-        examples: [
-          { cn: "집에서 쉬어요.", jp: "家で休みます。" },
-          { cn: "카페에서 만나요.", jp: "カフェで会いましょう。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "친구하고 같이 가요.",
-      hl: "하고",
-      pinyin: "chingu-hago gachi gayo.",
-      jp: "友達と一緒に行きます。",
-      word: { w: "같이", p: "gachi", pos: "副詞", jp: "一緒に" },
-      grammar: {
-        pattern: "N + 하고 / 와 / 과",
-        explain: "「〜と」を表す助詞。「하고」は会話で最も自然。書き言葉ではパッチムなし=「와」、あり=「과」。",
-        examples: [
-          { cn: "엄마하고 영화를 봐요.", jp: "母と映画を観ます。" },
-          { cn: "친구와 같이 공부해요.", jp: "友達と一緒に勉強します。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "비가 와요.",
-      hl: "가",
-      pinyin: "bi-ga wayo.",
-      jp: "雨が降っています。",
-      word: { w: "비", p: "bi", pos: "名詞", jp: "雨" },
-      grammar: {
-        pattern: "N + 이/가 (主格)",
-        explain: "主語を表す助詞。パッチムあり=이、なし=가。「は」にあたる「은/는」とは違い、新情報・存在を提示するときに使う。",
-        examples: [
-          { cn: "눈이 와요.", jp: "雪が降っています。" },
-          { cn: "고양이가 있어요.", jp: "猫がいます。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "한국어를 배우고 있어요.",
-      hl: "고 있어요",
-      pinyin: "hangugeo-reul baeu-go isseoyo.",
-      jp: "韓国語を学んでいます。",
-      word: { w: "배우다", p: "baeuda", pos: "動詞", jp: "学ぶ" },
-      grammar: {
-        pattern: "V + 고 있다",
-        explain: "進行を表す。日本語の「〜している」に相当。完了の意味を含む「아/어 있다」と区別: 「앉아 있다」(座っている状態)。",
-        examples: [
-          { cn: "지금 자고 있어요.", jp: "今寝ています。" },
-          { cn: "책을 읽고 있어요.", jp: "本を読んでいます。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "사과를 좋아해요.",
-      hl: "좋아해요",
-      pinyin: "sagwa-reul joa-haeyo.",
-      jp: "りんごが好きです。",
-      word: { w: "좋아하다", p: "joahada", pos: "動詞", jp: "好む" },
-      grammar: {
-        pattern: "N + 을/를 좋아하다",
-        explain: "韓国語では「好き」を動詞で表すため、目的格「を」をとる。日本語の「が好き」と助詞が違う点に注意。",
-        examples: [
-          { cn: "커피를 좋아해요.", jp: "コーヒーが好きです。" },
-          { cn: "한국 노래를 좋아해요.", jp: "韓国の歌が好きです。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "지금 뭐 해요?",
-      hl: "뭐",
-      pinyin: "jigeum mwo haeyo?",
-      jp: "今、何してる？",
-      word: { w: "뭐", p: "mwo", pos: "疑問詞", jp: "何 (口語)" },
-      grammar: {
-        pattern: "疑問詞 + 動詞？",
-        explain: "韓国語の疑問詞は語順を変えず、聞きたい位置に置くだけ。「뭐」は「무엇」の口語形。",
-        examples: [
-          { cn: "이거 뭐예요?", jp: "これ何ですか？" },
-          { cn: "뭐 먹을래요?", jp: "何食べる？" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "한국에 가고 싶어요.",
-      hl: "고 싶어요",
-      pinyin: "hanguk-e ga-go sipeoyo.",
-      jp: "韓国に行きたいです。",
-      word: { w: "싶다", p: "sipda", pos: "補助形容詞", jp: "〜したい" },
-      grammar: {
-        pattern: "V + 고 싶다",
-        explain: "願望「〜したい」。3人称には使えず、その場合「-고 싶어하다」を使う: 그는 가고 싶어해요.",
-        examples: [
-          { cn: "쉬고 싶어요.", jp: "休みたいです。" },
-          { cn: "뭐 먹고 싶어요?", jp: "何食べたい？" }
-        ]
-      }
-    },
+/* =====================================================================
+   BUILT-IN POOL — 日常頻出 + 間違いやすい 50問 (TOPIK縛りなし)
+   ===================================================================== */
+const BUILTIN_POOL = [
+  // === 助詞 (混同しやすいもの) ===
+  { id:"b_eun_i", type:"grammar", text:"은/는 vs 이/가", pinyin:"eun/neun · i/ga", jp:"主題 / 主格 (新情報)",
+    note:"「은/는」は主題「〜は」(既知・対比)、「이/가」は主格「〜が」(新情報・特定)。日本語と同じ感覚で大体OKだが、初出は「이/가」、二回目以降は「은/는」が多い。",
+    examples:[{cn:"제가 다나카예요. 다나카는 일본 사람이에요.", jp:"私が田中です。田中は日本人です。"}] },
+  { id:"b_eul_reul", type:"grammar", text:"을 / 를", pinyin:"eul / reul", jp:"〜を (目的格)",
+    note:"パッチムあり=을、なし=를。日本語の「を」とほぼ同じ。",
+    examples:[{cn:"물을 마셔요", jp:"水を飲みます"}, {cn:"커피를 마셔요", jp:"コーヒーを飲みます"}] },
+  { id:"b_e_eseo", type:"grammar", text:"에 vs 에서", pinyin:"e / eseo", jp:"〜に (方向・存在) / 〜で (動作の場所)",
+    note:"「에」は方向・到着点・時間・存在: 학교에 가요/집에 있어요。「에서」は動作が行われる場所: 학교에서 공부해요。",
+    examples:[{cn:"학교에 가요", jp:"学校に行きます"}, {cn:"학교에서 공부해요", jp:"学校で勉強します"}] },
+  { id:"b_hago_wa", type:"grammar", text:"하고 vs 와/과", pinyin:"hago / wa·gwa", jp:"〜と (口語 / 書き言葉)",
+    note:"「하고」は会話で自然。書き言葉ではパッチムなし=「와」、あり=「과」。意味は同じ「〜と」。",
+    examples:[{cn:"친구하고 가요", jp:"友達と行きます"}, {cn:"우유와 빵", jp:"牛乳とパン"}] },
+  { id:"b_do", type:"grammar", text:"〜도", pinyin:"do", jp:"〜も",
+    note:"主格や目的格の助詞を置き換える: 저도 학생이에요 (×저는도)。",
+    examples:[{cn:"저도 일본 사람이에요", jp:"私も日本人です"}] },
+  { id:"b_man", type:"grammar", text:"〜만", pinyin:"man", jp:"〜だけ / 〜のみ",
+    note:"「하나만 주세요」(1つだけください)。動詞には「-기만 하다」(〜してばかり)。",
+    examples:[{cn:"이것만 주세요", jp:"これだけください"}] },
+  { id:"b_kkaji_buteo", type:"grammar", text:"부터 vs 까지", pinyin:"buteo / kkaji", jp:"〜から / 〜まで",
+    note:"場所の起点は「에서」、時間や順序の起点は「부터」。「까지」は両方で使える終点。",
+    examples:[{cn:"9시부터 5시까지", jp:"9時から5時まで"}, {cn:"여기부터", jp:"ここから (順序)"}] },
+  { id:"b_boda", type:"grammar", text:"〜보다", pinyin:"boda", jp:"〜より (比較)",
+    note:"「A는 B보다 〜」または「B보다 A가 〜」。「더」(より一層) と組み合わせる: 더 좋아요。",
+    examples:[{cn:"커피가 차보다 좋아요", jp:"お茶よりコーヒーが好き"}] },
+  { id:"b_cheoreom", type:"grammar", text:"〜처럼 vs 〜같이", pinyin:"cheoreom / gachi", jp:"〜のように",
+    note:"ほぼ同義。「처럼」がやや書き言葉。「같이」は副詞「一緒に」の意味もあるので文脈で区別。",
+    examples:[{cn:"별처럼 빛나요", jp:"星のように輝く"}, {cn:"같이 가요", jp:"一緒に行こう"}] },
 
-    // ============ DAY 11-20: TOPIK 1 後半・過去・否定 ============
-    {
-      level: "TOPIK 1",
-      sentence: "영화를 봤어요.",
-      hl: "봤어요",
-      pinyin: "yeonghwa-reul bwasseoyo.",
-      jp: "映画を観ました。",
-      word: { w: "보다", p: "boda", pos: "動詞", jp: "見る/観る" },
-      grammar: {
-        pattern: "V + 았/었어요 (過去)",
-        explain: "過去形。母音陽性(ㅏ/ㅗ)=았어요、それ以外=었어요、하다=했어요。「ㅗ + 았」=「봤」のように縮約あり。",
-        examples: [
-          { cn: "친구를 만났어요.", jp: "友達に会いました。" },
-          { cn: "공부했어요.", jp: "勉強しました。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "시간이 없어요.",
-      hl: "없어요",
-      pinyin: "sigan-i eopseoyo.",
-      jp: "時間がありません。",
-      word: { w: "시간", p: "sigan", pos: "名詞", jp: "時間" },
-      grammar: {
-        pattern: "있다 / 없다",
-        explain: "「ある/いる」=있다、「ない/いない」=없다。存在と所有の両方を表す独立した動詞 (日本語のように動詞「ある」を否定して使わない)。",
-        examples: [
-          { cn: "돈이 있어요?", jp: "お金ありますか？" },
-          { cn: "친구가 없어요.", jp: "友達がいません。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "날씨가 추워요.",
-      hl: "추워요",
-      pinyin: "nalssi-ga chu-wo-yo.",
-      jp: "天気が寒いです。",
-      word: { w: "춥다", p: "chupda", pos: "形容詞", jp: "寒い" },
-      grammar: {
-        pattern: "ㅂ不規則",
-        explain: "語幹末の「ㅂ」が母音の前で「우」に変化: 춥다→추워요、덥다→더워요、쉽다→쉬워요。例外: 좁다(狭い)は変化しない。",
-        examples: [
-          { cn: "오늘 더워요.", jp: "今日暑いです。" },
-          { cn: "이거 어려워요.", jp: "これ難しいです。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "사진을 찍어 주세요.",
-      hl: "주세요",
-      pinyin: "sajin-eul jjik-eo juseyo.",
-      jp: "写真を撮ってください。",
-      word: { w: "찍다", p: "jjikda", pos: "動詞", jp: "撮る" },
-      grammar: {
-        pattern: "V + 아/어 주세요",
-        explain: "丁寧な依頼「〜してください」。「주세요」だけで「ください」、動詞をつけて「〜してください」になる。",
-        examples: [
-          { cn: "천천히 말해 주세요.", jp: "ゆっくり話してください。" },
-          { cn: "도와 주세요.", jp: "助けてください。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 1",
-      sentence: "비가 와서 안 갔어요.",
-      hl: "안",
-      pinyin: "bi-ga wa-seo an gass-eoyo.",
-      jp: "雨が降ったので行きませんでした。",
-      word: { w: "안", p: "an", pos: "副詞", jp: "〜ない" },
-      grammar: {
-        pattern: "안 + 動詞/形容詞",
-        explain: "否定の副詞。動詞の前に置くか、「하다」動詞は「공부 안 해요」のように分ける。「-지 않다」(書き言葉) と同じ意味。",
-        examples: [
-          { cn: "오늘 안 가요.", jp: "今日行きません。" },
-          { cn: "공부 안 했어요.", jp: "勉強しませんでした。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "지금 못 가요.",
-      hl: "못",
-      pinyin: "jigeum mot gayo.",
-      jp: "今、行けません。",
-      word: { w: "못", p: "mot", pos: "副詞", jp: "〜できない" },
-      grammar: {
-        pattern: "못 + 動詞",
-        explain: "不可能を表す。「안」が「したくない/しない」なのに対し、「못」は「条件的に〜できない」。「-지 못하다」と同義。",
-        examples: [
-          { cn: "한국어를 못 해요.", jp: "韓国語ができません。" },
-          { cn: "오늘은 못 만나요.", jp: "今日は会えません。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "만나서 반가워요.",
-      hl: "아서",
-      pinyin: "mannaseo ban-gaw-oyo.",
-      jp: "会えて嬉しいです。",
-      word: { w: "반갑다", p: "bangapda", pos: "形容詞", jp: "嬉しい (会えて)" },
-      grammar: {
-        pattern: "V + 아/어서 (理由・連結)",
-        explain: "原因や時間的連続を表す。「-니까」が話し手の主張なら、「-아서/어서」はより客観的・自然な流れ。命令文の理由には使えない。",
-        examples: [
-          { cn: "배가 고파서 먹었어요.", jp: "お腹が空いたので食べました。" },
-          { cn: "집에 가서 잤어요.", jp: "家に帰って寝ました。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "비싸지만 맛있어요.",
-      hl: "지만",
-      pinyin: "bissajiman masisseoyo.",
-      jp: "高いけどおいしいです。",
-      word: { w: "비싸다", p: "bissada", pos: "形容詞", jp: "(値段が)高い" },
-      grammar: {
-        pattern: "V/A + 지만",
-        explain: "逆接「〜だが/けど」。語幹に「지만」を直接つける。過去なら「-았/었지만」: 갔지만。",
-        examples: [
-          { cn: "어렵지만 재미있어요.", jp: "難しいけど面白い。" },
-          { cn: "추웠지만 즐거웠어요.", jp: "寒かったけど楽しかった。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "내일 같이 만날까요?",
-      hl: "ㄹ까요",
-      pinyin: "naeil gachi mannal-kkayo?",
-      jp: "明日一緒に会いましょうか？",
-      word: { w: "내일", p: "naeil", pos: "名詞", jp: "明日" },
-      grammar: {
-        pattern: "V + (으)ㄹ까요?",
-        explain: "提案や推量を表す。「一緒に〜しましょうか」のニュアンス。1人称(自分の推測)では「〜だろうか」。",
-        examples: [
-          { cn: "뭘 먹을까요?", jp: "何を食べましょうか？" },
-          { cn: "비가 올까요?", jp: "雨が降るかな？" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "시간이 있으면 같이 가요.",
-      hl: "으면",
-      pinyin: "sigan-i isseu-myeon gachi gayo.",
-      jp: "時間があれば、一緒に行きましょう。",
-      word: { w: "있다", p: "itda", pos: "動詞", jp: "ある/いる" },
-      grammar: {
-        pattern: "V/A + (으)면 (仮定)",
-        explain: "「〜なら/ば」。パッチムあり=으면、なし=면。「-(으)면 좋겠다」で願望「〜だといいな」も頻出。",
-        examples: [
-          { cn: "비가 오면 안 가요.", jp: "雨が降ったら行きません。" },
-          { cn: "한국에 가면 좋겠어요.", jp: "韓国に行けたらいいな。" }
-        ]
-      }
-    },
+  // === 否定 ===
+  { id:"b_an_mot", type:"grammar", text:"안 vs 못", pinyin:"an / mot", jp:"〜ない (意志) / 〜できない (不可能)",
+    note:"「안」は「したくない/しない」(意志否定)、「못」は「条件的にできない」。混同に注意。",
+    examples:[{cn:"오늘 안 가요", jp:"今日行きません (意志)"}, {cn:"오늘 못 가요", jp:"今日行けません (不可能)"}] },
+  { id:"b_ji_anhda", type:"grammar", text:"-지 않다 vs 안", pinyin:"-ji anhda / an", jp:"〜ない (書き言葉 / 口語)",
+    note:"「-지 않다」は丁寧・書き言葉、「안」は口語的。意味は同じ。",
+    examples:[{cn:"가지 않아요", jp:"行きません (フォーマル)"}, {cn:"안 가요", jp:"行きません (口語)"}] },
 
-    // ============ DAY 21-30: TOPIK 2 ============
-    {
-      level: "TOPIK 2",
-      sentence: "한국어를 할 줄 알아요.",
-      hl: "줄 알아요",
-      pinyin: "hangugeo-reul hal jul arayo.",
-      jp: "韓国語ができます。",
-      word: { w: "줄 알다", p: "jul alda", pos: "慣用", jp: "〜の仕方を知っている" },
-      grammar: {
-        pattern: "V + (으)ㄹ 줄 알다 / 모르다",
-        explain: "技能としての「〜できる/できない」。「-(으)ㄹ 수 있다」(条件的可能) との違い: 운전할 줄 알아요 (運転する技術がある) vs 운전할 수 있어요 (今運転できる状況)。",
-        examples: [
-          { cn: "수영할 줄 알아요.", jp: "泳げます (泳ぎ方を知っている)。" },
-          { cn: "피아노 칠 줄 몰라요.", jp: "ピアノが弾けません。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "가르쳐 주신 선생님이에요.",
-      hl: "주신",
-      pinyin: "gareuchyeo jusin seonsaengnim-ieyo.",
-      jp: "教えてくださった先生です。",
-      word: { w: "주시다", p: "jusida", pos: "補助動詞", jp: "〜してくださる" },
-      grammar: {
-        pattern: "V + 아/어 주시다",
-        explain: "「〜してくれる」(주다) の尊敬形「〜してくださる」。連体修飾の過去形「-신」と組み合わせて頻用。",
-        examples: [
-          { cn: "도와 주세요.", jp: "助けてください。" },
-          { cn: "선생님이 알려 주셨어요.", jp: "先生が教えてくださいました。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "한국어를 배운 지 일 년이 됐어요.",
-      hl: "ㄴ 지",
-      pinyin: "hangugeo-reul baeun ji il nyeon-i dwaesseoyo.",
-      jp: "韓国語を学んで1年になりました。",
-      word: { w: "년", p: "nyeon", pos: "依存名詞", jp: "〜年" },
-      grammar: {
-        pattern: "V + (으)ㄴ 지 + 期間 + 되다",
-        explain: "「〜してから(期間)が経った」。「지」の前は必ず過去連体形「-(으)ㄴ」。期間の後に「됐어요/지났어요」が来る。",
-        examples: [
-          { cn: "결혼한 지 5년 됐어요.", jp: "結婚して5年経ちました。" },
-          { cn: "온 지 얼마 안 됐어요.", jp: "来てまだ間もないです。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "내일 비가 올 것 같아요.",
-      hl: "ㄹ 것 같아요",
-      pinyin: "naeil bi-ga ol geot gatayo.",
-      jp: "明日雨が降りそうです。",
-      word: { w: "같다", p: "gatda", pos: "形容詞", jp: "〜のようだ" },
-      grammar: {
-        pattern: "V + (으)ㄹ/ㄴ 것 같다",
-        explain: "推量「〜しそう/〜ようだ」。未来=ㄹ 것 같다、現在/結果=ㄴ 것 같다、現在進行=는 것 같다、過去=았/었던 것 같다。",
-        examples: [
-          { cn: "맛있을 것 같아요.", jp: "おいしそうです。" },
-          { cn: "벌써 간 것 같아요.", jp: "もう行ったみたいです。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "한국에 가 본 적이 있어요.",
-      hl: "ㄴ 적이 있어요",
-      pinyin: "hanguk-e ga bon jeog-i isseoyo.",
-      jp: "韓国に行ったことがあります。",
-      word: { w: "적", p: "jeok", pos: "依存名詞", jp: "とき・経験" },
-      grammar: {
-        pattern: "V + (으)ㄴ 적이 있다/없다",
-        explain: "経験を表す「〜したことがある/ない」。よく「-아/어 보다」(試しに〜する) と組み合わせて「-아/어 본 적이 있다」になる。",
-        examples: [
-          { cn: "김치를 먹어 본 적이 있어요.", jp: "キムチを食べたことがあります。" },
-          { cn: "거기 가 본 적이 없어요.", jp: "そこ行ったことありません。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "공부하느라고 못 갔어요.",
-      hl: "느라고",
-      pinyin: "gongbu-haneurago mot gasseoyo.",
-      jp: "勉強していて行けませんでした。",
-      word: { w: "공부", p: "gongbu", pos: "名詞", jp: "勉強" },
-      grammar: {
-        pattern: "V + 느라고",
-        explain: "「〜のせいで(できなかった)」というネガティブな結果の理由。後ろには「못 〜」など否定的結果が来ることが多い。",
-        examples: [
-          { cn: "자느라고 전화를 못 받았어요.", jp: "寝ていて電話に出られませんでした。" },
-          { cn: "일하느라고 바빠요.", jp: "仕事で忙しいです。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "한국 음식 중에서 김치를 제일 좋아해요.",
-      hl: "중에서",
-      pinyin: "hanguk eumsik jung-eseo gimchi-reul jeil joa-haeyo.",
-      jp: "韓国料理の中でキムチが一番好きです。",
-      word: { w: "제일", p: "jeil", pos: "副詞", jp: "一番、最も" },
-      grammar: {
-        pattern: "N + 중에서 + 제일/가장 + 〜",
-        explain: "「〜の中で一番〜」。比較・最上級の頻出パターン。「가장」と「제일」はほぼ同義だが「제일」のほうが口語的。",
-        examples: [
-          { cn: "친구 중에서 그가 제일 친해요.", jp: "友達の中で彼が一番親しい。" },
-          { cn: "과일 중에서 사과가 가장 좋아요.", jp: "果物の中でりんごが一番好き。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 2",
-      sentence: "한국에 가려고 공부해요.",
-      hl: "려고",
-      pinyin: "hanguk-e garyeo-go gongbu-haeyo.",
-      jp: "韓国に行くために勉強しています。",
-      word: { w: "공부하다", p: "gongbuhada", pos: "動詞", jp: "勉強する" },
-      grammar: {
-        pattern: "V + (으)려고",
-        explain: "目的「〜しようと」。主語の意思的な目的に使う。「-기 위해서」(よりフォーマル) との使い分け。",
-        examples: [
-          { cn: "선물을 사려고 왔어요.", jp: "プレゼントを買おうと来ました。" },
-          { cn: "한국어를 배우려고 해요.", jp: "韓国語を学ぼうとしています。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 3",
-      sentence: "비가 오니까 우산을 가져가세요.",
-      hl: "니까",
-      pinyin: "bi-ga onikka usan-eul gajyeoga-seyo.",
-      jp: "雨が降っているので傘を持っていってください。",
-      word: { w: "우산", p: "usan", pos: "名詞", jp: "傘" },
-      grammar: {
-        pattern: "V/A + (으)니까",
-        explain: "理由を表す「〜なので」。「-아서/어서」と違い、後ろに命令・勧誘・提案を続けられる: 비가 오니까 가지 마세요 (雨だから行かないで)。",
-        examples: [
-          { cn: "추우니까 따뜻하게 입으세요.", jp: "寒いので暖かく着てください。" },
-          { cn: "시간이 없으니까 빨리 가요.", jp: "時間がないから早く行こう。" }
-        ]
-      }
-    },
-    {
-      level: "TOPIK 3",
-      sentence: "한국에 살게 됐어요.",
-      hl: "게 됐어요",
-      pinyin: "hanguk-e salge dwaesseoyo.",
-      jp: "韓国に住むことになりました。",
-      word: { w: "살다", p: "salda", pos: "動詞", jp: "住む/生きる" },
-      grammar: {
-        pattern: "V + 게 되다",
-        explain: "「〜することになる」。自分の意思とは別の流れで結果的にそうなった、というニュアンス。日本語の「〜することになった」とそっくり。",
-        examples: [
-          { cn: "그를 좋아하게 됐어요.", jp: "彼を好きになりました。" },
-          { cn: "회사를 그만두게 됐어요.", jp: "会社を辞めることになりました。" }
-        ]
-      }
-    }
-  ];
+  // === 接続・連結 ===
+  { id:"b_aseo_nikka", type:"grammar", text:"-아/어서 vs -(으)니까", pinyin:"-aseo / -(eu)nikka", jp:"〜なので (客観 / 主観)",
+    note:"「-아/어서」は客観的因果。命令・勧誘の前では使えない。「-(으)니까」は主観的・主張的で、命令・勧誘OK: 비가 오니까 가지 마세요。",
+    examples:[{cn:"배고파서 먹었어요", jp:"お腹空いたので食べた"}, {cn:"피곤하니까 쉽시다", jp:"疲れたから休もう"}] },
+  { id:"b_ado", type:"grammar", text:"-아/어도", pinyin:"-ado/-eodo", jp:"〜しても",
+    note:"逆接の譲歩「〜しても」。「-아도 되다」(〜してもいい) と組み合わせて許可も表す。",
+    examples:[{cn:"비가 와도 갈래요", jp:"雨でも行きます"}, {cn:"먹어도 돼요", jp:"食べてもいいです"}] },
+  { id:"b_myeon", type:"grammar", text:"-(으)면", pinyin:"-(eu)myeon", jp:"〜なら / 〜したら",
+    note:"仮定。パッチムあり=으면、なし=면。「-(으)면 좋겠다」=〜だといいな。",
+    examples:[{cn:"시간이 있으면 가요", jp:"時間があれば行こう"}, {cn:"한국에 가면 좋겠어요", jp:"韓国に行けたらいいな"}] },
+  { id:"b_ndeae", type:"grammar", text:"-는데 / -(으)ㄴ데", pinyin:"-neunde / -(eu)nde", jp:"〜だけど / 〜なんだけど (前置き)",
+    note:"単純な逆接ではなく、状況や情報を提示する「前置き」。動詞=는데、形容詞=(으)ㄴ데。",
+    examples:[{cn:"비가 오는데 갈까요?", jp:"雨だけど行く?"}, {cn:"맛있는데 좀 비싸요", jp:"美味しいけどちょっと高い"}] },
+  { id:"b_janhayo", type:"grammar", text:"-잖아요", pinyin:"-janhayo", jp:"〜じゃないですか (確認)",
+    note:"相手が知っているはずの事を再確認するニュアンス。「ね？」「でしょ？」",
+    examples:[{cn:"비가 오잖아요", jp:"雨降ってるじゃないですか"}] },
+  { id:"b_geodunyo", type:"grammar", text:"-거든요", pinyin:"-geodunyo", jp:"〜なんですよ (説明)",
+    note:"相手が知らない情報を「実は〜なんですよ」と説明する語尾。",
+    examples:[{cn:"오늘은 바쁘거든요", jp:"今日は忙しいんですよ"}] },
+  { id:"b_neyo", type:"grammar", text:"-네요", pinyin:"-neyo", jp:"〜ですね (新しい気づき)",
+    note:"その場で新しく気づいた感想。「これ美味しいですね」「綺麗ですね」。",
+    examples:[{cn:"맛있네요!", jp:"美味しいですね!"}, {cn:"춥네요", jp:"寒いですね"}] },
+  { id:"b_jiyo", type:"grammar", text:"-죠 / -지요", pinyin:"-jyo / -jiyo", jp:"〜でしょう (確認・同意)",
+    note:"相手も知っているはずの事の確認。「-죠」は「-지요」の短縮。",
+    examples:[{cn:"맞죠?", jp:"そうでしょう?"}, {cn:"좋죠", jp:"いいですよね"}] },
 
-  /* ================================================================
-     STATE
-     ================================================================ */
-  const STORAGE_KEY = 'today-ko-progress';
-  const THEME_KEY = 'today-ko-theme';
+  // === 助動詞・補助動詞 ===
+  { id:"b_go_itda", type:"grammar", text:"-고 있다 vs -아/어 있다", pinyin:"-go itda / -a/eo itda", jp:"〜している (進行) / 〜している (状態)",
+    note:"「-고 있다」は進行: 자고 있어요 (寝ているところ)。「-아/어 있다」は結果状態: 앉아 있어요 (座っている)。混同しやすい。",
+    examples:[{cn:"자고 있어요", jp:"寝ているところ"}, {cn:"앉아 있어요", jp:"座っている (状態)"}] },
+  { id:"b_a_juda", type:"grammar", text:"-아/어 주다", pinyin:"-a/eo juda", jp:"〜してあげる/してくれる",
+    note:"尊敬は「-아/어 주시다」(〜してくださる)。依頼「-아/어 주세요」も同形。",
+    examples:[{cn:"도와 주세요", jp:"助けてください"}, {cn:"선생님이 가르쳐 주셨어요", jp:"先生が教えてくださった"}] },
+  { id:"b_a_boda", type:"grammar", text:"-아/어 보다", pinyin:"-a/eo boda", jp:"〜してみる",
+    note:"試しに〜する。経験を表す「-(으)ㄴ 적이 있다」と組み合わせて「-아/어 본 적이 있다」(してみたことがある)。",
+    examples:[{cn:"먹어 봤어요", jp:"食べてみました"}, {cn:"한 번 가 보세요", jp:"一度行ってみて"}] },
+  { id:"b_ge_doeda", type:"grammar", text:"-게 되다", pinyin:"-ge doeda", jp:"〜することになる",
+    note:"自分の意思とは別の流れで結果的にそうなった。",
+    examples:[{cn:"한국에 가게 됐어요", jp:"韓国に行くことになった"}, {cn:"좋아하게 됐어요", jp:"好きになった"}] },
+  { id:"b_n_jeok", type:"grammar", text:"-(으)ㄴ 적이 있다/없다", pinyin:"-(eu)n jeogi itda/eopda", jp:"〜したことがある/ない",
+    note:"経験。よく「-아/어 본 적이 있다」と組み合わせる。",
+    examples:[{cn:"한국에 가 본 적이 있어요", jp:"韓国に行ったことがある"}] },
+  { id:"b_jul_alda", type:"grammar", text:"-(으)ㄹ 줄 알다/모르다", pinyin:"-(eu)l jul alda/moreuda", jp:"〜の仕方を知っている (技能)",
+    note:"習得した技能としての「できる」。条件可能の「-(으)ㄹ 수 있다」と区別: 운전할 줄 알아요 (運転できる、技能ある) vs 운전할 수 있어요 (今運転できる状況)。",
+    examples:[{cn:"수영할 줄 알아요", jp:"泳げます"}, {cn:"피아노 칠 줄 몰라요", jp:"ピアノ弾けません"}] },
+  { id:"b_ryeogo", type:"grammar", text:"-(으)려고 (하다)", pinyin:"-(eu)ryeogo", jp:"〜しようと (思う)",
+    note:"目的・意図。「-(으)려고 하다」で「〜しようと思う」。「-(으)러」(目的・移動) と区別。",
+    examples:[{cn:"선물을 사려고 왔어요", jp:"プレゼントを買おうと来た"}, {cn:"한국어를 배우려고 해요", jp:"韓国語を学ぼうとしている"}] },
+  { id:"b_giro_hada", type:"grammar", text:"-기로 하다", pinyin:"-giro hada", jp:"〜することにする/決める",
+    note:"自分の決断・約束。「가기로 했어요」(行くことにした)。",
+    examples:[{cn:"내일 만나기로 했어요", jp:"明日会うことにした"}] },
+  { id:"b_n_ji", type:"grammar", text:"-(으)ㄴ 지 ... 됐다", pinyin:"-(eu)n ji ... dwaetda", jp:"〜してから(期間)が経った",
+    note:"「지」の前は必ず過去連体形「-(으)ㄴ」。期間の後に「됐어요/지났어요」。",
+    examples:[{cn:"한국어를 배운 지 일 년 됐어요", jp:"韓国語を学んで1年になった"}] },
+  { id:"b_da_bomyeon", type:"grammar", text:"-다 보면", pinyin:"-da bomyeon", jp:"〜していると / 〜していけば",
+    note:"継続するうちに自然と何かが起こる。「하다 보면」(やっているうちに)。",
+    examples:[{cn:"공부하다 보면 잘하게 될 거예요", jp:"勉強していくと上手になるでしょう"}] },
+  { id:"b_l_su_itda", type:"grammar", text:"-(으)ㄹ 수 있다/없다", pinyin:"-(eu)l su itda/eopda", jp:"〜できる/できない",
+    note:"条件・可能性。「-(으)ㄹ 줄 알다」(技能) と使い分け。",
+    examples:[{cn:"내일 만날 수 있어요?", jp:"明日会えますか?"}] },
 
-  function loadState() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return defaultState();
-      const s = JSON.parse(raw);
-      return Object.assign(defaultState(), s);
-    } catch (e) { return defaultState(); }
+  // === 義務・許可・禁止 ===
+  { id:"b_aya_hada", type:"grammar", text:"-아/어야 하다(되다)", pinyin:"-aya hada", jp:"〜しなければならない",
+    note:"義務・必要。「하다」より「되다」のほうが口語的。「가야 돼요」=行かなきゃ。",
+    examples:[{cn:"빨리 가야 돼요", jp:"早く行かなきゃ"}] },
+  { id:"b_ado_doeda", type:"grammar", text:"-아/어도 되다", pinyin:"-ado doeda", jp:"〜してもいい (許可)",
+    note:"「-아/어도 괜찮아요」(〜しても大丈夫) も同義。質問形は「-아/어도 돼요?」",
+    examples:[{cn:"여기 앉아도 돼요?", jp:"ここ座っていいですか?"}] },
+  { id:"b_ji_maseyo", type:"grammar", text:"-지 마세요", pinyin:"-ji maseyo", jp:"〜しないでください",
+    note:"禁止の丁寧形。語幹+지+마세요。",
+    examples:[{cn:"걱정하지 마세요", jp:"心配しないでください"}, {cn:"여기 들어가지 마세요", jp:"ここに入らないで"}] },
+
+  // === 動詞ペアの混同 ===
+  { id:"b_alda_moreuda", type:"grammar", text:"알다 vs 모르다", pinyin:"alda / moreuda", jp:"知っている / 知らない",
+    note:"否定は「안 알다」ではなく必ず「모르다」(独立した語)。「알아요?」(知ってる?) → 「몰라요」(知りません)。",
+    examples:[{cn:"알아요", jp:"知っています"}, {cn:"몰라요", jp:"知りません"}] },
+  { id:"b_boida_boda", type:"grammar", text:"보이다 vs 보다", pinyin:"boida / boda", jp:"見える / 見る",
+    note:"自動詞「見える」と他動詞「見る」。「잘 보여요?」(よく見えますか?)。",
+    examples:[{cn:"잘 보여요?", jp:"よく見えますか?"}, {cn:"영화를 봐요", jp:"映画を観ます"}] },
+  { id:"b_deullida_deutda", type:"grammar", text:"들리다 vs 듣다", pinyin:"deullida / deutda", jp:"聞こえる / 聞く",
+    note:"自動詞「聞こえる」と他動詞「聞く」。「듣다」は「ㄷ→ㄹ」不規則: 들어요。",
+    examples:[{cn:"잘 들려요?", jp:"よく聞こえますか?"}, {cn:"음악을 들어요", jp:"音楽を聴きます"}] },
+  { id:"b_a_jida", type:"grammar", text:"-아/어지다", pinyin:"-ajida", jp:"〜くなる (変化)",
+    note:"形容詞 + 지다 で「(状態が)〜くなる」。「추워지다」(寒くなる)、「좋아지다」(良くなる)。",
+    examples:[{cn:"날씨가 추워졌어요", jp:"天気が寒くなった"}, {cn:"기분이 좋아져요", jp:"気分が良くなる"}] },
+  { id:"b_joahada_sarang", type:"grammar", text:"좋아하다 vs 사랑하다", pinyin:"joahada / saranghada", jp:"好む / 愛する",
+    note:"「좋아하다」=好き (人にも物にも気軽に使える)。「사랑하다」=愛している (より重い)。日常では家族・恋人以外には「좋아하다」が無難。",
+    examples:[{cn:"커피를 좋아해요", jp:"コーヒーが好き"}, {cn:"사랑해요", jp:"愛してます"}] },
+
+  // === 慣用句・あいさつ ===
+  { id:"b_annyeong", type:"sentence", text:"안녕하세요", pinyin:"annyeonghaseyo", jp:"こんにちは",
+    note:"朝昼晩いつでも使える基本のあいさつ。「안녕」(タメ口) と区別。",
+    examples:[{cn:"안녕하세요, 잘 지내세요?", jp:"こんにちは、お元気ですか?"}] },
+  { id:"b_gomawo", type:"sentence", text:"감사합니다 / 고맙습니다", pinyin:"gamsahamnida / gomapseumnida", jp:"ありがとうございます",
+    note:"両方丁寧。「감사」(感謝・漢語)、「고맙」(固有語) のニュアンス差。",
+    examples:[{cn:"정말 감사합니다", jp:"本当にありがとうございます"}] },
+  { id:"b_mianhae", type:"sentence", text:"죄송합니다 / 미안합니다", pinyin:"joesonghamnida / mianhamnida", jp:"すみません",
+    note:"「죄송」がより丁寧。「미안」はやや軽い。タメ口は「미안해」「죄송해」。",
+    examples:[{cn:"늦어서 죄송합니다", jp:"遅れてすみません"}] },
+  { id:"b_gwaenchanha", type:"sentence", text:"괜찮아요", pinyin:"gwaenchanayo", jp:"大丈夫です",
+    note:"「いえいえ」「平気です」「結構です」を全部カバーする万能語。",
+    examples:[{cn:"괜찮아요, 신경 쓰지 마세요", jp:"大丈夫です、気にしないで"}] },
+  { id:"b_jamkkanman", type:"sentence", text:"잠깐만요", pinyin:"jamkkanmanyo", jp:"ちょっと待ってください",
+    note:"「잠시만요」も同義でやや丁寧。割り込み時にも「すみません、ちょっと」のニュアンスで使える。",
+    examples:[{cn:"잠깐만요, 곧 갈게요", jp:"ちょっと待って、すぐ行きます"}] },
+  { id:"b_jeongmal", type:"sentence", text:"진짜? / 정말?", pinyin:"jinjja? / jeongmal?", jp:"本当?",
+    note:"「진짜」が口語的・若者言葉。「정말」がより一般。",
+    examples:[{cn:"진짜? 대박!", jp:"マジ? すごい!"}] },
+  { id:"b_majayo", type:"sentence", text:"맞아요", pinyin:"majayo", jp:"そうです / その通り",
+    note:"確認に対して「合っています」。否定は「틀려요」または「아니에요」。",
+    examples:[{cn:"네, 맞아요", jp:"はい、その通りです"}] },
+  { id:"b_eolma", type:"sentence", text:"얼마예요?", pinyin:"eolmayeyo?", jp:"いくらですか?",
+    note:"値段を尋ねる定番。「얼마」=いくら。",
+    examples:[{cn:"이거 얼마예요?", jp:"これいくらですか?"}] },
+  { id:"b_eotteohge", type:"sentence", text:"어떻게? / 왜?", pinyin:"eotteohge? / wae?", jp:"どうやって? / なんで?",
+    note:"「어떻게」=方法/手段、「왜」=理由。発音注意: 어떻게=eotteohge (ko)。",
+    examples:[{cn:"어떻게 가요?", jp:"どうやって行く?"}, {cn:"왜 안 와요?", jp:"なんで来ないの?"}] },
+  { id:"b_daebak", type:"sentence", text:"대박!", pinyin:"daebak!", jp:"すごい! / マジで!",
+    note:"驚き・感嘆の若者言葉。良くも悪くも。",
+    examples:[{cn:"이거 진짜 대박이에요", jp:"これマジすごい"}] },
+  { id:"b_aigo", type:"sentence", text:"아이고", pinyin:"aigo", jp:"あらら / おやおや",
+    note:"驚き・困惑・労いなど万能の感嘆詞。年配の人も若者も使う。",
+    examples:[{cn:"아이고, 비가 오네요", jp:"あら、雨ですね"}] },
+  { id:"b_hwaiting", type:"sentence", text:"화이팅! / 파이팅!", pinyin:"hwaiting! / paiting!", jp:"頑張れ!",
+    note:"英語「fighting」由来。応援の定番。「화이팅」と「파이팅」両方使う。",
+    examples:[{cn:"시험 화이팅!", jp:"試験頑張って!"}] }
+];
+
+/* =====================================================================
+   STATE
+   ===================================================================== */
+const STORAGE_KEY = 'today-ko-state-v2';
+const THEME_KEY = 'today-ko-theme';
+
+function defaultState() {
+  return {
+    collection: [],
+    builtinSeen: {},
+    todayCardId: null,
+    todayDate: null,
+    startDate: null,
+    lastOpen: null,
+    streak: 0
+  };
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return defaultState();
+    return Object.assign(defaultState(), JSON.parse(raw));
+  } catch (e) { return defaultState(); }
+}
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function daysBetween(aStr, bStr) {
+  const a = new Date(aStr + 'T00:00:00');
+  const b = new Date(bStr + 'T00:00:00');
+  return Math.round((b - a) / 86400000);
+}
+function addDays(ts, days) { return ts + days * 86400000; }
+
+let state = loadState();
+const today = todayStr();
+
+if (!state.startDate) {
+  state.startDate = today;
+  state.lastOpen = today;
+  state.streak = 1;
+} else if (state.lastOpen !== today) {
+  const diff = daysBetween(state.lastOpen, today);
+  if (diff === 1) state.streak += 1;
+  else if (diff > 1) state.streak = 1;
+  state.lastOpen = today;
+  state.todayCardId = null;
+  state.todayDate = today;
+}
+if (state.todayDate !== today) {
+  state.todayCardId = null;
+  state.todayDate = today;
+}
+saveState();
+
+/* =====================================================================
+   QUIZ PICK LOGIC
+   ===================================================================== */
+function hashStr(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function pickTodayCard() {
+  const now = Date.now();
+  const due = state.collection
+    .filter(c => (c.nextDueAt || 0) <= now)
+    .sort((a, b) => (a.nextDueAt || 0) - (b.nextDueAt || 0));
+  if (due.length > 0) return { source: 'user', card: due[0] };
+  const unseen = BUILTIN_POOL.filter(b => !state.builtinSeen[b.id] && !state.collection.some(c => c.id === b.id));
+  if (unseen.length > 0) {
+    const idx = hashStr(state.todayDate || today) % unseen.length;
+    return { source: 'builtin', card: unseen[idx] };
   }
-  function defaultState() {
-    return { startDate: null, learned: {}, lastOpen: null, streak: 0 };
+  if (state.collection.length > 0) {
+    const oldest = [...state.collection].sort((a, b) => (a.lastReviewedAt || 0) - (b.lastReviewedAt || 0))[0];
+    return { source: 'user', card: oldest };
   }
-  function saveState(s) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
-  }
+  return null;
+}
 
-  function todayStr() {
-    const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+function getOrPickTodayCard() {
+  if (state.todayCardId) {
+    const found = state.collection.find(c => c.id === state.todayCardId);
+    if (found) return { source: 'user', card: found };
+    const b = BUILTIN_POOL.find(b => b.id === state.todayCardId);
+    if (b) return { source: 'builtin', card: b };
   }
-  function daysBetween(aStr, bStr) {
-    const a = new Date(aStr + 'T00:00:00');
-    const b = new Date(bStr + 'T00:00:00');
-    return Math.round((b - a) / 86400000);
+  const picked = pickTodayCard();
+  if (picked) {
+    state.todayCardId = picked.card.id;
+    saveState();
   }
+  return picked;
+}
 
-  let state = loadState();
-  const today = todayStr();
+/* =====================================================================
+   RENDER — Today's card
+   ===================================================================== */
+const cardEl = document.getElementById('card');
 
-  if (!state.startDate) {
-    state.startDate = today;
-    state.lastOpen = today;
-    state.streak = 1;
-  } else if (state.lastOpen !== today) {
-    const diff = daysBetween(state.lastOpen, today);
-    if (diff === 1) state.streak += 1;
-    else if (diff > 1) state.streak = 1;
-    state.lastOpen = today;
-  }
-  saveState(state);
+function typeLabel(t) {
+  return { word: '単語', grammar: '文法', sentence: 'フレーズ' }[t] || t;
+}
 
-  const dayIndex = Math.min(daysBetween(state.startDate, today), CARDS.length - 1);
-  const card = CARDS[dayIndex];
-
-  /* ================================================================
-     RENDER
-     ================================================================ */
-  function highlightSentence(s, hl) {
-    if (!hl) return s;
-    return s.replaceAll(hl, `<span class="hl">${hl}</span>`);
-  }
-  function formatDateDisplay(d) {
-    const parts = d.split('-');
-    return `${parts[0]}.${parts[1]}.${parts[2]}`;
-  }
-  function renderCard(c, idx, container) {
-    container.innerHTML = `
-      <div class="card-meta">
-        <span>DAY ${String(idx + 1).padStart(3, '0')} · ${formatDateDisplay(today)}</span>
-        <span class="level-chip">${c.level}</span>
-      </div>
-      <p class="sentence">${highlightSentence(c.sentence, c.hl)}</p>
-      <p class="pinyin">${c.pinyin}</p>
-      <p class="translation">${c.jp}</p>
-      <div class="toggles">
-        <button class="mini-btn active" data-target=".pinyin">발음</button>
-        <button class="mini-btn active" data-target=".translation">和訳</button>
-        <button class="mini-btn" data-speak="${c.sentence}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-          音声
-        </button>
-      </div>
-      <div class="section">
-        <div class="section-label">今日の単語</div>
-        <div class="vocab">
-          <span class="vocab-word">${c.word.w}</span>
-          <span class="vocab-pinyin">${c.word.p}</span>
-          <span class="vocab-pos">${c.word.pos}</span>
-          <div class="vocab-jp">${c.word.jp}</div>
-        </div>
-      </div>
-      <div class="section">
-        <div class="section-label">今日の文法</div>
-        <div class="grammar-pattern">${c.grammar.pattern}</div>
-        <p class="grammar-explain">${c.grammar.explain}</p>
-        <ul class="examples">
-          ${c.grammar.examples.map(ex =>
-            `<li><span class="cn">${ex.cn}</span><span class="jp">${ex.jp}</span></li>`
-          ).join('')}
-        </ul>
+function renderCard() {
+  const picked = getOrPickTodayCard();
+  if (!picked) {
+    cardEl.innerHTML = `
+      <div class="done-message">
+        <p>すべての復習・補充カードが一周しました。<br>
+        <span class="accent">＋</span> から新しい学びを足してください。</p>
       </div>
     `;
-    wireToggles(container);
+    cardEl.className = 'card is-user';
+    return;
   }
+  const { source, card } = picked;
+  const isUser = source === 'user';
+  cardEl.className = 'card ' + (isUser ? 'is-user' : 'is-builtin');
 
-  function wireToggles(container) {
-    container.querySelectorAll('.mini-btn[data-target]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = container.querySelector(btn.dataset.target);
-        if (!target) return;
-        target.classList.toggle('hidden');
-        btn.classList.toggle('active');
-      });
-    });
-    container.querySelectorAll('[data-speak]').forEach(btn => {
-      btn.addEventListener('click', () => speakKo(btn.dataset.speak));
-    });
-    container.querySelectorAll('.pinyin, .translation').forEach(el => {
-      el.addEventListener('click', () => {
-        if (el.classList.contains('hidden')) {
-          el.classList.remove('hidden');
-          const target = '.' + el.classList[0];
-          const btn = container.querySelector(`.mini-btn[data-target="${target}"]`);
-          if (btn) btn.classList.add('active');
-        }
-      });
+  const sourceLabel = isUser
+    ? `あなたのストック${card.reviewCount ? ` · ${card.reviewCount}回目` : ' · 初回'}`
+    : '今日のおすすめ';
+
+  const hasDetail = card.pinyin || card.jp || card.note || (card.examples && card.examples.length);
+  const userHasNoDetail = isUser && !hasDetail;
+
+  cardEl.innerHTML = `
+    <div class="card-meta">
+      <span class="source-chip ${isUser ? 'user' : 'builtin'}">${sourceLabel}</span>
+      <span class="type-chip">${typeLabel(card.type)}</span>
+    </div>
+    <p class="quiz-text">${escapeHtml(card.text)}</p>
+    ${userHasNoDetail ? `<p class="quiz-hint">詳細未登録 — タップして書き加えられます</p>` : ''}
+    <div class="reveal-zone" id="reveal-zone">${renderRevealRows(card)}</div>
+    ${hasDetail ? `<button class="reveal-btn" id="reveal-btn">▾ 意味・例を見る</button>` : ''}
+    ${isUser ? renderUserActions(card) : renderBuiltinActions()}
+  `;
+
+  if (hasDetail) {
+    document.getElementById('reveal-btn').addEventListener('click', () => {
+      document.getElementById('reveal-zone').classList.add('open');
+      document.getElementById('reveal-btn').style.display = 'none';
     });
   }
-
-  function speakKo(text) {
-    if (!('speechSynthesis' in window)) return;
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'ko-KR';
-    u.rate = 0.85;
-    speechSynthesis.speak(u);
+  cardEl.querySelectorAll('[data-rate]').forEach(btn => {
+    btn.addEventListener('click', () => onRate(card, btn.dataset.rate));
+  });
+  cardEl.querySelectorAll('[data-stock]').forEach(btn => {
+    btn.addEventListener('click', () => onStockChoice(card, btn.dataset.stock));
+  });
+  if (userHasNoDetail) {
+    const qt = cardEl.querySelector('.quiz-text');
+    const qh = cardEl.querySelector('.quiz-hint');
+    qt.style.cursor = 'pointer';
+    qh.style.cursor = 'pointer';
+    const open = () => openDetail(card);
+    qt.addEventListener('click', open);
+    qh.addEventListener('click', open);
   }
+}
 
-  /* ================================================================
-     MAIN — wire today's card
-     ================================================================ */
-  const cardEl = document.getElementById('card');
-  renderCard(card, dayIndex, cardEl);
+function renderRevealRows(card) {
+  let rows = '';
+  if (card.pinyin) rows += `<div class="reveal-row"><span class="reveal-label">読み</span><span class="reveal-val pinyin">${escapeHtml(card.pinyin)}</span></div>`;
+  if (card.jp) rows += `<div class="reveal-row"><span class="reveal-label">意味</span><span class="reveal-val jp">${escapeHtml(card.jp)}</span></div>`;
+  if (card.note) rows += `<div class="reveal-row"><span class="reveal-label">メモ</span><span class="reveal-val note">${escapeHtml(card.note)}</span></div>`;
+  if (card.examples && card.examples.length) {
+    rows += `<div class="reveal-row"><span class="reveal-label">例文</span><ul class="reveal-examples">
+      ${card.examples.map(ex => `<li><span class="ex-zh">${escapeHtml(ex.cn)}</span><span class="ex-jp">${escapeHtml(ex.jp)}</span></li>`).join('')}
+    </ul></div>`;
+  }
+  return rows;
+}
 
-  const actionsHTML = `
-    <div class="actions">
-      <button class="btn primary" id="btn-learned">${state.learned[dayIndex] ? '✓ 覚えた' : '覚えた'}</button>
-      <button class="btn" id="btn-review">復習する ↓</button>
+function renderUserActions(card) {
+  const cur = card.interval || 1;
+  const i_warn = Math.max(2, Math.round(cur * 1.5));
+  const i_good = Math.max(3, Math.round(cur * 2.2));
+  return `
+    <div class="rate-row">
+      <button class="rate-btn bad" data-rate="bad">
+        <span class="lbl-jp">忘れた</span>
+        <span class="interval">+1日</span>
+      </button>
+      <button class="rate-btn warn" data-rate="warn">
+        <span class="lbl-jp">あやふや</span>
+        <span class="interval">+${i_warn}日</span>
+      </button>
+      <button class="rate-btn good" data-rate="good">
+        <span class="lbl-jp">覚えた</span>
+        <span class="interval">+${i_good}日</span>
+      </button>
     </div>
   `;
-  cardEl.insertAdjacentHTML('beforeend', actionsHTML);
+}
 
-  if (state.learned[dayIndex]) {
-    const b = document.getElementById('btn-learned');
-    b.classList.add('done');
-  }
+function renderBuiltinActions() {
+  return `
+    <div class="add-stock-row">
+      <button class="stock-btn skip" data-stock="skip">スキップ</button>
+      <button class="stock-btn add" data-stock="add">ストックに追加</button>
+    </div>
+  `;
+}
 
-  document.getElementById('btn-learned').addEventListener('click', () => {
-    state.learned[dayIndex] = Date.now();
-    saveState(state);
-    const b = document.getElementById('btn-learned');
-    b.classList.add('done');
-    b.textContent = '✓ 覚えた';
-    renderReviewList();
-  });
+/* =====================================================================
+   SR + Stock choice
+   ===================================================================== */
+function onRate(card, rating) {
+  const cur = card.interval || 1;
+  let newInterval;
+  if (rating === 'bad') newInterval = 1;
+  else if (rating === 'warn') newInterval = Math.max(2, Math.round(cur * 1.5));
+  else newInterval = Math.max(3, Math.round(cur * 2.2));
+  newInterval = Math.min(newInterval, 90);
 
-  document.getElementById('btn-review').addEventListener('click', () => {
-    const list = document.getElementById('review-list');
-    list.classList.add('open');
-    document.getElementById('review-toggle').textContent = '隠す ▴';
-    list.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+  card.interval = newInterval;
+  card.lastReviewedAt = Date.now();
+  card.nextDueAt = addDays(Date.now(), newInterval);
+  card.reviewCount = (card.reviewCount || 0) + 1;
+  if (rating === 'good') card.correctCount = (card.correctCount || 0) + 1;
 
-  /* ============ Header ============ */
-  document.querySelector('#streak .n').textContent = state.streak;
-  document.getElementById('day-info').innerHTML =
-    `DAY <span class="accent">${String(dayIndex + 1).padStart(3, '0')}</span> · ${card.level} · ${formatDateDisplay(today)}`;
+  state.todayCardId = null;
+  saveState();
+  renderCard();
+  renderStats();
+  renderCollection();
+}
 
-  /* ============ Review section ============ */
-  function renderReviewList() {
-    const list = document.getElementById('review-list');
-    const past = [];
-    for (let i = 0; i < dayIndex; i++) past.push(i);
-    if (past.length === 0) {
-      list.innerHTML = '<div class="review-empty">まだ過去カードはありません。明日また会いましょう。</div>';
-      document.getElementById('learned-count').textContent = Object.keys(state.learned).length;
-      return;
-    }
-    list.innerHTML = past.reverse().map(i => {
-      const c = CARDS[i];
-      const learned = !!state.learned[i];
-      return `
-        <div class="review-card ${learned ? 'learned' : ''}" data-idx="${i}">
-          <div class="review-card-top">
-            <span>DAY ${String(i + 1).padStart(3, '0')}</span>
-            <span>${c.level}</span>
-          </div>
-          <div class="review-card-sent">${c.sentence}</div>
-          <div class="review-card-jp">${c.jp}</div>
-        </div>
-      `;
-    }).join('');
-    list.querySelectorAll('.review-card').forEach(el => {
-      el.addEventListener('click', () => openReviewModal(parseInt(el.dataset.idx, 10)));
+function onStockChoice(card, choice) {
+  state.builtinSeen[card.id] = true;
+  if (choice === 'add') {
+    const copy = Object.assign({}, card, {
+      source: 'builtin',
+      addedAt: Date.now(),
+      reviewCount: 0,
+      correctCount: 0,
+      lastReviewedAt: null,
+      nextDueAt: addDays(Date.now(), 1),
+      interval: 1
     });
-    document.getElementById('learned-count').textContent = Object.keys(state.learned).length;
+    state.collection.push(copy);
+  }
+  state.todayCardId = null;
+  saveState();
+  renderCard();
+  renderStats();
+  renderCollection();
+}
+
+/* =====================================================================
+   STATS BAR
+   ===================================================================== */
+function renderStats() {
+  document.getElementById('s-streak').textContent = state.streak;
+  document.getElementById('s-stock').textContent = state.collection.length;
+  const now = Date.now();
+  const due = state.collection.filter(c => (c.nextDueAt || 0) <= now).length;
+  document.getElementById('s-due').textContent = due;
+}
+
+/* =====================================================================
+   COLLECTION
+   ===================================================================== */
+let currentFilter = 'all';
+const filterChips = document.querySelectorAll('.filter-chip');
+filterChips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    filterChips.forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    currentFilter = chip.dataset.filter;
+    renderCollection();
+  });
+});
+
+function typeIcon(t) {
+  return { word: '단', grammar: '법', sentence: '구' }[t] || '?';
+}
+
+function renderCollection() {
+  const list = document.getElementById('c-list');
+  document.getElementById('c-count').textContent = state.collection.length;
+  const now = Date.now();
+  let items = state.collection.slice();
+
+  if (currentFilter === 'due') {
+    items = items.filter(c => (c.nextDueAt || 0) <= now);
+  } else if (currentFilter === 'mastered') {
+    items = items.filter(c => (c.interval || 0) >= 14);
   }
 
-  document.getElementById('review-toggle').addEventListener('click', () => {
-    const list = document.getElementById('review-list');
-    const t = document.getElementById('review-toggle');
-    list.classList.toggle('open');
-    t.textContent = list.classList.contains('open') ? '隠す ▴' : '表示 ▾';
+  if (items.length === 0) {
+    const msg = currentFilter === 'all'
+      ? '<div class="col-empty"><div class="col-empty-icon">빈</div>まだストックはありません<br><small>右下の「＋」から学びを追加</small></div>'
+      : currentFilter === 'due'
+        ? '<div class="col-empty"><div class="col-empty-icon">휴</div>今日復習するものはありません</div>'
+        : '<div class="col-empty"><div class="col-empty-icon">미</div>習得済み (14日間隔以上) はまだありません</div>';
+    list.innerHTML = msg;
+    return;
+  }
+
+  items.sort((a, b) => {
+    const aDue = (a.nextDueAt || 0) <= now;
+    const bDue = (b.nextDueAt || 0) <= now;
+    if (aDue !== bDue) return aDue ? -1 : 1;
+    return (b.addedAt || 0) - (a.addedAt || 0);
   });
 
-  renderReviewList();
-
-  /* ============ Modal ============ */
-  const modalBack = document.getElementById('modal-back');
-  const modal = document.getElementById('modal');
-
-  function openReviewModal(idx) {
-    const c = CARDS[idx];
-    modal.innerHTML = `
-      <button class="modal-close" id="modal-close" aria-label="閉じる">✕</button>
-      <div class="card" style="border:none; box-shadow:none; border-radius:14px;"></div>
+  list.innerHTML = items.map(it => {
+    const dueState = (it.nextDueAt || 0) <= now;
+    const daysLeft = dueState ? 0 : Math.ceil(((it.nextDueAt || 0) - now) / 86400000);
+    const meta = dueState
+      ? `<span class="overdue">復習</span>`
+      : `<span class="due">+${daysLeft}日</span>`;
+    const sub = [it.pinyin, it.jp].filter(Boolean).join(' · ');
+    return `
+      <div class="col-item ${it.type}" data-id="${escapeAttr(it.id)}">
+        <div class="col-item-type">${typeIcon(it.type)}</div>
+        <div class="col-item-body">
+          <div class="col-item-text">${escapeHtml(it.text)}</div>
+          ${sub ? `<div class="col-item-sub">${escapeHtml(sub)}</div>` : `<div class="col-item-sub" style="color:var(--ink-4)">詳細未登録</div>`}
+        </div>
+        <div class="col-item-meta">
+          ${meta}
+          <div style="margin-top:3px">${it.interval || 1}d</div>
+        </div>
+      </div>
     `;
-    const innerCard = modal.querySelector('.card');
-    renderCard(c, idx, innerCard);
-    modalBack.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    document.getElementById('modal-close').addEventListener('click', closeModal);
-  }
-  function closeModal() {
-    modalBack.classList.remove('open');
-    document.body.style.overflow = '';
-    speechSynthesis.cancel();
-  }
-  modalBack.addEventListener('click', (e) => {
-    if (e.target === modalBack) closeModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
+  }).join('');
 
-  /* ============ Theme ============ */
-  document.getElementById('theme-toggle').addEventListener('click', () => {
-    const dark = document.documentElement.classList.toggle('dark');
-    localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+  list.querySelectorAll('.col-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.id;
+      const card = state.collection.find(c => c.id === id);
+      if (card) openDetail(card);
+    });
   });
+}
 
+/* =====================================================================
+   ADD MODAL
+   ===================================================================== */
+const addBack = document.getElementById('add-back');
+const addClose = document.getElementById('add-close');
+const addCancel = document.getElementById('add-cancel');
+const addSave = document.getElementById('add-save');
+const addText = document.getElementById('add-text');
+const addPinyin = document.getElementById('add-pinyin');
+const addJp = document.getElementById('add-jp');
+const addNote = document.getElementById('add-note');
+const addExamples = document.getElementById('add-examples');
+const addToggle = document.getElementById('add-toggle');
+const addDetails = document.getElementById('add-details');
+const addMainLabel = document.getElementById('add-main-label');
+let currentAddType = 'word';
+
+document.getElementById('fab').addEventListener('click', () => openAdd());
+addClose.addEventListener('click', closeAdd);
+addCancel.addEventListener('click', closeAdd);
+addBack.addEventListener('click', (e) => { if (e.target === addBack) closeAdd(); });
+addToggle.addEventListener('click', () => {
+  addDetails.classList.toggle('open');
+  addToggle.textContent = addDetails.classList.contains('open') ? '▴ 詳細を閉じる' : '▾ 詳細を追加 (任意)';
+});
+
+document.querySelectorAll('#type-row .type-pill').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('#type-row .type-pill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    currentAddType = p.dataset.type;
+    addMainLabel.textContent = { word: '単語 (한국어)', grammar: '文法ポイント', sentence: 'フレーズ・短文' }[currentAddType];
+    addText.placeholder = { word: '잠깐만요', grammar: '-아/어야 하다', sentence: '괜찮아요 / 화이팅' }[currentAddType];
+  });
+});
+
+function openAdd() {
+  addText.value = '';
+  addPinyin.value = '';
+  addJp.value = '';
+  addNote.value = '';
+  addExamples.value = '';
+  addDetails.classList.remove('open');
+  addToggle.textContent = '▾ 詳細を追加 (任意)';
+  addBack.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => addText.focus(), 200);
+}
+function closeAdd() {
+  addBack.classList.remove('open');
+  document.body.style.overflow = '';
+}
+addSave.addEventListener('click', () => {
+  const text = addText.value.trim();
+  if (!text) { addText.focus(); return; }
+  const examples = parseExamples(addExamples.value);
+  const item = {
+    id: 'u_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    type: currentAddType,
+    text: text,
+    pinyin: addPinyin.value.trim() || undefined,
+    jp: addJp.value.trim() || undefined,
+    note: addNote.value.trim() || undefined,
+    examples: examples.length ? examples : undefined,
+    addedAt: Date.now(),
+    reviewCount: 0,
+    correctCount: 0,
+    lastReviewedAt: null,
+    nextDueAt: Date.now(),
+    interval: 1,
+    source: 'user'
+  };
+  state.collection.push(item);
+  saveState();
+  closeAdd();
+  renderCard();
+  renderStats();
+  renderCollection();
+});
+
+function parseExamples(s) {
+  if (!s.trim()) return [];
+  return s.split('\n').map(line => line.trim()).filter(Boolean).map(line => {
+    const [cn, jp] = line.split('|').map(p => (p || '').trim());
+    return { cn: cn || line, jp: jp || '' };
+  });
+}
+
+/* =====================================================================
+   DETAIL MODAL
+   ===================================================================== */
+const detailBack = document.getElementById('detail-back');
+const detailBody = document.getElementById('detail-body');
+const detailClose = document.getElementById('detail-close');
+detailClose.addEventListener('click', closeDetail);
+detailBack.addEventListener('click', (e) => { if (e.target === detailBack) closeDetail(); });
+
+function openDetail(card) {
+  const ex = (card.examples || []).map(e => `${e.cn} | ${e.jp || ''}`).join('\n');
+  detailBody.innerHTML = `
+    <h3 class="modal-title">学びを編集</h3>
+    <div class="form-field">
+      <label class="form-label">${typeLabel(card.type)}</label>
+      <textarea class="form-textarea zh" id="d-text">${escapeHtml(card.text)}</textarea>
+    </div>
+    <div class="form-field">
+      <label class="form-label">読み (発音)</label>
+      <input class="form-input small" id="d-pinyin" value="${escapeAttr(card.pinyin || '')}">
+    </div>
+    <div class="form-field">
+      <label class="form-label">意味 (日本語)</label>
+      <input class="form-input small" id="d-jp" value="${escapeAttr(card.jp || '')}">
+    </div>
+    <div class="form-field">
+      <label class="form-label">メモ</label>
+      <textarea class="form-textarea" id="d-note" style="min-height:54px">${escapeHtml(card.note || '')}</textarea>
+    </div>
+    <div class="form-field">
+      <label class="form-label">例文 (1行=1例 · 한국어 | 日本語)</label>
+      <textarea class="form-textarea" id="d-examples" style="min-height:60px">${escapeHtml(ex)}</textarea>
+    </div>
+    <div class="form-actions">
+      <button class="form-btn" id="d-cancel">キャンセル</button>
+      <button class="form-btn primary" id="d-save">保存</button>
+    </div>
+    <div class="form-danger-row">
+      <button class="form-danger" id="d-delete">このカードを削除</button>
+    </div>
+  `;
+  detailBack.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('d-cancel').addEventListener('click', closeDetail);
+  document.getElementById('d-save').addEventListener('click', () => {
+    card.text = document.getElementById('d-text').value.trim() || card.text;
+    card.pinyin = document.getElementById('d-pinyin').value.trim() || undefined;
+    card.jp = document.getElementById('d-jp').value.trim() || undefined;
+    card.note = document.getElementById('d-note').value.trim() || undefined;
+    const exs = parseExamples(document.getElementById('d-examples').value);
+    card.examples = exs.length ? exs : undefined;
+    saveState();
+    closeDetail();
+    renderCard();
+    renderCollection();
+  });
+  document.getElementById('d-delete').addEventListener('click', () => {
+    if (!confirm('このカードを削除しますか？')) return;
+    state.collection = state.collection.filter(c => c.id !== card.id);
+    if (state.todayCardId === card.id) state.todayCardId = null;
+    saveState();
+    closeDetail();
+    renderCard();
+    renderStats();
+    renderCollection();
+  });
+}
+function closeDetail() {
+  detailBack.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (addBack.classList.contains('open')) closeAdd();
+    if (detailBack.classList.contains('open')) closeDetail();
+  }
+});
+
+/* =====================================================================
+   THEME
+   ===================================================================== */
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  const dark = document.documentElement.classList.toggle('dark');
+  localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+});
+
+/* =====================================================================
+   UTILS
+   ===================================================================== */
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escapeAttr(s) { return escapeHtml(s); }
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+renderStats();
+renderCard();
+renderCollection();
 </script>
 </body>
 </html>

@@ -1780,7 +1780,7 @@
         ]
       },
       {
-        topik: 1, num: 6, title: "丁寧体（합쇼体）と日付・家族",
+        topik: 1, num: 6, title: "丁寧体（합쇼体）と日付・家族", mode: "template", template: "polite",
         sentences: [
           {
             ja: "私は会社員です。", ko: "저는 회사원입니다.", roman: "jeoneun hoesawonimnida.",
@@ -3059,7 +3059,7 @@
       { overview: "短形否定（안・못）と疑問詞、そして基本形容詞の해요体を学ぶコースです。形容詞述語文と「그리고・그래서・그렇지만」の接続も練習し、簡単な意見や説明ができるようになります。【🔄 このコースは挑戦するたびに語が入れ替わり、毎回ちがう10問が出ます】",
         points: ["<strong>短形否定</strong>：用言の前に <code>안</code> を置く（<code>안 가요</code>＝行きません）。意志・単純否定。", "<strong>不可能の否定</strong>：<code>못</code>＋動詞（<code>못 가요</code>＝行けません）。能力・状況による不可能を表す。", "<strong>疑問詞</strong>：<code>누구</code>（誰）・<code>어디</code>（どこ）・<code>언제</code>（いつ）・<code>왜</code>（なぜ）・<code>어떻게</code>（どう）・<code>무슨</code>（何の）・<code>어느</code>（どの）。", "<strong>基本形容詞の해요体</strong>：<code>좋아요/나빠요</code>・<code>커요/작아요</code>・<code>많아요/적어요</code>・<code>비싸요/싸요</code>。", "<strong>形容詞述語文</strong>：形容詞がそのまま述語になる（<code>날씨가 좋아요</code>）。日本語の「〜い／〜だ」に当たる。", "<strong>接続表現</strong>：<code>그리고</code>（そして）・<code>그래서</code>（だから）・<code>그렇지만</code>（しかし）で文をつなぐ。"] },
       // TOPIK 1 - C6 丁寧体（합쇼体）と日付・家族
-      { overview: "フォーマルな丁寧体（합쇼体）の文末「-ㅂ니다/습니다」「-ㅂ니까/습니까」を軸に、曜日・日付（漢字数詞＋년/월/일）・家族の語彙を学びます。並列「-하고」「와/과」、相手助詞「-에게/한테」も扱い、해요体との違いを確認します。",
+      { overview: "フォーマルな丁寧体（합쇼体）の文末「-ㅂ니다/습니다」「-ㅂ니까/습니까」を軸に、曜日・日付（漢字数詞＋년/월/일）・家族の語彙を学びます。並列「-하고」「와/과」、相手助詞「-에게/한테」も扱い、해요体との違いを確認します。【🔄 このコースは挑戦するたびに動詞・家族・日付が入れ替わり、毎回ちがう10問が出ます】",
         points: ["<strong>합쇼体</strong>：母音/ㄹ語幹は<code>-ㅂ니다</code>、子音語幹は<code>-습니다</code>。改まった場で使う。", "<strong>疑問形</strong>は<code>-ㅂ니까?/습니까?</code>、名詞文は<code>-입니다/입니까?</code>。해요体は平叙も疑問も同形。", "<strong>曜日</strong>は<code>월·화·수·목·금·토·일</code>＋<code>요일</code>。「何曜日」は<code>무슨 요일</code>。", "<strong>日付</strong>は漢字数詞＋<code>년/월/일</code>。例外読み：<code>6월=유월</code>、<code>10월=시월</code>。", "<strong>家族</strong>は話者の性別で変化：兄<code>형/오빠</code>、姉<code>누나/언니</code>、ほか<code>아버지·어머니·할아버지·할머니·동생</code>。", "<strong>並列</strong>は<code>-하고</code>／<code>와(母音)·과(子音)</code>、<strong>相手助詞</strong>「〜に」は<code>-에게/한테</code>、尊敬は<code>-께</code>。"] },
       // TOPIK 2 - C4 連結語尾と理由
       { overview: "韓国語の連結語尾を体系的に学ぶコースです。-고、-지만、-아서/어서、-(으)니까、-는데/(으)ㄴ데を取り上げ、特に理由を表す-아서と-(으)니까の使い分け(命令・勧誘では-(으)니까)に注目します。",
@@ -3492,10 +3492,166 @@
         };
       }
 
+      // ====== #6「丁寧体（합쇼体）・日付・家族」用バンク（活用形は検証済みで事前格納）======
+      // 職業・身分の名詞（指定詞の해요体尾 tail も検証済みで格納）
+      const JOB = [
+        {ko:"회사원",r:"hoesawon",ja:"会社員",tail:"이에요"},
+        {ko:"학생",r:"haksaeng",ja:"学生",tail:"이에요"},
+        {ko:"의사",r:"uisa",ja:"医者",tail:"예요"},
+        {ko:"선생님",r:"seonsaengnim",ja:"先生",tail:"이에요"},
+        {ko:"가수",r:"gasu",ja:"歌手",tail:"예요"},
+        {ko:"요리사",r:"yorisa",ja:"料理人",tail:"예요"},
+        {ko:"간호사",r:"ganhosa",ja:"看護師",tail:"예요"},
+        {ko:"기자",r:"gija",ja:"記者",tail:"예요"}
+      ];
+      // 名詞文の主題（人物）
+      const PERSON = [
+        {topic:"저는",topicR:"jeoneun",ja:"私"},
+        {topic:"제 형은",topicR:"je hyeong-eun",ja:"私の兄"},
+        {topic:"제 친구는",topicR:"je chinguneun",ja:"私の友達"},
+        {topic:"어머니는",topicR:"eomeonineun",ja:"母"},
+        {topic:"아버지는",topicR:"abeojineun",ja:"父"},
+        {topic:"언니는",topicR:"eonnineun",ja:"姉"}
+      ];
+      function fFormalNoun() {
+        const p = pick(PERSON), j = pick(JOB);
+        return {
+          ja: `${p.ja}は${j.ja}です。`,
+          ko: `${p.topic} ${j.ko}입니다.`,
+          roman: `${p.topicR} ${j.r}-imnida.`,
+          w: [
+            {ko:p.topic,roman:p.topicR,ja:`${p.ja}＋主題助詞`},
+            {ko:j.ko,roman:j.r,ja:j.ja},
+            {ko:"-입니다",roman:"-imnida",ja:"〜です（합쇼体・名詞）"}
+          ],
+          g: `<strong>名詞文の합쇼体</strong>は「名詞＋입니다」。해요体の <code>-이에요/예요</code> より格式が高く、自己紹介や公式の場で使う。疑問は <code>-입니까?</code>。`,
+          alts: [`${p.topic} ${j.ko}${j.tail}.`]
+        };
+      }
+      // 動詞の主題（人物）
+      const FVSUBJ = [
+        {topic:"저는",topicR:"jeoneun",ja:"私"},
+        {topic:"동생은",topicR:"dongsaeng-eun",ja:"弟（妹）"},
+        {topic:"친구는",topicR:"chinguneun",ja:"友達"},
+        {topic:"형은",topicR:"hyeong-eun",ja:"兄"}
+      ];
+      // 動詞（합쇼体・해요体とも検証済み。preは目的語/場所句、wはその語分解）
+      const FVERB = [
+        {pre:"한국어를",preR:"hangugeoreul",ko:"공부합니다",r:"gongbuhamnida",haeyo:"공부해요",dict:"공부하다",ja:"韓国語を勉強します",rule:"하다→합니다",
+         w:[{ko:"한국어",roman:"hangugeo",ja:"韓国語"},{ko:"-를",roman:"-reul",ja:"目的格「を」"}]},
+        {pre:"책을",preR:"chaeg-eul",ko:"읽습니다",r:"ikseumnida",haeyo:"읽어요",dict:"읽다",ja:"本を読みます",rule:"子音語幹→습니다",
+         w:[{ko:"책",roman:"chaek",ja:"本"},{ko:"-을",roman:"-eul",ja:"目的格「を」"}]},
+        {pre:"밥을",preR:"bab-eul",ko:"먹습니다",r:"meokseumnida",haeyo:"먹어요",dict:"먹다",ja:"ご飯を食べます",rule:"子音語幹→습니다",
+         w:[{ko:"밥",roman:"bap",ja:"ご飯"},{ko:"-을",roman:"-eul",ja:"目的格「を」"}]},
+        {pre:"커피를",preR:"keopireul",ko:"마십니다",r:"masimnida",haeyo:"마셔요",dict:"마시다",ja:"コーヒーを飲みます",rule:"母音語幹→ㅂ니다",
+         w:[{ko:"커피",roman:"keopi",ja:"コーヒー"},{ko:"-를",roman:"-reul",ja:"目的格「を」"}]},
+        {pre:"친구를",preR:"chingureul",ko:"만납니다",r:"mannamnida",haeyo:"만나요",dict:"만나다",ja:"友達に会います",rule:"母音語幹→ㅂ니다",
+         w:[{ko:"친구",roman:"chingu",ja:"友達"},{ko:"-를",roman:"-reul",ja:"〜に（会う対象）"}]},
+        {pre:"영화를",preR:"yeonghwareul",ko:"봅니다",r:"bomnida",haeyo:"봐요",dict:"보다",ja:"映画を見ます",rule:"母音語幹→ㅂ니다",
+         w:[{ko:"영화",roman:"yeonghwa",ja:"映画"},{ko:"-를",roman:"-reul",ja:"目的格「を」"}]},
+        {pre:"음악을",preR:"eumag-eul",ko:"듣습니다",r:"deutseumnida",haeyo:"들어요",dict:"듣다",ja:"音楽を聞きます",rule:"子音語幹→습니다",
+         w:[{ko:"음악",roman:"eumak",ja:"音楽"},{ko:"-을",roman:"-eul",ja:"目的格「を」"}]},
+        {pre:"편지를",preR:"pyeonjireul",ko:"씁니다",r:"sseumnida",haeyo:"써요",dict:"쓰다",ja:"手紙を書きます",rule:"母音語幹→ㅂ니다",
+         w:[{ko:"편지",roman:"pyeonji",ja:"手紙"},{ko:"-를",roman:"-reul",ja:"目的格「を」"}]},
+        {pre:"서울에",preR:"seoul-e",ko:"삽니다",r:"samnida",haeyo:"살아요",dict:"살다",ja:"ソウルに住んでいます",rule:"ㄹ語幹→ㄹ脱落+ㅂ니다",
+         w:[{ko:"서울",roman:"seoul",ja:"ソウル"},{ko:"-에",roman:"-e",ja:"場所「に」"}]}
+      ];
+      function fFormalVerb() {
+        const s = pick(FVSUBJ), v = pick(FVERB);
+        return {
+          ja: `${s.ja}は${v.ja}。`,
+          ko: `${s.topic} ${v.pre} ${v.ko}.`,
+          roman: `${s.topicR} ${v.preR} ${v.r}.`,
+          w: [
+            {ko:s.topic,roman:s.topicR,ja:`${s.ja}＋主題助詞`},
+            ...v.w,
+            {ko:v.ko,roman:v.r,ja:`${v.ja}（합쇼体）`}
+          ],
+          g: `<strong>動詞の합쇼体</strong>：母音語幹＋<code>-ㅂ니다</code>、子音語幹＋<code>-습니다</code>。<code>ㄹ</code>語幹は<code>ㄹ</code>が落ちて<code>-ㅂ니다</code>（${v.dict}→${v.ko}、${v.rule}）。해요体は <code>${v.haeyo}</code>。`,
+          alts: [`${s.topic} ${v.pre} ${v.haeyo}.`]
+        };
+      }
+      // 家族（性別で変わる呼称。ages=その続柄に自然な年齢のみ）
+      const FAMILY = [
+        {topic:"형은",topicR:"hyeong-eun",subj:"형이",subjR:"hyeong-i",ja:"兄",ages:[21,23,25,30,32,35]},
+        {topic:"누나는",topicR:"nunaneun",subj:"누나가",subjR:"nunaga",ja:"姉",ages:[21,23,25,30,32,35]},
+        {topic:"오빠는",topicR:"oppaneun",subj:"오빠가",subjR:"oppaga",ja:"お兄さん",ages:[21,23,25,30,32,35]},
+        {topic:"언니는",topicR:"eonnineun",subj:"언니가",subjR:"eonniga",ja:"お姉さん",ages:[21,23,25,30,32,35]},
+        {topic:"남동생은",topicR:"namdongsaeng-eun",subj:"남동생이",subjR:"namdongsaeng-i",ja:"弟",ages:[19,20,21,23]},
+        {topic:"여동생은",topicR:"yeodongsaeng-eun",subj:"여동생이",subjR:"yeodongsaeng-i",ja:"妹",ages:[19,20,21,23]}
+      ];
+      function fFamilyExist() {
+        const f = pick(FAMILY);
+        return {
+          ja: `私は${f.ja}がいます。`,
+          ko: `저는 ${f.subj} 있습니다.`,
+          roman: `jeoneun ${f.subjR} itseumnida.`,
+          w: [
+            {ko:"저",roman:"jeo",ja:"私（謙譲）"},
+            {ko:"-는",roman:"-neun",ja:"主題助詞「は」"},
+            {ko:f.subj,roman:f.subjR,ja:`${f.ja}＋主格助詞`},
+            {ko:"있다",roman:"itda",ja:"いる／ある"}
+          ],
+          g: `<strong>家族の呼称は話者の性別で変わる</strong>：男性は兄<code>형</code>・姉<code>누나</code>、女性は兄<code>오빠</code>・姉<code>언니</code>。弟<code>남동생</code>・妹<code>여동생</code>は共通。存在は합쇼体で <code>있습니다</code>。`,
+          alts: [`저는 ${f.subj} 있어요.`]
+        };
+      }
+      function fFamilyAge() {
+        const f = pick(FAMILY), n = f.ages[rnd(f.ages.length)], A = AGES.find(a => a.n === n);
+        return {
+          ja: `${f.ja}は${A.n}歳です。`,
+          ko: `${f.topic} ${A.ko} 살입니다.`,
+          roman: `${f.topicR} ${A.r} sal-imnida.`,
+          w: [
+            {ko:f.topic,roman:f.topicR,ja:`${f.ja}＋主題助詞`},
+            {ko:A.ko,roman:A.r,ja:`${A.n}（固有数詞・冠形形）`},
+            {ko:"살",roman:"sal",ja:"〜歳（助数詞）"},
+            {ko:"-입니다",roman:"-imnida",ja:"〜です（합쇼体）"}
+          ],
+          g: `<strong>年齢は固有数詞＋<code>살</code></strong>。20は助数詞の前で <code>스무 살</code>。합쇼体は <code>살입니다</code>、해요体は <code>살이에요</code>。`,
+          alts: [`${f.topic} ${A.ko} 살이에요.`]
+        };
+      }
+      function fFormalDate() {
+        const m = pick(MONTHS), d = pick(DAYS);
+        return {
+          ja: `私の誕生日は${m.n}月${d.n}日です。`,
+          ko: `제 생일은 ${m.ko} ${d.ko} 일입니다.`,
+          roman: `je saengireun ${m.r} ${d.r} il-imnida.`,
+          w: [
+            {ko:"제",roman:"je",ja:"私の"},
+            {ko:"생일은",roman:"saengireun",ja:"誕生日＋主題助詞"},
+            {ko:m.ko,roman:m.r,ja:`${m.n}月`},
+            {ko:d.ko,roman:d.r,ja:`${d.n}（漢字数詞）`},
+            {ko:"일",roman:"il",ja:"〜日"},
+            {ko:"-입니다",roman:"-imnida",ja:"〜です（합쇼体）"}
+          ],
+          g: `<strong>日付は漢字数詞＋월（月）/일（日）</strong>。読みの例外：6月＝<code>유월</code>、10月＝<code>시월</code>（<code>육월/십월</code> とは言わない）。합쇼体は <code>일입니다</code>。`,
+          alts: [`제 생일은 ${m.ko} ${d.ko} 일이에요.`]
+        };
+      }
+      function fFormalWeekday() {
+        const wd = pick(WEEKDAYS);
+        return {
+          ja: `今日は${wd.ja}です。`,
+          ko: `오늘은 ${wd.ko}입니다.`,
+          roman: `oneureun ${wd.r}-imnida.`,
+          w: [
+            {ko:"오늘",roman:"oneul",ja:"今日"},
+            {ko:"-은",roman:"-eun",ja:"主題助詞「は」"},
+            {ko:wd.ko,roman:wd.r,ja:wd.ja},
+            {ko:"-입니다",roman:"-imnida",ja:"〜です（합쇼体）"}
+          ],
+          g: `<strong>曜日＝「漢字＋요일」</strong>：月<code>월</code>/火<code>화</code>/水<code>수</code>/木<code>목</code>/金<code>금</code>/土<code>토</code>/日<code>일</code>。합쇼体は <code>요일입니다</code>、해요体は <code>요일이에요</code>。`,
+          alts: [`오늘은 ${wd.ko}이에요.`]
+        };
+      }
+
       const SETS = {
         numbers: [fTime, fAge, fExist, fPrice, fDate, fWeekday],
         place:   [fMove, fActivity, fPurpose, fPosition],
-        negqa:   [fAdjective, fNegation, fQuestion]
+        negqa:   [fAdjective, fNegation, fQuestion],
+        polite:  [fFormalNoun, fFormalVerb, fFamilyExist, fFamilyAge, fFormalDate, fFormalWeekday]
       };
       function generate(key, count) {
         if (typeof key === "number") { count = key; key = "numbers"; } // 後方互換
