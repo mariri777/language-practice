@@ -1,0 +1,284 @@
+/* ============================================================
+   daily.css — Daily系 共通デザイン（さわやか / Manrope / クリーン）
+   - 色は 1 アクセント（--accent）を差し替えるとツール種類ごとに変えられる
+   - <html lang> で学習言語フォント（--font-cjk）が自動で切り替わる
+   ============================================================ */
+:root{
+  --bg:#f7fcfd; --surface:#ffffff; --surface-2:#eef7f9; --bg-deep:#d8ebef;
+  --ink:#15242a; --ink-2:#2d3d43; --ink-3:#5e727a; --ink-4:#92a7af; --ink-5:#c6d6db;
+  --accent:#16a8c4; --accent-bright:#2cc0db; --accent-deep:#0e87a0;
+  --accent-soft:rgba(22,168,196,.10); --accent-glow:rgba(22,168,196,.26);
+  --good:#16a8c4; --bad:#e2674e; --bad-soft:rgba(226,103,78,.10);
+  --line:#e7eef0; --hairline:rgba(21,36,42,.08);
+  --shadow-sm:0 1px 2px rgba(21,36,42,.05);
+  --shadow:0 1px 2px rgba(21,36,42,.04), 0 14px 32px rgba(21,36,42,.06);
+  --shadow-lg:0 12px 30px rgba(21,36,42,.10), 0 28px 60px rgba(21,36,42,.10);
+  --ease:cubic-bezier(.2,0,.2,1);
+  --ease-out:cubic-bezier(.66,0,.2,1);
+  --font-ui:"Manrope",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --font-display:"Manrope",-apple-system,system-ui,sans-serif;
+  --font-cjk:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic UI",sans-serif;
+}
+html[lang="ko"]{ --font-cjk:"Noto Sans KR","Apple SD Gothic Neo",sans-serif; }   /* UI文（出題文・解説・コース名）= UI言語 */
+html[lang="zh"]{ --font-cjk:"Noto Sans SC","PingFang SC",sans-serif; }
+/* 学習言語テキスト（.zh クラス）= 各ツールの「対象言語」。<html data-target> で出し分け */
+html[data-target="ja"] .zh{ font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN",sans-serif; }
+html[data-target="zh"] .zh{ font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB",sans-serif; }
+html[data-target="ko"] .zh{ font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif; }
+/* korean-practice は対象テキストに .ko クラスを使う */
+.ko, .answer-input.ko{ font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif; }
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+*:focus{ outline:none; }
+*:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:4px; }
+html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--font-ui);
+  font-size:15px; line-height:1.6; letter-spacing:-.005em; min-height:100vh;
+  overflow-x:hidden; padding-bottom:calc(96px + env(safe-area-inset-bottom));
+}
+::selection{ background:var(--accent); color:#fff; }
+input,textarea,button{ font-family:inherit; color:inherit; }
+
+/* 旧・装飾レイヤーは非表示（花・ハート等） */
+.deco{ display:none !important; }
+
+.container{ max-width:680px; margin:0 auto; padding:0 22px; }
+
+/* ============ Header（細いトップバー） ============ */
+.header{ padding:16px 0 12px; text-align:left; border-bottom:1px solid var(--hairline); margin-bottom:6px; }
+.header-eyebrow{ display:none; }   /* 「JAPANESE OUTPUT TRAINER」は省いてすっきり */
+.header h1{
+  font-family:var(--font-display); font-weight:800; font-size:19px; letter-spacing:-.02em;
+  line-height:1; color:var(--ink); cursor:pointer; display:flex; align-items:baseline; gap:7px; flex-wrap:wrap;
+}
+.header h1 .accent{ color:var(--accent); }
+.header h1 .zh-title{
+  display:inline; font-family:var(--font-ui); font-weight:600; font-size:11px;
+  letter-spacing:.02em; color:var(--ink-4); margin:0;
+}
+
+/* ============ Stats ============ */
+/* ============ 오늘의 목표 リング ============ */
+.stats{ display:flex; }   /* 旧stats枠（互換） */
+.goal{ display:flex; align-items:center; gap:14px; margin:18px 0 2px; }
+.goal-ring{
+  --p:0; width:62px; height:62px; border-radius:50%; flex-shrink:0;
+  background:conic-gradient(var(--accent) calc(var(--p)*1%), var(--bg-deep) 0);
+  display:flex; align-items:center; justify-content:center; transition:--p .5s var(--ease-out);
+}
+.goal-ring::before{ content:""; position:absolute; width:50px; height:50px; border-radius:50%; background:var(--bg); }
+.goal-ring{ position:relative; }
+.goal-frac{ position:relative; z-index:1; font-family:var(--font-display); font-weight:800; color:var(--ink); line-height:1; }
+.goal-frac b{ font-size:20px; }
+.goal-frac i{ font-size:11px; font-style:normal; color:var(--ink-4); }
+.goal-ring.done .goal-frac b{ color:var(--accent); }
+.goal-title{ font-family:var(--font-display); font-weight:800; font-size:14px; color:var(--ink); letter-spacing:-.01em; }
+.goal-sub{ font-family:var(--font-display); font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-4); margin-top:3px; }
+
+/* ============ レベル全体進度 ============ */
+.level-progress{ margin:0 0 18px; }
+.lp-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px; }
+.lp-label{ font-family:var(--font-display); font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-4); }
+.lp-pct{ font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--accent); }
+.lp-track{ height:6px; background:var(--bg-deep); border-radius:3px; overflow:hidden; }
+.lp-bar{ height:100%; background:var(--accent); border-radius:3px; transition:width .7s var(--ease-out); }
+
+/* ============ コース完了 도장 ============ */
+.stamps{ display:flex; flex-wrap:wrap; gap:7px; margin:0 0 22px; }
+.stamp{ width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:800; font-size:11px; color:var(--ink-4);
+  background:var(--surface); border:1px solid var(--line); }
+.stamp.on{ background:var(--accent); color:#fff; border-color:var(--accent); font-size:14px; }
+
+/* ============ Toast（目標達成など） ============ */
+.toast{ position:fixed; left:50%; bottom:calc(90px + env(safe-area-inset-bottom)); transform:translate(-50%,16px);
+  background:var(--ink); color:#fff; font-family:var(--font-display); font-weight:700; font-size:13px;
+  padding:11px 18px; border-radius:999px; box-shadow:var(--shadow-lg); opacity:0; pointer-events:none; z-index:300;
+  transition:opacity .3s var(--ease), transform .3s var(--ease-out); }
+.toast.show{ opacity:1; transform:translate(-50%,0); }
+
+/* ============ View title / back ============ */
+.view[hidden]{ display:none !important; }
+.view-title{ font-family:var(--font-display); font-weight:700; font-size:20px; letter-spacing:-.02em; color:var(--ink); text-align:left; margin:22px 0 18px; }
+.back-link{
+  display:inline-flex; align-items:center; gap:6px; font-family:var(--font-display); font-size:12px; font-weight:700;
+  letter-spacing:.02em; color:var(--ink-3); background:var(--surface); border:1px solid var(--line);
+  border-radius:999px; padding:8px 14px; cursor:pointer; margin:18px 0 16px; transition:all .2s var(--ease);
+}
+.back-link:hover{ color:var(--accent); border-color:var(--accent); transform:translateX(-2px); }
+
+/* ============ Level cards (home) ============ */
+.hsk-cards,.topik-cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:12px; margin-bottom:16px; }
+.hsk-card,.topik-card{
+  display:flex; flex-direction:column; gap:6px; padding:20px 18px; text-align:left; cursor:pointer;
+  background:var(--surface); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow-sm);
+  font-family:inherit; transition:all .2s var(--ease); position:relative;
+}
+.hsk-card:hover,.topik-card:hover{ transform:translateY(-3px); border-color:var(--accent); box-shadow:var(--shadow); }
+.hsk-card-num,.topik-card-num{ font-family:var(--font-display); font-weight:800; font-size:22px; letter-spacing:-.02em; color:var(--ink); }
+.hsk-card-label,.topik-card-label{ font-size:12px; color:var(--ink-3); }
+.hsk-card-progress,.topik-card-progress{ margin-top:4px; font-family:var(--font-display); font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); }
+.hsk-card-progress .done-tag,.topik-card-progress .done-tag{ display:inline-block; margin-left:6px; font-size:10px; color:var(--good); font-weight:800; }
+
+/* ============ Course list ============ */
+.course-cards{ display:flex; flex-direction:column; gap:10px; }
+.course-card{
+  display:flex; flex-direction:column; gap:9px; padding:17px 19px; text-align:left; cursor:pointer;
+  background:var(--surface); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow-sm);
+  font-family:inherit; transition:all .18s var(--ease);
+}
+.course-card:hover{ transform:translateX(3px); border-color:var(--accent); }
+.course-card.done{ background:var(--accent-soft); border-color:var(--accent); }
+.course-card.current{ border-color:var(--accent); border-width:2px; }
+.cc-head{ display:flex; align-items:center; gap:10px; }
+.cc-num{ font-family:var(--font-display); font-size:10px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); padding:3px 8px; border-radius:5px; }
+.cc-status{ margin-left:auto; font-family:var(--font-display); font-size:11px; font-weight:700; color:var(--ink-4); letter-spacing:.04em; }
+.cc-status.done{ color:var(--good); }
+.cc-title{ font-family:var(--font-cjk); font-weight:600; font-size:17px; color:var(--ink); letter-spacing:-.01em; }
+.cc-bar-wrap{ display:flex; align-items:center; gap:10px; }
+.cc-track{ flex:1; height:5px; background:var(--bg-deep); border-radius:3px; overflow:hidden; }
+.cc-bar{ height:100%; background:var(--accent); border-radius:3px; transition:width .6s var(--ease-out); }
+.course-card.done .cc-bar{ background:var(--good); }
+
+/* ============ Intro ============ */
+.intro-card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:26px 24px; box-shadow:var(--shadow); }
+.intro-meta{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.intro-title{ font-family:var(--font-cjk); font-weight:600; font-size:22px; line-height:1.3; color:var(--ink); margin-bottom:14px; letter-spacing:-.01em; }
+.intro-overview{ font-size:14px; line-height:1.8; color:var(--ink-2); margin-bottom:22px; }
+.intro-section-title{ font-family:var(--font-display); font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.intro-points{ list-style:none; padding:0; margin:0 0 24px; display:flex; flex-direction:column; gap:9px; }
+.intro-points li{ position:relative; padding:11px 13px 11px 32px; background:var(--surface-2); border-radius:9px; font-size:14px; line-height:1.7; color:var(--ink-2); }
+.intro-points li::before{ content:""; position:absolute; left:14px; top:18px; width:8px; height:8px; border-radius:2px; background:var(--accent); }
+.intro-points code{ font-family:var(--font-cjk); background:var(--surface); border:1px solid var(--hairline); padding:1px 5px; border-radius:3px; color:var(--accent); font-size:.94em; }
+.intro-points strong{ color:var(--ink); font-weight:800; }
+.intro-start{ width:100%; justify-content:center; margin-top:4px; }
+
+/* ============ Course banner (practice) ============ */
+.course-banner{ background:none; padding:0; margin-bottom:6px; }
+.course-info{ display:flex; align-items:center; gap:10px; margin-bottom:9px; }
+.hsk-tag,.topik-tag{ font-family:var(--font-display); font-size:10px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:var(--accent); border:1px solid var(--accent); padding:4px 8px; border-radius:5px; }
+.hsk-tag::before,.topik-tag::before{ content:none; }
+.course-label{ font-family:var(--font-display); font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-4); }
+.course-title{ font-family:var(--font-cjk); font-weight:600; font-size:20px; color:var(--ink); margin-bottom:12px; letter-spacing:-.01em; }
+.course-progress{ display:flex; align-items:center; gap:12px; }
+.progress-track{ flex:1; height:4px; background:var(--bg-deep); border-radius:2px; overflow:hidden; }
+.progress-bar{ height:100%; width:0; background:var(--accent); border-radius:2px; transition:width .6s var(--ease-out); }
+.progress-text{ font-family:var(--font-display); font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3); white-space:nowrap; }
+.course-actions{ display:flex; gap:16px; margin-top:12px; }
+.mini-btn{ background:none; border:none; cursor:pointer; font-family:var(--font-display); font-size:11px; font-weight:700; letter-spacing:.04em; color:var(--ink-3); padding:2px 0; }
+.mini-btn:hover{ color:var(--accent); }
+
+/* ============ Card (question) ============ */
+.card{ margin:16px 0 0; background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+.card::before{ content:""; display:block; height:3px; background:var(--accent); }
+.card-body{ padding:24px; }
+.card-head{ display:flex; justify-content:space-between; align-items:center; padding:22px 24px 0; }
+.q-num{ font-family:var(--font-display); font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-4); }
+.fav-btn{ background:none; border:none; cursor:pointer; font-size:18px; color:var(--ink-4); line-height:1; }
+.fav-btn.active{ color:var(--accent); }
+.question-label{ font-family:var(--font-display); font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin:14px 24px 0; }
+.question-ja{ font-family:var(--font-cjk); font-size:25px; line-height:1.4; font-weight:600; color:var(--ink); margin:10px 24px 0; letter-spacing:-.01em; }
+.input-wrap{ margin:18px 24px 0; }
+.answer-input{ width:100%; background:var(--surface-2); border:1px solid var(--line); border-radius:8px; padding:13px 15px; font-size:19px; font-weight:500; color:var(--ink); min-height:62px; resize:vertical; transition:border-color .2s var(--ease); }
+.answer-input:focus{ border-color:var(--accent); }
+.answer-input::placeholder{ color:var(--ink-4); font-family:var(--font-ui); font-size:14px; font-weight:400; }
+
+/* card 内アクション（採点/힌트/스킵）→ 副ボタンに格下げ。採点は下固定バーへ */
+.actions{ display:flex; gap:10px; margin:16px 24px 22px; align-items:center; flex-wrap:wrap; }
+.btn{ font-family:var(--font-display); cursor:pointer; transition:all .18s var(--ease); }
+/* 主要採点ボタン #check-btn は下固定バーへ移動して使う（.btn-primary） */
+/* 힌트/스킵 = アウトライン付きの副ボタン（ひと目でボタンと分かる） */
+.btn-ghost{ background:var(--surface); border:1px solid var(--line); border-radius:999px;
+  font-size:12px; font-weight:700; letter-spacing:.02em; color:var(--ink-3); padding:8px 16px; }
+.btn-ghost:hover{ color:var(--accent); border-color:var(--accent); }
+
+/* 結果エリア */
+#result-area{ margin:0; }
+.result{ margin:12px 0 0; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:24px; box-shadow:var(--shadow); animation:upIn .42s var(--ease-out); }
+@keyframes upIn{ from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);} }
+.verdict{ display:flex; align-items:center; gap:9px; font-family:var(--font-display); font-size:14px; font-weight:800; letter-spacing:-.01em; margin-bottom:18px; }
+.verdict .emoji{ font-size:16px; }
+.verdict-correct{ color:var(--good); }
+.verdict-partial{ color:var(--accent-deep); }
+.verdict-wrong{ color:var(--bad); }
+.mastered-badge{ margin-left:auto; font-family:var(--font-display); font-size:10px; font-weight:800; letter-spacing:.04em; color:var(--accent); border:1px solid var(--accent); padding:3px 8px; border-radius:5px; }
+.answer-block{ }
+.label{ font-family:var(--font-display); font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-4); margin-bottom:7px; }
+.answer-zh,.answer-ko{ display:flex; align-items:center; gap:10px; font-family:var(--font-cjk); font-size:24px; font-weight:600; color:var(--ink); line-height:1.4; letter-spacing:-.01em; }
+.speak-btn{ background:none; border:none; cursor:pointer; font-size:16px; color:var(--ink-4); }
+.speak-btn:hover{ color:var(--accent); }
+.answer-pinyin,.answer-roman{ font-family:var(--font-cjk); font-size:14px; color:var(--ink-3); margin-top:5px; }
+.your-answer{ margin-top:12px; padding:10px 12px; background:var(--bad-soft); border-radius:8px; font-family:var(--font-cjk); font-size:16px; }
+.section-title{ font-family:var(--font-display); font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin:22px 0 9px; }
+.grammar-block{ font-size:14px; line-height:1.78; color:var(--ink-2); border-left:2px solid var(--accent); padding-left:14px; }
+.grammar-block code{ font-family:var(--font-cjk); background:var(--surface-2); border:1px solid var(--hairline); padding:1px 5px; border-radius:3px; color:var(--accent); font-size:.92em; font-weight:500; }
+.grammar-block strong{ color:var(--ink); font-weight:800; }
+.words-grid{ display:flex; gap:8px; flex-wrap:wrap; }
+.word-item{ background:var(--surface-2); border:1px solid var(--line); border-radius:8px; padding:9px 12px; min-width:78px; }
+.word-zh,.word-ko{ font-family:var(--font-cjk); font-size:17px; font-weight:600; color:var(--ink); }
+.word-pinyin,.word-roman{ font-family:var(--font-display); font-size:11px; font-weight:600; color:var(--ink-4); margin-top:2px; }
+.word-ja{ font-family:var(--font-cjk); font-size:12px; color:var(--ink-3); margin-top:1px; }
+.next-wrap{ display:none; }  /* 「次へ」は下固定バーに統合するため非表示 */
+.hint{ margin:0 24px 8px; padding:10px 13px; background:var(--accent-soft); border-radius:8px; font-size:13px; color:var(--ink-2); }
+.hint strong{ font-family:var(--font-cjk); color:var(--accent); }
+
+/* diff */
+.diff-correct{ color:var(--good); font-weight:700; }
+.diff-wrong{ color:var(--bad); text-decoration:line-through; }
+.diff-missing{ color:var(--accent-deep); font-weight:700; background:var(--accent-soft); padding:0 3px; border-radius:3px; }
+
+/* ============ Sticky single action button ============ */
+.actionbar{ position:fixed; left:0; right:0; bottom:0; z-index:60;
+  padding:14px 22px calc(14px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg, transparent, var(--bg) 32%); display:none; justify-content:center; }
+body[data-view="practice"] .actionbar{ display:flex; }
+.actionbar-inner{ width:100%; max-width:680px; }
+.btn-primary{ width:100%; padding:17px; border:none; border-radius:9px; cursor:pointer;
+  background:var(--accent); color:#fff; font-family:var(--font-display); font-size:14px; font-weight:800;
+  letter-spacing:.02em; box-shadow:0 8px 24px var(--accent-glow); transition:transform .12s var(--ease), background .2s var(--ease); }
+.btn-primary:active{ transform:translateY(1px); }
+.btn-primary:disabled{ opacity:.55; }
+/* 次へ／もう一度 も同じアクアで統一（黒はやめる） */
+.btn-primary.is-next{ background:var(--accent); box-shadow:0 8px 24px var(--accent-glow); }
+
+/* ============ Modal (course complete) ============ */
+.modal{ position:fixed; inset:0; background:rgba(21,36,42,.5); backdrop-filter:blur(4px); z-index:200; display:none; align-items:center; justify-content:center; padding:22px; }
+.modal.open{ display:flex; }
+.modal-content{ width:100%; max-width:420px; background:var(--surface); border-radius:16px; box-shadow:var(--shadow-lg); }
+.complete-content{ text-align:center; padding:34px 24px; }
+.complete-emoji{ font-size:46px; margin-bottom:10px; }
+.complete-content h3{ font-family:var(--font-display); font-weight:800; font-size:23px; letter-spacing:-.02em; margin-bottom:6px; color:var(--ink); }
+.complete-content p{ color:var(--ink-3); margin-bottom:20px; font-size:14px; }
+.complete-actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+.btn-next{ font-family:var(--font-display); font-weight:800; font-size:13px; letter-spacing:.02em; padding:13px 22px; border-radius:9px; border:none; cursor:pointer; background:var(--accent); color:#fff; }
+.modal .btn-ghost{ border:1px solid var(--line); border-radius:9px; padding:13px 20px; text-transform:none; font-size:13px; color:var(--ink-2); }
+
+/* ============ Footer ============ */
+.footer{ margin-top:46px; text-align:center; }
+.footer p{ font-family:var(--font-cjk); font-size:13px; color:var(--ink-3); }
+.footer .heart{ color:var(--accent); }
+.footer-meta{ margin-top:14px; font-family:var(--font-ui); font-size:11px; color:var(--ink-4); }
+.footer-copy{ margin-top:4px; font-family:var(--font-ui); font-size:11px; color:var(--ink-4); }
+.footer a{ color:var(--accent); text-decoration:none; }
+.footer a:hover{ text-decoration:underline; }
+
+/* ============ 簡体/繁体トグル（中国語ツール用） ============ */
+.script-toggle-row{ display:flex; justify-content:flex-start; margin:14px 0 2px; }
+.script-toggle{ display:inline-flex; background:var(--surface-2); border:1px solid var(--line); border-radius:999px; padding:3px; gap:2px; }
+.script-toggle-btn{ border:none; background:none; cursor:pointer; font-family:var(--font-display); font-size:12px; font-weight:700;
+  letter-spacing:.02em; color:var(--ink-3); padding:6px 16px; border-radius:999px; transition:all .18s var(--ease); }
+.script-toggle-btn.active{ background:var(--accent); color:#fff; }
+
+/* 出題カードの入れ替え（控えめスライド） */
+@keyframes slideIn{ from{opacity:0; transform:translateX(38px);} to{opacity:1; transform:translateX(0);} }
+.card.slide-in{ animation:slideIn .4s var(--ease-out); }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important; }
+}
+@media (max-width:600px){
+  .card-body{ padding:20px 18px; }
+  .question-ja{ font-size:22px; }
+  .result{ padding:20px 18px; }
+}
