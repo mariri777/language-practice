@@ -35,7 +35,7 @@ html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; -moz-osx-font-
 body{
   background:var(--bg); color:var(--ink); font-family:var(--font-ui);
   font-size:15px; line-height:1.6; letter-spacing:-.005em; min-height:100vh;
-  overflow-x:hidden; padding-bottom:calc(40px + env(safe-area-inset-bottom));
+  overflow-x:hidden; padding-bottom:calc(96px + env(safe-area-inset-bottom));
 }
 ::selection{ background:var(--accent); color:#fff; }
 input,textarea,button{ font-family:inherit; color:inherit; }
@@ -230,8 +230,11 @@ input,textarea,button{ font-family:inherit; color:inherit; }
 .diff-missing{ color:var(--accent-deep); font-weight:700; background:var(--accent-soft); padding:0 3px; border-radius:3px; }
 
 /* ============ Sticky single action button ============ */
-/* 入力カードのすぐ下に置く（旧：画面下固定）。スマホで「すぐ下」に来て押しやすい */
-.actionbar{ padding:6px 0 10px; display:none; justify-content:center; }
+/* 画面下に固定。キーボードが出たら daily-kbd.js がその高さ分だけ持ち上げる（iOS対策） */
+.actionbar{ position:fixed; left:0; right:0; bottom:0; z-index:60;
+  padding:12px 22px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg, transparent, var(--bg) 30%);
+  display:none; justify-content:center; transition:transform .18s var(--ease); will-change:transform; }
 body[data-view="practice"] .actionbar{ display:flex; }
 .actionbar-inner{ width:100%; max-width:680px; }
 .btn-primary{ width:100%; padding:17px; border:none; border-radius:9px; cursor:pointer;
