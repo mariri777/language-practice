@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>font compare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7fcfd; --surface:#ffffff; --surface-2:#eef7f9;
+    --ink:#15242a; --ink-3:#5e727a; --ink-4:#92a7af;
+    --accent:#16a8c4; --line:#e2eef1;
+    --ko:"Noto Sans KR",sans-serif; --jp:"Noto Sans JP",sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);padding:26px 20px;}
+  h1{font-family:"Inter";font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);margin:0 0 18px;}
+  .samp{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:16px;
+    box-shadow:0 10px 28px rgba(21,36,42,.05);}
+  .tag{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.04em;margin-bottom:14px;font-family:"Inter";}
+  .row{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;margin-bottom:16px;}
+  .stat{display:flex;flex-direction:column;}
+  .num{font-weight:800;font-size:38px;line-height:.9;letter-spacing:-.03em;}
+  .num .a{color:var(--accent);}
+  .lbl{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4);margin-top:5px;}
+  .chip{align-self:center;font-size:12px;font-weight:700;letter-spacing:.05em;border:1px solid var(--accent);color:var(--accent);
+    padding:5px 10px;border-radius:6px;}
+  .cno{align-self:center;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-4);}
+  .kick{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+  .big{font-size:26px;font-weight:700;letter-spacing:-.01em;margin-bottom:16px;}
+  .row2{display:flex;align-items:center;gap:16px;}
+  .btn{border:none;background:var(--accent);color:#fff;font-weight:700;font-size:14px;padding:13px 26px;border-radius:9px;letter-spacing:.02em;}
+  .links{font-size:12px;font-weight:700;color:var(--ink-3);letter-spacing:.04em;}
+  .ko{font-family:var(--ko);} .jp{font-family:var(--jp);}
+
+  .f-jakarta{font-family:"Plus Jakarta Sans",sans-serif;}
+  .f-inter{font-family:"Inter",sans-serif;}
+  .f-manrope{font-family:"Manrope",sans-serif;}
+</style>
+</head>
+<body>
+  <h1>Font compare — same color, font only</h1>
+
+  <div class="samp f-jakarta">
+    <div class="tag">A — Plus Jakarta Sans（やさしい・少し丸み）</div>
+    <div class="row">
+      <div class="stat"><span class="num"><span class="a">7</span></span><span class="lbl">Streak</span></div>
+      <div class="stat"><span class="num">4<span style="font-size:18px;color:var(--ink-4)">/10</span></span><span class="lbl">Today</span></div>
+      <div class="stat"><span class="num">58</span><span class="lbl">Total</span></div>
+      <span class="chip">JLPT N5</span>
+      <span class="cno">Course 01 / 14</span>
+    </div>
+    <div class="kick">Translate to Japanese</div>
+    <div class="big">Daily <span class="ko">일본어</span> — One a Day 365</div>
+    <div class="row2"><button class="btn"><span class="ko">정답 확인</span></button><span class="links">Hint &nbsp; Skip &nbsp; ☆ Save</span></div>
+  </div>
+
+  <div class="samp f-inter">
+    <div class="tag">B — Inter（中立・端正・クセなし）</div>
+    <div class="row">
+      <div class="stat"><span class="num"><span class="a">7</span></span><span class="lbl">Streak</span></div>
+      <div class="stat"><span class="num">4<span style="font-size:18px;color:var(--ink-4)">/10</span></span><span class="lbl">Today</span></div>
+      <div class="stat"><span class="num">58</span><span class="lbl">Total</span></div>
+      <span class="chip">JLPT N5</span>
+      <span class="cno">Course 01 / 14</span>
+    </div>
+    <div class="kick">Translate to Japanese</div>
+    <div class="big">Daily <span class="ko">일본어</span> — One a Day 365</div>
+    <div class="row2"><button class="btn"><span class="ko">정답 확인</span></button><span class="links">Hint &nbsp; Skip &nbsp; ☆ Save</span></div>
+  </div>
+
+  <div class="samp f-manrope">
+    <div class="tag">C — Manrope（幾何学的・モダン）</div>
+    <div class="row">
+      <div class="stat"><span class="num"><span class="a">7</span></span><span class="lbl">Streak</span></div>
+      <div class="stat"><span class="num">4<span style="font-size:18px;color:var(--ink-4)">/10</span></span><span class="lbl">Today</span></div>
+      <div class="stat"><span class="num">58</span><span class="lbl">Total</span></div>
+      <span class="chip">JLPT N5</span>
+      <span class="cno">Course 01 / 14</span>
+    </div>
+    <div class="kick">Translate to Japanese</div>
+    <div class="big">Daily <span class="ko">일본어</span> — One a Day 365</div>
+    <div class="row2"><button class="btn"><span class="ko">정답 확인</span></button><span class="links">Hint &nbsp; Skip &nbsp; ☆ Save</span></div>
+  </div>
+</body>
+</html>
