@@ -532,7 +532,7 @@
       },
       // ============ TOPIK 2 ============
       {
-        topik: 2, num: 1, title: "過去と進行",
+        topik: 2, num: 1, title: "過去と進行", mode: "template", template: "past",
         sentences: [
           {
             ja: "私は毎日7時に起きます。", ko: "저는 매일 일곱 시에 일어나요.", roman: "jeoneun maeil ilgop sie ireonayo.",
@@ -3026,7 +3026,7 @@
       { overview: "主格・目的格・主題助詞、希望の「〜したい」、指示代名詞といった基本パーツ。文を組み立てるための骨組みを揃えます。",
         points: ["<strong>主格助詞</strong> <code>-이/-가</code>（パッチム有無）","<strong>目的格</strong> <code>-을/-를</code> と他動詞 <code>좋아하다</code>","<strong>「V-고 싶다」</strong>＝「〜したい」（一人称）／三人称は <code>-고 싶어하다</code>","해요体の活用（陽母音 → -아요、陰母音 → -어요）","指示代名詞 <code>이／그／저</code> と所有の <code>제／네</code>", "<strong>限定の助詞</strong>：<code>-도</code>（〜も／パッチム有無で形は不変）と <code>-만</code>（〜だけ）。<code>-만</code> は主格・目的格を押しのけて単独で使うのが普通：<code>물만 마셔요</code>（×물을만）。", "<strong>与格助詞</strong>「〜に（人）」：書き言葉・丁寧な <code>-에게</code>、口語の <code>-한테</code>、目上には <code>-께</code>。物・場所の「〜に」は <code>-에</code> で別物。", "<strong>否定</strong>：動詞・形容詞の前に <code>안</code> を置く前置否定が口語の基本：<code>안 가요</code>。「〜したくない」は <code>안 -고 싶어요</code> より <code>-고 싶지 않아요</code> が自然。"] },
       // TOPIK 2 - C4 過去と進行
-      { overview: "韓国語の時制の中心、過去形と進行形。陽母音／陰母音／하다語幹で変わる過去語尾と「〜している」表現を一気に押さえます。",
+      { overview: "韓国語の時制の中心、過去形と進行形。陽母音／陰母音／하다語幹で変わる過去語尾と「〜している」表現を一気に押さえます。【🔄 このコースは挑戦するたびに動詞・時間表現が入れ替わり、毎回ちがう10問が出ます】",
         points: ["<strong>過去形 <code>-았/-었/-였-</code></strong>（陽母音／陰母音／하다）","<strong>「V-고 있다」</strong>＝進行「〜している」（書面語は <code>-는 중이다</code>）","時刻の助詞 <code>-에</code>（〜に）","<code>벌써</code>（予想より早い「もう」）と <code>이미</code>（時点強調）","語順は「主語＋時間詞＋動詞」", "<strong>過去否定</strong>：<code>안 V-았/었어요</code>（意志的にしなかった）と <code>못 V-았/었어요</code>（できなかった）を区別する。", "<strong><code>V-는 중이다</code></strong>＝「〜している最中だ」。<code>-고 있다</code>より「まさに進行中」のニュアンスを強調する。", "<strong>理由の<code>-아서/어서</code></strong>：前節には過去・未来の時制を付けず基本形のまま用い、時制は後節で表す。"] },
       // TOPIK 2 - C5 比較・能力・依頼
       { overview: "「〜できる」「〜より〜」「〜してください」など、会話で頻出の対人表現。可能・比較・勧誘・依頼を1コースで網羅します。",
@@ -3647,11 +3647,160 @@
         };
       }
 
+      // ====== #7「過去と進行」用バンク（過去形・진행形は検証済みで事前格納）======
+      const TADV = [
+        {ko:"어제",r:"eoje",ja:"昨日"},
+        {ko:"아까",r:"akka",ja:"さっき"},
+        {ko:"오늘 아침",r:"oneul achim",ja:"今朝"},
+        {ko:"주말에",r:"jumal-e",ja:"週末に"},
+        {ko:"그저께",r:"geujeokke",ja:"おととい"}
+      ];
+      // 動詞の過去형・否定過去（全形を検証済みで格納。end は表示用の語尾ラベル）
+      const PASTV = [
+        {pre:"가게에",preR:"gage-e",dict:"가다",dictR:"gada",baseJa:"行く",end:"-았어요",endR:"-asseoyo",past:"갔어요",pastR:"gasseoyo",neg:"안 갔어요",negR:"an gasseoyo",ja:"お店に行きました",negJa:"お店に行きませんでした",rule:"가다→갔어요",w:[{ko:"가게",roman:"gage",ja:"店"},{ko:"-에",roman:"-e",ja:"〜に"}]},
+        {pre:"밥을",preR:"bab-eul",dict:"먹다",dictR:"meokda",baseJa:"食べる",end:"-었어요",endR:"-eosseoyo",past:"먹었어요",pastR:"meogeosseoyo",neg:"안 먹었어요",negR:"an meogeosseoyo",ja:"ご飯を食べました",negJa:"ご飯を食べませんでした",rule:"먹다→먹었어요",w:[{ko:"밥",roman:"bap",ja:"ご飯"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
+        {pre:"커피를",preR:"keopireul",dict:"마시다",dictR:"masida",baseJa:"飲む",end:"-었어요",endR:"-eosseoyo",past:"마셨어요",pastR:"masyeosseoyo",neg:"안 마셨어요",negR:"an masyeosseoyo",ja:"コーヒーを飲みました",negJa:"コーヒーを飲みませんでした",rule:"마시다→마셨어요",w:[{ko:"커피",roman:"keopi",ja:"コーヒー"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {pre:"친구를",preR:"chingureul",dict:"만나다",dictR:"mannada",baseJa:"会う",end:"-았어요",endR:"-asseoyo",past:"만났어요",pastR:"mannasseoyo",neg:"안 만났어요",negR:"an mannasseoyo",ja:"友達に会いました",negJa:"友達に会いませんでした",rule:"만나다→만났어요",w:[{ko:"친구",roman:"chingu",ja:"友達"},{ko:"-를",roman:"-reul",ja:"〜に（会う対象）"}]},
+        {pre:"영화를",preR:"yeonghwareul",dict:"보다",dictR:"boda",baseJa:"見る",end:"-았어요",endR:"-asseoyo",past:"봤어요",pastR:"bwasseoyo",neg:"안 봤어요",negR:"an bwasseoyo",ja:"映画を見ました",negJa:"映画を見ませんでした",rule:"보다→봤어요",w:[{ko:"영화",roman:"yeonghwa",ja:"映画"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {pre:"책을",preR:"chaeg-eul",dict:"읽다",dictR:"ikda",baseJa:"読む",end:"-었어요",endR:"-eosseoyo",past:"읽었어요",pastR:"ilgeosseoyo",neg:"안 읽었어요",negR:"an ilgeosseoyo",ja:"本を読みました",negJa:"本を読みませんでした",rule:"읽다→읽었어요",w:[{ko:"책",roman:"chaek",ja:"本"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
+        {pre:"음악을",preR:"eumag-eul",dict:"듣다",dictR:"deutda",baseJa:"聞く",end:"-었어요",endR:"-eosseoyo",past:"들었어요",pastR:"deureosseoyo",neg:"안 들었어요",negR:"an deureosseoyo",ja:"音楽を聞きました",negJa:"音楽を聞きませんでした",rule:"듣다→들었어요（ㄷ変則）",w:[{ko:"음악",roman:"eumak",ja:"音楽"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
+        {pre:"편지를",preR:"pyeonjireul",dict:"쓰다",dictR:"sseuda",baseJa:"書く",end:"-었어요",endR:"-eosseoyo",past:"썼어요",pastR:"sseosseoyo",neg:"안 썼어요",negR:"an sseosseoyo",ja:"手紙を書きました",negJa:"手紙を書きませんでした",rule:"쓰다→썼어요（으脱落）",w:[{ko:"편지",roman:"pyeonji",ja:"手紙"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {pre:"운동을",preR:"undong-eul",dict:"하다",dictR:"hada",baseJa:"する",end:"-였어요→했어요",endR:"-yeosseoyo",past:"했어요",pastR:"haesseoyo",neg:"안 했어요",negR:"an haesseoyo",ja:"運動をしました",negJa:"運動をしませんでした",rule:"하다→했어요",w:[{ko:"운동",roman:"undong",ja:"運動"},{ko:"-을",roman:"-eul",ja:"〜を"}]}
+      ];
+      function fPast() {
+        const adv = pick(TADV), v = pick(PASTV);
+        return {
+          ja: `${adv.ja}${v.ja}。`,
+          ko: `${adv.ko} ${v.pre} ${v.past}.`,
+          roman: `${adv.r} ${v.preR} ${v.pastR}.`,
+          w: [
+            {ko:adv.ko,roman:adv.r,ja:adv.ja},
+            ...v.w,
+            {ko:v.dict,roman:v.dictR,ja:v.baseJa},
+            {ko:v.end,roman:v.endR,ja:"過去・해요体"}
+          ],
+          g: `<strong>過去形 <code>-았/었/였어요</code></strong>：陽母音(ㅏ/ㅗ)→<code>았</code>、陰母音→<code>었</code>、하다→<code>했</code>。${v.rule}。`,
+          alts: [`${adv.ko} ${v.pre} ${v.past.replace(/어요$/, "습니다")}.`]
+        };
+      }
+      const NEG_ADV = [
+        {ko:"어제",r:"eoje",ja:"昨日は"}, {ko:"그저께",r:"geujeokke",ja:"おとといは"}, {ko:"주말에",r:"jumal-e",ja:"週末は"}
+      ];
+      function fPastNeg() {
+        const adv = pick(NEG_ADV), v = pick(PASTV);
+        return {
+          ja: `${adv.ja}${v.negJa}。`,
+          ko: `${adv.ko} ${v.pre} ${v.neg}.`,
+          roman: `${adv.r} ${v.preR} ${v.negR}.`,
+          w: [
+            {ko:adv.ko,roman:adv.r,ja:adv.ja.replace("は","")},
+            ...v.w,
+            {ko:"안",roman:"an",ja:"〜しない（否定）"},
+            {ko:v.past,roman:v.pastR,ja:`${v.baseJa}・過去`}
+          ],
+          g: `<strong>過去の否定</strong>は<code>안</code>を動詞の前に置き、動詞を過去形にする。하다動詞は「名詞＋안 했어요」と分ける（<code>운동을 안 했어요</code>）。能力的にできなかった時は<code>못</code>。`,
+          alts: [`${adv.ko} ${v.pre} ${v.neg.replace(/어요$/, "습니다")}.`, `${adv.ko} ${v.pre} ${v.dict.replace(/다$/, "")}지 않았어요.`]
+        };
+      }
+      const PSUBJ = [
+        {topic:"저는",topicR:"jeoneun",ja:"私"}, {topic:"그는",topicR:"geuneun",ja:"彼"},
+        {topic:"언니는",topicR:"eonnineun",ja:"姉"}, {topic:"동생은",topicR:"dongsaeng-eun",ja:"弟（妹）"}
+      ];
+      const PROGV = [
+        {pre:"",preR:"",go:"전화하고",goR:"jeonhwahago",dict:"전화하다",dictR:"jeonhwahada",baseJa:"電話する",ja:"電話しています",w:[]},
+        {pre:"밥을",preR:"bab-eul",go:"먹고",goR:"meokgo",dict:"먹다",dictR:"meokda",baseJa:"食べる",ja:"ご飯を食べています",w:[{ko:"밥",roman:"bap",ja:"ご飯"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
+        {pre:"커피를",preR:"keopireul",go:"마시고",goR:"masigo",dict:"마시다",dictR:"masida",baseJa:"飲む",ja:"コーヒーを飲んでいます",w:[{ko:"커피",roman:"keopi",ja:"コーヒー"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {pre:"영화를",preR:"yeonghwareul",go:"보고",goR:"bogo",dict:"보다",dictR:"boda",baseJa:"見る",ja:"映画を見ています",w:[{ko:"영화",roman:"yeonghwa",ja:"映画"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {pre:"음악을",preR:"eumag-eul",go:"듣고",goR:"deutgo",dict:"듣다",dictR:"deutda",baseJa:"聞く",ja:"音楽を聞いています",w:[{ko:"음악",roman:"eumak",ja:"音楽"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
+        {pre:"한국어를",preR:"hangugeoreul",go:"공부하고",goR:"gongbuhago",dict:"공부하다",dictR:"gongbuhada",baseJa:"勉強する",ja:"韓国語を勉強しています",w:[{ko:"한국어",roman:"hangugeo",ja:"韓国語"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {pre:"편지를",preR:"pyeonjireul",go:"쓰고",goR:"sseugo",dict:"쓰다",dictR:"sseuda",baseJa:"書く",ja:"手紙を書いています",w:[{ko:"편지",roman:"pyeonji",ja:"手紙"},{ko:"-를",roman:"-reul",ja:"〜を"}]}
+      ];
+      function fProgressive() {
+        const s = pick(PSUBJ), v = pick(PROGV);
+        const mid = v.pre ? v.pre + " " : "", midR = v.preR ? v.preR + " " : "";
+        return {
+          ja: `${s.ja}は今${v.ja}。`,
+          ko: `${s.topic} 지금 ${mid}${v.go} 있어요.`,
+          roman: `${s.topicR} jigeum ${midR}${v.goR} isseoyo.`,
+          w: [
+            {ko:s.topic,roman:s.topicR,ja:`${s.ja}＋助詞`},
+            {ko:"지금",roman:"jigeum",ja:"今"},
+            ...v.w,
+            {ko:v.dict,roman:v.dictR,ja:v.baseJa},
+            {ko:"-고 있다",roman:"-go itda",ja:"〜している（進行）"}
+          ],
+          g: `<strong>「V-고 있다」</strong>＝進行「〜している」。動詞の語幹に<code>-고 있다</code>を付ける（変則なし）。尊敬形は<code>-고 계시다</code>、합쇼体は<code>-고 있습니다</code>。`,
+          alts: [`${s.topic} 지금 ${mid}${v.go} 있습니다.`]
+        };
+      }
+      const JUNGV = [
+        {pre:"밥을",preR:"bab-eul",jung:"만드는",jungR:"mandeuneun",go:"만들고",dict:"만들다",dictR:"mandeulda",baseJa:"作る",jaCont:"ご飯を作っている",rule:"<code>만들다</code>はㄹ語幹で<code>-는</code>の前でㄹが脱落し<code>만드는</code>",w:[{ko:"밥",roman:"bap",ja:"ご飯"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
+        {pre:"영화를",preR:"yeonghwareul",jung:"보는",jungR:"boneun",go:"보고",dict:"보다",dictR:"boda",baseJa:"見る",jaCont:"映画を見ている",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",w:[{ko:"영화",roman:"yeonghwa",ja:"映画"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {pre:"편지를",preR:"pyeonjireul",jung:"쓰는",jungR:"sseuneun",go:"쓰고",dict:"쓰다",dictR:"sseuda",baseJa:"書く",jaCont:"手紙を書いている",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",w:[{ko:"편지",roman:"pyeonji",ja:"手紙"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {pre:"커피를",preR:"keopireul",jung:"마시는",jungR:"masineun",go:"마시고",dict:"마시다",dictR:"masida",baseJa:"飲む",jaCont:"コーヒーを飲んでいる",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",w:[{ko:"커피",roman:"keopi",ja:"コーヒー"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {pre:"한국어를",preR:"hangugeoreul",jung:"공부하는",jungR:"gongbuhaneun",go:"공부하고",dict:"공부하다",dictR:"gongbuhada",baseJa:"勉強する",jaCont:"韓国語を勉強している",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",w:[{ko:"한국어",roman:"hangugeo",ja:"韓国語"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {pre:"친구를",preR:"chingureul",jung:"만나는",jungR:"mannaneun",go:"만나고",dict:"만나다",dictR:"mannada",baseJa:"会う",jaCont:"友達に会っている",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",w:[{ko:"친구",roman:"chingu",ja:"友達"},{ko:"-를",roman:"-reul",ja:"〜に（会う対象）"}]}
+      ];
+      function fOngoing() {
+        const v = pick(JUNGV);
+        return {
+          ja: `今${v.jaCont}最中です。`,
+          ko: `지금 ${v.pre} ${v.jung} 중이에요.`,
+          roman: `jigeum ${v.preR} ${v.jungR} jung-ieyo.`,
+          w: [
+            {ko:"지금",roman:"jigeum",ja:"今"},
+            ...v.w,
+            {ko:v.jung,roman:v.jungR,ja:`${v.baseJa}（${v.dict}）`},
+            {ko:"중이에요",roman:"jung-ieyo",ja:"〜している最中だ"}
+          ],
+          g: `<strong>「V-는 중이다」</strong>＝「〜している最中だ」。<code>-고 있다</code>より「まさに今」感が強い。${v.rule}。`,
+          alts: [`지금 ${v.pre} ${v.go} 있어요.`]
+        };
+      }
+      const QPAST = [
+        {ko:"어제 뭐 했어요?",r:"eoje mwo haesseoyo?",ja:"昨日は何をしましたか？",w:[{ko:"어제",roman:"eoje",ja:"昨日"},{ko:"뭐",roman:"mwo",ja:"何（口語）"},{ko:"했어요",roman:"haesseoyo",ja:"しましたか"}]},
+        {ko:"어디에 갔어요?",r:"eodi-e gasseoyo?",ja:"どこに行きましたか？",w:[{ko:"어디",roman:"eodi",ja:"どこ"},{ko:"-에",roman:"-e",ja:"〜に"},{ko:"갔어요",roman:"gasseoyo",ja:"行きましたか"}]},
+        {ko:"누구를 만났어요?",r:"nugureul mannasseoyo?",ja:"誰に会いましたか？",w:[{ko:"누구",roman:"nugu",ja:"誰"},{ko:"-를",roman:"-reul",ja:"〜に（会う対象）"},{ko:"만났어요",roman:"mannasseoyo",ja:"会いましたか"}]},
+        {ko:"언제 왔어요?",r:"eonje wasseoyo?",ja:"いつ来ましたか？",w:[{ko:"언제",roman:"eonje",ja:"いつ"},{ko:"왔어요",roman:"wasseoyo",ja:"来ましたか"}]},
+        {ko:"무엇을 먹었어요?",r:"mueoseul meogeosseoyo?",ja:"何を食べましたか？",w:[{ko:"무엇",roman:"mueot",ja:"何"},{ko:"-을",roman:"-eul",ja:"〜を"},{ko:"먹었어요",roman:"meogeosseoyo",ja:"食べましたか"}]},
+        {ko:"왜 안 왔어요?",r:"wae an wasseoyo?",ja:"なぜ来なかったのですか？",w:[{ko:"왜",roman:"wae",ja:"なぜ"},{ko:"안",roman:"an",ja:"〜しない"},{ko:"왔어요",roman:"wasseoyo",ja:"来ましたか"}]}
+      ];
+      function fPastQuestion() {
+        const q = pick(QPAST);
+        return {
+          ja: q.ja, ko: q.ko, roman: q.r, w: q.w,
+          g: `<strong>過去の疑問</strong>は語尾<code>-았/었어요?</code>を上げ調子で言うだけ。語順・形は平叙文と同じで、疑問詞も位置を変えない。`,
+          alts: [q.ko.replace(/어요\?$/, "습니까?")]
+        };
+      }
+      const REASON = [
+        {causeKo:"비가 와서",causeR:"bi-ga waseo",causeJa:"雨が降ったので",resKo:"집에 있었어요",resR:"jib-e isseosseoyo",resJa:"家にいました",dict:"오다→와서"},
+        {causeKo:"배가 고파서",causeR:"bae-ga gopaseo",causeJa:"お腹が空いたので",resKo:"밥을 먹었어요",resR:"bab-eul meogeosseoyo",resJa:"ご飯を食べました",dict:"고프다→고파서（으脱落）"},
+        {causeKo:"시간이 없어서",causeR:"sigan-i eopseoseo",causeJa:"時間がなかったので",resKo:"택시를 탔어요",resR:"taeksireul tasseoyo",resJa:"タクシーに乗りました",dict:"없다→없어서"},
+        {causeKo:"너무 바빠서",causeR:"neomu bappaseo",causeJa:"とても忙しかったので",resKo:"전화를 못 했어요",resR:"jeonhwareul mot haesseoyo",resJa:"電話できませんでした",dict:"바쁘다→바빠서（으脱落）"},
+        {causeKo:"피곤해서",causeR:"pigonhaeseo",causeJa:"疲れていたので",resKo:"일찍 잤어요",resR:"iljjik jasseoyo",resJa:"早く寝ました",dict:"피곤하다→피곤해서"}
+      ];
+      function fReason() {
+        const r = pick(REASON);
+        return {
+          ja: `${r.causeJa}${r.resJa}。`,
+          ko: `${r.causeKo} ${r.resKo}.`,
+          roman: `${r.causeR} ${r.resR}.`,
+          w: [
+            {ko:r.causeKo,roman:r.causeR,ja:`${r.causeJa}（理由 -아서/어서）`},
+            {ko:r.resKo,roman:r.resR,ja:r.resJa}
+          ],
+          g: `<strong>理由の <code>-아서/어서</code></strong>：前節は時制を付けず<strong>常に基本形</strong>（${r.dict}）。過去の意味は後節の過去形が担う。`,
+          alts: [`${r.causeKo} ${r.resKo.replace(/어요$/, "습니다")}.`]
+        };
+      }
+
       const SETS = {
         numbers: [fTime, fAge, fExist, fPrice, fDate, fWeekday],
         place:   [fMove, fActivity, fPurpose, fPosition],
         negqa:   [fAdjective, fNegation, fQuestion],
-        polite:  [fFormalNoun, fFormalVerb, fFamilyExist, fFamilyAge, fFormalDate, fFormalWeekday]
+        polite:  [fFormalNoun, fFormalVerb, fFamilyExist, fFamilyAge, fFormalDate, fFormalWeekday],
+        past:    [fPast, fPastNeg, fProgressive, fOngoing, fPastQuestion, fReason]
       };
       function generate(key, count) {
         if (typeof key === "number") { count = key; key = "numbers"; } // 後方互換
