@@ -3771,28 +3771,35 @@
         {ko:"금요일",r:"geumyoil",ja:"金曜日"}, {ko:"토요일",r:"toyoil",ja:"土曜日"},
         {ko:"일요일",r:"iryoil",ja:"日曜日"}
       ];
-      // 場所（r=単独, re=「-에」連音込み）
-      const PLACES = [
-        {ko:"방",r:"bang",re:"bang-e",ja:"部屋"}, {ko:"교실",r:"gyosil",re:"gyosil-e",ja:"教室"},
-        {ko:"집",r:"jip",re:"jib-e",ja:"家"}, {ko:"공원",r:"gongwon",re:"gongwon-e",ja:"公園"},
-        {ko:"카페",r:"kape",re:"kape-e",ja:"カフェ"}, {ko:"사무실",r:"samusil",re:"samusil-e",ja:"オフィス"},
-        {ko:"도서관",r:"doseogwan",re:"doseogwan-e",ja:"図書館"}
-      ];
-      // 存在（主格助詞付きで事前確定、助数詞は対象に合わせる）
+      // 場所（r=単独, re=「-에」連音込み）。キー参照で相性指定に使う
+      const PLACE = {
+        bang:      {ko:"방",r:"bang",re:"bang-e",ja:"部屋"},
+        gyosil:    {ko:"교실",r:"gyosil",re:"gyosil-e",ja:"教室"},
+        jip:       {ko:"집",r:"jip",re:"jib-e",ja:"家"},
+        gongwon:   {ko:"공원",r:"gongwon",re:"gongwon-e",ja:"公園"},
+        kape:      {ko:"카페",r:"kape",re:"kape-e",ja:"カフェ"},
+        samusil:   {ko:"사무실",r:"samusil",re:"samusil-e",ja:"オフィス"},
+        doseogwan: {ko:"도서관",r:"doseogwan",re:"doseogwan-e",ja:"図書館"}
+      };
+      // 存在（主格助詞付きで事前確定、助数詞は対象に合わせる）。places=自然に置ける場所のみ
       const EXIST = [
-        {subj:"학생이",subjR:"haksaeng-i",ja:"学生",cnt:"명",cntR:"myeong",cja:"人",v:"います"},
-        {subj:"친구가",subjR:"chinguga",ja:"友達",cnt:"명",cntR:"myeong",cja:"人",v:"います"},
-        {subj:"고양이가",subjR:"goyangiga",ja:"猫",cnt:"마리",cntR:"mari",cja:"匹",v:"います"},
-        {subj:"강아지가",subjR:"gangajiga",ja:"子犬",cnt:"마리",cntR:"mari",cja:"匹",v:"います"},
-        {subj:"책이",subjR:"chaeg-i",ja:"本",cnt:"권",cntR:"gwon",cja:"冊",v:"あります"},
-        {subj:"사과가",subjR:"sagwaga",ja:"りんご",cnt:"개",cntR:"gae",cja:"個",v:"あります"},
-        {subj:"의자가",subjR:"uijaga",ja:"椅子",cnt:"개",cntR:"gae",cja:"脚",v:"あります"},
-        {subj:"커피가",subjR:"keopiga",ja:"コーヒー",cnt:"잔",cntR:"jan",cja:"杯",v:"あります"}
+        {subj:"학생이",subjR:"haksaeng-i",ja:"学生",cnt:"명",cntR:"myeong",cja:"人",v:"います",places:["gyosil","doseogwan","kape","gongwon"]},
+        {subj:"친구가",subjR:"chinguga",ja:"友達",cnt:"명",cntR:"myeong",cja:"人",v:"います",places:["kape","gongwon","jip","gyosil"]},
+        {subj:"고양이가",subjR:"goyangiga",ja:"猫",cnt:"마리",cntR:"mari",cja:"匹",v:"います",places:["jip","gongwon","bang"]},
+        {subj:"강아지가",subjR:"gangajiga",ja:"子犬",cnt:"마리",cntR:"mari",cja:"匹",v:"います",places:["jip","gongwon","kape"]},
+        {subj:"책이",subjR:"chaeg-i",ja:"本",cnt:"권",cntR:"gwon",cja:"冊",v:"あります",places:["doseogwan","gyosil","samusil","jip","bang"]},
+        {subj:"사과가",subjR:"sagwaga",ja:"りんご",cnt:"개",cntR:"gae",cja:"個",v:"あります",places:["jip","bang","kape"]},
+        {subj:"의자가",subjR:"uijaga",ja:"椅子",cnt:"개",cntR:"gae",cja:"脚",v:"あります",places:["gyosil","samusil","kape","jip","bang"]},
+        {subj:"커피가",subjR:"keopiga",ja:"コーヒー",cnt:"잔",cntR:"jan",cja:"杯",v:"あります",places:["kape","samusil","jip","bang"]}
       ];
+      // 値段（amounts=その品目に現実的な金額のみ。値は PRICES から選ぶ）
       const PRICEITEMS = [
-        {topic:"커피는",topicR:"keopineun",ja:"コーヒー"}, {topic:"가방은",topicR:"gabang-eun",ja:"カバン"},
-        {topic:"우산은",topicR:"usaneun",ja:"傘"}, {topic:"책은",topicR:"chaegeun",ja:"本"},
-        {topic:"티셔츠는",topicR:"tisyeocheuneun",ja:"Tシャツ"}, {topic:"빵은",topicR:"ppang-eun",ja:"パン"}
+        {topic:"커피는",topicR:"keopineun",ja:"コーヒー",amounts:[1500,3000,4500,5000]},
+        {topic:"가방은",topicR:"gabang-eun",ja:"カバン",amounts:[15000,30000]},
+        {topic:"우산은",topicR:"usaneun",ja:"傘",amounts:[3000,5000,8000,12000]},
+        {topic:"책은",topicR:"chaegeun",ja:"本",amounts:[8000,12000,15000]},
+        {topic:"티셔츠는",topicR:"tisyeocheuneun",ja:"Tシャツ",amounts:[8000,12000,15000,30000]},
+        {topic:"빵은",topicR:"ppang-eun",ja:"パン",amounts:[1500,3000,4500]}
       ];
       const PRICES = [
         {n:1500,ko:"천오백",r:"cheonobaek"}, {n:3000,ko:"삼천",r:"samcheon"},
@@ -3838,7 +3845,7 @@
         };
       }
       function fExist() {
-        const e = pick(EXIST), p = pick(PLACES), c = 1 + rnd(5), C = NATIVE[c];
+        const e = pick(EXIST), p = PLACE[pick(e.places)], c = 1 + rnd(5), C = NATIVE[c];
         return {
           ja: `${p.ja}に${e.ja}が${c}${e.cja}${e.v}。`,
           ko: `${p.ko}에 ${e.subj} ${C.ko} ${e.cnt} 있어요.`,
@@ -3856,7 +3863,7 @@
         };
       }
       function fPrice() {
-        const it = pick(PRICEITEMS), pr = pick(PRICES);
+        const it = pick(PRICEITEMS), pr = pick(PRICES.filter(x => it.amounts.includes(x.n)));
         return {
           ja: `この${it.ja}は${comma(pr.n)}ウォンです。`,
           ko: `이 ${it.topic} ${pr.ko} 원이에요.`,
