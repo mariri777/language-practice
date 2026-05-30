@@ -1,6 +1,6 @@
 // Language Practice — shared service worker
 // Bump VERSION whenever shipping new HTML / asset content.
-const VERSION = 'v1.9.7';
+const VERSION = 'v1.9.8';
 const CACHE = `lang-practice-${VERSION}`;
 
 const ASSETS = [

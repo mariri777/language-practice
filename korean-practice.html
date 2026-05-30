@@ -188,7 +188,7 @@
     const COURSES = [
       // ============ TOPIK 1 ============
       {
-        topik: 1, num: 1, title: "あいさつ・自己紹介",
+        topik: 1, num: 1, title: "あいさつ・自己紹介", mode: "pool",
         sentences: [
           {
             ja: "こんにちは。", ko: "안녕하세요.", roman: "annyeonghaseyo.",
@@ -300,6 +300,147 @@
             g: "年齢は<strong>固有数詞＋<code>살</code></strong>で言います。「20」は単独だと <code>스물</code> ですが、助数詞の前では <code>스무 살</code> と形が変わります。<br>同様に <code>하나→한, 둘→두, 셋→세</code> も連体形になります（例 <code>한 살</code>）。",
             alts: ["저는 스무 살입니다", "스무 살이에요"]
           }
+        ],
+        pool: [
+          // ===== あいさつ =====
+          { ja: "こんにちは。", ko: "안녕하세요.", roman: "annyeonghaseyo.",
+            w: [{ko:"안녕",roman:"annyeong",ja:"安寧（挨拶の語幹）"},{ko:"하세요",roman:"haseyo",ja:"尊敬の丁寧形"}],
+            g: "最も基本のあいさつ。<code>안녕</code>＝漢字「安寧」。朝昼晩いつでも使える。", alts: ["안녕하십니까?"] },
+          { ja: "お元気ですか？", ko: "잘 지내요?", roman: "jal jinaeyo?",
+            w: [{ko:"잘",roman:"jal",ja:"よく・元気に"},{ko:"지내다",roman:"jinaeda",ja:"過ごす"}],
+            g: "近況を尋ねる定番。返事は<code>잘 지내요</code>（元気です）。", alts: ["잘 지내세요?", "잘 지냅니까?"] },
+          { ja: "はい、元気です。", ko: "네, 잘 지내요.", roman: "ne, jal jinaeyo.",
+            w: [{ko:"네",roman:"ne",ja:"はい"},{ko:"잘 지내다",roman:"jal jinaeda",ja:"よく過ごす＝元気だ"}],
+            g: "<code>잘 지내요?</code>への定番の返答。", alts: ["네, 잘 지냅니다"] },
+          { ja: "お久しぶりです。", ko: "오랜만이에요.", roman: "oraenmanieyo.",
+            w: [{ko:"오랜만",roman:"oraenman",ja:"久しぶり"},{ko:"-이에요",roman:"-ieyo",ja:"〜です"}],
+            g: "再会のあいさつ。よりかしこまると<code>오랜만입니다</code>。", alts: ["오랜만입니다", "오래간만이에요"] },
+          { ja: "さようなら。（去る人へ）", ko: "안녕히 가세요.", roman: "annyeonghi gaseyo.",
+            w: [{ko:"안녕히",roman:"annyeonghi",ja:"安らかに"},{ko:"가세요",roman:"gaseyo",ja:"行ってください（가다の尊敬）"}],
+            g: "その場を<strong>去る相手</strong>に言う別れの言葉。", alts: ["안녕히 가십시오"] },
+          { ja: "さようなら。（残る人へ）", ko: "안녕히 계세요.", roman: "annyeonghi gyeseyo.",
+            w: [{ko:"안녕히",roman:"annyeonghi",ja:"安らかに"},{ko:"계세요",roman:"gyeseyo",ja:"いてください（있다の尊敬）"}],
+            g: "その場に<strong>残る相手</strong>に言う別れの言葉。自分が去るときに使う。", alts: ["안녕히 계십시오"] },
+          { ja: "また会いましょう。", ko: "또 만나요.", roman: "tto mannayo.",
+            w: [{ko:"또",roman:"tto",ja:"また"},{ko:"만나다",roman:"mannada",ja:"会う"}],
+            g: "親しい間柄の別れの言葉。", alts: ["또 봐요", "또 만나요"] },
+          { ja: "また明日。", ko: "내일 봐요.", roman: "naeil bwayo.",
+            w: [{ko:"내일",roman:"naeil",ja:"明日"},{ko:"봐요",roman:"bwayo",ja:"会いましょう（보다の해요体）"}],
+            g: "<code>보다</code>は「見る」だが<code>봐요</code>で「(また)会いましょう」の意でも使う。", alts: ["내일 만나요"] },
+          { ja: "いらっしゃいませ。", ko: "어서 오세요.", roman: "eoseo oseyo.",
+            w: [{ko:"어서",roman:"eoseo",ja:"どうぞ・早く"},{ko:"오세요",roman:"oseyo",ja:"来てください（오다の尊敬）"}],
+            g: "店や家に人を迎えるときの定番表現。" },
+          { ja: "おやすみなさい。", ko: "안녕히 주무세요.", roman: "annyeonghi jumuseyo.",
+            w: [{ko:"안녕히",roman:"annyeonghi",ja:"安らかに"},{ko:"주무세요",roman:"jumuseyo",ja:"お休みください（자다の尊敬）"}],
+            g: "<code>주무시다</code>は<code>자다</code>（寝る）の尊敬語。親しい間では<code>잘 자요</code>。", alts: ["잘 자요"] },
+          { ja: "また後で会いましょう。", ko: "다음에 봐요.", roman: "da-eume bwayo.",
+            w: [{ko:"다음",roman:"da-eum",ja:"次"},{ko:"-에",roman:"-e",ja:"〜に"},{ko:"봐요",roman:"bwayo",ja:"会いましょう"}],
+            g: "「今度／また今度会いましょう」のニュアンス。", alts: ["다음에 만나요"] },
+          // ===== 感謝・謝罪 =====
+          { ja: "ありがとうございます。", ko: "감사합니다.", roman: "gamsahamnida.",
+            w: [{ko:"감사",roman:"gamsa",ja:"感謝"},{ko:"-합니다",roman:"-hamnida",ja:"します（합쇼体）"}],
+            g: "最もフォーマルな感謝。柔らかくは<code>감사해요</code>、固有語の<code>고마워요</code>も多用。", alts: ["고맙습니다", "감사해요", "고마워요"] },
+          { ja: "本当にありがとうございます。", ko: "정말 감사합니다.", roman: "jeongmal gamsahamnida.",
+            w: [{ko:"정말",roman:"jeongmal",ja:"本当に"},{ko:"감사합니다",roman:"gamsahamnida",ja:"ありがとうございます"}],
+            g: "<code>정말</code>（本当に）で感謝を強める。", alts: ["정말 고맙습니다", "정말 감사해요"] },
+          { ja: "どういたしまして。", ko: "천만에요.", roman: "cheonmaneyo.",
+            w: [{ko:"천만",roman:"cheonman",ja:"千万（とんでもない）"},{ko:"-에요",roman:"-eyo",ja:"〜です"}],
+            g: "感謝への返答。会話では<code>아니에요</code>（いえいえ）も自然。", alts: ["아니에요", "별말씀을요"] },
+          { ja: "すみません。（謝罪）", ko: "죄송합니다.", roman: "joesonghamnida.",
+            w: [{ko:"죄송",roman:"joesong",ja:"申し訳ない"},{ko:"-합니다",roman:"-hamnida",ja:"です（합쇼体）"}],
+            g: "フォーマルな謝罪。柔らかくは<code>미안해요</code>。", alts: ["미안합니다", "미안해요"] },
+          { ja: "ごめんなさい。", ko: "미안해요.", roman: "mianhaeyo.",
+            w: [{ko:"미안",roman:"mian",ja:"すまない"},{ko:"-해요",roman:"-haeyo",ja:"です（해요体）"}],
+            g: "親しい間柄の謝罪。よりフォーマルには<code>죄송합니다</code>。", alts: ["미안합니다", "죄송해요"] },
+          { ja: "大丈夫です。", ko: "괜찮아요.", roman: "gwaenchanayo.",
+            w: [{ko:"괜찮다",roman:"gwaenchanta",ja:"大丈夫だ"},{ko:"-아요",roman:"-ayo",ja:"です（해요体）"}],
+            g: "謝罪や勧めへの返答。<code>괜찮다→괜찮아요</code>。", alts: ["괜찮습니다"] },
+          { ja: "すみません。（呼びかけ）", ko: "저기요.", roman: "jeogiyo.",
+            w: [{ko:"저기",roman:"jeogi",ja:"あそこ・ちょっと"},{ko:"-요",roman:"-yo",ja:"丁寧化"}],
+            g: "店員や人に声をかけるときの「すみません」。謝罪の<code>죄송합니다</code>とは別。" },
+          { ja: "失礼します。", ko: "실례합니다.", roman: "sillyehamnida.",
+            w: [{ko:"실례",roman:"sillye",ja:"失礼"},{ko:"-합니다",roman:"-hamnida",ja:"します"}],
+            g: "声をかける・入室するときの丁寧表現。", alts: ["실례하겠습니다"] },
+          // ===== 自己紹介 =====
+          { ja: "はじめまして。", ko: "처음 뵙겠습니다.", roman: "cheoeum boepgesseumnida.",
+            w: [{ko:"처음",roman:"cheoeum",ja:"初めて"},{ko:"뵙다",roman:"boepda",ja:"お目にかかる（보다の謙譲）"},{ko:"-겠습니다",roman:"-gesseumnida",ja:"意志・丁寧"}],
+            g: "初対面の決まり文句。謙譲語<code>뵙다</code>に意志の<code>-겠-</code>が付いた定型。", alts: ["반갑습니다", "만나서 반갑습니다"] },
+          { ja: "お会いできてうれしいです。", ko: "만나서 반가워요.", roman: "mannaseo bangawoyo.",
+            w: [{ko:"만나서",roman:"mannaseo",ja:"会えて"},{ko:"반갑다",roman:"bangapda",ja:"うれしい（ㅂ変則）"}],
+            g: "<code>반갑다</code>はㅂ変則で<code>반가워요</code>。よりフォーマルには<code>반갑습니다</code>。", alts: ["만나서 반갑습니다"] },
+          { ja: "よろしくお願いします。", ko: "잘 부탁드립니다.", roman: "jal butakdeurimnida.",
+            w: [{ko:"잘",roman:"jal",ja:"よく"},{ko:"부탁드리다",roman:"butakdeurida",ja:"お願いする（謙譲）"}],
+            g: "<code>부탁드리다</code>は<code>부탁하다</code>の謙譲形。会話では<code>잘 부탁해요</code>も。", alts: ["잘 부탁해요", "잘 부탁드려요"] },
+          { ja: "私はキム・スジンです。", ko: "저는 김수진이에요.", roman: "jeoneun gimsujin-ieyo.",
+            w: [{ko:"저",roman:"jeo",ja:"私（謙譲）"},{ko:"-는",roman:"-neun",ja:"〜は"},{ko:"김수진",roman:"gimsujin",ja:"キム・スジン（人名）"},{ko:"-이에요",roman:"-ieyo",ja:"〜です（パッチム有）"}],
+            g: "名前がパッチムで終わると<code>이에요</code>。母音終わりなら<code>예요</code>（例 다나카예요）。", alts: ["저는 김수진입니다"] },
+          { ja: "私は学生です。", ko: "저는 학생이에요.", roman: "jeoneun haksaeng-ieyo.",
+            w: [{ko:"저",roman:"jeo",ja:"私（謙譲）"},{ko:"학생",roman:"haksaeng",ja:"学生"},{ko:"-이에요",roman:"-ieyo",ja:"〜です（パッチム有）"}],
+            g: "<code>N＋이에요/예요</code>＝「Nです」。パッチム有→이에요。", alts: ["저는 학생입니다"] },
+          { ja: "私は会社員です。", ko: "저는 회사원이에요.", roman: "jeoneun hoesawon-ieyo.",
+            w: [{ko:"저",roman:"jeo",ja:"私"},{ko:"회사원",roman:"hoesawon",ja:"会社員"},{ko:"-이에요",roman:"-ieyo",ja:"〜です"}],
+            g: "職業を言う基本型。パッチム有なので<code>이에요</code>。", alts: ["저는 회사원입니다"] },
+          { ja: "私は先生です。", ko: "저는 선생님이에요.", roman: "jeoneun seonsaengnim-ieyo.",
+            w: [{ko:"저",roman:"jeo",ja:"私"},{ko:"선생님",roman:"seonsaengnim",ja:"先生"},{ko:"-이에요",roman:"-ieyo",ja:"〜です"}],
+            g: "自分の職業に<code>선생님</code>を使うのは自然。相手を指すときも敬称として使う。", alts: ["저는 선생님입니다"] },
+          { ja: "私は歌手ではありません。", ko: "저는 가수가 아니에요.", roman: "jeoneun gasu-ga anieyo.",
+            w: [{ko:"가수",roman:"gasu",ja:"歌手"},{ko:"-가",roman:"-ga",ja:"補語の助詞"},{ko:"아니에요",roman:"anieyo",ja:"〜ではありません"}],
+            g: "名詞の否定は<code>N이/가 아니에요</code>。否定する名詞に<code>-이/가</code>が付く。", alts: ["저는 가수가 아닙니다"] },
+          { ja: "お名前は何ですか？", ko: "이름이 뭐예요?", roman: "ireumi mwoyeyo?",
+            w: [{ko:"이름",roman:"ireum",ja:"名前"},{ko:"-이",roman:"-i",ja:"主格（パッチム有）"},{ko:"뭐",roman:"mwo",ja:"何（무엇の口語）"},{ko:"-예요",roman:"-yeyo",ja:"〜ですか"}],
+            g: "<code>N이/가 뭐예요?</code>＝「Nは何ですか?」。", alts: ["이름이 무엇이에요?"] },
+          { ja: "お名前は何とおっしゃいますか？", ko: "성함이 어떻게 되세요?", roman: "seonghami eotteoke doeseyo?",
+            w: [{ko:"성함",roman:"seongham",ja:"お名前（이름の尊敬）"},{ko:"어떻게",roman:"eotteoke",ja:"どのように"},{ko:"되세요",roman:"doeseyo",ja:"〜になられますか"}],
+            g: "目上の人に名前を尋ねる丁寧表現。<code>성함</code>は<code>이름</code>の尊敬語。" },
+          // ===== 出身・居住 =====
+          { ja: "私は日本から来ました。", ko: "저는 일본에서 왔어요.", roman: "jeoneun ilbon-eseo wasseoyo.",
+            w: [{ko:"일본",roman:"ilbon",ja:"日本"},{ko:"-에서",roman:"-eseo",ja:"起点「〜から」"},{ko:"왔어요",roman:"wasseoyo",ja:"来ました（오다の過去）"}],
+            g: "出身を言う型<code>N에서 왔어요</code>。起点の<code>-에서</code>を使う。", alts: ["저는 일본에서 왔습니다"] },
+          { ja: "どこから来ましたか？", ko: "어디에서 왔어요?", roman: "eodieseo wasseoyo?",
+            w: [{ko:"어디",roman:"eodi",ja:"どこ"},{ko:"-에서",roman:"-eseo",ja:"〜から"},{ko:"왔어요",roman:"wasseoyo",ja:"来ましたか"}],
+            g: "出身を尋ねる質問。口語では<code>어디서 왔어요?</code>とも縮約。", alts: ["어디서 왔어요?"] },
+          { ja: "私は日本人です。", ko: "저는 일본 사람이에요.", roman: "jeoneun ilbon saram-ieyo.",
+            w: [{ko:"일본",roman:"ilbon",ja:"日本"},{ko:"사람",roman:"saram",ja:"人"},{ko:"-이에요",roman:"-ieyo",ja:"〜です"}],
+            g: "国籍は<code>국가名＋사람</code>。漢字語の<code>일본인</code>も使う。", alts: ["저는 일본 사람입니다", "저는 일본인이에요"] },
+          { ja: "私は東京に住んでいます。", ko: "저는 도쿄에 살아요.", roman: "jeoneun dokyo-e sarayo.",
+            w: [{ko:"도쿄",roman:"dokyo",ja:"東京"},{ko:"-에",roman:"-e",ja:"〜に（居住地）"},{ko:"살다",roman:"salda",ja:"住む"}],
+            g: "<code>살다→살아요</code>。居住地は<code>-에 살다</code>。", alts: ["저는 도쿄에 살고 있어요"] },
+          { ja: "ソウルに住んでいます。", ko: "서울에 살아요.", roman: "seoure sarayo.",
+            w: [{ko:"서울",roman:"seoul",ja:"ソウル"},{ko:"-에",roman:"-e",ja:"〜に"},{ko:"살아요",roman:"sarayo",ja:"住んでいます"}],
+            g: "<code>살다</code>はㄹ語幹だが해요体<code>살아요</code>は規則的。", alts: ["서울에 삽니다", "서울에 살고 있어요"] },
+          // ===== 職業・勉強 =====
+          { ja: "私は会社で働いています。", ko: "저는 회사에서 일해요.", roman: "jeoneun hoesa-eseo ilhaeyo.",
+            w: [{ko:"회사",roman:"hoesa",ja:"会社"},{ko:"-에서",roman:"-eseo",ja:"〜で（動作の場所）"},{ko:"일하다",roman:"ilhada",ja:"働く"}],
+            g: "動作の場所は<code>-에서</code>。<code>일하다→일해요</code>（하다用言）。", alts: ["저는 회사에서 일합니다"] },
+          { ja: "お仕事は何ですか？", ko: "무슨 일 하세요?", roman: "museun il haseyo?",
+            w: [{ko:"무슨",roman:"museun",ja:"何の・どんな"},{ko:"일",roman:"il",ja:"仕事"},{ko:"하세요",roman:"haseyo",ja:"なさいますか"}],
+            g: "職業を尋ねる自然な表現。<code>직업이 뭐예요?</code>も可。", alts: ["직업이 뭐예요?"] },
+          { ja: "韓国語を少し勉強しています。", ko: "한국어를 조금 공부해요.", roman: "hangugeoreul jogeum gongbuhaeyo.",
+            w: [{ko:"한국어",roman:"hangugeo",ja:"韓国語"},{ko:"-를",roman:"-reul",ja:"〜を"},{ko:"조금",roman:"jogeum",ja:"少し"},{ko:"공부하다",roman:"gongbuhada",ja:"勉強する"}],
+            g: "<code>공부하다→공부해요</code>。母音終わりの目的語に<code>-를</code>。", alts: ["한국어를 조금 공부합니다", "한국어를 조금 배워요"] },
+          { ja: "韓国語が少しできます。", ko: "한국어를 조금 할 줄 알아요.", roman: "hangugeoreul jogeum hal jul arayo.",
+            w: [{ko:"한국어",roman:"hangugeo",ja:"韓国語"},{ko:"조금",roman:"jogeum",ja:"少し"},{ko:"-ㄹ 줄 알다",roman:"-l jul alda",ja:"〜できる（技能）"}],
+            g: "技能の<code>-(으)ㄹ 줄 알다</code>。<code>하다→할 줄 알아요</code>。", alts: ["한국어를 조금 할 수 있어요"] },
+          // ===== 年齢 =====
+          { ja: "私は二十歳です。", ko: "저는 스무 살이에요.", roman: "jeoneun seumu sal-ieyo.",
+            w: [{ko:"스무",roman:"seumu",ja:"20（固有数詞・冠形形）"},{ko:"살",roman:"sal",ja:"〜歳"},{ko:"-이에요",roman:"-ieyo",ja:"〜です"}],
+            g: "年齢は固有数詞＋<code>살</code>。<code>스물→스무</code>と助数詞の前で形が変わる。", alts: ["저는 스무 살입니다"] },
+          { ja: "おいくつですか？", ko: "몇 살이에요?", roman: "myeot sal-ieyo?",
+            w: [{ko:"몇",roman:"myeot",ja:"いくつ・何"},{ko:"살",roman:"sal",ja:"〜歳"},{ko:"-이에요",roman:"-ieyo",ja:"〜ですか"}],
+            g: "年齢を尋ねる表現。目上には<code>나이가 어떻게 되세요?</code>が丁寧。", alts: ["나이가 어떻게 되세요?"] },
+          // ===== 趣味・締め =====
+          { ja: "趣味は何ですか？", ko: "취미가 뭐예요?", roman: "chwimiga mwoyeyo?",
+            w: [{ko:"취미",roman:"chwimi",ja:"趣味"},{ko:"-가",roman:"-ga",ja:"主格（パッチム無）"},{ko:"뭐",roman:"mwo",ja:"何"},{ko:"-예요",roman:"-yeyo",ja:"〜ですか"}],
+            g: "母音終わりの名詞なので主格<code>-가</code>＋<code>-예요</code>。" },
+          { ja: "私の趣味は映画鑑賞です。", ko: "제 취미는 영화 감상이에요.", roman: "je chwimineun yeonghwa gamsang-ieyo.",
+            w: [{ko:"제",roman:"je",ja:"私の"},{ko:"취미",roman:"chwimi",ja:"趣味"},{ko:"영화 감상",roman:"yeonghwa gamsang",ja:"映画鑑賞"}],
+            g: "<code>제</code>は<code>저의</code>の縮約。<code>감상</code>＝鑑賞。", alts: ["제 취미는 영화 감상입니다"] },
+          { ja: "私の趣味は音楽鑑賞です。", ko: "제 취미는 음악 감상이에요.", roman: "je chwimineun eumak gamsang-ieyo.",
+            w: [{ko:"제 취미",roman:"je chwimi",ja:"私の趣味"},{ko:"음악 감상",roman:"eumak gamsang",ja:"音楽鑑賞"},{ko:"-이에요",roman:"-ieyo",ja:"〜です"}],
+            g: "「N鑑賞」は<code>N 감상</code>。<code>음악</code>＝音楽。", alts: ["제 취미는 음악 감상입니다"] },
+          { ja: "お会いできてうれしかったです。", ko: "만나서 반가웠어요.", roman: "mannaseo bangawosseoyo.",
+            w: [{ko:"만나서",roman:"mannaseo",ja:"会えて"},{ko:"반가웠어요",roman:"bangawosseoyo",ja:"うれしかったです（반갑다の過去）"}],
+            g: "別れ際に使う。<code>반갑다</code>はㅂ変則で過去は<code>반가웠어요</code>。", alts: ["만나서 반가웠습니다"] }
         ]
       },
       {
@@ -3017,7 +3158,7 @@
     // ========================================================================
     const COURSE_INTROS = [
       // TOPIK 1 - C1 あいさつ・自己紹介
-      { overview: "韓国語で最も基本のあいさつと自己紹介の表現。「Nです」構文・尊敬の語尾・疑問詞の語順といった、これから先すべての土台を確認します。",
+      { overview: "韓国語で最も基本のあいさつと自己紹介の表現。「Nです」構文・尊敬の語尾・疑問詞の語順といった、これから先すべての土台を確認します。【🔄 このコースは挑戦するたびに約40の定型表現から10問がランダムに出題されます】",
         points: ["<strong>-(으)세요</strong> 尊敬の丁寧語尾（안녕하세요）","<strong>-ㅂ니다／-습니다</strong> フォーマルな합쇼体","「N + 이에요/예요」＝「Nです」（パッチム有無で使い分け）","謙譲の <code>저</code> vs タメ口の <code>나</code>","疑問詞 <code>뭐</code>（무엇の口語形）の使い方", "<strong>出身の言い方</strong>：「〜から来ました」は <code>-에서 왔어요</code>。国名＋<code>사람</code>で「〜人」を表す（例 <code>한국 사람</code>）。", "<strong>パッチムの有無で変わる指定詞</strong>：名詞末にパッチムが無ければ <code>-예요</code>、有れば <code>-이에요</code>（例 <code>가수예요</code> / <code>학생이에요</code>）。", "<strong>年齢の助数詞</strong>：固有数詞＋<code>살</code>で年齢を言う。「20歳」は <code>스무 살</code> と形が変わる点に注意。"] },
       // TOPIK 1 - C2 数字・時間・存在
       { overview: "数字・時刻・年齢・人数といった、日常会話に欠かせない数量と存在の表現。固有数詞と漢字数詞の使い分けがポイントです。【🔄 このコースは挑戦するたびに数や語が入れ替わり、毎回ちがう10問が出ます】",
@@ -4312,11 +4453,11 @@
 
     if (state.currentCourseId >= COURSES.length) state.currentCourseId = COURSES.length - 1;
 
-    // template課程: 保存済みの生成文があれば復元（リロードしても同じ出題が続く）
+    // 生成型課程（template/pool）: 保存済みの生成文があれば復元（リロードしても同じ出題が続く）
     if (state.generated) {
       Object.keys(state.generated).forEach(id => {
         const c = COURSES[id];
-        if (c && c.mode === "template" && Array.isArray(state.generated[id]) && state.generated[id].length) {
+        if (c && (c.mode === "template" || c.mode === "pool") && Array.isArray(state.generated[id]) && state.generated[id].length) {
           c.sentences = state.generated[id];
         }
       });
@@ -4459,15 +4600,15 @@
       state.currentCourseId = courseId;
       saveState();
       const c = COURSES[courseId];
-      // template課程: 中断中なら同じセットを維持、それ以外（未着手/完了済み）は新規生成
-      if (isTemplate(courseId)) {
+      // 生成型課程: 中断中なら同じセットを維持、それ以外（未着手/完了済み）は新規生成
+      if (isGenerative(courseId)) {
         const resuming = state.inProgress && state.inProgress.courseId === courseId
           && Array.isArray(state.generated[courseId]) && state.generated[courseId].length === 10;
         const midCourse = masteredList(courseId).length > 0
           && !state.completedCourses.includes(courseId)
           && Array.isArray(state.generated[courseId]) && state.generated[courseId].length === 10;
         if (resuming || midCourse) applyGenerated(courseId);
-        else ensureTemplate(courseId, { fresh: true });
+        else ensureGenerated(courseId, { fresh: true });
       }
       // ホームの「つづきから」「連続日数」へ記録
       if (window.LC) LC.record({ href: 'korean-practice.html', label: 'Daily 한국어', sub: `TOPIK${c.topik} ・ ${c.title}` });
@@ -4575,28 +4716,38 @@
     // CORE LOGIC
     // ========================================================================
     function getCourse(id) { return COURSES[id]; }
-    function isTemplate(id) { return !!(COURSES[id] && COURSES[id].mode === "template"); }
+    // 生成型＝挑戦のたびに10問が入れ替わる課程（template＝スロット生成／pool＝検証済み大量文からの抽選）
+    function isGenerative(id) { const c = COURSES[id]; return !!(c && (c.mode === "template" || c.mode === "pool")); }
     function applyGenerated(id) {
       if (Array.isArray(state.generated[id]) && state.generated[id].length) {
         COURSES[id].sentences = state.generated[id];
       }
     }
-    // 新しい10問を生成し、コースの進捗をリセット（＝毎回フレッシュな出題）
-    function regenTemplate(id) {
-      const set = TMPL.generate((COURSES[id] && COURSES[id].template) || "numbers", 10);
+    // プール（検証済み40〜60文）から重複なく n 問を抽選
+    function samplePool(arr, n) {
+      const c = (arr || []).slice(), out = [];
+      while (c.length && out.length < n) out.push(c.splice(Math.floor(Math.random() * c.length), 1)[0]);
+      return out;
+    }
+    // 新しい10問を用意し、コースの進捗をリセット（＝毎回フレッシュな出題）
+    function regenCourse(id) {
+      const c = COURSES[id];
+      const set = (c && c.mode === "pool")
+        ? samplePool(c.pool, 10)
+        : TMPL.generate((c && c.template) || "numbers", 10);
       state.generated[id] = set;
-      COURSES[id].sentences = set;
+      c.sentences = set;
       state.mastered[id] = [];
       state.recentInCourse[id] = [];
       state.completedCourses = state.completedCourses.filter(x => x !== id);
       if (state.inProgress && state.inProgress.courseId === id) state.inProgress = null;
       saveState();
     }
-    // template課程の出題セットを用意。fresh=true で新規生成、それ以外は既存があれば維持
-    function ensureTemplate(id, opts) {
-      if (!isTemplate(id)) return;
+    // 生成型課程の出題セットを用意。fresh=true で新規生成、それ以外は既存があれば維持
+    function ensureGenerated(id, opts) {
+      if (!isGenerative(id)) return;
       const hasSet = Array.isArray(state.generated[id]) && state.generated[id].length === 10;
-      if ((opts && opts.fresh) || !hasSet) regenTemplate(id);
+      if ((opts && opts.fresh) || !hasSet) regenCourse(id);
       else applyGenerated(id);
     }
     // New courses are appended to COURSES, so array order != study order.
@@ -4918,8 +5069,8 @@
     // 完了モーダル: もう一度 → 現コースをリセットして再開（template課程は新しい10問を生成）
     elReplayCourseBtn.addEventListener("click", () => {
       closeModal(elCompleteModal);
-      if (isTemplate(state.currentCourseId)) {
-        regenTemplate(state.currentCourseId);
+      if (isGenerative(state.currentCourseId)) {
+        regenCourse(state.currentCourseId);
       } else {
         state.mastered[state.currentCourseId] = [];
         state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
@@ -4936,10 +5087,10 @@
 
     // 練習画面 → このコースをリセット（template課程は新しい10問を生成）
     elResetCourseBtn.addEventListener("click", () => {
-      const tmpl = isTemplate(state.currentCourseId);
-      if (!confirm(tmpl ? "新しい10問を出題し直しますか？" : "このコースの進捗をリセットしますか？")) return;
-      if (tmpl) {
-        regenTemplate(state.currentCourseId);
+      const gen = isGenerative(state.currentCourseId);
+      if (!confirm(gen ? "新しい10問を出題し直しますか？" : "このコースの進捗をリセットしますか？")) return;
+      if (gen) {
+        regenCourse(state.currentCourseId);
       } else {
         state.mastered[state.currentCourseId] = [];
         state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
