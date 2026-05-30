@@ -929,7 +929,7 @@
         ]
       },
       {
-        topik: 1, num: 2, title: "数字・時間・存在",
+        topik: 1, num: 2, title: "数字・時間・存在", mode: "template",
         sentences: [
           {
             ja: "私は20歳です。", ko: "저는 스무 살이에요.", roman: "jeoneun seumu sarieyo.",
@@ -3646,7 +3646,7 @@
       { overview: "韓国語で最も基本のあいさつと自己紹介の表現。「Nです」構文・尊敬の語尾・疑問詞の語順といった、これから先すべての土台を確認します。",
         points: ["<strong>-(으)세요</strong> 尊敬の丁寧語尾（안녕하세요）","<strong>-ㅂ니다／-습니다</strong> フォーマルな합쇼体","「N + 이에요/예요」＝「Nです」（パッチム有無で使い分け）","謙譲の <code>저</code> vs タメ口の <code>나</code>","疑問詞 <code>뭐</code>（무엇の口語形）の使い方", "<strong>出身の言い方</strong>：「〜から来ました」は <code>-에서 왔어요</code>。国名＋<code>사람</code>で「〜人」を表す（例 <code>한국 사람</code>）。", "<strong>パッチムの有無で変わる指定詞</strong>：名詞末にパッチムが無ければ <code>-예요</code>、有れば <code>-이에요</code>（例 <code>가수예요</code> / <code>학생이에요</code>）。", "<strong>年齢の助数詞</strong>：固有数詞＋<code>살</code>で年齢を言う。「20歳」は <code>스무 살</code> と形が変わる点に注意。"] },
       // TOPIK 1 - C2 数字・時間・存在
-      { overview: "数字・時刻・年齢・人数といった、日常会話に欠かせない数量と存在の表現。固有数詞と漢字数詞の使い分けがポイントです。",
+      { overview: "数字・時刻・年齢・人数といった、日常会話に欠かせない数量と存在の表現。固有数詞と漢字数詞の使い分けがポイントです。【🔄 このコースは挑戦するたびに数や語が入れ替わり、毎回ちがう10問が出ます】",
         points: ["<strong>年齢は固有数詞＋살</strong>（한/두/세/네/스무 の冠形形）","時刻は<strong>固有数詞＋시</strong>＋<strong>漢字数詞＋분</strong>の混合","存在動詞 <code>있다 ↔ 없다</code>（いる/ある ↔ いない/ない）","場所助詞 <code>-에</code>（〜に）","量詞 <code>명/사람</code>（人）、<code>개</code>、<code>마리</code>、<code>권</code>", "<strong>値段・電話番号は漢字数詞</strong>を桁ごとに読む。値段は <code>원</code>（ウォン）を付け、千は <code>천</code>、万は <code>만</code>（<code>일만</code> ではなく <code>만</code>）。", "<strong>日付は漢字数詞＋월/일</strong>。例外として 6月＝<code>유월</code>、10月＝<code>시월</code> と読み、<code>육월/십월</code> とは言わない。", "<strong>飲み物・物・動物の量詞</strong>：<code>잔</code>（杯）・<code>병</code>（本/瓶）・<code>개</code>（個）・<code>마리</code>（匹）。「名詞＋固有数詞（冠形形）＋量詞」の語順で <code>커피 두 잔</code>。"] },
       // TOPIK 1 - C3 助詞・希望・指示
       { overview: "主格・目的格・主題助詞、希望の「〜したい」、指示代名詞といった基本パーツ。文を組み立てるための骨組みを揃えます。",
@@ -3717,6 +3717,219 @@
     ];
 
     // ========================================================================
+    // TEMPLATE ENGINE — mode:"template" courses generate fresh sentences each session.
+    //   All Korean readings / romaja are hand-verified table lookups assembled with
+    //   fixed morpheme tails. We never algorithmically guess pronunciation changes,
+    //   so every generated sentence is guaranteed natural and correct.
+    // ========================================================================
+    const TMPL = (function () {
+      const rnd = (n) => Math.floor(Math.random() * n);
+      const pick = (a) => a[rnd(a.length)];
+      function sample(a, n) {
+        const c = a.slice(), out = [];
+        while (c.length && out.length < n) out.push(c.splice(rnd(c.length), 1)[0]);
+        return out;
+      }
+
+      // 固有数詞・冠形形（助数詞の前）1〜12
+      const NATIVE = {
+        1:{ko:"한",r:"han"}, 2:{ko:"두",r:"du"}, 3:{ko:"세",r:"se"}, 4:{ko:"네",r:"ne"},
+        5:{ko:"다섯",r:"daseot"}, 6:{ko:"여섯",r:"yeoseot"}, 7:{ko:"일곱",r:"ilgop"},
+        8:{ko:"여덟",r:"yeodeol"}, 9:{ko:"아홉",r:"ahop"}, 10:{ko:"열",r:"yeol"},
+        11:{ko:"열한",r:"yeolhan"}, 12:{ko:"열두",r:"yeoldu"}
+      };
+      // 年齢（固有数詞・冠形形、検証済みの値のみ）
+      const AGES = [
+        {n:19,ko:"열아홉",r:"yeorahop"}, {n:20,ko:"스무",r:"seumu"}, {n:21,ko:"스물한",r:"seumulhan"},
+        {n:23,ko:"스물세",r:"seumulse"}, {n:25,ko:"스물다섯",r:"seumuldaseot"},
+        {n:30,ko:"서른",r:"seoreun"}, {n:32,ko:"서른두",r:"seoreundu"}, {n:35,ko:"서른다섯",r:"seoreundaseot"}
+      ];
+      // 分（漢字数詞、5分刻み、検証済み）
+      const MIN = {
+        5:{ko:"오",r:"o"}, 10:{ko:"십",r:"sip"}, 15:{ko:"십오",r:"sibo"}, 20:{ko:"이십",r:"isip"},
+        25:{ko:"이십오",r:"isibo"}, 30:{ko:"삼십",r:"samsip"}, 35:{ko:"삼십오",r:"samsibo"},
+        40:{ko:"사십",r:"sasip"}, 45:{ko:"사십오",r:"sasibo"}, 50:{ko:"오십",r:"osip"}, 55:{ko:"오십오",r:"osibo"}
+      };
+      const MINS = Object.keys(MIN).map(Number);
+      // 月（読みの例外含む、検証済み）
+      const MONTHS = [
+        {n:1,ko:"일월",r:"irwol"}, {n:2,ko:"이월",r:"iwol"}, {n:3,ko:"삼월",r:"samwol"},
+        {n:4,ko:"사월",r:"sawol"}, {n:5,ko:"오월",r:"owol"}, {n:6,ko:"유월",r:"yuwol"},
+        {n:7,ko:"칠월",r:"chirwol"}, {n:8,ko:"팔월",r:"parwol"}, {n:9,ko:"구월",r:"guwol"},
+        {n:10,ko:"시월",r:"siwol"}, {n:11,ko:"십일월",r:"sibirwol"}, {n:12,ko:"십이월",r:"sibiwol"}
+      ];
+      // 日（漢字数詞、読みが明快な値のみ、検証済み）
+      const DAYS = [
+        {n:1,ko:"일",r:"il"}, {n:3,ko:"삼",r:"sam"}, {n:5,ko:"오",r:"o"}, {n:7,ko:"칠",r:"chil"},
+        {n:9,ko:"구",r:"gu"}, {n:10,ko:"십",r:"sip"}, {n:12,ko:"십이",r:"sibi"}, {n:15,ko:"십오",r:"sibo"},
+        {n:17,ko:"십칠",r:"sipchil"}, {n:20,ko:"이십",r:"isip"}, {n:21,ko:"이십일",r:"isibil"},
+        {n:25,ko:"이십오",r:"isibo"}, {n:30,ko:"삼십",r:"samsip"}
+      ];
+      const WEEKDAYS = [
+        {ko:"월요일",r:"woryoil",ja:"月曜日"}, {ko:"화요일",r:"hwayoil",ja:"火曜日"},
+        {ko:"수요일",r:"suyoil",ja:"水曜日"}, {ko:"목요일",r:"mogyoil",ja:"木曜日"},
+        {ko:"금요일",r:"geumyoil",ja:"金曜日"}, {ko:"토요일",r:"toyoil",ja:"土曜日"},
+        {ko:"일요일",r:"iryoil",ja:"日曜日"}
+      ];
+      // 場所（r=単独, re=「-에」連音込み）
+      const PLACES = [
+        {ko:"방",r:"bang",re:"bang-e",ja:"部屋"}, {ko:"교실",r:"gyosil",re:"gyosil-e",ja:"教室"},
+        {ko:"집",r:"jip",re:"jib-e",ja:"家"}, {ko:"공원",r:"gongwon",re:"gongwon-e",ja:"公園"},
+        {ko:"카페",r:"kape",re:"kape-e",ja:"カフェ"}, {ko:"사무실",r:"samusil",re:"samusil-e",ja:"オフィス"},
+        {ko:"도서관",r:"doseogwan",re:"doseogwan-e",ja:"図書館"}
+      ];
+      // 存在（主格助詞付きで事前確定、助数詞は対象に合わせる）
+      const EXIST = [
+        {subj:"학생이",subjR:"haksaeng-i",ja:"学生",cnt:"명",cntR:"myeong",cja:"人",v:"います"},
+        {subj:"친구가",subjR:"chinguga",ja:"友達",cnt:"명",cntR:"myeong",cja:"人",v:"います"},
+        {subj:"고양이가",subjR:"goyangiga",ja:"猫",cnt:"마리",cntR:"mari",cja:"匹",v:"います"},
+        {subj:"강아지가",subjR:"gangajiga",ja:"子犬",cnt:"마리",cntR:"mari",cja:"匹",v:"います"},
+        {subj:"책이",subjR:"chaeg-i",ja:"本",cnt:"권",cntR:"gwon",cja:"冊",v:"あります"},
+        {subj:"사과가",subjR:"sagwaga",ja:"りんご",cnt:"개",cntR:"gae",cja:"個",v:"あります"},
+        {subj:"의자가",subjR:"uijaga",ja:"椅子",cnt:"개",cntR:"gae",cja:"脚",v:"あります"},
+        {subj:"커피가",subjR:"keopiga",ja:"コーヒー",cnt:"잔",cntR:"jan",cja:"杯",v:"あります"}
+      ];
+      const PRICEITEMS = [
+        {topic:"커피는",topicR:"keopineun",ja:"コーヒー"}, {topic:"가방은",topicR:"gabang-eun",ja:"カバン"},
+        {topic:"우산은",topicR:"usaneun",ja:"傘"}, {topic:"책은",topicR:"chaegeun",ja:"本"},
+        {topic:"티셔츠는",topicR:"tisyeocheuneun",ja:"Tシャツ"}, {topic:"빵은",topicR:"ppang-eun",ja:"パン"}
+      ];
+      const PRICES = [
+        {n:1500,ko:"천오백",r:"cheonobaek"}, {n:3000,ko:"삼천",r:"samcheon"},
+        {n:4500,ko:"사천오백",r:"sacheonobaek"}, {n:5000,ko:"오천",r:"ocheon"},
+        {n:8000,ko:"팔천",r:"palcheon"}, {n:12000,ko:"만 이천",r:"man icheon"},
+        {n:15000,ko:"만 오천",r:"man ocheon"}, {n:30000,ko:"삼만",r:"samman"}
+      ];
+      const comma = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      function fTime() {
+        const h = 1 + rnd(12), H = NATIVE[h], m = pick(MINS), M = MIN[m];
+        const o = {
+          ja: `今、${h}時${m}分です。`,
+          ko: `지금 ${H.ko} 시 ${M.ko} 분이에요.`,
+          roman: `jigeum ${H.r} si ${M.r} bun-ieyo.`,
+          w: [
+            {ko:"지금",roman:"jigeum",ja:"今"},
+            {ko:H.ko,roman:H.r,ja:`${h}（固有数詞・冠形形）`},
+            {ko:"시",roman:"si",ja:"〜時"},
+            {ko:M.ko,roman:M.r,ja:`${m}（漢字数詞）`},
+            {ko:"분",roman:"bun",ja:"〜分"}
+          ],
+          g: `<strong>時刻は「時＝固有数詞＋시」「分＝漢字数詞＋분」の混合</strong>。時は <code>${H.ko} 시</code>（固有）、分は <code>${M.ko} 분</code>（漢字）。<br>固有数詞は「시」の前で <code>하나→한, 둘→두</code> のように形が変わる。`,
+          alts: [`지금 ${H.ko} 시 ${M.ko} 분입니다.`]
+        };
+        if (m === 30) o.alts.push(`지금 ${H.ko} 시 반이에요.`);
+        return o;
+      }
+      function fAge() {
+        const A = pick(AGES);
+        return {
+          ja: `私は${A.n}歳です。`,
+          ko: `저는 ${A.ko} 살이에요.`,
+          roman: `jeoneun ${A.r} sal-ieyo.`,
+          w: [
+            {ko:"저",roman:"jeo",ja:"私（謙譲）"},
+            {ko:"-는",roman:"-neun",ja:"主題助詞「は」"},
+            {ko:A.ko,roman:A.r,ja:`${A.n}（固有数詞・冠形形）`},
+            {ko:"살",roman:"sal",ja:"〜歳（助数詞）"}
+          ],
+          g: `<strong>年齢は固有数詞＋<code>살</code></strong>。「20」は単独だと <code>스물</code> だが助数詞の前では <code>스무 살</code> と形が変わる（한/두/세/네/스무）。`,
+          alts: [`저는 ${A.ko} 살입니다.`]
+        };
+      }
+      function fExist() {
+        const e = pick(EXIST), p = pick(PLACES), c = 1 + rnd(5), C = NATIVE[c];
+        return {
+          ja: `${p.ja}に${e.ja}が${c}${e.cja}${e.v}。`,
+          ko: `${p.ko}에 ${e.subj} ${C.ko} ${e.cnt} 있어요.`,
+          roman: `${p.re} ${e.subjR} ${C.r} ${e.cntR} isseoyo.`,
+          w: [
+            {ko:p.ko,roman:p.r,ja:p.ja},
+            {ko:"-에",roman:"-e",ja:"〜に（場所・存在）"},
+            {ko:e.subj,roman:e.subjR,ja:`${e.ja}＋主格助詞`},
+            {ko:C.ko,roman:C.r,ja:`${c}（固有数詞・冠形形）`},
+            {ko:e.cnt,roman:e.cntR,ja:`${e.cja}（助数詞）`},
+            {ko:"있다",roman:"itda",ja:"ある／いる"}
+          ],
+          g: `<strong>存在文「場所-에 ＋ N-이/가 ＋ 数＋助数詞 ＋ 있어요」</strong>。助数詞は対象で使い分け：人 <code>명</code>、動物 <code>마리</code>、本 <code>권</code>、物 <code>개</code>、飲み物 <code>잔</code>。数は固有数詞の冠形形。`,
+          alts: [`${p.ko}에 ${e.subj} ${C.ko} ${e.cnt} 있습니다.`]
+        };
+      }
+      function fPrice() {
+        const it = pick(PRICEITEMS), pr = pick(PRICES);
+        return {
+          ja: `この${it.ja}は${comma(pr.n)}ウォンです。`,
+          ko: `이 ${it.topic} ${pr.ko} 원이에요.`,
+          roman: `i ${it.topicR} ${pr.r} won-ieyo.`,
+          w: [
+            {ko:"이",roman:"i",ja:"この"},
+            {ko:it.topic,roman:it.topicR,ja:`${it.ja}＋主題助詞`},
+            {ko:pr.ko,roman:pr.r,ja:`${comma(pr.n)}（漢字数詞）`},
+            {ko:"원",roman:"won",ja:"ウォン（通貨）"}
+          ],
+          g: `<strong>値段は漢字数詞＋<code>원</code></strong>。千＝<code>천</code>、万＝<code>만</code>（1万は <code>일만</code> ではなく <code>만</code>）。`,
+          alts: [`이 ${it.topic} ${pr.ko} 원입니다.`]
+        };
+      }
+      function fDate() {
+        const m = pick(MONTHS), d = pick(DAYS);
+        return {
+          ja: `今日は${m.n}月${d.n}日です。`,
+          ko: `오늘은 ${m.ko} ${d.ko} 일이에요.`,
+          roman: `oneureun ${m.r} ${d.r} il-ieyo.`,
+          w: [
+            {ko:"오늘",roman:"oneul",ja:"今日"},
+            {ko:"-은",roman:"-eun",ja:"主題助詞「は」"},
+            {ko:m.ko,roman:m.r,ja:`${m.n}月`},
+            {ko:d.ko,roman:d.r,ja:`${d.n}（漢字数詞）`},
+            {ko:"일",roman:"il",ja:"〜日"}
+          ],
+          g: `<strong>日付は漢字数詞＋월（月）/일（日）</strong>。読みの例外：6月＝<code>유월</code>、10月＝<code>시월</code>（<code>육월/십월</code> とは言わない）。`,
+          alts: [`오늘은 ${m.ko} ${d.ko} 일입니다.`]
+        };
+      }
+      function fWeekday() {
+        const wd = pick(WEEKDAYS);
+        return {
+          ja: `今日は${wd.ja}です。`,
+          ko: `오늘은 ${wd.ko}이에요.`,
+          roman: `oneureun ${wd.r}-ieyo.`,
+          w: [
+            {ko:"오늘",roman:"oneul",ja:"今日"},
+            {ko:"-은",roman:"-eun",ja:"主題助詞「は」"},
+            {ko:wd.ko,roman:wd.r,ja:wd.ja},
+            {ko:"-이에요",roman:"-ieyo",ja:"〜です（パッチム有）"}
+          ],
+          g: `<strong>曜日＝「漢字＋요일」</strong>：月<code>월</code>/火<code>화</code>/水<code>수</code>/木<code>목</code>/金<code>금</code>/土<code>토</code>/日<code>일</code>＋<code>요일</code>。パッチムで終わるので指定詞は <code>이에요</code>。`,
+          alts: [`오늘은 ${wd.ko}입니다.`]
+        };
+      }
+
+      function generate(count) {
+        count = count || 10;
+        const frames = [fTime, fAge, fExist, fPrice, fDate, fWeekday];
+        const seq = sample(frames, frames.length).concat(
+          Array.from({length: Math.max(0, count - frames.length)}, () => pick(frames))
+        );
+        const out = [], seen = new Set();
+        for (const f of seq) {
+          if (out.length >= count) break;
+          let s = f(), tries = 0;
+          while (seen.has(s.ko) && tries < 8) { s = f(); tries++; }
+          if (seen.has(s.ko)) continue;
+          seen.add(s.ko); out.push(s);
+        }
+        let guard = 0;
+        while (out.length < count && guard++ < 80) {
+          const s = pick(frames)();
+          if (!seen.has(s.ko)) { seen.add(s.ko); out.push(s); }
+        }
+        return out;
+      }
+      return { generate };
+    })();
+
+    // ========================================================================
     // STATE & STORAGE
     // ========================================================================
     const STORAGE_KEY = "ko-practice-v2";
@@ -3730,7 +3943,8 @@
       completedCourses: [],
       favorites: [],       // ["courseId-sentIdx"]
       recentInCourse: {},  // { courseId: [sentIdx, ...] } (avoid immediate repeats)
-      inProgress: null     // { courseId, sentIdx, input } - 練習中に離脱した場合の途中状態
+      inProgress: null,    // { courseId, sentIdx, input } - 練習中に離脱した場合の途中状態
+      generated: {}        // { courseId: [sentence, ...] } - template課程の現セッション生成文
     };
 
     function loadState() {
@@ -3760,6 +3974,16 @@
     rollDayIfNeeded();
 
     if (state.currentCourseId >= COURSES.length) state.currentCourseId = COURSES.length - 1;
+
+    // template課程: 保存済みの生成文があれば復元（リロードしても同じ出題が続く）
+    if (state.generated) {
+      Object.keys(state.generated).forEach(id => {
+        const c = COURSES[id];
+        if (c && c.mode === "template" && Array.isArray(state.generated[id]) && state.generated[id].length) {
+          c.sentences = state.generated[id];
+        }
+      });
+    }
 
     // ========================================================================
     // DOM
@@ -3876,6 +4100,16 @@
       state.currentCourseId = courseId;
       saveState();
       const c = COURSES[courseId];
+      // template課程: 中断中なら同じセットを維持、それ以外（未着手/完了済み）は新規生成
+      if (isTemplate(courseId)) {
+        const resuming = state.inProgress && state.inProgress.courseId === courseId
+          && Array.isArray(state.generated[courseId]) && state.generated[courseId].length === 10;
+        const midCourse = masteredList(courseId).length > 0
+          && !state.completedCourses.includes(courseId)
+          && Array.isArray(state.generated[courseId]) && state.generated[courseId].length === 10;
+        if (resuming || midCourse) applyGenerated(courseId);
+        else ensureTemplate(courseId, { fresh: true });
+      }
       // ホームの「つづきから」「連続日数」へ記録
       if (window.LC) LC.record({ href: 'korean-practice.html', label: 'Daily 한국어', sub: `TOPIK${c.topik} ・ ${c.title}` });
       const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
@@ -3981,6 +4215,30 @@
     // CORE LOGIC
     // ========================================================================
     function getCourse(id) { return COURSES[id]; }
+    function isTemplate(id) { return !!(COURSES[id] && COURSES[id].mode === "template"); }
+    function applyGenerated(id) {
+      if (Array.isArray(state.generated[id]) && state.generated[id].length) {
+        COURSES[id].sentences = state.generated[id];
+      }
+    }
+    // 新しい10問を生成し、コースの進捗をリセット（＝毎回フレッシュな出題）
+    function regenTemplate(id) {
+      const set = TMPL.generate(10);
+      state.generated[id] = set;
+      COURSES[id].sentences = set;
+      state.mastered[id] = [];
+      state.recentInCourse[id] = [];
+      state.completedCourses = state.completedCourses.filter(x => x !== id);
+      if (state.inProgress && state.inProgress.courseId === id) state.inProgress = null;
+      saveState();
+    }
+    // template課程の出題セットを用意。fresh=true で新規生成、それ以外は既存があれば維持
+    function ensureTemplate(id, opts) {
+      if (!isTemplate(id)) return;
+      const hasSet = Array.isArray(state.generated[id]) && state.generated[id].length === 10;
+      if ((opts && opts.fresh) || !hasSet) regenTemplate(id);
+      else applyGenerated(id);
+    }
     // New courses are appended to COURSES, so array order != study order.
     // Return the index of the next course in (topik, num) order, or -1 if none.
     function nextCourseId(id) {
@@ -4277,12 +4535,16 @@
       }
     });
 
-    // 完了モーダル: もう一度 → 現コースをリセットして再開
+    // 完了モーダル: もう一度 → 現コースをリセットして再開（template課程は新しい10問を生成）
     elReplayCourseBtn.addEventListener("click", () => {
       closeModal(elCompleteModal);
-      state.mastered[state.currentCourseId] = [];
-      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
-      saveState();
+      if (isTemplate(state.currentCourseId)) {
+        regenTemplate(state.currentCourseId);
+      } else {
+        state.mastered[state.currentCourseId] = [];
+        state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+        saveState();
+      }
       renderHeader();
       pickNext();
     });
@@ -4292,12 +4554,17 @@
       renderIntroView(state.currentCourseId);
     });
 
-    // 練習画面 → このコースをリセット
+    // 練習画面 → このコースをリセット（template課程は新しい10問を生成）
     elResetCourseBtn.addEventListener("click", () => {
-      if (!confirm("このコースの進捗をリセットしますか？")) return;
-      state.mastered[state.currentCourseId] = [];
-      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
-      saveState();
+      const tmpl = isTemplate(state.currentCourseId);
+      if (!confirm(tmpl ? "新しい10問を出題し直しますか？" : "このコースの進捗をリセットしますか？")) return;
+      if (tmpl) {
+        regenTemplate(state.currentCourseId);
+      } else {
+        state.mastered[state.currentCourseId] = [];
+        state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+        saveState();
+      }
       renderHeader();
       pickNext();
     });
