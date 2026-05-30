@@ -35,7 +35,7 @@ html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; -moz-osx-font-
 body{
   background:var(--bg); color:var(--ink); font-family:var(--font-ui);
   font-size:15px; line-height:1.6; letter-spacing:-.005em; min-height:100vh;
-  overflow-x:hidden; padding-bottom:calc(96px + env(safe-area-inset-bottom));
+  overflow-x:hidden; padding-bottom:calc(40px + env(safe-area-inset-bottom));
 }
 ::selection{ background:var(--accent); color:#fff; }
 input,textarea,button{ font-family:inherit; color:inherit; }
@@ -220,7 +220,11 @@ input,textarea,button{ font-family:inherit; color:inherit; }
 .word-zh,.word-ko{ font-family:var(--font-cjk); font-size:17px; font-weight:600; color:var(--ink); }
 .word-pinyin,.word-roman{ font-family:var(--font-display); font-size:11px; font-weight:600; color:var(--ink-4); margin-top:2px; }
 .word-ja{ font-family:var(--font-cjk); font-size:12px; color:var(--ink-3); margin-top:1px; }
-.next-wrap{ display:none; }  /* 「次へ」は下固定バーに統合するため非表示 */
+/* 結果カード末尾の「次へ／もう一度」ボタン（読み終えた所にある＝戻りスクロール不要） */
+.next-wrap{ display:block; margin-top:20px; }
+.next-wrap .btn-next{ width:100%; padding:16px; border:none; border-radius:9px; cursor:pointer;
+  background:var(--accent); color:#fff; font-family:var(--font-display); font-size:14px; font-weight:800; letter-spacing:.02em;
+  box-shadow:0 6px 18px var(--accent-glow); }
 .hint{ margin:0 24px 8px; padding:10px 13px; background:var(--accent-soft); border-radius:8px; font-size:13px; color:var(--ink-2); }
 .hint strong{ font-family:var(--font-cjk); color:var(--accent); }
 
@@ -231,12 +235,8 @@ input,textarea,button{ font-family:inherit; color:inherit; }
 
 /* ============ Sticky single action button ============ */
 /* 画面下に固定。キーボードが出たら daily-kbd.js がその高さ分だけ持ち上げる（iOS対策） */
-.actionbar{ position:fixed; left:0; right:0; bottom:0; z-index:60;
-  padding:12px 22px calc(12px + env(safe-area-inset-bottom));
-  background:linear-gradient(180deg, transparent, var(--bg) 30%);
-  display:none; justify-content:center; transition:transform .18s var(--ease); will-change:transform; }
-body[data-view="practice"] .actionbar{ display:flex; }
-.actionbar-inner{ width:100%; max-width:680px; }
+/* カード内の採点ボタン（힌트/스킵 の真下に置く＝スクロール不要） */
+.btn-primary.card-check{ display:block; width:calc(100% - 48px); margin:16px 24px 6px; }
 .btn-primary{ width:100%; padding:17px; border:none; border-radius:9px; cursor:pointer;
   background:var(--accent); color:#fff; font-family:var(--font-display); font-size:14px; font-weight:800;
   letter-spacing:.02em; box-shadow:0 8px 24px var(--accent-glow); transition:transform .12s var(--ease), background .2s var(--ease); }
