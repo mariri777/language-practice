@@ -640,7 +640,7 @@
         ]
       },
       {
-        topik: 2, num: 2, title: "比較・能力・依頼",
+        topik: 2, num: 2, title: "比較・能力・依頼", mode: "template", template: "compare",
         sentences: [
           {
             ja: "韓国料理を作れます。", ko: "한국 음식을 만들 수 있어요.", roman: "hanguk eumsigeul mandeul su isseoyo.",
@@ -3029,7 +3029,7 @@
       { overview: "韓国語の時制の中心、過去形と進行形。陽母音／陰母音／하다語幹で変わる過去語尾と「〜している」表現を一気に押さえます。【🔄 このコースは挑戦するたびに動詞・時間表現が入れ替わり、毎回ちがう10問が出ます】",
         points: ["<strong>過去形 <code>-았/-었/-였-</code></strong>（陽母音／陰母音／하다）","<strong>「V-고 있다」</strong>＝進行「〜している」（書面語は <code>-는 중이다</code>）","時刻の助詞 <code>-에</code>（〜に）","<code>벌써</code>（予想より早い「もう」）と <code>이미</code>（時点強調）","語順は「主語＋時間詞＋動詞」", "<strong>過去否定</strong>：<code>안 V-았/었어요</code>（意志的にしなかった）と <code>못 V-았/었어요</code>（できなかった）を区別する。", "<strong><code>V-는 중이다</code></strong>＝「〜している最中だ」。<code>-고 있다</code>より「まさに進行中」のニュアンスを強調する。", "<strong>理由の<code>-아서/어서</code></strong>：前節には過去・未来の時制を付けず基本形のまま用い、時制は後節で表す。"] },
       // TOPIK 2 - C5 比較・能力・依頼
-      { overview: "「〜できる」「〜より〜」「〜してください」など、会話で頻出の対人表現。可能・比較・勧誘・依頼を1コースで網羅します。",
+      { overview: "「〜できる」「〜より〜」「〜してください」など、会話で頻出の対人表現。可能・比較・勧誘・依頼を1コースで網羅します。【🔄 このコースは挑戦するたびに動詞・形容詞・依頼内容が入れ替わり、毎回ちがう10問が出ます】",
         points: ["<strong>「V-(으)ㄹ 수 있다/없다」</strong>＝可能／不可能","比較構文「<strong>A는 B보다 + 形容詞</strong>」","해요体の万能語尾（平叙／疑問／勧誘／命令を兼ねる）","<strong>「V-아/어 주세요」</strong>＝丁寧な依頼","ㄹ語幹の <code>만들다</code> の活用（만들 수 있다）", "<strong>「V-(으)ㄹ 줄 알다/모르다」</strong>＝技能・方法を「知っている/知らない」。<code>운전할 줄 알아요</code>（運転できる）。<code>-(으)ㄹ 수 있다</code>が状況的可能も含むのに対し、これは習得した技能に使う。", "<strong>最上級「제일／가장 + 形容詞」</strong>＝「いちばん〜」。範囲は <code>-에서</code>、人や物の集合なら <code>중에서</code> で示す。<code>제일</code>は口語的、<code>가장</code>はやや硬い。", "<strong>「좀 + V-아/어 주세요」</strong>の <code>좀</code> は依頼を和らげるクッション語。<code>돕다→도와</code>（ㅂ不規則）、<code>모르다→몰라</code>（르不規則）など不規則活用にも注意。"] },
       // TOPIK 2 - C6 活用変則・程度・量詞
       { overview: "으탈락・固有数詞の冠形形・否定の2形態など、中級に進むために避けて通れない変則活用と細かい使い分けをまとめます。【🔄 このコースは挑戦するたびに変則活用・量詞・程度副詞が入れ替わり、毎回ちがう10問が出ます】",
@@ -3933,13 +3933,132 @@
         };
       }
 
+      // ====== #8「比較・能力・依頼」用バンク（-(으)ㄹ形・活用は検証済みで事前格納）======
+      // 可能 -(으)ㄹ 수 있다/없다。proj=「目的語＋用言の-(으)ㄹ形」を確定格納（ㄹ語幹・子音語幹を含む）
+      const POSSV = [
+        {proj:"한국어를 읽을",projR:"hangugeoreul ilgeul",dict:"읽다",dictR:"ikda",vja:"読む",jaCan:"韓国語が読めます。",jaNo:"韓国語が読めません。",w:[{ko:"한국어",roman:"hangugeo",ja:"韓国語"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {proj:"매운 음식을 먹을",projR:"maeun eumsigeul meogeul",dict:"먹다",dictR:"meokda",vja:"食べる",jaCan:"辛い物が食べられます。",jaNo:"辛い物が食べられません。",w:[{ko:"매운 음식",roman:"maeun eumsik",ja:"辛い物"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
+        {proj:"혼자 갈",projR:"honja gal",dict:"가다",dictR:"gada",vja:"行く",jaCan:"ひとりで行けます。",jaNo:"ひとりで行けません。",w:[{ko:"혼자",roman:"honja",ja:"ひとりで"}]},
+        {proj:"주말에 만날",projR:"jumare mannal",dict:"만나다",dictR:"mannada",vja:"会う",jaCan:"週末に会えます。",jaNo:"週末に会えません。",w:[{ko:"주말",roman:"jumal",ja:"週末"},{ko:"-에",roman:"-e",ja:"〜に"}]},
+        {proj:"내일 올",projR:"naeil ol",dict:"오다",dictR:"oda",vja:"来る",jaCan:"明日来られます。",jaNo:"明日は来られません。",w:[{ko:"내일",roman:"naeil",ja:"明日"}]},
+        {proj:"여기에서 기다릴",projR:"yeogieseo gidaril",dict:"기다리다",dictR:"gidarida",vja:"待つ",jaCan:"ここで待てます。",jaNo:"ここでは待てません。",w:[{ko:"여기",roman:"yeogi",ja:"ここ"},{ko:"-에서",roman:"-eseo",ja:"〜で"}]}
+      ];
+      function fAbility() {
+        const v = pick(POSSV), neg = rnd(2) === 0;
+        const tail = neg ? "없어요" : "있어요", tailR = neg ? "eopseoyo" : "isseoyo";
+        return {
+          ja: neg ? v.jaNo : v.jaCan,
+          ko: `${v.proj} 수 ${tail}.`,
+          roman: `${v.projR} su ${tailR}.`,
+          w: [
+            ...v.w,
+            {ko:v.dict,roman:v.dictR,ja:v.vja},
+            {ko: neg?"-ㄹ 수 없다":"-ㄹ 수 있다", roman: neg?"-l su eopda":"-l su itda", ja: neg?"〜できない（不可能）":"〜できる（可能）"}
+          ],
+          g: `<strong>「V-(으)ㄹ 수 있다/없다」</strong>＝状況的な可能/不可能。母音・ㄹ語幹は<code>-ㄹ 수</code>、子音語幹は<code>-을 수</code>（<code>읽다→읽을 수</code>、<code>가다→갈 수</code>）。`,
+          alts: [`${v.proj} 수 ${neg?"없습니다":"있습니다"}.`]
+        };
+      }
+      // 技能 -(으)ㄹ 줄 알다/모르다（習得した技能。POSSVとは対象を分け、ja衝突を回避）
+      const SKILLV = [
+        {proj:"피아노를 칠",projR:"piano-reul chil",dict:"치다",dictR:"chida",vja:"弾く",jaCan:"ピアノが弾けます。",jaNo:"ピアノが弾けません。",w:[{ko:"피아노",roman:"piano",ja:"ピアノ"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
+        {proj:"한국 음식을 만들",projR:"hanguk eumsigeul mandeul",dict:"만들다",dictR:"mandeulda",vja:"作る",jaCan:"韓国料理が作れます。",jaNo:"韓国料理が作れません。",w:[{ko:"한국 음식",roman:"hanguk eumsik",ja:"韓国料理"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
+        {proj:"자전거를 탈",projR:"jajeongeoreul tal",dict:"타다",dictR:"tada",vja:"乗る",jaCan:"自転車に乗れます。",jaNo:"自転車に乗れません。",w:[{ko:"자전거",roman:"jajeongeo",ja:"自転車"},{ko:"-를",roman:"-reul",ja:"〜に（乗る対象）"}]},
+        {proj:"운전을 할",projR:"unjeon-eul hal",dict:"하다",dictR:"hada",vja:"する",jaCan:"運転ができます。",jaNo:"運転ができません。",w:[{ko:"운전",roman:"unjeon",ja:"運転"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
+        {proj:"수영을 할",projR:"suyeong-eul hal",dict:"하다",dictR:"hada",vja:"する",jaCan:"泳げます。",jaNo:"泳げません。",w:[{ko:"수영",roman:"suyeong",ja:"水泳"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
+        {proj:"한자를 읽을",projR:"hanjareul ilgeul",dict:"읽다",dictR:"ikda",vja:"読む",jaCan:"漢字が読めます。",jaNo:"漢字が読めません。",w:[{ko:"한자",roman:"hanja",ja:"漢字"},{ko:"-를",roman:"-reul",ja:"〜を"}]}
+      ];
+      function fSkill() {
+        const v = pick(SKILLV), no = rnd(2) === 0;
+        const tail = no ? "몰라요" : "알아요", tailR = no ? "mollayo" : "arayo";
+        return {
+          ja: no ? v.jaNo : v.jaCan,
+          ko: `${v.proj} 줄 ${tail}.`,
+          roman: `${v.projR} jul ${tailR}.`,
+          w: [
+            ...v.w,
+            {ko:v.dict,roman:v.dictR,ja:v.vja},
+            {ko: no?"-ㄹ 줄 모르다":"-ㄹ 줄 알다", roman: no?"-l jul moreuda":"-l jul alda", ja: no?"〜できない（やり方を知らない）":"〜できる（やり方を知っている）"}
+          ],
+          g: `<strong>「V-(으)ㄹ 줄 알다/모르다」</strong>＝習得した技能の有無「（やり方を知っていて）〜できる／できない」。否定の<code>모르다</code>は르変則で<code>몰라요</code>。合쇼体は<code>알다→압니다</code>（ㄹ脱落）。`,
+          alts: [`${v.proj} 줄 ${no?"모릅니다":"압니다"}.`]
+        };
+      }
+      // 比較 A는 B보다 (더) 形容詞（自然な対を確定格納。形容詞活用は検証済み）
+      const COMP = [
+        {ko:"형은 저보다 키가 커요.",roman:"hyeong-eun jeoboda kiga keoyo.",ja:"兄は私より背が高いです。",moreKo:"형은 저보다 키가 더 커요.",moreR:"hyeong-eun jeoboda kiga deo keoyo.",adjNote:"크다→커요（으탈락）",w:[{ko:"형",roman:"hyeong",ja:"兄"},{ko:"-보다",roman:"-boda",ja:"〜より（比較）"},{ko:"키",roman:"ki",ja:"背丈"},{ko:"커요",roman:"keoyo",ja:"大きい・高い（크다）"}]},
+        {ko:"비행기는 기차보다 빨라요.",roman:"bihaenggineun gichaboda ballayo.",ja:"飛行機は電車より速いです。",moreKo:"비행기는 기차보다 더 빨라요.",moreR:"bihaenggineun gichaboda deo ballayo.",adjNote:"빠르다→빨라요（르変則）",w:[{ko:"비행기",roman:"bihaenggi",ja:"飛行機"},{ko:"기차",roman:"gicha",ja:"電車"},{ko:"-보다",roman:"-boda",ja:"〜より"},{ko:"빨라요",roman:"ballayo",ja:"速い（빠르다）"}]},
+        {ko:"서울은 부산보다 커요.",roman:"seoureun busanboda keoyo.",ja:"ソウルは釜山より大きいです。",moreKo:"서울은 부산보다 더 커요.",moreR:"seoureun busanboda deo keoyo.",adjNote:"크다→커요（으탈락）",w:[{ko:"서울",roman:"seoul",ja:"ソウル"},{ko:"부산",roman:"busan",ja:"釜山"},{ko:"-보다",roman:"-boda",ja:"〜より"},{ko:"커요",roman:"keoyo",ja:"大きい（크다）"}]},
+        {ko:"이 가방은 저 가방보다 비싸요.",roman:"i gabang-eun jeo gabangboda bissayo.",ja:"このカバンはあのカバンより高いです。",moreKo:"이 가방은 저 가방보다 더 비싸요.",moreR:"i gabang-eun jeo gabangboda deo bissayo.",adjNote:"비싸다→비싸요（規則）",w:[{ko:"가방",roman:"gabang",ja:"カバン"},{ko:"-보다",roman:"-boda",ja:"〜より"},{ko:"비싸요",roman:"bissayo",ja:"（値段が）高い（비싸다）"}]},
+        {ko:"동생은 저보다 키가 작아요.",roman:"dongsaeng-eun jeoboda kiga jagayo.",ja:"弟は私より背が低いです。",moreKo:"동생은 저보다 키가 더 작아요.",moreR:"dongsaeng-eun jeoboda kiga deo jagayo.",adjNote:"작다→작아요（規則）",w:[{ko:"동생",roman:"dongsaeng",ja:"弟・妹"},{ko:"-보다",roman:"-boda",ja:"〜より"},{ko:"키",roman:"ki",ja:"背丈"},{ko:"작아요",roman:"jagayo",ja:"小さい・低い（작다）"}]},
+        {ko:"이 책은 저 책보다 재미있어요.",roman:"i chaegeun jeo chaekboda jaemiisseoyo.",ja:"この本はあの本より面白いです。",moreKo:"이 책은 저 책보다 더 재미있어요.",moreR:"i chaegeun jeo chaekboda deo jaemiisseoyo.",adjNote:"재미있다→재미있어요（規則）",w:[{ko:"책",roman:"chaek",ja:"本"},{ko:"-보다",roman:"-boda",ja:"〜より"},{ko:"재미있어요",roman:"jaemiisseoyo",ja:"面白い（재미있다）"}]}
+      ];
+      function fCompare() {
+        const c = pick(COMP), more = rnd(2) === 0;
+        return {
+          ja: more ? c.ja.replace("より","よりもっと") : c.ja,
+          ko: more ? c.moreKo : c.ko,
+          roman: more ? c.moreR : c.roman,
+          w: more ? c.w.concat([{ko:"더",roman:"deo",ja:"もっと（強調）"}]) : c.w,
+          g: `<strong>比較「A는 B보다 (더) 形容詞」</strong>＝「AはBより(もっと)〜だ」。<code>보다</code>が比較基準「〜より」、強調に<code>더</code>（もっと）・<code>훨씬</code>（はるかに）。${c.adjNote}。`,
+          alts: more ? [c.ko] : [c.moreKo]
+        };
+      }
+      // 最上級 (범위) 중에서 + 제일/가장 …（自然な対を確定格納）
+      const SUP = [
+        {groupKo:"과일",groupR:"gwail",groupJa:"果物",headKo:"딸기를",headR:"ttalgireul",headJa:"いちご",predKo:"좋아해요",predR:"joahaeyo",predJa:"好きです（좋아하다）",ja:"果物の中でいちごが一番好きです。"},
+        {groupKo:"운동",groupR:"undong",groupJa:"スポーツ",headKo:"수영을",headR:"suyeong-eul",headJa:"水泳",predKo:"좋아해요",predR:"joahaeyo",predJa:"好きです（좋아하다）",ja:"スポーツの中で水泳が一番好きです。"},
+        {groupKo:"계절",groupR:"gyejeol",groupJa:"季節",headKo:"봄을",headR:"bom-eul",headJa:"春",predKo:"좋아해요",predR:"joahaeyo",predJa:"好きです（좋아하다）",ja:"季節の中で春が一番好きです。"},
+        {groupKo:"음식",groupR:"eumsik",groupJa:"料理",headKo:"불고기가",headR:"bulgogiga",headJa:"プルコギ",predKo:"맛있어요",predR:"masisseoyo",predJa:"おいしいです（맛있다）",ja:"料理の中でプルコギが一番おいしいです。"},
+        {groupKo:"친구",groupR:"chingu",groupJa:"友達",headKo:"민수가",headR:"minsuga",headJa:"ミンス",predKo:"키가 커요",predR:"kiga keoyo",predJa:"背が高いです（크다）",ja:"友達の中でミンスが一番背が高いです。"},
+        {groupKo:"과목",groupR:"gwamok",groupJa:"科目",headKo:"수학이",headR:"suhag-i",headJa:"数学",predKo:"어려워요",predR:"eoryeowoyo",predJa:"難しいです（어렵다）",ja:"科目の中で数学が一番難しいです。"}
+      ];
+      function fSuperlative() {
+        const s = pick(SUP), gajang = rnd(2) === 0;
+        const sup = gajang ? {ko:"가장",r:"gajang"} : {ko:"제일",r:"jeil"};
+        return {
+          ja: s.ja,
+          ko: `${s.groupKo} 중에서 ${s.headKo} ${sup.ko} ${s.predKo}.`,
+          roman: `${s.groupR} jung-eseo ${s.headR} ${sup.r} ${s.predR}.`,
+          w: [
+            {ko:s.groupKo,roman:s.groupR,ja:s.groupJa},
+            {ko:"중에서",roman:"jung-eseo",ja:"〜の中で（範囲）"},
+            {ko:s.headKo,roman:s.headR,ja:`${s.headJa}＋助詞`},
+            {ko:sup.ko,roman:sup.r,ja:"いちばん（最上級）"},
+            {ko:s.predKo,roman:s.predR,ja:s.predJa}
+          ],
+          g: `<strong>最上級「(범위) 중에서 + 제일/가장 …」</strong>。範囲は<code>중에서</code>、「いちばん」は<code>제일</code>(口語)／<code>가장</code>(やや硬い)。「好きだ」は他動詞<code>좋아하다</code>なので対象は<code>-를/을</code>。`,
+          alts: [`${s.groupKo} 중에서 ${s.headKo} ${gajang?"제일":"가장"} ${s.predKo}.`]
+        };
+      }
+      // 依頼 V-아/어 주세요（活用形を確定格納。陽母音-아/陰母音-어/하다-해/ㅂ変則/으탈락）
+      const RACTV = [
+        {ko:"천천히 말해 주세요.",r:"cheoncheonhi malhae juseyo.",ja:"ゆっくり話してください。",note:"<code>말하다→말해</code>（하다用言は해）。",w:[{ko:"천천히",roman:"cheoncheonhi",ja:"ゆっくり"},{ko:"말하다",roman:"malhada",ja:"話す"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
+        {ko:"사진을 찍어 주세요.",r:"sajineul jjigeo juseyo.",ja:"写真を撮ってください。",note:"<code>찍다→찍어</code>（陰母音語幹）。",w:[{ko:"사진",roman:"sajin",ja:"写真"},{ko:"-을",roman:"-eul",ja:"〜を"},{ko:"찍다",roman:"jjikda",ja:"撮る"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
+        {ko:"창문을 열어 주세요.",r:"changmuneul yeoreo juseyo.",ja:"窓を開けてください。",note:"<code>열다→열어</code>。",w:[{ko:"창문",roman:"changmun",ja:"窓"},{ko:"-을",roman:"-eul",ja:"〜を"},{ko:"열다",roman:"yeolda",ja:"開ける"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
+        {ko:"문을 닫아 주세요.",r:"muneul dada juseyo.",ja:"ドアを閉めてください。",note:"<code>닫다→닫아</code>（陽母音・規則。ㄷ変則ではない）。",w:[{ko:"문",roman:"mun",ja:"ドア"},{ko:"-을",roman:"-eul",ja:"〜を"},{ko:"닫다",roman:"datda",ja:"閉める"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
+        {ko:"조금만 기다려 주세요.",r:"jogeumman gidaryeo juseyo.",ja:"少しだけ待ってください。",note:"<code>기다리다→기다려</code>。",w:[{ko:"조금만",roman:"jogeumman",ja:"少しだけ"},{ko:"기다리다",roman:"gidarida",ja:"待つ"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
+        {ko:"여기에 이름을 써 주세요.",r:"yeogie ireumeul sseo juseyo.",ja:"ここに名前を書いてください。",note:"<code>쓰다→써</code>（으탈락）。",w:[{ko:"여기",roman:"yeogi",ja:"ここ"},{ko:"-에",roman:"-e",ja:"〜に"},{ko:"이름",roman:"ireum",ja:"名前"},{ko:"-을",roman:"-eul",ja:"〜を"},{ko:"쓰다",roman:"sseuda",ja:"書く"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
+        {ko:"좀 도와주세요.",r:"jom dowajuseyo.",ja:"ちょっと手伝ってください。",note:"<code>돕다→도와</code>（ㅂ変則）。<code>좀</code>は依頼を和らげるクッション語。",w:[{ko:"좀",roman:"jom",ja:"ちょっと（依頼を和らげる）"},{ko:"돕다",roman:"dopda",ja:"手伝う"},{ko:"-아/어 주다",roman:"-a/eo juda",ja:"〜してあげる／くれる"}]},
+        {ko:"다시 한번 말해 주세요.",r:"dasi hanbeon malhae juseyo.",ja:"もう一度言ってください。",note:"<code>말하다→말해</code>（하다用言は해）。",w:[{ko:"다시",roman:"dasi",ja:"もう一度"},{ko:"한번",roman:"hanbeon",ja:"一度"},{ko:"말하다",roman:"malhada",ja:"言う"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]}
+      ];
+      function fActRequest() {
+        const q = pick(RACTV);
+        return {
+          ja: q.ja, ko: q.ko, roman: q.r, w: q.w,
+          g: `<strong>「V-아/어 주세요」</strong>＝丁寧な依頼「〜してください」。陽母音語幹は<code>-아</code>、陰母音は<code>-어</code>、하다は<code>해</code>。${q.note}`,
+          alts: [q.ko.replace("주세요.", "주시겠어요?")]
+        };
+      }
+
       const SETS = {
         numbers:   [fTime, fAge, fExist, fPrice, fDate, fWeekday],
         place:     [fMove, fActivity, fPurpose, fPosition],
         negqa:     [fAdjective, fNegation, fQuestion],
         polite:    [fFormalNoun, fFormalVerb, fFamilyExist, fFamilyAge, fFormalDate, fFormalWeekday],
         past:      [fPast, fPastNeg, fProgressive, fOngoing, fPastQuestion, fReason],
-        irregular: [fIrregularAdj, fIrregularVerb, fCounter, fDegree, fRequest]
+        irregular: [fIrregularAdj, fIrregularVerb, fCounter, fDegree, fRequest],
+        compare:   [fAbility, fSkill, fCompare, fSuperlative, fActRequest]
       };
       function generate(key, count) {
         if (typeof key === "number") { count = key; key = "numbers"; } // 後方互換
