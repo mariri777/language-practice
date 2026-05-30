@@ -35,7 +35,7 @@ html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; -moz-osx-font-
 body{
   background:var(--bg); color:var(--ink); font-family:var(--font-ui);
   font-size:15px; line-height:1.6; letter-spacing:-.005em; min-height:100vh;
-  overflow-x:hidden; padding-bottom:calc(96px + env(safe-area-inset-bottom));
+  overflow-x:hidden; padding-bottom:calc(40px + env(safe-area-inset-bottom));
 }
 ::selection{ background:var(--accent); color:#fff; }
 input,textarea,button{ font-family:inherit; color:inherit; }
@@ -156,6 +156,7 @@ input,textarea,button{ font-family:inherit; color:inherit; }
 
 /* ============ Course banner (practice) ============ */
 .course-banner{ background:none; padding:0; margin-bottom:6px; }
+.course-banner .course-label{ display:none; }   /* 「COURSE x / N」は分かりづらいので非表示 */
 .course-info{ display:flex; align-items:center; gap:10px; margin-bottom:9px; }
 .hsk-tag,.topik-tag{ font-family:var(--font-display); font-size:10px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:var(--accent); border:1px solid var(--accent); padding:4px 8px; border-radius:5px; }
 .hsk-tag::before,.topik-tag::before{ content:none; }
@@ -229,9 +230,8 @@ input,textarea,button{ font-family:inherit; color:inherit; }
 .diff-missing{ color:var(--accent-deep); font-weight:700; background:var(--accent-soft); padding:0 3px; border-radius:3px; }
 
 /* ============ Sticky single action button ============ */
-.actionbar{ position:fixed; left:0; right:0; bottom:0; z-index:60;
-  padding:14px 22px calc(14px + env(safe-area-inset-bottom));
-  background:linear-gradient(180deg, transparent, var(--bg) 32%); display:none; justify-content:center; }
+/* 入力カードのすぐ下に置く（旧：画面下固定）。スマホで「すぐ下」に来て押しやすい */
+.actionbar{ padding:6px 0 10px; display:none; justify-content:center; }
 body[data-view="practice"] .actionbar{ display:flex; }
 .actionbar-inner{ width:100%; max-width:680px; }
 .btn-primary{ width:100%; padding:17px; border:none; border-radius:9px; cursor:pointer;

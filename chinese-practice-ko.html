@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="daily.css?v=6" />
+  <link rel="stylesheet" href="daily.css?v=7" />
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
 <script src="daily.js?v=1"></script>
@@ -2091,7 +2091,7 @@
         const badge = alreadyMastered ? "" : `<span class="mastered-badge">+1 마스터</span>`;
         verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">✓</span>정답입니다${badge}</div>`;
       } else if (cmp.verdict === "partial") {
-        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">↻</span>조금 아쉬워요 · 다시 도전해요</div>`;
+        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">↻</span>아쉬워요！다시 도전</div>`;
       } else {
         verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">✕</span>모범 답안을 확인하고 다시</div>`;
       }

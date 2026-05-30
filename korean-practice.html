@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="daily.css?v=6" />
+  <link rel="stylesheet" href="daily.css?v=7" />
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
 <script src="daily.js?v=1"></script>
@@ -308,7 +308,7 @@
         ]
       },
       {
-        topik: 1, num: 2, title: "数字・時間・存在", mode: "template",
+        topik: 1, num: 2, title: "数字・時間・存在", mode: "template", template: "numbers",
         sentences: [
           {
             ja: "私は20歳です。", ko: "저는 스무 살이에요.", roman: "jeoneun seumu sarieyo.",
@@ -1537,7 +1537,7 @@
         ]
       },
       {
-        topik: 1, num: 4, title: "場所・移動・日常動作",
+        topik: 1, num: 4, title: "場所・移動・日常動作", mode: "template", template: "place",
         sentences: [
           {
             ja: "私は家にいます。", ko: "저는 집에 있어요.", roman: "jeoneun jib-e isseoyo.",
@@ -3058,7 +3058,7 @@
       { overview: "「〜するほど」「〜する価値がある」「〜に関心がある」など、抽象度の高い程度・対象・評価の表現で仕上げ。中上級らしい言い回しを身につけます。",
         points: ["<strong>「V-(으)ㄹ수록」</strong>＝「〜するほど」（比例的変化）","<strong>「V-(으)ㄹ 만하다」</strong>＝「〜する価値がある」","<strong>「N에 관심이 있다」</strong>＝「〜に関心がある」","<strong>「N에 + 形容詞」</strong>＝対象「Nに対して〜だ」","程度副詞 <code>매우 ≈ 아주 ≈ 되게</code> の使い分け","慣用句「<code>나이가 들다</code>」（年を取る）", "<strong>-(으)ㄴ/는 편이다</strong>は「どちらかといえば〜なほうだ」と程度をやわらげる表現。形容詞は<code>좋은 편이에요</code>、動詞・現在は<code>늦는 편이에요</code>のように使い分けます。", "<strong>-기 마련이다</strong>は「〜するのが当然だ・〜するものだ」という一般的な道理を表します。<code>실수하기 마련이에요</code>のように動詞の語幹に付けます。"] },
       // TOPIK 1 - C4 場所・移動・日常動作
-      { overview: "場所・方向を表す助詞「-에」と動作の場所を表す「-에서」を中心に、가다・오다・다니다などの移動動詞や「-(으)러 가다」、日常の基本動詞、方位名詞、起点「-에서 ~까지」までを学びます。日常生活の移動と動作を韓国語で言えるようになる初級コースです。",
+      { overview: "場所・方向を表す助詞「-에」と動作の場所を表す「-에서」を中心に、가다・오다・다니다などの移動動詞や「-(으)러 가다」、日常の基本動詞、方位名詞、起点「-에서 ~까지」までを学びます。日常生活の移動と動作を韓国語で言えるようになる初級コースです。【🔄 このコースは挑戦するたびに場所や動作が入れ替わり、毎回ちがう10問が出ます】",
         points: ["<strong>-에</strong>＝存在・方向の助詞。場所＋<code>있다/없다</code>や<code>가다/오다</code>の行き先に付く（例：<code>집에 있어요</code>／<code>학교에 가요</code>）。", "<strong>-에서</strong>＝動作が行われる場所。<code>먹다・공부하다</code>など動作動詞とともに使う（例：<code>식당에서 먹어요</code>）。存在の<code>-에</code>との違いに注意。", "移動動詞 <strong>가다（行く）・오다（来る）・다니다（通う）</strong>。<code>다니다</code>は学校・会社へ定期的に通う意味。", "目的の <strong>-(으)러 가다/오다</strong>＝「〜しに行く／来る」。母音語幹は<code>-러</code>、子音語幹は<code>-으러</code>（例：<code>밥 먹으러 가요</code>）。", "方位名詞 <strong>위・아래・앞・뒤・옆・안・밖</strong>。「Nの上に」は<code>N 위에</code>のように位置＋<code>-에</code>で表す。", "起点と終点 <strong>-에서 ~까지</strong>＝「〜から〜まで」。場所の起点は<code>-에서</code>、到達点は<code>-까지</code>（例：<code>집에서 학교까지</code>）。"] },
       // TOPIK 1 - C5 否定・疑問詞・形容詞
       { overview: "短形否定（안・못）と疑問詞、そして基本形容詞の해요体を学ぶコースです。形容詞述語文と「그리고・그래서・그렇지만」の接続も練習し、簡単な意見や説明ができるようになります。",
@@ -3291,9 +3291,124 @@
         };
       }
 
-      function generate(count) {
+      // ====== #4「場所・移動・日常動作」用バンク（活用形は検証済みで事前格納）======
+      const SPOT = {
+        jip:      {ko:"집",r:"jip",e:"jib-e",eseo:"jib-eseo",ja:"家"},
+        hakgyo:   {ko:"학교",r:"hakgyo",e:"hakgyo-e",eseo:"hakgyo-eseo",ja:"学校"},
+        hoesa:    {ko:"회사",r:"hoesa",e:"hoesa-e",eseo:"hoesa-eseo",ja:"会社"},
+        doseogwan:{ko:"도서관",r:"doseogwan",e:"doseogwan-e",eseo:"doseogwan-eseo",ja:"図書館"},
+        sikdang:  {ko:"식당",r:"sikdang",e:"sikdang-e",eseo:"sikdang-eseo",ja:"食堂"},
+        kape:     {ko:"카페",r:"kape",e:"kape-e",eseo:"kape-eseo",ja:"カフェ"},
+        gongwon:  {ko:"공원",r:"gongwon",e:"gongwon-e",eseo:"gongwon-eseo",ja:"公園"},
+        gyosil:   {ko:"교실",r:"gyosil",e:"gyosil-e",eseo:"gyosil-eseo",ja:"教室"},
+        samusil:  {ko:"사무실",r:"samusil",e:"samusil-e",eseo:"samusil-eseo",ja:"オフィス"}
+      };
+      const MOVE = [
+        {ko:"가요",r:"gayo",dict:"가다",ja:"行きます",spots:Object.keys(SPOT)},
+        {ko:"와요",r:"wayo",dict:"오다",ja:"来ます",spots:Object.keys(SPOT)},
+        {ko:"다녀요",r:"danyeoyo",dict:"다니다",ja:"通っています",spots:["hakgyo","hoesa"]}
+      ];
+      const ACT = [
+        {ph:"밥을 먹어요",   phR:"bab-eul meogeoyo",   reo:"밥을 먹으러",   reoR:"bab-eul meogeureo",  ja:"ご飯を食べます",     jp:"ご飯を食べ",     spots:["sikdang","jip","kape"]},
+        {ph:"공부해요",      phR:"gongbuhaeyo",         reo:"공부하러",      reoR:"gongbuhareo",        ja:"勉強します",         jp:"勉強し",         spots:["doseogwan","gyosil","kape","jip"]},
+        {ph:"일해요",        phR:"ilhaeyo",             reo:"일하러",        reoR:"ilhareo",            ja:"働きます",           jp:"働き",           spots:["hoesa","samusil","jip"]},
+        {ph:"쉬어요",        phR:"swieoyo",             reo:"쉬러",          reoR:"swireo",             ja:"休みます",           jp:"休み",           spots:["jip","gongwon","kape"]},
+        {ph:"운동해요",      phR:"undonghaeyo",         reo:"운동하러",      reoR:"undonghareo",        ja:"運動します",         jp:"運動し",         spots:["gongwon","jip"]},
+        {ph:"책을 읽어요",   phR:"chaeg-eul ilgeoyo",   reo:"책을 읽으러",   reoR:"chaeg-eul ilgeureo", ja:"本を読みます",       jp:"本を読み",       spots:["doseogwan","kape","jip"]},
+        {ph:"커피를 마셔요", phR:"keopireul masyeoyo",  reo:"커피를 마시러", reoR:"keopireul masireo",  ja:"コーヒーを飲みます", jp:"コーヒーを飲み", spots:["kape","samusil"]},
+        {ph:"친구를 만나요", phR:"chingureul mannayo",  reo:"친구를 만나러", reoR:"chingureul mannareo",ja:"友達に会います",     jp:"友達に会い",     spots:["kape","gongwon","hakgyo"]}
+      ];
+      const OBJ = [
+        {subj:"책이",subjR:"chaeg-i",ja:"本",v:"あります"},
+        {subj:"가방이",subjR:"gabang-i",ja:"カバン",v:"あります"},
+        {subj:"고양이가",subjR:"goyangiga",ja:"猫",v:"います"},
+        {subj:"시계가",subjR:"sigyega",ja:"時計",v:"あります"},
+        {subj:"컵이",subjR:"keob-i",ja:"コップ",v:"あります"},
+        {subj:"안경이",subjR:"an-gyeong-i",ja:"メガネ",v:"あります"}
+      ];
+      const REF = [
+        {ko:"책상",r:"chaeksang",ja:"机",box:false}, {ko:"의자",r:"uija",ja:"椅子",box:false},
+        {ko:"침대",r:"chimdae",ja:"ベッド",box:false}, {ko:"상자",r:"sangja",ja:"箱",box:true},
+        {ko:"가방",r:"gabang",ja:"カバン",box:true}
+      ];
+      const POS = [
+        {ko:"위",r:"wi",ja:"上"}, {ko:"아래",r:"arae",ja:"下"}, {ko:"앞",r:"ap",ja:"前"},
+        {ko:"뒤",r:"dwi",ja:"後ろ"}, {ko:"옆",r:"yeop",ja:"横"}, {ko:"안",r:"an",ja:"中"}
+      ];
+
+      function fMove() {
+        const m = pick(MOVE), p = SPOT[pick(m.spots)];
+        return {
+          ja: `${p.ja}に${m.ja}。`,
+          ko: `${p.ko}에 ${m.ko}.`,
+          roman: `${p.e} ${m.r}.`,
+          w: [
+            {ko:p.ko,roman:p.r,ja:p.ja},
+            {ko:"-에",roman:"-e",ja:"〜に（到達点）"},
+            {ko:m.dict,roman:m.r.replace(/yo$/,""),ja:m.ja}
+          ],
+          g: `<strong>移動の助詞 <code>-에</code></strong>：가다/오다/다니다 などの移動動詞は到達点に <code>-에</code> を取る（<code>${p.ko}에 ${m.ko}</code>）。動作の場所 <code>-에서</code> とは区別する。`,
+          alts: []
+        };
+      }
+      function fActivity() {
+        const a = pick(ACT), p = SPOT[pick(a.spots)];
+        return {
+          ja: `${p.ja}で${a.ja}。`,
+          ko: `${p.ko}에서 ${a.ph}.`,
+          roman: `${p.eseo} ${a.phR}.`,
+          w: [
+            {ko:p.ko,roman:p.r,ja:p.ja},
+            {ko:"-에서",roman:"-eseo",ja:"〜で（動作の場所）"},
+            {ko:a.ph,roman:a.phR,ja:a.ja}
+          ],
+          g: `<strong>動作の場所 <code>-에서</code></strong>：「〜で（動作する）」。存在・到達の <code>-에</code> と使い分ける（<code>${p.ko}에서 ${a.ph}</code> ／ <code>${p.ko}에 가요</code>）。`,
+          alts: []
+        };
+      }
+      function fPurpose() {
+        const a = pick(ACT), p = SPOT[pick(a.spots)];
+        return {
+          ja: `${p.ja}へ${a.jp}に行きます。`,
+          ko: `${p.ko}에 ${a.reo} 가요.`,
+          roman: `${p.e} ${a.reoR} gayo.`,
+          w: [
+            {ko:p.ko,roman:p.r,ja:p.ja},
+            {ko:"-에",roman:"-e",ja:"〜に（到達点）"},
+            {ko:a.reo,roman:a.reoR,ja:`${a.jp}に（目的）`},
+            {ko:"가요",roman:"gayo",ja:"行きます"}
+          ],
+          g: `<strong>目的の <code>-(으)러 가다/오다</code></strong>：「〜しに行く」。母音・ㄹ語幹は <code>-러</code>、子音語幹は <code>-으러</code>（<code>먹다→먹으러</code>、<code>공부하다→공부하러</code>）。`,
+          alts: [`${p.ko}에 ${a.reo} 갑니다.`]
+        };
+      }
+      function fPosition() {
+        const o = pick(OBJ), pos = pick(POS);
+        const ref = pick(REF.filter(r => r.ja !== o.ja && (pos.ko !== "안" || r.box)));
+        return {
+          ja: `${o.ja}が${ref.ja}の${pos.ja}に${o.v}。`,
+          ko: `${o.subj} ${ref.ko} ${pos.ko}에 있어요.`,
+          roman: `${o.subjR} ${ref.r} ${pos.r}-e isseoyo.`,
+          w: [
+            {ko:o.subj,roman:o.subjR,ja:`${o.ja}＋主格助詞`},
+            {ko:ref.ko,roman:ref.r,ja:ref.ja},
+            {ko:pos.ko,roman:pos.r,ja:pos.ja},
+            {ko:"-에",roman:"-e",ja:"〜に（位置）"},
+            {ko:"있다",roman:"itda",ja:"ある／いる"}
+          ],
+          g: `<strong>位置名詞＋<code>-에</code></strong>：<code>위/아래/앞/뒤/옆/안</code>。「N1이/가 N2 ${pos.ko}에 있어요」で「N1がN2の${pos.ja}にある／いる」。`,
+          alts: [`${o.subj} ${ref.ko} ${pos.ko}에 있습니다.`]
+        };
+      }
+
+      const SETS = {
+        numbers: [fTime, fAge, fExist, fPrice, fDate, fWeekday],
+        place:   [fMove, fActivity, fPurpose, fPosition]
+      };
+      function generate(key, count) {
+        if (typeof key === "number") { count = key; key = "numbers"; } // 後方互換
         count = count || 10;
-        const frames = [fTime, fAge, fExist, fPrice, fDate, fWeekday];
+        const frames = SETS[key] || SETS.numbers;
         const seq = sample(frames, frames.length).concat(
           Array.from({length: Math.max(0, count - frames.length)}, () => pick(frames))
         );
@@ -3306,7 +3421,7 @@
           seen.add(s.ko); out.push(s);
         }
         let guard = 0;
-        while (out.length < count && guard++ < 80) {
+        while (out.length < count && guard++ < 120) {
           const s = pick(frames)();
           if (!seen.has(s.ko)) { seen.add(s.ko); out.push(s); }
         }
@@ -3633,7 +3748,7 @@
     }
     // 新しい10問を生成し、コースの進捗をリセット（＝毎回フレッシュな出題）
     function regenTemplate(id) {
-      const set = TMPL.generate(10);
+      const set = TMPL.generate((COURSES[id] && COURSES[id].template) || "numbers", 10);
       state.generated[id] = set;
       COURSES[id].sentences = set;
       state.mastered[id] = [];
@@ -3853,7 +3968,7 @@
         const badge = alreadyMastered ? "" : `<span class="mastered-badge">+1 マスター</span>`;
         verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">✓</span>正解！${badge}</div>`;
       } else if (cmp.verdict === "partial") {
-        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">↻</span>惜しい · もう一度挑戦</div>`;
+        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">↻</span>惜しい！もう一度挑戦</div>`;
       } else {
         verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">✕</span>模範解答を確認して再挑戦</div>`;
       }
