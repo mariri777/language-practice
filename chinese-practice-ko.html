@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-target="zh">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,673 +22,8 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #fff5f7; --bg-soft: #ffe7ee; --pink-light: #ffd0dd;
-      --pink: #ff8fa9; --pink-deep: #e76b8a; --pink-darker: #c84d6e;
-      --cream: #fffaf9; --white: #ffffff;
-      --ink: #4a2f3a; --ink-soft: #8a6a76; --ink-mute: #b69aa3;
-      --line: #f3d9d3;
-      --green: #6db99e; --green-soft: #d8f0e6;
-      --red: #e76b6b; --red-soft: #fde2e2;
-      --yellow: #f5c46b; --yellow-soft: #fbecc7;
-      --shadow: 0 14px 30px -18px rgba(231,107,138,.45);
-      --shadow-lg: 0 26px 60px -28px rgba(231,107,138,.55);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: "Plus Jakarta Sans", -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Noto Sans SC", sans-serif;
-      color: var(--ink);
-      background:
-        linear-gradient(135deg, #fff0f6 0%, #ffe1ec 25%, #fff6fa 50%, #ffd9e6 75%, #fff0f6 100%);
-      background-size: 400% 400%;
-      animation: bgShift 22s ease-in-out infinite;
-      background-attachment: fixed;
-      min-height: 100vh; line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      position: relative; overflow-x: hidden;
-    }
-    @keyframes bgShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    /* 부드럽게 빛나는 핑크 bokeh 레이어 */
-    body::before {
-      content: "";
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background:
-        radial-gradient(circle at 18% 22%, rgba(255,170,196,.55) 0%, transparent 30%),
-        radial-gradient(circle at 82% 18%, rgba(255,195,215,.5) 0%, transparent 32%),
-        radial-gradient(circle at 28% 82%, rgba(255,160,190,.45) 0%, transparent 30%),
-        radial-gradient(circle at 78% 78%, rgba(255,205,220,.5) 0%, transparent 34%),
-        radial-gradient(circle at 50% 50%, rgba(255,225,235,.35) 0%, transparent 45%);
-      filter: blur(2px);
-      animation: bokehDrift 16s ease-in-out infinite alternate;
-    }
-    @keyframes bokehDrift {
-      0%   { transform: translate3d(0, 0, 0) scale(1); }
-      50%  { transform: translate3d(-12px, 10px, 0) scale(1.05); }
-      100% { transform: translate3d(8px, -14px, 0) scale(1.02); }
-    }
-
-    /* 반짝이는 별빛 레이어 (CSS만으로 표현한 도트 패턴) */
-    body::after {
-      content: "";
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background-image:
-        radial-gradient(2px 2px at 12% 18%, rgba(255,255,255,.9), transparent 60%),
-        radial-gradient(1.5px 1.5px at 84% 14%, rgba(255,220,235,.9), transparent 60%),
-        radial-gradient(2px 2px at 24% 64%, rgba(255,255,255,.8), transparent 60%),
-        radial-gradient(1.2px 1.2px at 62% 32%, rgba(255,255,255,.9), transparent 60%),
-        radial-gradient(1.8px 1.8px at 92% 60%, rgba(255,235,245,.85), transparent 60%),
-        radial-gradient(1.5px 1.5px at 8% 88%, rgba(255,255,255,.85), transparent 60%),
-        radial-gradient(1.3px 1.3px at 46% 80%, rgba(255,220,235,.85), transparent 60%),
-        radial-gradient(2px 2px at 72% 90%, rgba(255,255,255,.9), transparent 60%),
-        radial-gradient(1.4px 1.4px at 36% 8%, rgba(255,255,255,.9), transparent 60%),
-        radial-gradient(1.6px 1.6px at 58% 56%, rgba(255,240,247,.85), transparent 60%);
-      animation: twinkle 4s ease-in-out infinite;
-      opacity: .85;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: .35; }
-      50%      { opacity: .95; }
-    }
-
-    .zh { font-family: "Noto Sans SC", "Plus Jakarta Sans", sans-serif; }
-
-    /* 떠다니는 꽃잎·하트·반짝임 */
-    .deco { position: fixed; pointer-events: none; z-index: 0; will-change: transform; }
-    .deco.petal  { animation: floatA 14s ease-in-out infinite; opacity: .6; }
-    .deco.heart  { animation: floatB 18s ease-in-out infinite; opacity: .55; }
-    .deco.spark  { animation: sparkle 3.6s ease-in-out infinite; opacity: .8; }
-    .deco.ribbon { animation: floatC 22s ease-in-out infinite; opacity: .5; }
-
-    .deco.p1 { top: 6%;  left: 4%;  font-size: 24px; animation-delay: 0s; }
-    .deco.p2 { top: 18%; right: 6%; font-size: 20px; animation-delay: -3s; }
-    .deco.p3 { bottom: 14%; left: 7%;  font-size: 26px; animation-delay: -6s; }
-    .deco.p4 { bottom: 24%; right: 5%; font-size: 18px; animation-delay: -9s; }
-    .deco.p5 { top: 48%; left: 2%;  font-size: 16px; animation-delay: -4s; }
-    .deco.p6 { top: 62%; right: 3%; font-size: 22px; animation-delay: -7s; }
-    .deco.h1d { top: 12%; left: 50%; font-size: 16px; animation-delay: -2s; }
-    .deco.h2d { bottom: 8%; right: 36%; font-size: 18px; animation-delay: -10s; }
-    .deco.s1 { top: 28%; left: 28%; font-size: 14px; animation-delay: 0s; }
-    .deco.s2 { top: 36%; right: 22%; font-size: 12px; animation-delay: -1.2s; }
-    .deco.s3 { bottom: 36%; left: 32%; font-size: 13px; animation-delay: -2.4s; }
-    .deco.s4 { bottom: 18%; right: 26%; font-size: 15px; animation-delay: -.8s; }
-    .deco.s5 { top: 70%; left: 18%; font-size: 11px; animation-delay: -1.8s; }
-    .deco.r1 { top: 40%; right: 10%; font-size: 18px; animation-delay: -5s; }
-
-    @keyframes floatA {
-      0%, 100% { transform: translateY(0)   rotate(0deg); }
-      50%      { transform: translateY(-22px) rotate(18deg); }
-    }
-    @keyframes floatB {
-      0%, 100% { transform: translate(0, 0)    rotate(-6deg) scale(1); }
-      50%      { transform: translate(-14px, -18px) rotate(8deg) scale(1.12); }
-    }
-    @keyframes floatC {
-      0%, 100% { transform: translateY(0) rotate(-12deg); opacity: .35; }
-      50%      { transform: translateY(-30px) rotate(10deg); opacity: .65; }
-    }
-    @keyframes sparkle {
-      0%, 100% { transform: scale(.6) rotate(0); opacity: .3; }
-      50%      { transform: scale(1.2) rotate(180deg); opacity: 1; }
-    }
-
-    /* 모션을 줄이고 싶은 사용자를 위한 설정 */
-    @media (prefers-reduced-motion: reduce) {
-      body, body::before, body::after, .deco { animation: none !important; }
-    }
-
-    .container { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
-
-    .header {
-      display: flex; flex-direction: column; align-items: center;
-      text-align: center; margin-bottom: 22px;
-    }
-    .header-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--pink-deep); background: var(--white); padding: 7px 14px;
-      border-radius: 999px; box-shadow: var(--shadow); margin-bottom: 14px;
-    }
-    .header-eyebrow::before, .header-eyebrow::after { content: "✿"; font-size: 13px; }
-    .header h1 {
-      font-family: "Fraunces", serif; font-weight: 600;
-      font-size: clamp(28px, 5vw, 42px); line-height: 1.1; letter-spacing: -.02em;
-      text-align: center;
-      cursor: pointer; display: inline-block;
-      transition: transform .15s ease, color .15s ease, text-shadow .3s ease;
-      text-shadow: 0 2px 18px rgba(231,107,138,.15);
-    }
-    .header h1:hover { transform: translateY(-1px); text-shadow: 0 4px 22px rgba(231,107,138,.3); }
-    .header h1:hover .accent { color: var(--pink); }
-    .header h1:active { transform: translateY(0); }
-    .header h1 .accent { color: var(--pink-deep); font-style: italic; font-weight: 500; }
-    .header h1 .zh-title {
-      display: block; font-family: "Noto Sans SC", serif; font-weight: 500;
-      font-size: .55em; color: var(--pink); margin-top: 4px; letter-spacing: .04em;
-      text-align: center;
-    }
-
-    .stats { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 18px 0 20px; }
-    .stat-pill {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: var(--white); padding: 9px 14px; border-radius: 999px;
-      box-shadow: var(--shadow); font-size: 12px; color: var(--ink-soft);
-    }
-    .stat-pill .icon { font-size: 14px; }
-    .stat-pill .value {
-      font-family: "JetBrains Mono", monospace; font-weight: 600;
-      color: var(--pink-darker); font-size: 13px;
-    }
-    .stat-pill .goal-met { color: var(--green); }
-
-    /* ---- Script (간체/번체) toggle ---- */
-    .script-toggle {
-      display: inline-flex;
-      padding: 3px;
-      background: var(--white);
-      border-radius: 999px;
-      box-shadow: var(--shadow);
-      margin: 0 0 18px;
-    }
-    .script-toggle-row {
-      display: flex;
-      justify-content: center;
-      margin: -8px 0 8px;
-    }
-    .script-toggle-btn {
-      border: none;
-      background: transparent;
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--ink-soft);
-      cursor: pointer;
-      font-family: inherit;
-      letter-spacing: 0.04em;
-      transition: background 0.15s, color 0.15s;
-    }
-    .script-toggle-btn.active {
-      background: var(--pink);
-      color: #fff;
-      box-shadow: 0 2px 6px rgba(231, 107, 138, 0.3);
-    }
-    .script-toggle-btn:not(.active):hover { color: var(--pink-deep); }
-
-    /* ---- Course banner ---- */
-    .course-banner {
-      background: linear-gradient(135deg, #fff 0%, #fff5f7 100%);
-      border: 1px solid var(--line); border-radius: 22px;
-      padding: 18px 22px; box-shadow: var(--shadow);
-      margin-bottom: 20px;
-    }
-    .course-info { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-    .hsk-tag {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 11px; font-weight: 700; letter-spacing: .08em;
-      color: var(--white); background: linear-gradient(135deg, var(--pink), var(--pink-deep));
-      padding: 4px 10px; border-radius: 999px;
-    }
-    .hsk-tag::before { content: "🌸"; }
-    .course-label {
-      font-family: "JetBrains Mono", monospace; font-size: 11px;
-      color: var(--ink-mute); letter-spacing: .05em;
-    }
-    .course-title {
-      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
-      font-weight: 500; font-size: 20px; color: var(--ink); margin-bottom: 12px;
-    }
-    .course-progress { display: flex; align-items: center; gap: 12px; }
-    .progress-track {
-      flex: 1; height: 8px; background: var(--bg-soft);
-      border-radius: 999px; overflow: hidden;
-    }
-    .progress-bar {
-      height: 100%; background: linear-gradient(90deg, #ffc6a8, var(--pink));
-      border-radius: 999px; transition: width .5s cubic-bezier(.2,.8,.2,1); width: 0%;
-    }
-    .progress-text {
-      font-family: "JetBrains Mono", monospace; font-size: 12px;
-      color: var(--ink-soft); white-space: nowrap;
-    }
-    .progress-text .mn { color: var(--pink-darker); font-weight: 600; }
-    .course-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-    .mini-btn {
-      font-family: inherit; font-size: 12px; font-weight: 600;
-      padding: 6px 12px; border-radius: 999px; cursor: pointer;
-      background: var(--white); color: var(--ink-soft); border: 1px solid var(--line);
-      transition: all .2s ease;
-    }
-    .mini-btn:hover { border-color: var(--pink); color: var(--pink-deep); }
-
-    /* ---- Card ---- */
-    .card {
-      background: var(--white); border: 1px solid var(--line);
-      border-radius: 28px; padding: 32px 28px;
-      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
-    }
-    .card::before {
-      content: ""; position: absolute; top: -60px; right: -60px;
-      width: 160px; height: 160px;
-      background: radial-gradient(circle, #ffd6dd 0%, transparent 70%);
-      border-radius: 50%; opacity: .55; pointer-events: none;
-    }
-    .card::after {
-      content: ""; position: absolute; bottom: -50px; left: -50px;
-      width: 130px; height: 130px;
-      background: radial-gradient(circle, #ffe4ec 0%, transparent 70%);
-      border-radius: 50%; opacity: .5; pointer-events: none;
-    }
-
-    .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: relative; z-index: 1; }
-    .q-num {
-      font-family: "JetBrains Mono", monospace; font-size: 11px;
-      color: var(--ink-mute); letter-spacing: .08em;
-    }
-    .q-num .now { color: var(--pink-darker); font-weight: 600; }
-    .fav-btn {
-      background: transparent; border: none; cursor: pointer; font-size: 22px;
-      transition: transform .2s ease; filter: grayscale(.8); opacity: .5;
-    }
-    .fav-btn:hover { transform: scale(1.15); }
-    .fav-btn.active { filter: none; opacity: 1; animation: pop .3s ease; }
-    @keyframes pop { 0%{transform:scale(1);} 50%{transform:scale(1.3);} 100%{transform:scale(1);} }
-
-    .question-label {
-      font-size: 11px; font-weight: 600; letter-spacing: .15em;
-      text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px;
-    }
-    .question-ja {
-      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
-      font-weight: 500; font-size: clamp(20px, 4vw, 26px);
-      line-height: 1.5; color: var(--ink); margin-bottom: 22px;
-      position: relative; z-index: 1;
-    }
-
-    .input-wrap { position: relative; z-index: 1; }
-    .answer-input {
-      width: 100%; font-family: "Noto Sans SC", sans-serif;
-      font-size: 20px; padding: 16px 18px;
-      border: 2px solid var(--line); border-radius: 18px;
-      background: var(--cream); color: var(--ink);
-      resize: vertical; min-height: 76px;
-      transition: border-color .2s ease, background .2s ease;
-    }
-    .answer-input::placeholder { color: var(--ink-mute); font-family: inherit; font-size: 14px; }
-    .answer-input:focus { outline: none; border-color: var(--pink); background: var(--white); }
-    .answer-input:disabled { opacity: .7; cursor: not-allowed; }
-
-    .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; position: relative; z-index: 1; }
-    .btn {
-      font-family: inherit; font-size: 13px; font-weight: 600;
-      padding: 11px 20px; border-radius: 999px; border: none;
-      cursor: pointer; transition: all .2s ease;
-      display: inline-flex; align-items: center; gap: 7px;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--pink), var(--pink-deep));
-      color: var(--white); box-shadow: 0 8px 20px -8px rgba(231,107,138,.6);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(231,107,138,.7); }
-    .btn-primary:disabled { background: var(--ink-mute); cursor: not-allowed; transform: none; box-shadow: none; }
-    .btn-ghost { background: var(--white); color: var(--ink-soft); border: 1.5px solid var(--line); }
-    .btn-ghost:hover { border-color: var(--pink); color: var(--pink-deep); }
-    .btn-next {
-      background: linear-gradient(135deg, var(--pink-deep), var(--pink-darker));
-      color: var(--white); box-shadow: 0 8px 20px -8px rgba(200,77,110,.6);
-    }
-    .btn-next:hover { transform: translateY(-2px); }
-
-    .hint {
-      margin-top: 12px; padding: 11px 14px;
-      background: var(--yellow-soft); border-radius: 14px;
-      font-size: 13px; color: #8a6a26; position: relative; z-index: 1;
-    }
-    .hint::before { content: "💡 "; }
-
-    /* ---- Result ---- */
-    .result { margin-top: 26px; position: relative; z-index: 1; animation: fadeUp .4s ease; }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
-
-    .verdict {
-      display: flex; align-items: center; gap: 10px;
-      padding: 13px 16px; border-radius: 16px;
-      font-size: 15px; font-weight: 600; margin-bottom: 18px;
-    }
-    .verdict-correct { background: var(--green-soft); color: #2f7c5e; }
-    .verdict-partial { background: var(--yellow-soft); color: #8a6a26; }
-    .verdict-wrong { background: var(--red-soft); color: #a23838; }
-    .verdict .emoji { font-size: 22px; }
-    .verdict-correct .mastered-badge {
-      margin-left: auto; font-size: 11px; padding: 4px 10px; border-radius: 999px;
-      background: rgba(255,255,255,.6); color: #2f7c5e; font-weight: 700;
-    }
-
-    .answer-block {
-      background: var(--bg-soft); border-radius: 18px;
-      padding: 18px 20px; margin-bottom: 16px;
-    }
-    .answer-block .label {
-      font-size: 11px; font-weight: 700; letter-spacing: .18em;
-      color: var(--pink-deep); text-transform: uppercase; margin-bottom: 6px;
-    }
-    .answer-zh {
-      font-family: "Noto Sans SC", sans-serif; font-size: 24px; font-weight: 500;
-      color: var(--ink); line-height: 1.4;
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    }
-    .answer-pinyin {
-      font-style: italic; color: var(--pink-darker); font-size: 14px;
-      margin-top: 4px; font-family: "Plus Jakarta Sans", serif;
-    }
-    .speak-btn {
-      background: var(--white); border: 1.5px solid var(--line);
-      width: 36px; height: 36px; border-radius: 50%;
-      cursor: pointer; font-size: 15px;
-      display: inline-flex; align-items: center; justify-content: center;
-      transition: all .2s ease;
-    }
-    .speak-btn:hover { background: var(--pink); color: var(--white); border-color: var(--pink); transform: scale(1.08); }
-    .your-answer {
-      font-family: "Noto Sans SC", sans-serif; font-size: 17px;
-      color: var(--ink-soft); margin-top: 4px;
-    }
-
-    .section-title {
-      font-size: 12px; font-weight: 700; letter-spacing: .12em;
-      color: var(--pink-deep); text-transform: uppercase;
-      margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
-    }
-    .section-title::before { content: ""; width: 6px; height: 6px; background: var(--pink); border-radius: 50%; }
-
-    .grammar-block {
-      background: linear-gradient(135deg, #fff5f7 0%, #fff 100%);
-      border: 1px solid var(--line); border-left: 4px solid var(--pink);
-      border-radius: 14px; padding: 15px 17px;
-      font-size: 14px; line-height: 1.8; color: var(--ink);
-      margin-bottom: 20px;
-    }
-    .grammar-block strong { color: var(--pink-darker); font-weight: 700; }
-    .grammar-block code {
-      font-family: "Noto Sans SC", "JetBrains Mono", monospace;
-      background: var(--bg-soft); padding: 1px 6px;
-      border-radius: 4px; color: var(--pink-darker); font-size: .95em;
-    }
-    .grammar-block .pat {
-      display: inline-block; background: var(--white); border: 1px dashed var(--pink-light);
-      padding: 2px 8px; border-radius: 6px; margin: 2px 0; font-family: "Noto Sans SC", sans-serif;
-    }
-
-    .words-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-      gap: 10px; margin-bottom: 18px;
-    }
-    .word-item {
-      background: var(--white); border: 1px solid var(--line);
-      border-radius: 14px; padding: 11px 13px;
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-    .word-item:hover { transform: translateY(-2px); box-shadow: 0 8px 16px -8px rgba(231,107,138,.3); }
-    .word-zh { font-family: "Noto Sans SC", sans-serif; font-size: 19px; font-weight: 600; color: var(--ink); }
-    .word-pinyin { font-style: italic; color: var(--pink-darker); font-size: 12px; margin-top: 2px; }
-    .word-ja { font-size: 12px; color: var(--ink-soft); margin-top: 3px; line-height: 1.45; }
-
-    .next-wrap { margin-top: 20px; display: flex; justify-content: center; }
-
-    /* ---- Modal ---- */
-    .modal {
-      position: fixed; inset: 0; background: rgba(74,47,58,.5);
-      display: none; align-items: center; justify-content: center;
-      z-index: 100; padding: 20px; backdrop-filter: blur(4px);
-    }
-    .modal.open { display: flex; animation: fadeIn .25s ease; }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-    .modal-content {
-      background: var(--white); border-radius: 24px;
-      padding: 26px 24px; max-width: 520px; width: 100%;
-      max-height: 85vh; overflow-y: auto; position: relative;
-      box-shadow: var(--shadow-lg); animation: slideUp .3s cubic-bezier(.2,.8,.2,1);
-    }
-    @keyframes slideUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
-    .modal-close {
-      position: absolute; top: 12px; right: 14px;
-      background: var(--bg-soft); border: none;
-      width: 32px; height: 32px; border-radius: 50%;
-      font-size: 18px; color: var(--ink-soft); cursor: pointer;
-      transition: all .2s ease;
-    }
-    .modal-close:hover { background: var(--pink); color: var(--white); }
-    .modal h3 {
-      font-family: "Fraunces", serif; font-weight: 500;
-      font-size: 22px; color: var(--ink); margin-bottom: 4px;
-    }
-    .modal-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; }
-
-    .course-list { display: flex; flex-direction: column; gap: 10px; }
-    .course-list-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 14px; border-radius: 14px;
-      border: 1.5px solid var(--line); background: var(--white);
-      cursor: pointer; transition: all .2s ease;
-    }
-    .course-list-item:hover { border-color: var(--pink); transform: translateX(2px); }
-    .course-list-item.current {
-      background: linear-gradient(135deg, #fff 0%, var(--bg-soft) 100%);
-      border-color: var(--pink);
-    }
-    .course-list-item.done { background: var(--green-soft); border-color: var(--green); }
-    .cli-hsk {
-      font-size: 10px; font-weight: 700; letter-spacing: .05em;
-      color: var(--white); background: var(--pink-deep);
-      padding: 3px 7px; border-radius: 6px; flex-shrink: 0;
-    }
-    .cli-meta { flex: 1; }
-    .cli-num { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--ink-mute); }
-    .cli-title { font-size: 14px; color: var(--ink); font-weight: 500; margin-top: 1px; }
-    .cli-prog {
-      font-family: "JetBrains Mono", monospace; font-size: 12px;
-      color: var(--pink-darker); font-weight: 600; flex-shrink: 0;
-    }
-    .cli-prog.complete { color: var(--green); }
-
-    /* Course complete modal */
-    .complete-content { text-align: center; padding: 36px 24px; }
-    .complete-emoji { font-size: 54px; margin-bottom: 8px; animation: pop .6s ease; }
-    .complete-content h3 { font-size: 26px; margin-bottom: 6px; }
-    .complete-content p { color: var(--ink-soft); margin-bottom: 20px; }
-    .complete-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-
-    .footer { margin-top: 48px; text-align: center; font-size: 12px; color: var(--ink-mute); }
-    .footer .footer-meta { margin-top: 14px; font-size: 11px; opacity: 0.85; }
-    .footer .footer-copy { margin-top: 4px; font-size: 11px; }
-    .footer a { color: var(--pink-deep); text-decoration: none; }
-    .footer a:hover { text-decoration: underline; }
-    .footer .heart { color: var(--pink-deep); }
-
-    .diff-correct { color: var(--green); font-weight: 600; }
-    .diff-wrong { color: var(--red); text-decoration: line-through; }
-    .diff-missing { color: var(--pink-darker); font-weight: 600; background: var(--bg-soft); padding: 0 4px; border-radius: 3px; }
-
-    /* ---- Views (home / level / intro / practice) ---- */
-    .view[hidden] { display: none !important; }
-
-    .view-title {
-      font-family: "Fraunces", serif; font-weight: 500;
-      font-size: 22px; color: var(--ink); text-align: center;
-      margin: 8px 0 22px;
-    }
-    .back-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: inherit; font-size: 13px; font-weight: 600;
-      color: var(--pink-deep); background: var(--white);
-      border: 1px solid var(--line); border-radius: 999px;
-      padding: 8px 14px; cursor: pointer; margin-bottom: 16px;
-      transition: all .2s ease;
-    }
-    .back-link:hover { background: var(--bg-soft); transform: translateX(-2px); }
-
-    /* HSK level cards */
-    .hsk-cards {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 14px; margin-bottom: 20px;
-    }
-    .hsk-card {
-      position: relative; display: flex; flex-direction: column; gap: 6px;
-      padding: 22px 20px; text-align: left;
-      background: var(--white); border: 1.5px solid var(--line);
-      border-radius: 22px; cursor: pointer; box-shadow: var(--shadow);
-      transition: all .25s cubic-bezier(.2,.8,.2,1);
-      overflow: hidden; font-family: inherit;
-    }
-    .hsk-card::before {
-      content: ""; position: absolute; top: -30px; right: -30px;
-      width: 90px; height: 90px;
-      background: radial-gradient(circle, var(--pink-light) 0%, transparent 70%);
-      border-radius: 50%; opacity: .7; transition: transform .4s ease;
-    }
-    .hsk-card:hover {
-      transform: translateY(-4px); border-color: var(--pink);
-      box-shadow: var(--shadow-lg);
-    }
-    .hsk-card:hover::before { transform: scale(1.4); }
-    .hsk-card-num {
-      font-family: "Fraunces", serif; font-weight: 600;
-      font-size: 26px; color: var(--pink-darker);
-      letter-spacing: -.01em; position: relative; z-index: 1;
-    }
-    .hsk-card-label {
-      font-size: 12px; color: var(--ink-soft); position: relative; z-index: 1;
-    }
-    .hsk-card-progress {
-      margin-top: 6px; font-family: "JetBrains Mono", monospace;
-      font-size: 12px; color: var(--pink-deep); font-weight: 600;
-      position: relative; z-index: 1;
-    }
-    .hsk-card-progress .done-tag {
-      display: inline-block; margin-left: 6px;
-      font-size: 10px; color: var(--green); font-weight: 700;
-    }
-
-    /* Course list (level view) */
-    .course-cards {
-      display: flex; flex-direction: column; gap: 12px;
-    }
-    .course-card {
-      display: flex; flex-direction: column; gap: 8px;
-      padding: 18px 20px; text-align: left;
-      background: var(--white); border: 1.5px solid var(--line);
-      border-radius: 18px; cursor: pointer; box-shadow: var(--shadow);
-      transition: all .2s ease; font-family: inherit;
-    }
-    .course-card:hover { transform: translateX(4px); border-color: var(--pink); }
-    .course-card.done { background: linear-gradient(135deg, #fff 0%, var(--green-soft) 100%); border-color: var(--green); }
-    .course-card.current { border-color: var(--pink); border-width: 2px; }
-    .cc-head {
-      display: flex; align-items: center; gap: 10px;
-    }
-    .cc-num {
-      font-family: "JetBrains Mono", monospace; font-size: 11px;
-      font-weight: 600; color: var(--pink-darker);
-      background: var(--bg-soft); padding: 3px 9px; border-radius: 6px;
-    }
-    .course-card.done .cc-num { background: rgba(255,255,255,.8); color: var(--green); }
-    .cc-status {
-      margin-left: auto; font-size: 11px; font-weight: 700;
-      color: var(--ink-mute); font-family: "JetBrains Mono", monospace;
-    }
-    .cc-status.done { color: var(--green); }
-    .cc-title {
-      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
-      font-weight: 500; font-size: 18px; color: var(--ink);
-    }
-    .cc-bar-wrap { display: flex; align-items: center; gap: 10px; }
-    .cc-track {
-      flex: 1; height: 6px; background: var(--bg-soft);
-      border-radius: 999px; overflow: hidden;
-    }
-    .cc-bar {
-      height: 100%; background: linear-gradient(90deg, #ffc6a8, var(--pink));
-      border-radius: 999px; transition: width .5s cubic-bezier(.2,.8,.2,1);
-    }
-    .course-card.done .cc-bar { background: var(--green); }
-
-    /* Intro view */
-    .intro-card {
-      background: var(--white); border: 1px solid var(--line);
-      border-radius: 24px; padding: 28px 24px;
-      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
-    }
-    .intro-card::before {
-      content: ""; position: absolute; top: -60px; right: -60px;
-      width: 150px; height: 150px;
-      background: radial-gradient(circle, #ffd6dd 0%, transparent 70%);
-      border-radius: 50%; opacity: .5; pointer-events: none;
-    }
-    .intro-meta {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 10px; position: relative; z-index: 1;
-    }
-    .intro-title {
-      font-family: "Fraunces", "Hiragino Kaku Gothic ProN", serif;
-      font-weight: 500; font-size: 24px; line-height: 1.3;
-      color: var(--ink); margin-bottom: 14px;
-      position: relative; z-index: 1;
-    }
-    .intro-overview {
-      font-size: 14px; line-height: 1.85; color: var(--ink-soft);
-      margin-bottom: 22px; position: relative; z-index: 1;
-    }
-    .intro-section-title {
-      font-size: 12px; font-weight: 700; letter-spacing: .15em;
-      color: var(--pink-deep); text-transform: uppercase;
-      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
-      position: relative; z-index: 1;
-    }
-    .intro-section-title::before {
-      content: "🌸"; font-size: 14px;
-    }
-    .intro-points {
-      list-style: none; padding: 0; margin: 0 0 24px;
-      display: flex; flex-direction: column; gap: 10px;
-      position: relative; z-index: 1;
-    }
-    .intro-points li {
-      padding: 12px 14px 12px 38px; position: relative;
-      background: var(--bg-soft); border-radius: 12px;
-      font-size: 14px; line-height: 1.7; color: var(--ink);
-    }
-    .intro-points li::before {
-      content: "✿"; position: absolute; left: 14px; top: 12px;
-      color: var(--pink); font-size: 14px;
-    }
-    .intro-points code {
-      font-family: "Noto Sans SC", "JetBrains Mono", monospace;
-      background: var(--white); padding: 1px 6px;
-      border-radius: 4px; color: var(--pink-darker); font-size: .95em;
-    }
-    .intro-points strong { color: var(--pink-darker); font-weight: 700; }
-    .intro-start {
-      width: 100%; justify-content: center; padding: 14px 20px !important;
-      font-size: 15px !important; position: relative; z-index: 1;
-    }
-
-    @media (max-width: 640px) {
-      .container { padding: 24px 14px 56px; }
-      .card { padding: 22px 18px; border-radius: 20px; }
-      .course-banner { padding: 14px 16px; border-radius: 18px; }
-      .question-ja { font-size: 18px; }
-      .answer-zh { font-size: 21px; }
-      .answer-input { font-size: 18px; }
-      .stat-pill { padding: 7px 11px; font-size: 11px; }
-      .btn { padding: 10px 16px; font-size: 12px; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="daily.css?v=6" />
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
 <script src="daily.js?v=1"></script>
@@ -719,11 +54,14 @@
       </h1>
     </header>
 
-    <div class="stats">
-      <span class="stat-pill"><span class="icon">🔥</span>연속 <span class="value" id="streak">0</span> 일</span>
-      <span class="stat-pill"><span class="icon">🌸</span>오늘 <span class="value" id="today-count">0</span> / 10</span>
-      <span class="stat-pill"><span class="icon">✨</span>완료 <span class="value" id="done-courses">0</span> 코스</span>
-      <span class="stat-pill"><span class="icon">📚</span>누적 <span class="value" id="total">0</span> 문장</span>
+    <div class="goal">
+      <div class="goal-ring" id="goal-ring">
+        <span class="goal-frac"><b id="today-count">0</b><i>/10</i></span>
+      </div>
+      <div class="goal-text">
+        <div class="goal-title">오늘의 목표</div>
+        <div class="goal-sub">하루 10문장</div>
+      </div>
     </div>
 
     <div class="script-toggle-row">
@@ -735,7 +73,7 @@
 
     <!-- ============ HOME VIEW ============ -->
     <div class="view view-home" id="view-home">
-      <h2 class="view-title">배우고 싶은 급수를 선택하세요 ✿</h2>
+      <h2 class="view-title">배우고 싶은 급수를 선택하세요</h2>
       <div class="hsk-cards">
         <button class="hsk-card" data-hsk="1">
           <span class="hsk-card-num">HSK 1</span>
@@ -764,6 +102,8 @@
     <div class="view view-level" id="view-level" hidden>
       <button class="back-link" data-back="home">← HSK 선택으로</button>
       <h2 class="view-title">HSK <span id="level-num">1</span> 코스 목록</h2>
+      <div class="level-progress" id="level-progress"></div>
+      <div class="stamps" id="stamps"></div>
       <div class="course-cards" id="level-courses"></div>
     </div>
 
@@ -779,7 +119,7 @@
         <p class="intro-overview" id="intro-overview"></p>
         <div class="intro-section-title">이 코스에서 배울 내용</div>
         <ul class="intro-points" id="intro-points"></ul>
-        <button class="btn btn-primary intro-start" id="intro-start-btn">10문제 도전 ✿</button>
+        <button class="btn btn-primary intro-start" id="intro-start-btn">10문제 도전</button>
       </div>
     </div>
 
@@ -819,14 +159,19 @@
         </div>
 
         <div class="actions">
-          <button class="btn btn-primary" id="check-btn">✿ 정답 확인</button>
-          <button class="btn btn-ghost" id="hint-btn">💡 힌트</button>
-          <button class="btn btn-ghost" id="skip-btn">⤴ 스킵</button>
+          <button class="btn btn-ghost" id="hint-btn">힌트</button>
+          <button class="btn btn-ghost" id="skip-btn">스킵</button>
         </div>
 
         <div id="hint-area"></div>
-        <div id="result-area"></div>
       </main>
+      <div id="result-area"></div>
+    </div>
+
+    <div class="actionbar">
+      <div class="actionbar-inner">
+        <button class="btn-primary" id="check-btn" data-mode="check">정답 확인</button>
+      </div>
     </div>
 
     <footer class="footer">
@@ -839,9 +184,9 @@
   <!-- Course complete modal -->
   <div class="modal" id="complete-modal">
     <div class="modal-content complete-content">
-      <div class="complete-emoji">🌸✨🌸</div>
+      <div class="complete-emoji">🎉</div>
       <h3>코스 완료!</h3>
-      <p>10문제 모두 마스터했습니다 太棒了！</p>
+      <p>10문제 모두 마스터했습니다!</p>
       <div class="complete-actions">
         <button class="btn btn-next" id="next-course-btn">다음 코스로 →</button>
         <button class="btn btn-ghost" id="replay-course-btn">다시 한 번</button>
@@ -2371,7 +1716,15 @@
         else el.setAttribute("hidden", "");
       });
       currentView = name;
+      document.body.dataset.view = name;
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function setMainButton(mode) {
+      if (!elCheckBtn) return;
+      if (mode === "next") { elCheckBtn.textContent = "다음 문제  →"; elCheckBtn.classList.add("is-next"); elCheckBtn.dataset.mode = "next"; }
+      else if (mode === "retry") { elCheckBtn.textContent = "다시 도전  →"; elCheckBtn.classList.add("is-next"); elCheckBtn.dataset.mode = "retry"; }
+      else { elCheckBtn.textContent = "정답 확인"; elCheckBtn.classList.remove("is-next"); elCheckBtn.dataset.mode = "check"; }
     }
 
     function renderHome() {
@@ -2414,6 +1767,20 @@
         `;
       }).join("");
       elLevelCourses.innerHTML = html;
+
+      const totalSent = items.reduce((a, x) => a + x.c.sentences.length, 0);
+      const doneSent = items.reduce((a, x) => a + Math.min(masteredList(x.i).length, x.c.sentences.length), 0);
+      const lvPct = totalSent ? Math.round((doneSent / totalSent) * 100) : 0;
+      const lp = document.getElementById("level-progress");
+      if (lp) lp.innerHTML =
+        `<div class="lp-top"><span class="lp-label">HSK ${hsk} 전체 진도</span><span class="lp-pct">${lvPct}%</span></div>` +
+        `<div class="lp-track"><div class="lp-bar" style="width:${lvPct}%"></div></div>`;
+      const st = document.getElementById("stamps");
+      if (st) st.innerHTML = items.map(({ c, i }) => {
+        const done = masteredList(i).length >= c.sentences.length;
+        return `<span class="stamp ${done ? "on" : ""}" title="Course ${i + 1}">${done ? "✓" : (i + 1)}</span>`;
+      }).join("");
+
       elLevelCourses.querySelectorAll("[data-course-id]").forEach(el => {
         el.addEventListener("click", () => {
           const id = parseInt(el.dataset.courseId);
@@ -2437,7 +1804,7 @@
       const mc = masteredList(courseId).length;
       const total = c.sentences.length;
       const done = mc >= total;
-      elIntroStartBtn.textContent = done ? "🌸 다시 도전" : (mc > 0 ? "이어서 도전 ✿" : "10문제 도전 ✿");
+      elIntroStartBtn.textContent = done ? "다시 도전" : (mc > 0 ? "이어서 도전" : "10문제 도전");
       showView("intro");
     }
 
@@ -2461,11 +1828,13 @@
           elInput.value = (ip && ip.sentIdx === targetIdx ? (ip.input || "") : "");
           elInput.disabled = false;
           elCheckBtn.disabled = false;
+          setMainButton("check");
           elInput.focus();
           elHintArea.innerHTML = "";
           elResult.innerHTML = "";
           renderFav();
           renderHeader();
+          animateCard();
           return;
         }
       }
@@ -2599,11 +1968,18 @@
       elInput.value = "";
       elInput.disabled = false;
       elCheckBtn.disabled = false;
-      elInput.focus();
+      setMainButton("check");
       elHintArea.innerHTML = "";
       elResult.innerHTML = "";
       renderFav();
       renderHeader();
+      animateCard();
+    }
+
+    function animateCard() {
+      const c = document.querySelector("#view-practice .card");
+      if (!c) return;
+      c.classList.remove("slide-in"); void c.offsetWidth; c.classList.add("slide-in");
     }
 
     // Retry the SAME sentence without picking a new one
@@ -2613,6 +1989,7 @@
       elInput.value = "";
       elInput.disabled = false;
       elCheckBtn.disabled = false;
+      setMainButton("check");
       elHintArea.innerHTML = "";
       elResult.innerHTML = "";
       elInput.focus();
@@ -2631,12 +2008,26 @@
       elQProgress.textContent = mc + 1 > total ? total : (mc + 1);
     }
 
+    let goalCelebratedToday = (state.todayCount >= 10);
     function renderStats() {
-      elStreak.textContent = state.streak;
-      elTodayCount.textContent = state.todayCount;
-      elDoneCourses.textContent = state.completedCourses.length;
-      elTotal.textContent = state.total;
-      elTodayCount.classList.toggle("goal-met", state.todayCount >= 10);
+      const t = document.getElementById("today-count");
+      if (t) t.textContent = state.todayCount;
+      updateGoalRing();
+    }
+    function updateGoalRing() {
+      const ring = document.getElementById("goal-ring");
+      if (ring) {
+        const pct = Math.min(100, Math.round((state.todayCount / 10) * 100));
+        ring.style.setProperty("--p", pct);
+        ring.classList.toggle("done", state.todayCount >= 10);
+      }
+      if (state.todayCount >= 10 && !goalCelebratedToday) { goalCelebratedToday = true; showToast("오늘의 목표 달성! 🎉"); }
+    }
+    function showToast(msg) {
+      let el = document.getElementById("toast");
+      if (!el) { el = document.createElement("div"); el.id = "toast"; el.className = "toast"; document.body.appendChild(el); }
+      el.textContent = msg; el.classList.remove("show"); void el.offsetWidth; el.classList.add("show");
+      clearTimeout(showToast._t); showToast._t = setTimeout(() => el.classList.remove("show"), 2600);
     }
 
     // ========================================================================
@@ -2697,12 +2088,12 @@
       let alreadyMastered = masteredList(state.currentCourseId).includes(currentSentIdx);
       let verdictHTML;
       if (isCorrect) {
-        const badge = alreadyMastered ? "" : `<span class="mastered-badge">✿ +1 마스터</span>`;
-        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">🌸</span>완벽해요！太棒了！${badge}</div>`;
+        const badge = alreadyMastered ? "" : `<span class="mastered-badge">+1 마스터</span>`;
+        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">✓</span>정답입니다${badge}</div>`;
       } else if (cmp.verdict === "partial") {
-        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">🌷</span>아쉬워요！이 문장을 다시 도전해 보세요</div>`;
+        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">↻</span>조금 아쉬워요 · 다시 도전해요</div>`;
       } else {
-        verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">💭</span>모범 답안을 외우고 다시 도전</div>`;
+        verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">✕</span>모범 답안을 확인하고 다시</div>`;
       }
 
       const wordsHTML = currentSent.w.map(w => `
@@ -2735,7 +2126,7 @@
           <div class="section-title">단어</div>
           <div class="words-grid">${wordsHTML}</div>
           <div class="next-wrap">
-            <button class="btn btn-next" id="next-btn">${isCorrect ? "다음 문제 ✿" : "다시 도전 →"}</button>
+            <button class="btn btn-next" id="next-btn">${isCorrect ? "다음 문제 →" : "다시 도전 →"}</button>
           </div>
         </div>
       `;
@@ -2773,8 +2164,8 @@
         }
       }
       checked = true;
-      elCheckBtn.disabled = true;
       elInput.disabled = true;
+      setMainButton(isCorrect ? "next" : "retry");
       setTimeout(() => speak(currentSent.zh), 350);
     }
 
@@ -2793,7 +2184,7 @@
 
     function showCompleteModal() {
       const isLast = state.currentCourseId === COURSES.length - 1;
-      elNextCourseBtn.textContent = isLast ? "🌸 홈으로 돌아가기" : "다음 코스로 →";
+      elNextCourseBtn.textContent = isLast ? "홈으로 돌아가기" : "다음 코스로 →";
       openModal(elCompleteModal);
     }
 
@@ -2910,43 +2301,16 @@
     // EVENT LISTENERS
     // ========================================================================
     elCheckBtn.addEventListener("click", () => {
-      if (!currentSent || checked) return;
-      renderResult(elInput.value);
+      const mode = elCheckBtn.dataset.mode || "check";
+      if (mode === "check") { if (!currentSent || checked) return; renderResult(elInput.value); }
+      else if (mode === "next") { pickNext(); }
+      else { retryCurrent(); }
+      elCheckBtn.disabled = true;
+      setTimeout(() => { elCheckBtn.disabled = false; }, 360);
     });
     elHintBtn.addEventListener("click", showHint);
     elSkipBtn.addEventListener("click", pickNext);
-    // Enter로 정답 확인 (Shift+Enter는 줄바꿈). IME 변환 중에는 무시.
-    // 채점에 사용된 Enter가 그대로 「다음」으로 흘러가지 않도록,
-    // 한 번 키를 떼고 나서 (keyup을 거친 후가 아니면) 「다음」을 발화시키지 않음.
-    let enterArmedForNext = false;
-
-    elInput.addEventListener("keydown", (e) => {
-      if (e.key !== "Enter") return;
-      if (e.isComposing || e.keyCode === 229) return;
-      if (e.shiftKey) return; // 줄바꿈은 Shift+Enter
-      if (checked) return;
-      e.preventDefault();
-      e.stopPropagation();
-      enterArmedForNext = false; // 채점 직후는 disarmed
-      elCheckBtn.click();
-    });
-
-    // 채점 후 (input이 disabled) Enter로 「다음/다시 한 번」
-    document.addEventListener("keydown", (e) => {
-      if (e.key !== "Enter") return;
-      if (e.isComposing || e.keyCode === 229) return;
-      if (e.shiftKey || e.metaKey || e.ctrlKey) return;
-      if (currentView !== "practice") return;
-      if (!checked) return;
-      if (!enterArmedForNext) return; // 한 번 keyup을 거치지 않으면 무시
-      const nb = document.getElementById("next-btn");
-      if (nb) { e.preventDefault(); nb.click(); enterArmedForNext = false; }
-    });
-
-    // Enter를 뗀 시점에 「다음」을 arm 함 (키 리피트로 인한 관통 방지)
-    document.addEventListener("keyup", (e) => {
-      if (e.key === "Enter") enterArmedForNext = true;
-    });
+    // ★ Enter は改行のみ。操作は画面下の大ボタンに一本化。
     elFavBtn.addEventListener("click", toggleFavorite);
 
     // 간체/번체 토글
