@@ -22,10 +22,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="daily.css?v=8" />
+  <link rel="stylesheet" href="daily.css?v=9" />
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
-<script src="daily-kbd.js?v=1" defer></script>
 <script src="daily.js?v=1"></script>
 </head>
 <body>
@@ -155,16 +154,11 @@
           <button class="btn btn-ghost" id="hint-btn">ヒント</button>
           <button class="btn btn-ghost" id="skip-btn">スキップ</button>
         </div>
+        <button class="btn-primary card-check" id="check-btn">答え合わせ</button>
 
         <div id="hint-area"></div>
       </main>
       <div id="result-area"></div>
-    </div>
-
-    <div class="actionbar">
-      <div class="actionbar-inner">
-        <button class="btn-primary" id="check-btn" data-mode="check">答え合わせ</button>
-      </div>
     </div>
 
     <footer class="footer">
@@ -3766,7 +3760,6 @@
           elInput.value = (ip && ip.sentIdx === targetIdx ? (ip.input || "") : "");
           elInput.disabled = false;
           elCheckBtn.disabled = false;
-          setMainButton("check");
           elInput.focus();
           elHintArea.innerHTML = "";
           elResult.innerHTML = "";
@@ -3948,7 +3941,6 @@
       elInput.value = "";
       elInput.disabled = false;
       elCheckBtn.disabled = false;
-      setMainButton("check");
       elHintArea.innerHTML = "";
       elResult.innerHTML = "";
       renderFav();
@@ -3969,7 +3961,6 @@
       elInput.value = "";
       elInput.disabled = false;
       elCheckBtn.disabled = false;
-      setMainButton("check");
       elHintArea.innerHTML = "";
       elResult.innerHTML = "";
       elInput.focus();
@@ -4144,8 +4135,8 @@
         }
       }
       checked = true;
+      elCheckBtn.disabled = true;
       elInput.disabled = true;
-      setMainButton(isCorrect ? "next" : "retry");
       setTimeout(() => speak(currentSent.ko), 350);
     }
 
@@ -4289,12 +4280,8 @@
     // EVENT LISTENERS
     // ========================================================================
     elCheckBtn.addEventListener("click", () => {
-      const mode = elCheckBtn.dataset.mode || "check";
-      if (mode === "check") { if (!currentSent || checked) return; renderResult(elInput.value); }
-      else if (mode === "next") { pickNext(); }
-      else { retryCurrent(); }
-      elCheckBtn.disabled = true;
-      setTimeout(() => { elCheckBtn.disabled = false; }, 360);
+      if (!currentSent || checked) return;
+      renderResult(elInput.value);
     });
     elHintBtn.addEventListener("click", showHint);
     elSkipBtn.addEventListener("click", pickNext);
