@@ -687,6 +687,7 @@
   </style>
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
+<script src="daily.js?v=1"></script>
 </head>
 <body>
   <!-- 장식 레이어 (클릭 통과) -->
@@ -1545,6 +1546,8 @@
       state.currentCourseId = courseId;
       saveState();
       const c = COURSES[courseId];
+      // 홈의 '이어서 하기' / 연속 일수에 기록
+      if (window.LC) LC.record({ href: 'japanese-practice-ko.html', label: 'Daily 일본어', sub: `JLPT N${c.hsk} · ${c.title}` });
       const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
       elIntroHsk.textContent = c.hsk;
       elIntroNum.textContent = courseId + 1;
