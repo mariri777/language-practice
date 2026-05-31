@@ -128,11 +128,10 @@
   </div>
 
   <div class="notice" id="noKey" style="display:none">
-    <strong>はじめての方へ</strong> — このツールは翻訳に Google の無料AI「Gemini」を使います。最初に一度だけ、自分の無料キーが必要です：
+    <strong>はじめての方へ</strong> — 翻訳にAIを使います。右上の <strong>⚙</strong> で <strong>Gemini</strong>（無料・中国本土✕）か <strong>DeepSeek</strong>（要チャージ・中国本土◯）を選び、自分のキーを入れてください：
     <ol>
-      <li><a id="noKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> でログイン →「Create API key」</li>
-      <li><code>AIza...</code> をコピー（無料・クレカ不要）</li>
-      <li>右上の <strong>⚙</strong> に貼って「保存」</li>
+      <li><a id="noKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">キー発行ページ</a> でキーを作ってコピー</li>
+      <li>⚙ の「APIキー」に貼って「保存」</li>
     </ol>
     キーはあなたのブラウザ内だけに保存され、サイト運営者には送られません。
   </div>
@@ -147,7 +146,7 @@
     </div>
     <div class="err" id="err"></div>
     <p class="hint">💡 スラングや新しい略語は、無料AIだと外しやすいです（自信がない語は「(推測)」と表示）。気になった語は「＋辞書」で保存して、自分の単語帳として育てていってください。</p>
-    <p class="disclose">※ 貼り付けた文章は、翻訳のため Google の Gemini に送信されます。ブラウザ内だけでは完結しません。Gemini の無料枠は入力がモデル改善に使われる場合があるため、個人情報や見られたくない内容（友だちのDMなど）は貼らないでください。</p>
+    <p class="disclose">※ 貼り付けた文章は、翻訳のため選択中のAI（Gemini または DeepSeek）に送信されます。ブラウザ内だけでは完結しません。特に Gemini の無料枠は入力がモデル改善に使われる場合があるので、個人情報や見られたくない内容（友だちのDMなど）は貼らないでください。</p>
   </div>
 
   <!-- result -->
@@ -178,11 +177,22 @@
 
 <script>
   const $ = id => document.getElementById(id);
-  const DICT_K='mydict-v1', KEY_K='key-gemini', MODEL_K='model-gemini', SEEN_K='seen-models-gemini';
-  const GEMINI = { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash' };
-
-  const getKey = () => (localStorage.getItem(KEY_K)||'').trim();
-  const getModel = () => (localStorage.getItem(MODEL_K)||GEMINI.model).trim();
+  const DICT_K='mydict-v1';
+  const PROVIDERS = {
+    gemini:   { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash', keyph:'AIza...', console:'https://aistudio.google.com/apikey',
+                guide:'迷ったら gemini-2.5-flash（無料で1日250回・質と量のバランス◎）。最高精度は gemini-2.5-pro（無料は1日100回）。新しい版が出たら自動で一覧に並びます。',
+                note:'Gemini は無料。ただし中国本土では使えません（VPN必要）。無料枠は入力が学習に使われる場合あり。' },
+    deepseek: { base:'https://api.deepseek.com',                                 model:'deepseek-chat',    keyph:'sk-...',  console:'https://platform.deepseek.com',
+                guide:'deepseek-chat が標準（中国本土でも使える）。利用には少額チャージが必要（使用料は激安）。',
+                note:'DeepSeek は中国本土でも使えます。利用に少額チャージが必要（使用料は激安）。' }
+  };
+  const provider = () => localStorage.getItem('reader-provider') || 'gemini';
+  const P = () => PROVIDERS[provider()] || PROVIDERS.gemini;
+  const keyK = () => 'key-'+provider();
+  const modelK = () => 'model-'+provider();
+  const seenK = () => 'seen-models-'+provider();
+  const getKey = () => (localStorage.getItem(keyK())||'').trim();
+  const getModel = () => (localStorage.getItem(modelK())||P().model).trim();
   function hasKey(){ return !!getKey(); }
   function refreshKeyNotice(){ $('noKey').style.display = hasKey() ? 'none' : 'block'; }
 
@@ -194,15 +204,23 @@
     if(!list.includes(cur)) list.unshift(cur);
     sel.innerHTML = list.map(id=>`<option value="${id}"${id===cur?' selected':''}>${id}</option>`).join('');
   }
-  function modelGuide(){
-    return '迷ったら gemini-2.5-flash（無料で1日250回・質と量のバランス◎）。最高精度は gemini-2.5-pro（無料は1日100回／課金キーなら制限が緩むので常用OK）。たくさん使う日は gemini-2.5-flash-lite（無料で1日1000回）。新しい版が出たら自動で一覧に並ぶので、気になったらたまにこの設定を開いてみてね（✨で知らせます）。';
+  function isChatModel(id){
+    if(provider()==='gemini') return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id);
+    return true; // deepseek: all chat models
   }
-  function isChatModel(id){ return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id); }
-
-  $('key').value = getKey();
-  fillModels([]);
-  $('modelHint').textContent = modelGuide();
-  refreshKeyNotice();
+  function syncProviderUI(){
+    const p = P();
+    $('provider').value = provider();
+    $('key').value = getKey();
+    $('key').placeholder = p.keyph;
+    $('getKeyLink').href = p.console;
+    const nkl = $('noKeyLink'); if(nkl) nkl.href = p.console;
+    $('provHint').textContent = p.note;
+    fillModels([]);
+    $('modelHint').textContent = p.guide;
+    refreshKeyNotice();
+  }
+  syncProviderUI();
 
   async function loadModels(){
     const key = getKey();
@@ -210,22 +228,26 @@
     if(!key){ hint.textContent='先にキーを保存してね。'; return; }
     hint.textContent='取得中…';
     try{
-      const res = await fetch(GEMINI.base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
+      const res = await fetch(P().base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
       const j = await res.json();
       const ids = (j.data||[]).map(m=>m.id).filter(Boolean).filter(isChatModel).sort();
       if(!ids.length){ hint.textContent='モデルが取得できませんでした。'; return; }
       fillModels(ids);
-      // 前回チェック時より新しく増えたモデルを知らせる
-      let seen = []; try{ seen = JSON.parse(localStorage.getItem(SEEN_K)||'[]'); }catch{}
+      let seen = []; try{ seen = JSON.parse(localStorage.getItem(seenK())||'[]'); }catch{}
       if(seen.length){
         const fresh = ids.filter(id=>!seen.includes(id));
-        hint.textContent = fresh.length ? ('✨ 新しいモデルが出てます：'+fresh.join('、')+'（選べます）') : modelGuide();
-      } else hint.textContent = modelGuide();
-      localStorage.setItem(SEEN_K, JSON.stringify(ids));
+        hint.textContent = fresh.length ? ('✨ 新しいモデルが出てます：'+fresh.join('、')+'（選べます）') : P().guide;
+      } else hint.textContent = P().guide;
+      localStorage.setItem(seenK(), JSON.stringify(ids));
     }catch(e){ hint.textContent='一覧の取得に失敗しました（キーや通信を確認）。'; }
   }
   $('loadModels').addEventListener('click', loadModels);
-  $('model').addEventListener('change', ()=> localStorage.setItem(MODEL_K, $('model').value));
+  $('model').addEventListener('change', ()=> localStorage.setItem(modelK(), $('model').value));
+  $('provider').addEventListener('change', ()=>{
+    localStorage.setItem('reader-provider', $('provider').value);
+    syncProviderUI();
+    if(hasKey()) loadModels();
+  });
 
   $('gearBtn').addEventListener('click', ()=>{
     const opening = !$('settings').classList.contains('open');
@@ -233,12 +255,12 @@
     if(opening && hasKey() && $('model').options.length <= 1) loadModels();
   });
   $('saveKey').addEventListener('click', ()=>{
-    localStorage.setItem(KEY_K, $('key').value.trim());
-    if($('model').value) localStorage.setItem(MODEL_K, $('model').value);
+    localStorage.setItem(keyK(), $('key').value.trim());
+    if($('model').value) localStorage.setItem(modelK(), $('model').value);
     refreshKeyNotice();
     if(hasKey()) loadModels();
   });
-  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(KEY_K); $('key').value=''; refreshKeyNotice(); });
+  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(keyK()); $('key').value=''; refreshKeyNotice(); });
 
   /* ---------- helpers ---------- */
   function detectLang(s){
@@ -298,7 +320,7 @@
 文："""${text}"""`;
 
     try{
-      const res = await fetch(GEMINI.base+'/chat/completions', {
+      const res = await fetch(P().base+'/chat/completions', {
         method:'POST',
         headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
         body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })

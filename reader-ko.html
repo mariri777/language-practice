@@ -108,7 +108,13 @@
 
   <!-- settings -->
   <div class="card" id="settings">
-    <label>Gemini API 키 (무료·이 브라우저에만 저장)</label>
+    <label>AI (Gemini 또는 DeepSeek 선택)</label>
+    <select id="provider">
+      <option value="gemini">Gemini (Google·무료 / 중국 본토에서는 사용 불가)</option>
+      <option value="deepseek">DeepSeek (소액 충전·저렴 / 중국 본토에서도 사용 가능)</option>
+    </select>
+    <p class="hint" id="provHint"></p>
+    <label style="margin-top:14px">API 키 (이 브라우저에만 저장)</label>
     <input id="key" type="password" placeholder="AIza..." autocomplete="off">
     <div class="row">
       <button class="btn sm" id="saveKey">저장</button>
@@ -122,11 +128,10 @@
   </div>
 
   <div class="notice" id="noKey" style="display:none">
-    <strong>처음이신가요?</strong> — 번역에 Google의 무료 AI 「Gemini」를 사용해요. 처음에 한 번만 본인의 무료 키가 필요해요:
+    <strong>처음이신가요?</strong> — 번역에 AI를 사용해요. 오른쪽 위 <strong>⚙</strong> 에서 <strong>Gemini</strong>(무료·중국 본토✕) 또는 <strong>DeepSeek</strong>(소액 충전·중국 본토◯)을 고르고, 본인 키를 넣어주세요:
     <ol>
-      <li><a id="noKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> 에서 로그인 →「Create API key」</li>
-      <li><code>AIza...</code> 복사 (무료·카드 불필요)</li>
-      <li>오른쪽 위 <strong>⚙</strong> 에 붙여넣고 「저장」</li>
+      <li><a id="noKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">키 발급 페이지</a> 에서 키를 만들어 복사</li>
+      <li>⚙ 의 「API 키」에 붙여넣고 「저장」</li>
     </ol>
     키는 이 브라우저에만 저장되며, 사이트 운영자에게는 전송되지 않아요.
   </div>
@@ -141,7 +146,7 @@
     </div>
     <div class="err" id="err"></div>
     <p class="hint">💡 슬랭·신조어는 무료 AI가 틀리기 쉬워요(확신 없는 단어는 「(추측)」으로 표시). 마음에 든 단어는 「＋사전」으로 저장해 나만의 단어장으로 키워보세요.</p>
-    <p class="disclose">※ 붙여넣은 문장은 번역을 위해 Google Gemini로 전송됩니다. 브라우저 안에서만 처리되지 않아요. Gemini 무료 등급은 입력이 모델 개선에 사용될 수 있으니, 개인정보나 민감한 내용(친구 DM 등)은 붙여넣지 마세요.</p>
+    <p class="disclose">※ 붙여넣은 문장은 번역을 위해 선택한 AI(Gemini 또는 DeepSeek)로 전송됩니다. 브라우저 안에서만 처리되지 않아요. 특히 Gemini 무료 등급은 입력이 모델 개선에 사용될 수 있으니, 개인정보나 민감한 내용(친구 DM 등)은 붙여넣지 마세요.</p>
   </div>
 
   <!-- result -->
@@ -172,11 +177,22 @@
 
 <script>
   const $ = id => document.getElementById(id);
-  const DICT_K='mydict-ko-v1', KEY_K='key-gemini', MODEL_K='model-gemini', SEEN_K='seen-models-gemini';
-  const GEMINI = { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash' };
-
-  const getKey = () => (localStorage.getItem(KEY_K)||'').trim();
-  const getModel = () => (localStorage.getItem(MODEL_K)||GEMINI.model).trim();
+  const DICT_K='mydict-ko-v1';
+  const PROVIDERS = {
+    gemini:   { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash', keyph:'AIza...', console:'https://aistudio.google.com/apikey',
+                guide:'고민되면 gemini-2.5-flash (무료 하루 250회·균형 ◎). 최고 정확도는 gemini-2.5-pro (무료 하루 100회). 새 버전이 나오면 자동으로 목록에 추가돼요.',
+                note:'Gemini는 무료. 단 중국 본토에서는 사용 불가(VPN 필요). 무료 등급은 입력이 학습에 쓰일 수 있어요.' },
+    deepseek: { base:'https://api.deepseek.com',                                 model:'deepseek-chat',    keyph:'sk-...',  console:'https://platform.deepseek.com',
+                guide:'deepseek-chat 가 표준 (중국 본토에서도 사용 가능). 사용에 소액 충전이 필요해요 (요금은 매우 저렴).',
+                note:'DeepSeek는 중국 본토에서도 사용 가능. 사용에 소액 충전이 필요해요 (요금은 매우 저렴).' }
+  };
+  const provider = () => localStorage.getItem('reader-provider') || 'gemini';
+  const P = () => PROVIDERS[provider()] || PROVIDERS.gemini;
+  const keyK = () => 'key-'+provider();
+  const modelK = () => 'model-'+provider();
+  const seenK = () => 'seen-models-'+provider();
+  const getKey = () => (localStorage.getItem(keyK())||'').trim();
+  const getModel = () => (localStorage.getItem(modelK())||P().model).trim();
   function hasKey(){ return !!getKey(); }
   function refreshKeyNotice(){ $('noKey').style.display = hasKey() ? 'none' : 'block'; }
 
@@ -188,15 +204,23 @@
     if(!list.includes(cur)) list.unshift(cur);
     sel.innerHTML = list.map(id=>`<option value="${id}"${id===cur?' selected':''}>${id}</option>`).join('');
   }
-  function modelGuide(){
-    return '고민되면 gemini-2.5-flash (무료 하루 250회·품질과 양의 균형 ◎). 최고 정확도는 gemini-2.5-pro (무료 하루 100회／유료 키면 제한이 완화돼 상시 사용 OK). 많이 쓰는 날은 gemini-2.5-flash-lite (무료 하루 1000회). 새 버전이 나오면 자동으로 목록에 추가되니, 궁금하면 가끔 이 설정을 열어보세요 (✨로 알려드려요).';
+  function isChatModel(id){
+    if(provider()==='gemini') return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id);
+    return true;
   }
-  function isChatModel(id){ return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id); }
-
-  $('key').value = getKey();
-  fillModels([]);
-  $('modelHint').textContent = modelGuide();
-  refreshKeyNotice();
+  function syncProviderUI(){
+    const p = P();
+    $('provider').value = provider();
+    $('key').value = getKey();
+    $('key').placeholder = p.keyph;
+    $('getKeyLink').href = p.console;
+    const nkl = $('noKeyLink'); if(nkl) nkl.href = p.console;
+    $('provHint').textContent = p.note;
+    fillModels([]);
+    $('modelHint').textContent = p.guide;
+    refreshKeyNotice();
+  }
+  syncProviderUI();
 
   async function loadModels(){
     const key = getKey();
@@ -204,21 +228,26 @@
     if(!key){ hint.textContent='먼저 키를 저장해 주세요.'; return; }
     hint.textContent='가져오는 중…';
     try{
-      const res = await fetch(GEMINI.base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
+      const res = await fetch(P().base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
       const j = await res.json();
       const ids = (j.data||[]).map(m=>m.id).filter(Boolean).filter(isChatModel).sort();
       if(!ids.length){ hint.textContent='모델을 가져오지 못했어요.'; return; }
       fillModels(ids);
-      let seen = []; try{ seen = JSON.parse(localStorage.getItem(SEEN_K)||'[]'); }catch{}
+      let seen = []; try{ seen = JSON.parse(localStorage.getItem(seenK())||'[]'); }catch{}
       if(seen.length){
         const fresh = ids.filter(id=>!seen.includes(id));
-        hint.textContent = fresh.length ? ('✨ 새 모델이 나왔어요: '+fresh.join('、')+' (선택 가능)') : modelGuide();
-      } else hint.textContent = modelGuide();
-      localStorage.setItem(SEEN_K, JSON.stringify(ids));
+        hint.textContent = fresh.length ? ('✨ 새 모델이 나왔어요: '+fresh.join('、')+' (선택 가능)') : P().guide;
+      } else hint.textContent = P().guide;
+      localStorage.setItem(seenK(), JSON.stringify(ids));
     }catch(e){ hint.textContent='목록을 가져오지 못했어요 (키·통신 확인).'; }
   }
   $('loadModels').addEventListener('click', loadModels);
-  $('model').addEventListener('change', ()=> localStorage.setItem(MODEL_K, $('model').value));
+  $('model').addEventListener('change', ()=> localStorage.setItem(modelK(), $('model').value));
+  $('provider').addEventListener('change', ()=>{
+    localStorage.setItem('reader-provider', $('provider').value);
+    syncProviderUI();
+    if(hasKey()) loadModels();
+  });
 
   $('gearBtn').addEventListener('click', ()=>{
     const opening = !$('settings').classList.contains('open');
@@ -226,12 +255,12 @@
     if(opening && hasKey() && $('model').options.length <= 1) loadModels();
   });
   $('saveKey').addEventListener('click', ()=>{
-    localStorage.setItem(KEY_K, $('key').value.trim());
-    if($('model').value) localStorage.setItem(MODEL_K, $('model').value);
+    localStorage.setItem(keyK(), $('key').value.trim());
+    if($('model').value) localStorage.setItem(modelK(), $('model').value);
     refreshKeyNotice();
     if(hasKey()) loadModels();
   });
-  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(KEY_K); $('key').value=''; refreshKeyNotice(); });
+  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(keyK()); $('key').value=''; refreshKeyNotice(); });
 
   /* ---------- helpers ---------- */
   function detectLang(s){
@@ -291,7 +320,7 @@
 문장: """${text}"""`;
 
     try{
-      const res = await fetch(GEMINI.base+'/chat/completions', {
+      const res = await fetch(P().base+'/chat/completions', {
         method:'POST',
         headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
         body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
