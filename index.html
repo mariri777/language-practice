@@ -1158,9 +1158,21 @@
         </div>
       </a>
 
-      <div class="tile soon" style="--i:4">
+      <a href="reader.html" class="tile" style="--i:4">
         <div class="tile-top">
           <span class="tile-num">05</span>
+          <span class="tile-tag">CN·KR · Read<span class="new">NEW</span></span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Reader</h3>
+          <p class="tile-sub">貼って中国語・韓国語を読む</p>
+          <span class="tile-cta">Open<span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <div class="tile soon" style="--i:5">
+        <div class="tile-top">
+          <span class="tile-num">06</span>
           <span class="tile-tag">KR · Journal<span class="soon">SOON</span></span>
         </div>
         <div class="tile-bottom">
@@ -1458,6 +1470,15 @@
   const UPDATE_VISIBLE     = 5;    // 折りたたまず表示する件数
 
   const updates = [
+    {
+      date: "2026-05-31",
+      tag:  { ja: "Reader · NEW", ko: "Reader · NEW", zh: "Reader · NEW" },
+      text: {
+        ja: "新ツール「Reader（貼って読む）」を公開しました。X・SNS・メッセージなどの中国語/韓国語を貼り付けると、日本語訳と単語・文法が出て、気になった語は自分の辞書に貯められます。翻訳は無料のAI（Groq）を使い、自分の無料キーを一度だけ登録すれば使えます（キーはブラウザ内のみ保存）。貼った文章は翻訳のためAIに送信されます。",
+        ko: "새 도구 ‘Reader(붙여넣어 읽기)’를 공개했어요. X·SNS·메시지 등의 중국어/한국어를 붙여넣으면 일본어 번역과 단어·문법이 나오고, 마음에 든 단어는 내 사전에 모을 수 있어요. 번역은 무료 AI(Groq)를 사용하며, 본인의 무료 키를 한 번만 등록하면 됩니다(키는 브라우저에만 저장). 붙여넣은 문장은 번역을 위해 AI로 전송됩니다.",
+        zh: "上线了新工具「Reader（粘贴即读）」。把 X、社交媒体、消息里的中文/韩语粘贴进来，就能得到日语翻译和单词、语法，喜欢的词还能存进自己的词典。翻译使用免费 AI（Groq），只需登记一次自己的免费密钥即可使用（密钥仅保存在浏览器内）。粘贴的文本会发送给 AI 进行翻译。"
+      }
+    },
     {
       date: "2026-05-30",
       tag:  { ja: "한국어 · Talk", ko: "한국어 · Talk", zh: "韩语 · Talk" },

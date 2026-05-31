@@ -47,6 +47,10 @@
   #settings.open{display:block}
   .notice{background:var(--red-soft);border:1px solid rgba(138,36,56,.25);color:var(--red-deep);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-bottom:14px}
   .notice a{font-weight:700}
+  .notice ol{margin:8px 0 6px;padding-left:20px}
+  .notice li{margin:2px 0}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;background:rgba(20,16,10,.06);padding:1px 5px;border-radius:4px;font-size:.92em}
+  .disclose{font-size:12px;color:var(--ink-4);margin:10px 0 0;line-height:1.6}
 
   /* result */
   #result{display:none}
@@ -114,8 +118,13 @@
   </div>
 
   <div class="notice" id="noKey" style="display:none">
-    使うには Groq の無料キーが必要です。右上の <strong>⚙</strong> から登録してください。
-    <a href="https://console.groq.com" target="_blank" rel="noopener">キーを取得</a>
+    <strong>はじめての方へ</strong> — このツールは翻訳に無料のAI（Groq）を使います。最初に一度だけ、自分の無料キーが必要です：
+    <ol>
+      <li><a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a> でログイン → 「API Keys」→「Create」</li>
+      <li><code>gsk_...</code> をコピー</li>
+      <li>右上の <strong>⚙</strong> に貼って「保存」</li>
+    </ol>
+    キーはあなたのブラウザ内だけに保存され、サイト運営者には送られません。
   </div>
 
   <!-- paste -->
@@ -127,6 +136,7 @@
       <button class="btn ghost sm" id="clearIn">クリア</button>
     </div>
     <div class="err" id="err"></div>
+    <p class="disclose">※ 貼り付けた文章は、翻訳のため AI（Groq）に送信されます。他のツールと違い、ブラウザ内だけでは完結しません。個人情報や見られたくない内容は貼らないでください。</p>
   </div>
 
   <!-- result -->
