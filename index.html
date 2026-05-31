@@ -1258,17 +1258,17 @@
     </div>
 
     <div class="tiles">
-      <div class="tile soon" style="--i:0">
+      <a href="korean-practice.html?lang=zh" class="tile" style="--i:0">
         <div class="tile-top">
           <span class="tile-num">01</span>
-          <span class="tile-tag">KR · Talk<span class="soon">SOON</span></span>
+          <span class="tile-tag">KR · Talk</span>
         </div>
         <div class="tile-bottom">
           <h3 class="tile-name">Daily 韩语</h3>
-          <p class="tile-sub">韩语作文练习（即将推出）</p>
-          <span class="tile-cta">即将推出</span>
+          <p class="tile-sub">韩语作文练习</p>
+          <span class="tile-cta">打开<span class="arrow">→</span></span>
         </div>
-      </div>
+      </a>
 
       <div class="tile soon" style="--i:1">
         <div class="tile-top">
@@ -1470,6 +1470,15 @@
   const UPDATE_VISIBLE     = 5;    // 折りたたまず表示する件数
 
   const updates = [
+    {
+      date: "2026-05-31",
+      tag:  { ja: "한국어 · Talk", ko: "한국어 · Talk", zh: "韩语 · Talk" },
+      text: {
+        ja: "🎉 中国語ユーザー向けの「Daily 韩语（韓国語作文ドリル）」を公開しました。中国語話者のページから開けます。Daily 한국어 と同じ全24コース・“尽きない”出題（毎回違う10問）をそのまま使い、出題文の韓国語・ローマ字は一切変えずに、プロンプト・文法解説・単語の語義だけを中国語にしました。検証済みの韓国語をそのまま再利用しているので品質は日本語版と同一です。",
+        ko: "🎉 중국어 사용자를 위한 ‘Daily 韩语(한국어 작문 드릴)’을 공개했어요. 중국어 사용자 페이지에서 열 수 있어요. Daily 한국어와 같은 전 24코스·‘끝나지 않는’ 출제(매번 다른 10문제)를 그대로 쓰고, 출제 문장의 한국어·로마자는 전혀 바꾸지 않은 채 프롬프트·문법 해설·단어 뜻만 중국어로 했어요. 검증된 한국어를 그대로 재사용하므로 품질은 일본어판과 동일해요.",
+        zh: "🎉 面向中文用户的「Daily 韩语（韩语作文练习）」上线了，可从中文用户页面打开。沿用与 Daily 한국어 完全相同的全部 24 个课程与「练不完」的出题方式（每次出不同的 10 题），出题句的韩语与罗马字一字未改，只把题目提示、语法解说、单词释义换成了中文。由于直接复用已校验的韩语，品质与日语版完全一致。"
+      }
+    },
     {
       date: "2026-05-31",
       tag:  { ja: "Reader · NEW", ko: "Reader · NEW", zh: "Reader · NEW" },
