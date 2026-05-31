@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grok ブラウザ直結テスト</title>
+<title>AI ブラウザ直結テスト（Grok / Groq）</title>
 <style>
   :root{
     --bg:#f1e8d2; --card:#faf2dc; --ink:#14100a; --ink3:#6a604e; --rule:#c1b491;
@@ -36,13 +36,20 @@
 </style>
 </head>
 <body>
-  <h1>Grok ブラウザ直結テスト</h1>
-  <p class="sub">このページから <code>api.x.ai</code> を直接呼べるか（CORS が通るか）を確かめます。結果で A案(中継)／B案(直結) が決まります。</p>
+  <h1>AI ブラウザ直結テスト（Grok / Groq）</h1>
+  <p class="sub">このページから AI の API を直接呼べるか（CORS が通るか）を確かめます。結果で A案(中継)／B案(直結) が決まります。</p>
 
   <div class="card">
     <div class="field">
-      <label>① xAI / Grok API キー</label>
-      <input id="key" type="password" placeholder="xai-... （このページのブラウザ内だけに保存されます）" autocomplete="off">
+      <label>プロバイダ</label>
+      <select id="provider">
+        <option value="groq">Groq（無料枠あり・キーは gsk_… で始まる）</option>
+        <option value="grok">Grok / xAI（有料・キーは xai_… で始まる）</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>① API キー</label>
+      <input id="key" type="password" placeholder="gsk_... または xai_...（このページのブラウザ内だけに保存）" autocomplete="off">
       <p class="hint">入力すると localStorage に保存（このブラウザのみ）。<button class="ghost" id="clearKey" style="padding:4px 10px;font-size:12px;margin-top:6px">キーを消す</button></p>
       <p class="warn">⚠️ このキーは絶対にチャットに貼らないでください。ここ（あなたの端末）にだけ入れてください。</p>
     </div>
@@ -65,13 +72,27 @@
 
 <script>
   const $ = id => document.getElementById(id);
-  const BASE = 'https://api.x.ai/v1';
   const out = $('out'), verdict = $('verdict');
 
-  // restore key
-  $('key').value = localStorage.getItem('grok-test-key') || '';
-  $('key').addEventListener('input', e => localStorage.setItem('grok-test-key', e.target.value.trim()));
-  $('clearKey').addEventListener('click', () => { localStorage.removeItem('grok-test-key'); $('key').value=''; });
+  const PROVIDERS = {
+    groq: { base:'https://api.groq.com/openai/v1', model:'llama-3.3-70b-versatile' },
+    grok: { base:'https://api.x.ai/v1',            model:'grok-3' }
+  };
+  const baseUrl = () => PROVIDERS[$('provider').value].base;
+
+  // restore provider + key (each provider remembers its own key)
+  $('provider').value = localStorage.getItem('ai-test-provider') || 'groq';
+  function loadKeyForProvider(){
+    $('key').value = localStorage.getItem('ai-test-key-' + $('provider').value) || '';
+    $('model').value = PROVIDERS[$('provider').value].model;
+  }
+  loadKeyForProvider();
+  $('provider').addEventListener('change', () => {
+    localStorage.setItem('ai-test-provider', $('provider').value);
+    loadKeyForProvider();
+  });
+  $('key').addEventListener('input', e => localStorage.setItem('ai-test-key-' + $('provider').value, e.target.value.trim()));
+  $('clearKey').addEventListener('click', () => { localStorage.removeItem('ai-test-key-' + $('provider').value); $('key').value=''; });
 
   function setVerdict(kind, msg){ verdict.className = 'verdict ' + kind; verdict.textContent = msg; }
   function log(s){ out.textContent = s; }
@@ -91,7 +112,7 @@
     if(!key){ setVerdict('ng','キーを入れてください'); return; }
     $('btnPing').disabled = true; log('接続中… GET /models');
     try{
-      const res = await fetch(BASE + '/models', { headers: { 'Authorization': 'Bearer ' + key } });
+      const res = await fetch(baseUrl() + '/models', { headers: { 'Authorization': 'Bearer ' + key } });
       const body = await res.text();
       if(res.ok){
         setVerdict('ok', '✓ ブラウザから直接呼べました！（CORS OK・認証OK）→ B案（サーバー無し直結）でいけます。');
@@ -108,7 +129,7 @@
 
   async function translate(){
     const key = $('key').value.trim();
-    const model = $('model').value.trim() || 'grok-3';
+    const model = $('model').value.trim() || PROVIDERS[$('provider').value].model;
     const text = $('text').value.trim();
     if(!key){ setVerdict('ng','キーを入れてください'); return; }
     $('btnTrans').disabled = true; log('翻訳中… POST /chat/completions ('+model+')');
@@ -117,7 +138,7 @@
 
 文: """${text}"""`;
     try{
-      const res = await fetch(BASE + '/chat/completions', {
+      const res = await fetch(baseUrl() + '/chat/completions', {
         method:'POST',
         headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
         body: JSON.stringify({
