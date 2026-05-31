@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reader · 붙여넣어 읽기 — 日々</title>
+<meta name="theme-color" content="#f1e8d2">
+<style>
+  :root{
+    --bg:#f1e8d2; --bg-elevated:#faf2dc; --bg-tile:#f6ecd2; --bg-deep:#e3d7b5;
+    --ink:#14100a; --ink-2:#2c2317; --ink-3:#6a604e; --ink-4:#a59881;
+    --red:#8a2438; --red-deep:#5a1622; --red-bright:#b53048; --red-soft:rgba(138,36,56,.08); --red-glow:rgba(138,36,56,.2);
+    --gold:#b6843a; --green:#2f7c5e; --rule:#c1b491; --hair:rgba(20,16,10,.10);
+    --font-ui:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",system-ui,sans-serif;
+    --font-head:"Apple SD Gothic Neo","Nanum Myeongjo","Noto Serif KR",serif;
+    --font-num:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+    --font-zh:"Songti SC","STSong","Source Han Serif SC","Noto Serif SC",serif;
+    --font-ja:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.65;
+       padding:0 0 80px;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+  header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;max-width:760px;margin:0 auto}
+  .brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  .brand .mark{width:26px;height:26px;background:var(--red);color:#fff;display:inline-flex;align-items:center;justify-content:center;border-radius:5px;font-family:var(--font-num);font-style:italic;font-size:17px;transform:rotate(-4deg)}
+  .gear{background:none;border:0;font-size:20px;cursor:pointer;color:var(--ink-3);padding:6px}
+
+  h1{font-family:var(--font-head);font-size:clamp(26px,5vw,38px);font-weight:600;letter-spacing:.01em;margin:8px 0 2px}
+  h1 .dot{color:var(--red);font-family:var(--font-num);font-style:italic}
+  .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 18px}
+
+  .card{background:var(--bg-elevated);border:1px solid var(--hair);border-radius:14px;padding:18px;margin-bottom:16px}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4);margin:0 0 7px}
+  textarea,input{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
+  textarea{min-height:96px;resize:vertical}
+  .btn{font:inherit;font-weight:700;padding:12px 20px;border:0;border-radius:10px;background:var(--red);color:#fff;cursor:pointer;transition:background .2s}
+  .btn:hover{background:var(--red-bright)} .btn:disabled{opacity:.5;cursor:wait}
+  .btn.ghost{background:transparent;color:var(--red);border:1px solid var(--red)}
+  .btn.sm{padding:6px 12px;font-size:13px;border-radius:8px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+
+  /* settings */
+  #settings{display:none}
+  #settings.open{display:block}
+  .notice{background:var(--red-soft);border:1px solid rgba(138,36,56,.25);color:var(--red-deep);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-bottom:14px}
+  .notice a{font-weight:700}
+  .notice ol{margin:8px 0 6px;padding-left:20px}
+  .notice li{margin:2px 0}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;background:rgba(20,16,10,.06);padding:1px 5px;border-radius:4px;font-size:.92em}
+  .disclose{font-size:12px;color:var(--ink-4);margin:10px 0 0;line-height:1.6}
+  .hint{font-size:12px;color:var(--ink-3);margin:6px 0 0;line-height:1.6}
+  select{appearance:auto}
+
+  /* result */
+  #result{display:none}
+  .sec-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin:18px 0 8px;display:flex;align-items:center;gap:10px}
+  .sec-title::before{content:"";width:24px;height:2px;background:var(--red)}
+  .trans{font-size:16px;line-height:1.8;color:var(--ink)}
+  .orig{font-size:15px;color:var(--ink-3);background:var(--bg-tile);border-radius:10px;padding:12px 14px;white-space:pre-wrap}
+  .orig.zh{font-family:var(--font-zh)} .orig.ja{font-family:var(--font-ja)}
+
+  .word{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
+  .word:first-child{border-top:0}
+  .word .term{font-size:20px;min-width:0}
+  .word.zh .term{font-family:var(--font-zh)} .word.ja .term{font-family:var(--font-ja)}
+  .word .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:14px}
+  .word .mean{flex:1;min-width:0;color:var(--ink-2);font-size:14px}
+  .word .add{flex-shrink:0}
+  .add-btn{background:transparent;border:1px solid var(--rule);color:var(--ink-3);border-radius:8px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+  .add-btn.saved{background:var(--green);border-color:var(--green);color:#fff}
+
+  .gram{padding:10px 0;border-top:1px solid var(--hair)}
+  .gram:first-child{border-top:0}
+  .gram .pt{font-weight:700}
+  .gram .note{color:var(--ink-3);font-size:14px}
+
+  /* dictionary */
+  .dict-head{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
+  .dict-head .n{font-family:var(--font-num);font-style:italic;font-size:30px;color:var(--red)}
+  .dict-empty{color:var(--ink-4);font-size:14px;padding:8px 0}
+  .dict-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
+  .dict-item:first-child{border-top:0}
+  .dict-item .term{font-size:18px} .dict-item.zh .term{font-family:var(--font-zh)} .dict-item.ja .term{font-family:var(--font-ja)}
+  .dict-item .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:13px}
+  .dict-item .mean{flex:1;color:var(--ink-2);font-size:14px}
+  .del{background:none;border:0;color:var(--ink-4);cursor:pointer;font-size:16px;padding:4px 8px}
+  .del:hover{color:var(--red)}
+  .tag{font-size:10px;font-weight:700;letter-spacing:.1em;padding:2px 7px;border-radius:20px;background:var(--bg-deep);color:var(--ink-3)}
+
+  .err{color:var(--red);font-size:14px;margin-top:10px;white-space:pre-wrap}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px;margin-right:8px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html?tab=ko"><span class="mark">&amp;</span> 日々</a>
+  <button class="gear" id="gearBtn" title="설정" aria-label="설정">⚙</button>
+</header>
+
+<div class="wrap">
+  <h1>붙여넣어 읽기<span class="dot">.</span></h1>
+  <p class="lead">궁금한 중국어·일본어를 붙여넣기만 하면, 한국어 번역과 단어·문법이 나와요. 외우고 싶은 단어는 내 사전에 모을 수 있어요.</p>
+
+  <!-- settings -->
+  <div class="card" id="settings">
+    <label>Gemini API 키 (무료·이 브라우저에만 저장)</label>
+    <input id="key" type="password" placeholder="AIza..." autocomplete="off">
+    <div class="row">
+      <button class="btn sm" id="saveKey">저장</button>
+      <button class="btn sm ghost" id="clearKey">삭제</button>
+      <a id="getKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="font-size:13px;color:var(--ink-3)">키 발급 →</a>
+    </div>
+    <label style="margin-top:14px">모델</label>
+    <select id="model"></select>
+    <div class="row"><button class="btn sm ghost" id="loadModels" type="button">사용 가능한 모델 목록 가져오기</button></div>
+    <p class="hint" id="modelHint"></p>
+  </div>
+
+  <div class="notice" id="noKey" style="display:none">
+    <strong>처음이신가요?</strong> — 번역에 Google의 무료 AI 「Gemini」를 사용해요. 처음에 한 번만 본인의 무료 키가 필요해요:
+    <ol>
+      <li><a id="noKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> 에서 로그인 →「Create API key」</li>
+      <li><code>AIza...</code> 복사 (무료·카드 불필요)</li>
+      <li>오른쪽 위 <strong>⚙</strong> 에 붙여넣고 「저장」</li>
+    </ol>
+    키는 이 브라우저에만 저장되며, 사이트 운영자에게는 전송되지 않아요.
+  </div>
+
+  <!-- paste -->
+  <div class="card">
+    <label>문장 붙여넣기</label>
+    <textarea id="input" placeholder="여기에 중국어·일본어를 붙여넣으세요…"></textarea>
+    <div class="row">
+      <button class="btn" id="go"><span id="goLabel">번역·분석</span></button>
+      <button class="btn ghost sm" id="clearIn">지우기</button>
+    </div>
+    <div class="err" id="err"></div>
+    <p class="hint">💡 슬랭·신조어는 무료 AI가 틀리기 쉬워요(확신 없는 단어는 「(추측)」으로 표시). 마음에 든 단어는 「＋사전」으로 저장해 나만의 단어장으로 키워보세요.</p>
+    <p class="disclose">※ 붙여넣은 문장은 번역을 위해 Google Gemini로 전송됩니다. 브라우저 안에서만 처리되지 않아요. Gemini 무료 등급은 입력이 모델 개선에 사용될 수 있으니, 개인정보나 민감한 내용(친구 DM 등)은 붙여넣지 마세요.</p>
+  </div>
+
+  <!-- result -->
+  <div id="result">
+    <div class="card">
+      <div class="sec-title">한국어 번역</div>
+      <div class="trans" id="trans"></div>
+      <div class="sec-title">원문</div>
+      <div class="orig" id="orig"></div>
+
+      <div class="sec-title">단어</div>
+      <div id="words"></div>
+
+      <div class="sec-title" id="gramTitle">문법</div>
+      <div id="grams"></div>
+    </div>
+  </div>
+
+  <!-- dictionary -->
+  <div class="card">
+    <div class="dict-head">
+      <div class="sec-title" style="margin:0">내 사전</div>
+      <span class="n" id="dictCount">0</span>
+    </div>
+    <div id="dictList"></div>
+  </div>
+</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const DICT_K='mydict-ko-v1', KEY_K='key-gemini', MODEL_K='model-gemini', SEEN_K='seen-models-gemini';
+  const GEMINI = { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash' };
+
+  const getKey = () => (localStorage.getItem(KEY_K)||'').trim();
+  const getModel = () => (localStorage.getItem(MODEL_K)||GEMINI.model).trim();
+  function hasKey(){ return !!getKey(); }
+  function refreshKeyNotice(){ $('noKey').style.display = hasKey() ? 'none' : 'block'; }
+
+  /* ---------- settings ---------- */
+  function fillModels(ids){
+    const sel = $('model');
+    const cur = getModel();
+    const list = ids.slice();
+    if(!list.includes(cur)) list.unshift(cur);
+    sel.innerHTML = list.map(id=>`<option value="${id}"${id===cur?' selected':''}>${id}</option>`).join('');
+  }
+  function modelGuide(){
+    return '고민되면 gemini-2.5-flash (무료 하루 250회·품질과 양의 균형 ◎). 최고 정확도는 gemini-2.5-pro (무료 하루 100회／유료 키면 제한이 완화돼 상시 사용 OK). 많이 쓰는 날은 gemini-2.5-flash-lite (무료 하루 1000회). 새 버전이 나오면 자동으로 목록에 추가되니, 궁금하면 가끔 이 설정을 열어보세요 (✨로 알려드려요).';
+  }
+  function isChatModel(id){ return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id); }
+
+  $('key').value = getKey();
+  fillModels([]);
+  $('modelHint').textContent = modelGuide();
+  refreshKeyNotice();
+
+  async function loadModels(){
+    const key = getKey();
+    const hint = $('modelHint');
+    if(!key){ hint.textContent='먼저 키를 저장해 주세요.'; return; }
+    hint.textContent='가져오는 중…';
+    try{
+      const res = await fetch(GEMINI.base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
+      const j = await res.json();
+      const ids = (j.data||[]).map(m=>m.id).filter(Boolean).filter(isChatModel).sort();
+      if(!ids.length){ hint.textContent='모델을 가져오지 못했어요.'; return; }
+      fillModels(ids);
+      let seen = []; try{ seen = JSON.parse(localStorage.getItem(SEEN_K)||'[]'); }catch{}
+      if(seen.length){
+        const fresh = ids.filter(id=>!seen.includes(id));
+        hint.textContent = fresh.length ? ('✨ 새 모델이 나왔어요: '+fresh.join('、')+' (선택 가능)') : modelGuide();
+      } else hint.textContent = modelGuide();
+      localStorage.setItem(SEEN_K, JSON.stringify(ids));
+    }catch(e){ hint.textContent='목록을 가져오지 못했어요 (키·통신 확인).'; }
+  }
+  $('loadModels').addEventListener('click', loadModels);
+  $('model').addEventListener('change', ()=> localStorage.setItem(MODEL_K, $('model').value));
+
+  $('gearBtn').addEventListener('click', ()=>{
+    const opening = !$('settings').classList.contains('open');
+    $('settings').classList.toggle('open');
+    if(opening && hasKey() && $('model').options.length <= 1) loadModels();
+  });
+  $('saveKey').addEventListener('click', ()=>{
+    localStorage.setItem(KEY_K, $('key').value.trim());
+    if($('model').value) localStorage.setItem(MODEL_K, $('model').value);
+    refreshKeyNotice();
+    if(hasKey()) loadModels();
+  });
+  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(KEY_K); $('key').value=''; refreshKeyNotice(); });
+
+  /* ---------- helpers ---------- */
+  function detectLang(s){
+    if(/[ぁ-んァ-ヶ]/.test(s)) return 'ja';
+    if(/[一-鿿㐀-䶿]/.test(s)) return 'zh';
+    return '';
+  }
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  /* ---------- dictionary ---------- */
+  function loadDict(){ try{ return JSON.parse(localStorage.getItem(DICT_K)||'[]'); }catch{ return []; } }
+  function saveDict(a){ localStorage.setItem(DICT_K, JSON.stringify(a)); }
+  function dictHas(term,lang){ return loadDict().some(d=>d.term===term && d.lang===lang); }
+  function addToDict(w, lang, source){
+    const a = loadDict();
+    if(a.some(d=>d.term===w.term && d.lang===lang)) return;
+    a.push({ id:'w_'+Math.random().toString(36).slice(2,9), term:w.term, reading:w.reading||'', meaning:w.meaning||'', lang, source:source||'', addedAt:Date.now() });
+    saveDict(a); renderDict();
+  }
+  function removeFromDict(id){ saveDict(loadDict().filter(d=>d.id!==id)); renderDict(); }
+  function renderDict(){
+    const a = loadDict().sort((x,y)=>y.addedAt-x.addedAt);
+    $('dictCount').textContent = a.length;
+    const el = $('dictList');
+    if(!a.length){ el.innerHTML = '<div class="dict-empty">아직 없어요. 위에서 문장을 분석하고, 마음에 든 단어를 「＋사전」으로 추가해 보세요.</div>'; return; }
+    el.innerHTML = a.map(d=>`
+      <div class="dict-item ${d.lang}">
+        <span class="term">${esc(d.term)}</span>
+        ${d.reading?`<span class="read">${esc(d.reading)}</span>`:''}
+        <span class="mean">${esc(d.meaning)}</span>
+        ${d.lang?`<span class="tag">${d.lang==='zh'?'中':'日'}</span>`:''}
+        <button class="del" data-id="${d.id}" title="삭제">✕</button>
+      </div>`).join('');
+    el.querySelectorAll('.del').forEach(b=> b.addEventListener('click', ()=>removeFromDict(b.dataset.id)));
+  }
+  renderDict();
+
+  /* ---------- analyze (Gemini) ---------- */
+  async function analyze(){
+    const text = $('input').value.trim();
+    $('err').textContent='';
+    if(!text){ $('err').textContent='문장을 붙여넣어 주세요.'; return; }
+    if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='먼저 API 키를 설정해 주세요 (오른쪽 위 ⚙).'; return; }
+
+    const key = getKey();
+    const model = getModel();
+    $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>분석 중…';
+
+    const prompt = `당신은 한국어 사용자를 위한 어학 어시스턴트입니다. 입력은 SNS·채팅의 격식 없는 문장일 가능성이 높고, 인터넷 슬랭·줄임말·신조어·방언·감정 표현(예: 중국어 「yyds＝최고」「绝绝子＝대박」, 일본어 「草／www＝ㅋㅋ」 등)이 포함된다는 전제로 분석하세요. 아래 JSON만 반환하세요(앞뒤에 설명 금지).
+{"translation":"자연스러운 한국어 번역. 직역이 아니라 SNS에서의 실제 뉘앙스로","words":[{"term":"문장 속 어구(슬랭·줄임말 포함)","reading":"중국어=병음 / 일본어=요미가나(히라가나)","meaning":"한국어 뜻. 인터넷 용법이 있으면 그 뜻을 우선"}],"grammar":[{"point":"문장에 실제로 나온 조사·어미·문형을 나온 형태 그대로","note":"이 문장에서의 역할을 정확히 1~2문장으로"}]}
+
+규칙:
+- 슬랭·줄임말·기호 표현도 words에 적극 포함(그게 배우고 싶은 말).
+- 뜻에 확신이 없으면 meaning 앞에 「(추측)」을 붙이고 아는 범위로. 아는 척 단정 금지.
+- 고유명사·자명한 단어는 생략. words는 5~12개 정도.
+- grammar: 이 문장에 실제로 나오는 것만 0~4개. 없는 문법을 만들지 말 것. point는 나온 형태 그대로(예: 중국어 「把」「了」「的」, 일본어 「は」「を」「て」). 일반화한 사전 표제어로 만들지 말 것.
+문장: """${text}"""`;
+
+    try{
+      const res = await fetch(GEMINI.base+'/chat/completions', {
+        method:'POST',
+        headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
+        body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
+      });
+      const raw = await res.text();
+      if(!res.ok){ throw new Error('API 오류 (HTTP '+res.status+')\n'+raw.slice(0,300)); }
+      let data;
+      try{ data = JSON.parse(JSON.parse(raw).choices[0].message.content); }
+      catch(e){ throw new Error('응답 분석에 실패했어요. 다시 시도해 주세요.'); }
+      render(text, data);
+    }catch(err){
+      const m = (err&&err.message)||String(err);
+      $('err').textContent = /Failed to fetch|NetworkError|Load failed/i.test(m)
+        ? '네트워크/연결에 실패했어요. 키나 통신을 확인해 주세요.' : m;
+    }finally{
+      $('go').disabled=false; $('goLabel').textContent='번역·분석';
+    }
+  }
+
+  function render(srcText, data){
+    const lang = detectLang(srcText);
+    $('trans').textContent = data.translation || '(번역을 가져오지 못했어요)';
+    const orig = $('orig'); orig.className = 'orig '+lang; orig.textContent = srcText;
+
+    // words
+    const words = Array.isArray(data.words)?data.words:[];
+    $('words').innerHTML = words.map((w,i)=>{
+      const wl = lang || detectLang(w.term||'');
+      const saved = dictHas(w.term, wl);
+      return `<div class="word ${wl}" data-i="${i}">
+        <span class="term">${esc(w.term)}</span>
+        ${w.reading?`<span class="read">${esc(w.reading)}</span>`:''}
+        <span class="mean">${esc(w.meaning)}</span>
+        <span class="add"><button class="add-btn ${saved?'saved':''}" data-i="${i}" data-lang="${wl}">${saved?'✓ 추가됨':'＋ 사전'}</button></span>
+      </div>`;
+    }).join('') || '<div class="dict-empty">단어가 추출되지 않았어요.</div>';
+    $('words').querySelectorAll('.add-btn').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const w = words[+b.dataset.i];
+        if(b.classList.contains('saved')) return;
+        addToDict(w, b.dataset.lang, srcText);
+        b.classList.add('saved'); b.textContent='✓ 추가됨';
+      });
+    });
+
+    // grammar
+    const grams = Array.isArray(data.grammar)?data.grammar:[];
+    $('gramTitle').style.display = grams.length ? '' : 'none';
+    $('grams').innerHTML = grams.map(g=>`<div class="gram"><span class="pt">${esc(g.point)}</span><span class="note"> — ${esc(g.note)}</span></div>`).join('');
+
+    $('result').style.display='block';
+    $('result').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  $('go').addEventListener('click', analyze);
+  $('clearIn').addEventListener('click', ()=>{ $('input').value=''; $('input').focus(); });
+</script>
+</body>
+</html>
