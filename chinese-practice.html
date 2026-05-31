@@ -3548,57 +3548,207 @@
         ]
       },
       {
-        hsk: 4, num: 10, title: "経過・順序・継起",
+        hsk: 4, num: 10, title: "経過・順序・継起", mode: "pool",
         sentences: [
           {
             ja: "先にご飯を食べて、その後で宿題をする。", zh: "我先吃饭，然后做作业。", py: "wǒ xiān chī fàn, ránhòu zuò zuòyè.",
-            g: "<strong>「先A，然后B」</strong>＝「先にA、それからB」（時間順）。<br><code>先</code>と <code>然后</code> はセットで使うのが定番。<code>先</code>を省略してもいいが、対比で「先に〜」を強調するなら <code>先</code> を付ける。類似：<code>先...再...</code>（先に〜してから〜）。",
+            g: "<strong>「先A，然后B」</strong>＝「先にA、それからB」（時間順）。<br><code>先</code>と <code>然后</code> はセットが定番。類似 <code>先...再...</code>。",
             w: [{z:"先",p:"xiān",j:"先に"},{z:"然后",p:"ránhòu",j:"その後"},{z:"作业",p:"zuòyè",j:"宿題"}]
           },
           {
+            ja: "先に少し休んでから、出発しよう。", zh: "你先休息一下，然后再出发。", py: "nǐ xiān xiūxi yíxià, ránhòu zài chūfā.",
+            g: "<strong>「先...，然后再...」</strong>＝先に〜してから、それから〜する。<br><code>再</code>で後続動作を強調。<code>一下</code>の <code>一</code> は4声 <code>xià</code> の前で <code>yí</code>。",
+            w: [{z:"先",p:"xiān",j:"先に"},{z:"休息",p:"xiūxi",j:"休む"},{z:"然后",p:"ránhòu",j:"その後"},{z:"出发",p:"chūfā",j:"出発する"}]
+          },
+          {
+            ja: "先に用紙に記入してから、お金を払ってください。", zh: "请先填表，再交钱。", py: "qǐng xiān tián biǎo, zài jiāo qián.",
+            g: "<strong>「先A，再B」</strong>＝先にAしてからB（手順）。<br><code>再</code>は「順を追って次に」。<code>填表</code>＝用紙に記入する。<code>交钱</code>＝お金を払う。",
+            w: [{z:"先",p:"xiān",j:"先に"},{z:"填表",p:"tián biǎo",j:"用紙に記入"},{z:"再",p:"zài",j:"それから"},{z:"交钱",p:"jiāo qián",j:"お金を払う"}]
+          },
+          {
             ja: "まず目標を明確にしなければ。", zh: "首先，我们要明确目标。", py: "shǒuxiān, wǒmen yào míngquè mùbiāo.",
-            g: "<strong><code>首先</code></strong>＝「まず第一に」（順序の冒頭）。続いて <code>其次</code>（次に）／<code>然后</code>（それから）／<code>最后</code>（最後に）でリスト的に展開する。<br>会議・プレゼン・文章の論述で頻出。<code>明确</code>＝明確にする（動詞・形容詞両用）、<code>目标</code>＝目標。",
+            g: "<strong><code>首先</code></strong>＝「まず第一に」（順序の冒頭）。続いて <code>其次／然后／最后</code> で展開。<br>論述・プレゼンで頻出。<code>明确</code>＝明確にする。",
             w: [{z:"首先",p:"shǒuxiān",j:"まず第一に"},{z:"明确",p:"míngquè",j:"明確にする"},{z:"目标",p:"mùbiāo",j:"目標"}]
           },
           {
-            ja: "それから、彼はまたいくつか話した。", zh: "接着，他又说了几句。", py: "jiēzhe, tā yòu shuō le jǐ jù.",
-            g: "<strong><code>接着</code></strong>＝「続いて・それから」（直接の連続）。前の動作・話題に直接つなげる。<br><code>然后</code>はやや時間の隔たり、<code>接着</code>は連続性が強い。<code>又＋V＋了</code>＝「また〜した」（既に起きたことの繰り返し）。<code>句</code>は「言葉の量詞」（<code>几句</code>＝数句）。",
-            w: [{z:"接着",p:"jiēzhe",j:"続いて"},{z:"又",p:"yòu",j:"また"},{z:"几句",p:"jǐ jù",j:"いくつか（の言葉）"}]
+            ja: "次に、計画を立てる必要がある。", zh: "其次，要制定计划。", py: "qícì, yào zhìdìng jìhuà.",
+            g: "<strong><code>其次</code></strong>＝「次に・二番目に」（<code>首先</code>に続く順序）。<br><code>制定计划</code>＝計画を立てる。リスト展開の2項目目に使う。",
+            w: [{z:"其次",p:"qícì",j:"次に"},{z:"制定",p:"zhìdìng",j:"立てる"},{z:"计划",p:"jìhuà",j:"計画"}]
           },
           {
             ja: "最後に、彼はついに成功した。", zh: "最后，他终于成功了。", py: "zuìhòu, tā zhōngyú chénggōng le.",
-            g: "<strong><code>最后</code></strong>＝「最後に・最終的に」（順序の終わり）。<br><code>最后</code>（最終段階・結末）／<code>后来</code>（後になって：過去の話）／<code>以后</code>（これから・〜後）の区別。<code>终于</code>と組み合わせると「努力の末ようやく」のニュアンスが強まる。",
+            g: "<strong><code>最后</code></strong>＝「最後に・最終的に」（順序の終わり）。<br><code>后来</code>（後になって）／<code>以后</code>（これから）との区別。<code>终于</code>と組むと努力の末感が増す。",
             w: [{z:"最后",p:"zuìhòu",j:"最後に"},{z:"终于",p:"zhōngyú",j:"ついに"},{z:"成功",p:"chénggōng",j:"成功する"}]
           },
           {
+            ja: "それから、彼はまたいくつか話した。", zh: "接着，他又说了几句。", py: "jiēzhe, tā yòu shuō le jǐ jù.",
+            g: "<strong><code>接着</code></strong>＝「続いて・それから」（直接の連続）。<br><code>然后</code>より連続性が強い。<code>又＋V＋了</code>＝また〜した。<code>句</code>＝言葉の量詞。",
+            w: [{z:"接着",p:"jiēzhe",j:"続いて"},{z:"又",p:"yòu",j:"また"},{z:"几句",p:"jǐ jù",j:"いくつかの言葉"}]
+          },
+          {
+            ja: "彼は私をちらっと見て、それから背を向けて去った。", zh: "他看了我一眼，然后转身走了。", py: "tā kàn le wǒ yìyǎn, ránhòu zhuǎnshēn zǒu le.",
+            g: "<strong>「...，然后...」</strong>で動作の継起。<code>看了我一眼</code>＝ちらっと見た。<br><code>一眼</code>の <code>一</code> は3声 <code>yǎn</code> の前で <code>yì</code>。<code>转身</code>＝身を翻す。",
+            w: [{z:"一眼",p:"yìyǎn",j:"ちらっと"},{z:"然后",p:"ránhòu",j:"その後"},{z:"转身",p:"zhuǎnshēn",j:"背を向ける"},{z:"走",p:"zǒu",j:"去る"}]
+          },
+          {
+            ja: "明かりが突然消え、そこでみんな静かになった。", zh: "灯突然灭了，于是大家都安静下来。", py: "dēng tūrán miè le, yúshì dàjiā dōu ānjìng xiàlái.",
+            g: "<strong><code>于是</code></strong>＝「そこで・それで」（出来事の流れに続く結果）。<br><code>安静下来</code>＝静かになる（<code>下来</code>＝状態の定着）。<code>灭</code>＝（明かりが）消える。",
+            w: [{z:"突然",p:"tūrán",j:"突然"},{z:"灭",p:"miè",j:"消える"},{z:"于是",p:"yúshì",j:"そこで"},{z:"安静下来",p:"ānjìng xiàlái",j:"静かになる"}]
+          },
+          {
             ja: "最初は、彼が冗談を言っていると思っていた。", zh: "起初，我以为他在开玩笑。", py: "qǐchū, wǒ yǐwéi tā zài kāi wánxiào.",
-            g: "<strong><code>起初</code></strong>＝「最初は・はじめのころ」（書面語的）。口語では <code>一开始</code>。<br>後で<strong>事実が違った</strong>と判明する展開でよく使う：<code>起初我以为...，后来才知道...</code>。<code>开玩笑</code>＝冗談を言う（離合詞）。",
+            g: "<strong><code>起初</code></strong>＝「最初は・はじめのころ」（書面語的）。口語は <code>一开始</code>。<br>後で事実が違ったと判明する展開でよく使う。<code>开玩笑</code>＝冗談を言う。",
             w: [{z:"起初",p:"qǐchū",j:"最初は"},{z:"以为",p:"yǐwéi",j:"〜と思っていた"},{z:"开玩笑",p:"kāi wánxiào",j:"冗談を言う"}]
           },
           {
             ja: "その後、彼は優秀になった。", zh: "后来，他变得很优秀。", py: "hòulái, tā biàn de hěn yōuxiù.",
-            g: "<strong><code>后来</code></strong>＝「その後・後になって」（過去の出来事の連続）。<br><code>后来</code>は<strong>過去</strong>の続き、<code>以后</code>は<strong>未来</strong>を指す。例：<code>后来怎么了？</code>（その後どうなった？）／<code>以后再说</code>（後で話そう）。<code>变得＋形容詞</code>＝「〜になる」（変化）。",
+            g: "<strong><code>后来</code></strong>＝「その後・後になって」（過去の続き）。<br><code>后来</code>は過去、<code>以后</code>は未来。<code>变得＋形</code>＝〜になる（変化）。",
             w: [{z:"后来",p:"hòulái",j:"その後"},{z:"变得",p:"biàn de",j:"〜になる"},{z:"优秀",p:"yōuxiù",j:"優秀"}]
           },
           {
             ja: "最初はあまり慣れなかった。", zh: "一开始，我不太适应。", py: "yì kāishǐ, wǒ bú tài shìyìng.",
-            g: "<strong><code>一开始</code></strong>＝「最初は」（口語的）。<code>起初</code> の口語版。<br><code>适应</code>＝「適応する・慣れる」（動詞）。<code>不太＋形容詞／動詞</code>＝「あまり〜ない」（婉曲否定）。日常会話の感想表現で頻出。",
+            g: "<strong><code>一开始</code></strong>＝「最初は」（口語）。<code>起初</code>の口語版。<br><code>一</code>は1声 <code>kāi</code> の前で <code>yì</code>。<code>不</code>は4声 <code>tài</code> の前で <code>bú</code>。<code>适应</code>＝慣れる。",
             w: [{z:"一开始",p:"yì kāishǐ",j:"最初は"},{z:"不太",p:"bú tài",j:"あまり〜ない"},{z:"适应",p:"shìyìng",j:"慣れる"}]
           },
           {
+            ja: "最初はみんな反対していたが、後で徐々に受け入れた。", zh: "起初大家都不同意，后来慢慢接受了。", py: "qǐchū dàjiā dōu bù tóngyì, hòulái mànmàn jiēshòu le.",
+            g: "<strong>「起初...，后来...」</strong>＝最初は〜、後で〜（変化の対比）。<br><code>不</code>は2声 <code>tóng</code> の前で <code>bù</code>。<code>接受</code>＝受け入れる。",
+            w: [{z:"起初",p:"qǐchū",j:"最初は"},{z:"不同意",p:"bù tóngyì",j:"反対する"},{z:"后来",p:"hòulái",j:"後で"},{z:"接受",p:"jiēshòu",j:"受け入れる"}]
+          },
+          {
+            ja: "中国に来る前、私は中国語を学んだことがなかった。", zh: "来中国之前，我没学过中文。", py: "lái Zhōngguó zhīqián, wǒ méi xué guo Zhōngwén.",
+            g: "<strong>「V＋之前」</strong>＝「〜する前に」。<code>之前</code>は動作・時点の前。<br><code>没V过</code>＝〜したことがない。<code>之前＝以前</code>（やや書面寄り）。",
+            w: [{z:"之前",p:"zhīqián",j:"〜の前"},{z:"没",p:"méi",j:"〜なかった"},{z:"学过",p:"xué guo",j:"学んだことがある"}]
+          },
+          {
+            ja: "食事の後で、散歩に行こう。", zh: "吃饭之后，我们去散步吧。", py: "chī fàn zhīhòu, wǒmen qù sànbù ba.",
+            g: "<strong>「V＋之后」</strong>＝「〜した後で」。<code>之后＝以后</code>。<br><code>散步</code>＝散歩する。動作の前後関係を示す基本表現。",
+            w: [{z:"之后",p:"zhīhòu",j:"〜の後"},{z:"散步",p:"sànbù",j:"散歩する"},{z:"吧",p:"ba",j:"〜しよう"}]
+          },
+          {
+            ja: "卒業後、彼は上海へ働きに行った。", zh: "毕业以后，他去了上海工作。", py: "bìyè yǐhòu, tā qù le Shànghǎi gōngzuò.",
+            g: "<strong>「V＋以后」</strong>＝「〜した後・〜してから」。<br><code>毕业</code>＝卒業する。連動文 <code>去上海工作</code>＝上海へ働きに行く。",
+            w: [{z:"毕业",p:"bìyè",j:"卒業する"},{z:"以后",p:"yǐhòu",j:"〜の後"},{z:"上海",p:"Shànghǎi",j:"上海"},{z:"工作",p:"gōngzuò",j:"働く"}]
+          },
+          {
+            ja: "3年前、ここはまだ一面の農地だった。", zh: "三年以前，这里还是一片农田。", py: "sān nián yǐqián, zhèlǐ hái shì yí piàn nóngtián.",
+            g: "<strong>「時間＋以前」</strong>＝「〜前」。<code>三年以前</code>＝3年前。<br><code>一片</code>の <code>一</code> は4声 <code>piàn</code> の前で <code>yí</code>。<code>农田</code>＝農地。",
+            w: [{z:"以前",p:"yǐqián",j:"〜前"},{z:"还是",p:"hái shì",j:"まだ〜だった"},{z:"一片",p:"yí piàn",j:"一面の"},{z:"农田",p:"nóngtián",j:"農地"}]
+          },
+          {
+            ja: "彼は家に帰るとすぐに眠ってしまった。", zh: "他一回到家就睡着了。", py: "tā yì huí dào jiā jiù shuìzháo le.",
+            g: "<strong>「一...就...」</strong>＝「〜するとすぐに…」（直後性）。<br><code>一</code>は2声 <code>huí</code> の前で <code>yì</code>。<code>睡着</code>＝寝入る（<code>着</code>=zháo）。",
+            w: [{z:"一",p:"yì",j:"〜するとすぐ"},{z:"回到家",p:"huí dào jiā",j:"家に帰る"},{z:"就",p:"jiù",j:"すぐに"},{z:"睡着",p:"shuìzháo",j:"寝入る"}]
+          },
+          {
+            ja: "私が家に着いたばかりのとき、電話が鳴った。", zh: "我刚到家，电话就响了。", py: "wǒ gāng dào jiā, diànhuà jiù xiǎng le.",
+            g: "<strong>「刚...，就...」</strong>＝「〜したばかりで、すぐに…」（直後の継起）。<br><code>刚</code>＝〜したばかり。<code>响</code>＝（音が）鳴る。二つの出来事の連続。",
+            w: [{z:"刚",p:"gāng",j:"〜したばかり"},{z:"到家",p:"dào jiā",j:"家に着く"},{z:"就",p:"jiù",j:"すぐに"},{z:"响",p:"xiǎng",j:"鳴る"}]
+          },
+          {
+            ja: "終業のベルが鳴るやいなや、生徒たちは駆け出した。", zh: "下课铃一响，学生们就跑出去了。", py: "xiàkè líng yì xiǎng, xuéshengmen jiù pǎo chūqù le.",
+            g: "<strong>「一＋V，就...」</strong>＝〜するやいなや…。<code>一</code>は3声 <code>xiǎng</code> の前で <code>yì</code>。<br><code>下课铃</code>＝終業のベル。<code>跑出去</code>＝駆け出す。",
+            w: [{z:"铃",p:"líng",j:"ベル"},{z:"一响",p:"yì xiǎng",j:"鳴るやいなや"},{z:"就",p:"jiù",j:"すぐに"},{z:"跑出去",p:"pǎo chūqù",j:"駆け出す"}]
+          },
+          {
+            ja: "彼が言い終えるやいなや、みんな拍手し始めた。", zh: "他刚说完，大家就鼓起掌来。", py: "tā gāng shuō wán, dàjiā jiù gǔ qǐ zhǎng lái.",
+            g: "<strong>「刚...，就...」</strong>＝〜し終えるなり…。<code>说完</code>＝言い終える。<br><code>鼓起掌来</code>＝拍手し始める（<code>鼓掌</code>＋方向補語 <code>起来</code> に目的語が挟まる）。",
+            w: [{z:"刚",p:"gāng",j:"〜したばかり"},{z:"说完",p:"shuō wán",j:"言い終える"},{z:"就",p:"jiù",j:"すぐに"},{z:"鼓掌",p:"gǔzhǎng",j:"拍手する"}]
+          },
+          {
+            ja: "話しているうちに、彼は泣き出した。", zh: "说着说着，他就哭了。", py: "shuōzhe shuōzhe, tā jiù kū le.",
+            g: "<strong>「V着V着，就...」</strong>＝「〜しているうちに、いつのまにか…」（動作の経過中の変化）。<br>同じ動詞を <code>着</code> で重ねる。<code>哭</code>＝泣く。経過変化の慣用型。",
+            w: [{z:"说着说着",p:"shuōzhe shuōzhe",j:"話しているうちに"},{z:"就",p:"jiù",j:"いつのまにか"},{z:"哭",p:"kū",j:"泣く"}]
+          },
+          {
+            ja: "歩いているうちに、空が暗くなった。", zh: "走着走着，天就黑了。", py: "zǒuzhe zǒuzhe, tiān jiù hēi le.",
+            g: "<strong>「V着V着，...就...」</strong>。<code>走着走着</code>＝歩いているうちに。<br>動作の継続中に状況が変化する。<code>天黑了</code>＝空が暗くなった。",
+            w: [{z:"走着走着",p:"zǒuzhe zǒuzhe",j:"歩いているうちに"},{z:"天",p:"tiān",j:"空"},{z:"黑",p:"hēi",j:"暗い"}]
+          },
+          {
+            ja: "聞いているうちに、私は寝てしまった。", zh: "听着听着，我就睡着了。", py: "tīngzhe tīngzhe, wǒ jiù shuìzháo le.",
+            g: "<strong>「V着V着，就...」</strong>＝〜しているうちに…。<code>听着听着</code>＝聞いているうちに。<br><code>睡着</code>＝寝入る。無意識の変化を表す。",
+            w: [{z:"听着听着",p:"tīngzhe tīngzhe",j:"聞いているうちに"},{z:"就",p:"jiù",j:"いつのまにか"},{z:"睡着",p:"shuìzháo",j:"寝入る"}]
+          },
+          {
+            ja: "朝から晩まで、彼はずっと働いている。", zh: "从早到晚，他一直在工作。", py: "cóng zǎo dào wǎn, tā yìzhí zài gōngzuò.",
+            g: "<strong>「从A到B」</strong>＝「AからBまで」（時間・空間の範囲）。<br><code>从早到晚</code>＝朝から晩まで。<code>一直</code>の <code>一</code> は2声 <code>zhí</code> の前で <code>yì</code>。",
+            w: [{z:"从…到",p:"cóng…dào",j:"〜から〜まで"},{z:"早",p:"zǎo",j:"朝"},{z:"晚",p:"wǎn",j:"晩"},{z:"一直",p:"yìzhí",j:"ずっと"}]
+          },
+          {
+            ja: "それ以来、私たちは二度と会っていない。", zh: "从那以后，我们再也没见过面。", py: "cóng nà yǐhòu, wǒmen zài yě méi jiàn guo miàn.",
+            g: "<strong>「从那以后」</strong>＝「それ以来」（起点を示す）。<br><code>再也没...过</code>＝二度と〜していない。<code>见面</code>＝会う（離合詞）。",
+            w: [{z:"从那以后",p:"cóng nà yǐhòu",j:"それ以来"},{z:"再也",p:"zài yě",j:"二度と"},{z:"没",p:"méi",j:"〜ない"},{z:"见面",p:"jiàn miàn",j:"会う"}]
+          },
+          {
+            ja: "明日から、早寝早起きをする。", zh: "从明天起，我要早睡早起。", py: "cóng míngtiān qǐ, wǒ yào zǎo shuì zǎo qǐ.",
+            g: "<strong>「从...起」</strong>＝「〜から（始めて）」（起点）。<code>从明天起</code>＝明日から。<br><code>早睡早起</code>＝早寝早起き（四字句）。決意を述べる。",
+            w: [{z:"从…起",p:"cóng…qǐ",j:"〜から"},{z:"明天",p:"míngtiān",j:"明日"},{z:"早睡早起",p:"zǎo shuì zǎo qǐ",j:"早寝早起き"}]
+          },
+          {
             ja: "同時に、私は日本語も学んでいる。", zh: "同时，我也在学习日语。", py: "tóngshí, wǒ yě zài xuéxí Rìyǔ.",
-            g: "<strong><code>同时</code></strong>＝「同時に・それと並行して」（接続詞）。文頭で並列を導く。<br>関連語：<code>另外</code>（それから）／<code>此外</code>（それ以外に）／<code>而且</code>（しかも）。同じ主体が複数の事を並行する文脈で使う。<code>也</code>を併用して「〜も」を明示。",
-            w: [{z:"同时",p:"tóngshí",j:"同時に"},{z:"也",p:"yě",j:"〜も"},{z:"学习",p:"xuéxí",j:"学ぶ"}]
+            g: "<strong><code>同时</code></strong>＝「同時に・それと並行して」（並列）。文頭で使う。<br>同じ主体が複数のことを並行する文脈。<code>也</code>を併用。",
+            w: [{z:"同时",p:"tóngshí",j:"同時に"},{z:"也",p:"yě",j:"〜も"},{z:"在学习",p:"zài xuéxí",j:"学んでいる"}]
           },
           {
             ja: "それ以外に、彼はピアノも弾ける。", zh: "此外，他还会弹钢琴。", py: "cǐwài, tā hái huì tán gāngqín.",
-            g: "<strong><code>此外</code></strong>＝「それ以外に・このほかに」（接続詞、書面語的）。<br>口語では <code>另外</code>。リスト的に項目を追加する時に使う。<code>弹</code>＝「（弦楽器・鍵盤楽器を）弾く」、<code>钢琴</code>＝ピアノ。<code>吹</code>（管楽器）／<code>拉</code>（バイオリン）との楽器動詞の使い分けも知っておくと◎。",
-            w: [{z:"此外",p:"cǐwài",j:"そのほかに"},{z:"弹",p:"tán",j:"弾く"},{z:"钢琴",p:"gāngqín",j:"ピアノ"}]
+            g: "<strong><code>此外</code></strong>＝「それ以外に」（追加、書面語）。口語は <code>另外</code>。<br>リスト的に項目を追加する。<code>弹钢琴</code>＝ピアノを弾く。",
+            w: [{z:"此外",p:"cǐwài",j:"そのほかに"},{z:"还",p:"hái",j:"さらに"},{z:"弹",p:"tán",j:"弾く"},{z:"钢琴",p:"gāngqín",j:"ピアノ"}]
+          },
+          {
+            ja: "それから、このことはもう少し検討する必要がある。", zh: "另外，这件事还需要再考虑。", py: "lìngwài, zhè jiàn shì hái xūyào zài kǎolǜ.",
+            g: "<strong><code>另外</code></strong>＝「それから・別に」（追加、口語的）。<br><code>此外</code>の口語版。<code>需要再考虑</code>＝もう少し検討が必要。",
+            w: [{z:"另外",p:"lìngwài",j:"それから"},{z:"需要",p:"xūyào",j:"必要とする"},{z:"再",p:"zài",j:"もう少し"},{z:"考虑",p:"kǎolǜ",j:"検討する"}]
+          },
+          {
+            ja: "中国語を学ぶと同時に、中国文化も理解した。", zh: "学中文的同时，我也了解了中国文化。", py: "xué Zhōngwén de tóngshí, wǒ yě liǎojiě le Zhōngguó wénhuà.",
+            g: "<strong>「V＋的同时」</strong>＝「〜すると同時に」（並行）。<br>動詞句の後に <code>的同时</code> を付ける。<code>了解</code>＝理解する。<code>文化</code>＝文化。",
+            w: [{z:"的同时",p:"de tóngshí",j:"〜と同時に"},{z:"也",p:"yě",j:"〜も"},{z:"了解",p:"liǎojiě",j:"理解する"},{z:"文化",p:"wénhuà",j:"文化"}]
+          },
+          {
+            ja: "努力の末、彼はついに試験に合格した。", zh: "经过努力，他终于通过了考试。", py: "jīngguò nǔlì, tā zhōngyú tōngguò le kǎoshì.",
+            g: "<strong>「经过...，终于...」</strong>＝〜を経て、ついに…。<br><code>经过</code>＝〜を経て（過程）。<code>终于</code>＝ついに。<code>通过考试</code>＝試験に合格する。",
+            w: [{z:"经过",p:"jīngguò",j:"〜を経て"},{z:"努力",p:"nǔlì",j:"努力"},{z:"终于",p:"zhōngyú",j:"ついに"},{z:"通过考试",p:"tōngguò kǎoshì",j:"試験に合格"}]
+          },
+          {
+            ja: "空がだんだん明るくなってきた。", zh: "天渐渐亮了。", py: "tiān jiànjiàn liàng le.",
+            g: "<strong><code>渐渐</code></strong>＝「だんだん・徐々に」（緩やかな変化）。<br>文末 <code>了</code> で変化を示す。<code>亮</code>＝明るい。<code>逐渐</code>とほぼ同義。",
+            w: [{z:"天",p:"tiān",j:"空"},{z:"渐渐",p:"jiànjiàn",j:"だんだん"},{z:"亮",p:"liàng",j:"明るい"}]
+          },
+          {
+            ja: "彼の病気は徐々に良くなってきた。", zh: "他的病逐渐好起来了。", py: "tā de bìng zhújiàn hǎo qǐlái le.",
+            g: "<strong><code>逐渐</code></strong>＝「徐々に・次第に」（書面語寄り）。<code>渐渐</code>と同義。<br><code>好起来</code>＝よくなってくる（方向補語 <code>起来</code>）。",
+            w: [{z:"病",p:"bìng",j:"病気"},{z:"逐渐",p:"zhújiàn",j:"徐々に"},{z:"好起来",p:"hǎo qǐlái",j:"よくなる"}]
+          },
+          {
+            ja: "彼は一瞬ぽかんとして、その後笑った。", zh: "他先愣了一下，随后笑了。", py: "tā xiān lèng le yíxià, suíhòu xiào le.",
+            g: "<strong><code>随后</code></strong>＝「その後すぐ・続いて」（書面語）。<br><code>愣了一下</code>＝一瞬ぽかんとする。<code>一下</code>の <code>一</code> は4声 <code>xià</code> の前で <code>yí</code>。",
+            w: [{z:"愣",p:"lèng",j:"ぽかんとする"},{z:"一下",p:"yíxià",j:"ちょっと"},{z:"随后",p:"suíhòu",j:"その後すぐ"},{z:"笑",p:"xiào",j:"笑う"}]
+          },
+          {
+            ja: "続けざまに、また一つの出来事が起きた。", zh: "紧接着，又发生了一件事。", py: "jǐn jiēzhe, yòu fāshēng le yí jiàn shì.",
+            g: "<strong><code>紧接着</code></strong>＝「すぐ続いて・続けざまに」（<code>接着</code>より連続性が強い）。<br><code>一件</code>の <code>一</code> は4声 <code>jiàn</code> の前で <code>yí</code>。<code>发生</code>＝起こる。",
+            w: [{z:"紧接着",p:"jǐn jiēzhe",j:"続けざまに"},{z:"又",p:"yòu",j:"また"},{z:"发生",p:"fāshēng",j:"起こる"},{z:"一件事",p:"yí jiàn shì",j:"一つの出来事"}]
+          },
+          {
+            ja: "最後には、みんなくたくたに疲れていた。", zh: "到最后，大家都累得不行了。", py: "dào zuìhòu, dàjiā dōu lèi de bùxíng le.",
+            g: "<strong>「到最后」</strong>＝「最後には・最終的に」（結末）。<br>「形＋得不行」＝〜でたまらない（程度補語）。<code>不</code>は2声 <code>xíng</code> の前で <code>bù</code>。",
+            w: [{z:"到最后",p:"dào zuìhòu",j:"最後には"},{z:"累",p:"lèi",j:"疲れる"},{z:"不行",p:"bùxíng",j:"たまらない"}]
+          },
+          {
+            ja: "しばらくして、彼はやっとゆっくり口を開いた。", zh: "过了一会儿，他才慢慢开口。", py: "guò le yíhuìr, tā cái mànmàn kāikǒu.",
+            g: "<strong>「过了一会儿」</strong>＝「しばらくして」（時間の経過）。<br><code>一会儿</code>の <code>一</code> は4声 <code>huì</code> の前で <code>yí</code>。<code>开口</code>＝口を開く・話し出す。",
+            w: [{z:"过了一会儿",p:"guò le yíhuìr",j:"しばらくして"},{z:"才",p:"cái",j:"やっと"},{z:"慢慢",p:"mànmàn",j:"ゆっくり"},{z:"开口",p:"kāikǒu",j:"口を開く"}]
           },
           {
             ja: "要するに、今回の旅行は楽しかった。", zh: "总之，这次旅行很愉快。", py: "zǒngzhī, zhè cì lǚxíng hěn yúkuài.",
-            g: "<strong><code>总之</code></strong>＝「要するに・結論を言えば」（まとめの接続詞）。<br>類似：<code>总而言之</code>（書面語）／<code>反正</code>（どうせ）／<code>简单地说</code>（簡単に言うと）。話のまとめ・要約で使う。<code>愉快</code>＝楽しい（書面語寄り、口語は <code>开心</code>）。",
+            g: "<strong><code>总之</code></strong>＝「要するに・結論を言えば」（まとめ）。<br>類似 <code>总而言之／简单地说</code>。話のまとめ・要約で使う。<code>愉快</code>＝楽しい。",
             w: [{z:"总之",p:"zǒngzhī",j:"要するに"},{z:"旅行",p:"lǚxíng",j:"旅行"},{z:"愉快",p:"yúkuài",j:"楽しい"}]
+          },
+          {
+            ja: "数年の努力を経て、彼は新人から専門家になった。", zh: "经过几年的努力，他从一个新人变成了专家。", py: "jīngguò jǐ nián de nǔlì, tā cóng yí ge xīnrén biàn chéng le zhuānjiā.",
+            g: "<strong>「从A变成B」</strong>＝「AからBに変わる」（経過の結末）。<br><code>一个</code>の <code>一</code> は4声 <code>ge</code> の前で <code>yí</code>。<code>变成</code>＝〜になる（変化の結果 <code>成</code>）。",
+            w: [{z:"经过",p:"jīngguò",j:"〜を経て"},{z:"从",p:"cóng",j:"〜から"},{z:"新人",p:"xīnrén",j:"新人"},{z:"变成",p:"biàn chéng",j:"〜になる"}]
           }
         ]
       },
