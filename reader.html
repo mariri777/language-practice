@@ -108,7 +108,13 @@
 
   <!-- settings -->
   <div class="card" id="settings">
-    <label>Gemini API キー（無料・このブラウザ内だけに保存）</label>
+    <label>AI（GeminiかDeepSeekを選べます）</label>
+    <select id="provider">
+      <option value="gemini">Gemini（Google・無料 / 中国本土では使えません）</option>
+      <option value="deepseek">DeepSeek（要チャージ・激安 / 中国本土でも使えます）</option>
+    </select>
+    <p class="hint" id="provHint"></p>
+    <label style="margin-top:14px">APIキー（このブラウザ内だけに保存）</label>
     <input id="key" type="password" placeholder="AIza..." autocomplete="off">
     <div class="row">
       <button class="btn sm" id="saveKey">保存</button>

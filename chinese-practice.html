@@ -409,7 +409,7 @@
       },
       // ============ HSK 2 ============
       {
-        hsk: 2, num: 1, title: "完了の「了」と経験の「过」",
+        hsk: 2, num: 1, title: "完了の「了」と経験の「过」", mode: "template", template: "aspect",
         sentences: [
           {
             ja: "私はご飯を食べました。", zh: "我吃了饭。", py: "wǒ chī le fàn.",
@@ -464,7 +464,7 @@
         ]
       },
       {
-        hsk: 2, num: 2, title: "進行・未来・願望",
+        hsk: 2, num: 2, title: "進行・未来・願望", mode: "template", template: "progress",
         sentences: [
           {
             ja: "彼は今、電話中です。", zh: "他正在打电话。", py: "tā zhèngzài dǎ diànhuà.",
@@ -519,7 +519,7 @@
         ]
       },
       {
-        hsk: 2, num: 3, title: "比較・能力・依頼・接続",
+        hsk: 2, num: 3, title: "比較・能力・依頼・接続", mode: "template", template: "compare",
         sentences: [
           {
             ja: "私は彼より背が高い。", zh: "我比他高。", py: "wǒ bǐ tā gāo.",
@@ -1896,9 +1896,202 @@
         };
       }
 
+      // ===== HSK2 #1「了・过」用バンク（拼音・量詞は検証済み単位）=====
+      const TADV2 = [{z:"昨天",p:"zuótiān",j:"昨日"}, {z:"今天",p:"jīntiān",j:"今日"}, {z:"刚才",p:"gāngcái",j:"さっき"}];
+      const DONEV = [
+        {v:"看",vp:"kàn",jv:"読む・見る",jStem:"読み",no:"一本书",nop:"yì běn shū",jno:"本を1冊"},
+        {v:"喝",vp:"hē",jv:"飲む",jStem:"飲み",no:"一杯咖啡",nop:"yì bēi kāfēi",jno:"コーヒーを1杯"},
+        {v:"买",vp:"mǎi",jv:"買う",jStem:"買い",no:"两件衣服",nop:"liǎng jiàn yīfu",jno:"服を2着"},
+        {v:"吃",vp:"chī",jv:"食べる",jStem:"食べ",no:"三个包子",nop:"sān ge bāozi",jno:"中華まんを3個"},
+        {v:"写",vp:"xiě",jv:"書く",jStem:"書き",no:"一封信",nop:"yì fēng xìn",jno:"手紙を1通"}
+      ];
+      const EXPV = [
+        {v:"去",vp:"qù",o:"北京",op:"Běijīng",jExp:"北京に行っ"},
+        {v:"吃",vp:"chī",o:"日本菜",op:"Rìběn cài",jExp:"日本料理を食べ"},
+        {v:"看",vp:"kàn",o:"这部电影",op:"zhè bù diànyǐng",jExp:"この映画を見"},
+        {v:"学",vp:"xué",o:"中文",op:"Zhōngwén",jExp:"中国語を習っ"},
+        {v:"来",vp:"lái",o:"这里",op:"zhèli",jExp:"ここに来"}
+      ];
+      const DAILY = [
+        {vo:"吃饭",vop:"chī fàn",jMa:"ご飯を食べ",jTe:"ご飯を食べ"}, {vo:"回家",vop:"huí jiā",jMa:"家に帰り",jTe:"家に帰っ"},
+        {vo:"起床",vop:"qǐchuáng",jMa:"起き",jTe:"起き"}, {vo:"睡觉",vop:"shuìjiào",jMa:"寝",jTe:"寝"}
+      ];
+      const ALREADY = [
+        {z:"知道",p:"zhīdào",ja:"もう知っています"}, {z:"到",p:"dào",ja:"もう着きました"},
+        {z:"吃完",p:"chī wán",ja:"もう食べ終わりました"}, {z:"下班",p:"xiàbān",ja:"もう退勤しました"}
+      ];
+      function fDone() {
+        const t = pick(TADV2), s = pick(SUBJ), v = pick(DONEV);
+        return {
+          ja:`${t.j}、${s.j}は${v.jno}${v.jStem}ました。`, zh:`${t.z}${s.z}${v.v}了${v.no}。`, py:`${t.p} ${s.p} ${v.vp} le ${v.nop}.`,
+          w:[{z:t.z,p:t.p,j:t.j},{z:s.z,p:s.p,j:s.j},{z:v.v,p:v.vp,j:v.jv},{z:"了",p:"le",j:"〜した（完了）"},{z:v.no,p:v.nop,j:v.jno}],
+          g:"<strong>動詞＋<code>了</code></strong>は完了・実現を表す（過去形ではない）。目的語に数量詞・修飾語が付くと文が落ち着く（<code>看了一本书</code>）。否定は <code>没</code>＋V で <code>了</code> を外す。",
+          alts:[]
+        };
+      }
+      function fExp() {
+        const s = pick(SUBJ), v = pick(EXPV), neg = rnd(2) === 0;
+        return {
+          ja: neg?`${s.j}は${v.jExp}たことがありません。`:`${s.j}は${v.jExp}たことがあります。`,
+          zh: neg?`${s.z}没${v.v}过${v.o}。`:`${s.z}${v.v}过${v.o}。`,
+          py: neg?`${s.p} méi ${v.vp} guo ${v.op}.`:`${s.p} ${v.vp} guo ${v.op}.`,
+          w:[{z:s.z,p:s.p,j:s.j}].concat(neg?[{z:"没",p:"méi",j:"〜していない"}]:[]).concat([{z:v.v,p:v.vp,j:"動詞"},{z:"过",p:"guo",j:"〜した経験"},{z:v.o,p:v.op,j:"目的語"}]),
+          g:"<strong>動詞＋<code>过</code></strong>は経験「〜したことがある」。否定は <code>没＋V＋过</code>（<code>没去过</code>＝行ったことがない）。完了の <code>了</code>（単発の実現）と区別する。",
+          alts:[]
+        };
+      }
+      function fDoneQ() {
+        const d = pick(DAILY);
+        return {
+          ja:`${d.jMa}ましたか？`, zh:`你${d.vo}了吗？`, py:`nǐ ${d.vop} le ma?`,
+          w:[{z:"你",p:"nǐ",j:"あなた"},{z:d.vo,p:d.vop,j:"動作"},{z:"了",p:"le",j:"〜した（変化）"},{z:"吗",p:"ma",j:"〜か"}],
+          g:"<strong>文末の <code>了</code></strong>は状況変化・新事態の発生を表す。完了疑問は <code>...了吗？</code>、正反疑問 <code>...了没有？</code> も可。答えは <code>...了</code>／<code>还没...</code>。",
+          alts:[`你${d.vo}了没有？`]
+        };
+      }
+      function fNotYet() {
+        const s = pick(SUBJ), d = pick(DAILY);
+        return {
+          ja:`${s.j}はまだ${d.jTe}ていません。`, zh:`${s.z}还没${d.vo}。`, py:`${s.p} hái méi ${d.vop}.`,
+          w:[{z:s.z,p:s.p,j:s.j},{z:"还",p:"hái",j:"まだ"},{z:"没",p:"méi",j:"〜していない"},{z:d.vo,p:d.vop,j:"動作"}],
+          g:"<strong><code>还没</code>＋V</strong>＝「まだ〜していない」（今後する可能性を含む）。<code>不</code>（意志的否定）・<code>没</code>（完了の否定）と使い分ける。",
+          alts:[]
+        };
+      }
+      function fAlready() {
+        const a = pick(ALREADY);
+        return {
+          ja:`${a.ja}。`, zh:`我已经${a.z}了。`, py:`wǒ yǐjīng ${a.p} le.`,
+          w:[{z:"已经",p:"yǐjīng",j:"もう・すでに"},{z:a.z,p:a.p,j:"動詞"},{z:"了",p:"le",j:"〜した（変化）"}],
+          g:"<strong>「已经...了」</strong>＝「もう〜した・〜になった」。<code>已经</code>（すでに）＋文末 <code>了</code>（状況変化）。否定は <code>还没</code>（まだ〜していない）。",
+          alts:[]
+        };
+      }
+
+      // ===== HSK2 #2「進行・未来・願望」用バンク =====
+      const TIMEFUT = [{z:"明天",p:"míngtiān",j:"明日"}, {z:"下个月",p:"xià ge yuè",j:"来月"}, {z:"明年",p:"míngnián",j:"来年"}];
+      const SOON = [
+        {z:"毕业",p:"bìyè",ja:"卒業します"}, {z:"下课",p:"xiàkè",ja:"授業が終わります"},
+        {z:"放假",p:"fàngjià",ja:"休みになります"}, {z:"到",p:"dào",ja:"着きます"}
+      ];
+      function fProg2() {
+        const s = pick(SUBJ), v = pick(VO);
+        return {
+          ja:`${s.j}は${v.jProg}いるところです。`, zh:`${s.z}正在${v.z}。`, py:`${s.p} zhèngzài ${v.p}.`,
+          w:[{z:s.z,p:s.p,j:s.j},{z:"正在",p:"zhèngzài",j:"〜している最中"}].concat(v.w),
+          g:"<strong><code>正在＋V</code></strong>＝ちょうど〜している最中。<code>正</code>は「ちょうど」を足す。文末 <code>呢</code> を添えると口語的（<code>正在...呢</code>）。否定は <code>没在＋V</code>。",
+          alts:[`${s.z}在${v.z}呢。`]
+        };
+      }
+      function fFuture() {
+        const t = pick(TIMEFUT), s = pick(SUBJ), p = pick(PLACE);
+        return {
+          ja:`${t.j}、${s.j}は${p.j}に行く予定です。`, zh:`${t.z}${s.z}要去${p.z}。`, py:`${t.p} ${s.p} yào qù ${p.p}.`,
+          w:[{z:t.z,p:t.p,j:t.j},{z:s.z,p:s.p,j:s.j},{z:"要",p:"yào",j:"〜する予定"},{z:"去",p:"qù",j:"行く"},{z:p.z,p:p.p,j:p.j}],
+          g:"<strong>助動詞 <code>要</code></strong>＝意志・予定「〜する（つもり）」。時間詞は動詞の前。<code>要</code>（強い意志）と <code>想</code>（やわらかい願望）を使い分ける。",
+          alts:[]
+        };
+      }
+      function fOrder() {
+        const v = pick(VO);
+        return {
+          ja:`${v.jWant}たいです。`, zh:`我要${v.z}。`, py:`wǒ yào ${v.p}.`,
+          w:[{z:"我",p:"wǒ",j:"私"},{z:"要",p:"yào",j:"〜したい・欲しい"}].concat(v.w),
+          g:"<strong>注文・意志の <code>要</code></strong>：飲食店では「〜をください」にも使う。否定で「〜したくない」は <code>不想</code> が自然（<code>不要</code>は禁止になりがち）。",
+          alts:[]
+        };
+      }
+      function fSoon() {
+        const s = pick(SUBJ), e = pick(SOON);
+        return {
+          ja:`${s.j}はもうすぐ${e.ja}。`, zh:`${s.z}快要${e.z}了。`, py:`${s.p} kuài yào ${e.p} le.`,
+          w:[{z:s.z,p:s.p,j:s.j},{z:"快要",p:"kuài yào",j:"もうすぐ〜"},{z:e.z,p:e.p,j:"出来事"},{z:"了",p:"le",j:"〜になる（変化）"}],
+          g:"<strong>「快要...了」</strong>＝「もうすぐ〜する」。差し迫った近未来。文末 <code>了</code> 必須。<code>就要...了</code>は具体的時刻と併用可（<code>明天就要...了</code>）。",
+          alts:[`${s.z}快${e.z}了。`]
+        };
+      }
+
+      // ===== HSK2 #3「比較・能力・依頼・接続」用バンク =====
+      const CMP = [
+        {z:"我",p:"wǒ",j:"私"}, {z:"他",p:"tā",j:"彼"}, {z:"我哥哥",p:"wǒ gēge",j:"私の兄"}, {z:"我妹妹",p:"wǒ mèimei",j:"私の妹"}
+      ];
+      const CMP_ADJ = [{z:"高",p:"gāo",j:"背が高い"}, {z:"忙",p:"máng",j:"忙しい"}, {z:"瘦",p:"shòu",j:"痩せている"}];
+      const AGE_DIFF = [{z:"两岁",p:"liǎng suì",j:"2歳"}, {z:"三岁",p:"sān suì",j:"3歳"}, {z:"五岁",p:"wǔ suì",j:"5歳"}];
+      const REQ = [
+        {z:"帮我",p:"bāng wǒ",j:"手伝っ"}, {z:"等我",p:"děng wǒ",j:"待っ"}, {z:"教我",p:"jiāo wǒ",j:"教え"}
+      ];
+      const PERM = [
+        {z:"拍照",p:"pāizhào",j:"写真を撮っ"}, {z:"抽烟",p:"chōuyān",j:"タバコを吸っ"}, {z:"停车",p:"tíngchē",j:"駐車し"}
+      ];
+      const GIVEOBJ = [
+        {z:"一杯水",p:"yì bēi shuǐ",j:"水を1杯"}, {z:"一杯咖啡",p:"yì bēi kāfēi",j:"コーヒーを1杯"}, {z:"一个面包",p:"yí ge miànbāo",j:"パンを1個"}
+      ];
+      const TAI = [
+        {z:"好",p:"hǎo",ja:"よかった・すごい"}, {z:"贵",p:"guì",ja:"高すぎる"}, {z:"累",p:"lèi",ja:"疲れた"}, {z:"棒",p:"bàng",ja:"最高だ"}
+      ];
+      function fCompare2() {
+        const a = pick(CMP); let b = pick(CMP); while (b.z === a.z) b = pick(CMP);
+        const adj = pick(CMP_ADJ);
+        return {
+          ja:`${a.j}は${b.j}より${adj.j}です。`, zh:`${a.z}比${b.z}${adj.z}。`, py:`${a.p} bǐ ${b.p} ${adj.p}.`,
+          w:[{z:a.z,p:a.p,j:a.j},{z:"比",p:"bǐ",j:"〜より"},{z:b.z,p:b.p,j:b.j},{z:adj.z,p:adj.p,j:adj.j}],
+          g:"<strong>比較「A＋比＋B＋形容詞」</strong>＝「AはBより〜」。形容詞に <code>很</code> は付けない。差は形容詞の後ろ（<code>高一点／高得多</code>）。否定は <code>没有B那么...</code>。",
+          alts:[]
+        };
+      }
+      function fCompareAge() {
+        const a = pick(CMP); let b = pick(CMP); while (b.z === a.z) b = pick(CMP);
+        const d = pick(AGE_DIFF), older = rnd(2) === 0;
+        return {
+          ja:`${a.j}は${b.j}より${d.j}${older?"年上":"年下"}です。`, zh:`${a.z}比${b.z}${older?"大":"小"}${d.z}。`, py:`${a.p} bǐ ${b.p} ${older?"dà":"xiǎo"} ${d.p}.`,
+          w:[{z:a.z,p:a.p,j:a.j},{z:"比",p:"bǐ",j:"〜より"},{z:b.z,p:b.p,j:b.j},{z:older?"大":"小",p:older?"dà":"xiǎo",j:older?"（年齢が）上":"（年齢が）下"},{z:d.z,p:d.p,j:d.j}],
+          g:"<strong>比較の差量</strong>：「A比B＋大/小＋数量」で年齢差を表す。<code>大</code>＝年上、<code>小</code>＝年下。量詞 <code>岁</code> の前なので2は必ず <code>两</code>。",
+          alts:[]
+        };
+      }
+      function fRequest2() {
+        const r = pick(REQ);
+        return {
+          ja:`${r.j}てもらえますか？`, zh:`你能${r.z}吗？`, py:`nǐ néng ${r.p} ma?`,
+          w:[{z:"你",p:"nǐ",j:"あなた"},{z:"能",p:"néng",j:"〜できる"},{z:r.z,p:r.p,j:"動作＋我"},{z:"吗",p:"ma",j:"〜か"}],
+          g:"<strong><code>能</code></strong>＝条件・能力的に「〜できる」。依頼でよく使う。正反疑問 <code>能不能帮我？</code>、許可なら <code>可以帮我吗？</code>、丁寧には <code>请帮我</code>。",
+          alts:[`你能不能${r.z}？`]
+        };
+      }
+      function fPermit() {
+        const p = pick(PERM);
+        return {
+          ja:`ここで${p.j}てもいいですか？`, zh:`这里可以${p.z}吗？`, py:`zhèli kěyǐ ${p.p} ma?`,
+          w:[{z:"这里",p:"zhèli",j:"ここ"},{z:"可以",p:"kěyǐ",j:"〜してよい"},{z:p.z,p:p.p,j:"動作"},{z:"吗",p:"ma",j:"〜か"}],
+          g:"<strong><code>可以</code></strong>＝許可「〜してもよい」。答えは <code>可以</code>／<code>不可以</code>／<code>不行</code>。<code>能</code>より規則・許可の側面が強い。",
+          alts:[]
+        };
+      }
+      function fGive2() {
+        const g = pick(GIVEOBJ);
+        return {
+          ja:`${g.j}ください。`, zh:`请给我${g.z}。`, py:`qǐng gěi wǒ ${g.p}.`,
+          w:[{z:"请",p:"qǐng",j:"どうぞ"},{z:"给",p:"gěi",j:"〜にあげる・くれる"},{z:"我",p:"wǒ",j:"私"},{z:g.z,p:g.p,j:g.j}],
+          g:"<strong>動詞 <code>给</code></strong>＝「与える・くれる」。語順は「给＋人＋もの」の二重目的語。<code>送（贈る）／告诉（告げる）／教（教える）</code>も同型。",
+          alts:[`给我${g.z}。`]
+        };
+      }
+      function fTai() {
+        const a = pick(TAI);
+        return {
+          ja:`${a.ja}！`, zh:`太${a.z}了！`, py:`tài ${a.p} le!`,
+          w:[{z:"太",p:"tài",j:"あまりにも"},{z:a.z,p:a.p,j:"形容詞"},{z:"了",p:"le",j:"〜だ（感嘆）"}],
+          g:"<strong>「太＋形容詞＋了」</strong>＝「あまりにも〜だ」。感嘆・強調の定型。プラス（<code>太好了！</code>）にもマイナス（<code>太贵了</code>）にも使う。",
+          alts:[]
+        };
+      }
+
       const SETS = {
         numbers: [fTime, fAge, fWeekday, fCount, fFamilyCount, fMoney],
-        place: [fLocation, fGo, fLike, fWant, fProgressive, fCan, fPosition]
+        place: [fLocation, fGo, fLike, fWant, fProgressive, fCan, fPosition],
+        aspect: [fDone, fExp, fDoneQ, fNotYet, fAlready],
+        progress: [fProg2, fFuture, fOrder, fSoon],
+        compare: [fCompare2, fCompareAge, fRequest2, fPermit, fGive2, fTai]
       };
       function generate(key, count) {
         count = count || 10;
