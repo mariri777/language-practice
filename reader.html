@@ -102,7 +102,7 @@
 
 <div class="wrap">
   <h1>貼って読む<span class="dot">.</span></h1>
-  <p class="lead">気になる中国語・韓国語を貼るだけ。日本語訳と単語・文法が出て、覚えたい語は自分の辞書に貯められます。</p>
+  <p class="lead">気になる中国語・韓国語を貼るだけ。日本語訳と単語が出て、覚えたい語は自分の辞書に貯められます。</p>
 
   <!-- settings -->
   <div class="card" id="settings">
@@ -149,9 +149,6 @@
 
       <div class="sec-title">単語</div>
       <div id="words"></div>
-
-      <div class="sec-title" id="gramTitle">文法</div>
-      <div id="grams"></div>
     </div>
   </div>
 
@@ -232,14 +229,11 @@
     $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>解析中…';
 
     const prompt = `あなたは日本語話者向けの、正確さを最優先する語学アシスタントです。次の文（中国語または韓国語）を解析し、下記JSONのみを返してください（前後に説明文を付けない）。
-{"translation":"自然な日本語訳","words":[{"term":"文中の語句","reading":"中国語=ピンイン / 韓国語=ローマ字発音","meaning":"日本語の意味"}],"grammar":[{"point":"文中に実際に現れた助詞・語尾・文型を、現れた形そのままで","note":"この文での働きを正確に1〜2文で"}]}
+{"translation":"自然な日本語訳","words":[{"term":"文中の語句","reading":"中国語=ピンイン / 韓国語=ローマ字発音","meaning":"日本語の意味"}]}
 
 厳守ルール：
-- 正確さ最優先。確信が持てない項目は含めない（個数を埋めるために推測で足さない）。
+- 正確さ最優先。確信が持てない語は含めない。
 - words：覚える価値のある語を中心に5〜12個。固有名詞・自明な語は省く。
-- grammar：この文に本当に出てくるものだけ、0〜4個。文に存在しない文法を作らない。
-- grammar の point は、文中に出た形をそのまま書く（例：韓国語「-에」「게（것이の縮約）」「-지」、中国語「把」「了」「的」）。一般化した辞書見出しにしない。
-- 複数の別々の助詞を1つにまとめない（例：「-는/은」と「-가」は別項目。混ぜない）。
 文："""${text}"""`;
 
     try{
@@ -288,11 +282,6 @@
         b.classList.add('saved'); b.textContent='✓ 追加済';
       });
     });
-
-    // grammar
-    const grams = Array.isArray(data.grammar)?data.grammar:[];
-    $('gramTitle').style.display = grams.length ? '' : 'none';
-    $('grams').innerHTML = grams.map(g=>`<div class="gram"><span class="pt">${esc(g.point)}</span><span class="note"> — ${esc(g.note)}</span></div>`).join('');
 
     $('result').style.display='block';
     $('result').scrollIntoView({behavior:'smooth', block:'start'});
