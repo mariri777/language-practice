@@ -252,7 +252,7 @@
         ]
       },
       {
-        hsk: 1, num: 2, title: "数字・時間・量詞",
+        hsk: 1, num: 2, title: "数字・時間・量詞", mode: "template", template: "numbers",
         sentences: [
           {
             ja: "今、何時ですか？", zh: "现在几点？", py: "xiànzài jǐ diǎn?",
@@ -1600,6 +1600,169 @@
     ];
 
     // ========================================================================
+    // TEMPLATE ENGINE — mode:"template" courses generate fresh sentences each session.
+    //   全ての漢字・拼音（声調含む）は手作業で検証した値を事前テーブルに格納し、
+    //   組み合わせるだけ。声調変化（一 yī/yí/yì・两 vs 二 など）はアルゴリズムで
+    //   計算せず、検証済みの形をそのまま使うので生成文は常に自然で正しい。
+    // ========================================================================
+    const CTMPL = (function () {
+      const rnd = (n) => Math.floor(Math.random() * n);
+      const pick = (a) => a[rnd(a.length)];
+      function sample(a, n) {
+        const c = a.slice(), out = [];
+        while (c.length && out.length < n) out.push(c.splice(rnd(c.length), 1)[0]);
+        return out;
+      }
+
+      // 時刻（検証済み拼音。2時は必ず 两点）
+      const HOURS = [
+        {n:1,zh:"一点",py:"yì diǎn"}, {n:2,zh:"两点",py:"liǎng diǎn"}, {n:3,zh:"三点",py:"sān diǎn"},
+        {n:4,zh:"四点",py:"sì diǎn"}, {n:5,zh:"五点",py:"wǔ diǎn"}, {n:6,zh:"六点",py:"liù diǎn"},
+        {n:7,zh:"七点",py:"qī diǎn"}, {n:8,zh:"八点",py:"bā diǎn"}, {n:9,zh:"九点",py:"jiǔ diǎn"},
+        {n:10,zh:"十点",py:"shí diǎn"}, {n:11,zh:"十一点",py:"shíyī diǎn"}, {n:12,zh:"十二点",py:"shí'èr diǎn"}
+      ];
+      // 年齢（検証済み拼音。末尾の一を避けた値のみ）
+      const AGES = [
+        {zh:"五岁",py:"wǔ suì",n:5}, {zh:"六岁",py:"liù suì",n:6}, {zh:"八岁",py:"bā suì",n:8},
+        {zh:"十岁",py:"shí suì",n:10}, {zh:"十二岁",py:"shí'èr suì",n:12}, {zh:"十五岁",py:"shíwǔ suì",n:15},
+        {zh:"十八岁",py:"shíbā suì",n:18}, {zh:"二十岁",py:"èrshí suì",n:20}, {zh:"二十五岁",py:"èrshíwǔ suì",n:25},
+        {zh:"三十岁",py:"sānshí suì",n:30}, {zh:"三十五岁",py:"sānshíwǔ suì",n:35}, {zh:"四十岁",py:"sìshí suì",n:40}
+      ];
+      const WEEKDAYS = [
+        {zh:"星期一",py:"xīngqī yī",ja:"月曜日"}, {zh:"星期二",py:"xīngqī èr",ja:"火曜日"},
+        {zh:"星期三",py:"xīngqī sān",ja:"水曜日"}, {zh:"星期四",py:"xīngqī sì",ja:"木曜日"},
+        {zh:"星期五",py:"xīngqī wǔ",ja:"金曜日"}, {zh:"星期六",py:"xīngqī liù",ja:"土曜日"},
+        {zh:"星期天",py:"xīngqī tiān",ja:"日曜日"}
+      ];
+      // 量詞バンク：数＋量詞の拼音は「一」の声調変化込みで検証済み。items はその量詞に合う名詞のみ。
+      const CLS = [
+        { cls:"本", clsJa:"冊", v:"あります",
+          nums:[{n:1,zh:"一本",py:"yì běn"},{n:2,zh:"两本",py:"liǎng běn"},{n:3,zh:"三本",py:"sān běn"},{n:4,zh:"四本",py:"sì běn"},{n:5,zh:"五本",py:"wǔ běn"}],
+          items:[{z:"书",p:"shū",j:"本"},{z:"杂志",p:"zázhì",j:"雑誌"}] },
+        { cls:"个", clsJa:"個", v:"あります",
+          nums:[{n:1,zh:"一个",py:"yí ge"},{n:2,zh:"两个",py:"liǎng ge"},{n:3,zh:"三个",py:"sān ge"},{n:4,zh:"四个",py:"sì ge"},{n:5,zh:"五个",py:"wǔ ge"}],
+          items:[{z:"苹果",p:"píngguǒ",j:"りんご"},{z:"问题",p:"wèntí",j:"問題"},{z:"包子",p:"bāozi",j:"中華まん"}] },
+        { cls:"张", clsJa:"枚", v:"あります",
+          nums:[{n:1,zh:"一张",py:"yì zhāng"},{n:2,zh:"两张",py:"liǎng zhāng"},{n:3,zh:"三张",py:"sān zhāng"},{n:4,zh:"四张",py:"sì zhāng"},{n:5,zh:"五张",py:"wǔ zhāng"}],
+          items:[{z:"票",p:"piào",j:"チケット"},{z:"地图",p:"dìtú",j:"地図"}] },
+        { cls:"件", clsJa:"着", v:"あります",
+          nums:[{n:1,zh:"一件",py:"yí jiàn"},{n:2,zh:"两件",py:"liǎng jiàn"},{n:3,zh:"三件",py:"sān jiàn"},{n:4,zh:"四件",py:"sì jiàn"},{n:5,zh:"五件",py:"wǔ jiàn"}],
+          items:[{z:"衣服",p:"yīfu",j:"服"}] },
+        { cls:"只", clsJa:"匹", v:"います",
+          nums:[{n:1,zh:"一只",py:"yì zhī"},{n:2,zh:"两只",py:"liǎng zhī"},{n:3,zh:"三只",py:"sān zhī"},{n:4,zh:"四只",py:"sì zhī"},{n:5,zh:"五只",py:"wǔ zhī"}],
+          items:[{z:"猫",p:"māo",j:"猫"},{z:"狗",p:"gǒu",j:"犬"}] }
+      ];
+      // 家族（人数は 个 で数える）
+      const FAM = [
+        {z:"哥哥",p:"gēge",j:"兄"}, {z:"姐姐",p:"jiějie",j:"姉"},
+        {z:"弟弟",p:"dìdi",j:"弟"}, {z:"妹妹",p:"mèimei",j:"妹"}
+      ];
+      const PEOPLE_NUM = [
+        {n:1,zh:"一个",py:"yí ge"}, {n:2,zh:"两个",py:"liǎng ge"}, {n:3,zh:"三个",py:"sān ge"}
+      ];
+      // 金額（口語 块。検証済み）
+      const AMOUNT = [
+        {zh:"五块",py:"wǔ kuài",n:5}, {zh:"十块",py:"shí kuài",n:10}, {zh:"十五块",py:"shíwǔ kuài",n:15},
+        {zh:"二十块",py:"èrshí kuài",n:20}, {zh:"三十块",py:"sānshí kuài",n:30}, {zh:"五十块",py:"wǔshí kuài",n:50},
+        {zh:"一百块",py:"yìbǎi kuài",n:100}
+      ];
+
+      function fTime() {
+        const h = pick(HOURS), half = rnd(2) === 0;
+        const zh = half ? `现在${h.zh}半。` : `现在${h.zh}。`;
+        const py = half ? `xiànzài ${h.py} bàn.` : `xiànzài ${h.py}.`;
+        return {
+          ja: half ? `今、${h.n}時半です。` : `今、${h.n}時です。`,
+          zh, py,
+          w: [{z:"现在",p:"xiànzài",j:"今"}, {z:h.zh,p:h.py,j:`${h.n}時`}].concat(half?[{z:"半",p:"bàn",j:"半・30分"}]:[]),
+          g: "<strong>時刻は <code>是</code> 不要</strong>で「数字＋点」が述語になる。<strong>2時は必ず <code>两点</code></strong>（<code>二点</code>×）。「〜時半」は <code>点半</code>（例：<code>三点半</code>）。否定や強調では <code>是</code> を補える。",
+          alts: half ? [`现在是${h.zh}半。`] : [`现在是${h.zh}。`]
+        };
+      }
+      function fAge() {
+        const a = pick(AGES);
+        return {
+          ja: `私は今年${a.n}歳です。`,
+          zh: `我今年${a.zh}。`,
+          py: `wǒ jīnnián ${a.py}.`,
+          w: [{z:"今年",p:"jīnnián",j:"今年"}, {z:a.zh,p:a.py,j:`${a.n}歳`}],
+          g: "<strong>年齢には <code>是</code> を付けない</strong>のが原則。「主語＋数詞＋岁」で文が完結する。年齢の尋ね方：子どもには <code>几岁？</code>、大人には <code>多大？</code>。",
+          alts: [`我${a.zh}。`]
+        };
+      }
+      function fWeekday() {
+        const wd = pick(WEEKDAYS);
+        return {
+          ja: `今日は${wd.ja}です。`,
+          zh: `今天${wd.zh}。`,
+          py: `jīntiān ${wd.py}.`,
+          w: [{z:"今天",p:"jīntiān",j:"今日"}, {z:wd.zh,p:wd.py,j:wd.ja}],
+          g: "<strong>曜日を述語にする時は <code>是</code> を省略可</strong>（<code>今天（是）星期一</code>）。否定文では <code>是</code> 必須（<code>今天不是星期一</code>）。日曜は <code>星期天／星期日</code>。",
+          alts: [`今天是${wd.zh}。`]
+        };
+      }
+      function fCount() {
+        const c = pick(CLS), num = pick(c.nums), it = pick(c.items);
+        return {
+          ja: `私は${it.j}が${num.n}${c.clsJa}${c.v}。`,
+          zh: `我有${num.zh}${it.z}。`,
+          py: `wǒ yǒu ${num.py} ${it.p}.`,
+          w: [{z:"有",p:"yǒu",j:"持つ・いる・ある"}, {z:num.zh,p:num.py,j:`${num.n}${c.clsJa}`}, {z:it.z,p:it.p,j:it.j}],
+          g: `<strong>量詞</strong>：「数詞＋量詞＋名詞」の語順。<code>${c.cls}</code>＝${c.clsJa}を数える量詞。<strong>2は <code>两</code></strong>（<code>二${c.cls}</code>×）。「一」は後ろの声調で <code>yī/yí/yì</code> と変調する。所有・存在は <code>有</code>、否定は <code>没有</code>。`,
+          alts: []
+        };
+      }
+      function fFamilyCount() {
+        const f = pick(FAM), num = pick(PEOPLE_NUM);
+        return {
+          ja: `私は${f.j}が${num.n}人います。`,
+          zh: `我有${num.zh}${f.z}。`,
+          py: `wǒ yǒu ${num.py} ${f.p}.`,
+          w: [{z:"有",p:"yǒu",j:"いる・持つ"}, {z:num.zh,p:num.py,j:`${num.n}人`}, {z:f.z,p:f.p,j:f.j}],
+          g: "<strong>人を数える量詞は <code>个</code></strong>（丁寧には <code>位</code>）。<strong>2人は <code>两个</code></strong>。親族は <code>的</code> を省くのが自然（<code>我哥哥</code>）。所有・存在は <code>有</code>。",
+          alts: []
+        };
+      }
+      function fMoney() {
+        const a = pick(AMOUNT);
+        return {
+          ja: `全部で${a.n}元です。`,
+          zh: `一共${a.zh}。`,
+          py: `yígòng ${a.py}.`,
+          w: [{z:"一共",p:"yígòng",j:"合計"}, {z:a.zh,p:a.py,j:`${a.n}元（口語 块）`}],
+          g: "<strong>通貨</strong>：書面語 <code>元（yuán）</code>、口語 <code>块（kuài）</code>。<code>一共</code>＝合計で。「いくら？」は <code>多少钱？</code>、「合計いくら？」は <code>一共多少钱？</code>。",
+          alts: [`一共${a.zh}钱。`]
+        };
+      }
+
+      const SETS = {
+        numbers: [fTime, fAge, fWeekday, fCount, fFamilyCount, fMoney]
+      };
+      function generate(key, count) {
+        count = count || 10;
+        const frames = SETS[key] || SETS.numbers;
+        const seq = sample(frames, frames.length).concat(
+          Array.from({length: Math.max(0, count - frames.length)}, () => pick(frames))
+        );
+        const out = [], seen = new Set();
+        for (const f of seq) {
+          if (out.length >= count) break;
+          let s = f(), tries = 0;
+          while (seen.has(s.zh) && tries < 10) { s = f(); tries++; }
+          if (seen.has(s.zh)) continue;
+          seen.add(s.zh); out.push(s);
+        }
+        let guard = 0;
+        while (out.length < count && guard++ < 200) {
+          const s = pick(frames)();
+          if (!seen.has(s.zh)) { seen.add(s.zh); out.push(s); }
+        }
+        return out;
+      }
+      return { generate };
+    })();
+
+    // ========================================================================
     // STATE & STORAGE
     // ========================================================================
     const STORAGE_KEY = "cn-practice-v2";
@@ -1614,7 +1777,8 @@
       favorites: [],       // ["courseId-sentIdx"]
       recentInCourse: {},  // { courseId: [sentIdx, ...] } (avoid immediate repeats)
       inProgress: null,    // { courseId, sentIdx, input } - 練習中に離脱した場合の途中状態
-      traditional: false   // 簡体字(false) / 繁体字(true)
+      traditional: false,  // 簡体字(false) / 繁体字(true)
+      generated: {}        // { courseId: [10 sentences] } 生成型コースの現セッション出題（リロード維持）
     };
 
     // Simplified→Traditional helper. Always returns the string in the currently
@@ -1788,6 +1952,16 @@
       state.currentCourseId = courseId;
       saveState();
       const c = COURSES[courseId];
+      // 生成型課程: 中断中なら同じセットを維持、それ以外（未着手/完了済み）は新規生成
+      if (isGenerative(courseId)) {
+        const resuming = state.inProgress && state.inProgress.courseId === courseId
+          && Array.isArray(state.generated[courseId]) && state.generated[courseId].length === 10;
+        const midCourse = masteredList(courseId).length > 0
+          && !state.completedCourses.includes(courseId)
+          && Array.isArray(state.generated[courseId]) && state.generated[courseId].length === 10;
+        if (resuming || midCourse) applyGenerated(courseId);
+        else ensureGenerated(courseId, { fresh: true });
+      }
       // ホームの「つづきから」「連続日数」へ記録
       if (window.LC) LC.record({ href: 'chinese-practice.html', label: 'Daily 中国語', sub: `HSK${c.hsk} ・ ${c.title}` });
       const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
@@ -1898,6 +2072,40 @@
       const c = getCourse(id);
       return c && masteredList(id).length >= c.sentences.length;
     }
+    // ===== 生成型コース（mode:"template" / "pool"）の出題セット管理 =====
+    function isGenerative(id) { const c = COURSES[id]; return !!(c && (c.mode === "template" || c.mode === "pool")); }
+    function applyGenerated(id) {
+      if (Array.isArray(state.generated[id]) && state.generated[id].length) {
+        COURSES[id].sentences = state.generated[id];
+      }
+    }
+    function samplePool(arr, n) {
+      const c = (arr || []).slice(), out = [];
+      while (c.length && out.length < n) out.push(c.splice(Math.floor(Math.random() * c.length), 1)[0]);
+      return out;
+    }
+    // 新しい10問を用意し、コースの進捗をリセット（＝毎回フレッシュな出題）
+    function regenCourse(id) {
+      const c = COURSES[id];
+      const set = (c && c.mode === "pool")
+        ? samplePool(c.pool, 10)
+        : CTMPL.generate((c && c.template) || "numbers", 10);
+      state.generated[id] = set;
+      c.sentences = set;
+      state.mastered[id] = [];
+      state.recentInCourse[id] = [];
+      state.completedCourses = state.completedCourses.filter(x => x !== id);
+      if (state.inProgress && state.inProgress.courseId === id) state.inProgress = null;
+      saveState();
+    }
+    // 生成型課程の出題セットを用意。fresh=true で新規生成、それ以外は既存があれば維持
+    function ensureGenerated(id, opts) {
+      if (!isGenerative(id)) return;
+      const hasSet = Array.isArray(state.generated[id]) && state.generated[id].length === 10;
+      if ((opts && opts.fresh) || !hasSet) regenCourse(id);
+      else applyGenerated(id);
+    }
+
     function markMastered(courseId, sentIdx) {
       if (!state.mastered[courseId]) state.mastered[courseId] = [];
       if (!state.mastered[courseId].includes(sentIdx)) {
@@ -2199,9 +2407,13 @@
     // 完了モーダル: もう一度 → 現コースをリセットして再開
     elReplayCourseBtn.addEventListener("click", () => {
       closeModal(elCompleteModal);
-      state.mastered[state.currentCourseId] = [];
-      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
-      saveState();
+      if (isGenerative(state.currentCourseId)) {
+        regenCourse(state.currentCourseId); // 生成型は新しい10問で再挑戦
+      } else {
+        state.mastered[state.currentCourseId] = [];
+        state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+        saveState();
+      }
       renderHeader();
       pickNext();
     });
@@ -2214,9 +2426,13 @@
     // 練習画面 → このコースをリセット
     elResetCourseBtn.addEventListener("click", () => {
       if (!confirm("このコースの進捗をリセットしますか？")) return;
-      state.mastered[state.currentCourseId] = [];
-      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
-      saveState();
+      if (isGenerative(state.currentCourseId)) {
+        regenCourse(state.currentCourseId); // 生成型は新しい10問でリセット
+      } else {
+        state.mastered[state.currentCourseId] = [];
+        state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+        saveState();
+      }
       renderHeader();
       pickNext();
     });
