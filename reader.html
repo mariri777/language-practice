@@ -174,29 +174,52 @@
 
 <script>
   const $ = id => document.getElementById(id);
-  const KEY_K='groq-key', MODEL_K='groq-model', DICT_K='mydict-v1';
-  const BASE='https://api.groq.com/openai/v1';
+  const DICT_K='mydict-v1';
+
+  const PROVIDERS = {
+    groq:   { base:'https://api.groq.com/openai/v1',                          model:'llama-3.3-70b-versatile', keyph:'gsk_...',  console:'https://console.groq.com' },
+    gemini: { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash',        keyph:'AIza...',  console:'https://aistudio.google.com/apikey' }
+  };
+  // migrate old single-provider Groq keys
+  if(localStorage.getItem('groq-key') && !localStorage.getItem('key-groq')) localStorage.setItem('key-groq', localStorage.getItem('groq-key'));
+  if(localStorage.getItem('groq-model') && !localStorage.getItem('model-groq')) localStorage.setItem('model-groq', localStorage.getItem('groq-model'));
+
+  const provider = () => localStorage.getItem('reader-provider') || 'groq';
+  const P = () => PROVIDERS[provider()];
+  const keyK = () => 'key-'+provider();
+  const modelK = () => 'model-'+provider();
+  const getKey = () => (localStorage.getItem(keyK())||'').trim();
+  const getModel = () => (localStorage.getItem(modelK())||P().model).trim();
+  function hasKey(){ return !!getKey(); }
+  function refreshKeyNotice(){ $('noKey').style.display = hasKey() ? 'none' : 'block'; }
 
   /* ---------- settings ---------- */
-  const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
-  $('key').value = localStorage.getItem(KEY_K) || '';
-
   function fillModels(ids){
     const sel = $('model');
-    const cur = localStorage.getItem(MODEL_K) || DEFAULT_MODEL;
+    const cur = getModel();
     const list = ids.slice();
     if(!list.includes(cur)) list.unshift(cur);
     sel.innerHTML = list.map(id=>`<option value="${id}"${id===cur?' selected':''}>${id}</option>`).join('');
   }
-  fillModels([]); // start with just the saved/default model
+  function syncProviderUI(){
+    const p = P();
+    $('provider').value = provider();
+    $('key').value = getKey();
+    $('key').placeholder = p.keyph;
+    $('getKeyLink').href = p.console;
+    const nkl = $('noKeyLink'); if(nkl) nkl.href = p.console;
+    fillModels([]);
+    refreshKeyNotice();
+  }
+  syncProviderUI();
 
   async function loadModels(){
-    const key = (localStorage.getItem(KEY_K)||'').trim();
+    const key = getKey();
     const hint = $('modelHint');
     if(!key){ hint.textContent='先にキーを保存してね。'; return; }
     hint.textContent='取得中…';
     try{
-      const res = await fetch(BASE+'/models', { headers:{ 'Authorization':'Bearer '+key } });
+      const res = await fetch(P().base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
       const j = await res.json();
       const ids = (j.data||[]).map(m=>m.id).filter(Boolean).sort();
       if(ids.length){ fillModels(ids); hint.textContent='スラングは大きめ・新しめのモデルが有利。切り替えて試してみて。'; }
@@ -204,7 +227,12 @@
     }catch(e){ hint.textContent='一覧の取得に失敗しました（キーや通信を確認）。'; }
   }
   $('loadModels').addEventListener('click', loadModels);
-  $('model').addEventListener('change', ()=> localStorage.setItem(MODEL_K, $('model').value));
+  $('model').addEventListener('change', ()=> localStorage.setItem(modelK(), $('model').value));
+  $('provider').addEventListener('change', ()=>{
+    localStorage.setItem('reader-provider', $('provider').value);
+    syncProviderUI();
+    if(hasKey()) loadModels();
+  });
 
   $('gearBtn').addEventListener('click', ()=>{
     const opening = !$('settings').classList.contains('open');
@@ -212,15 +240,12 @@
     if(opening && hasKey() && $('model').options.length <= 1) loadModels();
   });
   $('saveKey').addEventListener('click', ()=>{
-    localStorage.setItem(KEY_K, $('key').value.trim());
-    if($('model').value) localStorage.setItem(MODEL_K, $('model').value);
+    localStorage.setItem(keyK(), $('key').value.trim());
+    if($('model').value) localStorage.setItem(modelK(), $('model').value);
     refreshKeyNotice();
     if(hasKey()) loadModels();
   });
-  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(KEY_K); $('key').value=''; refreshKeyNotice(); });
-  function hasKey(){ return !!(localStorage.getItem(KEY_K)||'').trim(); }
-  function refreshKeyNotice(){ $('noKey').style.display = hasKey() ? 'none' : 'block'; }
-  refreshKeyNotice();
+  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(keyK()); $('key').value=''; refreshKeyNotice(); });
 
   /* ---------- helpers ---------- */
   function detectLang(s){
@@ -263,10 +288,10 @@
     const text = $('input').value.trim();
     $('err').textContent='';
     if(!text){ $('err').textContent='文章を貼ってね。'; return; }
-    if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='先にGroqキーを設定してね（右上の⚙）。'; return; }
+    if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='先にAPIキーを設定してね（右上の⚙）。'; return; }
 
-    const key = localStorage.getItem(KEY_K).trim();
-    const model = (localStorage.getItem(MODEL_K)||'llama-3.3-70b-versatile').trim();
+    const key = getKey();
+    const model = getModel();
     $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>解析中…';
 
     const prompt = `あなたは日本語話者向けの語学アシスタントです。入力はSNS・チャットのくだけた文の可能性が高く、ネットスラング・略語・新語・方言・感情表現（例: 韓国語の「ㅋㅋ＝笑」「ㅠㅠ＝泣」、中国語の「yyds＝最高」「绝绝子＝神」など）が含まれる前提で解析してください。下記JSONのみを返す（前後に説明文を付けない）。
@@ -279,7 +304,7 @@
 文："""${text}"""`;
 
     try{
-      const res = await fetch(BASE+'/chat/completions', {
+      const res = await fetch(P().base+'/chat/completions', {
         method:'POST',
         headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
         body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
