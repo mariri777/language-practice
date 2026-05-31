@@ -6451,6 +6451,153 @@
     elTotalCourses.textContent = COURSES.length; // actual count
 
     // ========================================================================
+    // i18n — PROMPT-LANGUAGE LAYER
+    //   韓国語コンテンツ(ko/roman/活用/pool)は単一ソース。解説言語だけを切り替える。
+    //   ?lang=zh → 中国語ユーザー向け。未翻訳項目は日本語に自動フォールバック。
+    // ========================================================================
+    const LANG = (new URLSearchParams(location.search).get("lang") === "zh") ? "zh" : "ja";
+    const PROMPT = (s) => (LANG === "zh" && s && s.zh != null) ? s.zh : (s ? s.ja : "");
+    const GRAM   = (s) => (LANG === "zh" && s && s.gz != null) ? s.gz : (s ? s.g : "");
+    const GLOSS  = (w) => (LANG === "zh" && w && w.zh != null) ? w.zh : (w ? w.ja : "");
+    const CTITLE = (c) => (LANG === "zh" && c && c.titleZh != null) ? c.titleZh : (c ? c.title : "");
+    const IOVER  = (intro) => (LANG === "zh" && intro && intro.overviewZh != null) ? intro.overviewZh : (intro ? intro.overview : "");
+    const IPTS   = (intro) => (LANG === "zh" && intro && intro.pointsZh) ? intro.pointsZh : ((intro && intro.points) || []);
+    const UI = {
+      check:{ja:"答え合わせ",zh:"对答案"}, next:{ja:"次の問題へ  →",zh:"下一题  →"}, retry:{ja:"もう一度  →",zh:"再来一次  →"},
+      again:{ja:"もう一度挑戦",zh:"再次挑战"}, resume:{ja:"続きから挑戦",zh:"继续挑战"}, start:{ja:"チャレンジ開始",zh:"开始挑战"},
+      courses:{ja:"コース",zh:"课"}, done:{ja:"✓ 完了",zh:"✓ 完成"}, levelProgress:{ja:"全体の進度",zh:"整体进度"},
+      altLabel:{ja:"他の自然な言い方: ",zh:"其他自然的说法: "}, hint:{ja:"ヒント",zh:"提示"},
+      master:{ja:"+1 マスター",zh:"+1 掌握"}, correct:{ja:"正解！",zh:"答对了！"}, partial:{ja:"惜しい！もう一度挑戦",zh:"差一点！再试一次"},
+      wrong:{ja:"模範解答を確認して再挑戦",zh:"看看模范答案再挑战"}, yourAns:{ja:"あなたの答え：",zh:"你的答案："},
+      modelLabel:{ja:"모범 답안 (模範解答)",zh:"모범 답안 (模范答案)"}, speakTitle:{ja:"発音を聞く",zh:"听发音"},
+      grammarTitle:{ja:"文法ポイント",zh:"语法要点"}, wordsTitle:{ja:"単語",zh:"单词"},
+      nextQ:{ja:"次の問題へ →",zh:"下一题 →"}, retryQ:{ja:"もう一度やる →",zh:"再做一次 →"}
+    };
+    const T = (k) => (UI[k] && UI[k][LANG] != null) ? UI[k][LANG] : (UI[k] ? UI[k].ja : k);
+    const HINTTEXT = (first, len) => LANG === "zh"
+      ? `第一个字是 <strong class="ko">${first}</strong>，共 ${len} 个字`
+      : `最初の文字は <strong class="ko">${first}</strong>、合計 ${len} 文字`;
+    if (LANG === "zh") document.documentElement.lang = "zh";
+
+    // ===== 中国語オーバーレイ（韓国語データは不変。ko文字列キーで解説言語を上書き）=====
+    // pool課程ぶんを順次拡充。未登録の課程は日本語にフォールバック。
+    const ZH_COURSE = {
+      "あいさつ・自己紹介": {
+        title: "问候・自我介绍",
+        overview: "韩语最基本的问候与自我介绍表达。确认「是N」句型、尊敬词尾、疑问词语序等今后所有内容的基础。【🔄 本课程每次挑战会从约40个固定表达中随机出10题】",
+        points: [
+          "<strong>-(으)세요</strong> 尊敬的礼貌词尾（안녕하세요）",
+          "<strong>-ㅂ니다／-습니다</strong> 正式的합쇼体",
+          "「N + 이에요/예요」＝「是N」（按有无收音区分）",
+          "谦让的 <code>저</code> vs 随意的 <code>나</code>",
+          "疑问词 <code>뭐</code>（<code>무엇</code>的口语形）的用法",
+          "<strong>说出身</strong>：「从〜来」是 <code>-에서 왔어요</code>。国名＋<code>사람</code>表示「〜人」（如 <code>한국 사람</code>）。",
+          "<strong>按收音区分的指定词</strong>：名词末无收音用 <code>-예요</code>，有收音用 <code>-이에요</code>（<code>가수예요</code> / <code>학생이에요</code>）。",
+          "<strong>年龄量词</strong>：固有数词＋<code>살</code>。「20岁」是 <code>스무 살</code>，形态有变化。"
+        ],
+        pool: {
+          "안녕하세요.": { zh:"你好。", gz:"最基本的问候语。<code>안녕</code>＝汉字「安宁」。早中晚都可用。", w:["安宁（问候语干）","尊敬的礼貌词尾"] },
+          "잘 지내요?": { zh:"过得好吗？", gz:"询问近况的常用句。回答用<code>잘 지내요</code>（过得好）。", w:["好好地·健康地","过日子"] },
+          "네, 잘 지내요.": { zh:"是的，过得很好。", gz:"对<code>잘 지내요?</code>的常用回答。", w:["是","过得好＝健康"] },
+          "오랜만이에요.": { zh:"好久不见。", gz:"重逢时的问候。更郑重为<code>오랜만입니다</code>。", w:["好久","〜（陈述）"] },
+          "안녕히 가세요.": { zh:"再见。（对离开的人）", gz:"对<strong>离开</strong>现场的人说的告别语。", w:["平安地","请走（가다的尊敬）"] },
+          "안녕히 계세요.": { zh:"再见。（对留下的人）", gz:"对<strong>留下</strong>的人说，自己离开时用。", w:["平安地","请留步（있다的尊敬）"] },
+          "또 만나요.": { zh:"下次再见。", gz:"亲近关系的告别语。", w:["再","见面"] },
+          "내일 봐요.": { zh:"明天见。", gz:"<code>보다</code>本义「看」，<code>봐요</code>也表示「（再）见面吧」。", w:["明天","见吧（보다的해요体）"] },
+          "어서 오세요.": { zh:"欢迎光临。", gz:"迎接客人或来访者时的常用语。", w:["请·快","请进来（오다的尊敬）"] },
+          "안녕히 주무세요.": { zh:"晚安。", gz:"<code>주무시다</code>是<code>자다</code>（睡）的尊敬语。亲近时说<code>잘 자요</code>。", w:["平安地","请安睡（자다的尊敬）"] },
+          "다음에 봐요.": { zh:"下次见。", gz:"含「改天再见」之意。", w:["下次","〜（时间）","见吧"] },
+          "감사합니다.": { zh:"谢谢。", gz:"最正式的感谢。柔和为<code>감사해요</code>，固有词<code>고마워요</code>也常用。", w:["感谢","做（합쇼体）"] },
+          "정말 감사합니다.": { zh:"非常感谢。", gz:"用<code>정말</code>（真的）加强感谢。", w:["真的·非常","谢谢"] },
+          "천만에요.": { zh:"不客气。", gz:"对感谢的回应。口语也用<code>아니에요</code>。", w:["千万（哪里的话）","〜（陈述）"] },
+          "죄송합니다.": { zh:"对不起。（道歉）", gz:"正式的道歉。柔和为<code>미안해요</code>。", w:["抱歉·惶恐","（합쇼体）"] },
+          "미안해요.": { zh:"对不起。", gz:"亲近关系的道歉。更正式为<code>죄송합니다</code>。", w:["抱歉","（해요体）"] },
+          "괜찮아요.": { zh:"没关系。", gz:"对道歉或邀请的回应。<code>괜찮다→괜찮아요</code>。", w:["没关系·不要紧","（해요体）"] },
+          "저기요.": { zh:"不好意思。（叫人时）", gz:"叫店员或他人时的「不好意思」。与道歉的<code>죄송합니다</code>不同。", w:["那边·喂","礼貌化"] },
+          "실례합니다.": { zh:"打扰一下。", gz:"搭话或进入时的礼貌用语。", w:["失礼","做"] },
+          "처음 뵙겠습니다.": { zh:"初次见面。", gz:"初次见面的固定说法。谦让语<code>뵙다</code>＋意志<code>-겠-</code>。", w:["初次","拜见（보다的谦让）","意志·礼貌"] },
+          "만나서 반가워요.": { zh:"很高兴见到你。", gz:"<code>반갑다</code>是ㅂ变则→<code>반가워요</code>。", w:["见到（你）","高兴（ㅂ变则）"] },
+          "잘 부탁드립니다.": { zh:"请多关照。", gz:"<code>부탁드리다</code>是<code>부탁하다</code>的谦让语。", w:["好好地","拜托（谦让）"] },
+          "저는 김수진이에요.": { zh:"我是金秀珍。", gz:"名字以收音结尾用<code>이에요</code>；以元音结尾用<code>예요</code>。", w:["我（谦让）","〜是（主题）","金秀珍（人名）","〜是（有收音）"] },
+          "저는 학생이에요.": { zh:"我是学生。", gz:"<code>N＋이에요/예요</code>＝「是N」。有收音→이에요。", w:["我（谦让）","学生","〜是（有收音）"] },
+          "저는 회사원이에요.": { zh:"我是公司职员。", gz:"陈述职业的基本句型。有收音用<code>이에요</code>。", w:["我","公司职员","〜是"] },
+          "저는 선생님이에요.": { zh:"我是老师。", gz:"说自己的职业可用<code>선생님</code>。", w:["我","老师","〜是"] },
+          "저는 가수가 아니에요.": { zh:"我不是歌手。", gz:"名词否定<code>N이/가 아니에요</code>。被否定的名词带<code>-이/가</code>。", w:["歌手","补语助词","不是"] },
+          "이름이 뭐예요?": { zh:"你叫什么名字？", gz:"<code>N이/가 뭐예요?</code>＝「N是什么？」。", w:["名字","主格（有收音）","什么（무엇的口语）","〜吗"] },
+          "성함이 어떻게 되세요?": { zh:"请问您贵姓大名？", gz:"向长辈询问姓名的礼貌说法。<code>성함</code>是<code>이름</code>的敬语。", w:["尊姓大名（이름的敬语）","怎么","（敬语）是呢"] },
+          "저는 일본에서 왔어요.": { zh:"我来自日本。", gz:"说出身的句型<code>N에서 왔어요</code>。起点用<code>-에서</code>。", w:["日本","起点「从〜」","来了（오다的过去）"] },
+          "어디에서 왔어요?": { zh:"你来自哪里？", gz:"询问出身。口语也缩为<code>어디서 왔어요?</code>。", w:["哪里","从〜","来了吗"] },
+          "저는 일본 사람이에요.": { zh:"我是日本人。", gz:"国籍用<code>国名＋사람</code>。也用汉字词<code>일본인</code>。", w:["日本","人","〜是"] },
+          "저는 도쿄에 살아요.": { zh:"我住在东京。", gz:"<code>살다→살아요</code>。居住地用<code>-에 살다</code>。", w:["东京","〜（居住地）","住"] },
+          "서울에 살아요.": { zh:"我住在首尔。", gz:"<code>살다</code>是ㄹ语干，但해요体<code>살아요</code>是规则的。", w:["首尔","〜在","住（着）"] },
+          "저는 회사에서 일해요.": { zh:"我在公司工作。", gz:"动作发生地用<code>-에서</code>。<code>일하다→일해요</code>。", w:["公司","〜（动作地点）","工作"] },
+          "무슨 일 하세요?": { zh:"您做什么工作？", gz:"询问职业的自然说法。也可<code>직업이 뭐예요?</code>。", w:["什么·哪种","工作","（敬语）做吗"] },
+          "한국어를 조금 공부해요.": { zh:"我在学一点韩语。", gz:"<code>공부하다→공부해요</code>。元音结尾的宾语用<code>-를</code>。", w:["韩语","〜（宾格）","一点","学习"] },
+          "한국어를 조금 할 줄 알아요.": { zh:"我会一点韩语。", gz:"技能用<code>-(으)ㄹ 줄 알다</code>。<code>하다→할 줄 알아요</code>。", w:["韩语","一点","会（技能）"] },
+          "저는 스무 살이에요.": { zh:"我二十岁。", gz:"年龄用固有数词＋<code>살</code>。<code>스물→스무</code>在量词前变形。", w:["20（固有数词·冠形形）","〜岁","〜是"] },
+          "몇 살이에요?": { zh:"你多大了？", gz:"询问年龄。对长辈用<code>나이가 어떻게 되세요?</code>更礼貌。", w:["几·多少","〜岁","〜吗"] },
+          "취미가 뭐예요?": { zh:"你的爱好是什么？", gz:"元音结尾名词用主格<code>-가</code>＋<code>-예요</code>。", w:["爱好","主格（无收音）","什么","〜吗"] },
+          "제 취미는 영화 감상이에요.": { zh:"我的爱好是看电影。", gz:"<code>제</code>是<code>저의</code>的缩约。<code>감상</code>＝欣赏/鉴赏。", w:["我的","爱好","看电影（电影欣赏）"] },
+          "제 취미는 음악 감상이에요.": { zh:"我的爱好是听音乐。", gz:"「N欣赏」＝<code>N 감상</code>。<code>음악</code>＝音乐。", w:["我的爱好","听音乐（音乐欣赏）","〜是"] },
+          "만나서 반가웠어요.": { zh:"很高兴见到你。（道别时）", gz:"道别时用。<code>반갑다</code>ㅂ变则过去→<code>반가웠어요</code>。", w:["见到（你）","（当时）很高兴（반갑다的过去）"] }
+        }
+      }
+    };
+    function applyZhOverlay() {
+      if (LANG !== "zh") return;
+      COURSES.forEach((c, i) => {
+        const z = ZH_COURSE[c.title];
+        if (!z) return;
+        if (z.title) c.titleZh = z.title;
+        const intro = COURSE_INTROS[i];
+        if (intro) { if (z.overview) intro.overviewZh = z.overview; if (z.points) intro.pointsZh = z.points; }
+        if (z.pool && Array.isArray(c.pool)) {
+          c.pool.forEach(s => {
+            const e = z.pool[s.ko];
+            if (!e) return;
+            if (e.zh != null) s.zh = e.zh;
+            if (e.gz != null) s.gz = e.gz;
+            if (e.w && Array.isArray(s.w)) s.w.forEach((wi, idx) => { if (e.w[idx] != null) wi.zh = e.w[idx]; });
+          });
+        }
+      });
+      localizeStatic();
+    }
+    function localizeStatic() {
+      if (LANG !== "zh") return;
+      const setText = (sel, t) => { const el = document.querySelector(sel); if (el) el.textContent = t; };
+      const setTail = (sel, t) => { const el = document.querySelector(sel); if (el && el.lastChild) el.lastChild.textContent = t; };
+      const setAttr = (sel, a, t) => { const el = document.querySelector(sel); if (el) el.setAttribute(a, t); };
+      setText(".ko-title", "韩语作文练习");
+      setText(".goal-title", "今日目标");
+      setText(".goal-sub", "每天10句");
+      setText(".view-home .view-title", "选择想学的级别");
+      const labels = ["入门 · 初级前半", "初级 · 过去与进行", "中级 · 复句与推测", "中上级 · 抽象表达"];
+      document.querySelectorAll(".topik-card-label").forEach((el, i) => { if (labels[i]) el.textContent = labels[i]; });
+      document.querySelectorAll(".back-link").forEach(el => { el.textContent = el.dataset.back === "home" ? "← 选择 TOPIK" : "← 课程列表"; });
+      setTail(".view-level .view-title", " 课程列表");
+      setText(".intro-section-title", "本课程学习内容");
+      setText(".question-label", "译成韩语");
+      setText("#course-title", "加载中…");
+      setText("#question-ja", "加载中…");
+      setAttr("#answer-input", "placeholder", "在此输入韩语（例：저는 학생이에요）");
+      setText("#hint-btn", "提示");
+      setText("#skip-btn", "跳过");
+      setText("#check-btn", "对答案");
+      setText("#open-intro-btn", "📖 重看要点");
+      setText("#reset-course-btn", "↺ 重置本课程");
+      setAttr("#fav-btn", "title", "收藏");
+      setTail(".progress-text", " 掌握");
+      setText("#complete-modal h3", "课程完成！");
+      setText("#complete-modal .complete-content > p", "全部掌握了！");
+      setText("#next-course-btn", "下一课 →");
+      setText("#replay-course-btn", "再来一次");
+      setText(".footer-meta", "个人兴趣制作，细小 bug 还请见谅。");
+      document.title = "Daily 한국어 · 韩语作文练习";
+    }
+    applyZhOverlay();
+
+    // ========================================================================
     // VIEW MANAGEMENT
     // ========================================================================
     let currentView = "home";
@@ -6468,9 +6615,9 @@
 
     function setMainButton(mode) {
       if (!elCheckBtn) return;
-      if (mode === "next") { elCheckBtn.textContent = "次の問題へ  →"; elCheckBtn.classList.add("is-next"); elCheckBtn.dataset.mode = "next"; }
-      else if (mode === "retry") { elCheckBtn.textContent = "もう一度  →"; elCheckBtn.classList.add("is-next"); elCheckBtn.dataset.mode = "retry"; }
-      else { elCheckBtn.textContent = "答え合わせ"; elCheckBtn.classList.remove("is-next"); elCheckBtn.dataset.mode = "check"; }
+      if (mode === "next") { elCheckBtn.textContent = T("next"); elCheckBtn.classList.add("is-next"); elCheckBtn.dataset.mode = "next"; }
+      else if (mode === "retry") { elCheckBtn.textContent = T("retry"); elCheckBtn.classList.add("is-next"); elCheckBtn.dataset.mode = "retry"; }
+      else { elCheckBtn.textContent = T("check"); elCheckBtn.classList.remove("is-next"); elCheckBtn.dataset.mode = "check"; }
     }
 
     function renderHome() {
@@ -6482,7 +6629,7 @@
         const el = document.querySelector(`[data-topik-progress="${topik}"]`);
         if (!el) return;
         const doneTag = done > 0 ? ` <span class="done-tag">✓ ${done}</span>` : "";
-        el.innerHTML = `${total} コース${doneTag}`;
+        el.innerHTML = `${total} ${T("courses")}${doneTag}`;
       });
     }
 
@@ -6497,14 +6644,14 @@
         const isCurrent = i === state.currentCourseId;
         const cls = ["course-card", done ? "done" : "", isCurrent ? "current" : ""].filter(Boolean).join(" ");
         const pct = (mc / total) * 100;
-        const status = done ? "✓ 完了" : `${mc} / ${total}`;
+        const status = done ? T("done") : `${mc} / ${total}`;
         return `
           <button class="${cls}" data-course-id="${i}">
             <div class="cc-head">
               <span class="cc-num">Course ${c.num}</span>
               <span class="cc-status ${done ? 'done' : ''}">${status}</span>
             </div>
-            <div class="cc-title">${c.title}</div>
+            <div class="cc-title">${CTITLE(c)}</div>
             <div class="cc-bar-wrap">
               <div class="cc-track"><div class="cc-bar" style="width:${pct}%"></div></div>
             </div>
@@ -6518,7 +6665,7 @@
       const lvPct = totalSent ? Math.round((doneSent / totalSent) * 100) : 0;
       const lp = document.getElementById("level-progress");
       if (lp) lp.innerHTML =
-        `<div class="lp-top"><span class="lp-label">TOPIK ${topik} 全体の進度</span><span class="lp-pct">${lvPct}%</span></div>` +
+        `<div class="lp-top"><span class="lp-label">TOPIK ${topik} ${T("levelProgress")}</span><span class="lp-pct">${lvPct}%</span></div>` +
         `<div class="lp-track"><div class="lp-bar" style="width:${lvPct}%"></div></div>`;
       const st = document.getElementById("stamps");
       if (st) st.innerHTML = items.map(({ c, i }) => {
@@ -6553,13 +6700,13 @@
       const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
       elIntroTopik.textContent = c.topik;
       elIntroNum.textContent = c.num;
-      elIntroTitle.textContent = c.title;
-      elIntroOverview.textContent = intro.overview;
-      elIntroPoints.innerHTML = intro.points.map(p => `<li>${p}</li>`).join("");
+      elIntroTitle.textContent = CTITLE(c);
+      elIntroOverview.textContent = IOVER(intro);
+      elIntroPoints.innerHTML = IPTS(intro).map(p => `<li>${p}</li>`).join("");
       const mc = masteredList(courseId).length;
       const total = c.sentences.length;
       const done = mc >= total;
-      elIntroStartBtn.textContent = done ? "もう一度挑戦" : (mc > 0 ? "続きから挑戦" : "チャレンジ開始");
+      elIntroStartBtn.textContent = done ? T("again") : (mc > 0 ? T("resume") : T("start"));
       showView("intro");
     }
 
@@ -6579,7 +6726,7 @@
           currentSent = course.sentences[targetIdx];
           currentSentIdx = targetIdx;
           checked = false;
-          elQuestion.textContent = currentSent.ja;
+          elQuestion.textContent = PROMPT(currentSent);
           elInput.value = (ip && ip.sentIdx === targetIdx ? (ip.input || "") : "");
           elInput.disabled = false;
           elCheckBtn.disabled = false;
@@ -6770,7 +6917,7 @@
       }
       saveState();
 
-      elQuestion.textContent = currentSent.ja;
+      elQuestion.textContent = PROMPT(currentSent);
       elInput.value = "";
       elInput.disabled = false;
       elCheckBtn.disabled = false;
@@ -6804,7 +6951,7 @@
       if (!course) return;
       elCourseTopik.textContent = course.topik;
       elCourseNum.textContent = course.num;
-      elCourseTitle.textContent = course.title;
+      elCourseTitle.textContent = CTITLE(course);
       const mc = masteredList(state.currentCourseId).length;
       const total = course.sentences.length;
       elMasteredCount.textContent = mc;
@@ -6887,27 +7034,27 @@
       let alreadyMastered = masteredList(state.currentCourseId).includes(currentSentIdx);
       let verdictHTML;
       if (isCorrect) {
-        const badge = alreadyMastered ? "" : `<span class="mastered-badge">+1 マスター</span>`;
-        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">✓</span>正解！${badge}</div>`;
+        const badge = alreadyMastered ? "" : `<span class="mastered-badge">${T("master")}</span>`;
+        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">✓</span>${T("correct")}${badge}</div>`;
       } else if (cmp.verdict === "partial") {
-        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">↻</span>惜しい！もう一度挑戦</div>`;
+        verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">↻</span>${T("partial")}</div>`;
       } else {
-        verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">✕</span>模範解答を確認して再挑戦</div>`;
+        verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">✕</span>${T("wrong")}</div>`;
       }
 
       const wordsHTML = currentSent.w.map(w => `
         <div class="word-item">
           <div class="word-ko ko">${w.ko}</div>
           <div class="word-roman">${w.roman}</div>
-          <div class="word-ja">${w.ja}</div>
+          <div class="word-ja">${GLOSS(w)}</div>
         </div>
       `).join("");
 
       const yourAnsHTML = (user && !isCorrect)
-        ? `<div class="your-answer"><span style="color:var(--ink-mute);font-size:11px;">あなたの答え：</span><br>${cmp.diff || user}</div>` : "";
+        ? `<div class="your-answer"><span style="color:var(--ink-mute);font-size:11px;">${T("yourAns")}</span><br>${cmp.diff || user}</div>` : "";
 
       const altsHTML = (currentSent.alts && currentSent.alts.length > 0)
-        ? `<div style="margin-top:10px;font-size:13px;color:var(--ink-soft);">他の自然な言い方: <span class="ko" style="color:var(--ink);">${currentSent.alts.join(" / ")}</span></div>`
+        ? `<div style="margin-top:10px;font-size:13px;color:var(--ink-soft);">${T("altLabel")}<span class="ko" style="color:var(--ink);">${currentSent.alts.join(" / ")}</span></div>`
         : "";
 
       elResult.dataset.courseId = state.currentCourseId;
@@ -6916,21 +7063,21 @@
         <div class="result">
           ${verdictHTML}
           <div class="answer-block">
-            <div class="label">모범 답안 (模範解答)</div>
+            <div class="label">${T("modelLabel")}</div>
             <div class="answer-ko ko">
               <span>${currentSent.ko}</span>
-              <button class="speak-btn" id="speak-btn" title="発音を聞く">🔊</button>
+              <button class="speak-btn" id="speak-btn" title="${T("speakTitle")}">🔊</button>
             </div>
             <div class="answer-roman">${currentSent.roman}</div>
             ${yourAnsHTML}
             ${altsHTML}
           </div>
-          <div class="section-title">文法ポイント</div>
-          <div class="grammar-block">${currentSent.g}</div>
-          <div class="section-title">単語</div>
+          <div class="section-title">${T("grammarTitle")}</div>
+          <div class="grammar-block">${GRAM(currentSent)}</div>
+          <div class="section-title">${T("wordsTitle")}</div>
           <div class="words-grid">${wordsHTML}</div>
           <div class="next-wrap">
-            <button class="btn btn-next" id="next-btn">${isCorrect ? "次の問題へ →" : "もう一度やる →"}</button>
+            <button class="btn btn-next" id="next-btn">${isCorrect ? T("nextQ") : T("retryQ")}</button>
           </div>
         </div>
       `;
@@ -7106,7 +7253,7 @@
       const stripped = currentSent.ko.replace(/[\s。、，．・！？!?,.;:：；「」『』（）()　]/g, "");
       const first = [...stripped][0] || "";
       const len = stripped.length;
-      elHintArea.innerHTML = `<div class="hint">最初の文字は <strong class="ko">${first}</strong>、合計 ${len} 文字</div>`;
+      elHintArea.innerHTML = `<div class="hint">${HINTTEXT(first, len)}</div>`;
     }
 
     // ========================================================================
