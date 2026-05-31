@@ -43,6 +43,8 @@
     <div class="field">
       <label>プロバイダ</label>
       <select id="provider">
+        <option value="deepseek">DeepSeek（無料枠あり・本土OK・キーは sk_… で始まる）</option>
+        <option value="gemini">Gemini（無料・キーは AIza_… で始まる）</option>
         <option value="groq">Groq（無料枠あり・キーは gsk_… で始まる）</option>
         <option value="grok">Grok / xAI（有料・キーは xai_… で始まる）</option>
       </select>
@@ -75,13 +77,15 @@
   const out = $('out'), verdict = $('verdict');
 
   const PROVIDERS = {
-    groq: { base:'https://api.groq.com/openai/v1', model:'llama-3.3-70b-versatile' },
-    grok: { base:'https://api.x.ai/v1',            model:'grok-3' }
+    deepseek: { base:'https://api.deepseek.com',                                model:'deepseek-chat' },
+    gemini:   { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash' },
+    groq:     { base:'https://api.groq.com/openai/v1',                          model:'llama-3.3-70b-versatile' },
+    grok:     { base:'https://api.x.ai/v1',                                     model:'grok-3' }
   };
   const baseUrl = () => PROVIDERS[$('provider').value].base;
 
   // restore provider + key (each provider remembers its own key)
-  $('provider').value = localStorage.getItem('ai-test-provider') || 'groq';
+  $('provider').value = localStorage.getItem('ai-test-provider') || 'deepseek';
   function loadKeyForProvider(){
     $('key').value = localStorage.getItem('ai-test-key-' + $('provider').value) || '';
     $('model').value = PROVIDERS[$('provider').value].model;

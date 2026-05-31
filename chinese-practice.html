@@ -196,7 +196,7 @@
     const COURSES = [
       // ============ HSK 1 ============
       {
-        hsk: 1, num: 1, title: "あいさつ・自己紹介",
+        hsk: 1, num: 1, title: "あいさつ・自己紹介", mode: "pool",
         sentences: [
           {
             ja: "こんにちは。", zh: "你好。", py: "nǐ hǎo.",
@@ -249,6 +249,52 @@
             g: "<strong><code>再</code>（また）＋<code>见</code>（会う）</strong>で「また会いましょう＝さようなら」。直訳に近い構成で覚えやすい。<br>くだけた言い方：<code>拜拜（báibái）</code>（バイバイ）。「またね」系：<code>明天见</code>（また明日）、<code>回头见</code>（あとで）、<code>下次见</code>（また今度）。",
             w: [{z:"再",p:"zài",j:"再び"},{z:"见",p:"jiàn",j:"会う"}]
           }
+        ],
+        pool: [
+          { ja:"こんにちは。", zh:"你好。", py:"nǐ hǎo.", g:"最も基本のあいさつ。<code>你</code>（あなた）＋<code>好</code>（良い）。朝昼晩問わず使える。", w:[{z:"你",p:"nǐ",j:"あなた"},{z:"好",p:"hǎo",j:"良い"}] },
+          { ja:"こんにちは。（丁寧）", zh:"您好。", py:"nín hǎo.", g:"<code>您</code>は <code>你</code> の敬称。目上・初対面・接客で使う丁寧なあいさつ。", w:[{z:"您",p:"nín",j:"あなた（敬称）"},{z:"好",p:"hǎo",j:"良い"}] },
+          { ja:"皆さん、こんにちは。", zh:"你们好。", py:"nǐmen hǎo.", g:"複数の相手へは <code>你们</code>（あなたたち）。<code>-们</code>は人称代名詞の複数を作る。", w:[{z:"你们",p:"nǐmen",j:"あなたたち"},{z:"好",p:"hǎo",j:"良い"}] },
+          { ja:"皆さん、こんにちは。", zh:"大家好。", py:"dàjiā hǎo.", g:"大勢に呼びかける時の <code>大家</code>（みんな）。スピーチや挨拶の冒頭で頻出。", w:[{z:"大家",p:"dàjiā",j:"みんな"},{z:"好",p:"hǎo",j:"良い"}] },
+          { ja:"おはようございます。", zh:"早上好。", py:"zǎoshang hǎo.", g:"朝のあいさつ。くだけて <code>早！</code> とも言う。<code>早上</code>＝朝。", w:[{z:"早上",p:"zǎoshang",j:"朝"},{z:"好",p:"hǎo",j:"良い"}] },
+          { ja:"こんばんは。", zh:"晚上好。", py:"wǎnshang hǎo.", g:"夜のあいさつ。<code>晚上</code>＝夜。就寝前は <code>晚安</code>（おやすみ）。", w:[{z:"晚上",p:"wǎnshang",j:"夜"},{z:"好",p:"hǎo",j:"良い"}] },
+          { ja:"先生、こんにちは。", zh:"老师好。", py:"lǎoshī hǎo.", g:"「呼びかけ＋好」で挨拶になる（<code>老师好</code>＝先生こんにちは）。学校で定番。", w:[{z:"老师",p:"lǎoshī",j:"先生"},{z:"好",p:"hǎo",j:"良い"}] },
+          { ja:"お久しぶりです。", zh:"好久不见。", py:"hǎojiǔ bújiàn.", g:"<code>好久</code>（長い間）＋<code>不见</code>（会っていない）。<code>不</code>は第4声 <code>见</code> の前で <code>bú</code> に変調。", w:[{z:"好久",p:"hǎojiǔ",j:"長い間"},{z:"不见",p:"bújiàn",j:"会わない"}] },
+          { ja:"お元気ですか？", zh:"你好吗？", py:"nǐ hǎo ma?", g:"文末の <code>吗</code> で「はい／いいえ」疑問文を作る。答えは <code>我很好</code> など。", w:[{z:"好",p:"hǎo",j:"良い"},{z:"吗",p:"ma",j:"〜か（疑問）"}] },
+          { ja:"元気です。", zh:"我很好。", py:"wǒ hěn hǎo.", g:"形容詞述語文「主語＋很＋形容詞」。<code>很</code>は形容詞文を整える役で「とても」の意味は薄い。", w:[{z:"我",p:"wǒ",j:"私"},{z:"很",p:"hěn",j:"とても"},{z:"好",p:"hǎo",j:"良い"}] },
+          { ja:"最近どうですか？", zh:"你最近怎么样？", py:"nǐ zuìjìn zěnmeyàng?", g:"<code>怎么样</code>＝「どう？」。<code>你好吗？</code>より自然でよく使う近況伺い。", w:[{z:"最近",p:"zuìjìn",j:"最近"},{z:"怎么样",p:"zěnmeyàng",j:"どう"}] },
+          { ja:"私も元気です。", zh:"我也很好。", py:"wǒ yě hěn hǎo.", g:"副詞 <code>也</code>（〜も）は動詞・形容詞の前に置く（<code>我也...</code>）。", w:[{z:"也",p:"yě",j:"〜も"},{z:"很",p:"hěn",j:"とても"},{z:"好",p:"hǎo",j:"良い"}] },
+          { ja:"あなたは？", zh:"你呢？", py:"nǐ ne?", g:"<code>呢</code>は「〜は？」と問いを相手に返す助詞。同じ質問を繰り返さず省略できる。", w:[{z:"你",p:"nǐ",j:"あなた"},{z:"呢",p:"ne",j:"〜は？"}] },
+          { ja:"ありがとう。", zh:"谢谢。", py:"xièxie.", g:"動詞の重ね型 <code>谢谢</code>で「ありがとう」。相手を示すなら <code>谢谢你/您</code>。", w:[{z:"谢谢",p:"xièxie",j:"ありがとう"}] },
+          { ja:"ありがとう。", zh:"谢谢你。", py:"xièxie nǐ.", g:"<code>谢谢</code>に <code>你</code> を続けて相手を明示。より丁寧には <code>谢谢您</code>。", w:[{z:"谢谢",p:"xièxie",j:"ありがとう"},{z:"你",p:"nǐ",j:"あなた"}] },
+          { ja:"本当にありがとうございます。", zh:"非常感谢。", py:"fēicháng gǎnxiè.", g:"<code>非常</code>（非常に）＋<code>感谢</code>（感謝する）。改まった強い謝意。", w:[{z:"非常",p:"fēicháng",j:"非常に"},{z:"感谢",p:"gǎnxiè",j:"感謝する"}] },
+          { ja:"どういたしまして。", zh:"不客气。", py:"bú kèqi.", g:"感謝への返事。<code>不</code>は第4声 <code>客</code> の前で <code>bú</code> に変調。<code>客气</code>＝遠慮する。", w:[{z:"不",p:"bù",j:"〜ない"},{z:"客气",p:"kèqi",j:"遠慮する"}] },
+          { ja:"どういたしまして。", zh:"不用谢。", py:"búyòng xiè.", g:"<code>不用</code>（〜する必要ない）＋<code>谢</code>。「お礼はいりませんよ」。<code>不</code>は <code>用</code>(4声)の前で <code>bú</code>。", w:[{z:"不用",p:"búyòng",j:"〜しなくてよい"},{z:"谢",p:"xiè",j:"感謝する"}] },
+          { ja:"ごめんなさい。", zh:"对不起。", py:"duìbuqǐ.", g:"基本の謝罪。返事は <code>没关系</code>（大丈夫）。軽い「すみません」は <code>不好意思</code>。", w:[{z:"对不起",p:"duìbuqǐ",j:"ごめんなさい"}] },
+          { ja:"大丈夫です。", zh:"没关系。", py:"méi guānxi.", g:"謝罪への返事「気にしないで」。<code>没</code>＝ない、<code>关系</code>＝関係。", w:[{z:"没关系",p:"méi guānxi",j:"大丈夫・関係ない"}] },
+          { ja:"すみません。（恐縮）", zh:"不好意思。", py:"bù hǎoyìsi.", g:"軽い謝罪・きまり悪さ「すみません」。人に声をかける時にも使う。<code>不</code>は <code>好</code>(3声)の前で <code>bù</code>。", w:[{z:"不好意思",p:"bù hǎoyìsi",j:"きまりが悪い・すみません"}] },
+          { ja:"すみません、トイレはどこですか？", zh:"请问，洗手间在哪儿？", py:"qǐngwèn, xǐshǒujiān zài nǎr?", g:"<code>请问</code>＝「お尋ねします」（丁寧な前置き）。<code>在哪儿？</code>＝「どこにありますか？」。", w:[{z:"请问",p:"qǐngwèn",j:"お尋ねします"},{z:"洗手间",p:"xǐshǒujiān",j:"トイレ"},{z:"在",p:"zài",j:"〜にある"},{z:"哪儿",p:"nǎr",j:"どこ"}] },
+          { ja:"私は田中といいます。", zh:"我叫田中。", py:"wǒ jiào Tiánzhōng.", g:"「主語＋叫＋名前」でフルネームを名乗る。<code>叫</code>＝（〜と）呼ぶ・名乗る。", w:[{z:"我",p:"wǒ",j:"私"},{z:"叫",p:"jiào",j:"名乗る"},{z:"田中",p:"Tiánzhōng",j:"田中"}] },
+          { ja:"お名前は何ですか？", zh:"你叫什么名字？", py:"nǐ jiào shénme míngzi?", g:"疑問詞 <code>什么</code> は聞きたい位置にそのまま置く（語順を変えない）。<code>吗</code> 不要。", w:[{z:"叫",p:"jiào",j:"名乗る"},{z:"什么",p:"shénme",j:"何"},{z:"名字",p:"míngzi",j:"名前"}] },
+          { ja:"私は王と申します。", zh:"我姓王。", py:"wǒ xìng Wáng.", g:"<code>姓</code>＝「姓は〜です」。姓だけなら <code>姓</code>、フルネームは <code>叫</code> を使い分ける。", w:[{z:"姓",p:"xìng",j:"姓は〜"},{z:"王",p:"Wáng",j:"王（姓）"}] },
+          { ja:"お名前を伺ってもよろしいですか？", zh:"请问您贵姓？", py:"qǐngwèn nín guìxìng?", g:"<code>贵姓</code>＝「ご芳名」。相手の姓を丁寧に尋ねる定型。答えは <code>我姓〜</code>。", w:[{z:"请问",p:"qǐngwèn",j:"お尋ねします"},{z:"您",p:"nín",j:"あなた（敬称）"},{z:"贵姓",p:"guìxìng",j:"ご芳名"}] },
+          { ja:"私は日本人です。", zh:"我是日本人。", py:"wǒ shì Rìběn rén.", g:"「A＋是＋B」構文。<code>是</code>はbe動詞的な連結詞。否定は <code>不是</code>。", w:[{z:"是",p:"shì",j:"〜である"},{z:"日本",p:"Rìběn",j:"日本"},{z:"人",p:"rén",j:"人"}] },
+          { ja:"どこの国の方ですか？", zh:"你是哪国人？", py:"nǐ shì nǎ guó rén?", g:"<code>哪</code>＝「どの」（疑問）。<code>哪国人</code>＝どこの国の人。答えは <code>我是〜人</code>。", w:[{z:"哪",p:"nǎ",j:"どの"},{z:"国",p:"guó",j:"国"},{z:"人",p:"rén",j:"人"}] },
+          { ja:"私は学生です。", zh:"我是学生。", py:"wǒ shì xuésheng.", g:"職業・身分も「A＋是＋B」で表す。否定は <code>不是</code>。", w:[{z:"是",p:"shì",j:"〜である"},{z:"学生",p:"xuésheng",j:"学生"}] },
+          { ja:"私は会社員です。", zh:"我是公司职员。", py:"wǒ shì gōngsī zhíyuán.", g:"<code>公司</code>（会社）＋<code>职员</code>（職員）。職業を述べる基本表現。", w:[{z:"公司",p:"gōngsī",j:"会社"},{z:"职员",p:"zhíyuán",j:"職員"}] },
+          { ja:"彼は先生ではありません。", zh:"他不是老师。", py:"tā bú shì lǎoshī.", g:"<code>是</code>の否定 <code>不是</code>。<code>是</code>(4声)の前で <code>不</code>→<code>bú</code>。正反疑問は <code>是不是？</code>。", w:[{z:"他",p:"tā",j:"彼"},{z:"不是",p:"bú shì",j:"〜ではない"},{z:"老师",p:"lǎoshī",j:"先生"}] },
+          { ja:"お会いできて嬉しいです。", zh:"认识你很高兴。", py:"rènshi nǐ hěn gāoxìng.", g:"<code>认识</code>（知り合う）＋<code>很高兴</code>（嬉しい）。語順を変えた <code>很高兴认识你</code> も同義。", w:[{z:"认识",p:"rènshi",j:"知り合う"},{z:"很",p:"hěn",j:"とても"},{z:"高兴",p:"gāoxìng",j:"嬉しい"}] },
+          { ja:"お会いできて嬉しいです。", zh:"很高兴见到你。", py:"hěn gāoxìng jiàndào nǐ.", g:"<code>见到</code>＝「会えた」（結果補語 <code>到</code> で実現を示す）。より丁寧な初対面の挨拶。", w:[{z:"高兴",p:"gāoxìng",j:"嬉しい"},{z:"见到",p:"jiàndào",j:"会える"},{z:"你",p:"nǐ",j:"あなた"}] },
+          { ja:"これは私の名刺です。", zh:"这是我的名片。", py:"zhè shì wǒ de míngpiàn.", g:"<code>这是〜</code>＝「これは〜です」。所有の <code>的</code>（〜の）。<code>名片</code>＝名刺。", w:[{z:"这",p:"zhè",j:"これ"},{z:"是",p:"shì",j:"〜である"},{z:"名片",p:"míngpiàn",j:"名刺"}] },
+          { ja:"私は今年20歳です。", zh:"我今年二十岁。", py:"wǒ jīnnián èrshí suì.", g:"年齢には <code>是</code> 不要。「主語＋数詞＋岁」で完結。尋ね方は大人に <code>多大？</code>。", w:[{z:"今年",p:"jīnnián",j:"今年"},{z:"二十",p:"èrshí",j:"20"},{z:"岁",p:"suì",j:"歳"}] },
+          { ja:"私は東京に住んでいます。", zh:"我住在东京。", py:"wǒ zhù zài Dōngjīng.", g:"<code>住在＋場所</code>＝「〜に住む」（動詞＋在で所在を示す）。", w:[{z:"住",p:"zhù",j:"住む"},{z:"在",p:"zài",j:"〜に"},{z:"东京",p:"Dōngjīng",j:"東京"}] },
+          { ja:"どうぞよろしくお願いします。", zh:"请多关照。", py:"qǐng duō guānzhào.", g:"<code>请</code>（どうぞ）＋<code>多</code>（多く）＋<code>关照</code>（面倒を見る）。挨拶の締めの定型。", w:[{z:"请",p:"qǐng",j:"どうぞ"},{z:"多",p:"duō",j:"多く"},{z:"关照",p:"guānzhào",j:"世話をする"}] },
+          { ja:"さようなら。", zh:"再见。", py:"zàijiàn.", g:"<code>再</code>（また）＋<code>见</code>（会う）。くだけて <code>拜拜</code> とも。", w:[{z:"再",p:"zài",j:"再び"},{z:"见",p:"jiàn",j:"会う"}] },
+          { ja:"バイバイ。", zh:"拜拜。", py:"báibái.", g:"英語 bye-bye の音訳。親しい間柄のくだけた別れの挨拶。", w:[{z:"拜拜",p:"báibái",j:"バイバイ"}] },
+          { ja:"また明日。", zh:"明天见。", py:"míngtiān jiàn.", g:"「時点＋见」で「（その時）会いましょう」。<code>明天</code>＝明日。", w:[{z:"明天",p:"míngtiān",j:"明日"},{z:"见",p:"jiàn",j:"会う"}] },
+          { ja:"またあとで。", zh:"回头见。", py:"huítóu jiàn.", g:"<code>回头</code>＝「あとで・そのうち」。同日のうちにまた会う時の別れ言葉。", w:[{z:"回头",p:"huítóu",j:"あとで"},{z:"见",p:"jiàn",j:"会う"}] },
+          { ja:"また今度。", zh:"下次见。", py:"xià cì jiàn.", g:"<code>下次</code>＝次回。「次にまた会いましょう」。", w:[{z:"下次",p:"xià cì",j:"次回"},{z:"见",p:"jiàn",j:"会う"}] },
+          { ja:"お気をつけて。（見送り）", zh:"慢走。", py:"màn zǒu.", g:"去る人を見送る際の決まり文句（直訳「ゆっくり歩いて」）。", w:[{z:"慢",p:"màn",j:"ゆっくり"},{z:"走",p:"zǒu",j:"歩く・行く"}] },
+          { ja:"おやすみなさい。", zh:"晚安。", py:"wǎn'ān.", g:"就寝前の挨拶。<code>晚</code>（夜）＋<code>安</code>（安らか）。", w:[{z:"晚安",p:"wǎn'ān",j:"おやすみ"}] }
         ]
       },
       {
@@ -307,7 +353,7 @@
         ]
       },
       {
-        hsk: 1, num: 3, title: "場所・動作・所有",
+        hsk: 1, num: 3, title: "場所・動作・所有", mode: "template", template: "place",
         sentences: [
           {
             ja: "私は家にいます。", zh: "我在家。", py: "wǒ zài jiā.",
@@ -1735,8 +1781,124 @@
         };
       }
 
+      // ===== #3「場所・動作・所有」用バンク（拼音は全て検証済み）=====
+      const SUBJ = [
+        {z:"我",p:"wǒ",j:"私"}, {z:"他",p:"tā",j:"彼"}, {z:"她",p:"tā",j:"彼女"}, {z:"我们",p:"wǒmen",j:"私たち"}
+      ];
+      const PLACE = [
+        {z:"家",p:"jiā",j:"家"}, {z:"学校",p:"xuéxiào",j:"学校"}, {z:"公司",p:"gōngsī",j:"会社"},
+        {z:"商店",p:"shāngdiàn",j:"店"}, {z:"图书馆",p:"túshūguǎn",j:"図書館"}, {z:"食堂",p:"shítáng",j:"食堂"},
+        {z:"公园",p:"gōngyuán",j:"公園"}, {z:"医院",p:"yīyuàn",j:"病院"}, {z:"教室",p:"jiàoshì",j:"教室"}
+      ];
+      // 動作（喜欢／想／在＋V で使い回す。連用形・て形のjaも検証済み）
+      const VO = [
+        {z:"喝茶",p:"hē chá",jPlain:"お茶を飲む",jWant:"お茶を飲み",jProg:"お茶を飲んで",w:[{z:"喝",p:"hē",j:"飲む"},{z:"茶",p:"chá",j:"茶"}]},
+        {z:"吃饭",p:"chī fàn",jPlain:"ご飯を食べる",jWant:"ご飯を食べ",jProg:"ご飯を食べて",w:[{z:"吃",p:"chī",j:"食べる"},{z:"饭",p:"fàn",j:"ご飯"}]},
+        {z:"看书",p:"kàn shū",jPlain:"本を読む",jWant:"本を読み",jProg:"本を読んで",w:[{z:"看",p:"kàn",j:"見る・読む"},{z:"书",p:"shū",j:"本"}]},
+        {z:"看电视",p:"kàn diànshì",jPlain:"テレビを見る",jWant:"テレビを見",jProg:"テレビを見て",w:[{z:"看",p:"kàn",j:"見る"},{z:"电视",p:"diànshì",j:"テレビ"}]},
+        {z:"听音乐",p:"tīng yīnyuè",jPlain:"音楽を聴く",jWant:"音楽を聴き",jProg:"音楽を聴いて",w:[{z:"听",p:"tīng",j:"聴く"},{z:"音乐",p:"yīnyuè",j:"音楽"}]},
+        {z:"喝咖啡",p:"hē kāfēi",jPlain:"コーヒーを飲む",jWant:"コーヒーを飲み",jProg:"コーヒーを飲んで",w:[{z:"喝",p:"hē",j:"飲む"},{z:"咖啡",p:"kāfēi",j:"コーヒー"}]},
+        {z:"买东西",p:"mǎi dōngxi",jPlain:"買い物をする",jWant:"買い物をし",jProg:"買い物をして",w:[{z:"买",p:"mǎi",j:"買う"},{z:"东西",p:"dōngxi",j:"もの"}]},
+        {z:"学中文",p:"xué Zhōngwén",jPlain:"中国語を学ぶ",jWant:"中国語を学び",jProg:"中国語を学んで",w:[{z:"学",p:"xué",j:"学ぶ"},{z:"中文",p:"Zhōngwén",j:"中国語"}]}
+      ];
+      // 技能（会＋V。否定 不会 bú huì も検証済み）
+      const SKILL = [
+        {z:"说中文",p:"shuō Zhōngwén",j:"中国語を話す",w:[{z:"说",p:"shuō",j:"話す"},{z:"中文",p:"Zhōngwén",j:"中国語"}]},
+        {z:"开车",p:"kāichē",j:"車を運転する",w:[{z:"开车",p:"kāichē",j:"運転する"}]},
+        {z:"游泳",p:"yóuyǒng",j:"泳ぐ",w:[{z:"游泳",p:"yóuyǒng",j:"泳ぐ"}]},
+        {z:"做饭",p:"zuò fàn",j:"料理をする",w:[{z:"做",p:"zuò",j:"作る"},{z:"饭",p:"fàn",j:"食事"}]},
+        {z:"说英语",p:"shuō Yīngyǔ",j:"英語を話す",w:[{z:"说",p:"shuō",j:"話す"},{z:"英语",p:"Yīngyǔ",j:"英語"}]}
+      ];
+      // 位置（私の〜は〜にある）
+      const POSS_ITEM = [
+        {z:"书",p:"shū",j:"本"}, {z:"手机",p:"shǒujī",j:"携帯"}, {z:"包",p:"bāo",j:"かばん"}, {z:"钱包",p:"qiánbāo",j:"財布"}
+      ];
+      const FURN_POS = [
+        {z:"桌子上",p:"zhuōzi shàng",j:"机の上"}, {z:"床上",p:"chuáng shàng",j:"ベッドの上"},
+        {z:"椅子上",p:"yǐzi shàng",j:"椅子の上"}, {z:"包里",p:"bāo lǐ",j:"かばんの中"}
+      ];
+
+      function fLocation() {
+        const s = pick(SUBJ), p = pick(PLACE);
+        return {
+          ja: `${s.j}は${p.j}にいます。`,
+          zh: `${s.z}在${p.z}。`,
+          py: `${s.p} zài ${p.p}.`,
+          w: [{z:s.z,p:s.p,j:s.j}, {z:"在",p:"zài",j:"〜にいる・ある"}, {z:p.z,p:p.p,j:p.j}],
+          g: "<strong>動詞 <code>在</code></strong>＝「〜にいる／〜にある」。「主語＋在＋場所」で所在を示す。否定は <code>不在</code>。<code>在</code> には動詞「いる」のほか、前置詞「〜で」・進行の副詞「〜している」の用法もある。",
+          alts: []
+        };
+      }
+      function fGo() {
+        const s = pick(SUBJ), p = pick(PLACE);
+        return {
+          ja: `${s.j}は${p.j}に行きます。`,
+          zh: `${s.z}去${p.z}。`,
+          py: `${s.p} qù ${p.p}.`,
+          w: [{z:s.z,p:s.p,j:s.j}, {z:"去",p:"qù",j:"行く"}, {z:p.z,p:p.p,j:p.j}],
+          g: "<strong><code>去</code>（行く）／<code>来</code>（来る）</strong>は方向を表す移動動詞。「主語＋去／来＋場所」で目的地を直接続ける。話者から離れるのが <code>去</code>、近づくのが <code>来</code>。",
+          alts: []
+        };
+      }
+      function fLike() {
+        const s = pick(SUBJ), v = pick(VO);
+        return {
+          ja: `${s.j}は${v.jPlain}のが好きです。`,
+          zh: `${s.z}喜欢${v.z}。`,
+          py: `${s.p} xǐhuan ${v.p}.`,
+          w: [{z:s.z,p:s.p,j:s.j}, {z:"喜欢",p:"xǐhuan",j:"好き"}].concat(v.w),
+          g: "<strong><code>喜欢</code>＋動詞句／名詞</strong>：「〜することが好き」。動詞をそのまま続ける（英語の to / -ing は不要）。否定は <code>不喜欢</code>、強調は <code>很喜欢／非常喜欢</code>。",
+          alts: []
+        };
+      }
+      function fWant() {
+        const s = pick(SUBJ), v = pick(VO);
+        return {
+          ja: `${s.j}は${v.jWant}たいです。`,
+          zh: `${s.z}想${v.z}。`,
+          py: `${s.p} xiǎng ${v.p}.`,
+          w: [{z:s.z,p:s.p,j:s.j}, {z:"想",p:"xiǎng",j:"〜したい"}].concat(v.w),
+          g: "<strong>助動詞 <code>想</code></strong>＝「〜したい」（願望）。「主語＋想＋動詞句」。<code>想</code>（やわらかい願望）／<code>要</code>（強い意志）／<code>愿意</code>（意欲）で使い分け。否定は <code>不想</code>。",
+          alts: []
+        };
+      }
+      function fProgressive() {
+        const s = pick(SUBJ), v = pick(VO);
+        return {
+          ja: `${s.j}は${v.jProg}います。`,
+          zh: `${s.z}在${v.z}。`,
+          py: `${s.p} zài ${v.p}.`,
+          w: [{z:s.z,p:s.p,j:s.j}, {z:"在",p:"zài",j:"〜している（進行）"}].concat(v.w),
+          g: "<strong>進行 <code>在＋V</code></strong>＝「〜している（最中）」。副詞 <code>在</code> を動詞の前に置く。<code>正在＋V</code>・<code>V＋呢</code>も同義。否定は <code>没在＋V</code>。",
+          alts: [`${s.z}正在${v.z}。`]
+        };
+      }
+      function fCan() {
+        const s = pick(SUBJ), k = pick(SKILL), neg = rnd(2) === 0;
+        return {
+          ja: neg ? `${s.j}は${k.j}ことができません。` : `${s.j}は${k.j}ことができます。`,
+          zh: neg ? `${s.z}不会${k.z}。` : `${s.z}会${k.z}。`,
+          py: neg ? `${s.p} bú huì ${k.p}.` : `${s.p} huì ${k.p}.`,
+          w: [{z:s.z,p:s.p,j:s.j}, neg ? {z:"不会",p:"bú huì",j:"〜できない"} : {z:"会",p:"huì",j:"〜できる"}].concat(k.w),
+          g: "<strong>助動詞 <code>会</code></strong>＝学習・訓練で習得した能力「〜できる」。否定は <code>不会</code>（<code>会</code>が第4声なので <code>不</code> は <code>bú</code> に変調）。能力の <code>能</code>・許可の <code>可以</code> と使い分ける。",
+          alts: []
+        };
+      }
+      function fPosition() {
+        const it = pick(POSS_ITEM), fp = pick(FURN_POS);
+        return {
+          ja: `私の${it.j}は${fp.j}にあります。`,
+          zh: `我的${it.z}在${fp.z}。`,
+          py: `wǒ de ${it.p} zài ${fp.p}.`,
+          w: [{z:"我的",p:"wǒ de",j:"私の"}, {z:it.z,p:it.p,j:it.j}, {z:"在",p:"zài",j:"〜にある"}, {z:fp.z,p:fp.p,j:fp.j}],
+          g: "<strong>方位詞</strong>：場所名詞の後ろに付けて位置を示す（<code>上／下／里／外／前／后／旁边</code>）。<code>桌子上</code>＝机の上。普通名詞には方位詞が必要。所有の <code>的</code> は所有が明確でなければ省略不可（<code>我的书</code>）。",
+          alts: []
+        };
+      }
+
       const SETS = {
-        numbers: [fTime, fAge, fWeekday, fCount, fFamilyCount, fMoney]
+        numbers: [fTime, fAge, fWeekday, fCount, fFamilyCount, fMoney],
+        place: [fLocation, fGo, fLike, fWant, fProgressive, fCan, fPosition]
       };
       function generate(key, count) {
         count = count || 10;
