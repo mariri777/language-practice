@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grok ブラウザ直結テスト</title>
+<style>
+  :root{
+    --bg:#f1e8d2; --card:#faf2dc; --ink:#14100a; --ink3:#6a604e; --rule:#c1b491;
+    --red:#8a2438; --green:#2f7c5e; --hair:rgba(20,16,10,.12);
+    --font: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", system-ui, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;
+       padding:28px 18px 80px;max-width:760px;margin:0 auto;font-size:15px}
+  h1{font-size:20px;margin:0 0 4px}
+  .sub{color:var(--ink3);font-size:13px;margin:0 0 20px}
+  .card{background:var(--card);border:1px solid var(--hair);border-radius:12px;padding:18px;margin-bottom:16px}
+  label{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--ink3);margin:0 0 6px;text-transform:uppercase}
+  input,textarea,select{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:#fff;color:var(--ink)}
+  textarea{min-height:84px;resize:vertical;font-family:var(--mono);font-size:14px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  button{font:inherit;font-weight:700;padding:11px 18px;border:0;border-radius:8px;background:var(--red);color:#fff;cursor:pointer}
+  button.ghost{background:transparent;color:var(--red);border:1px solid var(--red)}
+  button:disabled{opacity:.5;cursor:wait}
+  .field{margin-bottom:14px}
+  .hint{font-size:12px;color:var(--ink3);margin-top:6px}
+  .out{white-space:pre-wrap;font-family:var(--mono);font-size:13px;background:#fff;border:1px solid var(--hair);
+       border-radius:8px;padding:14px;margin-top:14px;min-height:40px;overflow-x:auto}
+  .verdict{font-weight:700;padding:12px 14px;border-radius:8px;margin-top:14px;display:none}
+  .verdict.ok{display:block;background:rgba(47,124,94,.12);color:var(--green)}
+  .verdict.ng{display:block;background:rgba(138,36,56,.10);color:var(--red)}
+  code{font-family:var(--mono);background:rgba(20,16,10,.06);padding:1px 5px;border-radius:4px}
+  .warn{font-size:12px;color:var(--red);margin-top:8px}
+</style>
+</head>
+<body>
+  <h1>Grok ブラウザ直結テスト</h1>
+  <p class="sub">このページから <code>api.x.ai</code> を直接呼べるか（CORS が通るか）を確かめます。結果で A案(中継)／B案(直結) が決まります。</p>
+
+  <div class="card">
+    <div class="field">
+      <label>① xAI / Grok API キー</label>
+      <input id="key" type="password" placeholder="xai-... （このページのブラウザ内だけに保存されます）" autocomplete="off">
+      <p class="hint">入力すると localStorage に保存（このブラウザのみ）。<button class="ghost" id="clearKey" style="padding:4px 10px;font-size:12px;margin-top:6px">キーを消す</button></p>
+      <p class="warn">⚠️ このキーは絶対にチャットに貼らないでください。ここ（あなたの端末）にだけ入れてください。</p>
+    </div>
+    <div class="field">
+      <label>② モデル名（不明なら接続テストで一覧を取得）</label>
+      <input id="model" type="text" value="grok-3">
+    </div>
+    <div class="field">
+      <label>③ 翻訳テスト用テキスト（中国語/韓国語など）</label>
+      <textarea id="text">今天天气不错，我们一起去喝杯咖啡吧。</textarea>
+    </div>
+    <div class="row">
+      <button id="btnPing" class="ghost">① 接続テスト（モデル一覧 GET）</button>
+      <button id="btnTrans">② 翻訳テスト（POST）</button>
+    </div>
+  </div>
+
+  <div id="verdict" class="verdict"></div>
+  <div id="out" class="out">結果がここに出ます。</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const BASE = 'https://api.x.ai/v1';
+  const out = $('out'), verdict = $('verdict');
+
+  // restore key
+  $('key').value = localStorage.getItem('grok-test-key') || '';
+  $('key').addEventListener('input', e => localStorage.setItem('grok-test-key', e.target.value.trim()));
+  $('clearKey').addEventListener('click', () => { localStorage.removeItem('grok-test-key'); $('key').value=''; });
+
+  function setVerdict(kind, msg){ verdict.className = 'verdict ' + kind; verdict.textContent = msg; }
+  function log(s){ out.textContent = s; }
+
+  function diagnose(err){
+    // CORS / network failures surface as TypeError "Failed to fetch" with no readable response
+    const m = (err && err.message) || String(err);
+    if (/Failed to fetch|NetworkError|Load failed/i.test(m)) {
+      setVerdict('ng', '✗ ブラウザから直接呼べませんでした（CORS かネットワークの可能性大）→ A案（小さな中継）に切替が必要。');
+      return 'エラー種別: ' + m + '\n\nこれは「リクエスト自体がブラウザにブロックされた」典型パターンです。\nDevTools の Console / Network に CORS エラーが出ていないか確認してください。';
+    }
+    return 'エラー: ' + m;
+  }
+
+  async function ping(){
+    const key = $('key').value.trim();
+    if(!key){ setVerdict('ng','キーを入れてください'); return; }
+    $('btnPing').disabled = true; log('接続中… GET /models');
+    try{
+      const res = await fetch(BASE + '/models', { headers: { 'Authorization': 'Bearer ' + key } });
+      const body = await res.text();
+      if(res.ok){
+        setVerdict('ok', '✓ ブラウザから直接呼べました！（CORS OK・認証OK）→ B案（サーバー無し直結）でいけます。');
+        let pretty = body;
+        try{ const j = JSON.parse(body); pretty = (j.data||[]).map(m=>m.id).join('\n') || JSON.stringify(j,null,2); }catch{}
+        log('利用可能なモデル:\n' + pretty);
+      }else{
+        setVerdict('ng', '△ CORS は通ったが API がエラー（HTTP ' + res.status + '）。キーやモデル名を確認。');
+        log('HTTP ' + res.status + '\n' + body);
+      }
+    }catch(err){ log(diagnose(err)); }
+    finally{ $('btnPing').disabled = false; }
+  }
+
+  async function translate(){
+    const key = $('key').value.trim();
+    const model = $('model').value.trim() || 'grok-3';
+    const text = $('text').value.trim();
+    if(!key){ setVerdict('ng','キーを入れてください'); return; }
+    $('btnTrans').disabled = true; log('翻訳中… POST /chat/completions ('+model+')');
+    const prompt = `次の文を日本語に訳し、出てくる主要な単語と文法ポイントを説明してください。出力は次のJSONのみ：
+{"translation":"日本語訳","words":[{"term":"原語","reading":"読み","meaning":"意味"}],"grammar":[{"point":"文法名","note":"説明"}]}
+
+文: """${text}"""`;
+    try{
+      const res = await fetch(BASE + '/chat/completions', {
+        method:'POST',
+        headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
+        body: JSON.stringify({
+          model,
+          messages:[{role:'user',content:prompt}],
+          temperature:0.2,
+          response_format:{type:'json_object'}
+        })
+      });
+      const body = await res.text();
+      if(res.ok){
+        setVerdict('ok','✓ 翻訳まで成功！ブラウザ直結 + 構造化出力ができました → このまま B案で本実装に進めます。');
+        let content = body;
+        try{
+          const j = JSON.parse(body);
+          content = j.choices?.[0]?.message?.content ?? body;
+          try{ content = JSON.stringify(JSON.parse(content), null, 2); }catch{}
+        }catch{}
+        log(content);
+      }else{
+        setVerdict('ng','△ CORS は通ったが API エラー（HTTP '+res.status+'）。モデル名を①の一覧から正しいものに直して再試行。');
+        log('HTTP '+res.status+'\n'+body);
+      }
+    }catch(err){ log(diagnose(err)); }
+    finally{ $('btnTrans').disabled = false; }
+  }
+
+  $('btnPing').addEventListener('click', ping);
+  $('btnTrans').addEventListener('click', translate);
+</script>
+</body>
+</html>
