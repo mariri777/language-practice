@@ -204,6 +204,11 @@
     if(!list.includes(cur)) list.unshift(cur);
     sel.innerHTML = list.map(id=>`<option value="${id}"${id===cur?' selected':''}>${id}</option>`).join('');
   }
+  function modelGuide(){
+    return provider()==='gemini'
+      ? '迷ったら gemini-2.5-flash（無料枠で質・量バランス◎）。最高精度は gemini-2.5-pro（無料は1日100回／課金キーなら制限が大幅に緩むのでこれ常用）。たくさん使う日は gemini-2.5-flash-lite（1日1000回）。新しい版が出たら自動で一覧に並びます。'
+      : '迷ったら llama-3.3-70b。ただしスラング・文法の精度は Gemini のほうが上です。';
+  }
   function syncProviderUI(){
     const p = P();
     $('provider').value = provider();
@@ -212,6 +217,7 @@
     $('getKeyLink').href = p.console;
     const nkl = $('noKeyLink'); if(nkl) nkl.href = p.console;
     fillModels([]);
+    $('modelHint').textContent = modelGuide();
     refreshKeyNotice();
   }
   syncProviderUI();
@@ -225,7 +231,7 @@
       const res = await fetch(P().base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
       const j = await res.json();
       const ids = (j.data||[]).map(m=>m.id).filter(Boolean).sort();
-      if(ids.length){ fillModels(ids); hint.textContent='スラングは大きめ・新しめのモデルが有利。切り替えて試してみて。'; }
+      if(ids.length){ fillModels(ids); hint.textContent=modelGuide(); }
       else hint.textContent='モデルが取得できませんでした。';
     }catch(e){ hint.textContent='一覧の取得に失敗しました（キーや通信を確認）。'; }
   }
