@@ -51,6 +51,8 @@
   .notice li{margin:2px 0}
   code{font-family:ui-monospace,Menlo,Consolas,monospace;background:rgba(20,16,10,.06);padding:1px 5px;border-radius:4px;font-size:.92em}
   .disclose{font-size:12px;color:var(--ink-4);margin:10px 0 0;line-height:1.6}
+  .hint{font-size:12px;color:var(--ink-3);margin:6px 0 0;line-height:1.6}
+  select{appearance:auto}
 
   /* result */
   #result{display:none}
@@ -114,7 +116,9 @@
       <a href="https://console.groq.com" target="_blank" rel="noopener" style="font-size:13px;color:var(--ink-3)">キーを取得 →</a>
     </div>
     <label style="margin-top:14px">モデル</label>
-    <input id="model" type="text" value="llama-3.3-70b-versatile">
+    <select id="model"></select>
+    <div class="row"><button class="btn sm ghost" id="loadModels" type="button">使えるモデル一覧を取得</button></div>
+    <p class="hint" id="modelHint">キーを保存してから取得すると、選べるモデルが増えます。スラングは大きめ・新しめのモデルが有利なので、いくつか試してみてください。</p>
   </div>
 
   <div class="notice" id="noKey" style="display:none">
@@ -168,13 +172,44 @@
   const BASE='https://api.groq.com/openai/v1';
 
   /* ---------- settings ---------- */
+  const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
   $('key').value = localStorage.getItem(KEY_K) || '';
-  $('model').value = localStorage.getItem(MODEL_K) || 'llama-3.3-70b-versatile';
-  $('gearBtn').addEventListener('click', ()=> $('settings').classList.toggle('open'));
+
+  function fillModels(ids){
+    const sel = $('model');
+    const cur = localStorage.getItem(MODEL_K) || DEFAULT_MODEL;
+    const list = ids.slice();
+    if(!list.includes(cur)) list.unshift(cur);
+    sel.innerHTML = list.map(id=>`<option value="${id}"${id===cur?' selected':''}>${id}</option>`).join('');
+  }
+  fillModels([]); // start with just the saved/default model
+
+  async function loadModels(){
+    const key = (localStorage.getItem(KEY_K)||'').trim();
+    const hint = $('modelHint');
+    if(!key){ hint.textContent='先にキーを保存してね。'; return; }
+    hint.textContent='取得中…';
+    try{
+      const res = await fetch(BASE+'/models', { headers:{ 'Authorization':'Bearer '+key } });
+      const j = await res.json();
+      const ids = (j.data||[]).map(m=>m.id).filter(Boolean).sort();
+      if(ids.length){ fillModels(ids); hint.textContent='スラングは大きめ・新しめのモデルが有利。切り替えて試してみて。'; }
+      else hint.textContent='モデルが取得できませんでした。';
+    }catch(e){ hint.textContent='一覧の取得に失敗しました（キーや通信を確認）。'; }
+  }
+  $('loadModels').addEventListener('click', loadModels);
+  $('model').addEventListener('change', ()=> localStorage.setItem(MODEL_K, $('model').value));
+
+  $('gearBtn').addEventListener('click', ()=>{
+    const opening = !$('settings').classList.contains('open');
+    $('settings').classList.toggle('open');
+    if(opening && hasKey() && $('model').options.length <= 1) loadModels();
+  });
   $('saveKey').addEventListener('click', ()=>{
     localStorage.setItem(KEY_K, $('key').value.trim());
-    localStorage.setItem(MODEL_K, $('model').value.trim() || 'llama-3.3-70b-versatile');
-    $('settings').classList.remove('open'); refreshKeyNotice();
+    if($('model').value) localStorage.setItem(MODEL_K, $('model').value);
+    refreshKeyNotice();
+    if(hasKey()) loadModels();
   });
   $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(KEY_K); $('key').value=''; refreshKeyNotice(); });
   function hasKey(){ return !!(localStorage.getItem(KEY_K)||'').trim(); }
