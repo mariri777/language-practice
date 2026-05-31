@@ -1082,57 +1082,207 @@
         ]
       },
       {
-        hsk: 3, num: 4, title: "結果補語",
+        hsk: 3, num: 4, title: "結果補語", mode: "pool",
         sentences: [
           {
-            ja: "あなたが見えました。", zh: "我看见了你。", py: "wǒ kàn jiàn le nǐ.",
-            g: "<strong>結果補語 <code>见</code></strong>＝「（感覚で）認識できた」。動詞だけでは動作のみで結果は不明だが、結果補語で「結果として認識した」を表す。<br>感覚動詞とよく結合：<code>看见</code>（見える）／<code>听见</code>（聞こえる）／<code>闻见</code>（嗅ぎ取る）／<code>梦见</code>（夢に見る）。否定 <code>没看见</code>。可能形 <code>看得见／看不见</code>（見える／見えない）。",
-            w: [{z:"看",p:"kàn",j:"見る"},{z:"见",p:"jiàn",j:"〜できる（感覚）"}]
+            ja: "あなたが見えた。", zh: "我看见你了。", py: "wǒ kàn jiàn nǐ le.",
+            g: "<strong>結果補語 <code>见</code></strong>＝「（感覚で）認識できた」。<code>看见</code>＝見える。<br>感覚動詞と結合：<code>听见／闻见／梦见</code>。否定 <code>没看见</code>。可能形 <code>看得见／看不见</code>。",
+            w: [{z:"看",p:"kàn",j:"見る"},{z:"见",p:"jiàn",j:"〜できる(感覚)"}]
           },
           {
-            ja: "聞き取れた。", zh: "我听懂了。", py: "wǒ tīng dǒng le.",
-            g: "<strong>結果補語 <code>懂</code></strong>＝「理解できた」。<code>听懂</code>＝「聴いて理解できた」、<code>看懂</code>＝「読んで・見て理解できた」。<br><code>懂</code>は単独動詞でも使う：<code>我懂了</code>（わかった）。否定形は <code>没听懂</code>（聞き取れなかった）。可能形 <code>听得懂</code>（聞き取れる）／<code>听不懂</code>（聞き取れない）は実用度高。",
-            w: [{z:"听",p:"tīng",j:"聞く"},{z:"懂",p:"dǒng",j:"理解する"}]
+            ja: "誰かが私を呼ぶのが聞こえた。", zh: "我听见有人叫我。", py: "wǒ tīng jiàn yǒu rén jiào wǒ.",
+            g: "<strong>「听见」</strong>＝聞こえる（聴いて認識できた）。<code>见</code>は感覚的な「達成」を示す結果補語。<br><code>有人</code>＝誰か。意図せず聞こえる感覚を表す。",
+            w: [{z:"听",p:"tīng",j:"聞く"},{z:"见",p:"jiàn",j:"〜できる(感覚)"},{z:"有人",p:"yǒu rén",j:"誰か"}]
           },
           {
-            ja: "その本は見つかりませんでした。", zh: "我没找到那本书。", py: "wǒ méi zhǎo dào nà běn shū.",
-            g: "<strong>結果補語 <code>到</code></strong>＝「（目的に）達した・達成した」。動作の結果として目的が達成されたことを示す。<br>例：<code>买到</code>（買えた・手に入った）／<code>找到</code>（見つかった）／<code>办到</code>（やり遂げた）／<code>想到</code>（思いつく）／<code>等到</code>（待ち得る）。否定形 <code>没＋V＋到</code>。",
-            w: [{z:"找",p:"zhǎo",j:"探す"},{z:"到",p:"dào",j:"達する"},{z:"那本书",p:"nà běn shū",j:"あの本"}]
+            ja: "私は彼が見えなかった。", zh: "我没看见他。", py: "wǒ méi kàn jiàn tā.",
+            g: "<strong>結果補語の否定「没＋V＋見」</strong>＝「〜できなかった」。<code>了</code>は使わない。<br>完了の否定は <code>没</code>（<code>不</code>ではない）。「見えなかった」＝結果に至らなかった。",
+            w: [{z:"没",p:"méi",j:"〜なかった"},{z:"看见",p:"kàn jiàn",j:"見える"}]
           },
           {
-            ja: "この漢字を書き間違えた。", zh: "这个汉字我写错了。", py: "zhège hànzì wǒ xiě cuò le.",
-            g: "<strong>結果補語 <code>错</code></strong>＝「間違った結果になる」。<br>類例：<code>说错</code>（言い間違える）／<code>看错</code>（見間違える）／<code>听错</code>（聞き間違える）／<code>打错电话</code>（電話番号を間違える）／<code>记错</code>（覚え間違える）。反対 <code>对</code>＝「正しい」：<code>猜对了</code>（当たった）。",
-            w: [{z:"汉字",p:"hànzì",j:"漢字"},{z:"写",p:"xiě",j:"書く"},{z:"错",p:"cuò",j:"間違える"}]
+            ja: "今回は聞き取れた。", zh: "这次我听懂了。", py: "zhè cì wǒ tīng dǒng le.",
+            g: "<strong>結果補語 <code>懂</code></strong>＝「理解できた」。<code>听懂</code>＝聴いて理解、<code>看懂</code>＝読んで理解。<br>可能形 <code>听得懂／听不懂</code> は実用度高。",
+            w: [{z:"这次",p:"zhè cì",j:"今回"},{z:"听",p:"tīng",j:"聞く"},{z:"懂",p:"dǒng",j:"理解する"}]
+          },
+          {
+            ja: "私はこの本を読んで理解できた。", zh: "我看懂了这本书。", py: "wǒ kàn dǒng le zhè běn shū.",
+            g: "<strong>「看懂」</strong>＝読んで・見て理解できた。<code>了</code>で達成を示す。<br>本の量詞は <code>本</code>。否定は <code>没看懂</code>。",
+            w: [{z:"看懂",p:"kàn dǒng",j:"読んで理解する"},{z:"本",p:"běn",j:"〜冊"}]
+          },
+          {
+            ja: "先生の話が聞き取れなかった。", zh: "老师说的话我没听懂。", py: "lǎoshī shuō de huà wǒ méi tīng dǒng.",
+            g: "<strong>「没听懂」</strong>＝聞き取れなかった（理解に至らず）。<br><code>说的话</code>＝言った話。完了の否定 <code>没</code>。",
+            w: [{z:"说的话",p:"shuō de huà",j:"言った話"},{z:"没",p:"méi",j:"〜なかった"},{z:"听懂",p:"tīng dǒng",j:"聞き取る"}]
+          },
+          {
+            ja: "その本は見つからなかった。", zh: "我没找到那本书。", py: "wǒ méi zhǎo dào nà běn shū.",
+            g: "<strong>結果補語 <code>到</code></strong>＝「（目的に）達した」。<code>找到</code>＝見つかる。<br>類例：<code>买到／办到／想到／等到</code>。否定 <code>没＋V＋到</code>。",
+            w: [{z:"没",p:"méi",j:"〜なかった"},{z:"找",p:"zhǎo",j:"探す"},{z:"到",p:"dào",j:"達する"}]
+          },
+          {
+            ja: "私はチケットを買えた。", zh: "我买到票了。", py: "wǒ mǎi dào piào le.",
+            g: "<strong>「买到」</strong>＝買えた・手に入った。<code>到</code>は「入手の達成」。<br>単に <code>买了</code>（買った）と違い、<code>买到</code>は「首尾よく入手」を強調。",
+            w: [{z:"买到",p:"mǎi dào",j:"買えた"},{z:"票",p:"piào",j:"チケット"}]
+          },
+          {
+            ja: "あなたの手紙を受け取った。", zh: "我收到你的信了。", py: "wǒ shōu dào nǐ de xìn le.",
+            g: "<strong>「收到」</strong>＝受け取った（受領の達成）。<code>到</code>で「届いた」結果を示す。<br>類例：<code>收到礼物／收到通知</code>。",
+            w: [{z:"收到",p:"shōu dào",j:"受け取る"},{z:"信",p:"xìn",j:"手紙"}]
+          },
+          {
+            ja: "いいアイデアを思いついた。", zh: "我想到了一个好主意。", py: "wǒ xiǎng dào le yí ge hǎo zhǔyi.",
+            g: "<strong>「想到」</strong>＝思いつく（思考の達成）。<code>到</code>で「考えが及ぶ」結果。<br><code>一个</code>の <code>一</code> は4声 <code>ge</code> の前で <code>yí</code>。<code>主意</code>＝アイデア。",
+            w: [{z:"想到",p:"xiǎng dào",j:"思いつく"},{z:"一个",p:"yí ge",j:"1つの"},{z:"主意",p:"zhǔyi",j:"アイデア"}]
+          },
+          {
+            ja: "私は彼を待ちきれず会えなかった。", zh: "我没等到他。", py: "wǒ méi děng dào tā.",
+            g: "<strong>「等到」</strong>＝待って（その時・人に）たどり着く。否定 <code>没等到</code>＝待ったが現れなかった。<br><code>到</code>は「待った結果の到達」を示す。",
+            w: [{z:"没",p:"méi",j:"〜なかった"},{z:"等",p:"děng",j:"待つ"},{z:"到",p:"dào",j:"達する"}]
+          },
+          {
+            ja: "この字を書き間違えた。", zh: "这个字我写错了。", py: "zhège zì wǒ xiě cuò le.",
+            g: "<strong>結果補語 <code>错</code></strong>＝「間違った結果」。<code>写错</code>＝書き間違える。<br>類例：<code>说错／看错／听错／打错</code>。反義は <code>对</code>。",
+            w: [{z:"字",p:"zì",j:"字"},{z:"写",p:"xiě",j:"書く"},{z:"错",p:"cuò",j:"間違える"}]
+          },
+          {
+            ja: "ごめん、言い間違えた。", zh: "对不起，我说错了。", py: "duìbuqǐ, wǒ shuō cuò le.",
+            g: "<strong>「说错」</strong>＝言い間違える。<code>错</code>で誤りの結果を示す。<br><code>对不起</code>＝ごめんなさい。日常で頻出の謝罪表現。",
+            w: [{z:"对不起",p:"duìbuqǐ",j:"ごめん"},{z:"说错",p:"shuō cuò",j:"言い間違える"}]
+          },
+          {
+            ja: "人を見間違えた。", zh: "我看错人了。", py: "wǒ kàn cuò rén le.",
+            g: "<strong>「看错」</strong>＝見間違える。<code>看错人</code>＝人を見間違える（人違い）。<br><code>错</code>は動作の誤った結果を表す。",
+            w: [{z:"看错",p:"kàn cuò",j:"見間違える"},{z:"人",p:"rén",j:"人"}]
+          },
+          {
+            ja: "電話番号を間違えていますよ。", zh: "你打错电话了。", py: "nǐ dǎ cuò diànhuà le.",
+            g: "<strong>「打错电话」</strong>＝電話をかけ間違える。<code>打电话</code>＋結果補語 <code>错</code>。<br>間違い電話を受けた相手にも言う定番表現。",
+            w: [{z:"打错",p:"dǎ cuò",j:"かけ間違える"},{z:"电话",p:"diànhuà",j:"電話"}]
           },
           {
             ja: "食べ終わった。", zh: "我吃完了。", py: "wǒ chī wán le.",
-            g: "<strong>結果補語 <code>完</code></strong>＝「終わる・完了する」。動作が完遂したことを示す。<br>類例：<code>用完</code>（使い切る）／<code>说完</code>（話し終える）／<code>读完</code>（読み終える）／<code>做完</code>（やり終える）。否定 <code>没吃完</code>（食べきっていない）。可能 <code>吃得完／吃不完</code>（食べきれる／きれない）。",
+            g: "<strong>結果補語 <code>完</code></strong>＝「終わる・完了」。動作の完遂を示す。<br>類例：<code>用完／说完／读完</code>。可能形 <code>吃得完／吃不完</code>。",
             w: [{z:"吃",p:"chī",j:"食べる"},{z:"完",p:"wán",j:"終わる"}]
           },
           {
-            ja: "当たった！", zh: "你猜对了！", py: "nǐ cāi duì le!",
-            g: "<strong>結果補語 <code>对</code></strong>＝「正しい結果」。<code>猜对</code>＝当てる、<code>说对</code>＝正しく言う、<code>做对</code>＝正解する。<br>反義は <code>错</code>。<code>猜</code>は「推測する・当てる」の動詞。「クイズ」<code>谜语 míyǔ</code>。「当たり！」と感嘆するなら <code>猜对了！</code> や <code>没错！</code>（その通り）。",
-            w: [{z:"猜",p:"cāi",j:"推測する"},{z:"对",p:"duì",j:"正しい"}]
+            ja: "お金を使い切った。", zh: "钱用完了。", py: "qián yòng wán le.",
+            g: "<strong>「用完」</strong>＝使い切る。<code>完</code>で資源の尽きた結果を示す。<br><code>钱用完了</code>＝お金がなくなった。",
+            w: [{z:"钱",p:"qián",j:"お金"},{z:"用完",p:"yòng wán",j:"使い切る"}]
           },
           {
             ja: "この本を読み終えた。", zh: "我看完这本书了。", py: "wǒ kàn wán zhè běn shū le.",
-            g: "結果補語 <code>完</code> ＋ 文末 <code>了</code> の組み合わせ。動作完了＋変化のニュアンスを両方含む。<br><strong>「V＋完＋目的語＋了」</strong>の語順を守る。否定 <code>没看完</code>（<code>了</code>を外す）。<code>看书</code>＝「本を読む」、<code>读书</code>＝「学ぶ・読む」のニュアンス差。",
-            w: [{z:"看完",p:"kàn wán",j:"読み終わる"},{z:"这本",p:"zhè běn",j:"この〜"}]
+            g: "<strong>「V＋完＋目的語＋了」</strong>の語順。<code>看完</code>＝読み終える。<br>否定は <code>没看完</code>（<code>了</code>を外す）。",
+            w: [{z:"看完",p:"kàn wán",j:"読み終える"},{z:"这本",p:"zhè běn",j:"この〜"}]
           },
           {
-            ja: "彼はまだ作り終わっていない。", zh: "他还没做好。", py: "tā hái méi zuò hǎo.",
-            g: "<strong>結果補語の否定</strong>：「没＋V＋補語」で「〜し終わっていない」。<code>了</code> は使わない。<br><code>还没</code>＝「まだ〜していない」（今後する可能性）。完了の<code>做完</code>と区別：<code>做完</code>（全工程終了）／<code>做好</code>（うまく仕上がる）。前者は量的完了、後者は質的完成のニュアンス。",
-            w: [{z:"还没",p:"hái méi",j:"まだ〜していない"},{z:"做好",p:"zuò hǎo",j:"作り終わる"}]
+            ja: "彼は宿題をやり終えた。", zh: "他做完作业了。", py: "tā zuò wán zuòyè le.",
+            g: "<strong>「做完」</strong>＝やり終える。<code>完</code>で量的な完了を示す。<br>質的完成の <code>做好</code> と区別。<code>作业</code>＝宿題。",
+            w: [{z:"做完",p:"zuò wán",j:"やり終える"},{z:"作业",p:"zuòyè",j:"宿題"}]
+          },
+          {
+            ja: "当たった！", zh: "你猜对了！", py: "nǐ cāi duì le!",
+            g: "<strong>結果補語 <code>对</code></strong>＝「正しい結果」。<code>猜对</code>＝当てる。<br>反義は <code>错</code>。「その通り」は <code>没错</code> とも。",
+            w: [{z:"猜",p:"cāi",j:"推測する"},{z:"对",p:"duì",j:"正しい"}]
+          },
+          {
+            ja: "この問題は正解した。", zh: "这道题我做对了。", py: "zhè dào tí wǒ zuò duì le.",
+            g: "<strong>「做对」</strong>＝正しくできた・正解する。<code>对</code>で正しい結果を示す。<br>問題の量詞は <code>道</code>（<code>这道题</code>）。",
+            w: [{z:"道",p:"dào",j:"〜問"},{z:"题",p:"tí",j:"問題"},{z:"做对",p:"zuò duì",j:"正解する"}]
+          },
+          {
+            ja: "あなたの言う通りだ。", zh: "你说对了。", py: "nǐ shuō duì le.",
+            g: "<strong>「说对」</strong>＝正しく言い当てる。<code>对</code>で発言が正しい結果を示す。<br>相づちで「その通り」の意でも使う。",
+            w: [{z:"说对",p:"shuō duì",j:"言い当てる"},{z:"了",p:"le",j:"〜した"}]
+          },
+          {
+            ja: "準備が整った。", zh: "我准备好了。", py: "wǒ zhǔnbèi hǎo le.",
+            g: "<strong>結果補語 <code>好</code></strong>＝「ちゃんと・完成して」。<code>准备好</code>＝準備が整う。<br>質的な完成・万端を示す。類例 <code>写好／说好</code>。",
+            w: [{z:"准备好",p:"zhǔnbèi hǎo",j:"準備が整う"},{z:"了",p:"le",j:"〜した"}]
+          },
+          {
+            ja: "母はご飯を作り終えた。", zh: "妈妈做好饭了。", py: "māma zuò hǎo fàn le.",
+            g: "<strong>「做好」</strong>＝うまく作り上げる。<code>好</code>で完成度のある結果を示す。<br>量的完了の <code>做完</code> とニュアンスが異なる。",
+            w: [{z:"做好",p:"zuò hǎo",j:"作り上げる"},{z:"饭",p:"fàn",j:"ご飯"}]
+          },
+          {
+            ja: "宿題を仕上げた。", zh: "我写好作业了。", py: "wǒ xiě hǎo zuòyè le.",
+            g: "<strong>「写好」</strong>＝きちんと書き上げる。<code>好</code>で仕上がりを示す。<br><code>作业</code>＝宿題。完成・出来上がりのニュアンス。",
+            w: [{z:"写好",p:"xiě hǎo",j:"書き上げる"},{z:"作业",p:"zuòyè",j:"宿題"}]
           },
           {
             ja: "はっきり聞き取れなかった。", zh: "我没听清楚。", py: "wǒ méi tīng qīngchu.",
-            g: "<strong>結果補語 <code>清楚</code></strong>＝「はっきり・明瞭に」。<br>動詞＋形容詞型の結果補語の代表例：<code>听清楚</code>（聴き取る）／<code>看清楚</code>（見える）／<code>说清楚</code>（はっきり言う）／<code>想清楚</code>（はっきり考える）。否定 <code>没＋V＋清楚</code>。可能形：<code>看得清楚／看不清楚</code>。",
-            w: [{z:"听",p:"tīng",j:"聞く"},{z:"清楚",p:"qīngchu",j:"はっきり"}]
+            g: "<strong>結果補語 <code>清楚</code></strong>＝「はっきり・明瞭に」。動詞＋形容詞型の代表。<br>類例：<code>看清楚／说清楚／想清楚</code>。否定 <code>没＋V＋清楚</code>。",
+            w: [{z:"没",p:"méi",j:"〜なかった"},{z:"听",p:"tīng",j:"聞く"},{z:"清楚",p:"qīngchu",j:"はっきり"}]
+          },
+          {
+            ja: "黒板の字がはっきり見えた。", zh: "我看清楚了黑板上的字。", py: "wǒ kàn qīngchu le hēibǎn shàng de zì.",
+            g: "<strong>「看清楚」</strong>＝はっきり見える。<code>清楚</code>で明瞭な結果を示す。<br><code>黑板上的字</code>＝黒板の字。可能形 <code>看得清楚／看不清楚</code>。",
+            w: [{z:"看清楚",p:"kàn qīngchu",j:"はっきり見える"},{z:"黑板",p:"hēibǎn",j:"黒板"},{z:"字",p:"zì",j:"字"}]
+          },
+          {
+            ja: "はっきり言ってください。", zh: "请你说清楚。", py: "qǐng nǐ shuō qīngchu.",
+            g: "<strong>「说清楚」</strong>＝はっきり言う。<code>清楚</code>で明瞭な発言の結果を示す。<br><code>请你...</code>で丁寧な依頼に。",
+            w: [{z:"请",p:"qǐng",j:"どうぞ"},{z:"说清楚",p:"shuō qīngchu",j:"はっきり言う"}]
           },
           {
             ja: "このことを覚えた。", zh: "这件事我记住了。", py: "zhè jiàn shì wǒ jì zhù le.",
-            g: "<strong>結果補語 <code>住</code></strong>＝「しっかり・固定する」（とどまる）。<code>记住</code>＝「記憶に定着する」。<br>類例：<code>站住</code>（立ち止まる）／<code>抓住</code>（つかむ・捕まえる）／<code>挡住</code>（さえぎる）／<code>停住</code>（停止する）。安定・固定の結果を表す。<code>这件事</code> の前置で話題化（このことについては、覚えた）。",
-            w: [{z:"事",p:"shì",j:"こと"},{z:"记",p:"jì",j:"覚える"},{z:"住",p:"zhù",j:"〜しとどめる"}]
+            g: "<strong>結果補語 <code>住</code></strong>＝「しっかり・固定」。<code>记住</code>＝記憶に定着する。<br>類例：<code>站住／抓住／挡住</code>。安定・固定の結果。",
+            w: [{z:"这件事",p:"zhè jiàn shì",j:"このこと"},{z:"记",p:"jì",j:"覚える"},{z:"住",p:"zhù",j:"〜しとどめる"}]
+          },
+          {
+            ja: "彼は私の手をつかんだ。", zh: "他抓住了我的手。", py: "tā zhuā zhù le wǒ de shǒu.",
+            g: "<strong>「抓住」</strong>＝しっかりつかむ・捕まえる。<code>住</code>で固定の結果を示す。<br><code>抓</code>＝つかむ。手や機会を「逃さずつかむ」に使う。",
+            w: [{z:"抓住",p:"zhuā zhù",j:"つかむ"},{z:"手",p:"shǒu",j:"手"}]
+          },
+          {
+            ja: "止まれ、動くな！", zh: "站住，别动！", py: "zhàn zhù, bié dòng!",
+            g: "<strong>「站住」</strong>＝立ち止まる。<code>住</code>で「その場に固定」する結果。<br>呼び止めの命令でよく使う。<code>别动</code>＝動くな。",
+            w: [{z:"站住",p:"zhàn zhù",j:"立ち止まる"},{z:"别",p:"bié",j:"〜するな"},{z:"动",p:"dòng",j:"動く"}]
+          },
+          {
+            ja: "これらの単語が覚えられない。", zh: "这些单词我记不住。", py: "zhèxiē dāncí wǒ jì bú zhù.",
+            g: "<strong>可能補語の否定「V＋不＋補語」</strong>＝「〜できない」。<code>记不住</code>＝覚えられない。<br><code>不</code>は4声 <code>zhù</code> の前なので <code>bú</code>。肯定は <code>记得住</code>。",
+            w: [{z:"这些",p:"zhèxiē",j:"これら"},{z:"单词",p:"dāncí",j:"単語"},{z:"记不住",p:"jì bú zhù",j:"覚えられない"}]
+          },
+          {
+            ja: "私は泳げるようになった。", zh: "我学会游泳了。", py: "wǒ xué huì yóuyǒng le.",
+            g: "<strong>結果補語 <code>会</code></strong>＝「習得できた」。<code>学会</code>＝学んで(できるように)なる。<br>能力の獲得を示す。否定 <code>没学会</code>。",
+            w: [{z:"学会",p:"xué huì",j:"習得する"},{z:"游泳",p:"yóuyǒng",j:"泳ぐ"}]
+          },
+          {
+            ja: "この動作はどうしても覚えられない。", zh: "这个动作我学不会。", py: "zhège dòngzuò wǒ xué bú huì.",
+            g: "<strong>可能補語の否定「学不会」</strong>＝（やっても）習得できない。<br><code>不</code>は4声 <code>huì</code> の前で <code>bú</code>。<code>动作</code>＝動作。",
+            w: [{z:"动作",p:"dòngzuò",j:"動作"},{z:"学不会",p:"xué bú huì",j:"習得できない"}]
+          },
+          {
+            ja: "お腹いっぱい食べた。", zh: "我吃饱了。", py: "wǒ chī bǎo le.",
+            g: "<strong>結果補語 <code>饱</code></strong>＝「満腹の状態」。<code>吃饱</code>＝食べて満腹になる。<br>動作の結果としての身体状態を示す。否定 <code>没吃饱</code>。",
+            w: [{z:"吃饱",p:"chī bǎo",j:"満腹になる"},{z:"了",p:"le",j:"〜した"}]
+          },
+          {
+            ja: "彼は昨日酔っ払った。", zh: "他昨天喝醉了。", py: "tā zuótiān hē zuì le.",
+            g: "<strong>結果補語 <code>醉</code></strong>＝「酔った状態」。<code>喝醉</code>＝飲んで酔う。<br>動作の結果としての状態変化を示す。",
+            w: [{z:"昨天",p:"zuótiān",j:"昨日"},{z:"喝醉",p:"hē zuì",j:"酔う"}]
+          },
+          {
+            ja: "私は服を洗ってきれいにした。", zh: "我把衣服洗干净了。", py: "wǒ bǎ yīfu xǐ gānjìng le.",
+            g: "<strong>結果補語 <code>干净</code></strong>＝「きれいな状態」。<code>洗干净</code>＝洗ってきれいにする。<br>把構文と相性◎。<code>洗</code>＝洗う。",
+            w: [{z:"把",p:"bǎ",j:"〜を"},{z:"衣服",p:"yīfu",j:"服"},{z:"洗",p:"xǐ",j:"洗う"},{z:"干净",p:"gānjìng",j:"きれい"}]
+          },
+          {
+            ja: "手をきれいに洗ってください。", zh: "请把手洗干净。", py: "qǐng bǎ shǒu xǐ gānjìng.",
+            g: "<strong>「洗干净」</strong>＝洗ってきれいにする。<code>干净</code>で清潔な結果を示す。<br>依頼の把構文 <code>请把...</code> 形。",
+            w: [{z:"请",p:"qǐng",j:"どうぞ"},{z:"手",p:"shǒu",j:"手"},{z:"洗干净",p:"xǐ gānjìng",j:"洗ってきれいに"}]
+          },
+          {
+            ja: "このドアがどうしても開かない。", zh: "这个门我打不开。", py: "zhège mén wǒ dǎ bù kāi.",
+            g: "<strong>可能補語の否定「打不开」</strong>＝（やっても）開けられない。<br><code>不</code>は1声 <code>kāi</code> の前なので <code>bù</code>。肯定 <code>打得开</code>。",
+            w: [{z:"门",p:"mén",j:"ドア"},{z:"打不开",p:"dǎ bù kāi",j:"開けられない"}]
+          },
+          {
+            ja: "私はやっとこの箱を開けた。", zh: "我终于打开了这个箱子。", py: "wǒ zhōngyú dǎ kāi le zhège xiāngzi.",
+            g: "<strong>結果補語 <code>开</code></strong>＝「開く」。<code>打开</code>＝開ける。<br><code>终于</code>＝やっと。苦労の末の達成を示す。",
+            w: [{z:"终于",p:"zhōngyú",j:"やっと"},{z:"打开",p:"dǎ kāi",j:"開ける"},{z:"箱子",p:"xiāngzi",j:"箱"}]
           }
         ]
       },
