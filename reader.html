@@ -108,17 +108,12 @@
 
   <!-- settings -->
   <div class="card" id="settings">
-    <label>AIプロバイダ（無料）</label>
-    <select id="provider">
-      <option value="groq">Groq（無料・スラングは弱め）</option>
-      <option value="gemini">Gemini（無料・スラングに強め）</option>
-    </select>
-    <label style="margin-top:14px">APIキー（このブラウザ内だけに保存）</label>
-    <input id="key" type="password" placeholder="gsk_..." autocomplete="off">
+    <label>Gemini API キー（無料・このブラウザ内だけに保存）</label>
+    <input id="key" type="password" placeholder="AIza..." autocomplete="off">
     <div class="row">
       <button class="btn sm" id="saveKey">保存</button>
       <button class="btn sm ghost" id="clearKey">消す</button>
-      <a id="getKeyLink" href="https://console.groq.com" target="_blank" rel="noopener" style="font-size:13px;color:var(--ink-3)">キーを取得 →</a>
+      <a id="getKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="font-size:13px;color:var(--ink-3)">キーを取得 →</a>
     </div>
     <label style="margin-top:14px">モデル</label>
     <select id="model"></select>
@@ -127,13 +122,13 @@
   </div>
 
   <div class="notice" id="noKey" style="display:none">
-    <strong>はじめての方へ</strong> — このツールは翻訳に無料のAIを使います。最初に一度だけ、自分の無料キーが必要です：
+    <strong>はじめての方へ</strong> — このツールは翻訳に Google の無料AI「Gemini」を使います。最初に一度だけ、自分の無料キーが必要です：
     <ol>
-      <li>右上の <strong>⚙</strong> でプロバイダ（Groq か Gemini）を選ぶ</li>
-      <li><a id="noKeyLink" href="https://console.groq.com" target="_blank" rel="noopener">キー発行ページ</a> でキーを作ってコピー</li>
-      <li>⚙ の「APIキー」に貼って「保存」</li>
+      <li><a id="noKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> でログイン →「Create API key」</li>
+      <li><code>AIza...</code> をコピー（無料・クレカ不要）</li>
+      <li>右上の <strong>⚙</strong> に貼って「保存」</li>
     </ol>
-    キーはあなたのブラウザ内だけに保存され、サイト運営者には送られません。スラングは <strong>Gemini</strong> のほうが得意です。
+    キーはあなたのブラウザ内だけに保存され、サイト運営者には送られません。
   </div>
 
   <!-- paste -->
@@ -146,7 +141,7 @@
     </div>
     <div class="err" id="err"></div>
     <p class="hint">💡 スラングや新しい略語は、無料AIだと外しやすいです（自信がない語は「(推測)」と表示）。気になった語は「＋辞書」で保存して、自分の単語帳として育てていってください。</p>
-    <p class="disclose">※ 貼り付けた文章は、翻訳のため選択中のAI（Groq / Gemini）に送信されます。ブラウザ内だけでは完結しません。特に Gemini の無料枠は入力がモデル改善に使われる場合があるため、個人情報や見られたくない内容は貼らないでください。</p>
+    <p class="disclose">※ 貼り付けた文章は、翻訳のため Google の Gemini に送信されます。ブラウザ内だけでは完結しません。Gemini の無料枠は入力がモデル改善に使われる場合があるため、個人情報や見られたくない内容（友だちのDMなど）は貼らないでください。</p>
   </div>
 
   <!-- result -->
@@ -177,22 +172,11 @@
 
 <script>
   const $ = id => document.getElementById(id);
-  const DICT_K='mydict-v1';
+  const DICT_K='mydict-v1', KEY_K='key-gemini', MODEL_K='model-gemini', SEEN_K='seen-models-gemini';
+  const GEMINI = { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash' };
 
-  const PROVIDERS = {
-    groq:   { base:'https://api.groq.com/openai/v1',                          model:'llama-3.3-70b-versatile', keyph:'gsk_...',  console:'https://console.groq.com' },
-    gemini: { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash',        keyph:'AIza...',  console:'https://aistudio.google.com/apikey' }
-  };
-  // migrate old single-provider Groq keys
-  if(localStorage.getItem('groq-key') && !localStorage.getItem('key-groq')) localStorage.setItem('key-groq', localStorage.getItem('groq-key'));
-  if(localStorage.getItem('groq-model') && !localStorage.getItem('model-groq')) localStorage.setItem('model-groq', localStorage.getItem('groq-model'));
-
-  const provider = () => localStorage.getItem('reader-provider') || 'groq';
-  const P = () => PROVIDERS[provider()];
-  const keyK = () => 'key-'+provider();
-  const modelK = () => 'model-'+provider();
-  const getKey = () => (localStorage.getItem(keyK())||'').trim();
-  const getModel = () => (localStorage.getItem(modelK())||P().model).trim();
+  const getKey = () => (localStorage.getItem(KEY_K)||'').trim();
+  const getModel = () => (localStorage.getItem(MODEL_K)||GEMINI.model).trim();
   function hasKey(){ return !!getKey(); }
   function refreshKeyNotice(){ $('noKey').style.display = hasKey() ? 'none' : 'block'; }
 
@@ -205,57 +189,37 @@
     sel.innerHTML = list.map(id=>`<option value="${id}"${id===cur?' selected':''}>${id}</option>`).join('');
   }
   function modelGuide(){
-    return provider()==='gemini'
-      ? '迷ったら gemini-2.5-flash（無料枠で質・量バランス◎）。最高精度は gemini-2.5-pro（無料は1日100回／課金キーなら制限が大幅に緩むのでこれ常用）。たくさん使う日は gemini-2.5-flash-lite（1日1000回）。新しい版が出たら自動で一覧に並びます。'
-      : '迷ったら llama-3.3-70b。ただしスラング・文法の精度は Gemini のほうが上です。';
+    return '迷ったら gemini-2.5-flash（無料枠で質・量バランス◎）。最高精度は gemini-2.5-pro（無料は1日100回／課金キーなら制限が緩むので常用OK）。たくさん使う日は gemini-2.5-flash-lite（1日1000回）。新しい版が出たら自動で一覧に並びます。';
   }
-  function syncProviderUI(){
-    const p = P();
-    $('provider').value = provider();
-    $('key').value = getKey();
-    $('key').placeholder = p.keyph;
-    $('getKeyLink').href = p.console;
-    const nkl = $('noKeyLink'); if(nkl) nkl.href = p.console;
-    fillModels([]);
-    $('modelHint').textContent = modelGuide();
-    refreshKeyNotice();
-  }
-  syncProviderUI();
+  function isChatModel(id){ return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id); }
 
-  function isChatModel(id){
-    if(provider()==='gemini') return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id);
-    return !/(whisper|tts|guard|embedding)/i.test(id);
-  }
+  $('key').value = getKey();
+  fillModels([]);
+  $('modelHint').textContent = modelGuide();
+  refreshKeyNotice();
+
   async function loadModels(){
     const key = getKey();
     const hint = $('modelHint');
     if(!key){ hint.textContent='先にキーを保存してね。'; return; }
     hint.textContent='取得中…';
     try{
-      const res = await fetch(P().base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
+      const res = await fetch(GEMINI.base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
       const j = await res.json();
       const ids = (j.data||[]).map(m=>m.id).filter(Boolean).filter(isChatModel).sort();
       if(!ids.length){ hint.textContent='モデルが取得できませんでした。'; return; }
       fillModels(ids);
       // 前回チェック時より新しく増えたモデルを知らせる
-      const seenK = 'seen-models-'+provider();
-      let seen = []; try{ seen = JSON.parse(localStorage.getItem(seenK)||'[]'); }catch{}
+      let seen = []; try{ seen = JSON.parse(localStorage.getItem(SEEN_K)||'[]'); }catch{}
       if(seen.length){
         const fresh = ids.filter(id=>!seen.includes(id));
         hint.textContent = fresh.length ? ('✨ 新しいモデルが出てます：'+fresh.join('、')+'（選べます）') : modelGuide();
-      } else {
-        hint.textContent = modelGuide();
-      }
-      localStorage.setItem(seenK, JSON.stringify(ids));
+      } else hint.textContent = modelGuide();
+      localStorage.setItem(SEEN_K, JSON.stringify(ids));
     }catch(e){ hint.textContent='一覧の取得に失敗しました（キーや通信を確認）。'; }
   }
   $('loadModels').addEventListener('click', loadModels);
-  $('model').addEventListener('change', ()=> localStorage.setItem(modelK(), $('model').value));
-  $('provider').addEventListener('change', ()=>{
-    localStorage.setItem('reader-provider', $('provider').value);
-    syncProviderUI();
-    if(hasKey()) loadModels();
-  });
+  $('model').addEventListener('change', ()=> localStorage.setItem(MODEL_K, $('model').value));
 
   $('gearBtn').addEventListener('click', ()=>{
     const opening = !$('settings').classList.contains('open');
@@ -263,12 +227,12 @@
     if(opening && hasKey() && $('model').options.length <= 1) loadModels();
   });
   $('saveKey').addEventListener('click', ()=>{
-    localStorage.setItem(keyK(), $('key').value.trim());
-    if($('model').value) localStorage.setItem(modelK(), $('model').value);
+    localStorage.setItem(KEY_K, $('key').value.trim());
+    if($('model').value) localStorage.setItem(MODEL_K, $('model').value);
     refreshKeyNotice();
     if(hasKey()) loadModels();
   });
-  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(keyK()); $('key').value=''; refreshKeyNotice(); });
+  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(KEY_K); $('key').value=''; refreshKeyNotice(); });
 
   /* ---------- helpers ---------- */
   function detectLang(s){
@@ -328,7 +292,7 @@
 文："""${text}"""`;
 
     try{
-      const res = await fetch(P().base+'/chat/completions', {
+      const res = await fetch(GEMINI.base+'/chat/completions', {
         method:'POST',
         headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
         body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
