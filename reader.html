@@ -189,7 +189,7 @@
     sel.innerHTML = list.map(id=>`<option value="${id}"${id===cur?' selected':''}>${id}</option>`).join('');
   }
   function modelGuide(){
-    return '迷ったら gemini-2.5-flash（無料枠で質・量バランス◎）。最高精度は gemini-2.5-pro（無料は1日100回／課金キーなら制限が緩むので常用OK）。たくさん使う日は gemini-2.5-flash-lite（1日1000回）。新しい版が出たら自動で一覧に並びます。';
+    return '迷ったら gemini-2.5-flash（無料で1日250回・質と量のバランス◎）。最高精度は gemini-2.5-pro（無料は1日100回／課金キーなら制限が緩むので常用OK）。たくさん使う日は gemini-2.5-flash-lite（無料で1日1000回）。新しい版が出たら自動で一覧に並ぶので、気になったらたまにこの設定を開いてみてね（✨で知らせます）。';
   }
   function isChatModel(id){ return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id); }
 
