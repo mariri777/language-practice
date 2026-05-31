@@ -111,7 +111,7 @@
     <label>AI（GeminiかDeepSeekを選べます）</label>
     <select id="provider">
       <option value="gemini">Gemini（Google・無料 / 中国本土では使えません）</option>
-      <option value="deepseek">DeepSeek（要チャージ・激安 / 中国本土でも使えます）</option>
+      <option value="deepseek">DeepSeek（要チャージ / 中国本土でも使えます）</option>
     </select>
     <p class="hint" id="provHint"></p>
     <label style="margin-top:14px">APIキー（このブラウザ内だけに保存）</label>
@@ -183,8 +183,8 @@
                 guide:'迷ったら gemini-2.5-flash（無料で1日250回・質と量のバランス◎）。最高精度は gemini-2.5-pro（無料は1日100回）。新しい版が出たら自動で一覧に並びます。',
                 note:'Gemini は無料。ただし中国本土では使えません（VPN必要）。無料枠は入力が学習に使われる場合あり。' },
     deepseek: { base:'https://api.deepseek.com',                                 model:'deepseek-chat',    keyph:'sk-...',  console:'https://platform.deepseek.com',
-                guide:'deepseek-chat が標準（中国本土でも使える）。利用には少額チャージが必要（使用料は激安）。',
-                note:'DeepSeek は中国本土でも使えます。利用に少額チャージが必要（使用料は激安）。' }
+                guide:'deepseek-chat が標準（中国本土でも使える）。利用には事前チャージが必要（使った分だけの従量課金）。',
+                note:'DeepSeek は中国本土でも使えます。利用に事前チャージが必要（使った分だけの従量課金）。' }
   };
   const provider = () => localStorage.getItem('reader-provider') || 'gemini';
   const P = () => PROVIDERS[provider()] || PROVIDERS.gemini;

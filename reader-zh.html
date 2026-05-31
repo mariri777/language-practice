@@ -111,7 +111,7 @@
     <label>AI（可选 Gemini 或 DeepSeek）</label>
     <select id="provider">
       <option value="gemini">Gemini（Google·免费 / 中国大陆无法使用）</option>
-      <option value="deepseek">DeepSeek（需充值·便宜 / 中国大陆可用）</option>
+      <option value="deepseek">DeepSeek（需充值 / 中国大陆可用）</option>
     </select>
     <p class="hint" id="provHint"></p>
     <label style="margin-top:14px">API 密钥（仅保存在此浏览器内）</label>
@@ -183,8 +183,8 @@
                 guide:'拿不准就选 gemini-2.5-flash（免费每天250次·均衡 ◎）。最高精度是 gemini-2.5-pro（免费每天100次）。出新版本会自动出现在列表里。',
                 note:'Gemini 免费，但中国大陆无法使用（需 VPN）。免费层输入可能用于训练。' },
     deepseek: { base:'https://api.deepseek.com',                                 model:'deepseek-chat',    keyph:'sk-...',  console:'https://platform.deepseek.com',
-                guide:'deepseek-chat 为标准（中国大陆可用）。使用需少量充值（费用很低）。',
-                note:'DeepSeek 在中国大陆也能用。使用需少量充值（费用很低）。' }
+                guide:'deepseek-chat 为标准（中国大陆可用）。使用需先充值（按用量计费）。',
+                note:'DeepSeek 在中国大陆也能用。使用需先充值（按用量计费）。' }
   };
   const provider = () => localStorage.getItem('reader-provider') || 'gemini';
   const P = () => PROVIDERS[provider()] || PROVIDERS.gemini;
