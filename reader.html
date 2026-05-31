@@ -222,6 +222,10 @@
   }
   syncProviderUI();
 
+  function isChatModel(id){
+    if(provider()==='gemini') return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id);
+    return !/(whisper|tts|guard|embedding)/i.test(id);
+  }
   async function loadModels(){
     const key = getKey();
     const hint = $('modelHint');
@@ -230,9 +234,19 @@
     try{
       const res = await fetch(P().base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
       const j = await res.json();
-      const ids = (j.data||[]).map(m=>m.id).filter(Boolean).sort();
-      if(ids.length){ fillModels(ids); hint.textContent=modelGuide(); }
-      else hint.textContent='モデルが取得できませんでした。';
+      const ids = (j.data||[]).map(m=>m.id).filter(Boolean).filter(isChatModel).sort();
+      if(!ids.length){ hint.textContent='モデルが取得できませんでした。'; return; }
+      fillModels(ids);
+      // 前回チェック時より新しく増えたモデルを知らせる
+      const seenK = 'seen-models-'+provider();
+      let seen = []; try{ seen = JSON.parse(localStorage.getItem(seenK)||'[]'); }catch{}
+      if(seen.length){
+        const fresh = ids.filter(id=>!seen.includes(id));
+        hint.textContent = fresh.length ? ('✨ 新しいモデルが出てます：'+fresh.join('、')+'（選べます）') : modelGuide();
+      } else {
+        hint.textContent = modelGuide();
+      }
+      localStorage.setItem(seenK, JSON.stringify(ids));
     }catch(e){ hint.textContent='一覧の取得に失敗しました（キーや通信を確認）。'; }
   }
   $('loadModels').addEventListener('click', loadModels);
