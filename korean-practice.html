@@ -5219,40 +5219,40 @@
         {n:25,ko:"이십오",r:"isibo"}, {n:30,ko:"삼십",r:"samsip"}
       ];
       const WEEKDAYS = [
-        {ko:"월요일",r:"woryoil",ja:"月曜日"}, {ko:"화요일",r:"hwayoil",ja:"火曜日"},
-        {ko:"수요일",r:"suyoil",ja:"水曜日"}, {ko:"목요일",r:"mogyoil",ja:"木曜日"},
-        {ko:"금요일",r:"geumyoil",ja:"金曜日"}, {ko:"토요일",r:"toyoil",ja:"土曜日"},
-        {ko:"일요일",r:"iryoil",ja:"日曜日"}
+        {ko:"월요일",r:"woryoil",ja:"月曜日",zh:"星期一"}, {ko:"화요일",r:"hwayoil",ja:"火曜日",zh:"星期二"},
+        {ko:"수요일",r:"suyoil",ja:"水曜日",zh:"星期三"}, {ko:"목요일",r:"mogyoil",ja:"木曜日",zh:"星期四"},
+        {ko:"금요일",r:"geumyoil",ja:"金曜日",zh:"星期五"}, {ko:"토요일",r:"toyoil",ja:"土曜日",zh:"星期六"},
+        {ko:"일요일",r:"iryoil",ja:"日曜日",zh:"星期天"}
       ];
       // 場所（r=単独, re=「-에」連音込み）。キー参照で相性指定に使う
       const PLACE = {
-        bang:      {ko:"방",r:"bang",re:"bang-e",ja:"部屋"},
-        gyosil:    {ko:"교실",r:"gyosil",re:"gyosil-e",ja:"教室"},
-        jip:       {ko:"집",r:"jip",re:"jib-e",ja:"家"},
-        gongwon:   {ko:"공원",r:"gongwon",re:"gongwon-e",ja:"公園"},
-        kape:      {ko:"카페",r:"kape",re:"kape-e",ja:"カフェ"},
-        samusil:   {ko:"사무실",r:"samusil",re:"samusil-e",ja:"オフィス"},
-        doseogwan: {ko:"도서관",r:"doseogwan",re:"doseogwan-e",ja:"図書館"}
+        bang:      {ko:"방",r:"bang",re:"bang-e",ja:"部屋",zh:"房间"},
+        gyosil:    {ko:"교실",r:"gyosil",re:"gyosil-e",ja:"教室",zh:"教室"},
+        jip:       {ko:"집",r:"jip",re:"jib-e",ja:"家",zh:"家"},
+        gongwon:   {ko:"공원",r:"gongwon",re:"gongwon-e",ja:"公園",zh:"公园"},
+        kape:      {ko:"카페",r:"kape",re:"kape-e",ja:"カフェ",zh:"咖啡店"},
+        samusil:   {ko:"사무실",r:"samusil",re:"samusil-e",ja:"オフィス",zh:"办公室"},
+        doseogwan: {ko:"도서관",r:"doseogwan",re:"doseogwan-e",ja:"図書館",zh:"图书馆"}
       };
       // 存在（主格助詞付きで事前確定、助数詞は対象に合わせる）。places=自然に置ける場所のみ
       const EXIST = [
-        {subj:"학생이",subjR:"haksaeng-i",ja:"学生",cnt:"명",cntR:"myeong",cja:"人",v:"います",places:["gyosil","doseogwan","kape","gongwon"]},
-        {subj:"친구가",subjR:"chinguga",ja:"友達",cnt:"명",cntR:"myeong",cja:"人",v:"います",places:["kape","gongwon","jip","gyosil"]},
-        {subj:"고양이가",subjR:"goyangiga",ja:"猫",cnt:"마리",cntR:"mari",cja:"匹",v:"います",places:["jip","gongwon","bang"]},
-        {subj:"강아지가",subjR:"gangajiga",ja:"子犬",cnt:"마리",cntR:"mari",cja:"匹",v:"います",places:["jip","gongwon","kape"]},
-        {subj:"책이",subjR:"chaeg-i",ja:"本",cnt:"권",cntR:"gwon",cja:"冊",v:"あります",places:["doseogwan","gyosil","samusil","jip","bang"]},
-        {subj:"사과가",subjR:"sagwaga",ja:"りんご",cnt:"개",cntR:"gae",cja:"個",v:"あります",places:["jip","bang","kape"]},
-        {subj:"의자가",subjR:"uijaga",ja:"椅子",cnt:"개",cntR:"gae",cja:"脚",v:"あります",places:["gyosil","samusil","kape","jip","bang"]},
-        {subj:"커피가",subjR:"keopiga",ja:"コーヒー",cnt:"잔",cntR:"jan",cja:"杯",v:"あります",places:["kape","samusil","jip","bang"]}
+        {subj:"학생이",subjR:"haksaeng-i",ja:"学生",zh:"学生",cnt:"명",cntR:"myeong",cja:"人",czh:"名",v:"います",vzh:"在·有",places:["gyosil","doseogwan","kape","gongwon"]},
+        {subj:"친구가",subjR:"chinguga",ja:"友達",zh:"朋友",cnt:"명",cntR:"myeong",cja:"人",czh:"名",v:"います",vzh:"在·有",places:["kape","gongwon","jip","gyosil"]},
+        {subj:"고양이가",subjR:"goyangiga",ja:"猫",zh:"猫",cnt:"마리",cntR:"mari",cja:"匹",czh:"只",v:"います",vzh:"在·有",places:["jip","gongwon","bang"]},
+        {subj:"강아지가",subjR:"gangajiga",ja:"子犬",zh:"小狗",cnt:"마리",cntR:"mari",cja:"匹",czh:"只",v:"います",vzh:"在·有",places:["jip","gongwon","kape"]},
+        {subj:"책이",subjR:"chaeg-i",ja:"本",zh:"书",cnt:"권",cntR:"gwon",cja:"冊",czh:"本",v:"あります",vzh:"有",places:["doseogwan","gyosil","samusil","jip","bang"]},
+        {subj:"사과가",subjR:"sagwaga",ja:"りんご",zh:"苹果",cnt:"개",cntR:"gae",cja:"個",czh:"个",v:"あります",vzh:"有",places:["jip","bang","kape"]},
+        {subj:"의자가",subjR:"uijaga",ja:"椅子",zh:"椅子",cnt:"개",cntR:"gae",cja:"脚",czh:"把",v:"あります",vzh:"有",places:["gyosil","samusil","kape","jip","bang"]},
+        {subj:"커피가",subjR:"keopiga",ja:"コーヒー",zh:"咖啡",cnt:"잔",cntR:"jan",cja:"杯",czh:"杯",v:"あります",vzh:"有",places:["kape","samusil","jip","bang"]}
       ];
       // 値段（amounts=その品目に現実的な金額のみ。値は PRICES から選ぶ）
       const PRICEITEMS = [
-        {topic:"커피는",topicR:"keopineun",ja:"コーヒー",amounts:[1500,3000,4500,5000]},
-        {topic:"가방은",topicR:"gabang-eun",ja:"カバン",amounts:[15000,30000]},
-        {topic:"우산은",topicR:"usaneun",ja:"傘",amounts:[3000,5000,8000,12000]},
-        {topic:"책은",topicR:"chaegeun",ja:"本",amounts:[8000,12000,15000]},
-        {topic:"티셔츠는",topicR:"tisyeocheuneun",ja:"Tシャツ",amounts:[8000,12000,15000,30000]},
-        {topic:"빵은",topicR:"ppang-eun",ja:"パン",amounts:[1500,3000,4500]}
+        {topic:"커피는",topicR:"keopineun",ja:"コーヒー",zh:"咖啡",amounts:[1500,3000,4500,5000]},
+        {topic:"가방은",topicR:"gabang-eun",ja:"カバン",zh:"包",amounts:[15000,30000]},
+        {topic:"우산은",topicR:"usaneun",ja:"傘",zh:"雨伞",amounts:[3000,5000,8000,12000]},
+        {topic:"책은",topicR:"chaegeun",ja:"本",zh:"书",amounts:[8000,12000,15000]},
+        {topic:"티셔츠는",topicR:"tisyeocheuneun",ja:"Tシャツ",zh:"T恤",amounts:[8000,12000,15000,30000]},
+        {topic:"빵은",topicR:"ppang-eun",ja:"パン",zh:"面包",amounts:[1500,3000,4500]}
       ];
       const PRICES = [
         {n:1500,ko:"천오백",r:"cheonobaek"}, {n:3000,ko:"삼천",r:"samcheon"},
@@ -5266,16 +5266,18 @@
         const h = 1 + rnd(12), H = NATIVE[h], m = pick(MINS), M = MIN[m];
         const o = {
           ja: `今、${h}時${m}分です。`,
+          zh: `现在${h}点${m}分。`,
           ko: `지금 ${H.ko} 시 ${M.ko} 분이에요.`,
           roman: `jigeum ${H.r} si ${M.r} bun-ieyo.`,
           w: [
-            {ko:"지금",roman:"jigeum",ja:"今"},
-            {ko:H.ko,roman:H.r,ja:`${h}（固有数詞・冠形形）`},
-            {ko:"시",roman:"si",ja:"〜時"},
-            {ko:M.ko,roman:M.r,ja:`${m}（漢字数詞）`},
-            {ko:"분",roman:"bun",ja:"〜分"}
+            {ko:"지금",roman:"jigeum",ja:"今",zh:"现在"},
+            {ko:H.ko,roman:H.r,ja:`${h}（固有数詞・冠形形）`,zh:`${h}（固有数词·冠形形）`},
+            {ko:"시",roman:"si",ja:"〜時",zh:"~点（时刻）"},
+            {ko:M.ko,roman:M.r,ja:`${m}（漢字数詞）`,zh:`${m}（汉字数词）`},
+            {ko:"분",roman:"bun",ja:"〜分",zh:"~分"}
           ],
           g: `<strong>時刻は「時＝固有数詞＋시」「分＝漢字数詞＋분」の混合</strong>。時は <code>${H.ko} 시</code>（固有）、分は <code>${M.ko} 분</code>（漢字）。<br>固有数詞は「시」の前で <code>하나→한, 둘→두</code> のように形が変わる。`,
+          gz: `<strong>报时是「点＝固有数词＋시」「分＝汉字数词＋분」的混合</strong>。点用<code>${H.ko} 시</code>（固有数词），分用<code>${M.ko} 분</code>（汉字数词）。<br>固有数词在「시」前会变形：<code>하나→한, 둘→두</code>。`,
           alts: [`지금 ${H.ko} 시 ${M.ko} 분입니다.`]
         };
         if (m === 30) o.alts.push(`지금 ${H.ko} 시 반이에요.`);
@@ -5285,15 +5287,17 @@
         const A = pick(AGES);
         return {
           ja: `私は${A.n}歳です。`,
+          zh: `我${A.n}岁。`,
           ko: `저는 ${A.ko} 살이에요.`,
           roman: `jeoneun ${A.r} sal-ieyo.`,
           w: [
-            {ko:"저",roman:"jeo",ja:"私（謙譲）"},
-            {ko:"-는",roman:"-neun",ja:"主題助詞「は」"},
-            {ko:A.ko,roman:A.r,ja:`${A.n}（固有数詞・冠形形）`},
-            {ko:"살",roman:"sal",ja:"〜歳（助数詞）"}
+            {ko:"저",roman:"jeo",ja:"私（謙譲）",zh:"我（谦让）"},
+            {ko:"-는",roman:"-neun",ja:"主題助詞「は」",zh:"主题助词「是·～」"},
+            {ko:A.ko,roman:A.r,ja:`${A.n}（固有数詞・冠形形）`,zh:`${A.n}（固有数词·冠形形）`},
+            {ko:"살",roman:"sal",ja:"〜歳（助数詞）",zh:"~岁（量词）"}
           ],
           g: `<strong>年齢は固有数詞＋<code>살</code></strong>。「20」は単独だと <code>스물</code> だが助数詞の前では <code>스무 살</code> と形が変わる（한/두/세/네/스무）。`,
+          gz: `<strong>年龄用固有数词＋<code>살</code></strong>。「20」单独是<code>스물</code>，但在量词前变为<code>스무 살</code>（한/두/세/네/스무）。`,
           alts: [`저는 ${A.ko} 살입니다.`]
         };
       }
@@ -5301,17 +5305,19 @@
         const e = pick(EXIST), p = PLACE[pick(e.places)], c = 1 + rnd(5), C = NATIVE[c];
         return {
           ja: `${p.ja}に${e.ja}が${c}${e.cja}${e.v}。`,
+          zh: `${p.zh}里有${c}${e.czh}${e.zh}。`,
           ko: `${p.ko}에 ${e.subj} ${C.ko} ${e.cnt} 있어요.`,
           roman: `${p.re} ${e.subjR} ${C.r} ${e.cntR} isseoyo.`,
           w: [
-            {ko:p.ko,roman:p.r,ja:p.ja},
-            {ko:"-에",roman:"-e",ja:"〜に（場所・存在）"},
-            {ko:e.subj,roman:e.subjR,ja:`${e.ja}＋主格助詞`},
-            {ko:C.ko,roman:C.r,ja:`${c}（固有数詞・冠形形）`},
-            {ko:e.cnt,roman:e.cntR,ja:`${e.cja}（助数詞）`},
-            {ko:"있다",roman:"itda",ja:"ある／いる"}
+            {ko:p.ko,roman:p.r,ja:p.ja,zh:p.zh},
+            {ko:"-에",roman:"-e",ja:"〜に（場所・存在）",zh:"~在·里（场所·存在）"},
+            {ko:e.subj,roman:e.subjR,ja:`${e.ja}＋主格助詞`,zh:`${e.zh}＋主格助词`},
+            {ko:C.ko,roman:C.r,ja:`${c}（固有数詞・冠形形）`,zh:`${c}（固有数词·冠形形）`},
+            {ko:e.cnt,roman:e.cntR,ja:`${e.cja}（助数詞）`,zh:`${e.czh}（量词）`},
+            {ko:"있다",roman:"itda",ja:"ある／いる",zh:"有·在"}
           ],
           g: `<strong>存在文「場所-에 ＋ N-이/가 ＋ 数＋助数詞 ＋ 있어요」</strong>。助数詞は対象で使い分け：人 <code>명</code>、動物 <code>마리</code>、本 <code>권</code>、物 <code>개</code>、飲み物 <code>잔</code>。数は固有数詞の冠形形。`,
+          gz: `<strong>存在句「场所-에 ＋ N-이/가 ＋ 数＋量词 ＋ 있어요」</strong>。量词按对象区分：人 <code>명</code>、动物 <code>마리</code>、书 <code>권</code>、物 <code>개</code>、饮料 <code>잔</code>。数字用固有数词的冠形形。`,
           alts: [`${p.ko}에 ${e.subj} ${C.ko} ${e.cnt} 있습니다.`]
         };
       }
@@ -5319,15 +5325,17 @@
         const it = pick(PRICEITEMS), pr = pick(PRICES.filter(x => it.amounts.includes(x.n)));
         return {
           ja: `この${it.ja}は${comma(pr.n)}ウォンです。`,
+          zh: `这${it.zh}是${comma(pr.n)}韩元。`,
           ko: `이 ${it.topic} ${pr.ko} 원이에요.`,
           roman: `i ${it.topicR} ${pr.r} won-ieyo.`,
           w: [
-            {ko:"이",roman:"i",ja:"この"},
-            {ko:it.topic,roman:it.topicR,ja:`${it.ja}＋主題助詞`},
-            {ko:pr.ko,roman:pr.r,ja:`${comma(pr.n)}（漢字数詞）`},
-            {ko:"원",roman:"won",ja:"ウォン（通貨）"}
+            {ko:"이",roman:"i",ja:"この",zh:"这"},
+            {ko:it.topic,roman:it.topicR,ja:`${it.ja}＋主題助詞`,zh:`${it.zh}＋主题助词`},
+            {ko:pr.ko,roman:pr.r,ja:`${comma(pr.n)}（漢字数詞）`,zh:`${comma(pr.n)}（汉字数词）`},
+            {ko:"원",roman:"won",ja:"ウォン（通貨）",zh:"韩元（货币）"}
           ],
           g: `<strong>値段は漢字数詞＋<code>원</code></strong>。千＝<code>천</code>、万＝<code>만</code>（1万は <code>일만</code> ではなく <code>만</code>）。`,
+          gz: `<strong>价格用汉字数词＋<code>원</code></strong>。千＝<code>천</code>，万＝<code>만</code>（1万不是<code>일만</code>而是<code>만</code>）。`,
           alts: [`이 ${it.topic} ${pr.ko} 원입니다.`]
         };
       }
@@ -5335,16 +5343,18 @@
         const m = pick(MONTHS), d = pick(DAYS);
         return {
           ja: `今日は${m.n}月${d.n}日です。`,
+          zh: `今天是${m.n}月${d.n}日。`,
           ko: `오늘은 ${m.ko} ${d.ko} 일이에요.`,
           roman: `oneureun ${m.r} ${d.r} il-ieyo.`,
           w: [
-            {ko:"오늘",roman:"oneul",ja:"今日"},
-            {ko:"-은",roman:"-eun",ja:"主題助詞「は」"},
-            {ko:m.ko,roman:m.r,ja:`${m.n}月`},
-            {ko:d.ko,roman:d.r,ja:`${d.n}（漢字数詞）`},
-            {ko:"일",roman:"il",ja:"〜日"}
+            {ko:"오늘",roman:"oneul",ja:"今日",zh:"今天"},
+            {ko:"-은",roman:"-eun",ja:"主題助詞「は」",zh:"主题助词「是·～」"},
+            {ko:m.ko,roman:m.r,ja:`${m.n}月`,zh:`${m.n}月`},
+            {ko:d.ko,roman:d.r,ja:`${d.n}（漢字数詞）`,zh:`${d.n}（汉字数词）`},
+            {ko:"일",roman:"il",ja:"〜日",zh:"~日·号"}
           ],
           g: `<strong>日付は漢字数詞＋월（月）/일（日）</strong>。読みの例外：6月＝<code>유월</code>、10月＝<code>시월</code>（<code>육월/십월</code> とは言わない）。`,
+          gz: `<strong>日期用汉字数词＋월（月）/일（日）</strong>。读音例外：6月＝<code>유월</code>，10月＝<code>시월</code>（不说<code>육월/십월</code>）。`,
           alts: [`오늘은 ${m.ko} ${d.ko} 일입니다.`]
         };
       }
@@ -5352,76 +5362,80 @@
         const wd = pick(WEEKDAYS);
         return {
           ja: `今日は${wd.ja}です。`,
+          zh: `今天是${wd.zh}。`,
           ko: `오늘은 ${wd.ko}이에요.`,
           roman: `oneureun ${wd.r}-ieyo.`,
           w: [
-            {ko:"오늘",roman:"oneul",ja:"今日"},
-            {ko:"-은",roman:"-eun",ja:"主題助詞「は」"},
-            {ko:wd.ko,roman:wd.r,ja:wd.ja},
-            {ko:"-이에요",roman:"-ieyo",ja:"〜です（パッチム有）"}
+            {ko:"오늘",roman:"oneul",ja:"今日",zh:"今天"},
+            {ko:"-은",roman:"-eun",ja:"主題助詞「は」",zh:"主题助词「是·～」"},
+            {ko:wd.ko,roman:wd.r,ja:wd.ja,zh:wd.zh},
+            {ko:"-이에요",roman:"-ieyo",ja:"〜です（パッチム有）",zh:"~是（有收音）"}
           ],
           g: `<strong>曜日＝「漢字＋요일」</strong>：月<code>월</code>/火<code>화</code>/水<code>수</code>/木<code>목</code>/金<code>금</code>/土<code>토</code>/日<code>일</code>＋<code>요일</code>。パッチムで終わるので指定詞は <code>이에요</code>。`,
+          gz: `<strong>星期＝「汉字＋요일」</strong>：一<code>월</code>/二<code>화</code>/三<code>수</code>/四<code>목</code>/五<code>금</code>/六<code>토</code>/日<code>일</code>＋<code>요일</code>。以收音结尾，故指定词用<code>이에요</code>。`,
           alts: [`오늘은 ${wd.ko}입니다.`]
         };
       }
 
       // ====== #4「場所・移動・日常動作」用バンク（活用形は検証済みで事前格納）======
       const SPOT = {
-        jip:      {ko:"집",r:"jip",e:"jib-e",eseo:"jib-eseo",ja:"家"},
-        hakgyo:   {ko:"학교",r:"hakgyo",e:"hakgyo-e",eseo:"hakgyo-eseo",ja:"学校"},
-        hoesa:    {ko:"회사",r:"hoesa",e:"hoesa-e",eseo:"hoesa-eseo",ja:"会社"},
-        doseogwan:{ko:"도서관",r:"doseogwan",e:"doseogwan-e",eseo:"doseogwan-eseo",ja:"図書館"},
-        sikdang:  {ko:"식당",r:"sikdang",e:"sikdang-e",eseo:"sikdang-eseo",ja:"食堂"},
-        kape:     {ko:"카페",r:"kape",e:"kape-e",eseo:"kape-eseo",ja:"カフェ"},
-        gongwon:  {ko:"공원",r:"gongwon",e:"gongwon-e",eseo:"gongwon-eseo",ja:"公園"},
-        gyosil:   {ko:"교실",r:"gyosil",e:"gyosil-e",eseo:"gyosil-eseo",ja:"教室"},
-        samusil:  {ko:"사무실",r:"samusil",e:"samusil-e",eseo:"samusil-eseo",ja:"オフィス"}
+        jip:      {ko:"집",r:"jip",e:"jib-e",eseo:"jib-eseo",ja:"家",zh:"家"},
+        hakgyo:   {ko:"학교",r:"hakgyo",e:"hakgyo-e",eseo:"hakgyo-eseo",ja:"学校",zh:"学校"},
+        hoesa:    {ko:"회사",r:"hoesa",e:"hoesa-e",eseo:"hoesa-eseo",ja:"会社",zh:"公司"},
+        doseogwan:{ko:"도서관",r:"doseogwan",e:"doseogwan-e",eseo:"doseogwan-eseo",ja:"図書館",zh:"图书馆"},
+        sikdang:  {ko:"식당",r:"sikdang",e:"sikdang-e",eseo:"sikdang-eseo",ja:"食堂",zh:"餐厅"},
+        kape:     {ko:"카페",r:"kape",e:"kape-e",eseo:"kape-eseo",ja:"カフェ",zh:"咖啡店"},
+        gongwon:  {ko:"공원",r:"gongwon",e:"gongwon-e",eseo:"gongwon-eseo",ja:"公園",zh:"公园"},
+        gyosil:   {ko:"교실",r:"gyosil",e:"gyosil-e",eseo:"gyosil-eseo",ja:"教室",zh:"教室"},
+        samusil:  {ko:"사무실",r:"samusil",e:"samusil-e",eseo:"samusil-eseo",ja:"オフィス",zh:"办公室"}
       };
       const MOVE = [
-        {ko:"가요",r:"gayo",dict:"가다",ja:"行きます",spots:Object.keys(SPOT)},
-        {ko:"와요",r:"wayo",dict:"오다",ja:"来ます",spots:Object.keys(SPOT)},
-        {ko:"다녀요",r:"danyeoyo",dict:"다니다",ja:"通っています",spots:["hakgyo","hoesa"]}
+        {ko:"가요",r:"gayo",dict:"가다",ja:"行きます",zh:"去",zhV:"去",spots:Object.keys(SPOT)},
+        {ko:"와요",r:"wayo",dict:"오다",ja:"来ます",zh:"来",zhV:"来",spots:Object.keys(SPOT)},
+        {ko:"다녀요",r:"danyeoyo",dict:"다니다",ja:"通っています",zh:"经常去·上（学/班）",zhV:"经常去",spots:["hakgyo","hoesa"]}
       ];
       const ACT = [
-        {ph:"밥을 먹어요",   phR:"bab-eul meogeoyo",   reo:"밥을 먹으러",   reoR:"bab-eul meogeureo",  ja:"ご飯を食べます",     jp:"ご飯を食べ",     spots:["sikdang","jip","kape"]},
-        {ph:"공부해요",      phR:"gongbuhaeyo",         reo:"공부하러",      reoR:"gongbuhareo",        ja:"勉強します",         jp:"勉強し",         spots:["doseogwan","gyosil","kape","jip"]},
-        {ph:"일해요",        phR:"ilhaeyo",             reo:"일하러",        reoR:"ilhareo",            ja:"働きます",           jp:"働き",           spots:["hoesa","samusil","jip"]},
-        {ph:"쉬어요",        phR:"swieoyo",             reo:"쉬러",          reoR:"swireo",             ja:"休みます",           jp:"休み",           spots:["jip","gongwon","kape"]},
-        {ph:"운동해요",      phR:"undonghaeyo",         reo:"운동하러",      reoR:"undonghareo",        ja:"運動します",         jp:"運動し",         spots:["gongwon","jip"]},
-        {ph:"책을 읽어요",   phR:"chaeg-eul ilgeoyo",   reo:"책을 읽으러",   reoR:"chaeg-eul ilgeureo", ja:"本を読みます",       jp:"本を読み",       spots:["doseogwan","kape","jip"]},
-        {ph:"커피를 마셔요", phR:"keopireul masyeoyo",  reo:"커피를 마시러", reoR:"keopireul masireo",  ja:"コーヒーを飲みます", jp:"コーヒーを飲み", spots:["kape","samusil"]},
-        {ph:"친구를 만나요", phR:"chingureul mannayo",  reo:"친구를 만나러", reoR:"chingureul mannareo",ja:"友達に会います",     jp:"友達に会い",     spots:["kape","gongwon","hakgyo"]}
+        {ph:"밥을 먹어요",   phR:"bab-eul meogeoyo",   reo:"밥을 먹으러",   reoR:"bab-eul meogeureo",  ja:"ご飯を食べます",     jp:"ご飯を食べ",     zh:"吃饭",         spots:["sikdang","jip","kape"]},
+        {ph:"공부해요",      phR:"gongbuhaeyo",         reo:"공부하러",      reoR:"gongbuhareo",        ja:"勉強します",         jp:"勉強し",         zh:"学习",         spots:["doseogwan","gyosil","kape","jip"]},
+        {ph:"일해요",        phR:"ilhaeyo",             reo:"일하러",        reoR:"ilhareo",            ja:"働きます",           jp:"働き",           zh:"工作",         spots:["hoesa","samusil","jip"]},
+        {ph:"쉬어요",        phR:"swieoyo",             reo:"쉬러",          reoR:"swireo",             ja:"休みます",           jp:"休み",           zh:"休息",         spots:["jip","gongwon","kape"]},
+        {ph:"운동해요",      phR:"undonghaeyo",         reo:"운동하러",      reoR:"undonghareo",        ja:"運動します",         jp:"運動し",         zh:"运动",         spots:["gongwon","jip"]},
+        {ph:"책을 읽어요",   phR:"chaeg-eul ilgeoyo",   reo:"책을 읽으러",   reoR:"chaeg-eul ilgeureo", ja:"本を読みます",       jp:"本を読み",       zh:"看书",         spots:["doseogwan","kape","jip"]},
+        {ph:"커피를 마셔요", phR:"keopireul masyeoyo",  reo:"커피를 마시러", reoR:"keopireul masireo",  ja:"コーヒーを飲みます", jp:"コーヒーを飲み", zh:"喝咖啡",       spots:["kape","samusil"]},
+        {ph:"친구를 만나요", phR:"chingureul mannayo",  reo:"친구를 만나러", reoR:"chingureul mannareo",ja:"友達に会います",     jp:"友達に会い",     zh:"见朋友",       spots:["kape","gongwon","hakgyo"]}
       ];
       const OBJ = [
-        {subj:"책이",subjR:"chaeg-i",ja:"本",v:"あります"},
-        {subj:"가방이",subjR:"gabang-i",ja:"カバン",v:"あります"},
-        {subj:"고양이가",subjR:"goyangiga",ja:"猫",v:"います"},
-        {subj:"시계가",subjR:"sigyega",ja:"時計",v:"あります"},
-        {subj:"컵이",subjR:"keob-i",ja:"コップ",v:"あります"},
-        {subj:"안경이",subjR:"an-gyeong-i",ja:"メガネ",v:"あります"}
+        {subj:"책이",subjR:"chaeg-i",ja:"本",zh:"书",v:"あります"},
+        {subj:"가방이",subjR:"gabang-i",ja:"カバン",zh:"包",v:"あります"},
+        {subj:"고양이가",subjR:"goyangiga",ja:"猫",zh:"猫",v:"います"},
+        {subj:"시계가",subjR:"sigyega",ja:"時計",zh:"钟表",v:"あります"},
+        {subj:"컵이",subjR:"keob-i",ja:"コップ",zh:"杯子",v:"あります"},
+        {subj:"안경이",subjR:"an-gyeong-i",ja:"メガネ",zh:"眼镜",v:"あります"}
       ];
       const REF = [
-        {ko:"책상",r:"chaeksang",ja:"机",box:false}, {ko:"의자",r:"uija",ja:"椅子",box:false},
-        {ko:"침대",r:"chimdae",ja:"ベッド",box:false}, {ko:"상자",r:"sangja",ja:"箱",box:true},
-        {ko:"가방",r:"gabang",ja:"カバン",box:true}
+        {ko:"책상",r:"chaeksang",ja:"机",zh:"桌子",box:false}, {ko:"의자",r:"uija",ja:"椅子",zh:"椅子",box:false},
+        {ko:"침대",r:"chimdae",ja:"ベッド",zh:"床",box:false}, {ko:"상자",r:"sangja",ja:"箱",zh:"箱子",box:true},
+        {ko:"가방",r:"gabang",ja:"カバン",zh:"包",box:true}
       ];
       const POS = [
-        {ko:"위",r:"wi",ja:"上"}, {ko:"아래",r:"arae",ja:"下"}, {ko:"앞",r:"ap",ja:"前"},
-        {ko:"뒤",r:"dwi",ja:"後ろ"}, {ko:"옆",r:"yeop",ja:"横"}, {ko:"안",r:"an",ja:"中"}
+        {ko:"위",r:"wi",ja:"上",zh:"上面"}, {ko:"아래",r:"arae",ja:"下",zh:"下面"}, {ko:"앞",r:"ap",ja:"前",zh:"前面"},
+        {ko:"뒤",r:"dwi",ja:"後ろ",zh:"后面"}, {ko:"옆",r:"yeop",ja:"横",zh:"旁边"}, {ko:"안",r:"an",ja:"中",zh:"里面"}
       ];
 
       function fMove() {
         const m = pick(MOVE), p = SPOT[pick(m.spots)];
         return {
           ja: `${p.ja}に${m.ja}。`,
+          zh: `${m.zhV}${p.zh}。`,
           ko: `${p.ko}에 ${m.ko}.`,
           roman: `${p.e} ${m.r}.`,
           w: [
-            {ko:p.ko,roman:p.r,ja:p.ja},
-            {ko:"-에",roman:"-e",ja:"〜に（到達点）"},
-            {ko:m.dict,roman:m.r.replace(/yo$/,""),ja:m.ja}
+            {ko:p.ko,roman:p.r,ja:p.ja,zh:p.zh},
+            {ko:"-에",roman:"-e",ja:"〜に（到達点）",zh:"~到（目的地）"},
+            {ko:m.dict,roman:m.r.replace(/yo$/,""),ja:m.ja,zh:m.zh}
           ],
           g: `<strong>移動の助詞 <code>-에</code></strong>：가다/오다/다니다 などの移動動詞は到達点に <code>-에</code> を取る（<code>${p.ko}에 ${m.ko}</code>）。動作の場所 <code>-에서</code> とは区別する。`,
+          gz: `<strong>移动助词 <code>-에</code></strong>：가다/오다/다니다 等移动动词的目的地用<code>-에</code>（<code>${p.ko}에 ${m.ko}</code>）。与表示动作场所的<code>-에서</code>区分。`,
           alts: []
         };
       }
@@ -5429,14 +5443,16 @@
         const a = pick(ACT), p = SPOT[pick(a.spots)];
         return {
           ja: `${p.ja}で${a.ja}。`,
+          zh: `在${p.zh}${a.zh}。`,
           ko: `${p.ko}에서 ${a.ph}.`,
           roman: `${p.eseo} ${a.phR}.`,
           w: [
-            {ko:p.ko,roman:p.r,ja:p.ja},
-            {ko:"-에서",roman:"-eseo",ja:"〜で（動作の場所）"},
-            {ko:a.ph,roman:a.phR,ja:a.ja}
+            {ko:p.ko,roman:p.r,ja:p.ja,zh:p.zh},
+            {ko:"-에서",roman:"-eseo",ja:"〜で（動作の場所）",zh:"~在（动作场所）"},
+            {ko:a.ph,roman:a.phR,ja:a.ja,zh:a.zh}
           ],
           g: `<strong>動作の場所 <code>-에서</code></strong>：「〜で（動作する）」。存在・到達の <code>-에</code> と使い分ける（<code>${p.ko}에서 ${a.ph}</code> ／ <code>${p.ko}에 가요</code>）。`,
+          gz: `<strong>动作场所 <code>-에서</code></strong>：「在〜（做某事）」。与表存在·目的地的<code>-에</code>区分使用（<code>${p.ko}에서 ${a.ph}</code> ／ <code>${p.ko}에 가요</code>）。`,
           alts: []
         };
       }
@@ -5444,15 +5460,17 @@
         const a = pick(ACT), p = SPOT[pick(a.spots)];
         return {
           ja: `${p.ja}へ${a.jp}に行きます。`,
+          zh: `去${p.zh}${a.zh}。`,
           ko: `${p.ko}에 ${a.reo} 가요.`,
           roman: `${p.e} ${a.reoR} gayo.`,
           w: [
-            {ko:p.ko,roman:p.r,ja:p.ja},
-            {ko:"-에",roman:"-e",ja:"〜に（到達点）"},
-            {ko:a.reo,roman:a.reoR,ja:`${a.jp}に（目的）`},
-            {ko:"가요",roman:"gayo",ja:"行きます"}
+            {ko:p.ko,roman:p.r,ja:p.ja,zh:p.zh},
+            {ko:"-에",roman:"-e",ja:"〜に（到達点）",zh:"~到（目的地）"},
+            {ko:a.reo,roman:a.reoR,ja:`${a.jp}に（目的）`,zh:`${a.zh}（目的）`},
+            {ko:"가요",roman:"gayo",ja:"行きます",zh:"去"}
           ],
           g: `<strong>目的の <code>-(으)러 가다/오다</code></strong>：「〜しに行く」。母音・ㄹ語幹は <code>-러</code>、子音語幹は <code>-으러</code>（<code>먹다→먹으러</code>、<code>공부하다→공부하러</code>）。`,
+          gz: `<strong>目的的 <code>-(으)러 가다/오다</code></strong>：「去做〜」。元音·ㄹ词干用<code>-러</code>，辅音词干用<code>-으러</code>（<code>먹다→먹으러</code>，<code>공부하다→공부하러</code>）。`,
           alts: [`${p.ko}에 ${a.reo} 갑니다.`]
         };
       }
@@ -5461,16 +5479,18 @@
         const ref = pick(REF.filter(r => r.ja !== o.ja && (pos.ko !== "안" || r.box)));
         return {
           ja: `${o.ja}が${ref.ja}の${pos.ja}に${o.v}。`,
+          zh: `${o.zh}在${ref.zh}${pos.zh}。`,
           ko: `${o.subj} ${ref.ko} ${pos.ko}에 있어요.`,
           roman: `${o.subjR} ${ref.r} ${pos.r}-e isseoyo.`,
           w: [
-            {ko:o.subj,roman:o.subjR,ja:`${o.ja}＋主格助詞`},
-            {ko:ref.ko,roman:ref.r,ja:ref.ja},
-            {ko:pos.ko,roman:pos.r,ja:pos.ja},
-            {ko:"-에",roman:"-e",ja:"〜に（位置）"},
-            {ko:"있다",roman:"itda",ja:"ある／いる"}
+            {ko:o.subj,roman:o.subjR,ja:`${o.ja}＋主格助詞`,zh:`${o.zh}＋主格助词`},
+            {ko:ref.ko,roman:ref.r,ja:ref.ja,zh:ref.zh},
+            {ko:pos.ko,roman:pos.r,ja:pos.ja,zh:pos.zh},
+            {ko:"-에",roman:"-e",ja:"〜に（位置）",zh:"~在（位置）"},
+            {ko:"있다",roman:"itda",ja:"ある／いる",zh:"在·有"}
           ],
           g: `<strong>位置名詞＋<code>-에</code></strong>：<code>위/아래/앞/뒤/옆/안</code>。「N1이/가 N2 ${pos.ko}에 있어요」で「N1がN2の${pos.ja}にある／いる」。`,
+          gz: `<strong>方位名词＋<code>-에</code></strong>：<code>위/아래/앞/뒤/옆/안</code>。「N1이/가 N2 ${pos.ko}에 있어요」表示「N1在N2的${pos.zh}」。`,
           alts: [`${o.subj} ${ref.ko} ${pos.ko}에 있습니다.`]
         };
       }
