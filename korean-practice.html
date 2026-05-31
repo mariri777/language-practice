@@ -5767,286 +5767,311 @@
 
       // ====== #7「過去と進行」用バンク（過去形・진행形は検証済みで事前格納）======
       const TADV = [
-        {ko:"어제",r:"eoje",ja:"昨日"},
-        {ko:"아까",r:"akka",ja:"さっき"},
-        {ko:"오늘 아침",r:"oneul achim",ja:"今朝"},
-        {ko:"주말에",r:"jumal-e",ja:"週末に"},
-        {ko:"그저께",r:"geujeokke",ja:"おととい"}
+        {ko:"어제",r:"eoje",ja:"昨日",zh:"昨天"},
+        {ko:"아까",r:"akka",ja:"さっき",zh:"刚才"},
+        {ko:"오늘 아침",r:"oneul achim",ja:"今朝",zh:"今天早上"},
+        {ko:"주말에",r:"jumal-e",ja:"週末に",zh:"周末"},
+        {ko:"그저께",r:"geujeokke",ja:"おととい",zh:"前天"}
       ];
       // 動詞の過去형・否定過去（全形を検証済みで格納。end は表示用の語尾ラベル）
       const PASTV = [
-        {pre:"가게에",preR:"gage-e",dict:"가다",dictR:"gada",baseJa:"行く",end:"-았어요",endR:"-asseoyo",past:"갔어요",pastR:"gasseoyo",neg:"안 갔어요",negR:"an gasseoyo",ja:"お店に行きました",negJa:"お店に行きませんでした",rule:"가다→갔어요",w:[{ko:"가게",roman:"gage",ja:"店"},{ko:"-에",roman:"-e",ja:"〜に"}]},
-        {pre:"밥을",preR:"bab-eul",dict:"먹다",dictR:"meokda",baseJa:"食べる",end:"-었어요",endR:"-eosseoyo",past:"먹었어요",pastR:"meogeosseoyo",neg:"안 먹었어요",negR:"an meogeosseoyo",ja:"ご飯を食べました",negJa:"ご飯を食べませんでした",rule:"먹다→먹었어요",w:[{ko:"밥",roman:"bap",ja:"ご飯"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {pre:"커피를",preR:"keopireul",dict:"마시다",dictR:"masida",baseJa:"飲む",end:"-었어요",endR:"-eosseoyo",past:"마셨어요",pastR:"masyeosseoyo",neg:"안 마셨어요",negR:"an masyeosseoyo",ja:"コーヒーを飲みました",negJa:"コーヒーを飲みませんでした",rule:"마시다→마셨어요",w:[{ko:"커피",roman:"keopi",ja:"コーヒー"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {pre:"친구를",preR:"chingureul",dict:"만나다",dictR:"mannada",baseJa:"会う",end:"-았어요",endR:"-asseoyo",past:"만났어요",pastR:"mannasseoyo",neg:"안 만났어요",negR:"an mannasseoyo",ja:"友達に会いました",negJa:"友達に会いませんでした",rule:"만나다→만났어요",w:[{ko:"친구",roman:"chingu",ja:"友達"},{ko:"-를",roman:"-reul",ja:"〜に（会う対象）"}]},
-        {pre:"영화를",preR:"yeonghwareul",dict:"보다",dictR:"boda",baseJa:"見る",end:"-았어요",endR:"-asseoyo",past:"봤어요",pastR:"bwasseoyo",neg:"안 봤어요",negR:"an bwasseoyo",ja:"映画を見ました",negJa:"映画を見ませんでした",rule:"보다→봤어요",w:[{ko:"영화",roman:"yeonghwa",ja:"映画"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {pre:"책을",preR:"chaeg-eul",dict:"읽다",dictR:"ikda",baseJa:"読む",end:"-었어요",endR:"-eosseoyo",past:"읽었어요",pastR:"ilgeosseoyo",neg:"안 읽었어요",negR:"an ilgeosseoyo",ja:"本を読みました",negJa:"本を読みませんでした",rule:"읽다→읽었어요",w:[{ko:"책",roman:"chaek",ja:"本"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {pre:"음악을",preR:"eumag-eul",dict:"듣다",dictR:"deutda",baseJa:"聞く",end:"-었어요",endR:"-eosseoyo",past:"들었어요",pastR:"deureosseoyo",neg:"안 들었어요",negR:"an deureosseoyo",ja:"音楽を聞きました",negJa:"音楽を聞きませんでした",rule:"듣다→들었어요（ㄷ変則）",w:[{ko:"음악",roman:"eumak",ja:"音楽"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {pre:"편지를",preR:"pyeonjireul",dict:"쓰다",dictR:"sseuda",baseJa:"書く",end:"-었어요",endR:"-eosseoyo",past:"썼어요",pastR:"sseosseoyo",neg:"안 썼어요",negR:"an sseosseoyo",ja:"手紙を書きました",negJa:"手紙を書きませんでした",rule:"쓰다→썼어요（으脱落）",w:[{ko:"편지",roman:"pyeonji",ja:"手紙"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {pre:"운동을",preR:"undong-eul",dict:"하다",dictR:"hada",baseJa:"する",end:"-였어요→했어요",endR:"-yeosseoyo",past:"했어요",pastR:"haesseoyo",neg:"안 했어요",negR:"an haesseoyo",ja:"運動をしました",negJa:"運動をしませんでした",rule:"하다→했어요",w:[{ko:"운동",roman:"undong",ja:"運動"},{ko:"-을",roman:"-eul",ja:"〜を"}]}
+        {pre:"가게에",preR:"gage-e",dict:"가다",dictR:"gada",baseJa:"行く",baseZh:"去",end:"-았어요",endR:"-asseoyo",past:"갔어요",pastR:"gasseoyo",neg:"안 갔어요",negR:"an gasseoyo",ja:"お店に行きました",negJa:"お店に行きませんでした",zh:"去了店里",negZh:"没去店里",rule:"가다→갔어요",w:[{ko:"가게",roman:"gage",ja:"店",zh:"店"},{ko:"-에",roman:"-e",ja:"〜に",zh:"~到"}]},
+        {pre:"밥을",preR:"bab-eul",dict:"먹다",dictR:"meokda",baseJa:"食べる",baseZh:"吃",end:"-었어요",endR:"-eosseoyo",past:"먹었어요",pastR:"meogeosseoyo",neg:"안 먹었어요",negR:"an meogeosseoyo",ja:"ご飯を食べました",negJa:"ご飯を食べませんでした",zh:"吃了饭",negZh:"没吃饭",rule:"먹다→먹었어요",w:[{ko:"밥",roman:"bap",ja:"ご飯",zh:"饭"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"커피를",preR:"keopireul",dict:"마시다",dictR:"masida",baseJa:"飲む",baseZh:"喝",end:"-었어요",endR:"-eosseoyo",past:"마셨어요",pastR:"masyeosseoyo",neg:"안 마셨어요",negR:"an masyeosseoyo",ja:"コーヒーを飲みました",negJa:"コーヒーを飲みませんでした",zh:"喝了咖啡",negZh:"没喝咖啡",rule:"마시다→마셨어요",w:[{ko:"커피",roman:"keopi",ja:"コーヒー",zh:"咖啡"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"친구를",preR:"chingureul",dict:"만나다",dictR:"mannada",baseJa:"会う",baseZh:"见",end:"-았어요",endR:"-asseoyo",past:"만났어요",pastR:"mannasseoyo",neg:"안 만났어요",negR:"an mannasseoyo",ja:"友達に会いました",negJa:"友達に会いませんでした",zh:"见了朋友",negZh:"没见朋友",rule:"만나다→만났어요",w:[{ko:"친구",roman:"chingu",ja:"友達",zh:"朋友"},{ko:"-를",roman:"-reul",ja:"〜に（会う対象）",zh:"~（见的对象）"}]},
+        {pre:"영화를",preR:"yeonghwareul",dict:"보다",dictR:"boda",baseJa:"見る",baseZh:"看",end:"-았어요",endR:"-asseoyo",past:"봤어요",pastR:"bwasseoyo",neg:"안 봤어요",negR:"an bwasseoyo",ja:"映画を見ました",negJa:"映画を見ませんでした",zh:"看了电影",negZh:"没看电影",rule:"보다→봤어요",w:[{ko:"영화",roman:"yeonghwa",ja:"映画",zh:"电影"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"책을",preR:"chaeg-eul",dict:"읽다",dictR:"ikda",baseJa:"読む",baseZh:"读",end:"-었어요",endR:"-eosseoyo",past:"읽었어요",pastR:"ilgeosseoyo",neg:"안 읽었어요",negR:"an ilgeosseoyo",ja:"本を読みました",negJa:"本を読みませんでした",zh:"读了书",negZh:"没读书",rule:"읽다→읽었어요",w:[{ko:"책",roman:"chaek",ja:"本",zh:"书"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"음악을",preR:"eumag-eul",dict:"듣다",dictR:"deutda",baseJa:"聞く",baseZh:"听",end:"-었어요",endR:"-eosseoyo",past:"들었어요",pastR:"deureosseoyo",neg:"안 들었어요",negR:"an deureosseoyo",ja:"音楽を聞きました",negJa:"音楽を聞きませんでした",zh:"听了音乐",negZh:"没听音乐",rule:"듣다→들었어요（ㄷ変則）",w:[{ko:"음악",roman:"eumak",ja:"音楽",zh:"音乐"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"편지를",preR:"pyeonjireul",dict:"쓰다",dictR:"sseuda",baseJa:"書く",baseZh:"写",end:"-었어요",endR:"-eosseoyo",past:"썼어요",pastR:"sseosseoyo",neg:"안 썼어요",negR:"an sseosseoyo",ja:"手紙を書きました",negJa:"手紙を書きませんでした",zh:"写了信",negZh:"没写信",rule:"쓰다→썼어요（으脱落）",w:[{ko:"편지",roman:"pyeonji",ja:"手紙",zh:"信"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"운동을",preR:"undong-eul",dict:"하다",dictR:"hada",baseJa:"する",baseZh:"做",end:"-였어요→했어요",endR:"-yeosseoyo",past:"했어요",pastR:"haesseoyo",neg:"안 했어요",negR:"an haesseoyo",ja:"運動をしました",negJa:"運動をしませんでした",zh:"做了运动",negZh:"没做运动",rule:"하다→했어요",w:[{ko:"운동",roman:"undong",ja:"運動",zh:"运动"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]}
       ];
       function fPast() {
         const adv = pick(TADV), v = pick(PASTV);
         return {
           ja: `${adv.ja}${v.ja}。`,
+          zh: `${adv.zh}${v.zh}。`,
           ko: `${adv.ko} ${v.pre} ${v.past}.`,
           roman: `${adv.r} ${v.preR} ${v.pastR}.`,
           w: [
-            {ko:adv.ko,roman:adv.r,ja:adv.ja},
+            {ko:adv.ko,roman:adv.r,ja:adv.ja,zh:adv.zh},
             ...v.w,
-            {ko:v.dict,roman:v.dictR,ja:v.baseJa},
-            {ko:v.end,roman:v.endR,ja:"過去・해요体"}
+            {ko:v.dict,roman:v.dictR,ja:v.baseJa,zh:v.baseZh},
+            {ko:v.end,roman:v.endR,ja:"過去・해요体",zh:"过去·해요体"}
           ],
           g: `<strong>過去形 <code>-았/었/였어요</code></strong>：陽母音(ㅏ/ㅗ)→<code>았</code>、陰母音→<code>었</code>、하다→<code>했</code>。${v.rule}。`,
+          gz: `<strong>过去形 <code>-았/었/였어요</code></strong>：阳元音(ㅏ/ㅗ)→<code>았</code>，阴元音→<code>었</code>，하다→<code>했</code>。${v.rule}。`,
           alts: [`${adv.ko} ${v.pre} ${v.past.replace(/어요$/, "습니다")}.`]
         };
       }
       const NEG_ADV = [
-        {ko:"어제",r:"eoje",ja:"昨日は"}, {ko:"그저께",r:"geujeokke",ja:"おとといは"}, {ko:"주말에",r:"jumal-e",ja:"週末は"}
+        {ko:"어제",r:"eoje",ja:"昨日は",zh:"昨天"}, {ko:"그저께",r:"geujeokke",ja:"おとといは",zh:"前天"}, {ko:"주말에",r:"jumal-e",ja:"週末は",zh:"周末"}
       ];
       function fPastNeg() {
         const adv = pick(NEG_ADV), v = pick(PASTV);
         return {
           ja: `${adv.ja}${v.negJa}。`,
+          zh: `${adv.zh}${v.negZh}。`,
           ko: `${adv.ko} ${v.pre} ${v.neg}.`,
           roman: `${adv.r} ${v.preR} ${v.negR}.`,
           w: [
-            {ko:adv.ko,roman:adv.r,ja:adv.ja.replace("は","")},
+            {ko:adv.ko,roman:adv.r,ja:adv.ja.replace("は",""),zh:adv.zh},
             ...v.w,
-            {ko:"안",roman:"an",ja:"〜しない（否定）"},
-            {ko:v.past,roman:v.pastR,ja:`${v.baseJa}・過去`}
+            {ko:"안",roman:"an",ja:"〜しない（否定）",zh:"~不·没（否定）"},
+            {ko:v.past,roman:v.pastR,ja:`${v.baseJa}・過去`,zh:`${v.baseZh}·过去`}
           ],
           g: `<strong>過去の否定</strong>は<code>안</code>を動詞の前に置き、動詞を過去形にする。하다動詞は「名詞＋안 했어요」と分ける（<code>운동을 안 했어요</code>）。能力的にできなかった時は<code>못</code>。`,
+          gz: `<strong>过去否定</strong>是把<code>안</code>放在动词前，并把动词变过去形。하다动词分写为「名词＋안 했어요」（<code>운동을 안 했어요</code>）。能力上做不到时用<code>못</code>。`,
           alts: [`${adv.ko} ${v.pre} ${v.neg.replace(/어요$/, "습니다")}.`, `${adv.ko} ${v.pre} ${v.dict.replace(/다$/, "")}지 않았어요.`]
         };
       }
       const PSUBJ = [
-        {topic:"저는",topicR:"jeoneun",ja:"私"}, {topic:"그는",topicR:"geuneun",ja:"彼"},
-        {topic:"언니는",topicR:"eonnineun",ja:"姉"}, {topic:"동생은",topicR:"dongsaeng-eun",ja:"弟（妹）"}
+        {topic:"저는",topicR:"jeoneun",ja:"私",zh:"我"}, {topic:"그는",topicR:"geuneun",ja:"彼",zh:"他"},
+        {topic:"언니는",topicR:"eonnineun",ja:"姉",zh:"姐姐"}, {topic:"동생은",topicR:"dongsaeng-eun",ja:"弟（妹）",zh:"弟弟·妹妹"}
       ];
       const PROGV = [
-        {pre:"",preR:"",go:"전화하고",goR:"jeonhwahago",dict:"전화하다",dictR:"jeonhwahada",baseJa:"電話する",ja:"電話しています",w:[]},
-        {pre:"밥을",preR:"bab-eul",go:"먹고",goR:"meokgo",dict:"먹다",dictR:"meokda",baseJa:"食べる",ja:"ご飯を食べています",w:[{ko:"밥",roman:"bap",ja:"ご飯"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {pre:"커피를",preR:"keopireul",go:"마시고",goR:"masigo",dict:"마시다",dictR:"masida",baseJa:"飲む",ja:"コーヒーを飲んでいます",w:[{ko:"커피",roman:"keopi",ja:"コーヒー"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {pre:"영화를",preR:"yeonghwareul",go:"보고",goR:"bogo",dict:"보다",dictR:"boda",baseJa:"見る",ja:"映画を見ています",w:[{ko:"영화",roman:"yeonghwa",ja:"映画"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {pre:"음악을",preR:"eumag-eul",go:"듣고",goR:"deutgo",dict:"듣다",dictR:"deutda",baseJa:"聞く",ja:"音楽を聞いています",w:[{ko:"음악",roman:"eumak",ja:"音楽"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {pre:"한국어를",preR:"hangugeoreul",go:"공부하고",goR:"gongbuhago",dict:"공부하다",dictR:"gongbuhada",baseJa:"勉強する",ja:"韓国語を勉強しています",w:[{ko:"한국어",roman:"hangugeo",ja:"韓国語"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {pre:"편지를",preR:"pyeonjireul",go:"쓰고",goR:"sseugo",dict:"쓰다",dictR:"sseuda",baseJa:"書く",ja:"手紙を書いています",w:[{ko:"편지",roman:"pyeonji",ja:"手紙"},{ko:"-를",roman:"-reul",ja:"〜を"}]}
+        {pre:"",preR:"",go:"전화하고",goR:"jeonhwahago",dict:"전화하다",dictR:"jeonhwahada",baseJa:"電話する",baseZh:"打电话",ja:"電話しています",zh:"在打电话",w:[]},
+        {pre:"밥을",preR:"bab-eul",go:"먹고",goR:"meokgo",dict:"먹다",dictR:"meokda",baseJa:"食べる",baseZh:"吃",ja:"ご飯を食べています",zh:"在吃饭",w:[{ko:"밥",roman:"bap",ja:"ご飯",zh:"饭"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"커피를",preR:"keopireul",go:"마시고",goR:"masigo",dict:"마시다",dictR:"masida",baseJa:"飲む",baseZh:"喝",ja:"コーヒーを飲んでいます",zh:"在喝咖啡",w:[{ko:"커피",roman:"keopi",ja:"コーヒー",zh:"咖啡"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"영화를",preR:"yeonghwareul",go:"보고",goR:"bogo",dict:"보다",dictR:"boda",baseJa:"見る",baseZh:"看",ja:"映画を見ています",zh:"在看电影",w:[{ko:"영화",roman:"yeonghwa",ja:"映画",zh:"电影"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"음악을",preR:"eumag-eul",go:"듣고",goR:"deutgo",dict:"듣다",dictR:"deutda",baseJa:"聞く",baseZh:"听",ja:"音楽を聞いています",zh:"在听音乐",w:[{ko:"음악",roman:"eumak",ja:"音楽",zh:"音乐"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"한국어를",preR:"hangugeoreul",go:"공부하고",goR:"gongbuhago",dict:"공부하다",dictR:"gongbuhada",baseJa:"勉強する",baseZh:"学习",ja:"韓国語を勉強しています",zh:"在学习韩语",w:[{ko:"한국어",roman:"hangugeo",ja:"韓国語",zh:"韩语"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"편지를",preR:"pyeonjireul",go:"쓰고",goR:"sseugo",dict:"쓰다",dictR:"sseuda",baseJa:"書く",baseZh:"写",ja:"手紙を書いています",zh:"在写信",w:[{ko:"편지",roman:"pyeonji",ja:"手紙",zh:"信"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]}
       ];
       function fProgressive() {
         const s = pick(PSUBJ), v = pick(PROGV);
         const mid = v.pre ? v.pre + " " : "", midR = v.preR ? v.preR + " " : "";
         return {
           ja: `${s.ja}は今${v.ja}。`,
+          zh: `${s.zh}现在${v.zh}。`,
           ko: `${s.topic} 지금 ${mid}${v.go} 있어요.`,
           roman: `${s.topicR} jigeum ${midR}${v.goR} isseoyo.`,
           w: [
-            {ko:s.topic,roman:s.topicR,ja:`${s.ja}＋助詞`},
-            {ko:"지금",roman:"jigeum",ja:"今"},
+            {ko:s.topic,roman:s.topicR,ja:`${s.ja}＋助詞`,zh:`${s.zh}＋助词`},
+            {ko:"지금",roman:"jigeum",ja:"今",zh:"现在"},
             ...v.w,
-            {ko:v.dict,roman:v.dictR,ja:v.baseJa},
-            {ko:"-고 있다",roman:"-go itda",ja:"〜している（進行）"}
+            {ko:v.dict,roman:v.dictR,ja:v.baseJa,zh:v.baseZh},
+            {ko:"-고 있다",roman:"-go itda",ja:"〜している（進行）",zh:"~正在（进行）"}
           ],
           g: `<strong>「V-고 있다」</strong>＝進行「〜している」。動詞の語幹に<code>-고 있다</code>を付ける（変則なし）。尊敬形は<code>-고 계시다</code>、합쇼体は<code>-고 있습니다</code>。`,
+          gz: `<strong>「V-고 있다」</strong>＝进行「正在〜」。在动词词干加<code>-고 있다</code>（无变则）。尊敬形是<code>-고 계시다</code>，합쇼体是<code>-고 있습니다</code>。`,
           alts: [`${s.topic} 지금 ${mid}${v.go} 있습니다.`]
         };
       }
       const JUNGV = [
-        {pre:"밥을",preR:"bab-eul",jung:"만드는",jungR:"mandeuneun",go:"만들고",dict:"만들다",dictR:"mandeulda",baseJa:"作る",jaCont:"ご飯を作っている",rule:"<code>만들다</code>はㄹ語幹で<code>-는</code>の前でㄹが脱落し<code>만드는</code>",w:[{ko:"밥",roman:"bap",ja:"ご飯"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {pre:"영화를",preR:"yeonghwareul",jung:"보는",jungR:"boneun",go:"보고",dict:"보다",dictR:"boda",baseJa:"見る",jaCont:"映画を見ている",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",w:[{ko:"영화",roman:"yeonghwa",ja:"映画"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {pre:"편지를",preR:"pyeonjireul",jung:"쓰는",jungR:"sseuneun",go:"쓰고",dict:"쓰다",dictR:"sseuda",baseJa:"書く",jaCont:"手紙を書いている",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",w:[{ko:"편지",roman:"pyeonji",ja:"手紙"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {pre:"커피를",preR:"keopireul",jung:"마시는",jungR:"masineun",go:"마시고",dict:"마시다",dictR:"masida",baseJa:"飲む",jaCont:"コーヒーを飲んでいる",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",w:[{ko:"커피",roman:"keopi",ja:"コーヒー"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {pre:"한국어를",preR:"hangugeoreul",jung:"공부하는",jungR:"gongbuhaneun",go:"공부하고",dict:"공부하다",dictR:"gongbuhada",baseJa:"勉強する",jaCont:"韓国語を勉強している",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",w:[{ko:"한국어",roman:"hangugeo",ja:"韓国語"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {pre:"친구를",preR:"chingureul",jung:"만나는",jungR:"mannaneun",go:"만나고",dict:"만나다",dictR:"mannada",baseJa:"会う",jaCont:"友達に会っている",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",w:[{ko:"친구",roman:"chingu",ja:"友達"},{ko:"-를",roman:"-reul",ja:"〜に（会う対象）"}]}
+        {pre:"밥을",preR:"bab-eul",jung:"만드는",jungR:"mandeuneun",go:"만들고",dict:"만들다",dictR:"mandeulda",baseJa:"作る",baseZh:"做",jaCont:"ご飯を作っている",zhCont:"做饭",rule:"<code>만들다</code>はㄹ語幹で<code>-는</code>の前でㄹが脱落し<code>만드는</code>",ruleZh:"<code>만들다</code>是ㄹ词干，在<code>-는</code>前脱落ㄹ变<code>만드는</code>",w:[{ko:"밥",roman:"bap",ja:"ご飯",zh:"饭"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"영화를",preR:"yeonghwareul",jung:"보는",jungR:"boneun",go:"보고",dict:"보다",dictR:"boda",baseJa:"見る",baseZh:"看",jaCont:"映画を見ている",zhCont:"看电影",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",ruleZh:"在动词词干加<code>-는 중이다</code>",w:[{ko:"영화",roman:"yeonghwa",ja:"映画",zh:"电影"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"편지를",preR:"pyeonjireul",jung:"쓰는",jungR:"sseuneun",go:"쓰고",dict:"쓰다",dictR:"sseuda",baseJa:"書く",baseZh:"写",jaCont:"手紙を書いている",zhCont:"写信",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",ruleZh:"在动词词干加<code>-는 중이다</code>",w:[{ko:"편지",roman:"pyeonji",ja:"手紙",zh:"信"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"커피를",preR:"keopireul",jung:"마시는",jungR:"masineun",go:"마시고",dict:"마시다",dictR:"masida",baseJa:"飲む",baseZh:"喝",jaCont:"コーヒーを飲んでいる",zhCont:"喝咖啡",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",ruleZh:"在动词词干加<code>-는 중이다</code>",w:[{ko:"커피",roman:"keopi",ja:"コーヒー",zh:"咖啡"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"한국어를",preR:"hangugeoreul",jung:"공부하는",jungR:"gongbuhaneun",go:"공부하고",dict:"공부하다",dictR:"gongbuhada",baseJa:"勉強する",baseZh:"学习",jaCont:"韓国語を勉強している",zhCont:"学习韩语",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",ruleZh:"在动词词干加<code>-는 중이다</code>",w:[{ko:"한국어",roman:"hangugeo",ja:"韓国語",zh:"韩语"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"친구를",preR:"chingureul",jung:"만나는",jungR:"mannaneun",go:"만나고",dict:"만나다",dictR:"mannada",baseJa:"会う",baseZh:"见",jaCont:"友達に会っている",zhCont:"见朋友",rule:"動詞の語幹に<code>-는 중이다</code>を付ける",ruleZh:"在动词词干加<code>-는 중이다</code>",w:[{ko:"친구",roman:"chingu",ja:"友達",zh:"朋友"},{ko:"-를",roman:"-reul",ja:"〜に（会う対象）",zh:"~（见的对象）"}]}
       ];
       function fOngoing() {
         const v = pick(JUNGV);
         return {
           ja: `今${v.jaCont}最中です。`,
+          zh: `现在正在${v.zhCont}。`,
           ko: `지금 ${v.pre} ${v.jung} 중이에요.`,
           roman: `jigeum ${v.preR} ${v.jungR} jung-ieyo.`,
           w: [
-            {ko:"지금",roman:"jigeum",ja:"今"},
+            {ko:"지금",roman:"jigeum",ja:"今",zh:"现在"},
             ...v.w,
-            {ko:v.jung,roman:v.jungR,ja:`${v.baseJa}（${v.dict}）`},
-            {ko:"중이에요",roman:"jung-ieyo",ja:"〜している最中だ"}
+            {ko:v.jung,roman:v.jungR,ja:`${v.baseJa}（${v.dict}）`,zh:`${v.baseZh}（${v.dict}）`},
+            {ko:"중이에요",roman:"jung-ieyo",ja:"〜している最中だ",zh:"~正在…当中"}
           ],
           g: `<strong>「V-는 중이다」</strong>＝「〜している最中だ」。<code>-고 있다</code>より「まさに今」感が強い。${v.rule}。`,
+          gz: `<strong>「V-는 중이다」</strong>＝「正在〜（当中）」。比<code>-고 있다</code>更强调「正此刻」。${v.ruleZh}。`,
           alts: [`지금 ${v.pre} ${v.go} 있어요.`]
         };
       }
       const QPAST = [
-        {ko:"어제 뭐 했어요?",r:"eoje mwo haesseoyo?",ja:"昨日は何をしましたか？",w:[{ko:"어제",roman:"eoje",ja:"昨日"},{ko:"뭐",roman:"mwo",ja:"何（口語）"},{ko:"했어요",roman:"haesseoyo",ja:"しましたか"}]},
-        {ko:"어디에 갔어요?",r:"eodi-e gasseoyo?",ja:"どこに行きましたか？",w:[{ko:"어디",roman:"eodi",ja:"どこ"},{ko:"-에",roman:"-e",ja:"〜に"},{ko:"갔어요",roman:"gasseoyo",ja:"行きましたか"}]},
-        {ko:"누구를 만났어요?",r:"nugureul mannasseoyo?",ja:"誰に会いましたか？",w:[{ko:"누구",roman:"nugu",ja:"誰"},{ko:"-를",roman:"-reul",ja:"〜に（会う対象）"},{ko:"만났어요",roman:"mannasseoyo",ja:"会いましたか"}]},
-        {ko:"언제 왔어요?",r:"eonje wasseoyo?",ja:"いつ来ましたか？",w:[{ko:"언제",roman:"eonje",ja:"いつ"},{ko:"왔어요",roman:"wasseoyo",ja:"来ましたか"}]},
-        {ko:"무엇을 먹었어요?",r:"mueoseul meogeosseoyo?",ja:"何を食べましたか？",w:[{ko:"무엇",roman:"mueot",ja:"何"},{ko:"-을",roman:"-eul",ja:"〜を"},{ko:"먹었어요",roman:"meogeosseoyo",ja:"食べましたか"}]},
-        {ko:"왜 안 왔어요?",r:"wae an wasseoyo?",ja:"なぜ来なかったのですか？",w:[{ko:"왜",roman:"wae",ja:"なぜ"},{ko:"안",roman:"an",ja:"〜しない"},{ko:"왔어요",roman:"wasseoyo",ja:"来ましたか"}]}
+        {ko:"어제 뭐 했어요?",r:"eoje mwo haesseoyo?",ja:"昨日は何をしましたか？",zh:"昨天做了什么？",w:[{ko:"어제",roman:"eoje",ja:"昨日",zh:"昨天"},{ko:"뭐",roman:"mwo",ja:"何（口語）",zh:"什么（口语）"},{ko:"했어요",roman:"haesseoyo",ja:"しましたか",zh:"做了吗"}]},
+        {ko:"어디에 갔어요?",r:"eodi-e gasseoyo?",ja:"どこに行きましたか？",zh:"去了哪里？",w:[{ko:"어디",roman:"eodi",ja:"どこ",zh:"哪里"},{ko:"-에",roman:"-e",ja:"〜に",zh:"~到"},{ko:"갔어요",roman:"gasseoyo",ja:"行きましたか",zh:"去了吗"}]},
+        {ko:"누구를 만났어요?",r:"nugureul mannasseoyo?",ja:"誰に会いましたか？",zh:"见了谁？",w:[{ko:"누구",roman:"nugu",ja:"誰",zh:"谁"},{ko:"-를",roman:"-reul",ja:"〜に（会う対象）",zh:"~（见的对象）"},{ko:"만났어요",roman:"mannasseoyo",ja:"会いましたか",zh:"见了吗"}]},
+        {ko:"언제 왔어요?",r:"eonje wasseoyo?",ja:"いつ来ましたか？",zh:"什么时候来的？",w:[{ko:"언제",roman:"eonje",ja:"いつ",zh:"什么时候"},{ko:"왔어요",roman:"wasseoyo",ja:"来ましたか",zh:"来了吗"}]},
+        {ko:"무엇을 먹었어요?",r:"mueoseul meogeosseoyo?",ja:"何を食べましたか？",zh:"吃了什么？",w:[{ko:"무엇",roman:"mueot",ja:"何",zh:"什么"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"},{ko:"먹었어요",roman:"meogeosseoyo",ja:"食べましたか",zh:"吃了吗"}]},
+        {ko:"왜 안 왔어요?",r:"wae an wasseoyo?",ja:"なぜ来なかったのですか？",zh:"为什么没来？",w:[{ko:"왜",roman:"wae",ja:"なぜ",zh:"为什么"},{ko:"안",roman:"an",ja:"〜しない",zh:"~没·不"},{ko:"왔어요",roman:"wasseoyo",ja:"来ましたか",zh:"来了吗"}]}
       ];
       function fPastQuestion() {
         const q = pick(QPAST);
         return {
-          ja: q.ja, ko: q.ko, roman: q.r, w: q.w,
+          ja: q.ja, zh: q.zh, ko: q.ko, roman: q.r, w: q.w,
           g: `<strong>過去の疑問</strong>は語尾<code>-았/었어요?</code>を上げ調子で言うだけ。語順・形は平叙文と同じで、疑問詞も位置を変えない。`,
+          gz: `<strong>过去的疑问</strong>只需把句尾<code>-았/었어요?</code>读成上扬。语序·形态与陈述句相同，疑问词也不改变位置。`,
           alts: [q.ko.replace(/어요\?$/, "습니까?")]
         };
       }
       const REASON = [
-        {causeKo:"비가 와서",causeR:"bi-ga waseo",causeJa:"雨が降ったので",resKo:"집에 있었어요",resR:"jib-e isseosseoyo",resJa:"家にいました",dict:"오다→와서"},
-        {causeKo:"배가 고파서",causeR:"bae-ga gopaseo",causeJa:"お腹が空いたので",resKo:"밥을 먹었어요",resR:"bab-eul meogeosseoyo",resJa:"ご飯を食べました",dict:"고프다→고파서（으脱落）"},
-        {causeKo:"시간이 없어서",causeR:"sigan-i eopseoseo",causeJa:"時間がなかったので",resKo:"택시를 탔어요",resR:"taeksireul tasseoyo",resJa:"タクシーに乗りました",dict:"없다→없어서"},
-        {causeKo:"너무 바빠서",causeR:"neomu bappaseo",causeJa:"とても忙しかったので",resKo:"전화를 못 했어요",resR:"jeonhwareul mot haesseoyo",resJa:"電話できませんでした",dict:"바쁘다→바빠서（으脱落）"},
-        {causeKo:"피곤해서",causeR:"pigonhaeseo",causeJa:"疲れていたので",resKo:"일찍 잤어요",resR:"iljjik jasseoyo",resJa:"早く寝ました",dict:"피곤하다→피곤해서"}
+        {causeKo:"비가 와서",causeR:"bi-ga waseo",causeJa:"雨が降ったので",causeZh:"因为下雨",resKo:"집에 있었어요",resR:"jib-e isseosseoyo",resJa:"家にいました",resZh:"待在了家里",dict:"오다→와서"},
+        {causeKo:"배가 고파서",causeR:"bae-ga gopaseo",causeJa:"お腹が空いたので",causeZh:"因为肚子饿",resKo:"밥을 먹었어요",resR:"bab-eul meogeosseoyo",resJa:"ご飯を食べました",resZh:"吃了饭",dict:"고프다→고파서（으脱落）"},
+        {causeKo:"시간이 없어서",causeR:"sigan-i eopseoseo",causeJa:"時間がなかったので",causeZh:"因为没时间",resKo:"택시를 탔어요",resR:"taeksireul tasseoyo",resJa:"タクシーに乗りました",resZh:"坐了出租车",dict:"없다→없어서"},
+        {causeKo:"너무 바빠서",causeR:"neomu bappaseo",causeJa:"とても忙しかったので",causeZh:"因为太忙",resKo:"전화를 못 했어요",resR:"jeonhwareul mot haesseoyo",resJa:"電話できませんでした",resZh:"没能打电话",dict:"바쁘다→바빠서（으脱落）"},
+        {causeKo:"피곤해서",causeR:"pigonhaeseo",causeJa:"疲れていたので",causeZh:"因为累",resKo:"일찍 잤어요",resR:"iljjik jasseoyo",resJa:"早く寝ました",resZh:"早早睡了",dict:"피곤하다→피곤해서"}
       ];
       function fReason() {
         const r = pick(REASON);
         return {
           ja: `${r.causeJa}${r.resJa}。`,
+          zh: `${r.causeZh}，${r.resZh}。`,
           ko: `${r.causeKo} ${r.resKo}.`,
           roman: `${r.causeR} ${r.resR}.`,
           w: [
-            {ko:r.causeKo,roman:r.causeR,ja:`${r.causeJa}（理由 -아서/어서）`},
-            {ko:r.resKo,roman:r.resR,ja:r.resJa}
+            {ko:r.causeKo,roman:r.causeR,ja:`${r.causeJa}（理由 -아서/어서）`,zh:`${r.causeZh}（原因 -아서/어서）`},
+            {ko:r.resKo,roman:r.resR,ja:r.resJa,zh:r.resZh}
           ],
           g: `<strong>理由の <code>-아서/어서</code></strong>：前節は時制を付けず<strong>常に基本形</strong>（${r.dict}）。過去の意味は後節の過去形が担う。`,
+          gz: `<strong>原因的 <code>-아서/어서</code></strong>：前句不加时态<strong>始终用基本形</strong>（${r.dict}）。过去的含义由后句的过去形承担。`,
           alts: [`${r.causeKo} ${r.resKo.replace(/어요$/, "습니다")}.`]
         };
       }
 
       // ====== #9「活用変則・程度・量詞」用バンク（変則活用は検証済みで事前格納）======
       const IADJ = {
-        pretty: {ko:"예뻐요",r:"yeppeoyo",dict:"예쁘다",ja:"きれいです",type:"으탈락"},
-        big:    {ko:"커요",r:"keoyo",dict:"크다",ja:"大きいです",type:"으탈락"},
-        sick:   {ko:"아파요",r:"apayo",dict:"아프다",ja:"痛いです",type:"으탈락"},
-        sad:    {ko:"슬퍼요",r:"seulpeoyo",dict:"슬프다",ja:"悲しいです",type:"으탈락"},
-        busy:   {ko:"바빠요",r:"bappayo",dict:"바쁘다",ja:"忙しいです",type:"으탈락"},
-        fast:   {ko:"빨라요",r:"ballayo",dict:"빠르다",ja:"速いです",type:"르変則"},
-        diff:   {ko:"달라요",r:"dallayo",dict:"다르다",ja:"違います",type:"르変則"}
+        pretty: {ko:"예뻐요",r:"yeppeoyo",dict:"예쁘다",ja:"きれいです",type:"으탈락",zhPred:"很漂亮",glossZh:"漂亮（으脱落）"},
+        big:    {ko:"커요",r:"keoyo",dict:"크다",ja:"大きいです",type:"으탈락",zhPred:"很大",glossZh:"大（으脱落）"},
+        sick:   {ko:"아파요",r:"apayo",dict:"아프다",ja:"痛いです",type:"으탈락",zhPred:"疼",glossZh:"疼·痛（으脱落）"},
+        sad:    {ko:"슬퍼요",r:"seulpeoyo",dict:"슬프다",ja:"悲しいです",type:"으탈락",zhPred:"很悲伤",glossZh:"悲伤（으脱落）"},
+        busy:   {ko:"바빠요",r:"bappayo",dict:"바쁘다",ja:"忙しいです",type:"으탈락",zhPred:"很忙",glossZh:"忙（으脱落）"},
+        fast:   {ko:"빨라요",r:"ballayo",dict:"빠르다",ja:"速いです",type:"르変則",zhPred:"很快",glossZh:"快（르变则）"},
+        diff:   {ko:"달라요",r:"dallayo",dict:"다르다",ja:"違います",type:"르変則",zhPred:"不一样",glossZh:"不同（르变则）"}
       };
       const ISUBJ = [
-        {subj:"이 옷이",subjR:"i osi",ja:"この服",adjs:["pretty"]},
-        {subj:"꽃이",subjR:"kkochi",ja:"花",adjs:["pretty"]},
-        {subj:"가방이",subjR:"gabang-i",ja:"カバン",adjs:["pretty","big"]},
-        {subj:"집이",subjR:"jib-i",ja:"家",adjs:["big"]},
-        {subj:"머리가",subjR:"meoriga",ja:"頭",adjs:["sick"]},
-        {subj:"배가",subjR:"baega",ja:"お腹",adjs:["sick"]},
-        {subj:"이 영화가",subjR:"i yeonghwaga",ja:"この映画",adjs:["sad"]},
-        {subj:"기차가",subjR:"gichaga",ja:"電車",adjs:["fast"]},
-        {subj:"인터넷이",subjR:"inteones-i",ja:"インターネット",adjs:["fast"]},
-        {subj:"생각이",subjR:"saenggag-i",ja:"考え",adjs:["diff"]},
-        {subj:"의견이",subjR:"uigyeon-i",ja:"意見",adjs:["diff"]},
-        {subj:"오늘은",subjR:"oneureun",ja:"今日",adjs:["busy"],topic:true}
+        {subj:"이 옷이",subjR:"i osi",ja:"この服",zh:"这件衣服",adjs:["pretty"]},
+        {subj:"꽃이",subjR:"kkochi",ja:"花",zh:"花",adjs:["pretty"]},
+        {subj:"가방이",subjR:"gabang-i",ja:"カバン",zh:"包",adjs:["pretty","big"]},
+        {subj:"집이",subjR:"jib-i",ja:"家",zh:"家",adjs:["big"]},
+        {subj:"머리가",subjR:"meoriga",ja:"頭",zh:"头",adjs:["sick"]},
+        {subj:"배가",subjR:"baega",ja:"お腹",zh:"肚子",adjs:["sick"]},
+        {subj:"이 영화가",subjR:"i yeonghwaga",ja:"この映画",zh:"这部电影",adjs:["sad"]},
+        {subj:"기차가",subjR:"gichaga",ja:"電車",zh:"火车",adjs:["fast"]},
+        {subj:"인터넷이",subjR:"inteones-i",ja:"インターネット",zh:"网络",adjs:["fast"]},
+        {subj:"생각이",subjR:"saenggag-i",ja:"考え",zh:"想法",adjs:["diff"]},
+        {subj:"의견이",subjR:"uigyeon-i",ja:"意見",zh:"意见",adjs:["diff"]},
+        {subj:"오늘은",subjR:"oneureun",ja:"今日",zh:"今天",adjs:["busy"],topic:true}
       ];
       function fIrregularAdj() {
         const s = pick(ISUBJ), a = IADJ[pick(s.adjs)];
         return {
           ja: `${s.ja}は${a.ja}。`,
+          zh: `${s.zh}${a.zhPred}。`,
           ko: `${s.subj} ${a.ko}.`,
           roman: `${s.subjR} ${a.r}.`,
           w: [
-            {ko:s.subj,roman:s.subjR,ja:`${s.ja}＋${s.topic?"主題":"主格"}助詞`},
-            {ko:a.ko,roman:a.r,ja:`${a.ja.replace("です","").replace("ます","")}（${a.dict}）`}
+            {ko:s.subj,roman:s.subjR,ja:`${s.ja}＋${s.topic?"主題":"主格"}助詞`,zh:`${s.zh}＋${s.topic?"主题":"主格"}助词`},
+            {ko:a.ko,roman:a.r,ja:`${a.ja.replace("です","").replace("ます","")}（${a.dict}）`,zh:`${a.glossZh}`}
           ],
           g: a.type === "으탈락"
             ? `<strong>으탈락活用</strong>：語幹の「으」が脱落して아요/어요と結合（<code>${a.dict}→${a.ko}</code>）。同類に<code>예쁘다→예뻐요</code>、<code>바쁘다→바빠요</code>、<code>크다→커요</code>。`
             : `<strong>르変則</strong>：「르」が「ㄹㄹ」に変化（<code>${a.dict}→${a.ko}</code>）。同類に<code>모르다→몰라요</code>、<code>빠르다→빨라요</code>、<code>다르다→달라요</code>。`,
+          gz: a.type === "으탈락"
+            ? `<strong>으脱落活用</strong>：词干的「으」脱落后与아요/어요结合（<code>${a.dict}→${a.ko}</code>）。同类有<code>예쁘다→예뻐요</code>、<code>바쁘다→바빠요</code>、<code>크다→커요</code>。`
+            : `<strong>르变则</strong>：「르」变为「ㄹㄹ」（<code>${a.dict}→${a.ko}</code>）。同类有<code>모르다→몰라요</code>、<code>빠르다→빨라요</code>、<code>다르다→달라요</code>。`,
           alts: []
         };
       }
       const IVERB = [
-        {pre:"매일",preR:"maeil",ko:"걸어요",r:"georeoyo",dict:"걷다",dictR:"geotda",baseJa:"歩く",type:"ㄷ変則",ja:"毎日歩きます",note:"語幹末「ㄷ」が「ㄹ」に変化",w:[{ko:"매일",roman:"maeil",ja:"毎日"}]},
-        {pre:"음악을",preR:"eumag-eul",ko:"들어요",r:"deureoyo",dict:"듣다",dictR:"deutda",baseJa:"聞く",type:"ㄷ変則",ja:"音楽を聞きます",note:"듣다→들어요",w:[{ko:"음악",roman:"eumak",ja:"音楽"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {pre:"길을",preR:"gireul",ko:"물어요",r:"mureoyo",dict:"묻다",dictR:"mutda",baseJa:"尋ねる",type:"ㄷ変則",ja:"道を尋ねます",note:"묻다→물어요",w:[{ko:"길",roman:"gil",ja:"道"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {pre:"이 단어를",preR:"i daneoreul",ko:"몰라요",r:"mollayo",dict:"모르다",dictR:"moreuda",baseJa:"わからない",type:"르変則",ja:"この単語がわかりません",note:"모르다→몰라요",w:[{ko:"이",roman:"i",ja:"この"},{ko:"단어",roman:"daneo",ja:"単語"},{ko:"-를",roman:"-reul",ja:"〜が（を）"}]},
-        {pre:"노래를",preR:"noraereul",ko:"불러요",r:"bulleoyo",dict:"부르다",dictR:"bureuda",baseJa:"歌う",type:"르変則",ja:"歌を歌います",note:"부르다→불러요",w:[{ko:"노래",roman:"norae",ja:"歌"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {pre:"선물을",preR:"seonmureul",ko:"골라요",r:"gollayo",dict:"고르다",dictR:"goreuda",baseJa:"選ぶ",type:"르変則",ja:"プレゼントを選びます",note:"고르다→골라요",w:[{ko:"선물",roman:"seonmul",ja:"プレゼント"},{ko:"-을",roman:"-eul",ja:"〜を"}]}
+        {pre:"매일",preR:"maeil",ko:"걸어요",r:"georeoyo",dict:"걷다",dictR:"geotda",baseJa:"歩く",baseZh:"走路",type:"ㄷ変則",ja:"毎日歩きます",zh:"每天走路",note:"語幹末「ㄷ」が「ㄹ」に変化",w:[{ko:"매일",roman:"maeil",ja:"毎日",zh:"每天"}]},
+        {pre:"음악을",preR:"eumag-eul",ko:"들어요",r:"deureoyo",dict:"듣다",dictR:"deutda",baseJa:"聞く",baseZh:"听",type:"ㄷ変則",ja:"音楽を聞きます",zh:"听音乐",note:"듣다→들어요",w:[{ko:"음악",roman:"eumak",ja:"音楽",zh:"音乐"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"길을",preR:"gireul",ko:"물어요",r:"mureoyo",dict:"묻다",dictR:"mutda",baseJa:"尋ねる",baseZh:"问",type:"ㄷ変則",ja:"道を尋ねます",zh:"问路",note:"묻다→물어요",w:[{ko:"길",roman:"gil",ja:"道",zh:"路"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"이 단어를",preR:"i daneoreul",ko:"몰라요",r:"mollayo",dict:"모르다",dictR:"moreuda",baseJa:"わからない",baseZh:"不认识·不知道",type:"르変則",ja:"この単語がわかりません",zh:"不认识这个单词",note:"모르다→몰라요",w:[{ko:"이",roman:"i",ja:"この",zh:"这"},{ko:"단어",roman:"daneo",ja:"単語",zh:"单词"},{ko:"-를",roman:"-reul",ja:"〜が（を）",zh:"宾格「～」"}]},
+        {pre:"노래를",preR:"noraereul",ko:"불러요",r:"bulleoyo",dict:"부르다",dictR:"bureuda",baseJa:"歌う",baseZh:"唱",type:"르変則",ja:"歌を歌います",zh:"唱歌",note:"부르다→불러요",w:[{ko:"노래",roman:"norae",ja:"歌",zh:"歌"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {pre:"선물을",preR:"seonmureul",ko:"골라요",r:"gollayo",dict:"고르다",dictR:"goreuda",baseJa:"選ぶ",baseZh:"挑选",type:"르変則",ja:"プレゼントを選びます",zh:"挑选礼物",note:"고르다→골라요",w:[{ko:"선물",roman:"seonmul",ja:"プレゼント",zh:"礼物"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]}
       ];
       function fIrregularVerb() {
         const v = pick(IVERB);
         return {
           ja: `私は${v.ja}。`,
+          zh: `我${v.zh}。`,
           ko: `저는 ${v.pre} ${v.ko}.`,
           roman: `jeoneun ${v.preR} ${v.r}.`,
           w: [
-            {ko:"저",roman:"jeo",ja:"私"},
-            {ko:"-는",roman:"-neun",ja:"主題助詞"},
+            {ko:"저",roman:"jeo",ja:"私",zh:"我"},
+            {ko:"-는",roman:"-neun",ja:"主題助詞",zh:"主题助词"},
             ...v.w,
-            {ko:v.dict,roman:v.dictR,ja:v.baseJa},
-            {ko:v.ko,roman:v.r,ja:`${v.type}`}
+            {ko:v.dict,roman:v.dictR,ja:v.baseJa,zh:v.baseZh},
+            {ko:v.ko,roman:v.r,ja:`${v.type}`,zh:v.type.replace("変則","变则")}
           ],
           g: v.type === "ㄷ変則"
             ? `<strong>ㄷ変則</strong>：母音語尾の前で語幹末「ㄷ」が「ㄹ」に変わる（<code>${v.dict}→${v.ko}</code>）。ただし<code>받다→받아요</code>、<code>닫다→닫아요</code>は規則活用。`
             : `<strong>르変則</strong>：母音語尾の前で「르」が「ㄹㄹ」に変化（<code>${v.dict}→${v.ko}</code>）。同類に<code>빠르다→빨라요</code>、<code>다르다→달라요</code>。`,
+          gz: v.type === "ㄷ変則"
+            ? `<strong>ㄷ变则</strong>：在元音词尾前，词干末「ㄷ」变为「ㄹ」（<code>${v.dict}→${v.ko}</code>）。但<code>받다→받아요</code>、<code>닫다→닫아요</code>是规则活用。`
+            : `<strong>르变则</strong>：在元音词尾前「르」变为「ㄹㄹ」（<code>${v.dict}→${v.ko}</code>）。同类有<code>빠르다→빨라요</code>、<code>다르다→달라요</code>。`,
           alts: []
         };
       }
       const CITEM = [
-        {item:"사과",itemR:"sagwa",ja:"りんご",cnt:"개",cntR:"gae",cja:"個"},
-        {item:"커피",itemR:"keopi",ja:"コーヒー",cnt:"잔",cntR:"jan",cja:"杯"},
-        {item:"표",itemR:"pyo",ja:"チケット",cnt:"장",cntR:"jang",cja:"枚"},
-        {item:"빵",itemR:"ppang",ja:"パン",cnt:"개",cntR:"gae",cja:"個"},
-        {item:"물",itemR:"mul",ja:"水",cnt:"병",cntR:"byeong",cja:"本"},
-        {item:"맥주",itemR:"maekju",ja:"ビール",cnt:"잔",cntR:"jan",cja:"杯"}
+        {item:"사과",itemR:"sagwa",ja:"りんご",zh:"苹果",cnt:"개",cntR:"gae",cja:"個",czh:"个"},
+        {item:"커피",itemR:"keopi",ja:"コーヒー",zh:"咖啡",cnt:"잔",cntR:"jan",cja:"杯",czh:"杯"},
+        {item:"표",itemR:"pyo",ja:"チケット",zh:"票",cnt:"장",cntR:"jang",cja:"枚",czh:"张"},
+        {item:"빵",itemR:"ppang",ja:"パン",zh:"面包",cnt:"개",cntR:"gae",cja:"個",czh:"个"},
+        {item:"물",itemR:"mul",ja:"水",zh:"水",cnt:"병",cntR:"byeong",cja:"本",czh:"瓶"},
+        {item:"맥주",itemR:"maekju",ja:"ビール",zh:"啤酒",cnt:"잔",cntR:"jan",cja:"杯",czh:"杯"}
       ];
       function fCounter() {
         const it = pick(CITEM), n = 1 + rnd(5), N = NATIVE[n];
         return {
           ja: `${it.ja}を${n}${it.cja}ください。`,
+          zh: `请给我${n}${it.czh}${it.zh}。`,
           ko: `${it.item} ${N.ko} ${it.cnt} 주세요.`,
           roman: `${it.itemR} ${N.r} ${it.cntR} juseyo.`,
           w: [
-            {ko:it.item,roman:it.itemR,ja:it.ja},
-            {ko:N.ko,roman:N.r,ja:`${n}（固有数詞・冠形形）`},
-            {ko:it.cnt,roman:it.cntR,ja:`${it.cja}（助数詞）`},
-            {ko:"주세요",roman:"juseyo",ja:"ください"}
+            {ko:it.item,roman:it.itemR,ja:it.ja,zh:it.zh},
+            {ko:N.ko,roman:N.r,ja:`${n}（固有数詞・冠形形）`,zh:`${n}（固有数词·冠形形）`},
+            {ko:it.cnt,roman:it.cntR,ja:`${it.cja}（助数詞）`,zh:`${it.czh}（量词）`},
+            {ko:"주세요",roman:"juseyo",ja:"ください",zh:"请给（我）"}
           ],
           g: `<strong>固有数詞＋助数詞</strong>：数詞は助数詞の前で冠形形（<code>한/두/세/네/스무</code>）。助数詞は対象で使い分け：個<code>개</code>・杯<code>잔</code>・枚<code>장</code>・本<code>병</code>・冊<code>권</code>・人<code>명/분</code>。`,
+          gz: `<strong>固有数词＋量词</strong>：数词在量词前用冠形形（<code>한/두/세/네/스무</code>）。量词按对象区分：个<code>개</code>·杯<code>잔</code>·张<code>장</code>·瓶<code>병</code>·本<code>권</code>·名<code>명/분</code>。`,
           alts: [`${it.item} ${N.ko} ${it.cnt} 주실래요?`]
         };
       }
       const DADV = [
-        {ko:"너무",r:"neomu",ja:"とても"}, {ko:"아주",r:"aju",ja:"とても"},
-        {ko:"조금",r:"jogeum",ja:"少し"}, {ko:"정말",r:"jeongmal",ja:"本当に"}
+        {ko:"너무",r:"neomu",ja:"とても",zh:"太"}, {ko:"아주",r:"aju",ja:"とても",zh:"非常"},
+        {ko:"조금",r:"jogeum",ja:"少し",zh:"有点"}, {ko:"정말",r:"jeongmal",ja:"本当に",zh:"真的"}
       ];
       const DADJ = [
-        {subj:"오늘은",subjR:"oneureun",ja:"今日",ko:"바빠요",r:"bappayo",dict:"바쁘다",adjJa:"忙しいです"},
-        {subj:"이 가방은",subjR:"i gabang-eun",ja:"このカバン",ko:"비싸요",r:"bissayo",dict:"비싸다",adjJa:"高いです"},
-        {subj:"날씨가",subjR:"nalssiga",ja:"天気",ko:"좋아요",r:"joayo",dict:"좋다",adjJa:"いいです"},
-        {subj:"방이",subjR:"bang-i",ja:"部屋",ko:"커요",r:"keoyo",dict:"크다",adjJa:"大きいです"},
-        {subj:"음식이",subjR:"eumsig-i",ja:"料理",ko:"맛있어요",r:"masisseoyo",dict:"맛있다",adjJa:"おいしいです"},
-        {subj:"기차가",subjR:"gichaga",ja:"電車",ko:"빨라요",r:"ballayo",dict:"빠르다",adjJa:"速いです"}
+        {subj:"오늘은",subjR:"oneureun",ja:"今日",zh:"今天",ko:"바빠요",r:"bappayo",dict:"바쁘다",adjJa:"忙しいです",zhPred:"忙"},
+        {subj:"이 가방은",subjR:"i gabang-eun",ja:"このカバン",zh:"这个包",ko:"비싸요",r:"bissayo",dict:"비싸다",adjJa:"高いです",zhPred:"贵"},
+        {subj:"날씨가",subjR:"nalssiga",ja:"天気",zh:"天气",ko:"좋아요",r:"joayo",dict:"좋다",adjJa:"いいです",zhPred:"好"},
+        {subj:"방이",subjR:"bang-i",ja:"部屋",zh:"房间",ko:"커요",r:"keoyo",dict:"크다",adjJa:"大きいです",zhPred:"大"},
+        {subj:"음식이",subjR:"eumsig-i",ja:"料理",zh:"菜·食物",ko:"맛있어요",r:"masisseoyo",dict:"맛있다",adjJa:"おいしいです",zhPred:"好吃"},
+        {subj:"기차가",subjR:"gichaga",ja:"電車",zh:"火车",ko:"빨라요",r:"ballayo",dict:"빠르다",adjJa:"速いです",zhPred:"快"}
       ];
       function fDegree() {
         const adv = pick(DADV), a = pick(DADJ);
         return {
           ja: `${a.ja}は${adv.ja}${a.adjJa}。`,
+          zh: `${a.zh}${adv.zh}${a.zhPred}。`,
           ko: `${a.subj} ${adv.ko} ${a.ko}.`,
           roman: `${a.subjR} ${adv.r} ${a.r}.`,
           w: [
-            {ko:a.subj,roman:a.subjR,ja:`${a.ja}＋助詞`},
-            {ko:adv.ko,roman:adv.r,ja:adv.ja},
-            {ko:a.ko,roman:a.r,ja:`${a.adjJa}（${a.dict}）`}
+            {ko:a.subj,roman:a.subjR,ja:`${a.ja}＋助詞`,zh:`${a.zh}＋助词`},
+            {ko:adv.ko,roman:adv.r,ja:adv.ja,zh:adv.zh},
+            {ko:a.ko,roman:a.r,ja:`${a.adjJa}（${a.dict}）`,zh:`${a.zhPred}（${a.dict}）`}
           ],
           g: `<strong>程度副詞</strong>：<code>너무</code>（本来「〜すぎる」だが口語で強調）／<code>아주・정말</code>（とても・本当に）／<code>조금・좀</code>（少し）。形容詞の前に置く。`,
+          gz: `<strong>程度副词</strong>：<code>너무</code>（本为「太～」，口语中也作强调）／<code>아주・정말</code>（非常·真的）／<code>조금・좀</code>（有点）。放在形容词前。`,
           alts: []
         };
       }
       const RITEM = [
-        {ko:"물",r:"mul",ja:"水"}, {ko:"소금",r:"sogeum",ja:"塩"}, {ko:"메뉴",r:"menyu",ja:"メニュー"},
-        {ko:"휴지",r:"hyuji",ja:"ティッシュ"}, {ko:"영수증",r:"yeongsujeung",ja:"領収書"}, {ko:"물티슈",r:"multisyu",ja:"おしぼり"}
+        {ko:"물",r:"mul",ja:"水",zh:"水"}, {ko:"소금",r:"sogeum",ja:"塩",zh:"盐"}, {ko:"메뉴",r:"menyu",ja:"メニュー",zh:"菜单"},
+        {ko:"휴지",r:"hyuji",ja:"ティッシュ",zh:"纸巾"}, {ko:"영수증",r:"yeongsujeung",ja:"領収書",zh:"收据"}, {ko:"물티슈",r:"multisyu",ja:"おしぼり",zh:"湿巾"}
       ];
       function fRequest() {
         const it = pick(RITEM);
         return {
           ja: `${it.ja}をちょっとください。`,
+          zh: `麻烦给我${it.zh}。`,
           ko: `${it.ko} 좀 주세요.`,
           roman: `${it.r} jom juseyo.`,
           w: [
-            {ko:it.ko,roman:it.r,ja:it.ja},
-            {ko:"좀",roman:"jom",ja:"ちょっと（조금の口語）"},
-            {ko:"주세요",roman:"juseyo",ja:"ください"}
+            {ko:it.ko,roman:it.r,ja:it.ja,zh:it.zh},
+            {ko:"좀",roman:"jom",ja:"ちょっと（조금の口語）",zh:"一点（조금的口语）"},
+            {ko:"주세요",roman:"juseyo",ja:"ください",zh:"请给（我）"}
           ],
           g: `<strong>조금→좀</strong>：「少し/ちょっと」。依頼の<code>좀</code>は量を表すと同時に語調をやわらげる役割もある。より丁寧には<code>주실래요?</code>。`,
+          gz: `<strong>조금→좀</strong>：「一点/稍微」。请求时的<code>좀</code>既表数量也起到缓和语气的作用。更礼貌可用<code>주실래요?</code>。`,
           alts: [`${it.ko} 좀 주실래요?`]
         };
       }
@@ -6054,117 +6079,126 @@
       // ====== #8「比較・能力・依頼」用バンク（-(으)ㄹ形・活用は検証済みで事前格納）======
       // 可能 -(으)ㄹ 수 있다/없다。proj=「目的語＋用言の-(으)ㄹ形」を確定格納（ㄹ語幹・子音語幹を含む）
       const POSSV = [
-        {proj:"한국어를 읽을",projR:"hangugeoreul ilgeul",dict:"읽다",dictR:"ikda",vja:"読む",jaCan:"韓国語が読めます。",jaNo:"韓国語が読めません。",w:[{ko:"한국어",roman:"hangugeo",ja:"韓国語"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {proj:"매운 음식을 먹을",projR:"maeun eumsigeul meogeul",dict:"먹다",dictR:"meokda",vja:"食べる",jaCan:"辛い物が食べられます。",jaNo:"辛い物が食べられません。",w:[{ko:"매운 음식",roman:"maeun eumsik",ja:"辛い物"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {proj:"혼자 갈",projR:"honja gal",dict:"가다",dictR:"gada",vja:"行く",jaCan:"ひとりで行けます。",jaNo:"ひとりで行けません。",w:[{ko:"혼자",roman:"honja",ja:"ひとりで"}]},
-        {proj:"주말에 만날",projR:"jumare mannal",dict:"만나다",dictR:"mannada",vja:"会う",jaCan:"週末に会えます。",jaNo:"週末に会えません。",w:[{ko:"주말",roman:"jumal",ja:"週末"},{ko:"-에",roman:"-e",ja:"〜に"}]},
-        {proj:"내일 올",projR:"naeil ol",dict:"오다",dictR:"oda",vja:"来る",jaCan:"明日来られます。",jaNo:"明日は来られません。",w:[{ko:"내일",roman:"naeil",ja:"明日"}]},
-        {proj:"여기에서 기다릴",projR:"yeogieseo gidaril",dict:"기다리다",dictR:"gidarida",vja:"待つ",jaCan:"ここで待てます。",jaNo:"ここでは待てません。",w:[{ko:"여기",roman:"yeogi",ja:"ここ"},{ko:"-에서",roman:"-eseo",ja:"〜で"}]}
+        {proj:"한국어를 읽을",projR:"hangugeoreul ilgeul",dict:"읽다",dictR:"ikda",vja:"読む",vzh:"读",jaCan:"韓国語が読めます。",jaNo:"韓国語が読めません。",zhCan:"会读韩语。",zhNo:"不会读韩语。",w:[{ko:"한국어",roman:"hangugeo",ja:"韓国語",zh:"韩语"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {proj:"매운 음식을 먹을",projR:"maeun eumsigeul meogeul",dict:"먹다",dictR:"meokda",vja:"食べる",vzh:"吃",jaCan:"辛い物が食べられます。",jaNo:"辛い物が食べられません。",zhCan:"能吃辣的东西。",zhNo:"不能吃辣的东西。",w:[{ko:"매운 음식",roman:"maeun eumsik",ja:"辛い物",zh:"辣的东西"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {proj:"혼자 갈",projR:"honja gal",dict:"가다",dictR:"gada",vja:"行く",vzh:"去",jaCan:"ひとりで行けます。",jaNo:"ひとりで行けません。",zhCan:"能一个人去。",zhNo:"不能一个人去。",w:[{ko:"혼자",roman:"honja",ja:"ひとりで",zh:"独自·一个人"}]},
+        {proj:"주말에 만날",projR:"jumare mannal",dict:"만나다",dictR:"mannada",vja:"会う",vzh:"见",jaCan:"週末に会えます。",jaNo:"週末に会えません。",zhCan:"周末能见面。",zhNo:"周末不能见面。",w:[{ko:"주말",roman:"jumal",ja:"週末",zh:"周末"},{ko:"-에",roman:"-e",ja:"〜に",zh:"~（时间）"}]},
+        {proj:"내일 올",projR:"naeil ol",dict:"오다",dictR:"oda",vja:"来る",vzh:"来",jaCan:"明日来られます。",jaNo:"明日は来られません。",zhCan:"明天能来。",zhNo:"明天不能来。",w:[{ko:"내일",roman:"naeil",ja:"明日",zh:"明天"}]},
+        {proj:"여기에서 기다릴",projR:"yeogieseo gidaril",dict:"기다리다",dictR:"gidarida",vja:"待つ",vzh:"等",jaCan:"ここで待てます。",jaNo:"ここでは待てません。",zhCan:"能在这里等。",zhNo:"不能在这里等。",w:[{ko:"여기",roman:"yeogi",ja:"ここ",zh:"这里"},{ko:"-에서",roman:"-eseo",ja:"〜で",zh:"~在（场所）"}]}
       ];
       function fAbility() {
         const v = pick(POSSV), neg = rnd(2) === 0;
         const tail = neg ? "없어요" : "있어요", tailR = neg ? "eopseoyo" : "isseoyo";
         return {
           ja: neg ? v.jaNo : v.jaCan,
+          zh: neg ? v.zhNo : v.zhCan,
           ko: `${v.proj} 수 ${tail}.`,
           roman: `${v.projR} su ${tailR}.`,
           w: [
             ...v.w,
-            {ko:v.dict,roman:v.dictR,ja:v.vja},
-            {ko: neg?"-ㄹ 수 없다":"-ㄹ 수 있다", roman: neg?"-l su eopda":"-l su itda", ja: neg?"〜できない（不可能）":"〜できる（可能）"}
+            {ko:v.dict,roman:v.dictR,ja:v.vja,zh:v.vzh},
+            {ko: neg?"-ㄹ 수 없다":"-ㄹ 수 있다", roman: neg?"-l su eopda":"-l su itda", ja: neg?"〜できない（不可能）":"〜できる（可能）", zh: neg?"~不能（不可能）":"~能·可以（可能）"}
           ],
           g: `<strong>「V-(으)ㄹ 수 있다/없다」</strong>＝状況的な可能/不可能。母音・ㄹ語幹は<code>-ㄹ 수</code>、子音語幹は<code>-을 수</code>（<code>읽다→읽을 수</code>、<code>가다→갈 수</code>）。`,
+          gz: `<strong>「V-(으)ㄹ 수 있다/없다」</strong>＝情况上的可能/不可能。元音·ㄹ词干用<code>-ㄹ 수</code>，辅音词干用<code>-을 수</code>（<code>읽다→읽을 수</code>，<code>가다→갈 수</code>）。`,
           alts: [`${v.proj} 수 ${neg?"없습니다":"있습니다"}.`]
         };
       }
       // 技能 -(으)ㄹ 줄 알다/모르다（習得した技能。POSSVとは対象を分け、ja衝突を回避）
       const SKILLV = [
-        {proj:"피아노를 칠",projR:"piano-reul chil",dict:"치다",dictR:"chida",vja:"弾く",jaCan:"ピアノが弾けます。",jaNo:"ピアノが弾けません。",w:[{ko:"피아노",roman:"piano",ja:"ピアノ"},{ko:"-를",roman:"-reul",ja:"〜を"}]},
-        {proj:"한국 음식을 만들",projR:"hanguk eumsigeul mandeul",dict:"만들다",dictR:"mandeulda",vja:"作る",jaCan:"韓国料理が作れます。",jaNo:"韓国料理が作れません。",w:[{ko:"한국 음식",roman:"hanguk eumsik",ja:"韓国料理"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {proj:"자전거를 탈",projR:"jajeongeoreul tal",dict:"타다",dictR:"tada",vja:"乗る",jaCan:"自転車に乗れます。",jaNo:"自転車に乗れません。",w:[{ko:"자전거",roman:"jajeongeo",ja:"自転車"},{ko:"-를",roman:"-reul",ja:"〜に（乗る対象）"}]},
-        {proj:"운전을 할",projR:"unjeon-eul hal",dict:"하다",dictR:"hada",vja:"する",jaCan:"運転ができます。",jaNo:"運転ができません。",w:[{ko:"운전",roman:"unjeon",ja:"運転"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {proj:"수영을 할",projR:"suyeong-eul hal",dict:"하다",dictR:"hada",vja:"する",jaCan:"泳げます。",jaNo:"泳げません。",w:[{ko:"수영",roman:"suyeong",ja:"水泳"},{ko:"-을",roman:"-eul",ja:"〜を"}]},
-        {proj:"한자를 읽을",projR:"hanjareul ilgeul",dict:"읽다",dictR:"ikda",vja:"読む",jaCan:"漢字が読めます。",jaNo:"漢字が読めません。",w:[{ko:"한자",roman:"hanja",ja:"漢字"},{ko:"-를",roman:"-reul",ja:"〜を"}]}
+        {proj:"피아노를 칠",projR:"piano-reul chil",dict:"치다",dictR:"chida",vja:"弾く",vzh:"弹",jaCan:"ピアノが弾けます。",jaNo:"ピアノが弾けません。",zhCan:"会弹钢琴。",zhNo:"不会弹钢琴。",w:[{ko:"피아노",roman:"piano",ja:"ピアノ",zh:"钢琴"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]},
+        {proj:"한국 음식을 만들",projR:"hanguk eumsigeul mandeul",dict:"만들다",dictR:"mandeulda",vja:"作る",vzh:"做",jaCan:"韓国料理が作れます。",jaNo:"韓国料理が作れません。",zhCan:"会做韩国菜。",zhNo:"不会做韩国菜。",w:[{ko:"한국 음식",roman:"hanguk eumsik",ja:"韓国料理",zh:"韩国菜"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {proj:"자전거를 탈",projR:"jajeongeoreul tal",dict:"타다",dictR:"tada",vja:"乗る",vzh:"骑",jaCan:"自転車に乗れます。",jaNo:"自転車に乗れません。",zhCan:"会骑自行车。",zhNo:"不会骑自行车。",w:[{ko:"자전거",roman:"jajeongeo",ja:"自転車",zh:"自行车"},{ko:"-를",roman:"-reul",ja:"〜に（乗る対象）",zh:"~（骑的对象）"}]},
+        {proj:"운전을 할",projR:"unjeon-eul hal",dict:"하다",dictR:"hada",vja:"する",vzh:"做",jaCan:"運転ができます。",jaNo:"運転ができません。",zhCan:"会开车。",zhNo:"不会开车。",w:[{ko:"운전",roman:"unjeon",ja:"運転",zh:"开车·驾驶"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {proj:"수영을 할",projR:"suyeong-eul hal",dict:"하다",dictR:"hada",vja:"する",vzh:"做",jaCan:"泳げます。",jaNo:"泳げません。",zhCan:"会游泳。",zhNo:"不会游泳。",w:[{ko:"수영",roman:"suyeong",ja:"水泳",zh:"游泳"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"}]},
+        {proj:"한자를 읽을",projR:"hanjareul ilgeul",dict:"읽다",dictR:"ikda",vja:"読む",vzh:"读",jaCan:"漢字が読めます。",jaNo:"漢字が読めません。",zhCan:"会读汉字。",zhNo:"不会读汉字。",w:[{ko:"한자",roman:"hanja",ja:"漢字",zh:"汉字"},{ko:"-를",roman:"-reul",ja:"〜を",zh:"宾格「～」"}]}
       ];
       function fSkill() {
         const v = pick(SKILLV), no = rnd(2) === 0;
         const tail = no ? "몰라요" : "알아요", tailR = no ? "mollayo" : "arayo";
         return {
           ja: no ? v.jaNo : v.jaCan,
+          zh: no ? v.zhNo : v.zhCan,
           ko: `${v.proj} 줄 ${tail}.`,
           roman: `${v.projR} jul ${tailR}.`,
           w: [
             ...v.w,
-            {ko:v.dict,roman:v.dictR,ja:v.vja},
-            {ko: no?"-ㄹ 줄 모르다":"-ㄹ 줄 알다", roman: no?"-l jul moreuda":"-l jul alda", ja: no?"〜できない（やり方を知らない）":"〜できる（やり方を知っている）"}
+            {ko:v.dict,roman:v.dictR,ja:v.vja,zh:v.vzh},
+            {ko: no?"-ㄹ 줄 모르다":"-ㄹ 줄 알다", roman: no?"-l jul moreuda":"-l jul alda", ja: no?"〜できない（やり方を知らない）":"〜できる（やり方を知っている）", zh: no?"~不会（不懂方法）":"~会（懂方法）"}
           ],
           g: `<strong>「V-(으)ㄹ 줄 알다/모르다」</strong>＝習得した技能の有無「（やり方を知っていて）〜できる／できない」。否定の<code>모르다</code>は르変則で<code>몰라요</code>。合쇼体は<code>알다→압니다</code>（ㄹ脱落）。`,
+          gz: `<strong>「V-(으)ㄹ 줄 알다/모르다」</strong>＝是否掌握某项技能「（懂方法而）会／不会〜」。否定的<code>모르다</code>是르变则<code>몰라요</code>。합쇼体是<code>알다→압니다</code>（ㄹ脱落）。`,
           alts: [`${v.proj} 줄 ${no?"모릅니다":"압니다"}.`]
         };
       }
       // 比較 A는 B보다 (더) 形容詞（自然な対を確定格納。形容詞活用は検証済み）
       const COMP = [
-        {ko:"형은 저보다 키가 커요.",roman:"hyeong-eun jeoboda kiga keoyo.",ja:"兄は私より背が高いです。",moreKo:"형은 저보다 키가 더 커요.",moreR:"hyeong-eun jeoboda kiga deo keoyo.",adjNote:"크다→커요（으탈락）",w:[{ko:"형",roman:"hyeong",ja:"兄"},{ko:"-보다",roman:"-boda",ja:"〜より（比較）"},{ko:"키",roman:"ki",ja:"背丈"},{ko:"커요",roman:"keoyo",ja:"大きい・高い（크다）"}]},
-        {ko:"비행기는 기차보다 빨라요.",roman:"bihaenggineun gichaboda ballayo.",ja:"飛行機は電車より速いです。",moreKo:"비행기는 기차보다 더 빨라요.",moreR:"bihaenggineun gichaboda deo ballayo.",adjNote:"빠르다→빨라요（르変則）",w:[{ko:"비행기",roman:"bihaenggi",ja:"飛行機"},{ko:"기차",roman:"gicha",ja:"電車"},{ko:"-보다",roman:"-boda",ja:"〜より"},{ko:"빨라요",roman:"ballayo",ja:"速い（빠르다）"}]},
-        {ko:"서울은 부산보다 커요.",roman:"seoureun busanboda keoyo.",ja:"ソウルは釜山より大きいです。",moreKo:"서울은 부산보다 더 커요.",moreR:"seoureun busanboda deo keoyo.",adjNote:"크다→커요（으탈락）",w:[{ko:"서울",roman:"seoul",ja:"ソウル"},{ko:"부산",roman:"busan",ja:"釜山"},{ko:"-보다",roman:"-boda",ja:"〜より"},{ko:"커요",roman:"keoyo",ja:"大きい（크다）"}]},
-        {ko:"이 가방은 저 가방보다 비싸요.",roman:"i gabang-eun jeo gabangboda bissayo.",ja:"このカバンはあのカバンより高いです。",moreKo:"이 가방은 저 가방보다 더 비싸요.",moreR:"i gabang-eun jeo gabangboda deo bissayo.",adjNote:"비싸다→비싸요（規則）",w:[{ko:"가방",roman:"gabang",ja:"カバン"},{ko:"-보다",roman:"-boda",ja:"〜より"},{ko:"비싸요",roman:"bissayo",ja:"（値段が）高い（비싸다）"}]},
-        {ko:"동생은 저보다 키가 작아요.",roman:"dongsaeng-eun jeoboda kiga jagayo.",ja:"弟は私より背が低いです。",moreKo:"동생은 저보다 키가 더 작아요.",moreR:"dongsaeng-eun jeoboda kiga deo jagayo.",adjNote:"작다→작아요（規則）",w:[{ko:"동생",roman:"dongsaeng",ja:"弟・妹"},{ko:"-보다",roman:"-boda",ja:"〜より"},{ko:"키",roman:"ki",ja:"背丈"},{ko:"작아요",roman:"jagayo",ja:"小さい・低い（작다）"}]},
-        {ko:"이 책은 저 책보다 재미있어요.",roman:"i chaegeun jeo chaekboda jaemiisseoyo.",ja:"この本はあの本より面白いです。",moreKo:"이 책은 저 책보다 더 재미있어요.",moreR:"i chaegeun jeo chaekboda deo jaemiisseoyo.",adjNote:"재미있다→재미있어요（規則）",w:[{ko:"책",roman:"chaek",ja:"本"},{ko:"-보다",roman:"-boda",ja:"〜より"},{ko:"재미있어요",roman:"jaemiisseoyo",ja:"面白い（재미있다）"}]}
+        {ko:"형은 저보다 키가 커요.",roman:"hyeong-eun jeoboda kiga keoyo.",ja:"兄は私より背が高いです。",zh:"哥哥比我个子高。",moreKo:"형은 저보다 키가 더 커요.",moreR:"hyeong-eun jeoboda kiga deo keoyo.",moreZh:"哥哥比我个子更高。",adjNote:"크다→커요（으탈락）",adjNoteZh:"크다→커요（으脱落）",w:[{ko:"형",roman:"hyeong",ja:"兄",zh:"哥哥"},{ko:"-보다",roman:"-boda",ja:"〜より（比較）",zh:"~比（比较）"},{ko:"키",roman:"ki",ja:"背丈",zh:"个子·身高"},{ko:"커요",roman:"keoyo",ja:"大きい・高い（크다）",zh:"大·高（크다）"}]},
+        {ko:"비행기는 기차보다 빨라요.",roman:"bihaenggineun gichaboda ballayo.",ja:"飛行機は電車より速いです。",zh:"飞机比火车快。",moreKo:"비행기는 기차보다 더 빨라요.",moreR:"bihaenggineun gichaboda deo ballayo.",moreZh:"飞机比火车更快。",adjNote:"빠르다→빨라요（르変則）",adjNoteZh:"빠르다→빨라요（르变则）",w:[{ko:"비행기",roman:"bihaenggi",ja:"飛行機",zh:"飞机"},{ko:"기차",roman:"gicha",ja:"電車",zh:"火车"},{ko:"-보다",roman:"-boda",ja:"〜より",zh:"~比"},{ko:"빨라요",roman:"ballayo",ja:"速い（빠르다）",zh:"快（빠르다）"}]},
+        {ko:"서울은 부산보다 커요.",roman:"seoureun busanboda keoyo.",ja:"ソウルは釜山より大きいです。",zh:"首尔比釜山大。",moreKo:"서울은 부산보다 더 커요.",moreR:"seoureun busanboda deo keoyo.",moreZh:"首尔比釜山更大。",adjNote:"크다→커요（으탈락）",adjNoteZh:"크다→커요（으脱落）",w:[{ko:"서울",roman:"seoul",ja:"ソウル",zh:"首尔"},{ko:"부산",roman:"busan",ja:"釜山",zh:"釜山"},{ko:"-보다",roman:"-boda",ja:"〜より",zh:"~比"},{ko:"커요",roman:"keoyo",ja:"大きい（크다）",zh:"大（크다）"}]},
+        {ko:"이 가방은 저 가방보다 비싸요.",roman:"i gabang-eun jeo gabangboda bissayo.",ja:"このカバンはあのカバンより高いです。",zh:"这个包比那个包贵。",moreKo:"이 가방은 저 가방보다 더 비싸요.",moreR:"i gabang-eun jeo gabangboda deo bissayo.",moreZh:"这个包比那个包更贵。",adjNote:"비싸다→비싸요（規則）",adjNoteZh:"비싸다→비싸요（规则）",w:[{ko:"가방",roman:"gabang",ja:"カバン",zh:"包"},{ko:"-보다",roman:"-boda",ja:"〜より",zh:"~比"},{ko:"비싸요",roman:"bissayo",ja:"（値段が）高い（비싸다）",zh:"（价格）贵（비싸다）"}]},
+        {ko:"동생은 저보다 키가 작아요.",roman:"dongsaeng-eun jeoboda kiga jagayo.",ja:"弟は私より背が低いです。",zh:"弟弟比我个子矮。",moreKo:"동생은 저보다 키가 더 작아요.",moreR:"dongsaeng-eun jeoboda kiga deo jagayo.",moreZh:"弟弟比我个子更矮。",adjNote:"작다→작아요（規則）",adjNoteZh:"작다→작아요（规则）",w:[{ko:"동생",roman:"dongsaeng",ja:"弟・妹",zh:"弟弟·妹妹"},{ko:"-보다",roman:"-boda",ja:"〜より",zh:"~比"},{ko:"키",roman:"ki",ja:"背丈",zh:"个子·身高"},{ko:"작아요",roman:"jagayo",ja:"小さい・低い（작다）",zh:"小·矮（작다）"}]},
+        {ko:"이 책은 저 책보다 재미있어요.",roman:"i chaegeun jeo chaekboda jaemiisseoyo.",ja:"この本はあの本より面白いです。",zh:"这本书比那本书有意思。",moreKo:"이 책은 저 책보다 더 재미있어요.",moreR:"i chaegeun jeo chaekboda deo jaemiisseoyo.",moreZh:"这本书比那本书更有意思。",adjNote:"재미있다→재미있어요（規則）",adjNoteZh:"재미있다→재미있어요（规则）",w:[{ko:"책",roman:"chaek",ja:"本",zh:"书"},{ko:"-보다",roman:"-boda",ja:"〜より",zh:"~比"},{ko:"재미있어요",roman:"jaemiisseoyo",ja:"面白い（재미있다）",zh:"有意思（재미있다）"}]}
       ];
       function fCompare() {
         const c = pick(COMP), more = rnd(2) === 0;
         return {
           ja: more ? c.ja.replace("より","よりもっと") : c.ja,
+          zh: more ? c.moreZh : c.zh,
           ko: more ? c.moreKo : c.ko,
           roman: more ? c.moreR : c.roman,
-          w: more ? c.w.concat([{ko:"더",roman:"deo",ja:"もっと（強調）"}]) : c.w,
+          w: more ? c.w.concat([{ko:"더",roman:"deo",ja:"もっと（強調）",zh:"更（强调）"}]) : c.w,
           g: `<strong>比較「A는 B보다 (더) 形容詞」</strong>＝「AはBより(もっと)〜だ」。<code>보다</code>が比較基準「〜より」、強調に<code>더</code>（もっと）・<code>훨씬</code>（はるかに）。${c.adjNote}。`,
+          gz: `<strong>比较「A는 B보다 (더) 形容词」</strong>＝「A比B(更)〜」。<code>보다</code>是比较基准「比〜」，强调用<code>더</code>（更）·<code>훨씬</code>（…得多）。${c.adjNoteZh}。`,
           alts: more ? [c.ko] : [c.moreKo]
         };
       }
       // 最上級 (범위) 중에서 + 제일/가장 …（自然な対を確定格納）
       const SUP = [
-        {groupKo:"과일",groupR:"gwail",groupJa:"果物",headKo:"딸기를",headR:"ttalgireul",headJa:"いちご",predKo:"좋아해요",predR:"joahaeyo",predJa:"好きです（좋아하다）",ja:"果物の中でいちごが一番好きです。"},
-        {groupKo:"운동",groupR:"undong",groupJa:"スポーツ",headKo:"수영을",headR:"suyeong-eul",headJa:"水泳",predKo:"좋아해요",predR:"joahaeyo",predJa:"好きです（좋아하다）",ja:"スポーツの中で水泳が一番好きです。"},
-        {groupKo:"계절",groupR:"gyejeol",groupJa:"季節",headKo:"봄을",headR:"bom-eul",headJa:"春",predKo:"좋아해요",predR:"joahaeyo",predJa:"好きです（좋아하다）",ja:"季節の中で春が一番好きです。"},
-        {groupKo:"음식",groupR:"eumsik",groupJa:"料理",headKo:"불고기가",headR:"bulgogiga",headJa:"プルコギ",predKo:"맛있어요",predR:"masisseoyo",predJa:"おいしいです（맛있다）",ja:"料理の中でプルコギが一番おいしいです。"},
-        {groupKo:"친구",groupR:"chingu",groupJa:"友達",headKo:"민수가",headR:"minsuga",headJa:"ミンス",predKo:"키가 커요",predR:"kiga keoyo",predJa:"背が高いです（크다）",ja:"友達の中でミンスが一番背が高いです。"},
-        {groupKo:"과목",groupR:"gwamok",groupJa:"科目",headKo:"수학이",headR:"suhag-i",headJa:"数学",predKo:"어려워요",predR:"eoryeowoyo",predJa:"難しいです（어렵다）",ja:"科目の中で数学が一番難しいです。"}
+        {groupKo:"과일",groupR:"gwail",groupJa:"果物",groupZh:"水果",headKo:"딸기를",headR:"ttalgireul",headJa:"いちご",headZh:"草莓",predKo:"좋아해요",predR:"joahaeyo",predJa:"好きです（좋아하다）",predZh:"喜欢（좋아하다）",ja:"果物の中でいちごが一番好きです。",zh:"水果当中我最喜欢草莓。"},
+        {groupKo:"운동",groupR:"undong",groupJa:"スポーツ",groupZh:"运动",headKo:"수영을",headR:"suyeong-eul",headJa:"水泳",headZh:"游泳",predKo:"좋아해요",predR:"joahaeyo",predJa:"好きです（좋아하다）",predZh:"喜欢（좋아하다）",ja:"スポーツの中で水泳が一番好きです。",zh:"运动当中我最喜欢游泳。"},
+        {groupKo:"계절",groupR:"gyejeol",groupJa:"季節",groupZh:"季节",headKo:"봄을",headR:"bom-eul",headJa:"春",headZh:"春天",predKo:"좋아해요",predR:"joahaeyo",predJa:"好きです（좋아하다）",predZh:"喜欢（좋아하다）",ja:"季節の中で春が一番好きです。",zh:"季节当中我最喜欢春天。"},
+        {groupKo:"음식",groupR:"eumsik",groupJa:"料理",groupZh:"菜·料理",headKo:"불고기가",headR:"bulgogiga",headJa:"プルコギ",headZh:"烤肉",predKo:"맛있어요",predR:"masisseoyo",predJa:"おいしいです（맛있다）",predZh:"好吃（맛있다）",ja:"料理の中でプルコギが一番おいしいです。",zh:"菜当中烤肉最好吃。"},
+        {groupKo:"친구",groupR:"chingu",groupJa:"友達",groupZh:"朋友",headKo:"민수가",headR:"minsuga",headJa:"ミンス",headZh:"民秀",predKo:"키가 커요",predR:"kiga keoyo",predJa:"背が高いです（크다）",predZh:"个子高（크다）",ja:"友達の中でミンスが一番背が高いです。",zh:"朋友当中民秀个子最高。"},
+        {groupKo:"과목",groupR:"gwamok",groupJa:"科目",groupZh:"科目",headKo:"수학이",headR:"suhag-i",headJa:"数学",headZh:"数学",predKo:"어려워요",predR:"eoryeowoyo",predJa:"難しいです（어렵다）",predZh:"难（어렵다）",ja:"科目の中で数学が一番難しいです。",zh:"科目当中数学最难。"}
       ];
       function fSuperlative() {
         const s = pick(SUP), gajang = rnd(2) === 0;
         const sup = gajang ? {ko:"가장",r:"gajang"} : {ko:"제일",r:"jeil"};
         return {
           ja: s.ja,
+          zh: s.zh,
           ko: `${s.groupKo} 중에서 ${s.headKo} ${sup.ko} ${s.predKo}.`,
           roman: `${s.groupR} jung-eseo ${s.headR} ${sup.r} ${s.predR}.`,
           w: [
-            {ko:s.groupKo,roman:s.groupR,ja:s.groupJa},
-            {ko:"중에서",roman:"jung-eseo",ja:"〜の中で（範囲）"},
-            {ko:s.headKo,roman:s.headR,ja:`${s.headJa}＋助詞`},
-            {ko:sup.ko,roman:sup.r,ja:"いちばん（最上級）"},
-            {ko:s.predKo,roman:s.predR,ja:s.predJa}
+            {ko:s.groupKo,roman:s.groupR,ja:s.groupJa,zh:s.groupZh},
+            {ko:"중에서",roman:"jung-eseo",ja:"〜の中で（範囲）",zh:"~当中（范围）"},
+            {ko:s.headKo,roman:s.headR,ja:`${s.headJa}＋助詞`,zh:`${s.headZh}＋助词`},
+            {ko:sup.ko,roman:sup.r,ja:"いちばん（最上級）",zh:"最（最高级）"},
+            {ko:s.predKo,roman:s.predR,ja:s.predJa,zh:s.predZh}
           ],
           g: `<strong>最上級「(범위) 중에서 + 제일/가장 …」</strong>。範囲は<code>중에서</code>、「いちばん」は<code>제일</code>(口語)／<code>가장</code>(やや硬い)。「好きだ」は他動詞<code>좋아하다</code>なので対象は<code>-를/을</code>。`,
+          gz: `<strong>最高级「(범위) 중에서 + 제일/가장 …」</strong>。范围用<code>중에서</code>，「最」用<code>제일</code>(口语)／<code>가장</code>(略书面)。「喜欢」是他动词<code>좋아하다</code>，故对象用<code>-를/을</code>。`,
           alts: [`${s.groupKo} 중에서 ${s.headKo} ${gajang?"제일":"가장"} ${s.predKo}.`]
         };
       }
       // 依頼 V-아/어 주세요（活用形を確定格納。陽母音-아/陰母音-어/하다-해/ㅂ変則/으탈락）
       const RACTV = [
-        {ko:"천천히 말해 주세요.",r:"cheoncheonhi malhae juseyo.",ja:"ゆっくり話してください。",note:"<code>말하다→말해</code>（하다用言は해）。",w:[{ko:"천천히",roman:"cheoncheonhi",ja:"ゆっくり"},{ko:"말하다",roman:"malhada",ja:"話す"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
-        {ko:"사진을 찍어 주세요.",r:"sajineul jjigeo juseyo.",ja:"写真を撮ってください。",note:"<code>찍다→찍어</code>（陰母音語幹）。",w:[{ko:"사진",roman:"sajin",ja:"写真"},{ko:"-을",roman:"-eul",ja:"〜を"},{ko:"찍다",roman:"jjikda",ja:"撮る"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
-        {ko:"창문을 열어 주세요.",r:"changmuneul yeoreo juseyo.",ja:"窓を開けてください。",note:"<code>열다→열어</code>。",w:[{ko:"창문",roman:"changmun",ja:"窓"},{ko:"-을",roman:"-eul",ja:"〜を"},{ko:"열다",roman:"yeolda",ja:"開ける"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
-        {ko:"문을 닫아 주세요.",r:"muneul dada juseyo.",ja:"ドアを閉めてください。",note:"<code>닫다→닫아</code>（陽母音・規則。ㄷ変則ではない）。",w:[{ko:"문",roman:"mun",ja:"ドア"},{ko:"-을",roman:"-eul",ja:"〜を"},{ko:"닫다",roman:"datda",ja:"閉める"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
-        {ko:"조금만 기다려 주세요.",r:"jogeumman gidaryeo juseyo.",ja:"少しだけ待ってください。",note:"<code>기다리다→기다려</code>。",w:[{ko:"조금만",roman:"jogeumman",ja:"少しだけ"},{ko:"기다리다",roman:"gidarida",ja:"待つ"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
-        {ko:"여기에 이름을 써 주세요.",r:"yeogie ireumeul sseo juseyo.",ja:"ここに名前を書いてください。",note:"<code>쓰다→써</code>（으탈락）。",w:[{ko:"여기",roman:"yeogi",ja:"ここ"},{ko:"-에",roman:"-e",ja:"〜に"},{ko:"이름",roman:"ireum",ja:"名前"},{ko:"-을",roman:"-eul",ja:"〜を"},{ko:"쓰다",roman:"sseuda",ja:"書く"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]},
-        {ko:"좀 도와주세요.",r:"jom dowajuseyo.",ja:"ちょっと手伝ってください。",note:"<code>돕다→도와</code>（ㅂ変則）。<code>좀</code>は依頼を和らげるクッション語。",w:[{ko:"좀",roman:"jom",ja:"ちょっと（依頼を和らげる）"},{ko:"돕다",roman:"dopda",ja:"手伝う"},{ko:"-아/어 주다",roman:"-a/eo juda",ja:"〜してあげる／くれる"}]},
-        {ko:"다시 한번 말해 주세요.",r:"dasi hanbeon malhae juseyo.",ja:"もう一度言ってください。",note:"<code>말하다→말해</code>（하다用言は해）。",w:[{ko:"다시",roman:"dasi",ja:"もう一度"},{ko:"한번",roman:"hanbeon",ja:"一度"},{ko:"말하다",roman:"malhada",ja:"言う"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください"}]}
+        {ko:"천천히 말해 주세요.",r:"cheoncheonhi malhae juseyo.",ja:"ゆっくり話してください。",zh:"请慢点说。",note:"<code>말하다→말해</code>（하다用言は해）。",noteZh:"<code>말하다→말해</code>（하다类用言用해）。",w:[{ko:"천천히",roman:"cheoncheonhi",ja:"ゆっくり",zh:"慢慢·慢点"},{ko:"말하다",roman:"malhada",ja:"話す",zh:"说"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください",zh:"请~（请求）"}]},
+        {ko:"사진을 찍어 주세요.",r:"sajineul jjigeo juseyo.",ja:"写真を撮ってください。",zh:"请帮我拍张照。",note:"<code>찍다→찍어</code>（陰母音語幹）。",noteZh:"<code>찍다→찍어</code>（阴元音词干）。",w:[{ko:"사진",roman:"sajin",ja:"写真",zh:"照片"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"},{ko:"찍다",roman:"jjikda",ja:"撮る",zh:"拍"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください",zh:"请~（请求）"}]},
+        {ko:"창문을 열어 주세요.",r:"changmuneul yeoreo juseyo.",ja:"窓を開けてください。",zh:"请开一下窗。",note:"<code>열다→열어</code>。",noteZh:"<code>열다→열어</code>。",w:[{ko:"창문",roman:"changmun",ja:"窓",zh:"窗户"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"},{ko:"열다",roman:"yeolda",ja:"開ける",zh:"开"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください",zh:"请~（请求）"}]},
+        {ko:"문을 닫아 주세요.",r:"muneul dada juseyo.",ja:"ドアを閉めてください。",zh:"请关一下门。",note:"<code>닫다→닫아</code>（陽母音・規則。ㄷ変則ではない）。",noteZh:"<code>닫다→닫아</code>（阳元音·规则，非ㄷ变则）。",w:[{ko:"문",roman:"mun",ja:"ドア",zh:"门"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"},{ko:"닫다",roman:"datda",ja:"閉める",zh:"关"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください",zh:"请~（请求）"}]},
+        {ko:"조금만 기다려 주세요.",r:"jogeumman gidaryeo juseyo.",ja:"少しだけ待ってください。",zh:"请稍等一下。",note:"<code>기다리다→기다려</code>。",noteZh:"<code>기다리다→기다려</code>。",w:[{ko:"조금만",roman:"jogeumman",ja:"少しだけ",zh:"稍·只一会儿"},{ko:"기다리다",roman:"gidarida",ja:"待つ",zh:"等"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください",zh:"请~（请求）"}]},
+        {ko:"여기에 이름을 써 주세요.",r:"yeogie ireumeul sseo juseyo.",ja:"ここに名前を書いてください。",zh:"请在这里写上名字。",note:"<code>쓰다→써</code>（으탈락）。",noteZh:"<code>쓰다→써</code>（으脱落）。",w:[{ko:"여기",roman:"yeogi",ja:"ここ",zh:"这里"},{ko:"-에",roman:"-e",ja:"〜に",zh:"~在"},{ko:"이름",roman:"ireum",ja:"名前",zh:"名字"},{ko:"-을",roman:"-eul",ja:"〜を",zh:"宾格「～」"},{ko:"쓰다",roman:"sseuda",ja:"書く",zh:"写"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください",zh:"请~（请求）"}]},
+        {ko:"좀 도와주세요.",r:"jom dowajuseyo.",ja:"ちょっと手伝ってください。",zh:"请帮我一下。",note:"<code>돕다→도와</code>（ㅂ変則）。<code>좀</code>は依頼を和らげるクッション語。",noteZh:"<code>돕다→도와</code>（ㅂ变则）。<code>좀</code>是缓和请求语气的词。",w:[{ko:"좀",roman:"jom",ja:"ちょっと（依頼を和らげる）",zh:"稍·缓和语气"},{ko:"돕다",roman:"dopda",ja:"手伝う",zh:"帮"},{ko:"-아/어 주다",roman:"-a/eo juda",ja:"〜してあげる／くれる",zh:"给~做·帮~做"}]},
+        {ko:"다시 한번 말해 주세요.",r:"dasi hanbeon malhae juseyo.",ja:"もう一度言ってください。",zh:"请再说一遍。",note:"<code>말하다→말해</code>（하다用言は해）。",noteZh:"<code>말하다→말해</code>（하다类用言用해）。",w:[{ko:"다시",roman:"dasi",ja:"もう一度",zh:"再"},{ko:"한번",roman:"hanbeon",ja:"一度",zh:"一遍·一次"},{ko:"말하다",roman:"malhada",ja:"言う",zh:"说"},{ko:"-아/어 주세요",roman:"-a/eo juseyo",ja:"〜してください",zh:"请~（请求）"}]}
       ];
       function fActRequest() {
         const q = pick(RACTV);
         return {
-          ja: q.ja, ko: q.ko, roman: q.r, w: q.w,
+          ja: q.ja, zh: q.zh, ko: q.ko, roman: q.r, w: q.w,
           g: `<strong>「V-아/어 주세요」</strong>＝丁寧な依頼「〜してください」。陽母音語幹は<code>-아</code>、陰母音は<code>-어</code>、하다は<code>해</code>。${q.note}`,
+          gz: `<strong>「V-아/어 주세요」</strong>＝礼貌请求「请〜」。阳元音词干用<code>-아</code>，阴元音用<code>-어</code>，하다用<code>해</code>。${q.noteZh}`,
           alts: [q.ko.replace("주세요.", "주시겠어요?")]
         };
       }
@@ -6172,179 +6206,193 @@
       // ====== #3「助詞・希望・指示」用バンク（助詞のパッチム別形・活用は検証済みで事前格納）======
       // 希望 -고 싶다 / -고 싶지 않다（目的格はパッチム別に確定。-고は変則なし）
       const WISHV = [
-        {obj:"물을",objR:"mureul",noun:"물",nounR:"mul",nounJa:"水",op:"-을",opR:"-eul",vgo:"마시고",vgoR:"masigo",dict:"마시다",dictR:"masida",baseJa:"飲む",jaWant:"水が飲みたいです。",jaNo:"水は飲みたくないです。"},
-        {obj:"커피를",objR:"keopireul",noun:"커피",nounR:"keopi",nounJa:"コーヒー",op:"-를",opR:"-reul",vgo:"마시고",vgoR:"masigo",dict:"마시다",dictR:"masida",baseJa:"飲む",jaWant:"コーヒーが飲みたいです。",jaNo:"コーヒーは飲みたくないです。"},
-        {obj:"불고기를",objR:"bulgogireul",noun:"불고기",nounR:"bulgogi",nounJa:"プルコギ",op:"-를",opR:"-reul",vgo:"먹고",vgoR:"meokgo",dict:"먹다",dictR:"meokda",baseJa:"食べる",jaWant:"プルコギが食べたいです。",jaNo:"プルコギは食べたくないです。"},
-        {obj:"영화를",objR:"yeonghwareul",noun:"영화",nounR:"yeonghwa",nounJa:"映画",op:"-를",opR:"-reul",vgo:"보고",vgoR:"bogo",dict:"보다",dictR:"boda",baseJa:"見る",jaWant:"映画が見たいです。",jaNo:"映画は見たくないです。"},
-        {obj:"친구를",objR:"chingureul",noun:"친구",nounR:"chingu",nounJa:"友達",op:"-를",opR:"-reul",vgo:"만나고",vgoR:"mannago",dict:"만나다",dictR:"mannada",baseJa:"会う",jaWant:"友達に会いたいです。",jaNo:"友達には会いたくないです。"},
-        {obj:"한국어를",objR:"hangugeoreul",noun:"한국어",nounR:"hangugeo",nounJa:"韓国語",op:"-를",opR:"-reul",vgo:"배우고",vgoR:"baeugo",dict:"배우다",dictR:"baeuda",baseJa:"習う",jaWant:"韓国語が習いたいです。",jaNo:"韓国語は習いたくないです。"},
-        {obj:"옷을",objR:"oseul",noun:"옷",nounR:"ot",nounJa:"服",op:"-을",opR:"-eul",vgo:"사고",vgoR:"sago",dict:"사다",dictR:"sada",baseJa:"買う",jaWant:"服が買いたいです。",jaNo:"服は買いたくないです。"}
+        {obj:"물을",objR:"mureul",noun:"물",nounR:"mul",nounJa:"水",nounZh:"水",op:"-을",opR:"-eul",vgo:"마시고",vgoR:"masigo",dict:"마시다",dictR:"masida",baseJa:"飲む",baseZh:"喝",jaWant:"水が飲みたいです。",jaNo:"水は飲みたくないです。",zhWant:"想喝水。",zhNo:"不想喝水。"},
+        {obj:"커피를",objR:"keopireul",noun:"커피",nounR:"keopi",nounJa:"コーヒー",nounZh:"咖啡",op:"-를",opR:"-reul",vgo:"마시고",vgoR:"masigo",dict:"마시다",dictR:"masida",baseJa:"飲む",baseZh:"喝",jaWant:"コーヒーが飲みたいです。",jaNo:"コーヒーは飲みたくないです。",zhWant:"想喝咖啡。",zhNo:"不想喝咖啡。"},
+        {obj:"불고기를",objR:"bulgogireul",noun:"불고기",nounR:"bulgogi",nounJa:"プルコギ",nounZh:"烤肉",op:"-를",opR:"-reul",vgo:"먹고",vgoR:"meokgo",dict:"먹다",dictR:"meokda",baseJa:"食べる",baseZh:"吃",jaWant:"プルコギが食べたいです。",jaNo:"プルコギは食べたくないです。",zhWant:"想吃烤肉。",zhNo:"不想吃烤肉。"},
+        {obj:"영화를",objR:"yeonghwareul",noun:"영화",nounR:"yeonghwa",nounJa:"映画",nounZh:"电影",op:"-를",opR:"-reul",vgo:"보고",vgoR:"bogo",dict:"보다",dictR:"boda",baseJa:"見る",baseZh:"看",jaWant:"映画が見たいです。",jaNo:"映画は見たくないです。",zhWant:"想看电影。",zhNo:"不想看电影。"},
+        {obj:"친구를",objR:"chingureul",noun:"친구",nounR:"chingu",nounJa:"友達",nounZh:"朋友",op:"-를",opR:"-reul",vgo:"만나고",vgoR:"mannago",dict:"만나다",dictR:"mannada",baseJa:"会う",baseZh:"见",jaWant:"友達に会いたいです。",jaNo:"友達には会いたくないです。",zhWant:"想见朋友。",zhNo:"不想见朋友。"},
+        {obj:"한국어를",objR:"hangugeoreul",noun:"한국어",nounR:"hangugeo",nounJa:"韓国語",nounZh:"韩语",op:"-를",opR:"-reul",vgo:"배우고",vgoR:"baeugo",dict:"배우다",dictR:"baeuda",baseJa:"習う",baseZh:"学",jaWant:"韓国語が習いたいです。",jaNo:"韓国語は習いたくないです。",zhWant:"想学韩语。",zhNo:"不想学韩语。"},
+        {obj:"옷을",objR:"oseul",noun:"옷",nounR:"ot",nounJa:"服",nounZh:"衣服",op:"-을",opR:"-eul",vgo:"사고",vgoR:"sago",dict:"사다",dictR:"sada",baseJa:"買う",baseZh:"买",jaWant:"服が買いたいです。",jaNo:"服は買いたくないです。",zhWant:"想买衣服。",zhNo:"不想买衣服。"}
       ];
       function fWish() {
         const v = pick(WISHV), neg = rnd(2) === 0;
         return {
           ja: neg ? v.jaNo : v.jaWant,
+          zh: neg ? v.zhNo : v.zhWant,
           ko: neg ? `${v.obj} ${v.vgo} 싶지 않아요.` : `${v.obj} ${v.vgo} 싶어요.`,
           roman: neg ? `${v.objR} ${v.vgoR} sipji anayo.` : `${v.objR} ${v.vgoR} sipeoyo.`,
           w: [
-            {ko:v.noun,roman:v.nounR,ja:v.nounJa},
-            {ko:v.op,roman:v.opR,ja:"目的格助詞（を/に）"},
-            {ko:v.dict,roman:v.dictR,ja:v.baseJa},
-            neg ? {ko:"-고 싶지 않다",roman:"-go sipji anta",ja:"〜したくない"} : {ko:"-고 싶다",roman:"-go sipda",ja:"〜したい"}
+            {ko:v.noun,roman:v.nounR,ja:v.nounJa,zh:v.nounZh},
+            {ko:v.op,roman:v.opR,ja:"目的格助詞（を/に）",zh:"宾格助词（～）"},
+            {ko:v.dict,roman:v.dictR,ja:v.baseJa,zh:v.baseZh},
+            neg ? {ko:"-고 싶지 않다",roman:"-go sipji anta",ja:"〜したくない",zh:"~不想"} : {ko:"-고 싶다",roman:"-go sipda",ja:"〜したい",zh:"~想（愿望）"}
           ],
           g: `<strong>「V-고 싶다」</strong>＝願望「〜したい」(一人称)。否定は<code>-고 싶지 않다</code>が自然（前置否定<code>안 V-고 싶다</code>も可）。三人称は<code>-고 싶어하다</code>。`,
+          gz: `<strong>「V-고 싶다」</strong>＝愿望「想〜」(第一人称)。否定常用<code>-고 싶지 않다</code>（前置否定<code>안 V-고 싶다</code>也可）。第三人称用<code>-고 싶어하다</code>。`,
           alts: neg ? [`${v.obj} ${v.vgo} 싶지 않습니다.`] : [`${v.obj} ${v.vgo} 싶습니다.`]
         };
       }
       // 添加 -도（〜も）/ 限定 -만（〜だけ）。해요体・합쇼体を確定格納
       const PMV = [
-        {noun:"커피",nounR:"keopi",op:"-를",opR:"-reul",obj:"커피를",objR:"keopireul",v:"마셔요",vR:"masyeoyo",vF:"마십니다",vFR:"masimnida",dict:"마시다",dictR:"masida",baseJa:"飲む",jaV:"飲みます",nounJa:"コーヒー"},
-        {noun:"김치",nounR:"gimchi",op:"-를",opR:"-reul",obj:"김치를",objR:"gimchireul",v:"먹어요",vR:"meogeoyo",vF:"먹습니다",vFR:"meokseumnida",dict:"먹다",dictR:"meokda",baseJa:"食べる",jaV:"食べます",nounJa:"キムチ"},
-        {noun:"한국어",nounR:"hangugeo",op:"-를",opR:"-reul",obj:"한국어를",objR:"hangugeoreul",v:"공부해요",vR:"gongbuhaeyo",vF:"공부합니다",vFR:"gongbuhamnida",dict:"공부하다",dictR:"gongbuhada",baseJa:"勉強する",jaV:"勉強します",nounJa:"韓国語"},
-        {noun:"영화",nounR:"yeonghwa",op:"-를",opR:"-reul",obj:"영화를",objR:"yeonghwareul",v:"봐요",vR:"bwayo",vF:"봅니다",vFR:"bomnida",dict:"보다",dictR:"boda",baseJa:"見る",jaV:"見ます",nounJa:"映画"},
-        {noun:"빵",nounR:"ppang",op:"-을",opR:"-eul",obj:"빵을",objR:"ppang-eul",v:"먹어요",vR:"meogeoyo",vF:"먹습니다",vFR:"meokseumnida",dict:"먹다",dictR:"meokda",baseJa:"食べる",jaV:"食べます",nounJa:"パン"},
-        {noun:"물",nounR:"mul",op:"-을",opR:"-eul",obj:"물을",objR:"mureul",v:"마셔요",vR:"masyeoyo",vF:"마십니다",vFR:"masimnida",dict:"마시다",dictR:"masida",baseJa:"飲む",jaV:"飲みます",nounJa:"水"}
+        {noun:"커피",nounR:"keopi",op:"-를",opR:"-reul",obj:"커피를",objR:"keopireul",v:"마셔요",vR:"masyeoyo",vF:"마십니다",vFR:"masimnida",dict:"마시다",dictR:"masida",baseJa:"飲む",jaV:"飲みます",nounJa:"コーヒー",nounZh:"咖啡",vzh:"喝"},
+        {noun:"김치",nounR:"gimchi",op:"-를",opR:"-reul",obj:"김치를",objR:"gimchireul",v:"먹어요",vR:"meogeoyo",vF:"먹습니다",vFR:"meokseumnida",dict:"먹다",dictR:"meokda",baseJa:"食べる",jaV:"食べます",nounJa:"キムチ",nounZh:"泡菜",vzh:"吃"},
+        {noun:"한국어",nounR:"hangugeo",op:"-를",opR:"-reul",obj:"한국어를",objR:"hangugeoreul",v:"공부해요",vR:"gongbuhaeyo",vF:"공부합니다",vFR:"gongbuhamnida",dict:"공부하다",dictR:"gongbuhada",baseJa:"勉強する",jaV:"勉強します",nounJa:"韓国語",nounZh:"韩语",vzh:"学习"},
+        {noun:"영화",nounR:"yeonghwa",op:"-를",opR:"-reul",obj:"영화를",objR:"yeonghwareul",v:"봐요",vR:"bwayo",vF:"봅니다",vFR:"bomnida",dict:"보다",dictR:"boda",baseJa:"見る",jaV:"見ます",nounJa:"映画",nounZh:"电影",vzh:"看"},
+        {noun:"빵",nounR:"ppang",op:"-을",opR:"-eul",obj:"빵을",objR:"ppang-eul",v:"먹어요",vR:"meogeoyo",vF:"먹습니다",vFR:"meokseumnida",dict:"먹다",dictR:"meokda",baseJa:"食べる",jaV:"食べます",nounJa:"パン",nounZh:"面包",vzh:"吃"},
+        {noun:"물",nounR:"mul",op:"-을",opR:"-eul",obj:"물을",objR:"mureul",v:"마셔요",vR:"masyeoyo",vF:"마십니다",vFR:"masimnida",dict:"마시다",dictR:"masida",baseJa:"飲む",jaV:"飲みます",nounJa:"水",nounZh:"水",vzh:"喝"}
       ];
       function fParticle() {
         const p = pick(PMV), man = rnd(2) === 0;
         if (man) {
           return {
             ja: `私は${p.nounJa}だけ${p.jaV}。`,
+            zh: `我只${p.vzh}${p.nounZh}。`,
             ko: `저는 ${p.noun}만 ${p.v}.`,
             roman: `jeoneun ${p.nounR}man ${p.vR}.`,
             w: [
-              {ko:"저",roman:"jeo",ja:"私（謙譲）"},
-              {ko:"-는",roman:"-neun",ja:"主題助詞「は」"},
-              {ko:p.noun,roman:p.nounR,ja:p.nounJa},
-              {ko:"-만",roman:"-man",ja:"〜だけ（限定）"},
-              {ko:p.dict,roman:p.dictR,ja:p.baseJa}
+              {ko:"저",roman:"jeo",ja:"私（謙譲）",zh:"我（谦让）"},
+              {ko:"-는",roman:"-neun",ja:"主題助詞「は」",zh:"主题助词「是·～」"},
+              {ko:p.noun,roman:p.nounR,ja:p.nounJa,zh:p.nounZh},
+              {ko:"-만",roman:"-man",ja:"〜だけ（限定）",zh:"~只·仅（限定）"},
+              {ko:p.dict,roman:p.dictR,ja:p.baseJa,zh:p.vzh}
             ],
             g: `<strong>限定の <code>-만</code></strong>（〜だけ）。目的格 <code>-을/를</code> は普通省く（×<code>${p.noun}를만</code>→<code>${p.noun}만</code>）。`,
+            gz: `<strong>限定的 <code>-만</code></strong>（只·仅）。宾格 <code>-을/를</code> 通常省略（×<code>${p.noun}를만</code>→<code>${p.noun}만</code>）。`,
             alts: [`저는 ${p.noun}만 ${p.vF}.`]
           };
         }
         return {
           ja: `私も${p.nounJa}を${p.jaV}。`,
+          zh: `我也${p.vzh}${p.nounZh}。`,
           ko: `저도 ${p.obj} ${p.v}.`,
           roman: `jeodo ${p.objR} ${p.vR}.`,
           w: [
-            {ko:"저",roman:"jeo",ja:"私（謙譲）"},
-            {ko:"-도",roman:"-do",ja:"〜も（添加）"},
-            {ko:p.noun,roman:p.nounR,ja:p.nounJa},
-            {ko:p.op,roman:p.opR,ja:"目的格助詞「を」"},
-            {ko:p.dict,roman:p.dictR,ja:p.baseJa}
+            {ko:"저",roman:"jeo",ja:"私（謙譲）",zh:"我（谦让）"},
+            {ko:"-도",roman:"-do",ja:"〜も（添加）",zh:"~也（添加）"},
+            {ko:p.noun,roman:p.nounR,ja:p.nounJa,zh:p.nounZh},
+            {ko:p.op,roman:p.opR,ja:"目的格助詞「を」",zh:"宾格助词「～」"},
+            {ko:p.dict,roman:p.dictR,ja:p.baseJa,zh:p.vzh}
           ],
           g: `<strong>添加の <code>-도</code></strong>（〜も）は主格・主題を置き換える（<code>저는→저도</code>、×<code>저는도</code>）。パッチムの有無で形は不変。`,
+          gz: `<strong>添加的 <code>-도</code></strong>（～也）替换主格·主题（<code>저는→저도</code>，×<code>저는도</code>）。不随收音有无而变形。`,
           alts: [`저도 ${p.obj} ${p.vF}.`]
         };
       }
       // 指示 이것/그것/저것 + (소유) + 名詞 + 이에요/예요（コピュラはパッチム別に確定）
       const DEMO_DEM = [
-        {ko:"이것",r:"igeot",eun:"이것은",eunR:"igeoseun",ja:"これ"},
-        {ko:"그것",r:"geugeot",eun:"그것은",eunR:"geugeoseun",ja:"それ"},
-        {ko:"저것",r:"jeogeot",eun:"저것은",eunR:"jeogeoseun",ja:"あれ"}
+        {ko:"이것",r:"igeot",eun:"이것은",eunR:"igeoseun",ja:"これ",zh:"这个"},
+        {ko:"그것",r:"geugeot",eun:"그것은",eunR:"geugeoseun",ja:"それ",zh:"那个"},
+        {ko:"저것",r:"jeogeot",eun:"저것은",eunR:"jeogeoseun",ja:"あれ",zh:"那个（远处）"}
       ];
       const DEMO_N = [
-        {base:"책",baseR:"chaek",cop:"이에요",copR:"-ieyo",fullKo:"책이에요",fullR:"chaeg-ieyo",ja:"本"},
-        {base:"가방",baseR:"gabang",cop:"이에요",copR:"-ieyo",fullKo:"가방이에요",fullR:"gabang-ieyo",ja:"カバン"},
-        {base:"우산",baseR:"usan",cop:"이에요",copR:"-ieyo",fullKo:"우산이에요",fullR:"usan-ieyo",ja:"傘"},
-        {base:"시계",baseR:"sigye",cop:"예요",copR:"-yeyo",fullKo:"시계예요",fullR:"sigye-yeyo",ja:"時計"},
-        {base:"의자",baseR:"uija",cop:"예요",copR:"-yeyo",fullKo:"의자예요",fullR:"uija-yeyo",ja:"椅子"},
-        {base:"모자",baseR:"moja",cop:"예요",copR:"-yeyo",fullKo:"모자예요",fullR:"moja-yeyo",ja:"帽子"}
+        {base:"책",baseR:"chaek",cop:"이에요",copR:"-ieyo",fullKo:"책이에요",fullR:"chaeg-ieyo",ja:"本",zh:"书"},
+        {base:"가방",baseR:"gabang",cop:"이에요",copR:"-ieyo",fullKo:"가방이에요",fullR:"gabang-ieyo",ja:"カバン",zh:"包"},
+        {base:"우산",baseR:"usan",cop:"이에요",copR:"-ieyo",fullKo:"우산이에요",fullR:"usan-ieyo",ja:"傘",zh:"雨伞"},
+        {base:"시계",baseR:"sigye",cop:"예요",copR:"-yeyo",fullKo:"시계예요",fullR:"sigye-yeyo",ja:"時計",zh:"钟表"},
+        {base:"의자",baseR:"uija",cop:"예요",copR:"-yeyo",fullKo:"의자예요",fullR:"uija-yeyo",ja:"椅子",zh:"椅子"},
+        {base:"모자",baseR:"moja",cop:"예요",copR:"-yeyo",fullKo:"모자예요",fullR:"moja-yeyo",ja:"帽子",zh:"帽子"}
       ];
       const POSS = [
-        {ko:"",r:"",ja:""}, {ko:"제 ",r:"je ",ja:"私の"}, {ko:"친구 ",r:"chingu ",ja:"友達の"}
+        {ko:"",r:"",ja:"",zh:""}, {ko:"제 ",r:"je ",ja:"私の",zh:"我的"}, {ko:"친구 ",r:"chingu ",ja:"友達の",zh:"朋友的"}
       ];
       function fThing() {
         const d = pick(DEMO_DEM), n = pick(DEMO_N), p = pick(POSS);
         return {
           ja: `${d.ja}は${p.ja}${n.ja}です。`,
+          zh: `${d.zh}是${p.zh}${n.zh}。`,
           ko: `${d.eun} ${p.ko}${n.fullKo}.`,
           roman: `${d.eunR} ${p.r}${n.fullR}.`,
           w: [
-            {ko:d.ko,roman:d.r,ja:d.ja},
-            {ko:"-은",roman:"-eun",ja:"主題助詞「は」"},
-            ...(p.ko ? [{ko:p.ko.trim(),roman:p.r.trim(),ja:p.ja}] : []),
-            {ko:n.base,roman:n.baseR,ja:n.ja},
-            {ko:n.cop,roman:n.copR,ja:"〜です（指定詞）"}
+            {ko:d.ko,roman:d.r,ja:d.ja,zh:d.zh},
+            {ko:"-은",roman:"-eun",ja:"主題助詞「は」",zh:"主题助词「是·～」"},
+            ...(p.ko ? [{ko:p.ko.trim(),roman:p.r.trim(),ja:p.ja,zh:p.zh}] : []),
+            {ko:n.base,roman:n.baseR,ja:n.ja,zh:n.zh},
+            {ko:n.cop,roman:n.copR,ja:"〜です（指定詞）",zh:"~是（指定词）"}
           ],
           g: `<strong>指示代名詞</strong>：<code>이것</code>（これ）／<code>그것</code>（それ）／<code>저것</code>（あれ）。「私の」は<code>저의→제</code>。「〜です」はパッチム有<code>이에요</code>／無<code>예요</code>。口語では<code>이거/그거/저거</code>も多用。`,
+          gz: `<strong>指示代词</strong>：<code>이것</code>（这个）／<code>그것</code>（那个）／<code>저것</code>（那个·远）。「我的」是<code>저의→제</code>。「是〜」按收音有<code>이에요</code>／无<code>예요</code>。口语常用<code>이거/그거/저거</code>。`,
           alts: [`${d.eun} ${p.ko}${n.base}입니다.`]
         };
       }
       // 与格 -에게/-한테（人に）＋ 주다。物・場所の -에 と区別
       const RECIP = [
-        {ko:"친구",r:"chingu",ja:"友達"}, {ko:"동생",r:"dongsaeng",ja:"弟・妹"},
-        {ko:"엄마",r:"eomma",ja:"お母さん"}, {ko:"형",r:"hyeong",ja:"兄"}
+        {ko:"친구",r:"chingu",ja:"友達",zh:"朋友"}, {ko:"동생",r:"dongsaeng",ja:"弟・妹",zh:"弟弟·妹妹"},
+        {ko:"엄마",r:"eomma",ja:"お母さん",zh:"妈妈"}, {ko:"형",r:"hyeong",ja:"兄",zh:"哥哥"}
       ];
       const GOBJ = [
-        {base:"선물",baseR:"seonmul",op:"-을",opR:"-eul",obj:"선물을",objR:"seonmureul",ja:"プレゼント"},
-        {base:"꽃",baseR:"kkot",op:"-을",opR:"-eul",obj:"꽃을",objR:"kkoch-eul",ja:"花"},
-        {base:"책",baseR:"chaek",op:"-을",opR:"-eul",obj:"책을",objR:"chaeg-eul",ja:"本"},
-        {base:"편지",baseR:"pyeonji",op:"-를",opR:"-reul",obj:"편지를",objR:"pyeonjireul",ja:"手紙"}
+        {base:"선물",baseR:"seonmul",op:"-을",opR:"-eul",obj:"선물을",objR:"seonmureul",ja:"プレゼント",zh:"礼物"},
+        {base:"꽃",baseR:"kkot",op:"-을",opR:"-eul",obj:"꽃을",objR:"kkoch-eul",ja:"花",zh:"花"},
+        {base:"책",baseR:"chaek",op:"-을",opR:"-eul",obj:"책을",objR:"chaeg-eul",ja:"本",zh:"书"},
+        {base:"편지",baseR:"pyeonji",op:"-를",opR:"-reul",obj:"편지를",objR:"pyeonjireul",ja:"手紙",zh:"信"}
       ];
       function fGive() {
         const r = pick(RECIP), o = pick(GOBJ), hante = rnd(2) === 0;
         const dat = hante ? {ko:"한테",r:"-hante"} : {ko:"에게",r:"-ege"};
         return {
           ja: `${r.ja}に${o.ja}をあげます。`,
+          zh: `给${r.zh}${o.zh}。`,
           ko: `${r.ko}${dat.ko} ${o.obj} 줘요.`,
           roman: `${r.r}${dat.r} ${o.objR} jwoyo.`,
           w: [
-            {ko:r.ko,roman:r.r,ja:r.ja},
-            {ko:`-${dat.ko}`,roman:dat.r,ja:"〜に（人・与格）"},
-            {ko:o.base,roman:o.baseR,ja:o.ja},
-            {ko:o.op,roman:o.opR,ja:"目的格助詞「を」"},
-            {ko:"주다",roman:"juda",ja:"あげる"}
+            {ko:r.ko,roman:r.r,ja:r.ja,zh:r.zh},
+            {ko:`-${dat.ko}`,roman:dat.r,ja:"〜に（人・与格）",zh:"~给（人·与格）"},
+            {ko:o.base,roman:o.baseR,ja:o.ja,zh:o.zh},
+            {ko:o.op,roman:o.opR,ja:"目的格助詞「を」",zh:"宾格助词「～」"},
+            {ko:"주다",roman:"juda",ja:"あげる",zh:"给"}
           ],
           g: `<strong>与格 <code>-에게/-한테</code></strong>（人に）。<code>-한테</code>は口語的、目上には<code>-께</code>。物・場所の「に」は<code>-에</code>で区別。<code>주다→줘요</code>（주어요の縮約）。`,
+          gz: `<strong>与格 <code>-에게/-한테</code></strong>（给人）。<code>-한테</code>偏口语，对长辈用<code>-께</code>。物·场所的「到」用<code>-에</code>区分。<code>주다→줘요</code>（주어요的缩约）。`,
           alts: [`${r.ko}${hante?"에게":"한테"} ${o.obj} 줘요.`, `${r.ko}${dat.ko} ${o.obj} 줍니다.`]
         };
       }
       // 主格 -이/가 ＋ 形容詞、および 좋다（N이/가）と 좋아하다（N을/를）の使い分け
       const SUBJADJ = [
-        {subj:"날씨가",subjR:"nalssiga",noun:"날씨",nounR:"nalssi",part:"-가",partR:"-ga",adj:"좋아요",adjR:"joayo",adjF:"좋습니다",adjFR:"joseumnida",dict:"좋다",ja:"天気",adjJa:"いいです"},
-        {subj:"가방이",subjR:"gabang-i",noun:"가방",nounR:"gabang",part:"-이",partR:"-i",adj:"비싸요",adjR:"bissayo",adjF:"비쌉니다",adjFR:"bissamnida",dict:"비싸다",ja:"カバン",adjJa:"高いです"},
-        {subj:"음식이",subjR:"eumsig-i",noun:"음식",nounR:"eumsik",part:"-이",partR:"-i",adj:"맛있어요",adjR:"masisseoyo",adjF:"맛있습니다",adjFR:"masitseumnida",dict:"맛있다",ja:"料理",adjJa:"おいしいです"},
-        {subj:"방이",subjR:"bang-i",noun:"방",nounR:"bang",part:"-이",partR:"-i",adj:"커요",adjR:"keoyo",adjF:"큽니다",adjFR:"keumnida",dict:"크다",ja:"部屋",adjJa:"大きいです"},
-        {subj:"꽃이",subjR:"kkochi",noun:"꽃",nounR:"kkot",part:"-이",partR:"-i",adj:"예뻐요",adjR:"yeppeoyo",adjF:"예쁩니다",adjFR:"yeppeumnida",dict:"예쁘다",ja:"花",adjJa:"きれいです"}
+        {subj:"날씨가",subjR:"nalssiga",noun:"날씨",nounR:"nalssi",part:"-가",partR:"-ga",adj:"좋아요",adjR:"joayo",adjF:"좋습니다",adjFR:"joseumnida",dict:"좋다",ja:"天気",adjJa:"いいです",zh:"天气",zhPred:"很好",glossZh:"好"},
+        {subj:"가방이",subjR:"gabang-i",noun:"가방",nounR:"gabang",part:"-이",partR:"-i",adj:"비싸요",adjR:"bissayo",adjF:"비쌉니다",adjFR:"bissamnida",dict:"비싸다",ja:"カバン",adjJa:"高いです",zh:"包",zhPred:"很贵",glossZh:"（价格）贵"},
+        {subj:"음식이",subjR:"eumsig-i",noun:"음식",nounR:"eumsik",part:"-이",partR:"-i",adj:"맛있어요",adjR:"masisseoyo",adjF:"맛있습니다",adjFR:"masitseumnida",dict:"맛있다",ja:"料理",adjJa:"おいしいです",zh:"菜·食物",zhPred:"很好吃",glossZh:"好吃"},
+        {subj:"방이",subjR:"bang-i",noun:"방",nounR:"bang",part:"-이",partR:"-i",adj:"커요",adjR:"keoyo",adjF:"큽니다",adjFR:"keumnida",dict:"크다",ja:"部屋",adjJa:"大きいです",zh:"房间",zhPred:"很大",glossZh:"大（크다）"},
+        {subj:"꽃이",subjR:"kkochi",noun:"꽃",nounR:"kkot",part:"-이",partR:"-i",adj:"예뻐요",adjR:"yeppeoyo",adjF:"예쁩니다",adjFR:"yeppeumnida",dict:"예쁘다",ja:"花",adjJa:"きれいです",zh:"花",zhPred:"很漂亮",glossZh:"漂亮（예쁘다）"}
       ];
       const LIKE = [
-        {ko:"사과",r:"sagwa",op:"-를",opR:"-reul",obj:"사과를",objR:"sagwareul",subj:"사과가",subjR:"sagwaga",ja:"りんご"},
-        {ko:"커피",r:"keopi",op:"-를",opR:"-reul",obj:"커피를",objR:"keopireul",subj:"커피가",subjR:"keopiga",ja:"コーヒー"},
-        {ko:"강아지",r:"gangaji",op:"-를",opR:"-reul",obj:"강아지를",objR:"gangajireul",subj:"강아지가",subjR:"gangajiga",ja:"子犬"},
-        {ko:"음악",r:"eumak",op:"-을",opR:"-eul",obj:"음악을",objR:"eumag-eul",subj:"음악이",subjR:"eumag-i",ja:"音楽"},
-        {ko:"여행",r:"yeohaeng",op:"-을",opR:"-eul",obj:"여행을",objR:"yeohaeng-eul",subj:"여행이",subjR:"yeohaeng-i",ja:"旅行"}
+        {ko:"사과",r:"sagwa",op:"-를",opR:"-reul",obj:"사과를",objR:"sagwareul",subj:"사과가",subjR:"sagwaga",ja:"りんご",zh:"苹果"},
+        {ko:"커피",r:"keopi",op:"-를",opR:"-reul",obj:"커피를",objR:"keopireul",subj:"커피가",subjR:"keopiga",ja:"コーヒー",zh:"咖啡"},
+        {ko:"강아지",r:"gangaji",op:"-를",opR:"-reul",obj:"강아지를",objR:"gangajireul",subj:"강아지가",subjR:"gangajiga",ja:"子犬",zh:"小狗"},
+        {ko:"음악",r:"eumak",op:"-을",opR:"-eul",obj:"음악을",objR:"eumag-eul",subj:"음악이",subjR:"eumag-i",ja:"音楽",zh:"音乐"},
+        {ko:"여행",r:"yeohaeng",op:"-을",opR:"-eul",obj:"여행을",objR:"yeohaeng-eul",subj:"여행이",subjR:"yeohaeng-i",ja:"旅行",zh:"旅行"}
       ];
       function fSubject() {
         if (rnd(2) === 0) {
           const a = pick(SUBJADJ);
           return {
             ja: `${a.ja}が${a.adjJa}。`,
+            zh: `${a.zh}${a.zhPred}。`,
             ko: `${a.subj} ${a.adj}.`,
             roman: `${a.subjR} ${a.adjR}.`,
             w: [
-              {ko:a.noun,roman:a.nounR,ja:a.ja},
-              {ko:a.part,roman:a.partR,ja:"主格助詞（が）"},
-              {ko:a.adj,roman:a.adjR,ja:`${a.adjJa}（${a.dict}）`}
+              {ko:a.noun,roman:a.nounR,ja:a.ja,zh:a.zh},
+              {ko:a.part,roman:a.partR,ja:"主格助詞（が）",zh:"主格助词（～）"},
+              {ko:a.adj,roman:a.adjR,ja:`${a.adjJa}（${a.dict}）`,zh:`${a.glossZh}（${a.dict}）`}
             ],
             g: `<strong>主格助詞</strong>：パッチム有→<code>-이</code>、無→<code>-가</code>（<code>날씨가</code>／<code>음식이</code>）。形容詞も해요体で活用する。`,
+            gz: `<strong>主格助词</strong>：有收音→<code>-이</code>，无收音→<code>-가</code>（<code>날씨가</code>／<code>음식이</code>）。形容词也按해요体活用。`,
             alts: [`${a.subj} ${a.adjF}.`]
           };
         }
         const L = pick(LIKE);
         return {
           ja: `私は${L.ja}が好きです。`,
+          zh: `我喜欢${L.zh}。`,
           ko: `저는 ${L.obj} 좋아해요.`,
           roman: `jeoneun ${L.objR} joahaeyo.`,
           w: [
-            {ko:"저",roman:"jeo",ja:"私（謙譲）"},
-            {ko:"-는",roman:"-neun",ja:"主題助詞「は」"},
-            {ko:L.ko,roman:L.r,ja:L.ja},
-            {ko:L.op,roman:L.opR,ja:"目的格助詞「を」"},
-            {ko:"좋아하다",roman:"joahada",ja:"好む（他動詞）"}
+            {ko:"저",roman:"jeo",ja:"私（謙譲）",zh:"我（谦让）"},
+            {ko:"-는",roman:"-neun",ja:"主題助詞「は」",zh:"主题助词「是·～」"},
+            {ko:L.ko,roman:L.r,ja:L.ja,zh:L.zh},
+            {ko:L.op,roman:L.opR,ja:"目的格助詞「を」",zh:"宾格助词「～」"},
+            {ko:"좋아하다",roman:"joahada",ja:"好む（他動詞）",zh:"喜欢（他动词）"}
           ],
           g: `「好き」は<strong>他動詞 <code>좋아하다</code></strong>＝<code>N을/를 좋아하다</code>。形容詞<code>좋다</code>を使うと<code>N이/가 좋다</code>（感情的・×を）。行為的な좋아하다と助詞が変わる。`,
+          gz: `「喜欢」是<strong>他动词 <code>좋아하다</code></strong>＝<code>N을/를 좋아하다</code>。用形容词<code>좋다</code>则是<code>N이/가 좋다</code>（情感性·不用宾格）。助词随之改变。`,
           alts: [`저는 ${L.subj} 좋아요.`, `저는 ${L.obj} 좋아합니다.`]
         };
       }
