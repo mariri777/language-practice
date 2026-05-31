@@ -104,7 +104,7 @@
 
 <div class="wrap">
   <h1>貼って読む<span class="dot">.</span></h1>
-  <p class="lead">気になる中国語・韓国語を貼るだけ。日本語訳と単語が出て、覚えたい語は自分の辞書に貯められます。</p>
+  <p class="lead">気になる中国語・韓国語を貼るだけ。日本語訳と単語・文法が出て、覚えたい語は自分の辞書に貯められます。</p>
 
   <!-- settings -->
   <div class="card" id="settings">
@@ -159,6 +159,9 @@
 
       <div class="sec-title">単語</div>
       <div id="words"></div>
+
+      <div class="sec-title" id="gramTitle">文法</div>
+      <div id="grams"></div>
     </div>
   </div>
 
@@ -295,12 +298,13 @@
     $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>解析中…';
 
     const prompt = `あなたは日本語話者向けの語学アシスタントです。入力はSNS・チャットのくだけた文の可能性が高く、ネットスラング・略語・新語・方言・感情表現（例: 韓国語の「ㅋㅋ＝笑」「ㅠㅠ＝泣」、中国語の「yyds＝最高」「绝绝子＝神」など）が含まれる前提で解析してください。下記JSONのみを返す（前後に説明文を付けない）。
-{"translation":"自然な日本語訳。文字どおりでなく、SNSでの実際のニュアンスで訳す","words":[{"term":"文中の語句（スラング・略語も含める）","reading":"中国語=ピンイン / 韓国語=ローマ字発音","meaning":"日本語の意味。ネット用法があればその意味を優先"}]}
+{"translation":"自然な日本語訳。文字どおりでなく、SNSでの実際のニュアンスで訳す","words":[{"term":"文中の語句（スラング・略語も含める）","reading":"中国語=ピンイン / 韓国語=ローマ字発音","meaning":"日本語の意味。ネット用法があればその意味を優先"}],"grammar":[{"point":"文中に実際に現れた助詞・語尾・文型を、現れた形そのままで","note":"この文での働きを正確に1〜2文で"}]}
 
 ルール：
 - スラング・略語・記号的表現も words に積極的に含める（それこそ学びたい語）。
 - 意味に確信が持てない語は、meaning の先頭に「(推測)」と付け、分かる範囲で書く。知ったかぶりで断定しない。
 - 固有名詞・完全に自明な語は省く。words は5〜12個目安。
+- grammar：この文に本当に出てくるものだけ、0〜4個。文に存在しない文法を作らない。point は文中に出た形そのまま（例：韓国語「-에」「게（것이の縮約）」「-지」、中国語「把」「了」「的」）。一般化した辞書見出しにしない。別々の助詞を1つにまとめない。
 文："""${text}"""`;
 
     try{
@@ -349,6 +353,11 @@
         b.classList.add('saved'); b.textContent='✓ 追加済';
       });
     });
+
+    // grammar
+    const grams = Array.isArray(data.grammar)?data.grammar:[];
+    $('gramTitle').style.display = grams.length ? '' : 'none';
+    $('grams').innerHTML = grams.map(g=>`<div class="gram"><span class="pt">${esc(g.point)}</span><span class="note"> — ${esc(g.note)}</span></div>`).join('');
 
     $('result').style.display='block';
     $('result').scrollIntoView({behavior:'smooth', block:'start'});
