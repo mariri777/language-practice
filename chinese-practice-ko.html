@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="daily.css?v=9" />
+  <link rel="stylesheet" href="daily.css?v=10" />
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
 <script src="daily.js?v=1"></script>
@@ -3133,12 +3133,15 @@
     function renderResult(user) {
       const cmp = compareAnswer(user, currentSent.zh);
       const isCorrect = checkAlternatives(user) || cmp.verdict === "correct";
+      // 다른 정답으로 맞혔는지(모범 답안 그 자체가 아닌 수용)
+      const viaAlt = isCorrect && user && canonical(user) !== canonical(currentSent.zh);
 
       let alreadyMastered = masteredList(state.currentCourseId).includes(currentSentIdx);
       let verdictHTML;
       if (isCorrect) {
         const badge = alreadyMastered ? "" : `<span class="mastered-badge">+1 마스터</span>`;
-        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">✓</span>정답입니다${badge}</div>`;
+        const altNote = viaAlt ? `<span class="verdict-alt">입력하신 답도 정답이에요</span>` : "";
+        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">✓</span>정답입니다${badge}${altNote}</div>`;
       } else if (cmp.verdict === "partial") {
         verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">↻</span>아쉬워요！다시 도전</div>`;
       } else {
@@ -3152,6 +3155,16 @@
           <div class="word-ja">${w.j}</div>
         </div>
       `).join("");
+
+      // 다른 정답(alts): 문자열 or {zh, note}를 받아 모범 답안과 겹치지 않는 것만 표시
+      const altItems = (currentSent.alts || [])
+        .map(a => (typeof a === "string" ? { zh: a } : a))
+        .filter(a => a && a.zh && normalize(a.zh) !== normalize(currentSent.zh));
+      const altsHTML = altItems.length ? `
+          <div class="section-title">다른 정답(둘 다 정답)</div>
+          <div class="alts-block">
+            ${altItems.map(a => `<div class="alt-item"><span class="alt-zh zh">${tx(a.zh)}</span>${a.note ? `<span class="alt-note">${a.note}</span>` : ""}</div>`).join("")}
+          </div>` : "";
 
       const yourAnsHTML = (user && !isCorrect)
         ? `<div class="your-answer"><span style="color:var(--ink-mute);font-size:11px;">내 답안：</span><br>${cmp.diff || user}</div>` : "";
@@ -3170,6 +3183,7 @@
             <div class="answer-pinyin">${currentSent.py}</div>
             ${yourAnsHTML}
           </div>
+          ${altsHTML}
           <div class="section-title">문법 포인트</div>
           <div class="grammar-block">${tx(currentSent.g)}</div>
           <div class="section-title">단어</div>

@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="daily.css?v=9" />
+  <link rel="stylesheet" href="daily.css?v=10" />
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
 <script src="daily.js?v=1"></script>
@@ -2721,12 +2721,15 @@
     function renderResult(user) {
       const cmp = compareAnswer(user, currentSent.zh);
       const isCorrect = checkAlternatives(user) || cmp.verdict === "correct";
+      // 別解で正解したか（模範解答そのものではない受理）
+      const viaAlt = isCorrect && user && canonical(user) !== canonical(currentSent.zh);
 
       let alreadyMastered = masteredList(state.currentCourseId).includes(currentSentIdx);
       let verdictHTML;
       if (isCorrect) {
         const badge = alreadyMastered ? "" : `<span class="mastered-badge">+1 マスター</span>`;
-        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">✓</span>正解！${badge}</div>`;
+        const altNote = viaAlt ? `<span class="verdict-alt">あなたの答えも別解として正解です</span>` : "";
+        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">✓</span>正解！${badge}${altNote}</div>`;
       } else if (cmp.verdict === "partial") {
         verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">↻</span>惜しい！もう一度挑戦</div>`;
       } else {
@@ -2740,6 +2743,16 @@
           <div class="word-ja">${w.j}</div>
         </div>
       `).join("");
+
+      // 別解（alts）: 文字列 or {zh, note} を受け、模範解答と重複しないものを表示
+      const altItems = (currentSent.alts || [])
+        .map(a => (typeof a === "string" ? { zh: a } : a))
+        .filter(a => a && a.zh && normalize(a.zh) !== normalize(currentSent.zh));
+      const altsHTML = altItems.length ? `
+          <div class="section-title">別解（どちらも正解）</div>
+          <div class="alts-block">
+            ${altItems.map(a => `<div class="alt-item"><span class="alt-zh zh">${tx(a.zh)}</span>${a.note ? `<span class="alt-note">${a.note}</span>` : ""}</div>`).join("")}
+          </div>` : "";
 
       const yourAnsHTML = (user && !isCorrect)
         ? `<div class="your-answer"><span style="color:var(--ink-mute);font-size:11px;">あなたの答え：</span><br>${cmp.diff || user}</div>` : "";
@@ -2758,6 +2771,7 @@
             <div class="answer-pinyin">${currentSent.py}</div>
             ${yourAnsHTML}
           </div>
+          ${altsHTML}
           <div class="section-title">文法ポイント</div>
           <div class="grammar-block">${tx(currentSent.g)}</div>
           <div class="section-title">単語</div>

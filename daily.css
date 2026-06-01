@@ -211,6 +211,11 @@ input,textarea,button{ font-family:inherit; color:inherit; }
 .speak-btn:hover{ color:var(--accent); }
 .answer-pinyin,.answer-roman{ font-family:var(--font-cjk); font-size:14px; color:var(--ink-3); margin-top:5px; }
 .your-answer{ margin-top:12px; padding:10px 12px; background:var(--bad-soft); border-radius:8px; font-family:var(--font-cjk); font-size:16px; }
+.verdict-alt{ font-size:12px; font-weight:600; color:var(--ink-3); margin-left:8px; }
+.alts-block{ display:flex; flex-direction:column; gap:7px; }
+.alt-item{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; padding:9px 12px; background:var(--surface-2); border-left:2px solid var(--good); border-radius:0 8px 8px 0; }
+.alt-zh{ font-family:var(--font-cjk); font-size:18px; font-weight:600; color:var(--ink); }
+.alt-note{ font-size:12px; color:var(--ink-3); }
 .section-title{ font-family:var(--font-display); font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin:22px 0 9px; }
 .grammar-block{ font-size:14px; line-height:1.78; color:var(--ink-2); border-left:2px solid var(--accent); padding-left:14px; }
 .grammar-block code{ font-family:var(--font-cjk); background:var(--surface-2); border:1px solid var(--hairline); padding:1px 5px; border-radius:3px; color:var(--accent); font-size:.92em; font-weight:500; }
