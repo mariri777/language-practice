@@ -196,7 +196,7 @@
     const COURSES = [
       // ============ HSK 1 ============
       {
-        hsk: 1, num: 1, title: "인사·자기소개",
+        hsk: 1, num: 1, title: "인사·자기소개", mode: "pool",
         sentences: [
           {
             ja: "안녕하세요.", zh: "你好。", py: "nǐ hǎo.",
@@ -249,6 +249,52 @@
             g: "<strong><code>再</code>(또)＋<code>见</code>(만나다)</strong>로 「또 만나요＝안녕히」. 직역에 가까운 구성으로 외우기 쉬움.<br>편한 말투: <code>拜拜(báibái)</code>(바이바이). 「또 봐」 계열: <code>明天见</code>(내일 봐요), <code>回头见</code>(이따 봐요), <code>下次见</code>(다음에 봐요).",
             w: [{z:"再",p:"zài",j:"또, 다시"},{z:"见",p:"jiàn",j:"만나다"}]
           }
+        ],
+        pool: [
+          { ja:"안녕하세요.", zh:"你好。", py:"nǐ hǎo.", g:"<strong>「你好」</strong>는 가장 기본적인 인사. <code>你</code>(너)＋<code>好</code>(좋다). 시간·상대에 관계없이 두루 쓴다.", w:[{z:"你",p:"nǐ",j:"너"},{z:"好",p:"hǎo",j:"좋다"}] },
+          { ja:"안녕하세요. (정중)", zh:"您好。", py:"nín hǎo.", g:"<strong>「您好」</strong>의 <code>您</code>은 <code>你</code>의 존칭. 윗사람·처음 만나는 사이·접객에서 쓴다.", w:[{z:"您",p:"nín",j:"당신(존칭)"},{z:"好",p:"hǎo",j:"좋다"}] },
+          { ja:"여러분, 안녕하세요.", zh:"你们好。", py:"nǐmen hǎo.", g:"<code>你们</code>은 <code>你</code>의 복수형(<code>们</code>＝〜들). 여러 사람에게 인사할 때.", w:[{z:"你们",p:"nǐmen",j:"너희"},{z:"好",p:"hǎo",j:"좋다"}] },
+          { ja:"여러분, 안녕하세요.", zh:"大家好。", py:"dàjiā hǎo.", g:"<code>大家</code>＝모두·여러분. <code>你们好</code>보다 청중 전체를 부르는 느낌.", w:[{z:"大家",p:"dàjiā",j:"모두"},{z:"好",p:"hǎo",j:"좋다"}] },
+          { ja:"좋은 아침입니다.", zh:"早上好。", py:"zǎoshang hǎo.", g:"<code>早上好</code>＝아침 인사. <code>早上</code>(아침)＋<code>好</code>. 친한 사이엔 <code>早！</code>만으로도.", w:[{z:"早上",p:"zǎoshang",j:"아침"},{z:"好",p:"hǎo",j:"좋다"}] },
+          { ja:"안녕하세요. (저녁 인사)", zh:"晚上好。", py:"wǎnshang hǎo.", g:"<code>晚上好</code>＝저녁 인사. <code>晚上</code>(저녁)＋<code>好</code>. 낮은 <code>中午好</code>.", w:[{z:"晚上",p:"wǎnshang",j:"저녁"},{z:"好",p:"hǎo",j:"좋다"}] },
+          { ja:"선생님, 안녕하세요.", zh:"老师好。", py:"lǎoshī hǎo.", g:"<code>호칭＋好</code> 형태의 인사. <code>老师好／大家好</code>처럼 상대를 부르며 인사한다.", w:[{z:"老师",p:"lǎoshī",j:"선생님"},{z:"好",p:"hǎo",j:"좋다"}] },
+          { ja:"오랜만이에요.", zh:"好久不见。", py:"hǎojiǔ bújiàn.", g:"<strong>「好久不见」</strong>＝오랜만이다(관용구). <code>好久</code>(오랫동안)＋<code>不见</code>(못 보다).", w:[{z:"好久",p:"hǎojiǔ",j:"오랫동안"},{z:"不见",p:"bújiàn",j:"못 보다"}] },
+          { ja:"잘 지내세요?", zh:"你好吗？", py:"nǐ hǎo ma?", g:"<strong>「你好吗？」</strong>＝안부 인사. 문장 끝 <code>吗</code>로 의문문을 만든다.", w:[{z:"好",p:"hǎo",j:"좋다"},{z:"吗",p:"ma",j:"~까(의문)"}] },
+          { ja:"잘 지내요.", zh:"我很好。", py:"wǒ hěn hǎo.", g:"<code>我很好</code>＝잘 지낸다. 형용사 술어문은 보통 <code>很</code>을 동반한다(강조 의미는 약함).", w:[{z:"我",p:"wǒ",j:"나"},{z:"很",p:"hěn",j:"매우"},{z:"好",p:"hǎo",j:"좋다"}] },
+          { ja:"요즘 어떻게 지내세요?", zh:"你最近怎么样？", py:"nǐ zuìjìn zěnmeyàng?", g:"<code>怎么样</code>＝어떠한가(상태를 묻는 의문대명사). <code>最近怎么样？</code>로 근황을 묻는다.", w:[{z:"最近",p:"zuìjìn",j:"최근"},{z:"怎么样",p:"zěnmeyàng",j:"어떠하다"}] },
+          { ja:"저도 잘 지내요.", zh:"我也很好。", py:"wǒ yě hěn hǎo.", g:"<code>也</code>＝〜도. 부사로 동사·형용사 앞에 둔다(<code>我也很好</code>).", w:[{z:"也",p:"yě",j:"~도"},{z:"很",p:"hěn",j:"매우"},{z:"好",p:"hǎo",j:"좋다"}] },
+          { ja:"당신은요?", zh:"你呢？", py:"nǐ ne?", g:"<strong>「你呢？」</strong>＝당신은요? 문장 끝 <code>呢</code>로 「~는?」 하고 되묻는다.", w:[{z:"你",p:"nǐ",j:"너"},{z:"呢",p:"ne",j:"~는?"}] },
+          { ja:"고마워요.", zh:"谢谢。", py:"xièxie.", g:"<code>谢谢</code>＝고맙다(가장 기본). 단독으로 쓴다.", w:[{z:"谢谢",p:"xièxie",j:"고맙다"}] },
+          { ja:"고맙습니다.", zh:"谢谢你。", py:"xièxie nǐ.", g:"<code>谢谢你</code>＝당신에게 고맙다. 대상을 밝히면 <code>谢谢＋사람</code>.", w:[{z:"谢谢",p:"xièxie",j:"고맙다"},{z:"你",p:"nǐ",j:"너"}] },
+          { ja:"정말 감사합니다.", zh:"非常感谢。", py:"fēicháng gǎnxiè.", g:"<code>非常感谢</code>＝매우 감사하다(정중·격식). <code>非常</code>(매우)＋<code>感谢</code>(감사하다).", w:[{z:"非常",p:"fēicháng",j:"매우"},{z:"感谢",p:"gǎnxiè",j:"감사하다"}] },
+          { ja:"천만에요.", zh:"不客气。", py:"bú kèqi.", g:"<strong>「不客气」</strong>＝천만에요. 감사에 대한 정형 답. <code>客气</code>＝사양하다.", w:[{z:"不",p:"bù",j:"~않다"},{z:"客气",p:"kèqi",j:"사양하다"}] },
+          { ja:"천만에요. (별말씀을요)", zh:"不用谢。", py:"búyòng xiè.", g:"<code>不用谢</code>＝감사할 필요 없다＝천만에요. <code>不用</code>＝〜할 필요 없다.", w:[{z:"不用",p:"búyòng",j:"~할 필요 없다"},{z:"谢",p:"xiè",j:"감사"}] },
+          { ja:"죄송합니다.", zh:"对不起。", py:"duìbuqǐ.", g:"<strong>「对不起」</strong>＝미안합니다(사과). 답으로는 <code>没关系</code>.", w:[{z:"对不起",p:"duìbuqǐ",j:"미안합니다"}] },
+          { ja:"괜찮아요.", zh:"没关系。", py:"méi guānxi.", g:"<strong>「没关系」</strong>＝괜찮다·상관없다. 사과를 받아넘길 때. <code>没事</code>도 같은 뜻.", w:[{z:"没关系",p:"méi guānxi",j:"괜찮다·상관없다"}] },
+          { ja:"실례합니다. (송구스러울 때)", zh:"不好意思。", py:"bù hǎoyìsi.", g:"<code>不好意思</code>＝쑥스럽다·미안하다(가벼운 사과·말 걸기). <code>对不起</code>보다 부드럽다.", w:[{z:"不好意思",p:"bù hǎoyìsi",j:"쑥스럽다·죄송하다"}] },
+          { ja:"실례지만, 화장실이 어디예요?", zh:"请问，洗手间在哪儿？", py:"qǐngwèn, xǐshǒujiān zài nǎr?", g:"<code>请问</code>＝여쭙겠습니다(말 걸기). 장소는 <code>在＋의문사 哪儿</code>으로 묻는다.", w:[{z:"请问",p:"qǐngwèn",j:"여쭙겠습니다"},{z:"洗手间",p:"xǐshǒujiān",j:"화장실"},{z:"在",p:"zài",j:"~에 있다"},{z:"哪儿",p:"nǎr",j:"어디"}] },
+          { ja:"저는 다나카라고 합니다.", zh:"我叫田中。", py:"wǒ jiào Tiánzhōng.", g:"<code>叫</code>＝(이름을) ~라고 하다. <code>我叫＋이름</code>으로 이름 전체를 댄다.", w:[{z:"我",p:"wǒ",j:"나"},{z:"叫",p:"jiào",j:"(이름을)대다"},{z:"田中",p:"Tiánzhōng",j:"다나카"}] },
+          { ja:"이름이 어떻게 되세요?", zh:"你叫什么名字？", py:"nǐ jiào shénme míngzi?", g:"<code>你叫什么名字？</code>＝이름이 뭐예요? <code>什么</code>(무엇)＋<code>名字</code>(이름).", w:[{z:"叫",p:"jiào",j:"(이름을)대다"},{z:"什么",p:"shénme",j:"무엇"},{z:"名字",p:"míngzi",j:"이름"}] },
+          { ja:"저는 성이 왕입니다.", zh:"我姓王。", py:"wǒ xìng Wáng.", g:"<code>姓</code>＝성이 ~이다(동사). <code>我姓王</code>＝성은 왕이다.", w:[{z:"姓",p:"xìng",j:"성이 ~이다"},{z:"王",p:"Wáng",j:"왕(성)"}] },
+          { ja:"실례지만 성함이 어떻게 되세요?", zh:"请问您贵姓？", py:"qǐngwèn nín guìxìng?", g:"<strong>「您贵姓？」</strong>＝성함이 어떻게 되십니까(존대). <code>贵姓</code>은 상대의 성을 높이는 표현.", w:[{z:"请问",p:"qǐngwèn",j:"여쭙겠습니다"},{z:"您",p:"nín",j:"당신(존칭)"},{z:"贵姓",p:"guìxìng",j:"존함"}] },
+          { ja:"저는 일본인입니다.", zh:"我是日本人。", py:"wǒ shì Rìběn rén.", g:"<code>是</code>＝〜이다(명사 술어). <code>我是日本人</code>. 부정은 <code>不是</code>.", w:[{z:"是",p:"shì",j:"~이다"},{z:"日本",p:"Rìběn",j:"일본"},{z:"人",p:"rén",j:"사람"}] },
+          { ja:"어느 나라 사람이에요?", zh:"你是哪国人？", py:"nǐ shì nǎ guó rén?", g:"<code>哪</code>＝어느. <code>哪国人</code>＝어느 나라 사람. 국적을 묻는 정형.", w:[{z:"哪",p:"nǎ",j:"어느"},{z:"国",p:"guó",j:"나라"},{z:"人",p:"rén",j:"사람"}] },
+          { ja:"저는 학생입니다.", zh:"我是学生。", py:"wǒ shì xuésheng.", g:"<code>我是学生</code>＝나는 학생이다. <code>是＋신분 명사</code>.", w:[{z:"是",p:"shì",j:"~이다"},{z:"学生",p:"xuésheng",j:"학생"}] },
+          { ja:"저는 회사원입니다.", zh:"我是公司职员。", py:"wǒ shì gōngsī zhíyuán.", g:"<code>公司职员</code>＝회사원. <code>公司</code>(회사)＋<code>职员</code>(직원).", w:[{z:"公司",p:"gōngsī",j:"회사"},{z:"职员",p:"zhíyuán",j:"직원"}] },
+          { ja:"그는 선생님이 아닙니다.", zh:"他不是老师。", py:"tā bú shì lǎoshī.", g:"<code>不是</code>＝〜이 아니다(<code>是</code>의 부정). <code>他不是老师</code>.", w:[{z:"他",p:"tā",j:"그"},{z:"不是",p:"bú shì",j:"~이 아니다"},{z:"老师",p:"lǎoshī",j:"선생님"}] },
+          { ja:"만나서 반갑습니다.", zh:"认识你很高兴。", py:"rènshi nǐ hěn gāoxìng.", g:"<code>认识你很高兴</code>＝당신을 알게 되어 기쁘다. <code>认识</code>＝알게 되다.", w:[{z:"认识",p:"rènshi",j:"알게 되다"},{z:"很",p:"hěn",j:"매우"},{z:"高兴",p:"gāoxìng",j:"기쁘다"}] },
+          { ja:"만나서 반갑습니다.", zh:"很高兴见到你。", py:"hěn gāoxìng jiàndào nǐ.", g:"<code>很高兴见到你</code>＝만나서 반갑다(어순만 다른 같은 인사). <code>见到</code>＝만나다(결과보어).", w:[{z:"高兴",p:"gāoxìng",j:"기쁘다"},{z:"见到",p:"jiàndào",j:"만나게 되다"},{z:"你",p:"nǐ",j:"너"}] },
+          { ja:"이건 제 명함입니다.", zh:"这是我的名片。", py:"zhè shì wǒ de míngpiàn.", g:"<code>这是＋的</code>＝이것은 ~의 것이다. <code>名片</code>＝명함.", w:[{z:"这",p:"zhè",j:"이것"},{z:"是",p:"shì",j:"~이다"},{z:"名片",p:"míngpiàn",j:"명함"}] },
+          { ja:"저는 올해 스무 살입니다.", zh:"我今年二十岁。", py:"wǒ jīnnián èrshí suì.", g:"나이는 <code>是</code> 없이 「수＋岁」가 술어. <code>二十岁</code>＝스무 살.", w:[{z:"今年",p:"jīnnián",j:"올해"},{z:"二十",p:"èrshí",j:"스물"},{z:"岁",p:"suì",j:"살"}] },
+          { ja:"저는 도쿄에 살아요.", zh:"我住在东京。", py:"wǒ zhù zài Dōngjīng.", g:"<code>住在＋장소</code>＝〜에 살다(동사＋결과 <code>在</code>). <code>我住在东京</code>.", w:[{z:"住",p:"zhù",j:"살다"},{z:"在",p:"zài",j:"~에"},{z:"东京",p:"Dōngjīng",j:"도쿄"}] },
+          { ja:"잘 부탁드립니다.", zh:"请多关照。", py:"qǐng duō guānzhào.", g:"<strong>「请多关照」</strong>＝잘 부탁드립니다(관용구). <code>关照</code>＝돌봐주다.", w:[{z:"请",p:"qǐng",j:"부디"},{z:"多",p:"duō",j:"많이"},{z:"关照",p:"guānzhào",j:"돌봐주다"}] },
+          { ja:"안녕히 가세요/계세요.", zh:"再见。", py:"zàijiàn.", g:"<code>再见</code>＝안녕히 가세요(헤어질 때). <code>再</code>(다시)＋<code>见</code>(보다).", w:[{z:"再",p:"zài",j:"다시"},{z:"见",p:"jiàn",j:"보다"}] },
+          { ja:"바이바이.", zh:"拜拜。", py:"báibái.", g:"<code>拜拜</code>＝바이바이(영어 bye-bye 음역, 친한 사이 구어).", w:[{z:"拜拜",p:"báibái",j:"바이바이"}] },
+          { ja:"내일 봐요.", zh:"明天见。", py:"míngtiān jiàn.", g:"<code>明天见</code>＝내일 봐요. <code>시간 명사＋见</code>으로 다음 만남을 약속한다.", w:[{z:"明天",p:"míngtiān",j:"내일"},{z:"见",p:"jiàn",j:"보다"}] },
+          { ja:"이따 봐요.", zh:"回头见。", py:"huítóu jiàn.", g:"<code>回头见</code>＝이따 봐요. <code>回头</code>＝조금 뒤에(구어).", w:[{z:"回头",p:"huítóu",j:"나중에"},{z:"见",p:"jiàn",j:"보다"}] },
+          { ja:"다음에 봐요.", zh:"下次见。", py:"xià cì jiàn.", g:"<code>下次见</code>＝다음에 봐요. <code>下次</code>＝다음번.", w:[{z:"下次",p:"xià cì",j:"다음번"},{z:"见",p:"jiàn",j:"보다"}] },
+          { ja:"살펴 가세요. (배웅)", zh:"慢走。", py:"màn zǒu.", g:"<code>慢走</code>＝살펴 가세요(배웅 인사). 직역은 「천천히 가세요」.", w:[{z:"慢",p:"màn",j:"천천히"},{z:"走",p:"zǒu",j:"가다·걷다"}] },
+          { ja:"안녕히 주무세요.", zh:"晚安。", py:"wǎn'ān.", g:"<code>晚安</code>＝안녕히 주무세요(밤 인사).", w:[{z:"晚安",p:"wǎn'ān",j:"안녕히 주무세요"}] }
         ]
       },
       {
@@ -1602,7 +1648,7 @@
     // ========================================================================
     // STATE & STORAGE
     // ========================================================================
-    const STORAGE_KEY = "cn-practice-v2";
+    const STORAGE_KEY = "cn-practice-ko-v1";
     const TOTAL_COURSES_PLANNED = 24;
 
     const defaultState = {
@@ -1614,6 +1660,7 @@
       favorites: [],       // ["courseId-sentIdx"]
       recentInCourse: {},  // { courseId: [sentIdx, ...] } (avoid immediate repeats)
       inProgress: null,    // { courseId, sentIdx, input }
+      generated: {},       // { courseId: [10 sentences] } 생성형 코스의 현재 세션 출제(리로드 유지)
       traditional: false   // 간체(false) / 번체(true)
     };
 
@@ -1788,6 +1835,16 @@
       state.currentCourseId = courseId;
       saveState();
       const c = COURSES[courseId];
+      // 생성형 코스: 중단 중이면 같은 세트 유지, 그 외(미착수/완료)는 새로 생성
+      if (isGenerative(courseId)) {
+        const resuming = state.inProgress && state.inProgress.courseId === courseId
+          && Array.isArray(state.generated[courseId]) && state.generated[courseId].length === 10;
+        const midCourse = masteredList(courseId).length > 0
+          && !state.completedCourses.includes(courseId)
+          && Array.isArray(state.generated[courseId]) && state.generated[courseId].length === 10;
+        if (resuming || midCourse) applyGenerated(courseId);
+        else ensureGenerated(courseId, { fresh: true });
+      }
       // 홈의 '이어서 하기' / 연속 일수에 기록
       if (window.LC) LC.record({ href: 'chinese-practice-ko.html', label: 'Daily 중국어', sub: `HSK${c.hsk} · ${c.title}` });
       const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
@@ -1896,6 +1953,39 @@
       const c = getCourse(id);
       return c && masteredList(id).length >= c.sentences.length;
     }
+
+    // ===== 생성형 코스(mode:"pool") 출제 세트 관리 =====
+    function isGenerative(id) { const c = COURSES[id]; return !!(c && c.mode === "pool"); }
+    function applyGenerated(id) {
+      if (Array.isArray(state.generated[id]) && state.generated[id].length) {
+        COURSES[id].sentences = state.generated[id];
+      }
+    }
+    function samplePool(arr, n) {
+      const c = (arr || []).slice(), out = [];
+      while (c.length && out.length < n) out.push(c.splice(Math.floor(Math.random() * c.length), 1)[0]);
+      return out;
+    }
+    // 새로운 10문제를 준비하고 코스 진행을 리셋(＝매번 새로운 출제)
+    function regenCourse(id) {
+      const c = COURSES[id];
+      const set = samplePool(c.pool, 10);
+      state.generated[id] = set;
+      c.sentences = set;
+      state.mastered[id] = [];
+      state.recentInCourse[id] = [];
+      state.completedCourses = state.completedCourses.filter(x => x !== id);
+      if (state.inProgress && state.inProgress.courseId === id) state.inProgress = null;
+      saveState();
+    }
+    // 생성형 코스의 출제 세트를 준비. fresh=true면 새로 생성, 아니면 기존 유지
+    function ensureGenerated(id, opts) {
+      if (!isGenerative(id)) return;
+      const hasSet = Array.isArray(state.generated[id]) && state.generated[id].length === 10;
+      if ((opts && opts.fresh) || !hasSet) regenCourse(id);
+      else applyGenerated(id);
+    }
+
     function markMastered(courseId, sentIdx) {
       if (!state.mastered[courseId]) state.mastered[courseId] = [];
       if (!state.mastered[courseId].includes(sentIdx)) {
@@ -2194,9 +2284,13 @@
     // 완료 모달: 다시 한 번 → 현재 코스를 리셋하고 재개
     elReplayCourseBtn.addEventListener("click", () => {
       closeModal(elCompleteModal);
-      state.mastered[state.currentCourseId] = [];
-      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
-      saveState();
+      if (isGenerative(state.currentCourseId)) {
+        regenCourse(state.currentCourseId); // 생성형은 새로운 10문제로 재도전
+      } else {
+        state.mastered[state.currentCourseId] = [];
+        state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+        saveState();
+      }
       renderHeader();
       pickNext();
     });
@@ -2209,9 +2303,13 @@
     // 연습 화면 → 이 코스를 리셋
     elResetCourseBtn.addEventListener("click", () => {
       if (!confirm("이 코스의 진도를 리셋하시겠습니까？")) return;
-      state.mastered[state.currentCourseId] = [];
-      state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
-      saveState();
+      if (isGenerative(state.currentCourseId)) {
+        regenCourse(state.currentCourseId); // 생성형은 새로운 10문제로 리셋
+      } else {
+        state.mastered[state.currentCourseId] = [];
+        state.completedCourses = state.completedCourses.filter(id => id !== state.currentCourseId);
+        saveState();
+      }
       renderHeader();
       pickNext();
     });
