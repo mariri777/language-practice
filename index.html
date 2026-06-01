@@ -980,6 +980,8 @@
 
   .rec-streak .rec-num { color: var(--red); }
   .rec-streak .ico { font-size: 16px; }
+  .rec-wrote .rec-num { color: #2f7c5e; }
+  .rec-wrote .ico { font-size: 15px; }
 
   .rec-cal {
     display: flex;
@@ -1066,6 +1068,7 @@
 
   <div class="record">
     <div class="rec-stat rec-streak" id="rec-streak" hidden><span class="ico">🔥</span><span class="rec-num" id="streak-num">0</span><span class="rec-label">日連続</span></div>
+    <div class="rec-stat rec-wrote" id="rec-wrote" hidden><span class="ico">✍️</span><span class="rec-num" id="wrote-num">0</span><span class="rec-label">書けた / 今月</span></div>
     <div class="rec-cal">
       <span class="rec-cal-label">今月</span>
       <div class="cal-dots" id="cal-dots"></div>
@@ -1170,9 +1173,21 @@
         </div>
       </a>
 
-      <div class="tile soon" style="--i:5">
+      <a href="writer.html" class="tile" style="--i:5">
         <div class="tile-top">
           <span class="tile-num">06</span>
+          <span class="tile-tag">CN·KR · Write</span>
+        </div>
+        <div class="tile-bottom">
+          <h3 class="tile-name">Writer</h3>
+          <p class="tile-sub">書いて「通じるか」をAI判定</p>
+          <span class="tile-cta">Open<span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <div class="tile soon" style="--i:6">
+        <div class="tile-top">
+          <span class="tile-num">07</span>
           <span class="tile-tag">KR · Journal<span class="soon">SOON</span></span>
         </div>
         <div class="tile-bottom">
@@ -1368,6 +1383,18 @@
       streakWrap.hidden = true;
     }
 
+    // 今月「書けた」文の数（能力の手応え）
+    const wroteWrap = document.getElementById('rec-wrote');
+    if (wroteWrap && LC.winCount) {
+      const w = LC.winCount({ skill: '書', since: LC.monthStart() });
+      if (w >= 1) {
+        document.getElementById('wrote-num').textContent = w;
+        wroteWrap.hidden = false;
+      } else {
+        wroteWrap.hidden = true;
+      }
+    }
+
     // 今月カレンダー（活動日に点）
     const el = document.getElementById('cal-dots');
     if (el) {
@@ -1494,6 +1521,15 @@
   const UPDATE_VISIBLE     = 5;    // 折りたたまず表示する件数
 
   const updates = [
+    {
+      date: "2026-06-01",
+      tag:  { ja: "Writer · NEW", ko: "Writer · NEW", zh: "Writer · NEW" },
+      text: {
+        ja: "新ツール Writer を公開 — 言いたいことを日本語で入れて、中国語/韓国語で書いてみると、AIが「通じるか」を判定し、もっと自然な言い方も教えてくれます。直しは辞書にためられ、書けた文の数がホームに記録されます。",
+        ko: "새 도구 Writer 공개 — 하고 싶은 말을 일본어로 넣고 중국어/한국어로 써 보면, AI가 ‘통하는지’ 판정하고 더 자연스러운 표현도 알려줘요. 고친 단어는 사전에 모이고, 써낸 문장 수가 홈에 기록돼요.",
+        zh: "上线新工具 Writer — 用日语写下想说的话，再试着用中文/韩语写出来，AI 会判定「能不能通」并教你更自然的说法。修改会存进词典，写成的句子数会记录在首页。"
+      }
+    },
     {
       date: "2026-06-01",
       tag:  { ja: "중국어 · Talk", ko: "중국어 · Talk", zh: "中文(韩) · Talk" },

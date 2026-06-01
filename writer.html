@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writer · 書いてみる — 日々</title>
+<meta name="theme-color" content="#f1e8d2">
+<style>
+  :root{
+    --bg:#f1e8d2; --bg-elevated:#faf2dc; --bg-tile:#f6ecd2; --bg-deep:#e3d7b5;
+    --ink:#14100a; --ink-2:#2c2317; --ink-3:#6a604e; --ink-4:#a59881;
+    --red:#8a2438; --red-deep:#5a1622; --red-bright:#b53048; --red-soft:rgba(138,36,56,.08); --red-glow:rgba(138,36,56,.2);
+    --gold:#b6843a; --green:#2f7c5e; --green-soft:rgba(47,124,94,.1); --rule:#c1b491; --hair:rgba(20,16,10,.10);
+    --font-ui:-apple-system,BlinkMacSystemFont,"Inter","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif;
+    --font-mincho:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+    --font-num:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+    --font-zh:"Songti SC","STSong","Source Han Serif SC","Noto Serif SC",serif;
+    --font-ko:"Apple SD Gothic Neo","Source Han Serif K","Noto Serif KR",serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.65;
+       padding:0 0 80px;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+  header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;max-width:760px;margin:0 auto}
+  .brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  .brand .mark{width:26px;height:26px;background:var(--red);color:#fff;display:inline-flex;align-items:center;justify-content:center;border-radius:5px;font-family:var(--font-num);font-style:italic;font-size:17px;transform:rotate(-4deg)}
+  .gear{background:none;border:0;font-size:20px;cursor:pointer;color:var(--ink-3);padding:6px}
+
+  h1{font-family:var(--font-mincho);font-size:clamp(26px,5vw,38px);font-weight:400;letter-spacing:.04em;margin:8px 0 2px}
+  h1 .dot{color:var(--red);font-family:var(--font-num);font-style:italic}
+  .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 10px}
+  .scorechip{display:inline-flex;align-items:center;gap:7px;background:var(--green-soft);color:var(--green);border:1px solid rgba(47,124,94,.3);border-radius:20px;padding:4px 13px;font-size:12.5px;font-weight:700;margin:0 0 18px}
+  .scorechip b{font-family:var(--font-num);font-style:italic;font-size:16px;font-weight:700}
+
+  .card{background:var(--bg-elevated);border:1px solid var(--hair);border-radius:14px;padding:18px;margin-bottom:16px}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4);margin:0 0 7px}
+  textarea,input{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
+  textarea{min-height:64px;resize:vertical}
+  textarea.attempt{min-height:80px}
+  textarea.attempt.zh{font-family:var(--font-zh)} textarea.attempt.ko{font-family:var(--font-ko)}
+  .btn{font:inherit;font-weight:700;padding:12px 20px;border:0;border-radius:10px;background:var(--red);color:#fff;cursor:pointer;transition:background .2s}
+  .btn:hover{background:var(--red-bright)} .btn:disabled{opacity:.5;cursor:wait}
+  .btn.ghost{background:transparent;color:var(--red);border:1px solid var(--red)}
+  .btn.sm{padding:6px 12px;font-size:13px;border-radius:8px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+  .spacer{flex:1}
+
+  /* language segmented toggle */
+  .seg{display:inline-flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin-bottom:14px}
+  .seg button{font:inherit;font-weight:700;font-size:14px;padding:8px 18px;border:0;background:transparent;color:var(--ink-3);cursor:pointer}
+  .seg button.on{background:var(--red);color:#fff}
+
+  /* settings */
+  #settings{display:none}
+  #settings.open{display:block}
+  .notice{background:var(--red-soft);border:1px solid rgba(138,36,56,.25);color:var(--red-deep);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-bottom:14px}
+  .notice a{font-weight:700}
+  .notice ol{margin:8px 0 6px;padding-left:20px}
+  .notice li{margin:2px 0}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;background:rgba(20,16,10,.06);padding:1px 5px;border-radius:4px;font-size:.92em}
+  .disclose{font-size:12px;color:var(--ink-4);margin:10px 0 0;line-height:1.6}
+  .hint{font-size:12px;color:var(--ink-3);margin:6px 0 0;line-height:1.6}
+  select{appearance:auto}
+
+  /* result */
+  #result{display:none}
+  .verdict{display:flex;align-items:center;gap:11px;padding:4px 0 14px}
+  .verdict .vmark{width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;color:#fff}
+  .verdict.ok    .vmark{background:var(--green)}
+  .verdict.almost .vmark{background:var(--gold)}
+  .verdict.off   .vmark{background:var(--ink-4)}
+  .verdict .vtext{font-weight:700;font-size:16px}
+  .verdict.ok .vtext{color:var(--green)} .verdict.almost .vtext{color:var(--gold)} .verdict.off .vtext{color:var(--ink-3)}
+  .win-add{margin-left:auto;font-family:var(--font-num);font-style:italic;color:var(--green);font-size:15px;font-weight:700;opacity:0;transition:opacity .4s}
+  .win-add.show{opacity:1}
+  .comment{color:var(--ink-2);font-size:14.5px;line-height:1.7;margin:0 0 4px}
+
+  .sec-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin:18px 0 8px;display:flex;align-items:center;gap:10px}
+  .sec-title::before{content:"";width:24px;height:2px;background:var(--red)}
+  .natural{font-size:19px;line-height:1.7;color:var(--ink);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .natural.zh{font-family:var(--font-zh)} .natural.ko{font-family:var(--font-ko)}
+  .natural .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:15px}
+  .copy{background:transparent;border:1px solid var(--rule);color:var(--ink-3);border-radius:8px;padding:4px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;margin-left:auto}
+  .copy.done{background:var(--green);border-color:var(--green);color:#fff}
+
+  .alt{padding:8px 0;border-top:1px solid var(--hair);font-size:15px}
+  .alt:first-child{border-top:0}
+  .alt.zh .at{font-family:var(--font-zh)} .alt.ko .at{font-family:var(--font-ko)}
+  .alt .ar{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:13px;margin-left:8px}
+  .alt .an{display:block;color:var(--ink-3);font-size:13px;margin-top:2px}
+
+  .word{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
+  .word:first-child{border-top:0}
+  .word .term{font-size:18px;min-width:0}
+  .word.zh .term{font-family:var(--font-zh)} .word.ko .term{font-family:var(--font-ko)}
+  .word .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:14px}
+  .word .mean{flex:1;min-width:0;color:var(--ink-2);font-size:14px}
+  .add-btn{background:transparent;border:1px solid var(--rule);color:var(--ink-3);border-radius:8px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0}
+  .add-btn.saved{background:var(--green);border-color:var(--green);color:#fff}
+
+  /* dictionary */
+  .dict-head{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
+  .dict-head .n{font-family:var(--font-num);font-style:italic;font-size:30px;color:var(--red)}
+  .dict-empty{color:var(--ink-4);font-size:14px;padding:8px 0}
+  .dict-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
+  .dict-item:first-child{border-top:0}
+  .dict-item .term{font-size:18px} .dict-item.zh .term{font-family:var(--font-zh)} .dict-item.ko .term{font-family:var(--font-ko)}
+  .dict-item .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:13px}
+  .dict-item .mean{flex:1;color:var(--ink-2);font-size:14px}
+  .del{background:none;border:0;color:var(--ink-4);cursor:pointer;font-size:16px;padding:4px 8px}
+  .del:hover{color:var(--red)}
+  .tag{font-size:10px;font-weight:700;letter-spacing:.1em;padding:2px 7px;border-radius:20px;background:var(--bg-deep);color:var(--ink-3)}
+
+  .err{color:var(--red);font-size:14px;margin-top:10px;white-space:pre-wrap}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px;margin-right:8px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html"><span class="mark">&amp;</span> 日々</a>
+  <button class="gear" id="gearBtn" title="設定" aria-label="設定">⚙</button>
+</header>
+
+<div class="wrap">
+  <h1>書いてみる<span class="dot">.</span></h1>
+  <p class="lead">言いたいことを、その言語で書いてみる。AIが「通じるか」を判定して、もっと自然な言い方も教えてくれます。</p>
+  <div class="scorechip">✍️ 今月 自分の力で書けた文 <b id="monthCount">0</b></div>
+
+  <!-- settings -->
+  <div class="card" id="settings">
+    <label>AI（GeminiかDeepSeekを選べます ／ Readerと共通）</label>
+    <select id="provider">
+      <option value="gemini">Gemini（Google・無料 / 中国本土では使えません）</option>
+      <option value="deepseek">DeepSeek（要チャージ / 中国本土でも使えます）</option>
+    </select>
+    <p class="hint" id="provHint"></p>
+    <label style="margin-top:14px">APIキー（このブラウザ内だけに保存）</label>
+    <input id="key" type="password" placeholder="AIza..." autocomplete="off">
+    <div class="row">
+      <button class="btn sm" id="saveKey">保存</button>
+      <button class="btn sm ghost" id="clearKey">消す</button>
+      <a id="getKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="font-size:13px;color:var(--ink-3)">キーを取得 →</a>
+    </div>
+    <label style="margin-top:14px">モデル</label>
+    <select id="model"></select>
+    <div class="row"><button class="btn sm ghost" id="loadModels" type="button">使えるモデル一覧を取得</button></div>
+    <p class="hint" id="modelHint">キーを保存してから取得すると、選べるモデルが増えます。Reader と同じキー・設定を使います。</p>
+  </div>
+
+  <div class="notice" id="noKey" style="display:none">
+    <strong>はじめての方へ</strong> — 判定にAIを使います。右上の <strong>⚙</strong> で <strong>Gemini</strong>（無料・中国本土✕）か <strong>DeepSeek</strong>（要チャージ・中国本土◯）を選び、自分のキーを入れてください：
+    <ol>
+      <li><a id="noKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">キー発行ページ</a> でキーを作ってコピー</li>
+      <li>⚙ の「APIキー」に貼って「保存」</li>
+    </ol>
+    キーはあなたのブラウザ内だけに保存され、サイト運営者には送られません。Reader で設定済みなら、そのまま使えます。
+  </div>
+
+  <!-- compose -->
+  <div class="card">
+    <div class="seg" id="langSeg">
+      <button data-lang="zh" class="on">中国語で書く</button>
+      <button data-lang="ko">韓国語で書く</button>
+    </div>
+
+    <label>① 日本語で、言いたいこと</label>
+    <textarea id="intent" placeholder="例：今日は友達と映画を見に行って、すごく楽しかった！"></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="btn ghost sm" id="topicBtn" type="button">お題ちょうだい</button>
+      <span class="spacer"></span>
+    </div>
+
+    <label style="margin-top:16px">② <span id="attemptLangLabel">中国語</span>で、自分で書いてみる</label>
+    <textarea id="attempt" class="attempt zh" placeholder="まず自分の力で。思い出せない語があってもOK、分かるところまで書いてみよう。"></textarea>
+
+    <div class="row">
+      <button class="btn" id="go"><span id="goLabel">通じるか判定</span></button>
+      <button class="btn ghost sm" id="clearIn">クリア</button>
+    </div>
+    <div class="err" id="err"></div>
+    <p class="hint">💡 完璧じゃなくて大丈夫。「通じれば勝ち」。書いてみて、直しを辞書にためていくと、だんだん思い出せる語が増えていきます。</p>
+    <p class="disclose">※ 入力した文章は、判定のため選択中のAI（Gemini または DeepSeek）に送信されます。ブラウザ内だけでは完結しません。特に Gemini の無料枠は入力がモデル改善に使われる場合があるので、見られたくない内容は書かないでください。</p>
+  </div>
+
+  <!-- result -->
+  <div id="result">
+    <div class="card">
+      <div class="verdict" id="verdict">
+        <span class="vmark" id="vmark"></span>
+        <span class="vtext" id="vtext"></span>
+        <span class="win-add" id="winAdd">書けた +1</span>
+      </div>
+      <p class="comment" id="comment"></p>
+
+      <div class="sec-title">自然な言い方</div>
+      <div class="natural" id="natural"></div>
+
+      <div class="sec-title" id="altsTitle" style="display:none">ほかの言い方</div>
+      <div id="alts"></div>
+
+      <div class="sec-title" id="fixesTitle" style="display:none">覚えておきたい語</div>
+      <div id="fixes"></div>
+    </div>
+  </div>
+
+  <!-- dictionary -->
+  <div class="card">
+    <div class="dict-head">
+      <div class="sec-title" style="margin:0">マイ辞書</div>
+      <span class="n" id="dictCount">0</span>
+    </div>
+    <div id="dictList"></div>
+  </div>
+</div>
+
+<script src="daily.js?v=1"></script>
+<script>
+  const $ = id => document.getElementById(id);
+  const DICT_K='mydict-v1';
+  const PROVIDERS = {
+    gemini:   { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash', keyph:'AIza...', console:'https://aistudio.google.com/apikey',
+                guide:'迷ったら gemini-2.5-flash（無料で1日250回・質と量のバランス◎）。最高精度は gemini-2.5-pro（無料は1日100回）。新しい版が出たら自動で一覧に並びます。',
+                note:'Gemini は無料。ただし中国本土では使えません（VPN必要）。無料枠は入力が学習に使われる場合あり。' },
+    deepseek: { base:'https://api.deepseek.com',                                 model:'deepseek-chat',    keyph:'sk-...',  console:'https://platform.deepseek.com',
+                guide:'deepseek-chat が標準（中国本土でも使える）。利用には事前チャージが必要（使った分だけの従量課金）。',
+                note:'DeepSeek は中国本土でも使えます。利用に事前チャージが必要（使った分だけの従量課金）。' }
+  };
+  const provider = () => localStorage.getItem('reader-provider') || 'gemini';
+  const P = () => PROVIDERS[provider()] || PROVIDERS.gemini;
+  const keyK = () => 'key-'+provider();
+  const modelK = () => 'model-'+provider();
+  const seenK = () => 'seen-models-'+provider();
+  const getKey = () => (localStorage.getItem(keyK())||'').trim();
+  const getModel = () => (localStorage.getItem(modelK())||P().model).trim();
+  function hasKey(){ return !!getKey(); }
+  function refreshKeyNotice(){ $('noKey').style.display = hasKey() ? 'none' : 'block'; }
+
+  /* ---------- target language ---------- */
+  const LANG_K='writer-lang';
+  let TL = localStorage.getItem(LANG_K) || 'zh';   // 'zh' | 'ko'
+  const langName = l => l==='zh' ? '中国語' : '韓国語';
+  function syncLang(){
+    $('langSeg').querySelectorAll('button').forEach(b=> b.classList.toggle('on', b.dataset.lang===TL));
+    $('attemptLangLabel').textContent = langName(TL);
+    const a = $('attempt'); a.classList.remove('zh','ko'); a.classList.add(TL);
+  }
+  $('langSeg').querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', ()=>{ TL=b.dataset.lang; localStorage.setItem(LANG_K,TL); syncLang(); });
+  });
+  syncLang();
+
+  /* ---------- score chip ---------- */
+  function refreshScore(){
+    try{ $('monthCount').textContent = LC.winCount({skill:'書', since:LC.monthStart()}); }
+    catch{ $('monthCount').textContent = '0'; }
+  }
+  refreshScore();
+
+  /* ---------- settings ---------- */
+  function fillModels(ids){
+    const sel = $('model'); const cur = getModel(); const list = ids.slice();
+    if(!list.includes(cur)) list.unshift(cur);
+    sel.innerHTML = list.map(id=>`<option value="${id}"${id===cur?' selected':''}>${id}</option>`).join('');
+  }
+  function isChatModel(id){
+    if(provider()==='gemini') return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id);
+    return true;
+  }
+  function syncProviderUI(){
+    const p = P();
+    $('provider').value = provider();
+    $('key').value = getKey();
+    $('key').placeholder = p.keyph;
+    $('getKeyLink').href = p.console;
+    const nkl = $('noKeyLink'); if(nkl) nkl.href = p.console;
+    $('provHint').textContent = p.note;
+    fillModels([]);
+    $('modelHint').textContent = p.guide;
+    refreshKeyNotice();
+  }
+  syncProviderUI();
+
+  async function loadModels(){
+    const key = getKey(); const hint = $('modelHint');
+    if(!key){ hint.textContent='先にキーを保存してね。'; return; }
+    hint.textContent='取得中…';
+    try{
+      const res = await fetch(P().base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
+      const j = await res.json();
+      const ids = (j.data||[]).map(m=>m.id).filter(Boolean).filter(isChatModel).sort();
+      if(!ids.length){ hint.textContent='モデルが取得できませんでした。'; return; }
+      fillModels(ids);
+      let seen = []; try{ seen = JSON.parse(localStorage.getItem(seenK())||'[]'); }catch{}
+      if(seen.length){
+        const fresh = ids.filter(id=>!seen.includes(id));
+        hint.textContent = fresh.length ? ('✨ 新しいモデルが出てます：'+fresh.join('、')+'（選べます）') : P().guide;
+      } else hint.textContent = P().guide;
+      localStorage.setItem(seenK(), JSON.stringify(ids));
+    }catch(e){ hint.textContent='一覧の取得に失敗しました（キーや通信を確認）。'; }
+  }
+  $('loadModels').addEventListener('click', loadModels);
+  $('model').addEventListener('change', ()=> localStorage.setItem(modelK(), $('model').value));
+  $('provider').addEventListener('change', ()=>{
+    localStorage.setItem('reader-provider', $('provider').value);
+    syncProviderUI();
+    if(hasKey()) loadModels();
+  });
+  $('gearBtn').addEventListener('click', ()=>{
+    const opening = !$('settings').classList.contains('open');
+    $('settings').classList.toggle('open');
+    if(opening && hasKey() && $('model').options.length <= 1) loadModels();
+  });
+  $('saveKey').addEventListener('click', ()=>{
+    localStorage.setItem(keyK(), $('key').value.trim());
+    if($('model').value) localStorage.setItem(modelK(), $('model').value);
+    refreshKeyNotice();
+    if(hasKey()) loadModels();
+  });
+  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(keyK()); $('key').value=''; refreshKeyNotice(); });
+
+  /* ---------- helpers ---------- */
+  function detectLang(s){
+    if(/[가-힣]/.test(s)) return 'ko';
+    if(/[一-鿿㐀-䶿]/.test(s)) return 'zh';
+    return '';
+  }
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  /* ---------- dictionary (shared with Reader) ---------- */
+  function loadDict(){ try{ return JSON.parse(localStorage.getItem(DICT_K)||'[]'); }catch{ return []; } }
+  function saveDict(a){ localStorage.setItem(DICT_K, JSON.stringify(a)); }
+  function dictHas(term,lang){ return loadDict().some(d=>d.term===term && d.lang===lang); }
+  function addToDict(w, lang, source){
+    const a = loadDict();
+    if(a.some(d=>d.term===w.term && d.lang===lang)) return;
+    a.push({ id:'w_'+Math.random().toString(36).slice(2,9), term:w.term, reading:w.reading||'', meaning:w.meaning||'', lang, source:source||'', addedAt:Date.now() });
+    saveDict(a); renderDict();
+  }
+  function removeFromDict(id){ saveDict(loadDict().filter(d=>d.id!==id)); renderDict(); }
+  function renderDict(){
+    const a = loadDict().sort((x,y)=>y.addedAt-x.addedAt);
+    $('dictCount').textContent = a.length;
+    const el = $('dictList');
+    if(!a.length){ el.innerHTML = '<div class="dict-empty">まだありません。文章を書いて判定すると、直しや学べる語をここに貯められます。</div>'; return; }
+    el.innerHTML = a.map(d=>`
+      <div class="dict-item ${d.lang}">
+        <span class="term">${esc(d.term)}</span>
+        ${d.reading?`<span class="read">${esc(d.reading)}</span>`:''}
+        <span class="mean">${esc(d.meaning)}</span>
+        ${d.lang?`<span class="tag">${d.lang==='zh'?'中':'韓'}</span>`:''}
+        <button class="del" data-id="${d.id}" title="削除">✕</button>
+      </div>`).join('');
+    el.querySelectorAll('.del').forEach(b=> b.addEventListener('click', ()=>removeFromDict(b.dataset.id)));
+  }
+  renderDict();
+
+  /* ---------- AI call ---------- */
+  async function callAI(messages, opts){
+    const res = await fetch(P().base+'/chat/completions', {
+      method:'POST',
+      headers:{ 'Authorization':'Bearer '+getKey(), 'Content-Type':'application/json' },
+      body: JSON.stringify(Object.assign({ model:getModel(), messages, temperature:0.3 }, opts||{}))
+    });
+    const raw = await res.text();
+    if(!res.ok) throw new Error('API エラー (HTTP '+res.status+')\n'+raw.slice(0,300));
+    return JSON.parse(raw).choices[0].message.content;
+  }
+
+  /* ---------- お題 ---------- */
+  $('topicBtn').addEventListener('click', async ()=>{
+    if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='先にAPIキーを設定してね（右上の⚙）。'; return; }
+    const btn=$('topicBtn'); btn.disabled=true; const old=btn.textContent; btn.textContent='考え中…';
+    try{
+      const c = await callAI([{role:'user',content:
+        'SNS（X・小红书など）に投稿しそうな、ひとことの「言いたいこと」を日本語で1つだけ出してください。日常的で短く、語学初〜中級が書いてみたくなる内容。説明や記号は付けず、その一文だけを返してください。'}],
+        { temperature:1.0 });
+      $('intent').value = (c||'').trim().replace(/^["「]|["」]$/g,'');
+      $('attempt').focus();
+    }catch(e){ $('err').textContent = 'お題の取得に失敗しました。もう一度試してね。'; }
+    finally{ btn.disabled=false; btn.textContent=old; }
+  });
+
+  /* ---------- judge ---------- */
+  async function judge(){
+    const intent = $('intent').value.trim();
+    const attempt = $('attempt').value.trim();
+    $('err').textContent='';
+    if(!intent){ $('err').textContent='①「言いたいこと」を日本語で入れてね。'; return; }
+    if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='先にAPIキーを設定してね（右上の⚙）。'; return; }
+
+    $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>判定中…';
+    const tgt = langName(TL);
+    const readingKind = TL==='zh' ? 'ピンイン' : 'ローマ字発音';
+
+    const prompt = `あなたは日本語話者向けの${tgt}ライティング・コーチです。学習者が「日本語で言いたいこと」と「自分で書いた${tgt}の文」を出します。あなたの仕事は、その${tgt}文が意図を伝えられているかを、やさしく前向きに判定し、より自然な言い方を教えることです。
+最重要：間違い探しをしない。多少不自然でも「意図が伝わる」なら ok とする。落ち込ませず、まず良い点を認める。決めつけず、自然さはSNS・日常会話基準で。
+
+判定(verdict)：
+- "ok"     … 意図がちゃんと通じる（多少の不自然さは許容）
+- "almost" … 一部直せば通じる（惜しい）
+- "off"    … 伝わらない／大きくズレる／空欄
+
+下記JSONのみを返す（前後に説明文を付けない）：
+{"verdict":"ok|almost|off","comment":"日本語で1〜2文。まず褒めてから、良い点や惜しい点を一言。","natural":"その意図を最も自然に表す${tgt}の文（1文）","reading":"natural の${readingKind}","alts":[{"text":"別の自然な言い方(${tgt})","reading":"${readingKind}","note":"ニュアンス差(日本語・任意)"}],"fixes":[{"term":"学習者の文との差や、覚えておくと役立つ語句(${tgt})","reading":"${readingKind}","meaning":"日本語の意味"}]}
+
+ルール：
+- natural と reading は必ず入れる（空欄でも答えを見て学べるように）。
+- alts は0〜2個。なければ空配列。
+- fixes は2〜5個。学習者の文で惜しかった語・抜けていた語・覚えると便利な語を中心に。固有名詞や自明な語は省く。
+- 学習者の文が空でも責めず、verdict="off"、comment は「まず思いつくところまで書いてみよう」と促し、natural/reading は埋める。
+
+言いたいこと（日本語）："""${intent}"""
+学習者が書いた${tgt}の文："""${attempt||'(まだ書いていない)'}"""`;
+
+    try{
+      const content = await callAI([{role:'user',content:prompt}], { temperature:0.3, response_format:{type:'json_object'} });
+      let data; try{ data = JSON.parse(content); }catch(e){ throw new Error('返答の解析に失敗しました。もう一度試してください。'); }
+      render(data);
+    }catch(err){
+      const m = (err&&err.message)||String(err);
+      $('err').textContent = /Failed to fetch|NetworkError|Load failed/i.test(m)
+        ? 'ネットワーク/接続に失敗しました。キーや通信を確認してね。' : m;
+    }finally{
+      $('go').disabled=false; $('goLabel').textContent='通じるか判定';
+    }
+  }
+
+  const VERDICT_UI = {
+    ok:     { mark:'✓', text:'通じるよ！' },
+    almost: { mark:'△', text:'おしい！ここを直せば通じる' },
+    off:    { mark:'↻', text:'まずは下の言い方を見て、もう一度' }
+  };
+
+  function render(data){
+    const v = (data.verdict==='ok'||data.verdict==='almost'||data.verdict==='off') ? data.verdict : 'almost';
+    const ui = VERDICT_UI[v];
+    const vEl = $('verdict'); vEl.className = 'verdict '+v;
+    $('vmark').textContent = ui.mark;
+    $('vtext').textContent = ui.text;
+    $('comment').textContent = data.comment || '';
+
+    // natural
+    const nat = $('natural'); nat.className = 'natural '+TL;
+    nat.innerHTML = `<span>${esc(data.natural||'')}</span>${data.reading?`<span class="read">${esc(data.reading)}</span>`:''}<button class="copy" id="copyNat">コピー</button>`;
+    const cp = $('copyNat');
+    if(cp) cp.addEventListener('click', ()=>{
+      navigator.clipboard?.writeText(data.natural||'').then(()=>{ cp.textContent='✓ コピーした'; cp.classList.add('done'); });
+    });
+
+    // alts
+    const alts = Array.isArray(data.alts)?data.alts.filter(a=>a&&a.text):[];
+    $('altsTitle').style.display = alts.length ? '' : 'none';
+    $('alts').innerHTML = alts.map(a=>`<div class="alt ${TL}"><span class="at">${esc(a.text)}</span>${a.reading?`<span class="ar">${esc(a.reading)}</span>`:''}${a.note?`<span class="an">${esc(a.note)}</span>`:''}</div>`).join('');
+
+    // fixes → dict
+    const fixes = Array.isArray(data.fixes)?data.fixes.filter(f=>f&&f.term):[];
+    $('fixesTitle').style.display = fixes.length ? '' : 'none';
+    $('fixes').innerHTML = fixes.map((f,i)=>{
+      const saved = dictHas(f.term, TL);
+      return `<div class="word ${TL}">
+        <span class="term">${esc(f.term)}</span>
+        ${f.reading?`<span class="read">${esc(f.reading)}</span>`:''}
+        <span class="mean">${esc(f.meaning||'')}</span>
+        <button class="add-btn ${saved?'saved':''}" data-i="${i}">${saved?'✓ 追加済':'＋ 辞書'}</button>
+      </div>`;
+    }).join('');
+    $('fixes').querySelectorAll('.add-btn').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        if(b.classList.contains('saved')) return;
+        addToDict(fixes[+b.dataset.i], TL, $('intent').value.trim());
+        b.classList.add('saved'); b.textContent='✓ 追加済';
+      });
+    });
+
+    // 「書けた +1」— 通じた(ok)ときだけ、1意図1回まで
+    const winAdd = $('winAdd'); winAdd.classList.remove('show');
+    if(v==='ok'){
+      const sig = TL+'|'+$('intent').value.trim();
+      if(sig !== render._lastWinSig){
+        render._lastWinSig = sig;
+        try{ LC.win({ skill:'書', lang:TL, source:'writer' }); }catch{}
+        refreshScore();
+        winAdd.classList.add('show');
+      }
+    }
+
+    $('result').style.display='block';
+    $('result').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // 文章を変えたら、次の ok を新しい1件として数える
+  $('intent').addEventListener('input', ()=>{ render._lastWinSig = null; });
+
+  $('go').addEventListener('click', judge);
+  $('clearIn').addEventListener('click', ()=>{ $('intent').value=''; $('attempt').value=''; render._lastWinSig=null; $('intent').focus(); });
+
+  // ツール利用としても記録（ホームの「つづきから」に出る）
+  try{ LC.record({ href:'writer.html', label:'Writer 書いてみる', sub:langName(TL)+'で書く' }); }catch{}
+</script>
+</body>
+</html>

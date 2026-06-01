@@ -15,7 +15,9 @@
 (function (global) {
   const LAST_KEY = 'lc-last';      // {href, label, sub, ts}
   const ACT_KEY  = 'lc-activity';  // ["YYYY-MM-DD", ...] 昇順ユニーク
+  const WINS_KEY = 'lc-wins';      // [{skill, lang, source, at}] 「できた」イベント
   const ACT_CAP  = 400;            // 保持する日数の上限
+  const WIN_CAP  = 3000;           // 保持するできたイベントの上限
   const DAY_MS   = 86400000;
 
   function dateStr(d) {
@@ -61,6 +63,43 @@
     logToday();
   }
 
+  // ---- 「できた」イベント（書けた／読めた／聞けた／話せた）----
+  function getWins() {
+    const a = readJSON(WINS_KEY, []);
+    return Array.isArray(a) ? a : [];
+  }
+  // ツールから呼ぶ：能力の「できた」を1件記録。skill='書'|'読'|'聞'|'話'。
+  //   LC.win({ skill:'書', lang:'zh', source:'writer' });
+  function win(info) {
+    info = info || {};
+    const ev = {
+      skill:  info.skill  || '',
+      lang:   info.lang   || '',
+      source: info.source || '',
+      at:     Date.now()
+    };
+    const a = getWins();
+    a.push(ev);
+    const trimmed = a.length > WIN_CAP ? a.slice(a.length - WIN_CAP) : a;
+    try { localStorage.setItem(WINS_KEY, JSON.stringify(trimmed)); } catch {}
+    logToday(); // できた日は活動日でもある
+    return ev;
+  }
+  function monthStart() {
+    const d = new Date();
+    return new Date(d.getFullYear(), d.getMonth(), 1).getTime();
+  }
+  // できた件数。opt {skill, lang, since} で絞り込み。引数なし=全件。
+  function winCount(opt) {
+    opt = opt || {};
+    const since = opt.since || 0;
+    return getWins().filter(w =>
+      (!opt.skill || w.skill === opt.skill) &&
+      (!opt.lang  || w.lang  === opt.lang) &&
+      (w.at >= since)
+    ).length;
+  }
+
   // 連続日数。今日 or 昨日まで活動していれば継続（1日の猶予あり）。
   function streak() {
     const set = new Set(getActivity());
@@ -77,5 +116,7 @@
     return n;
   }
 
-  global.LC = { dateStr, getLast, getActivity, logToday, record, streak, LAST_KEY, ACT_KEY };
+  global.LC = { dateStr, getLast, getActivity, logToday, record, streak,
+                getWins, win, winCount, monthStart,
+                LAST_KEY, ACT_KEY, WINS_KEY };
 })(window);
