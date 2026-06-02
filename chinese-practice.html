@@ -1983,19 +1983,19 @@
         {v:"写",vp:"xiě",jv:"書く",jStem:"書き",no:"一封信",nop:"yì fēng xìn",jno:"手紙を1通"}
       ];
       const EXPV = [
-        {v:"去",vp:"qù",o:"北京",op:"Běijīng",jExp:"北京に行っ"},
-        {v:"吃",vp:"chī",o:"日本菜",op:"Rìběn cài",jExp:"日本料理を食べ"},
-        {v:"看",vp:"kàn",o:"这部电影",op:"zhè bù diànyǐng",jExp:"この映画を見"},
-        {v:"学",vp:"xué",o:"中文",op:"Zhōngwén",jExp:"中国語を習っ"},
-        {v:"来",vp:"lái",o:"这里",op:"zhèli",jExp:"ここに来"}
+        {v:"去",vp:"qù",jv:"行く",o:"北京",op:"Běijīng",jo:"北京",jExp:"北京に行っ"},
+        {v:"吃",vp:"chī",jv:"食べる",o:"日本菜",op:"Rìběn cài",jo:"日本料理",jExp:"日本料理を食べ"},
+        {v:"看",vp:"kàn",jv:"見る",o:"这部电影",op:"zhè bù diànyǐng",jo:"この映画",jExp:"この映画を見"},
+        {v:"学",vp:"xué",jv:"習う",o:"中文",op:"Zhōngwén",jo:"中国語",jExp:"中国語を習っ"},
+        {v:"来",vp:"lái",jv:"来る",o:"这里",op:"zhèli",jo:"ここ",jExp:"ここに来"}
       ];
       const DAILY = [
-        {vo:"吃饭",vop:"chī fàn",jMa:"ご飯を食べ",jTe:"ご飯を食べ"}, {vo:"回家",vop:"huí jiā",jMa:"家に帰り",jTe:"家に帰っ"},
-        {vo:"起床",vop:"qǐchuáng",jMa:"起き",jTe:"起き"}, {vo:"睡觉",vop:"shuìjiào",jMa:"寝",jTe:"寝"}
+        {vo:"吃饭",vop:"chī fàn",jo:"ご飯を食べる",jMa:"ご飯を食べ",jTe:"ご飯を食べ"}, {vo:"回家",vop:"huí jiā",jo:"家に帰る",jMa:"家に帰り",jTe:"家に帰っ"},
+        {vo:"起床",vop:"qǐchuáng",jo:"起きる",jMa:"起き",jTe:"起き"}, {vo:"睡觉",vop:"shuìjiào",jo:"寝る",jMa:"寝",jTe:"寝"}
       ];
       const ALREADY = [
-        {z:"知道",p:"zhīdào",ja:"もう知っています"}, {z:"到",p:"dào",ja:"もう着きました"},
-        {z:"吃完",p:"chī wán",ja:"もう食べ終わりました"}, {z:"下班",p:"xiàbān",ja:"もう退勤しました"}
+        {z:"知道",p:"zhīdào",jv:"知る",ja:"もう知っています"}, {z:"到",p:"dào",jv:"着く",ja:"もう着きました"},
+        {z:"吃完",p:"chī wán",jv:"食べ終わる",ja:"もう食べ終わりました"}, {z:"下班",p:"xiàbān",jv:"退勤する",ja:"もう退勤しました"}
       ];
       function fDone() {
         const t = pick(TADV2), s = pick(SUBJ), v = pick(DONEV);
@@ -2012,7 +2012,7 @@
           ja: neg?`${s.j}は${v.jExp}たことがありません。`:`${s.j}は${v.jExp}たことがあります。`,
           zh: neg?`${s.z}没${v.v}过${v.o}。`:`${s.z}${v.v}过${v.o}。`,
           py: neg?`${s.p} méi ${v.vp} guo ${v.op}.`:`${s.p} ${v.vp} guo ${v.op}.`,
-          w:[{z:s.z,p:s.p,j:s.j}].concat(neg?[{z:"没",p:"méi",j:"〜していない"}]:[]).concat([{z:v.v,p:v.vp,j:"動詞"},{z:"过",p:"guo",j:"〜した経験"},{z:v.o,p:v.op,j:"目的語"}]),
+          w:[{z:s.z,p:s.p,j:s.j}].concat(neg?[{z:"没",p:"méi",j:"〜していない"}]:[]).concat([{z:v.v,p:v.vp,j:v.jv},{z:"过",p:"guo",j:"〜した経験"},{z:v.o,p:v.op,j:v.jo}]),
           g:"<strong>動詞＋<code>过</code></strong>は経験「〜したことがある」。否定は <code>没＋V＋过</code>（<code>没去过</code>＝行ったことがない）。完了の <code>了</code>（単発の実現）と区別する。",
           alts:[]
         };
@@ -2021,7 +2021,7 @@
         const d = pick(DAILY);
         return {
           ja:`${d.jMa}ましたか？`, zh:`你${d.vo}了吗？`, py:`nǐ ${d.vop} le ma?`,
-          w:[{z:"你",p:"nǐ",j:"あなた"},{z:d.vo,p:d.vop,j:"動作"},{z:"了",p:"le",j:"〜した（変化）"},{z:"吗",p:"ma",j:"〜か"}],
+          w:[{z:"你",p:"nǐ",j:"あなた"},{z:d.vo,p:d.vop,j:d.jo},{z:"了",p:"le",j:"〜した（変化）"},{z:"吗",p:"ma",j:"〜か"}],
           g:"<strong>文末の <code>了</code></strong>は状況変化・新事態の発生を表す。完了疑問は <code>...了吗？</code>、正反疑問 <code>...了没有？</code> も可。答えは <code>...了</code>／<code>还没...</code>。",
           alts:[`你${d.vo}了没有？`]
         };
@@ -2030,7 +2030,7 @@
         const s = pick(SUBJ), d = pick(DAILY);
         return {
           ja:`${s.j}はまだ${d.jTe}ていません。`, zh:`${s.z}还没${d.vo}。`, py:`${s.p} hái méi ${d.vop}.`,
-          w:[{z:s.z,p:s.p,j:s.j},{z:"还",p:"hái",j:"まだ"},{z:"没",p:"méi",j:"〜していない"},{z:d.vo,p:d.vop,j:"動作"}],
+          w:[{z:s.z,p:s.p,j:s.j},{z:"还",p:"hái",j:"まだ"},{z:"没",p:"méi",j:"〜していない"},{z:d.vo,p:d.vop,j:d.jo}],
           g:"<strong><code>还没</code>＋V</strong>＝「まだ〜していない」（今後する可能性を含む）。<code>不</code>（意志的否定）・<code>没</code>（完了の否定）と使い分ける。",
           alts:[]
         };
@@ -2039,7 +2039,7 @@
         const a = pick(ALREADY);
         return {
           ja:`${a.ja}。`, zh:`我已经${a.z}了。`, py:`wǒ yǐjīng ${a.p} le.`,
-          w:[{z:"已经",p:"yǐjīng",j:"もう・すでに"},{z:a.z,p:a.p,j:"動詞"},{z:"了",p:"le",j:"〜した（変化）"}],
+          w:[{z:"已经",p:"yǐjīng",j:"もう・すでに"},{z:a.z,p:a.p,j:a.jv},{z:"了",p:"le",j:"〜した（変化）"}],
           g:"<strong>「已经...了」</strong>＝「もう〜した・〜になった」。<code>已经</code>（すでに）＋文末 <code>了</code>（状況変化）。否定は <code>还没</code>（まだ〜していない）。",
           alts:[]
         };
@@ -2095,16 +2095,16 @@
       const CMP_ADJ = [{z:"高",p:"gāo",j:"背が高い"}, {z:"忙",p:"máng",j:"忙しい"}, {z:"瘦",p:"shòu",j:"痩せている"}];
       const AGE_DIFF = [{z:"两岁",p:"liǎng suì",j:"2歳"}, {z:"三岁",p:"sān suì",j:"3歳"}, {z:"五岁",p:"wǔ suì",j:"5歳"}];
       const REQ = [
-        {z:"帮我",p:"bāng wǒ",j:"手伝っ"}, {z:"等我",p:"děng wǒ",j:"待っ"}, {z:"教我",p:"jiāo wǒ",j:"教え"}
+        {z:"帮我",p:"bāng wǒ",j:"手伝っ",jw:"（私を）手伝う"}, {z:"等我",p:"děng wǒ",j:"待っ",jw:"（私を）待つ"}, {z:"教我",p:"jiāo wǒ",j:"教え",jw:"（私に）教える"}
       ];
       const PERM = [
-        {z:"拍照",p:"pāizhào",j:"写真を撮っ"}, {z:"抽烟",p:"chōuyān",j:"タバコを吸っ"}, {z:"停车",p:"tíngchē",j:"駐車し"}
+        {z:"拍照",p:"pāizhào",j:"写真を撮っ",jw:"写真を撮る"}, {z:"抽烟",p:"chōuyān",j:"タバコを吸っ",jw:"タバコを吸う"}, {z:"停车",p:"tíngchē",j:"駐車し",jw:"駐車する"}
       ];
       const GIVEOBJ = [
         {z:"一杯水",p:"yì bēi shuǐ",j:"水を1杯"}, {z:"一杯咖啡",p:"yì bēi kāfēi",j:"コーヒーを1杯"}, {z:"一个面包",p:"yí ge miànbāo",j:"パンを1個"}
       ];
       const TAI = [
-        {z:"好",p:"hǎo",ja:"よかった・すごい"}, {z:"贵",p:"guì",ja:"高すぎる"}, {z:"累",p:"lèi",ja:"疲れた"}, {z:"棒",p:"bàng",ja:"最高だ"}
+        {z:"好",p:"hǎo",jw:"良い",ja:"よかった・すごい"}, {z:"贵",p:"guì",jw:"（値段が）高い",ja:"高すぎる"}, {z:"累",p:"lèi",jw:"疲れている",ja:"疲れた"}, {z:"棒",p:"bàng",jw:"すばらしい",ja:"最高だ"}
       ];
       function fCompare2() {
         const a = pick(CMP); let b = pick(CMP); while (b.z === a.z) b = pick(CMP);
@@ -2130,7 +2130,7 @@
         const r = pick(REQ);
         return {
           ja:`${r.j}てもらえますか？`, zh:`你能${r.z}吗？`, py:`nǐ néng ${r.p} ma?`,
-          w:[{z:"你",p:"nǐ",j:"あなた"},{z:"能",p:"néng",j:"〜できる"},{z:r.z,p:r.p,j:"動作＋我"},{z:"吗",p:"ma",j:"〜か"}],
+          w:[{z:"你",p:"nǐ",j:"あなた"},{z:"能",p:"néng",j:"〜できる"},{z:r.z,p:r.p,j:r.jw},{z:"吗",p:"ma",j:"〜か"}],
           g:"<strong><code>能</code></strong>＝条件・能力的に「〜できる」。依頼でよく使う。正反疑問 <code>能不能帮我？</code>、許可なら <code>可以帮我吗？</code>、丁寧には <code>请帮我</code>。",
           alts:[`你能不能${r.z}？`]
         };
@@ -2139,7 +2139,7 @@
         const p = pick(PERM);
         return {
           ja:`ここで${p.j}てもいいですか？`, zh:`这里可以${p.z}吗？`, py:`zhèli kěyǐ ${p.p} ma?`,
-          w:[{z:"这里",p:"zhèli",j:"ここ"},{z:"可以",p:"kěyǐ",j:"〜してよい"},{z:p.z,p:p.p,j:"動作"},{z:"吗",p:"ma",j:"〜か"}],
+          w:[{z:"这里",p:"zhèli",j:"ここ"},{z:"可以",p:"kěyǐ",j:"〜してよい"},{z:p.z,p:p.p,j:p.jw},{z:"吗",p:"ma",j:"〜か"}],
           g:"<strong><code>可以</code></strong>＝許可「〜してもよい」。答えは <code>可以</code>／<code>不可以</code>／<code>不行</code>。<code>能</code>より規則・許可の側面が強い。",
           alts:[]
         };
@@ -2157,7 +2157,7 @@
         const a = pick(TAI);
         return {
           ja:`${a.ja}！`, zh:`太${a.z}了！`, py:`tài ${a.p} le!`,
-          w:[{z:"太",p:"tài",j:"あまりにも"},{z:a.z,p:a.p,j:"形容詞"},{z:"了",p:"le",j:"〜だ（感嘆）"}],
+          w:[{z:"太",p:"tài",j:"あまりにも"},{z:a.z,p:a.p,j:a.jw},{z:"了",p:"le",j:"〜だ（感嘆）"}],
           g:"<strong>「太＋形容詞＋了」</strong>＝「あまりにも〜だ」。感嘆・強調の定型。プラス（<code>太好了！</code>）にもマイナス（<code>太贵了</code>）にも使う。",
           alts:[]
         };
