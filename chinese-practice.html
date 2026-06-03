@@ -2199,6 +2199,8 @@
     // ========================================================================
     const STORAGE_KEY = "cn-practice-v2";
     const TOTAL_COURSES_PLANNED = 24;
+    // 生成エンジン（テンプレ・語義）を更新したら上げる。古い generated キャッシュを破棄して再生成させる。
+    const GEN_VERSION = 3;
 
     const defaultState = {
       streak: 0, lastDate: "",
@@ -2210,7 +2212,8 @@
       recentInCourse: {},  // { courseId: [sentIdx, ...] } (avoid immediate repeats)
       inProgress: null,    // { courseId, sentIdx, input } - 練習中に離脱した場合の途中状態
       traditional: false,  // 簡体字(false) / 繁体字(true)
-      generated: {}        // { courseId: [10 sentences] } 生成型コースの現セッション出題（リロード維持）
+      generated: {},       // { courseId: [10 sentences] } 生成型コースの現セッション出題（リロード維持）
+      genVersion: 0        // 生成エンジンの版。GEN_VERSION と不一致なら generated を破棄
     };
 
     // Simplified→Traditional helper. Always returns the string in the currently
@@ -2232,6 +2235,15 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
     const state = loadState();
+
+    // 生成エンジン更新時: 旧バージョンで作られた generated キャッシュ（古い語義・古い構造）を破棄。
+    // これにより次回入室で最新エンジンの問題が再生成される（語義「動詞」化や描画エラーの解消）。
+    if (state.genVersion !== GEN_VERSION) {
+      state.generated = {};
+      if (state.inProgress && isGenerative(state.inProgress.courseId)) state.inProgress = null;
+      state.genVersion = GEN_VERSION;
+      saveState();
+    }
 
     function todayStr() {
       const d = new Date();
@@ -2668,7 +2680,9 @@
     // CHECK ANSWER
     // ========================================================================
     function normalize(s) {
-      return (s || "")
+      if (s && typeof s === "object") s = s.zh || "";   // {zh,note} 形式を取りこぼさない安全策
+      if (typeof s !== "string") s = s == null ? "" : String(s);
+      return s
         .replace(/[\s　]/g, "")
         .replace(/[，。．、！？!?,.;:；：]/g, "")
         .trim();
@@ -2683,7 +2697,11 @@
     function checkAlternatives(user) {
       const u = canonical(user);
       if (canonical(currentSent.zh) === u) return true;
-      if (currentSent.alts) return currentSent.alts.some(a => canonical(a) === u);
+      // alts は文字列 or {zh, note} の混在を許容（{zh} の場合は zh を取り出して比較）
+      if (currentSent.alts) return currentSent.alts.some(a => {
+        const zh = (a && typeof a === "object") ? a.zh : a;
+        return zh && canonical(zh) === u;
+      });
       return false;
     }
     function compareAnswer(user, correct) {
@@ -2736,7 +2754,7 @@
         verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">✕</span>模範解答を確認して再挑戦</div>`;
       }
 
-      const wordsHTML = currentSent.w.map(w => `
+      const wordsHTML = (currentSent.w || []).map(w => `
         <div class="word-item">
           <div class="word-zh zh">${tx(w.z)}</div>
           <div class="word-pinyin">${w.p}</div>
