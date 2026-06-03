@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="ja" data-target="ko">
+<html lang="zh" data-target="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Journal 한국어 · 韓国語の短文を書き写す</title>
+<title>Journal 韩语 · 抄写韩语短句</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="icons/favicon-180.png">
-<link rel="manifest" href="korean-diary.webmanifest">
+<link rel="manifest" href="korean-diary-zh.webmanifest">
 <meta name="theme-color" content="#984a2e">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Journal 한국어">
+<meta name="apple-mobile-web-app-title" content="Journal 韩语">
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -61,7 +61,7 @@
     --dur-slow: 380ms;
 
     --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI",
-               "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", system-ui, sans-serif;
+               "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
     --font-display: -apple-system, "SF Pro Display", "Inter", "Hiragino Sans", sans-serif;
     --font-zh: "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Hiragino Sans",
                sans-serif;
@@ -1420,19 +1420,19 @@
 <div class="app">
   <header class="site">
     <div class="brand">
-      <h1>Journal 한국어<span class="sub">韓国語の短文を書き写す</span></h1>
-      <p>TOPIK 1〜4対応・1日1パッセージのトレーニング</p>
+      <h1>Journal 韩语<span class="sub">抄写韩语短句</span></h1>
+      <p>TOPIK 1〜4 · 每天一段的训练</p>
     </div>
     <div class="header-right">
       <div class="progress-meta">
         <div class="progress-numbers">
           <span class="now" id="progress-now">0</span>
           <span class="of" id="progress-of">/ 14</span>
-          <span class="label">完了</span>
+          <span class="label">完成</span>
         </div>
         <div class="progress-dots" id="progress-dots"></div>
       </div>
-      <button class="icon-btn" id="theme-toggle" title="テーマ切替 (D)" aria-label="テーマ切替">
+      <button class="icon-btn" id="theme-toggle" title="切换主题 (D)" aria-label="切换主题">
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
       </button>
@@ -1440,24 +1440,24 @@
   </header>
 
   <div class="voice-warning" id="voice-warning">
-    ブラウザに韓国語(ko-KR)の音声が見つかりません。macOS:「システム設定 → アクセシビリティ → 読み上げコンテンツ」/ Windows:「設定 → 時刻と言語 → 言語と地域」で韓国語音声を追加してください。
+    浏览器中没有韩语(ko-KR)语音。macOS:「系统设置 → 辅助功能 → 朗读内容」/ Windows:「设置 → 时间和语言 → 语言和区域」中添加韩语语音。
   </div>
 
   <nav class="day-nav">
-    <button class="nav-btn" id="prev-day" title="前の日 (←)">
+    <button class="nav-btn" id="prev-day" title="上一篇 (←)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      前へ
+      上一篇
     </button>
     <div class="day-indicator">
       <span class="num" id="day-num">1</span><span class="total" id="day-total">14</span>
     </div>
-    <select class="day-jump" id="day-jump" title="日数ジャンプ"></select>
-    <button class="nav-btn" id="next-day" title="次の日 (→)">
-      次へ
+    <select class="day-jump" id="day-jump" title="跳转"></select>
+    <button class="nav-btn" id="next-day" title="下一篇 (→)">
+      下一篇
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
     <div class="toggle-group">
-      <button class="reset-link" id="reset-btn" title="進捗リセット">⟲ Reset</button>
+      <button class="reset-link" id="reset-btn" title="重置进度">⟲ Reset</button>
     </div>
   </nav>
 
@@ -1468,11 +1468,11 @@
         <span class="theme-text">
           <span class="zh" id="theme-zh">자기소개</span>
           <span class="sep">·</span>
-          <span id="theme-ja">自己紹介</span>
+          <span id="theme-ja">自我介绍</span>
         </span>
       </div>
       <h2 class="lesson-title" id="lesson-title">반갑습니다</h2>
-      <p class="lesson-subtitle" id="lesson-subtitle">お知り合いになりましょう</p>
+      <p class="lesson-subtitle" id="lesson-subtitle">很高兴认识你</p>
 
       <div class="tip">
         <span class="tip-label">Point</span>
@@ -1482,11 +1482,11 @@
       <div class="audio-bar">
         <button class="play-btn" id="play-all-normal">
           <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-          全文を再生
+          播放全文
         </button>
         <button class="play-btn ghost" id="play-all-slow">
           <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-          ゆっくり
+          慢速
         </button>
         <button class="play-btn ghost" id="stop-audio" title="停止 (Esc)">
           <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
@@ -1495,67 +1495,67 @@
       </div>
 
       <div class="display-toggles">
-        <button class="display-toggle active" id="pinyin-toggle" title="発音 表示切替">
+        <button class="display-toggle active" id="pinyin-toggle" title="切换发音">
           <span class="dt-dot"></span>
-          発音
+          发音
         </button>
-        <button class="display-toggle active" id="translation-toggle" title="和訳 表示切替">
+        <button class="display-toggle active" id="translation-toggle" title="切换翻译">
           <span class="dt-dot"></span>
-          和訳
+          翻译
         </button>
       </div>
 
       <div class="passage" id="passage"></div>
 
       <div class="vocab-section">
-        <div class="section-label" style="margin-bottom:10px;">単語</div>
+        <div class="section-label" style="margin-bottom:10px;">生词</div>
         <div class="vocab-grid" id="vocab-list"></div>
       </div>
 
       <div class="progress-block">
         <div class="counter">
-          <span class="counter-label">音読 · 5</span>
+          <span class="counter-label">朗读 · 5</span>
           <span class="dots" id="read-dots"></span>
         </div>
         <div class="counter">
-          <span class="counter-label">書写 · 3</span>
+          <span class="counter-label">抄写 · 3</span>
           <span class="dots" id="write-dots"></span>
         </div>
       </div>
 
       <button class="complete-btn" id="complete-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        <span id="complete-text">今日のレッスンを完了する</span>
+        <span id="complete-text">完成今天的练习</span>
       </button>
     </article>
 
     <article class="card writing-card">
       <div class="lesson-meta">
-        <span class="theme-text" style="color:var(--ink-3);">WRITE<span class="sep">·</span>書く</span>
+        <span class="theme-text" style="color:var(--ink-3);">WRITE<span class="sep">·</span>书写</span>
       </div>
-      <h2 class="lesson-title" style="font-size:22px;margin-bottom:6px;">あなたのノート</h2>
+      <h2 class="lesson-title" style="font-size:22px;margin-bottom:6px;">我的笔记</h2>
 
       <div class="mode-tabs" id="mode-tabs">
         <button class="mode-tab" data-mode="canvas">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-          手書き
+          手写
         </button>
         <button class="mode-tab active" data-mode="typing">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M7 16h10"/></svg>
-          タイピング
+          打字
         </button>
       </div>
 
       <div class="grid-tabs typing-submode-tabs" id="typing-submode-tabs">
-        <button class="grid-tab active" data-submode="original">原文表示</button>
-        <button class="grid-tab" data-submode="dictation">聞き取り</button>
-        <button class="grid-tab" data-submode="translation">和訳表示</button>
+        <button class="grid-tab active" data-submode="original">原文显示</button>
+        <button class="grid-tab" data-submode="dictation">听写</button>
+        <button class="grid-tab" data-submode="translation">翻译显示</button>
       </div>
 
       <p class="right-hint" id="typing-hint" hidden></p>
 
       <details class="reference-block" id="reference-block" open>
-        <summary id="reference-summary">参照する原文を表示</summary>
+        <summary id="reference-summary">显示参考原文</summary>
         <div class="reference-text" id="reference-text"></div>
       </details>
 
@@ -1563,11 +1563,11 @@
         <div class="dictation-icon">🔊</div>
         <button class="canvas-btn" id="dictation-play-normal">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          通常
+          正常
         </button>
         <button class="canvas-btn" id="dictation-play-slow">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          ゆっくり
+          慢速
         </button>
         <button class="canvas-btn" id="dictation-stop">
           <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
@@ -1576,13 +1576,13 @@
       </div>
 
       <div class="write-pane" id="canvas-pane" hidden>
-        <p class="right-hint">紙に書くのが理想ですが、このキャンバスでも練習できます。ハングルはマス目に書くと字のバランスを取りやすいです。</p>
+        <p class="right-hint">在纸上写最为理想，但用这块画布也可以练习。韩文(한글)写进方格里，更容易把握字形的平衡。</p>
 
         <div class="grid-tabs" id="grid-tabs">
-          <button class="grid-tab active" data-mode="tianzi">マス目</button>
-          <button class="grid-tab" data-mode="grid">方眼</button>
-          <button class="grid-tab" data-mode="lined">横罫</button>
-          <button class="grid-tab" data-mode="blank">無地</button>
+          <button class="grid-tab active" data-mode="tianzi">方格</button>
+          <button class="grid-tab" data-mode="grid">网格</button>
+          <button class="grid-tab" data-mode="lined">横线</button>
+          <button class="grid-tab" data-mode="blank">空白</button>
         </div>
 
         <div class="writing-area tianzi" id="writing-area">
@@ -1592,14 +1592,14 @@
         <div class="canvas-controls">
           <button class="canvas-btn" id="clear-canvas">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14H7L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-            クリア
+            清除
           </button>
           <button class="canvas-btn" id="undo-canvas">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-            1筆戻す
+            撤销一笔
           </button>
           <div class="brush-control">
-            太さ
+            粗细
             <input type="range" id="brush-size" min="1" max="10" value="3">
           </div>
         </div>
@@ -1607,19 +1607,19 @@
 
       <div class="write-pane" id="typing-pane">
         <textarea class="typing-input" id="typing-input"
-                  placeholder="ここに書き写してください…"
+                  placeholder="请在这里抄写…"
                   spellcheck="false"></textarea>
 
         <div class="canvas-controls">
           <button class="canvas-btn" id="compare-btn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            原文と比較
+            与原文比较
           </button>
           <button class="canvas-btn" id="clear-typing">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14H7L5 6"/></svg>
-            クリア
+            清除
           </button>
-          <span class="char-count" id="char-count">0 / 0 文字</span>
+          <span class="char-count" id="char-count">0 / 0 字</span>
         </div>
 
         <div class="diff-output" id="diff-output" hidden></div>
@@ -1629,7 +1629,7 @@
 
   <footer class="site">
     <div class="meta">
-      <span>個人の趣味の範囲で作っています。細かいバグなどはご容赦ください。</span>
+      <span>个人兴趣范围内制作，细小的bug还请见谅。</span>
       <span>© 2026 mari · <a href="https://x.com/mmmmmmmari_" target="_blank" rel="noopener">@mmmmmmmari_</a></span>
     </div>
   </footer>
@@ -1639,32 +1639,32 @@
 const LESSONS = [
   {
     day: 1, hsk: 1,
-    theme: { zh: "자기소개", ja: "自己紹介" },
-    title: { zh: "반갑습니다", ja: "お知り合いになりましょう" },
-    tip: "「저는 ~예요/이에요」で「私は〜です」。パッチム（語末子音）が無い名詞には예요、有る名詞には이에요が付く。「-고」は「〜して、〜で」と文をつなぐ語尾。",
+    theme: { zh: "자기소개", ja: "自我介绍" },
+    title: { zh: "반갑습니다", ja: "很高兴认识你" },
+    tip: "「저는 ~예요/이에요」＝「我是~」。无收音(받침)的名词后接예요，有收音的接이에요。「-고」是「~，并且/~而且」连接句子的语尾。",
     sentences: [
-      { zh: "안녕하세요! 저는 다나카예요.", pinyin: "annyeonghaseyo! jeoneun danakayeyo." },
-      { zh: "올해 서른 살이고, 일본 사람이에요.", pinyin: "olhae seoreun sarigo, ilbon saramieyo." },
-      { zh: "도쿄에 살고, 매일 회사에 가요.", pinyin: "dokyoe salgo, maeil hoesae gayo." },
+      { zh: "안녕하세요! 저는 리밍이에요.", pinyin: "annyeonghaseyo! jeoneun rimingieyo." },
+      { zh: "올해 서른 살이고, 중국 사람이에요.", pinyin: "olhae seoreun sarigo, jungguk saramieyo." },
+      { zh: "상하이에 살고, 매일 회사에 가요.", pinyin: "sanghaie salgo, maeil hoesae gayo." },
       { zh: "한국을 아주 좋아해서 지금 한국어를 배워요.", pinyin: "hangugeul aju joahaeseo jigeum hangugeoreul baewoyo." },
       { zh: "잘 부탁합니다!", pinyin: "jal butakhamnida!" }
     ],
-    translation: "こんにちは！私は田中です。今年30歳で、日本人です。東京に住んでいて、毎日会社に行きます。韓国がとても好きで、今韓国語を学んでいます。よろしくお願いします！",
+    translation: "你好！我叫李明。今年30岁，是中国人。我住在上海，每天去公司上班。我非常喜欢韩国，所以现在在学习韩语。请多多关照！",
     vocab: [
-      { zh: "저", pinyin: "jeo", ja: "私（謙譲）" },
+      { zh: "저", pinyin: "jeo", ja: "我(谦辞)" },
       { zh: "올해", pinyin: "olhae", ja: "今年" },
-      { zh: "살다", pinyin: "salda", ja: "住む・暮らす" },
-      { zh: "매일", pinyin: "maeil", ja: "毎日" },
-      { zh: "회사", pinyin: "hoesa", ja: "会社" },
-      { zh: "-아서/어서", pinyin: "-aseo/eoseo", ja: "〜なので・〜して" },
-      { zh: "잘 부탁합니다", pinyin: "jal butakhamnida", ja: "よろしくお願いします" }
+      { zh: "살다", pinyin: "salda", ja: "住·生活" },
+      { zh: "매일", pinyin: "maeil", ja: "每天" },
+      { zh: "회사", pinyin: "hoesa", ja: "公司" },
+      { zh: "-아서/어서", pinyin: "-aseo/eoseo", ja: "因为~/~然后" },
+      { zh: "잘 부탁합니다", pinyin: "jal butakhamnida", ja: "请多关照" }
     ]
   },
   {
     day: 2, hsk: 1,
-    theme: { zh: "가족", ja: "家族" },
-    title: { zh: "우리 가족", ja: "私の温かい家" },
-    tip: "助数詞は「명(人)・마리(動物)・개(個)」など対象で変わる。数は固有数詞「한·두·세·네」を使い、後ろの助数詞で形が変わる（하나→한 명）。「있는데」は「いるんだけど」と前置きする接続。",
+    theme: { zh: "가족", ja: "家庭" },
+    title: { zh: "우리 가족", ja: "温暖的家" },
+    tip: "量词随对象变化：「명(人)·마리(动物)·개(个)」等。数字用固有数词「한·두·세·네」，与后面量词搭配会变形(하나→한 명)。「있는데」是「有~，(而)」的铺垫连接。",
     sentences: [
       { zh: "우리 가족은 네 명이에요.", pinyin: "uri gajogeun ne myeongieyo." },
       { zh: "아버지는 의사고, 어머니는 선생님이에요.", pinyin: "abeojineun uisago, eomeonineun seonsaengnimieyo." },
@@ -1672,22 +1672,22 @@ const LESSONS = [
       { zh: "우리 집에는 고양이가 한 마리 있어요.", pinyin: "uri jibeneun goyangiga han mari isseoyo." },
       { zh: "우리는 모두 고양이를 사랑하고, 고양이도 우리를 좋아해요.", pinyin: "urineun modu goyangireul saranghago, goyangido urireul joahaeyo." }
     ],
-    translation: "私の家族は4人です。父は医者で、母は教師です。弟が一人いて、大学生です。我が家には猫が一匹います。私たちはみんな猫を可愛がっていて、猫も私たちが好きです。",
+    translation: "我家有四口人。爸爸是医生，妈妈是老师。我有一个弟弟，是大学生。我家养了一只猫。我们都很疼爱它，它也很喜欢我们。",
     vocab: [
-      { zh: "가족", pinyin: "gajok", ja: "家族" },
-      { zh: "명", pinyin: "myeong", ja: "〜人（助数詞）" },
-      { zh: "의사", pinyin: "uisa", ja: "医者" },
-      { zh: "선생님", pinyin: "seonsaengnim", ja: "先生" },
-      { zh: "남동생", pinyin: "namdongsaeng", ja: "弟" },
-      { zh: "마리", pinyin: "mari", ja: "〜匹（助数詞）" },
-      { zh: "모두", pinyin: "modu", ja: "みんな・全部" }
+      { zh: "가족", pinyin: "gajok", ja: "家人" },
+      { zh: "명", pinyin: "myeong", ja: "~名(量词)" },
+      { zh: "의사", pinyin: "uisa", ja: "医生" },
+      { zh: "선생님", pinyin: "seonsaengnim", ja: "老师" },
+      { zh: "남동생", pinyin: "namdongsaeng", ja: "弟弟" },
+      { zh: "마리", pinyin: "mari", ja: "~只(量词)" },
+      { zh: "모두", pinyin: "modu", ja: "都·全部" }
     ]
   },
   {
     day: 15, hsk: 1,
-    theme: { zh: "날씨", ja: "天気" },
-    title: { zh: "오늘은 기분이 좋아요", ja: "今日はとても嬉しい" },
-    tip: "過去形は語幹に「-았/었어요」。陽母音(ㅏㅗ)は-았、陰母音は-었。「보러 가다」の「-(으)러」は「〜しに（行く）」と目的を表す。",
+    theme: { zh: "날씨", ja: "天气" },
+    title: { zh: "오늘은 기분이 좋아요", ja: "今天心情很好" },
+    tip: "过去式在词干加「-았/었어요」。阳性元音(ㅏㅗ)用-았，阴性用-었。「보러 가다」的「-(으)러」表示「去做~」的目的。",
     sentences: [
       { zh: "오늘은 날씨가 아주 좋아요.", pinyin: "oneureun nalssiga aju joayo." },
       { zh: "친구하고 같이 영화를 보러 갔어요.", pinyin: "chinguhago gachi yeonghwareul boreo gasseoyo." },
@@ -1695,22 +1695,22 @@ const LESSONS = [
       { zh: "저는 사과 하나를 먹고, 차 한 잔을 마셨어요.", pinyin: "jeoneun sagwa hanareul meokgo, cha han janeul masyeosseoyo." },
       { zh: "오늘 하루가 참 좋았어요.", pinyin: "oneul haruga cham joasseoyo." }
     ],
-    translation: "今日は天気がとても良いです。友達と一緒に映画を見に行きました。映画が面白くて、二人とも気分が良かったです。私はりんごを一つ食べて、お茶を一杯飲みました。今日一日は本当に良かったです。",
+    translation: "今天天气很好。和朋友一起去看了电影。电影很有趣，我们俩都很开心。我吃了一个苹果，喝了一杯茶。今天一天真好。",
     vocab: [
-      { zh: "날씨", pinyin: "nalssi", ja: "天気" },
-      { zh: "같이", pinyin: "gachi", ja: "一緒に" },
-      { zh: "영화", pinyin: "yeonghwa", ja: "映画" },
-      { zh: "재미있다", pinyin: "jaemiitda", ja: "面白い" },
-      { zh: "기분", pinyin: "gibun", ja: "気分" },
-      { zh: "마시다", pinyin: "masida", ja: "飲む" },
-      { zh: "참", pinyin: "cham", ja: "本当に・とても" }
+      { zh: "날씨", pinyin: "nalssi", ja: "天气" },
+      { zh: "같이", pinyin: "gachi", ja: "一起" },
+      { zh: "영화", pinyin: "yeonghwa", ja: "电影" },
+      { zh: "재미있다", pinyin: "jaemiitda", ja: "有趣" },
+      { zh: "기분", pinyin: "gibun", ja: "心情" },
+      { zh: "마시다", pinyin: "masida", ja: "喝" },
+      { zh: "참", pinyin: "cham", ja: "真·非常" }
     ]
   },
   {
     day: 16, hsk: 1,
-    theme: { zh: "쇼핑", ja: "買い物" },
-    title: { zh: "가게에 가요", ja: "お店に行く" },
-    tip: "「-고 싶다」で「〜したい」。名詞の並列は「-과/와」（パッチム有=과、無=와）。「-지만」は「〜だが・〜けれど」の逆接。",
+    theme: { zh: "쇼핑", ja: "购物" },
+    title: { zh: "가게에 가요", ja: "去商店" },
+    tip: "「-고 싶다」＝「想~」。名词并列用「-과/와」(有收音=과，无=와)。「-지만」＝「虽然~但是」的转折。",
     sentences: [
       { zh: "오늘 저는 가게에 가요.", pinyin: "oneul jeoneun gagee gayo." },
       { zh: "물건을 조금 샀어요.", pinyin: "mulgeoneul jogeum sasseoyo." },
@@ -1718,22 +1718,22 @@ const LESSONS = [
       { zh: "사과가 크고 아주 맛있어요.", pinyin: "sagwaga keugo aju masisseoyo." },
       { zh: "차도 사고 싶었지만 돈이 없었어요.", pinyin: "chado sago sipeotjiman doni eopseosseoyo." }
     ],
-    translation: "今日私はお店に行きます。物を少し買いました。水とお米とりんごを買いました。りんごが大きくてとても美味しいです。お茶も買いたかったけれど、お金がありませんでした。",
+    translation: "今天我去商店。买了一些东西。买了水、米和苹果。苹果又大又好吃。我也想买茶，但是没钱了。",
     vocab: [
-      { zh: "가게", pinyin: "gage", ja: "店" },
-      { zh: "물건", pinyin: "mulgeon", ja: "品物" },
-      { zh: "사다", pinyin: "sada", ja: "買う" },
+      { zh: "가게", pinyin: "gage", ja: "商店" },
+      { zh: "물건", pinyin: "mulgeon", ja: "东西·物品" },
+      { zh: "사다", pinyin: "sada", ja: "买" },
       { zh: "쌀", pinyin: "ssal", ja: "米" },
-      { zh: "맛있다", pinyin: "masitda", ja: "美味しい" },
-      { zh: "돈", pinyin: "don", ja: "お金" },
-      { zh: "없다", pinyin: "eopda", ja: "無い・いない" }
+      { zh: "맛있다", pinyin: "masitda", ja: "好吃" },
+      { zh: "돈", pinyin: "don", ja: "钱" },
+      { zh: "없다", pinyin: "eopda", ja: "没有" }
     ]
   },
   {
     day: 20, hsk: 1,
-    theme: { zh: "아이", ja: "子ども" },
-    title: { zh: "우리 딸", ja: "私の娘" },
-    tip: "「-기를 좋아하다」で「〜するのが好き」（動詞を名詞化する-기）。「-(으)면」は「〜すれば・〜すると」の条件。",
+    theme: { zh: "아이", ja: "孩子" },
+    title: { zh: "우리 딸", ja: "我的女儿" },
+    tip: "「-기를 좋아하다」＝「喜欢做~」(用-기把动词名词化)。「-(으)면」＝「如果~/一~就」的条件。",
     sentences: [
       { zh: "저는 딸이 한 명 있어요.", pinyin: "jeoneun ttari han myeong isseoyo." },
       { zh: "우리 딸은 다섯 살이에요.", pinyin: "uri ttareun daseot sarieyo." },
@@ -1741,23 +1741,23 @@ const LESSONS = [
       { zh: "매일 아침 같이 유치원에 가요.", pinyin: "maeil achim gachi yuchiwone gayo." },
       { zh: "딸의 웃는 얼굴을 보면 저도 행복해요.", pinyin: "ttarui unneun eolgureul bomyeon jeodo haengbokhaeyo." }
     ],
-    translation: "私は娘が一人います。うちの娘は五歳です。娘は絵を描くのがとても好きです。毎朝一緒に幼稚園に行きます。娘の笑顔を見ると、私も幸せです。",
+    translation: "我有一个女儿。我女儿五岁。女儿非常喜欢画画。每天早上一起去幼儿园。看到女儿的笑脸，我也很幸福。",
     vocab: [
-      { zh: "딸", pinyin: "ttal", ja: "娘" },
-      { zh: "다섯", pinyin: "daseot", ja: "五つ" },
-      { zh: "그림", pinyin: "geurim", ja: "絵" },
-      { zh: "그리다", pinyin: "geurida", ja: "描く" },
-      { zh: "아침", pinyin: "achim", ja: "朝" },
-      { zh: "유치원", pinyin: "yuchiwon", ja: "幼稚園" },
-      { zh: "웃다", pinyin: "utda", ja: "笑う" },
-      { zh: "행복하다", pinyin: "haengbokhada", ja: "幸せだ" }
+      { zh: "딸", pinyin: "ttal", ja: "女儿" },
+      { zh: "다섯", pinyin: "daseot", ja: "五" },
+      { zh: "그림", pinyin: "geurim", ja: "画" },
+      { zh: "그리다", pinyin: "geurida", ja: "画" },
+      { zh: "아침", pinyin: "achim", ja: "早上" },
+      { zh: "유치원", pinyin: "yuchiwon", ja: "幼儿园" },
+      { zh: "웃다", pinyin: "utda", ja: "笑" },
+      { zh: "행복하다", pinyin: "haengbokhada", ja: "幸福" }
     ]
   },
   {
     day: 21, hsk: 1,
-    theme: { zh: "시간", ja: "時間" },
-    title: { zh: "지금 몇 시예요?", ja: "今何時？" },
-    tip: "「時」は固有数詞（한 시·두 시…）、「分」は漢数詞（일 분·이 분…）で読む。時刻の「〜に」は「-에」。",
+    theme: { zh: "시간", ja: "时间" },
+    title: { zh: "지금 몇 시예요?", ja: "现在几点？" },
+    tip: "「~시(点)」用固有数词(한 시·두 시…)，「~분(分)」用汉字数词(일 분·이 분…)。时刻的「在~」用「-에」。",
     sentences: [
       { zh: "지금 몇 시예요?", pinyin: "jigeum myeot sieyo?" },
       { zh: "지금은 아침 일곱 시예요.", pinyin: "jigeumeun achim ilgop sieyo." },
@@ -1765,23 +1765,23 @@ const LESSONS = [
       { zh: "점심은 열두 시 반에 먹어요.", pinyin: "jeomsimeun yeoldu si bane meogeoyo." },
       { zh: "밤 열한 시에 자요.", pinyin: "bam yeolhan sie jayo." }
     ],
-    translation: "今何時ですか？今は朝の七時です。私は普通八時に会社に行きます。昼ごはんは十二時半に食べます。夜十一時に寝ます。",
+    translation: "现在几点？现在是早上七点。我一般八点去公司。午饭十二点半吃。晚上十一点睡觉。",
     vocab: [
-      { zh: "지금", pinyin: "jigeum", ja: "今" },
-      { zh: "몇", pinyin: "myeot", ja: "何（数を尋ねる）" },
-      { zh: "시", pinyin: "si", ja: "〜時" },
-      { zh: "보통", pinyin: "botong", ja: "普通" },
-      { zh: "점심", pinyin: "jeomsim", ja: "昼食" },
+      { zh: "지금", pinyin: "jigeum", ja: "现在" },
+      { zh: "몇", pinyin: "myeot", ja: "几(问数量)" },
+      { zh: "시", pinyin: "si", ja: "~点" },
+      { zh: "보통", pinyin: "botong", ja: "一般·通常" },
+      { zh: "점심", pinyin: "jeomsim", ja: "午饭" },
       { zh: "반", pinyin: "ban", ja: "半" },
-      { zh: "밤", pinyin: "bam", ja: "夜" },
-      { zh: "자다", pinyin: "jada", ja: "寝る" }
+      { zh: "밤", pinyin: "bam", ja: "夜晚" },
+      { zh: "자다", pinyin: "jada", ja: "睡觉" }
     ]
   },
   {
     day: 22, hsk: 1,
-    theme: { zh: "공부", ja: "学び" },
-    title: { zh: "저는 한국어를 배워요", ja: "韓国語を学んでいます" },
-    tip: "「-(으)면서」は「〜しながら」と同時動作。手段の「〜で」は「-(으)로」（한국어로＝韓国語で）。",
+    theme: { zh: "공부", ja: "学习" },
+    title: { zh: "저는 한국어를 배워요", ja: "我在学韩语" },
+    tip: "「-(으)면서」＝「一边~一边~」(同时动作)。表手段的「用~」是「-(으)로」(한국어로＝用韩语)。",
     sentences: [
       { zh: "저는 매일 한국어를 공부해요.", pinyin: "jeoneun maeil hangugeoreul gongbuhaeyo." },
       { zh: "아침에 단어를 외우고, 밤에 책을 읽어요.", pinyin: "achime daneoreul oeugo, bame chaegeul ilgeoyo." },
@@ -1789,22 +1789,22 @@ const LESSONS = [
       { zh: "한국어는 어렵지만 아주 재미있어요.", pinyin: "hangugeoneun eoryeopjiman aju jaemiisseoyo." },
       { zh: "언젠가 한국 친구하고 한국어로 이야기하고 싶어요.", pinyin: "eonjenga hanguk chinguhago hangugeoro iyagihago sipeoyo." }
     ],
-    translation: "私は毎日韓国語を勉強します。朝に単語を覚えて、夜に本を読みます。韓国ドラマを見ながら勉強します。韓国語は難しいけれど、とても面白いです。いつか韓国の友達と韓国語で話したいです。",
+    translation: "我每天学习韩语。早上背单词，晚上读书。我一边看韩剧一边学习。韩语虽然难，但很有趣。希望有一天能和韩国朋友用韩语聊天。",
     vocab: [
-      { zh: "공부하다", pinyin: "gongbuhada", ja: "勉強する" },
-      { zh: "단어", pinyin: "daneo", ja: "単語" },
-      { zh: "외우다", pinyin: "oeuda", ja: "覚える" },
-      { zh: "읽다", pinyin: "ilkda", ja: "読む" },
-      { zh: "어렵다", pinyin: "eoryeopda", ja: "難しい" },
-      { zh: "언젠가", pinyin: "eonjenga", ja: "いつか" },
-      { zh: "이야기하다", pinyin: "iyagihada", ja: "話す" }
+      { zh: "공부하다", pinyin: "gongbuhada", ja: "学习" },
+      { zh: "단어", pinyin: "daneo", ja: "单词" },
+      { zh: "외우다", pinyin: "oeuda", ja: "背·记" },
+      { zh: "읽다", pinyin: "ilkda", ja: "读" },
+      { zh: "어렵다", pinyin: "eoryeopda", ja: "难" },
+      { zh: "언젠가", pinyin: "eonjenga", ja: "某一天" },
+      { zh: "이야기하다", pinyin: "iyagihada", ja: "说·聊" }
     ]
   },
   {
     day: 23, hsk: 1,
-    theme: { zh: "친구", ja: "友達" },
-    title: { zh: "내 친구", ja: "私の友達" },
-    tip: "「-(으)ㄹ 때」は「〜する時」。連体形：動詞現在は「-는」、形容詞は「-(으)ㄴ」（친한 친구＝親しい友達）。",
+    theme: { zh: "친구", ja: "朋友" },
+    title: { zh: "내 친구", ja: "我的朋友" },
+    tip: "「-(으)ㄹ 때」＝「~的时候」。定语形：动词现在用「-는」，形容词用「-(으)ㄴ」(친한 친구＝要好的朋友)。",
     sentences: [
       { zh: "저는 친한 친구가 한 명 있어요.", pinyin: "jeoneun chinhan chinguga han myeong isseoyo." },
       { zh: "그 친구 이름은 유나예요.", pinyin: "geu chingu ireumeun yunayeyo." },
@@ -1812,22 +1812,22 @@ const LESSONS = [
       { zh: "주말에는 자주 같이 커피를 마셔요.", pinyin: "jumareneun jaju gachi keopireul masyeoyo." },
       { zh: "힘들 때 친구가 있어서 정말 좋아요.", pinyin: "himdeul ttae chinguga isseoseo jeongmal joayo." }
     ],
-    translation: "私には親しい友達が一人います。その友達の名前はユナです。私たちは同じ学校に通いました。週末にはよく一緒にコーヒーを飲みます。つらい時、友達がいて本当に良いです。",
+    translation: "我有一个要好的朋友。那个朋友叫宥娜。我们上的是同一所学校。周末常常一起喝咖啡。难过的时候有朋友在，真好。",
     vocab: [
-      { zh: "친하다", pinyin: "chinhada", ja: "親しい" },
-      { zh: "이름", pinyin: "ireum", ja: "名前" },
-      { zh: "같다", pinyin: "gatda", ja: "同じだ" },
+      { zh: "친하다", pinyin: "chinhada", ja: "要好·亲近" },
+      { zh: "이름", pinyin: "ireum", ja: "名字" },
+      { zh: "같다", pinyin: "gatda", ja: "相同" },
       { zh: "학교", pinyin: "hakgyo", ja: "学校" },
-      { zh: "다니다", pinyin: "danida", ja: "通う" },
-      { zh: "자주", pinyin: "jaju", ja: "よく・頻繁に" },
-      { zh: "힘들다", pinyin: "himdeulda", ja: "つらい・大変だ" }
+      { zh: "다니다", pinyin: "danida", ja: "上(学)·往来" },
+      { zh: "자주", pinyin: "jaju", ja: "经常" },
+      { zh: "힘들다", pinyin: "himdeulda", ja: "辛苦·难受" }
     ]
   },
   {
     day: 24, hsk: 1,
     theme: { zh: "외출", ja: "外出" },
-    title: { zh: "택시를 타요", ja: "タクシーに乗ろう" },
-    tip: "「-아/어 주세요」で「〜してください」と依頼。「-까지」は「〜まで」、到達点を表す。「타다（乗る）」は助詞「-을/를」を取る（택시를 타다）。",
+    title: { zh: "택시를 타요", ja: "坐出租车" },
+    tip: "「-아/어 주세요」＝「请~」(请求)。「-까지」＝「到~/~为止」。「타다(坐·乘)」用助词「-을/를」(택시를 타다)。",
     sentences: [
       { zh: "오늘은 친구하고 약속이 있어요.", pinyin: "oneureun chinguhago yaksogi isseoyo." },
       { zh: "시간이 없어서 택시를 타요.", pinyin: "sigani eopseoseo taeksireul tayo." },
@@ -1835,23 +1835,23 @@ const LESSONS = [
       { zh: "길이 막혀서 조금 늦었어요.", pinyin: "giri makhyeoseo jogeum neujeosseoyo." },
       { zh: "그래도 약속 시간에 도착했어요.", pinyin: "geuraedo yaksok sigane dochakhaesseoyo." }
     ],
-    translation: "今日は友達と約束があります。時間がないのでタクシーに乗ります。運転手さん、空港まで行ってください。道が混んでいて少し遅れました。それでも約束の時間に到着しました。",
+    translation: "今天和朋友有约。没有时间，所以坐出租车。司机，请到机场。路上堵车，稍微迟到了。不过还是赶上了约定的时间。",
     vocab: [
-      { zh: "약속", pinyin: "yaksok", ja: "約束" },
-      { zh: "타다", pinyin: "tada", ja: "乗る" },
-      { zh: "기사님", pinyin: "gisanim", ja: "運転手さん" },
-      { zh: "공항", pinyin: "gonghang", ja: "空港" },
-      { zh: "길", pinyin: "gil", ja: "道" },
-      { zh: "막히다", pinyin: "makhida", ja: "渋滞する・詰まる" },
-      { zh: "늦다", pinyin: "neutda", ja: "遅れる" },
-      { zh: "도착하다", pinyin: "dochakhada", ja: "到着する" }
+      { zh: "약속", pinyin: "yaksok", ja: "约定" },
+      { zh: "타다", pinyin: "tada", ja: "坐·乘" },
+      { zh: "기사님", pinyin: "gisanim", ja: "司机" },
+      { zh: "공항", pinyin: "gonghang", ja: "机场" },
+      { zh: "길", pinyin: "gil", ja: "路" },
+      { zh: "막히다", pinyin: "makhida", ja: "堵·不通" },
+      { zh: "늦다", pinyin: "neutda", ja: "迟到" },
+      { zh: "도착하다", pinyin: "dochakhada", ja: "到达" }
     ]
   },
   {
     day: 25, hsk: 1,
-    theme: { zh: "요리", ja: "料理" },
-    title: { zh: "저는 요리를 할 수 있어요", ja: "料理ができます" },
-    tip: "「-(으)ㄹ 수 있다/없다」で「〜できる/できない」（タイトル参照）。「-기 위해／-을 위해」は「〜のために」。「-게」は形容詞を副詞化（맛있게＝美味しく）。",
+    theme: { zh: "요리", ja: "做饭" },
+    title: { zh: "저는 요리를 할 수 있어요", ja: "我会做菜" },
+    tip: "「-(으)ㄹ 수 있다/없다」＝「能/不能~」(见标题)。「-기 위해／-을 위해」＝「为了~」。「-게」把形容词副词化(맛있게＝美味地)。",
     sentences: [
       { zh: "저는 요리하는 것을 좋아해요.", pinyin: "jeoneun yorihaneun geoseul joahaeyo." },
       { zh: "주말에는 가족을 위해 밥을 만들어요.", pinyin: "jumareneun gajogeul wihae babeul mandeureoyo." },
@@ -1859,22 +1859,22 @@ const LESSONS = [
       { zh: "조금 맵지만 정말 맛있어요.", pinyin: "jogeum maepjiman jeongmal masisseoyo." },
       { zh: "가족이 맛있게 먹어서 기뻐요.", pinyin: "gajogi masitge meogeoseo gippeoyo." }
     ],
-    translation: "私は料理をするのが好きです。週末には家族のためにご飯を作ります。今日はキムチチゲを作りました。少し辛いけれど、本当に美味しいです。家族が美味しそうに食べてくれて嬉しいです。",
+    translation: "我喜欢做饭。周末为家人做饭。今天煮了泡菜汤。虽然有点辣，但真的很好吃。家人吃得津津有味，我很高兴。",
     vocab: [
-      { zh: "요리하다", pinyin: "yorihada", ja: "料理する" },
-      { zh: "만들다", pinyin: "mandeulda", ja: "作る" },
-      { zh: "김치찌개", pinyin: "gimchijjigae", ja: "キムチチゲ" },
-      { zh: "끓이다", pinyin: "kkeurida", ja: "煮る・沸かす" },
-      { zh: "맵다", pinyin: "maepda", ja: "辛い" },
-      { zh: "맛있게", pinyin: "masitge", ja: "美味しく" },
-      { zh: "기쁘다", pinyin: "gippeuda", ja: "嬉しい" }
+      { zh: "요리하다", pinyin: "yorihada", ja: "做菜" },
+      { zh: "만들다", pinyin: "mandeulda", ja: "做·制作" },
+      { zh: "김치찌개", pinyin: "gimchijjigae", ja: "泡菜汤" },
+      { zh: "끓이다", pinyin: "kkeurida", ja: "煮·熬" },
+      { zh: "맵다", pinyin: "maepda", ja: "辣" },
+      { zh: "맛있게", pinyin: "masitge", ja: "美味地" },
+      { zh: "기쁘다", pinyin: "gippeuda", ja: "高兴" }
     ]
   },
   {
     day: 3, hsk: 2,
     theme: { zh: "일상생활", ja: "日常生活" },
-    title: { zh: "이게 제 하루예요", ja: "これが私の一日" },
-    tip: "「-은/ㄴ 후에」は「〜した後に」。「-다가」は「〜していて（途中で）」と動作の転換。「-들」は複数（동료들＝同僚たち）。",
+    title: { zh: "이게 제 하루예요", ja: "这就是我的一天" },
+    tip: "「-은/ㄴ 후에」＝「~之后」。「-다가」＝「~着(中途转换)」。「-들」表复数(동료들＝同事们)。",
     sentences: [
       { zh: "저는 보통 일곱 시에 일어나요.", pinyin: "jeoneun botong ilgop sie ireonayo." },
       { zh: "세수를 하고 아침을 먹은 후에 집을 나가요.", pinyin: "sesureul hago achimeul meogeun hue jibeul nagayo." },
@@ -1882,23 +1882,23 @@ const LESSONS = [
       { zh: "저녁에 집에 돌아오면 좀 피곤해요.", pinyin: "jeonyeoge jibe doraomyeon jom pigonhaeyo." },
       { zh: "그래도 하루를 마치고 쉬는 시간이 제일 좋아요.", pinyin: "geuraedo harureul machigo swineun sigani jeil joayo." }
     ],
-    translation: "私は普通七時に起きます。顔を洗って朝ごはんを食べた後に家を出ます。会社で仕事をしていて、昼休みに同僚たちとご飯を食べます。夕方家に帰ると少し疲れます。それでも一日を終えて休む時間が一番好きです。",
+    translation: "我一般七点起床。洗脸、吃完早饭后出门。在公司工作，午休时和同事们一起吃饭。傍晚回到家会有点累。即便如此，结束一天后休息的时间最让我喜欢。",
     vocab: [
-      { zh: "일어나다", pinyin: "ireonada", ja: "起きる" },
-      { zh: "세수", pinyin: "sesu", ja: "洗顔" },
-      { zh: "나가다", pinyin: "nagada", ja: "出る・出かける" },
-      { zh: "동료", pinyin: "dongnyo", ja: "同僚" },
-      { zh: "저녁", pinyin: "jeonyeok", ja: "夕方・夕食" },
-      { zh: "돌아오다", pinyin: "doraoda", ja: "帰ってくる" },
-      { zh: "피곤하다", pinyin: "pigonhada", ja: "疲れている" },
-      { zh: "쉬다", pinyin: "swida", ja: "休む" }
+      { zh: "일어나다", pinyin: "ireonada", ja: "起床" },
+      { zh: "세수", pinyin: "sesu", ja: "洗脸" },
+      { zh: "나가다", pinyin: "nagada", ja: "出去" },
+      { zh: "동료", pinyin: "dongnyo", ja: "同事" },
+      { zh: "저녁", pinyin: "jeonyeok", ja: "傍晚·晚饭" },
+      { zh: "돌아오다", pinyin: "doraoda", ja: "回来" },
+      { zh: "피곤하다", pinyin: "pigonhada", ja: "疲惫" },
+      { zh: "쉬다", pinyin: "swida", ja: "休息" }
     ]
   },
   {
     day: 4, hsk: 2,
-    theme: { zh: "음식", ja: "食べ物" },
-    title: { zh: "한국 음식을 좋아해요", ja: "韓国料理が大好き" },
-    tip: "「-아/어지다」で「〜くなる（変化）」（좋아지다＝良くなる）。「-기도 하다」は「〜したりもする」。「특히」は「特に」。",
+    theme: { zh: "음식", ja: "食物" },
+    title: { zh: "한국 음식을 좋아해요", ja: "我喜欢韩国菜" },
+    tip: "「-아/어지다」＝「变得~」(좋아지다＝变好)。「-기도 하다」＝「也会~/~也做」。「특히」＝「尤其」。",
     sentences: [
       { zh: "저는 한국 음식을 정말 좋아해요.", pinyin: "jeoneun hanguk eumsigeul jeongmal joahaeyo." },
       { zh: "특히 매운 음식을 자주 먹어요.", pinyin: "teukhi maeun eumsigeul jaju meogeoyo." },
@@ -1906,23 +1906,23 @@ const LESSONS = [
       { zh: "가끔 직접 떡볶이를 만들어 먹기도 해요.", pinyin: "gakkeum jikjeop tteokbokkireul mandeureo meokgido haeyo." },
       { zh: "맛있는 음식을 먹으면 기분이 좋아져요.", pinyin: "masinneun eumsigeul meogeumyeon gibuni joajyeoyo." }
     ],
-    translation: "私は韓国料理が本当に好きです。特に辛い料理をよく食べます。友達は私が辛いものをよく食べるので驚きます。たまに自分でトッポッキを作って食べたりもします。美味しい料理を食べると気分が良くなります。",
+    translation: "我真的很喜欢韩国菜。尤其常吃辣的菜。朋友们看我那么能吃辣，都很惊讶。偶尔也会自己做炒年糕来吃。吃到好吃的菜，心情就会变好。",
     vocab: [
-      { zh: "음식", pinyin: "eumsik", ja: "食べ物・料理" },
-      { zh: "특히", pinyin: "teukhi", ja: "特に" },
-      { zh: "맵다", pinyin: "maepda", ja: "辛い" },
-      { zh: "놀라다", pinyin: "nollada", ja: "驚く" },
-      { zh: "가끔", pinyin: "gakkeum", ja: "たまに" },
-      { zh: "직접", pinyin: "jikjeop", ja: "自分で・直接" },
-      { zh: "떡볶이", pinyin: "tteokbokki", ja: "トッポッキ" },
-      { zh: "좋아지다", pinyin: "joajida", ja: "良くなる" }
+      { zh: "음식", pinyin: "eumsik", ja: "食物·菜" },
+      { zh: "특히", pinyin: "teukhi", ja: "尤其" },
+      { zh: "맵다", pinyin: "maepda", ja: "辣" },
+      { zh: "놀라다", pinyin: "nollada", ja: "惊讶" },
+      { zh: "가끔", pinyin: "gakkeum", ja: "偶尔" },
+      { zh: "직접", pinyin: "jikjeop", ja: "亲自·直接" },
+      { zh: "떡볶이", pinyin: "tteokbokki", ja: "炒年糕" },
+      { zh: "좋아지다", pinyin: "joajida", ja: "变好" }
     ]
   },
   {
     day: 17, hsk: 2,
-    theme: { zh: "주말", ja: "週末" },
-    title: { zh: "주말에 뭐 해요?", ja: "週末は何をする" },
-    tip: "「-거나」は「〜したり（選択）」。「-(으)면」は「〜すると」。「가깝다（近い）」のㅂ不規則：가까운（連体形）。",
+    theme: { zh: "주말", ja: "周末" },
+    title: { zh: "주말에 뭐 해요?", ja: "周末做什么？" },
+    tip: "「-거나」＝「~或者~」(选择)。「-(으)면」＝「~就」。「가깝다(近)」的ㅂ不规则：가까운(定语形)。",
     sentences: [
       { zh: "주말에는 보통 집에서 쉬어요.", pinyin: "jumareneun botong jibeseo swieoyo." },
       { zh: "토요일 아침에는 청소하고 빨래를 해요.", pinyin: "toyoil achimeneun cheongsohago ppallaereul haeyo." },
@@ -1930,23 +1930,23 @@ const LESSONS = [
       { zh: "일요일에는 친구를 만나거나 영화를 봐요.", pinyin: "iryoireneun chingureul mannageona yeonghwareul bwayo." },
       { zh: "이렇게 주말을 보내면 다음 주도 힘이 나요.", pinyin: "ireoke jumareul bonaemyeon daeum judo himi nayo." }
     ],
-    translation: "週末は普通家で休みます。土曜日の朝には掃除をして洗濯をします。午後には近くの公園で散歩をします。日曜日には友達に会ったり映画を見たりします。こうして週末を過ごすと、来週も元気が出ます。",
+    translation: "周末一般在家休息。周六早上打扫、洗衣服。下午在附近的公园散步。周日去见朋友，或者看电影。这样度过周末，下周也会有精神。",
     vocab: [
-      { zh: "주말", pinyin: "jumal", ja: "週末" },
-      { zh: "청소", pinyin: "cheongso", ja: "掃除" },
-      { zh: "빨래", pinyin: "ppallae", ja: "洗濯" },
-      { zh: "공원", pinyin: "gongwon", ja: "公園" },
-      { zh: "산책", pinyin: "sanchaek", ja: "散歩" },
-      { zh: "만나다", pinyin: "mannada", ja: "会う" },
-      { zh: "보내다", pinyin: "bonaeda", ja: "過ごす・送る" },
-      { zh: "힘이 나다", pinyin: "himi nada", ja: "元気が出る" }
+      { zh: "주말", pinyin: "jumal", ja: "周末" },
+      { zh: "청소", pinyin: "cheongso", ja: "打扫" },
+      { zh: "빨래", pinyin: "ppallae", ja: "洗衣服" },
+      { zh: "공원", pinyin: "gongwon", ja: "公园" },
+      { zh: "산책", pinyin: "sanchaek", ja: "散步" },
+      { zh: "만나다", pinyin: "mannada", ja: "见面" },
+      { zh: "보내다", pinyin: "bonaeda", ja: "度过·送" },
+      { zh: "힘이 나다", pinyin: "himi nada", ja: "来精神" }
     ]
   },
   {
     day: 18, hsk: 2,
-    theme: { zh: "몸", ja: "体調" },
-    title: { zh: "좀 아파요", ja: "少し体調が悪い" },
-    tip: "否定は「안 + 用言」または「-지 않다」。「-부터」は「〜から（起点）」。「낫다（治る）」はㅅ不規則：나아서。",
+    theme: { zh: "몸", ja: "身体状况" },
+    title: { zh: "좀 아파요", ja: "有点不舒服" },
+    tip: "否定用「안+谓词」或「-지 않다」。「-부터」＝「从~(起点)」。「낫다(痊愈)」是ㅅ不规则：나아서。",
     sentences: [
       { zh: "어제부터 몸이 좀 안 좋아요.", pinyin: "eojebuteo momi jom an joayo." },
       { zh: "머리가 아프고 열도 조금 있어요.", pinyin: "meoriga apeugo yeoldo jogeum isseoyo." },
@@ -1954,23 +1954,23 @@ const LESSONS = [
       { zh: "약을 먹고 따뜻한 물을 많이 마셨어요.", pinyin: "yageul meokgo ttatteuthan mureul mani masyeosseoyo." },
       { zh: "빨리 나아서 다시 건강해지고 싶어요.", pinyin: "ppalli naaseo dasi geonganghaejigo sipeoyo." }
     ],
-    translation: "昨日から体が少し良くないです。頭が痛くて、熱も少しあります。それで今日は会社に行かずに休みました。薬を飲んで温かい水をたくさん飲みました。早く治って、また健康になりたいです。",
+    translation: "从昨天开始身体有点不舒服。头疼，还有点发烧。所以今天没去公司，休息了。吃了药，喝了很多热水。希望快点好起来，重新变得健康。",
     vocab: [
-      { zh: "몸", pinyin: "mom", ja: "体" },
-      { zh: "머리", pinyin: "meori", ja: "頭" },
-      { zh: "아프다", pinyin: "apeuda", ja: "痛い・具合が悪い" },
-      { zh: "열", pinyin: "yeol", ja: "熱" },
-      { zh: "약", pinyin: "yak", ja: "薬" },
-      { zh: "따뜻하다", pinyin: "ttatteuthada", ja: "温かい" },
-      { zh: "낫다", pinyin: "natda", ja: "治る" },
-      { zh: "건강하다", pinyin: "geonganghada", ja: "健康だ" }
+      { zh: "몸", pinyin: "mom", ja: "身体" },
+      { zh: "머리", pinyin: "meori", ja: "头" },
+      { zh: "아프다", pinyin: "apeuda", ja: "疼·不舒服" },
+      { zh: "열", pinyin: "yeol", ja: "发烧" },
+      { zh: "약", pinyin: "yak", ja: "药" },
+      { zh: "따뜻하다", pinyin: "ttatteuthada", ja: "温暖·热" },
+      { zh: "낫다", pinyin: "natda", ja: "痊愈" },
+      { zh: "건강하다", pinyin: "geonganghada", ja: "健康" }
     ]
   },
   {
     day: 5, hsk: 3,
-    theme: { zh: "취미", ja: "趣味" },
-    title: { zh: "나의 작은 취미", ja: "私のちょっとした趣味" },
-    tip: "「-마다」は「〜ごとに」。「-아/어 보이다」は「〜く見える」。「덕분에」は「〜のおかげで」。「찍다」の連体形は찍는。",
+    theme: { zh: "취미", ja: "爱好" },
+    title: { zh: "나의 작은 취미", ja: "我的小爱好" },
+    tip: "「-마다」＝「每~」。「-아/어 보이다」＝「显得~/看起来~」。「덕분에」＝「多亏~」。「찍다」的定语形是찍는。",
     sentences: [
       { zh: "저에게는 작지만 소중한 취미가 하나 있어요.", pinyin: "jeoegeneun jakjiman sojunghan chwimiga hana isseoyo." },
       { zh: "바로 사진을 찍는 것이에요.", pinyin: "baro sajineul jjingneun geosieyo." },
@@ -1978,23 +1978,23 @@ const LESSONS = [
       { zh: "평범한 풍경도 사진으로 남기면 특별해 보여요.", pinyin: "pyeongbeomhan punggyeongdo sajineuro namgimyeon teukbyeolhae boyeoyo." },
       { zh: "이 취미 덕분에 일상이 더 즐거워졌어요.", pinyin: "i chwimi deokbune ilsangi deo jeulgeowojyeosseoyo." }
     ],
-    translation: "私には小さいけれど大切な趣味が一つあります。それは写真を撮ることです。週末ごとにカメラを持って近所をゆっくり歩きます。平凡な風景も写真に残すと特別に見えます。この趣味のおかげで、日常がもっと楽しくなりました。",
+    translation: "我有一个虽小却很珍贵的爱好。那就是拍照。每个周末我都带着相机，在小区里慢慢地走。普通的风景，拍成照片留下来，也会显得特别。多亏这个爱好，日常变得更有趣了。",
     vocab: [
-      { zh: "소중하다", pinyin: "sojunghada", ja: "大切だ" },
-      { zh: "사진을 찍다", pinyin: "sajineul jjikda", ja: "写真を撮る" },
-      { zh: "카메라", pinyin: "kamera", ja: "カメラ" },
-      { zh: "동네", pinyin: "dongne", ja: "町内・近所" },
-      { zh: "풍경", pinyin: "punggyeong", ja: "風景" },
-      { zh: "남기다", pinyin: "namgida", ja: "残す" },
-      { zh: "특별하다", pinyin: "teukbyeolhada", ja: "特別だ" },
-      { zh: "덕분에", pinyin: "deokbune", ja: "おかげで" }
+      { zh: "소중하다", pinyin: "sojunghada", ja: "珍贵" },
+      { zh: "사진을 찍다", pinyin: "sajineul jjikda", ja: "拍照" },
+      { zh: "카메라", pinyin: "kamera", ja: "相机" },
+      { zh: "동네", pinyin: "dongne", ja: "小区·街坊" },
+      { zh: "풍경", pinyin: "punggyeong", ja: "风景" },
+      { zh: "남기다", pinyin: "namgida", ja: "留下" },
+      { zh: "특별하다", pinyin: "teukbyeolhada", ja: "特别" },
+      { zh: "덕분에", pinyin: "deokbune", ja: "多亏" }
     ]
   },
   {
     day: 6, hsk: 3,
-    theme: { zh: "주말", ja: "週末" },
-    title: { zh: "느긋한 주말", ja: "ゆっくりの週末" },
-    tip: "「아무 ~도 안/없다」は「何の〜も〜ない」。「-(으)면서」同時動作。「쬐다（日に当たる）」など縮約に注意。",
+    theme: { zh: "주말", ja: "周末" },
+    title: { zh: "느긋한 주말", ja: "悠闲的周末" },
+    tip: "「아무 ~도 안/없다」＝「什么~都不/没」。「-(으)면서」同时动作。注意「쬐다(晒)」等缩约。",
     sentences: [
       { zh: "이번 주말에는 아무 계획도 세우지 않았어요.", pinyin: "ibeon jumareneun amu gyehoekdo seuji anasseoyo." },
       { zh: "늦잠을 자고 천천히 일어났어요.", pinyin: "neutjameul jago cheoncheonhi ireonasseoyo." },
@@ -2002,47 +2002,47 @@ const LESSONS = [
       { zh: "오후에는 햇볕을 쬐면서 음악을 들었어요.", pinyin: "ohueneun haetbyeoteul jjoemyeonseo eumageul deureosseoyo." },
       { zh: "아무것도 안 했지만 마음이 아주 편안했어요.", pinyin: "amugeotdo an haetjiman maeumi aju pyeonanhaesseoyo." }
     ],
-    translation: "今週末は何の計画も立てませんでした。朝寝坊をして、ゆっくり起きました。温かいコーヒーを飲みながら、好きな本を読みました。午後には日差しを浴びながら音楽を聴きました。何もしなかったけれど、心がとても穏やかでした。",
+    translation: "这个周末我什么计划都没安排。睡了懒觉，慢慢起床。一边喝热咖啡，一边读喜欢的书。下午一边晒太阳，一边听音乐。虽然什么都没做，但心里非常平静。",
     vocab: [
-      { zh: "계획", pinyin: "gyehoek", ja: "計画" },
-      { zh: "세우다", pinyin: "seuda", ja: "立てる" },
-      { zh: "늦잠", pinyin: "neutjam", ja: "朝寝坊" },
-      { zh: "햇볕", pinyin: "haetbyeot", ja: "日差し" },
-      { zh: "쬐다", pinyin: "jjoeda", ja: "(日に)当たる" },
-      { zh: "음악", pinyin: "eumak", ja: "音楽" },
+      { zh: "계획", pinyin: "gyehoek", ja: "计划" },
+      { zh: "세우다", pinyin: "seuda", ja: "制定" },
+      { zh: "늦잠", pinyin: "neutjam", ja: "懒觉" },
+      { zh: "햇볕", pinyin: "haetbyeot", ja: "阳光" },
+      { zh: "쬐다", pinyin: "jjoeda", ja: "晒" },
+      { zh: "음악", pinyin: "eumak", ja: "音乐" },
       { zh: "마음", pinyin: "maeum", ja: "心" },
-      { zh: "편안하다", pinyin: "pyeonanhada", ja: "穏やかだ・楽だ" }
+      { zh: "편안하다", pinyin: "pyeonanhada", ja: "平静·舒适" }
     ]
   },
   {
     day: 7, hsk: 3,
-    theme: { zh: "도시", ja: "都市" },
-    title: { zh: "도쿄를 좋아해요", ja: "東京が大好き" },
-    tip: "「-고 있다」は「〜している（進行）」。「-(으)ㄴ/는 점」は「〜という点」。形容詞の名詞化「복잡하다→복잡함」（-ㅁ/음）。",
+    theme: { zh: "도시", ja: "城市" },
+    title: { zh: "상하이를 좋아해요", ja: "我爱上海" },
+    tip: "「-고 있다」＝「正在~(进行)」。「-(으)ㄴ/는 점」＝「~的一点」。形容词名词化「복잡하다→복잡함」(-ㅁ/음)。",
     sentences: [
-      { zh: "저는 도쿄에서 십 년 넘게 살고 있어요.", pinyin: "jeoneun dokyoeseo sip nyeon neomge salgo isseoyo." },
+      { zh: "저는 상하이에서 십 년 넘게 살고 있어요.", pinyin: "jeoneun sanghaieseo sip nyeon neomge salgo isseoyo." },
       { zh: "이 도시는 늘 바쁘지만 그만큼 활기차요.", pinyin: "i dosineun neul bappeujiman geumankeum hwalgichayo." },
       { zh: "출근길 지하철은 정말 복잡해요.", pinyin: "chulgeungil jihacheoreun jeongmal bokjaphaeyo." },
       { zh: "하지만 골목마다 작은 카페와 서점이 있어서 좋아요.", pinyin: "hajiman golmongmada jageun kapewa seojeomi isseoseo joayo." },
-      { zh: "복잡함과 조용함이 함께 있는 점이 도쿄의 매력이에요.", pinyin: "bokjaphamgwa joyonghami hamkke inneun jeomi dokyoui maeryeogieyo." }
+      { zh: "복잡함과 조용함이 함께 있는 점이 상하이의 매력이에요.", pinyin: "bokjaphamgwa joyonghami hamkke inneun jeomi sanghaiui maeryeogieyo." }
     ],
-    translation: "私は東京で十年以上暮らしています。この街はいつも忙しいけれど、その分活気があります。通勤の地下鉄は本当に混みます。でも路地ごとに小さなカフェや書店があって良いです。賑やかさと静けさが共にある点が、東京の魅力です。",
+    translation: "我在上海住了十年以上。这座城市总是很忙碌，但也因此充满活力。上班路上的地铁真的很挤。不过每条小巷里都有小咖啡馆和书店，挺好的。喧闹与安静并存，正是上海的魅力。",
     vocab: [
-      { zh: "도시", pinyin: "dosi", ja: "都市" },
-      { zh: "활기차다", pinyin: "hwalgichada", ja: "活気がある" },
-      { zh: "출근길", pinyin: "chulgeungil", ja: "通勤の道" },
-      { zh: "지하철", pinyin: "jihacheol", ja: "地下鉄" },
-      { zh: "복잡하다", pinyin: "bokjaphada", ja: "混む・複雑だ" },
-      { zh: "골목", pinyin: "golmok", ja: "路地" },
-      { zh: "서점", pinyin: "seojeom", ja: "書店" },
+      { zh: "도시", pinyin: "dosi", ja: "城市" },
+      { zh: "활기차다", pinyin: "hwalgichada", ja: "有活力" },
+      { zh: "출근길", pinyin: "chulgeungil", ja: "上班路" },
+      { zh: "지하철", pinyin: "jihacheol", ja: "地铁" },
+      { zh: "복잡하다", pinyin: "bokjaphada", ja: "拥挤·复杂" },
+      { zh: "골목", pinyin: "golmok", ja: "小巷" },
+      { zh: "서점", pinyin: "seojeom", ja: "书店" },
       { zh: "매력", pinyin: "maeryeok", ja: "魅力" }
     ]
   },
   {
     day: 8, hsk: 3,
-    theme: { zh: "공부", ja: "学び" },
-    title: { zh: "천천히, 서두르지 말자", ja: "焦らず、ゆっくり" },
-    tip: "「-(으)ㄴ 지 ~ 됐다」は「〜してから〜になる」（期間）。「-더라고요」は気づき・実感の回想。「-(으)려고 하다」は意図「〜しようとする」。",
+    theme: { zh: "공부", ja: "学习" },
+    title: { zh: "천천히, 서두르지 말자", ja: "别着急，慢慢来" },
+    tip: "「-(으)ㄴ 지 ~ 됐다」＝「~了多久」(时间)。「-더라고요」表示亲身体会的回想。「-(으)려고 하다」＝「打算~/想~」。",
     sentences: [
       { zh: "한국어를 공부한 지 벌써 일 년이 됐어요.", pinyin: "hangugeoreul gongbuhan ji beolsseo il nyeoni dwaesseoyo." },
       { zh: "처음에는 빨리 잘하고 싶어서 자주 조급했어요.", pinyin: "cheoeumeneun ppalli jalhago sipeoseo jaju jogeuphaesseoyo." },
@@ -2050,23 +2050,23 @@ const LESSONS = [
       { zh: "이제는 매일 조금씩 꾸준히 하려고 해요.", pinyin: "ijeneun maeil jogeumssik kkujunhi haryeogo haeyo." },
       { zh: "서두르지 않고 천천히 가는 것이 제일 빠른 길이에요.", pinyin: "seodureuji anko cheoncheonhi ganeun geosi jeil ppareun girieyo." }
     ],
-    translation: "韓国語を勉強し始めてもう一年になりました。最初は早く上手くなりたくて、よく焦っていました。でも言語は一朝一夕には伸びないんですよね。今は毎日少しずつ地道にやろうとしています。焦らずゆっくり進むことが、一番早い道です。",
+    translation: "学韩语已经一年了。起初想快点学好，常常很着急。但语言不是一朝一夕就能进步的。现在我尽量每天踏踏实实地学一点。不着急、慢慢前进，才是最快的路。",
     vocab: [
-      { zh: "벌써", pinyin: "beolsseo", ja: "もう・すでに" },
-      { zh: "조급하다", pinyin: "jogeuphada", ja: "焦る" },
-      { zh: "언어", pinyin: "eoneo", ja: "言語" },
-      { zh: "하루아침에", pinyin: "haruachime", ja: "一朝一夕に" },
-      { zh: "늘다", pinyin: "neulda", ja: "伸びる・上達する" },
-      { zh: "꾸준히", pinyin: "kkujunhi", ja: "地道に" },
-      { zh: "서두르다", pinyin: "seodureuda", ja: "急ぐ" },
-      { zh: "천천히", pinyin: "cheoncheonhi", ja: "ゆっくり" }
+      { zh: "벌써", pinyin: "beolsseo", ja: "已经" },
+      { zh: "조급하다", pinyin: "jogeuphada", ja: "着急" },
+      { zh: "언어", pinyin: "eoneo", ja: "语言" },
+      { zh: "하루아침에", pinyin: "haruachime", ja: "一朝一夕" },
+      { zh: "늘다", pinyin: "neulda", ja: "进步·增长" },
+      { zh: "꾸준히", pinyin: "kkujunhi", ja: "踏实·坚持不懈" },
+      { zh: "서두르다", pinyin: "seodureuda", ja: "赶·急" },
+      { zh: "천천히", pinyin: "cheoncheonhi", ja: "慢慢" }
     ]
   },
   {
     day: 9, hsk: 3,
     theme: { zh: "여행", ja: "旅行" },
-    title: { zh: "서울은 정말 재미있었어요", ja: "ソウルはとても楽しかった" },
-    tip: "「-아/어 보다」は「〜してみる」。「처음으로」は「初めて」。「-게」副詞化（쉽게＝簡単に）。",
+    title: { zh: "서울은 정말 재미있었어요", ja: "首尔真好玩" },
+    tip: "「-아/어 보다」＝「试着~/~看」。「처음으로」＝「第一次」。「-게」副词化(쉽게＝容易地)。",
     sentences: [
       { zh: "지난달에 처음으로 서울에 여행을 갔어요.", pinyin: "jinandare cheoeumeuro seoure yeohaengeul gasseoyo." },
       { zh: "경복궁도 보고 남산 타워에도 올라갔어요.", pinyin: "gyeongbokgungdo bogo namsan tawoaedo ollagasseoyo." },
@@ -2074,23 +2074,23 @@ const LESSONS = [
       { zh: "사람들이 모두 친절해서 길을 쉽게 찾았어요.", pinyin: "saramdeuri modu chinjeolhaeseo gireul swipge chajasseoyo." },
       { zh: "다음에는 부산에도 꼭 가 보고 싶어요.", pinyin: "daeumeneun busanedo kkok ga bogo sipeoyo." }
     ],
-    translation: "先月初めてソウルに旅行に行きました。景福宮も見て、南山タワーにも登りました。市場で食べた屋台の食べ物が本当に美味しかったです。人々がみんな親切で、道を簡単に見つけられました。次は釜山にもぜひ行ってみたいです。",
+    translation: "上个月我第一次去首尔旅行。看了景福宫，还登上了南山塔。在市场吃的路边小吃真的很好吃。大家都很亲切，路也很容易就找到了。下次一定也想去釜山看看。",
     vocab: [
-      { zh: "지난달", pinyin: "jinandal", ja: "先月" },
+      { zh: "지난달", pinyin: "jinandal", ja: "上个月" },
       { zh: "여행", pinyin: "yeohaeng", ja: "旅行" },
-      { zh: "올라가다", pinyin: "ollagada", ja: "登る・上がる" },
-      { zh: "시장", pinyin: "sijang", ja: "市場" },
-      { zh: "길거리 음식", pinyin: "gilgeori eumsik", ja: "屋台の食べ物" },
-      { zh: "친절하다", pinyin: "chinjeolhada", ja: "親切だ" },
-      { zh: "찾다", pinyin: "chatda", ja: "探す・見つける" },
-      { zh: "꼭", pinyin: "kkok", ja: "必ず・ぜひ" }
+      { zh: "올라가다", pinyin: "ollagada", ja: "登上·上去" },
+      { zh: "시장", pinyin: "sijang", ja: "市场" },
+      { zh: "길거리 음식", pinyin: "gilgeori eumsik", ja: "路边小吃" },
+      { zh: "친절하다", pinyin: "chinjeolhada", ja: "亲切" },
+      { zh: "찾다", pinyin: "chatda", ja: "找" },
+      { zh: "꼭", pinyin: "kkok", ja: "一定·务必" }
     ]
   },
   {
     day: 10, hsk: 3,
     theme: { zh: "건강", ja: "健康" },
-    title: { zh: "건강이 제일 중요해요", ja: "健康が一番大切" },
-    tip: "「-(으)ㄴ 적이 있다」は「〜したことがある（経験）」。「-기 시작하다」は「〜し始める」。「아무리 -아/어도」は「どんなに〜しても」。",
+    title: { zh: "건강이 제일 중요해요", ja: "健康最重要" },
+    tip: "「-(으)ㄴ 적이 있다」＝「曾经~过」(经验)。「-기 시작하다」＝「开始~」。「아무리 -아/어도」＝「无论多么~也」。",
     sentences: [
       { zh: "작년에 건강이 나빠져서 크게 후회한 적이 있어요.", pinyin: "jangnyeone geongangi nappajyeoseo keuge huhoehan jeogi isseoyo." },
       { zh: "그때부터 매일 아침 삼십 분씩 걷기 시작했어요.", pinyin: "geuttaebuteo maeil achim samsip bunssik geotgi sijakhaesseoyo." },
@@ -2098,23 +2098,23 @@ const LESSONS = [
       { zh: "일찍 자고 일찍 일어나니까 몸이 훨씬 가벼워졌어요.", pinyin: "iljjik jago iljjik ireonanikka momi hwolssin gabyeowojyeosseoyo." },
       { zh: "아무리 바빠도 건강을 잃으면 아무 소용이 없어요.", pinyin: "amuri bappado geongangeul ireumyeon amu soyongi eopseoyo." }
     ],
-    translation: "去年健康が悪くなって、大きく後悔したことがあります。その時から毎朝三十分ずつ歩き始めました。インスタント食品を減らして、野菜をたくさん食べようと努力しています。早く寝て早く起きるので、体がずっと軽くなりました。どんなに忙しくても、健康を失えば何の役にも立ちません。",
+    translation: "去年健康变差，让我后悔了很久。从那时起，我每天早上开始走三十分钟。我减少吃速食，努力多吃蔬菜。早睡早起，身体轻松了很多。无论多忙，一旦失去健康就什么都没用了。",
     vocab: [
-      { zh: "나빠지다", pinyin: "nappajida", ja: "悪くなる" },
-      { zh: "후회하다", pinyin: "huhoehada", ja: "後悔する" },
-      { zh: "줄이다", pinyin: "jurida", ja: "減らす" },
-      { zh: "채소", pinyin: "chaeso", ja: "野菜" },
-      { zh: "노력하다", pinyin: "noryeokhada", ja: "努力する" },
-      { zh: "훨씬", pinyin: "hwolssin", ja: "ずっと・はるかに" },
-      { zh: "가볍다", pinyin: "gabyeopda", ja: "軽い" },
-      { zh: "잃다", pinyin: "ilta", ja: "失う" }
+      { zh: "나빠지다", pinyin: "nappajida", ja: "变差" },
+      { zh: "후회하다", pinyin: "huhoehada", ja: "后悔" },
+      { zh: "줄이다", pinyin: "jurida", ja: "减少" },
+      { zh: "채소", pinyin: "chaeso", ja: "蔬菜" },
+      { zh: "노력하다", pinyin: "noryeokhada", ja: "努力" },
+      { zh: "훨씬", pinyin: "hwolssin", ja: "~得多" },
+      { zh: "가볍다", pinyin: "gabyeopda", ja: "轻" },
+      { zh: "잃다", pinyin: "ilta", ja: "失去" }
     ]
   },
   {
     day: 11, hsk: 3,
-    theme: { zh: "쇼핑", ja: "ショッピング" },
-    title: { zh: "인터넷 쇼핑의 장단점", ja: "ネット通販のメリットとデメリット" },
-    tip: "「못 + 動詞／-지 못하다」は不可能「〜できない」。「-긴 하지만」は「〜ではあるが」と部分肯定。「-는 게（것이）」は「〜するのが」。",
+    theme: { zh: "쇼핑", ja: "网购" },
+    title: { zh: "인터넷 쇼핑의 장단점", ja: "网购的利与弊" },
+    tip: "「못+动词／-지 못하다」表示不可能「不能~」。「-긴 하지만」＝「~是~，但是」(部分肯定)。「-는 게(것이)」＝「~的(事)」。",
     sentences: [
       { zh: "요즘은 거의 모든 물건을 인터넷으로 사요.", pinyin: "yojeumeun geoui modeun mulgeoneul inteoneseuro sayo." },
       { zh: "집에서 편하게 주문하면 다음 날 바로 도착해요.", pinyin: "jibeseo pyeonhage jumunhamyeon daeum nal baro dochakhaeyo." },
@@ -2122,23 +2122,23 @@ const LESSONS = [
       { zh: "지난번에는 사진과 색깔이 너무 달라서 반품했어요.", pinyin: "jinanbeoneneun sajingwa saekkkari neomu dallaseo banpumhaesseoyo." },
       { zh: "편리하긴 하지만 가끔은 가게에 직접 가는 게 더 좋아요.", pinyin: "pyeollihagin hajiman gakkeumeun gagee jikjeop ganeun ge deo joayo." }
     ],
-    translation: "最近はほとんどすべての物をインターネットで買います。家で楽に注文すれば、翌日すぐに届きます。でも直接見られないので、たまに失敗をします。この前は写真と色があまりに違って返品しました。便利ではあるけれど、たまにはお店に直接行く方がもっと良いです。",
+    translation: "最近几乎所有东西我都在网上买。在家轻松下单，第二天就送到。但因为看不到实物，偶尔会出错。上次照片和颜色差太多，就退货了。虽然方便，但偶尔还是亲自去店里买更好。",
     vocab: [
       { zh: "요즘", pinyin: "yojeum", ja: "最近" },
-      { zh: "주문하다", pinyin: "jumunhada", ja: "注文する" },
-      { zh: "실수", pinyin: "silsu", ja: "失敗・ミス" },
-      { zh: "색깔", pinyin: "saekkkal", ja: "色" },
-      { zh: "다르다", pinyin: "dareuda", ja: "違う" },
-      { zh: "반품하다", pinyin: "banpumhada", ja: "返品する" },
-      { zh: "편리하다", pinyin: "pyeollihada", ja: "便利だ" },
-      { zh: "직접", pinyin: "jikjeop", ja: "直接" }
+      { zh: "주문하다", pinyin: "jumunhada", ja: "下单·订购" },
+      { zh: "실수", pinyin: "silsu", ja: "失误" },
+      { zh: "색깔", pinyin: "saekkkal", ja: "颜色" },
+      { zh: "다르다", pinyin: "dareuda", ja: "不同" },
+      { zh: "반품하다", pinyin: "banpumhada", ja: "退货" },
+      { zh: "편리하다", pinyin: "pyeollihada", ja: "方便" },
+      { zh: "직접", pinyin: "jikjeop", ja: "亲自·直接" }
     ]
   },
   {
     day: 12, hsk: 3,
-    theme: { zh: "친구", ja: "友人" },
-    title: { zh: "이런 친구가 있어서 좋아요", ja: "こんな友達がいて本当に良い" },
-    tip: "「-처럼」は「〜のように」。「-다는 것（게）」は「〜だということ」と内容の引用名詞化。「-아/어도」は「〜しても」。",
+    theme: { zh: "친구", ja: "朋友" },
+    title: { zh: "이런 친구가 있어서 좋아요", ja: "有这样的朋友真好" },
+    tip: "「-처럼」＝「像~一样」。「-다는 것(게)」＝「~这件事」(把内容名词化)。「-아/어도」＝「即使~也」。",
     sentences: [
       { zh: "저에게는 십 년 넘게 알고 지낸 친구가 있어요.", pinyin: "jeoegeneun sip nyeon neomge algo jinaen chinguga isseoyo." },
       { zh: "멀리 살아서 자주 만나지는 못해요.", pinyin: "meolli saraseo jaju mannajineun mothaeyo." },
@@ -2146,23 +2146,23 @@ const LESSONS = [
       { zh: "오랜만에 전화해도 어제 본 것처럼 편해요.", pinyin: "oraenmane jeonhwahaedo eoje bon geotcheoreom pyeonhaeyo." },
       { zh: "이런 친구가 곁에 있다는 게 참 고마운 일이에요.", pinyin: "ireon chinguga gyeote itdaneun ge cham gomaun irieyo." }
     ],
-    translation: "私には十年以上付き合いのある友達がいます。遠くに住んでいるので、よくは会えません。それでもつらいことが起きると、一番先に思い浮かびます。久しぶりに電話しても、昨日会ったように気楽です。こんな友達がそばにいるということが、本当にありがたいことです。",
+    translation: "我有一个相识十年以上的朋友。因为住得远，不太能见面。即便如此，一遇到难事，最先想到的就是他。即使很久没联系，一打电话也像昨天才见过一样自在。有这样的朋友在身边，真的很值得感激。",
     vocab: [
-      { zh: "알고 지내다", pinyin: "algo jinaeda", ja: "付き合う・知り合いでいる" },
-      { zh: "멀리", pinyin: "meolli", ja: "遠くに" },
-      { zh: "생기다", pinyin: "saenggida", ja: "生じる・起きる" },
-      { zh: "떠오르다", pinyin: "tteooreuda", ja: "思い浮かぶ" },
-      { zh: "오랜만에", pinyin: "oraenmane", ja: "久しぶりに" },
-      { zh: "편하다", pinyin: "pyeonhada", ja: "気楽だ・楽だ" },
-      { zh: "곁", pinyin: "gyeot", ja: "そば" },
-      { zh: "고맙다", pinyin: "gomapda", ja: "ありがたい" }
+      { zh: "알고 지내다", pinyin: "algo jinaeda", ja: "相识·来往" },
+      { zh: "멀리", pinyin: "meolli", ja: "远" },
+      { zh: "생기다", pinyin: "saenggida", ja: "发生·产生" },
+      { zh: "떠오르다", pinyin: "tteooreuda", ja: "想起·浮现" },
+      { zh: "오랜만에", pinyin: "oraenmane", ja: "久违地" },
+      { zh: "편하다", pinyin: "pyeonhada", ja: "自在·舒服" },
+      { zh: "곁", pinyin: "gyeot", ja: "身边" },
+      { zh: "고맙다", pinyin: "gomapda", ja: "感激·感谢" }
     ]
   },
   {
     day: 13, hsk: 4,
-    theme: { zh: "계절", ja: "季節" },
-    title: { zh: "사계절의 아름다움", ja: "四季の美しさ" },
-    tip: "「-게 하다」は使役「〜させる」。「-(으)ㄹ 때마다」は「〜するたびに」。「-아/어지다」変化（달라지다＝変わる）。",
+    theme: { zh: "계절", ja: "季节" },
+    title: { zh: "사계절의 아름다움", ja: "四季之美" },
+    tip: "「-게 하다」表使役「让/使~」。「-(으)ㄹ 때마다」＝「每当~时」。「-아/어지다」变化(달라지다＝变得不同)。",
     sentences: [
       { zh: "한국에는 뚜렷한 사계절이 있어서 계절마다 풍경이 달라져요.", pinyin: "hangugeneun tturyeotan sagyejeori isseoseo gyejeolmada punggyeongi dallajyeoyo." },
       { zh: "봄에는 거리마다 벚꽃이 피어 마음을 설레게 해요.", pinyin: "bomeneun georimada beotkkochi pieo maeumeul seollege haeyo." },
@@ -2170,23 +2170,23 @@ const LESSONS = [
       { zh: "겨울이 되면 온 세상이 하얀 눈으로 뒤덮여요.", pinyin: "gyeouri doemyeon on sesangi hayan nuneuro dwideopyeoyo." },
       { zh: "계절이 바뀔 때마다 새로운 시작을 느낄 수 있어서 좋아요.", pinyin: "gyejeori bakkwil ttaemada saeroun sijageul neukkil su isseoseo joayo." }
     ],
-    translation: "韓国にははっきりとした四季があるので、季節ごとに風景が変わります。春には街ごとに桜が咲いて、心をときめかせます。夏の青い空と秋の紅葉は、それぞれ違う魅力を与えてくれます。冬になると、世界中が白い雪で覆われます。季節が変わるたびに新しい始まりを感じられて良いです。",
+    translation: "韩国有分明的四季，每个季节风景都不同。春天每条街都开满樱花，让人心动。夏天的蓝天和秋天的红叶，各自带来不同的魅力。一到冬天，整个世界被白雪覆盖。每当季节变换，都能感受到新的开始，真好。",
     vocab: [
-      { zh: "뚜렷하다", pinyin: "tturyeotada", ja: "はっきりしている" },
+      { zh: "뚜렷하다", pinyin: "tturyeotada", ja: "分明·清晰" },
       { zh: "사계절", pinyin: "sagyejeol", ja: "四季" },
-      { zh: "벚꽃", pinyin: "beotkkot", ja: "桜" },
-      { zh: "피다", pinyin: "pida", ja: "咲く" },
-      { zh: "단풍", pinyin: "danpung", ja: "紅葉" },
-      { zh: "각각", pinyin: "gakgak", ja: "それぞれ" },
-      { zh: "뒤덮이다", pinyin: "dwideopida", ja: "覆われる" },
-      { zh: "바뀌다", pinyin: "bakkwida", ja: "変わる" }
+      { zh: "벚꽃", pinyin: "beotkkot", ja: "樱花" },
+      { zh: "피다", pinyin: "pida", ja: "开(花)" },
+      { zh: "단풍", pinyin: "danpung", ja: "红叶" },
+      { zh: "각각", pinyin: "gakgak", ja: "各自" },
+      { zh: "뒤덮이다", pinyin: "dwideopida", ja: "被覆盖" },
+      { zh: "바뀌다", pinyin: "bakkwida", ja: "变换" }
     ]
   },
   {
     day: 14, hsk: 4,
-    theme: { zh: "목표와 꿈", ja: "目標と夢" },
-    title: { zh: "한 걸음씩", ja: "一歩ずつ進む" },
-    tip: "「-(으)ㄹ 거예요」は推量・意志「〜でしょう／〜するつもり」。「-보다」は比較「〜より」。「-다고 믿다/생각하다」は引用「〜と信じる/思う」。",
+    theme: { zh: "목표와 꿈", ja: "目标与梦想" },
+    title: { zh: "한 걸음씩", ja: "一步一步走" },
+    tip: "「-(으)ㄹ 거예요」＝「会~吧/打算~」(推测·意志)。「-보다」＝「比~」。「-다고 믿다/생각하다」＝「相信/认为~」(引用)。",
     sentences: [
       { zh: "누구에게나 이루고 싶은 꿈이 하나쯤 있을 거예요.", pinyin: "nuguegena irugo sipeun kkumi hanajjeum isseul geoyeyo." },
       { zh: "저의 꿈은 한국어로 자유롭게 대화하는 것이에요.", pinyin: "jeoui kkumeun hangugeoro jayuropge daehwahaneun geosieyo." },
@@ -2194,23 +2194,23 @@ const LESSONS = [
       { zh: "하지만 어제보다 오늘 한 단어라도 더 알면 그걸로 충분해요.", pinyin: "hajiman eojeboda oneul han daneorado deo almyeon geugeollo chungbunhaeyo." },
       { zh: "큰 목표도 결국 작은 한 걸음에서 시작된다고 믿어요.", pinyin: "keun mokpyodo gyeolguk jageun han georeomeseo sijakdoendago mideoyo." }
     ],
-    translation: "誰にでも、叶えたい夢が一つくらいあるでしょう。私の夢は、韓国語で自由に会話することです。もちろんその道は遠く、たまには諦めたくなる時もあります。でも昨日より今日、一単語でも多く知れば、それで十分です。大きな目標も結局、小さな一歩から始まると信じています。",
+    translation: "每个人大概都有一个想实现的梦想。我的梦想，是能用韩语自由地交谈。当然，这条路很远，偶尔也会有想放弃的时候。但只要比昨天的今天多记住一个词，就足够了。我相信，再大的目标，归根结底也始于小小的一步。",
     vocab: [
-      { zh: "이루다", pinyin: "iruda", ja: "叶える・成し遂げる" },
-      { zh: "꿈", pinyin: "kkum", ja: "夢" },
-      { zh: "자유롭다", pinyin: "jayuropda", ja: "自由だ" },
-      { zh: "포기하다", pinyin: "pogihada", ja: "諦める" },
-      { zh: "충분하다", pinyin: "chungbunhada", ja: "十分だ" },
-      { zh: "결국", pinyin: "gyeolguk", ja: "結局" },
-      { zh: "걸음", pinyin: "georeum", ja: "歩み・一歩" },
-      { zh: "믿다", pinyin: "mitda", ja: "信じる" }
+      { zh: "이루다", pinyin: "iruda", ja: "实现" },
+      { zh: "꿈", pinyin: "kkum", ja: "梦想" },
+      { zh: "자유롭다", pinyin: "jayuropda", ja: "自由" },
+      { zh: "포기하다", pinyin: "pogihada", ja: "放弃" },
+      { zh: "충분하다", pinyin: "chungbunhada", ja: "足够" },
+      { zh: "결국", pinyin: "gyeolguk", ja: "最终" },
+      { zh: "걸음", pinyin: "georeum", ja: "步·脚步" },
+      { zh: "믿다", pinyin: "mitda", ja: "相信" }
     ]
   },
   {
     day: 19, hsk: 4,
-    theme: { zh: "인생관", ja: "人生観" },
-    title: { zh: "시간의 의미", ja: "時間の意味" },
-    tip: "「-(으)ㄹ수록」は「〜するほど」。「-는 것 같다」は推量「〜のようだ」。「-곤 했다」は過去の習慣「（よく）〜したものだ」。",
+    theme: { zh: "인생관", ja: "人生观" },
+    title: { zh: "시간의 의미", ja: "时间的意义" },
+    tip: "「-(으)ㄹ수록」＝「越~越~」。「-는 것 같다」＝「好像~」(推测)。「-곤 했다」＝「(过去)常常~」。",
     sentences: [
       { zh: "나이가 들수록 시간이 점점 더 빨리 가는 것 같아요.", pinyin: "naiga deulsurok sigani jeomjeom deo ppalli ganeun geot gatayo." },
       { zh: "예전에는 시간이 많다고 생각해서 자주 미루곤 했어요.", pinyin: "yejeoneneun sigani mantago saenggakhaeseo jaju mirugon haesseoyo." },
@@ -2218,25 +2218,25 @@ const LESSONS = [
       { zh: "그래서 요즘은 소중한 사람들과 보내는 시간을 가장 아껴요.", pinyin: "geuraeseo yojeumeun sojunghan saramdeulgwa bonaeneun siganeul gajang akkyeoyo." },
       { zh: "결국 시간을 어떻게 쓰느냐가 삶을 만든다고 생각해요.", pinyin: "gyeolguk siganeul eotteoke sseuneunyaga salmeul mandeundago saenggakhaeyo." }
     ],
-    translation: "年を取るほど、時間がだんだん早く過ぎていくように感じます。昔は時間がたくさんあると思って、よく後回しにしていました。でも過ぎ去った時間は、絶対に二度と戻ってきません。だから最近は、大切な人たちと過ごす時間を一番大事にしています。結局、時間をどう使うかが人生を作るのだと思います。",
+    translation: "年纪越大，越觉得时间过得飞快。以前总以为时间还多，常常往后拖。但逝去的时间，绝对不会再回来。所以最近，我最珍惜和重要的人共度的时间。归根结底，我认为如何使用时间，决定了人生。",
     vocab: [
-      { zh: "나이가 들다", pinyin: "naiga deulda", ja: "年を取る" },
-      { zh: "점점", pinyin: "jeomjeom", ja: "だんだん" },
-      { zh: "예전", pinyin: "yejeon", ja: "昔" },
-      { zh: "미루다", pinyin: "miruda", ja: "後回しにする" },
-      { zh: "지나가다", pinyin: "jinagada", ja: "過ぎ去る" },
-      { zh: "절대", pinyin: "jeoldae", ja: "絶対に" },
-      { zh: "아끼다", pinyin: "akkida", ja: "大事にする・惜しむ" },
-      { zh: "삶", pinyin: "sam", ja: "人生・生" }
+      { zh: "나이가 들다", pinyin: "naiga deulda", ja: "上年纪" },
+      { zh: "점점", pinyin: "jeomjeom", ja: "渐渐" },
+      { zh: "예전", pinyin: "yejeon", ja: "从前" },
+      { zh: "미루다", pinyin: "miruda", ja: "拖延" },
+      { zh: "지나가다", pinyin: "jinagada", ja: "过去·逝去" },
+      { zh: "절대", pinyin: "jeoldae", ja: "绝对" },
+      { zh: "아끼다", pinyin: "akkida", ja: "珍惜·节省" },
+      { zh: "삶", pinyin: "sam", ja: "人生·生活" }
     ]
   }
 ];
 
 const HSK_INFO = {
-  1: { label: "入門", target: 10, desc: "基本のあいさつと自己紹介" },
-  2: { label: "初級", target: 15, desc: "日常生活" },
-  3: { label: "中級", target: 25, desc: "複文・接続表現" },
-  4: { label: "中上級", target: 30, desc: "抽象的トピック" }
+  1: { label: "入门", target: 10, desc: "基本问候与自我介绍" },
+  2: { label: "初级", target: 15, desc: "日常生活" },
+  3: { label: "中级", target: 25, desc: "复句·连接表达" },
+  4: { label: "中高级", target: 30, desc: "抽象话题" }
 };
 
 // Compute levelNum (sequence within TOPIK level) and globalIndex for each lesson
@@ -2246,7 +2246,7 @@ LESSONS.forEach((l, i) => {
   l.levelNum = sameLevelBefore + 1;
 });
 
-const STORAGE_KEY = 'korean-diary-progress-v1';
+const STORAGE_KEY = 'korean-diary-zh-progress-v1';
 
 function loadProgress() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
@@ -2256,7 +2256,7 @@ function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
 
 let progress = loadProgress();
 let currentIdx = progress._currentIdx ?? 0;  // 0-based array index
-// クリップ「出典へ」用 deep link：#d=N でレッスン番号を上書き
+// 用于卡片「跳转出处」的 deep link：#d=N 覆盖课程编号
 const _hashMatch = location.hash.match(/^#d=(\d+)/);
 if (_hashMatch) {
   const _hashIdx = parseInt(_hashMatch[1], 10);
@@ -2269,7 +2269,7 @@ let gridMode = progress._gridMode || 'tianzi';
 let theme = progress._theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 let writeMode = progress._writeMode || 'typing';  // 'canvas' or 'typing'
 let typingSubMode = progress._typingSubMode || 'original';  // 'original' | 'dictation' | 'translation'
-// 韓国語には字体変換がないため素通し（呼び出し側との互換のため関数は残す）
+// 韩语没有字形转换，原样返回（为兼容调用方保留函数）
 function tx(s) { return s; }
 
 function currentLesson() {
@@ -2422,7 +2422,7 @@ if (typeof speechSynthesis !== 'undefined') {
 function escapeHtml(s) {
   return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-// 韓国語にはピンインのような声調がないため、ローマ字をそのまま表示する
+// 韩语没有像拼音那样的声调，罗马字原样显示
 function colorizePinyin(text) {
   return escapeHtml(text);
 }
@@ -2477,12 +2477,12 @@ function renderDay(animate = false) {
 }
 
 function doRender(lesson) {
-  // ホームの「つづきから」「連続日数」へ、今このレッスンを開いていることを記録
+  // 记录到首页的「继续学习」/ 连续天数
   if (window.LC) {
     LC.record({
-      href:  'korean-diary.html',
-      label: 'Journal 한국어',
-      sub:   `第${lesson.levelNum}課 ・ ${lesson.title.zh}`
+      href:  'korean-diary-zh.html',
+      label: 'Journal 韩语',
+      sub:   `第${lesson.levelNum}课 · ${lesson.title.zh}`
     });
   }
   document.getElementById('day-num').textContent = String(lesson.levelNum).padStart(2, '0');
@@ -2498,7 +2498,7 @@ function doRender(lesson) {
   const passage = document.getElementById('passage');
   passage.innerHTML = '';
 
-  // 和訳を文末記号で区切り、各中国語文の文末記号数に応じて割り当てる
+  // 按句末符号切分中文翻译，对应每个韩语句子分配
   const jaChunks = (lesson.translation || '')
     .split(/(?<=[。．.！？!?])/)
     .map(s => s.trim())
@@ -2519,11 +2519,11 @@ function doRender(lesson) {
       <div class="audio-pills">
         <button class="audio-pill" data-rate="0.95">
           <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-          通常
+          正常
         </button>
         <button class="audio-pill" data-rate="0.55">
           <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-          ゆっくり
+          慢速
         </button>
       </div>
     `;
@@ -2559,8 +2559,8 @@ function doRender(lesson) {
 
   const btn = document.getElementById('complete-btn');
   const btnText = document.getElementById('complete-text');
-  if (dp.completed) { btn.classList.add('completed'); btnText.textContent = '完了済み（クリックで取り消し）'; }
-  else { btn.classList.remove('completed'); btnText.textContent = '今日のレッスンを完了する'; }
+  if (dp.completed) { btn.classList.add('completed'); btnText.textContent = '已完成（点击取消）'; }
+  else { btn.classList.remove('completed'); btnText.textContent = '完成今天的练习'; }
 
   document.getElementById('prev-day').disabled = currentIdx === 0;
   document.getElementById('next-day').disabled = currentIdx === LESSONS.length - 1;
@@ -2575,7 +2575,7 @@ function renderDots(containerId, total, current, type) {
   for (let i = 1; i <= total; i++) {
     const d = document.createElement('div');
     d.className = 'dot' + (i <= current ? ' filled' : '');
-    d.title = `${type === 'read' ? '音読' : '書写'} ${i}回目`;
+    d.title = `${type === 'read' ? '朗读' : '抄写'} 第${i}次`;
     d.addEventListener('click', () => {
       const lesson = currentLesson();
       const dp = getLessonProgress(lesson);
@@ -2629,7 +2629,7 @@ document.getElementById('complete-btn').addEventListener('click', () => {
   const dp = getLessonProgress(lesson);
   const wasCompleted = dp.completed;
   dp.completed = !dp.completed;
-  // 完了に切り替えた時だけ、次回起動時は次のレッスンから始まるよう保存（最終レッスンは除く）
+  // 仅在切换为完成时，保存以便下次从下一课开始（最后一课除外）
   if (!wasCompleted && currentIdx < LESSONS.length - 1) {
     progress._currentIdx = currentIdx + 1;
   }
@@ -2639,7 +2639,7 @@ document.getElementById('complete-btn').addEventListener('click', () => {
 });
 
 document.getElementById('reset-btn').addEventListener('click', () => {
-  if (confirm('進捗をすべてリセットしますか？（取り消せません）')) {
+  if (confirm('确定要重置所有进度吗？（无法撤销）')) {
     localStorage.removeItem(STORAGE_KEY);
     progress = {}; currentIdx = 0; showPinyin = true; showTranslation = true; gridMode = 'tianzi';
     applyPinyinVisibility(); applyTranslationVisibility(); applyGridMode(gridMode);
@@ -2828,7 +2828,7 @@ function updateReferenceText() {
   const summary = document.getElementById('reference-summary');
   refEl.innerHTML = '';
   if (typingSubMode === 'translation') {
-    // 和訳を文末記号（。！？）で区切って、原文と同じく一文ずつ改行表示
+    // 按句末符号(。！？)切分中文翻译，与原文逐句对应换行显示
     const parts = (lesson.translation || '')
       .split(/(?<=[。！？])/)
       .map(s => s.trim())
@@ -2839,7 +2839,7 @@ function updateReferenceText() {
       p.style.margin = '0 0 4px';
       refEl.appendChild(p);
     });
-    if (summary) summary.textContent = '日本語訳を表示';
+    if (summary) summary.textContent = '显示中文翻译';
   } else {
     lesson.sentences.forEach(s => {
       const p = document.createElement('p');
@@ -2847,7 +2847,7 @@ function updateReferenceText() {
       p.style.margin = '0 0 4px';
       refEl.appendChild(p);
     });
-    if (summary) summary.textContent = '参照する原文を表示';
+    if (summary) summary.textContent = '显示参考原文';
   }
 }
 
@@ -2864,20 +2864,20 @@ function applyTypingSubMode(mode) {
     refBlock.hidden = true;
     dictCard.hidden = false;
     hint.hidden = false;
-    hint.textContent = '下のボタンで聞き取って書き写しましょう。原文と和訳は表示されていません。';
-    input.placeholder = '聞き取った文を書いてください…';
+    hint.textContent = '用下方按钮听写练习。原文与翻译均不显示。';
+    input.placeholder = '请写下你听到的句子…';
   } else if (mode === 'translation') {
     refBlock.hidden = false;
     dictCard.hidden = true;
     hint.hidden = true;
     hint.textContent = '';
-    input.placeholder = '和訳を見て韓国語を書いてください…';
+    input.placeholder = '看着翻译写出韩语…';
   } else {
     refBlock.hidden = false;
     dictCard.hidden = true;
     hint.hidden = true;
     hint.textContent = '';
-    input.placeholder = 'ここに書き写してください…';
+    input.placeholder = '请在这里抄写…';
   }
   updateReferenceText();
 }
@@ -2907,7 +2907,7 @@ function updateCharCount() {
   const original = getLessonText();
   const typedCount = [...typed].filter(c => !PUNCT_RE.test(c)).length;
   const originalCount = [...original].filter(c => !PUNCT_RE.test(c)).length;
-  charCount.textContent = `${typedCount} / ${originalCount} 文字`;
+  charCount.textContent = `${typedCount} / ${originalCount} 字`;
   charCount.classList.toggle('complete', typedCount >= originalCount && typedCount > 0);
 }
 
@@ -3001,7 +3001,7 @@ function renderDiff() {
   const original = getLessonText();
   if (!typed.trim()) {
     diffOutput.hidden = false;
-    diffOutput.innerHTML = '<span class="diff-label">比較結果</span><p style="color:var(--ink-3);font-size:13px;font-style:italic;">タイピングエリアに文章を入力してから比較してください。</p>';
+    diffOutput.innerHTML = '<span class="diff-label">比较结果</span><p style="color:var(--ink-3);font-size:13px;font-style:italic;">请先在打字区输入句子，再进行比较。</p>';
     return;
   }
   const { ops, match, wrong, missing, extra, total } = computeDiff(typed, original);
@@ -3031,7 +3031,7 @@ function renderDiff() {
     const bucket = buckets[idx];
     const hasErrors = bucket.length === 0 || bucket.some(op => op.type !== 'match');
     const typedHtml = bucket.length === 0
-      ? '<span class="diff-empty">（未入力）</span>'
+      ? '<span class="diff-empty">（未输入）</span>'
       : bucket.map(op => {
           if (op.type === 'match') return `<span class="diff-match">${escapeHtml(op.char)}</span>`;
           if (op.type === 'wrong') return `<span class="diff-wrong"><span class="diff-typed-char">${escapeHtml(op.char)}</span><span class="diff-expect-char">${escapeHtml(op.expected)}</span></span>`;
@@ -3039,12 +3039,12 @@ function renderDiff() {
           if (op.type === 'extra') return `<span class="diff-extra">${escapeHtml(op.char)}</span>`;
           return '';
         }).join('');
-    const badge = hasErrors ? '<span class="diff-line-status err">要確認</span>' : '<span class="diff-line-status ok">✓ 正解</span>';
+    const badge = hasErrors ? '<span class="diff-line-status err">需确认</span>' : '<span class="diff-line-status ok">✓ 正确</span>';
     return `
       <div class="diff-line ${hasErrors ? 'has-error' : 'is-ok'}">
-        <div class="diff-line-head"><span class="diff-line-label">第${idx + 1}文</span>${badge}</div>
+        <div class="diff-line-head"><span class="diff-line-label">第${idx + 1}句</span>${badge}</div>
         <div class="diff-line-orig"><span class="diff-row-label">原文</span>${escapeHtml(origLine)}</div>
-        <div class="diff-line-typed"><span class="diff-row-label">入力</span><span class="diff-row-body">${typedHtml}</span></div>
+        <div class="diff-line-typed"><span class="diff-row-label">输入</span><span class="diff-row-body">${typedHtml}</span></div>
       </div>
     `;
   }).join('');
@@ -3052,13 +3052,13 @@ function renderDiff() {
   const accuracy = total > 0 ? Math.round((match / total) * 100) : 0;
   diffOutput.hidden = false;
   diffOutput.innerHTML = `
-    <span class="diff-label">比較結果 · 正解率 ${accuracy}%</span>
+    <span class="diff-label">比较结果 · 正确率 ${accuracy}%</span>
     <div class="diff-lines">${linesHtml}</div>
     <div class="diff-summary">
-      <span>正解 <strong>${match}</strong></span>
-      <span>誤字 <strong>${wrong}</strong></span>
-      <span>抜け <strong>${missing}</strong></span>
-      <span>余り <strong>${extra}</strong></span>
+      <span>正确 <strong>${match}</strong></span>
+      <span>错字 <strong>${wrong}</strong></span>
+      <span>缺漏 <strong>${missing}</strong></span>
+      <span>多余 <strong>${extra}</strong></span>
     </div>
   `;
 }
@@ -3067,7 +3067,7 @@ if (typingInput) {
   typingInput.addEventListener('input', updateCharCount);
   document.getElementById('compare-btn').addEventListener('click', renderDiff);
   document.getElementById('clear-typing').addEventListener('click', () => {
-    if (typingInput.value && !confirm('入力をクリアしますか？')) return;
+    if (typingInput.value && !confirm('要清除输入的内容吗？')) return;
     clearTyping();
   });
 }

@@ -1,0 +1,20 @@
+{
+  "name": "韩语日记 · Korean Diary",
+  "short_name": "韩语日记",
+  "id": "/korean-diary-zh.html",
+  "start_url": "./korean-diary-zh.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f0e6",
+  "theme_color": "#984a2e",
+  "lang": "zh",
+  "description": "用中文学习韩语：以日记形式抄写 TOPIK 1~4 韩语短句",
+  "icons": [
+    { "src": "icons/favicon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
