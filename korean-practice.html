@@ -7995,7 +7995,9 @@
     // CHECK ANSWER
     // ========================================================================
     function normalize(s) {
-      return (s || "")
+      if (s && typeof s === "object") s = s.ko || s.zh || "";   // {ko/zh,note} 형식 안전 처리
+      if (typeof s !== "string") s = s == null ? "" : String(s);
+      return s
         .replace(/[\s　]/g, "")
         .replace(/[，。．、！？!?,.;:；：]/g, "")
         .trim();
@@ -8003,7 +8005,10 @@
     function checkAlternatives(user) {
       const u = normalize(user);
       if (normalize(currentSent.ko) === u) return true;
-      if (currentSent.alts) return currentSent.alts.some(a => normalize(a) === u);
+      if (currentSent.alts) return currentSent.alts.some(a => {
+        const ko = (a && typeof a === "object") ? (a.ko || a.zh) : a;
+        return ko && normalize(ko) === u;
+      });
       return false;
     }
     function compareAnswer(user, correct) {
@@ -8050,7 +8055,7 @@
         verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">✕</span>${T("wrong")}</div>`;
       }
 
-      const wordsHTML = currentSent.w.map(w => `
+      const wordsHTML = (currentSent.w || []).map(w => `
         <div class="word-item">
           <div class="word-ko ko">${w.ko}</div>
           <div class="word-roman">${w.roman}</div>

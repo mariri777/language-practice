@@ -1795,7 +1795,9 @@
     // CHECK ANSWER
     // ========================================================================
     function normalize(s) {
-      return (s || "")
+      if (s && typeof s === "object") s = s.zh || "";   // {zh,note} 형식 안전 처리
+      if (typeof s !== "string") s = s == null ? "" : String(s);
+      return s
         .replace(/[\s　]/g, "")
         .replace(/[，。．、！？!?,.;:；：]/g, "")
         .trim();
@@ -1807,7 +1809,10 @@
     function checkAlternatives(user) {
       const u = canonical(user);
       if (canonical(currentSent.zh) === u) return true;
-      if (currentSent.alts) return currentSent.alts.some(a => canonical(a) === u);
+      if (currentSent.alts) return currentSent.alts.some(a => {
+        const zh = (a && typeof a === "object") ? a.zh : a;
+        return zh && canonical(zh) === u;
+      });
       return false;
     }
     function compareAnswer(user, correct) {
@@ -1857,7 +1862,7 @@
         verdictHTML = `<div class="verdict verdict-wrong"><span class="emoji">✕</span>모범 답안을 확인하고 다시</div>`;
       }
 
-      const wordsHTML = currentSent.w.map(w => `
+      const wordsHTML = (currentSent.w || []).map(w => `
         <div class="word-item">
           <div class="word-zh zh">${tx(w.z)}</div>
           <div class="word-pinyin">${w.p}</div>
