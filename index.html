@@ -1185,17 +1185,17 @@
         </div>
       </a>
 
-      <div class="tile soon" style="--i:6">
+      <a href="korean-diary.html" class="tile" style="--i:6">
         <div class="tile-top">
           <span class="tile-num">07</span>
-          <span class="tile-tag">KR · Journal<span class="soon">SOON</span></span>
+          <span class="tile-tag">KR · Journal</span>
         </div>
         <div class="tile-bottom">
           <h3 class="tile-name">Journal 한국어</h3>
-          <p class="tile-sub">韓国語の短文を書き写す（準備中）</p>
-          <span class="tile-cta">Coming soon</span>
+          <p class="tile-sub">韓国語の短文を書き写す</p>
+          <span class="tile-cta">Open<span class="arrow">→</span></span>
         </div>
-      </div>
+      </a>
     </div>
   </section>
 
@@ -1527,6 +1527,15 @@
   const UPDATE_VISIBLE     = 5;    // 折りたたまず表示する件数
 
   const updates = [
+    {
+      date: "2026-06-03",
+      tag:  { ja: "한국어 · Journal", ko: "한국어 · Journal", zh: "韩语 · Journal" },
+      text: {
+        ja: "Journal 한국어（韓国語の短文を書き写す）を公開 — TOPIK 1〜4の日記25本、ローマ字・和訳・音読・書き写し付き。",
+        ko: "Journal 한국어(한국어 단문 베껴쓰기)를 공개 — TOPIK 1〜4 일기 25편, 로마자·일본어역·낭독·베껴쓰기 지원.",
+        zh: "上线 Journal 한국어（抄写韩语短句）— TOPIK 1〜4 共25篇日记，附罗马字·日译·朗读·抄写。"
+      }
+    },
     {
       date: "2026-06-03",
       tag:  { ja: "Daily · 修正", ko: "Daily · 수정", zh: "Daily · 修复" },
