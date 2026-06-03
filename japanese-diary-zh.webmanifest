@@ -1,0 +1,20 @@
+{
+  "name": "日语日记 · Japanese Diary",
+  "short_name": "日语日记",
+  "id": "/japanese-diary-zh.html",
+  "start_url": "./japanese-diary-zh.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f0e6",
+  "theme_color": "#984a2e",
+  "lang": "zh",
+  "description": "用中文学习日语：以日记形式抄写 JLPT N5~N2 日语短句",
+  "icons": [
+    { "src": "icons/favicon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/favicon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
