@@ -1,0 +1,3078 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal 일본어 · 일본어 단문 베껴쓰기</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="icons/favicon-180.png">
+<link rel="manifest" href="japanese-diary-ko.webmanifest">
+<meta name="theme-color" content="#984a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Journal 일본어">
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+</script>
+<style>
+  :root {
+    /* === Light (default) — restrained warm paper === */
+    --bg: #f4f0e6;
+    --bg-elevated: #faf7ee;
+    --bg-card: #ffffff;
+    --bg-subtle: #ebe4d2;
+    --bg-deeper: #e4dbc4;
+
+    --ink: #1a1611;
+    --ink-2: #4a4239;
+    --ink-3: #82786b;
+    --ink-4: #b3a78f;
+    --ink-5: #d5cbb8;
+
+    /* Single accent: refined warm clay */
+    --accent: #984a2e;
+    --accent-2: #7a3a23;
+    --accent-soft: #f1e1d7;
+    --accent-glow: rgba(152, 74, 46, 0.10);
+
+    --border: #e0d6bd;
+    --border-strong: #cdc1a3;
+    --divider: #e8e0c8;
+
+    --shadow-sm: 0 1px 2px rgba(26, 22, 17, 0.04);
+    --shadow: 0 1px 3px rgba(26, 22, 17, 0.04), 0 2px 12px rgba(26, 22, 17, 0.04);
+    --shadow-lg: 0 4px 16px rgba(26, 22, 17, 0.06), 0 24px 56px rgba(26, 22, 17, 0.06);
+
+    --t1: #2f7bd1;
+    --t2: #2d8a57;
+    --t3: #c98624;
+    --t4: #b8442a;
+    --t0: #9a8e7a;
+
+    --ease: cubic-bezier(0.2, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+    --dur-fast: 150ms;
+    --dur: 220ms;
+    --dur-slow: 380ms;
+
+    --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI",
+               "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", system-ui, sans-serif;
+    --font-display: -apple-system, "SF Pro Display", "Inter", "Hiragino Sans", sans-serif;
+    --font-zh: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP",
+               "Meiryo", sans-serif;
+    --font-zh-serif: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+    --font-mono: "SF Mono", "JetBrains Mono", "Menlo", "Consolas", monospace;
+  }
+
+  body.dark {
+    --bg: #14110d;
+    --bg-elevated: #1c1813;
+    --bg-card: #1f1b16;
+    --bg-subtle: #25201a;
+    --bg-deeper: #2c2620;
+
+    --ink: #f1ebde;
+    --ink-2: #cdc2b1;
+    --ink-3: #938874;
+    --ink-4: #5e5447;
+    --ink-5: #3a342b;
+
+    --accent: #d97757;
+    --accent-2: #e08670;
+    --accent-soft: rgba(217, 119, 87, 0.14);
+    --accent-glow: rgba(217, 119, 87, 0.18);
+
+    --border: #2e2820;
+    --border-strong: #3d3528;
+    --divider: #28221a;
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.4), 0 28px 56px rgba(0,0,0,0.3);
+
+    --t1: #6aa9e8;
+    --t2: #6dc996;
+    --t3: #f0bb6a;
+    --t4: #ec8b73;
+    --t0: #7a7163;
+  }
+
+  * { box-sizing: border-box; }
+  *:focus { outline: none; }
+  *:focus-visible {
+    outline: 1.5px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-ui);
+    color: var(--ink);
+    line-height: 1.65;
+    background: var(--bg);
+    min-height: 100vh;
+    font-size: 15px;
+    letter-spacing: -0.005em;
+    transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  /* ========== Layout ========== */
+  .app {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 32px 40px 80px;
+  }
+  @media (max-width: 720px) {
+    .app { padding: 20px; }
+  }
+
+  /* ========== Header ========== */
+  header.site {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 28px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--divider);
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .brand h1 {
+    margin: 0;
+    font-family: var(--font-zh-serif);
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .brand h1 .sub {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-left: 10px;
+    vertical-align: 2px;
+  }
+  .brand p {
+    margin: 6px 0 0;
+    font-size: 12.5px;
+    color: var(--ink-3);
+    letter-spacing: 0.01em;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .progress-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .progress-numbers {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  .progress-numbers .now {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .progress-numbers .of {
+    font-size: 13px;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .progress-numbers .label {
+    font-size: 10px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-left: 10px;
+    font-weight: 500;
+  }
+  .progress-dots {
+    display: inline-flex;
+    gap: 4px;
+  }
+  .progress-dots i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    transition: background var(--dur) var(--ease);
+  }
+  .progress-dots i.done {
+    background: var(--accent);
+  }
+  .progress-dots i.current {
+    background: var(--ink-3);
+    box-shadow: 0 0 0 2px var(--bg);
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--dur) var(--ease);
+  }
+  .icon-btn:hover {
+    color: var(--accent);
+    border-color: var(--border-strong);
+    background: var(--bg-card);
+  }
+  .icon-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+  body:not(.dark) .icon-btn .moon { display: block; }
+  body:not(.dark) .icon-btn .sun { display: none; }
+  body.dark .icon-btn .moon { display: none; }
+  body.dark .icon-btn .sun { display: block; }
+
+  /* ========== Voice warning ========== */
+  .voice-warning {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    color: var(--ink-2);
+    padding: 12px 18px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    display: none;
+    line-height: 1.6;
+  }
+
+  /* ========== Day Navigator ========== */
+  .day-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 13px;
+    background: transparent;
+    color: var(--ink-2);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all var(--dur) var(--ease);
+  }
+  .nav-btn:hover:not(:disabled) {
+    background: var(--bg-subtle);
+    color: var(--ink);
+  }
+  .nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .nav-btn svg { width: 13px; height: 13px; }
+
+  .day-indicator {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    padding: 0 14px;
+    border-left: 1px solid var(--divider);
+    border-right: 1px solid var(--divider);
+  }
+  .day-indicator .num {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .day-indicator .total {
+    font-size: 12px;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .day-indicator .total::before { content: " / "; }
+
+  .day-jump {
+    flex: 1;
+    min-width: 200px;
+    padding: 8px 32px 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ink-2);
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2382786b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+  .day-jump:hover {
+    background-color: var(--bg-subtle);
+    color: var(--ink);
+  }
+
+  .toggle-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    padding-left: 4px;
+    border-left: 1px solid var(--divider);
+  }
+  .pill-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: transparent;
+    border: none;
+    font-size: 12px;
+    color: var(--ink-3);
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    user-select: none;
+    font-family: inherit;
+  }
+  .pill-toggle:hover { color: var(--ink); }
+  .pill-toggle.active {
+    background: var(--bg-subtle);
+    color: var(--ink);
+  }
+  .pill-toggle svg { width: 12px; height: 12px; }
+
+  .reset-link {
+    background: none;
+    border: none;
+    color: var(--ink-4);
+    font-size: 11px;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: inherit;
+    transition: all var(--dur) var(--ease);
+    letter-spacing: 0.02em;
+  }
+  .reset-link:hover {
+    color: var(--accent);
+  }
+
+  /* ========== Main layout ========== */
+  main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 980px) {
+    main { grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  .card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 36px;
+    box-shadow: var(--shadow-sm);
+  }
+  @media (max-width: 720px) {
+    .card { padding: 24px 20px; border-radius: 14px; }
+  }
+
+  /* ========== Lesson Header ========== */
+  .lesson-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .hsk-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .hsk-badge i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .theme-text {
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .theme-text .sep {
+    color: var(--ink-4);
+    margin: 0 6px;
+  }
+  .theme-text .zh {
+    color: var(--ink-2);
+    font-family: var(--font-zh);
+    margin-right: 2px;
+  }
+
+  .lesson-title {
+    font-family: var(--font-zh-serif);
+    font-size: clamp(30px, 4vw, 42px);
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 8px;
+    letter-spacing: 0.015em;
+    line-height: 1.15;
+  }
+  .lesson-subtitle {
+    font-size: 14px;
+    color: var(--ink-3);
+    margin: 0 0 28px;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+
+  /* ========== Grammar Tip ========== */
+  .tip {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    background: var(--bg-subtle);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .tip-label {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+
+  /* ========== Audio Bar ========== */
+  .audio-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+  .play-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    background: var(--ink);
+    color: var(--bg-card);
+    border: 1px solid var(--ink);
+    border-radius: 9px;
+    font-size: 12.5px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    position: relative;
+    letter-spacing: 0.01em;
+  }
+  .play-btn:hover {
+    background: var(--ink-2);
+    border-color: var(--ink-2);
+  }
+  body.dark .play-btn {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  body.dark .play-btn:hover {
+    background: var(--ink-2);
+  }
+  .play-btn.ghost {
+    background: transparent;
+    color: var(--ink-2);
+    border: 1px solid var(--border-strong);
+  }
+  .play-btn.ghost:hover {
+    background: var(--bg-card);
+    color: var(--ink);
+    border-color: var(--ink-3);
+  }
+  .play-btn svg { width: 11px; height: 11px; }
+  .play-btn.playing::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 11px;
+    border: 1.5px solid var(--accent);
+    animation: pulse 1.4s infinite;
+    pointer-events: none;
+  }
+  @keyframes pulse {
+    0% { opacity: 0.5; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.16); }
+  }
+
+  /* ========== Passage / Sentences ========== */
+  .passage {
+    margin-bottom: 28px;
+  }
+  .sentence {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--divider);
+    position: relative;
+    cursor: pointer;
+    transition: padding var(--dur) var(--ease);
+  }
+  .sentence:last-child { border-bottom: none; padding-bottom: 4px; }
+  .sentence:first-child { padding-top: 4px; }
+  .sentence:hover { padding-left: 12px; }
+  .sentence::before {
+    content: "";
+    position: absolute;
+    left: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 0;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: height var(--dur) var(--ease);
+  }
+  .sentence:hover::before { height: 60%; }
+  .sentence.playing { padding-left: 12px; }
+  .sentence.playing::before {
+    height: 70%;
+    animation: bar-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes bar-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  .sentence.playing .zh {
+    color: var(--accent);
+  }
+
+  .zh {
+    font-family: var(--font-zh);
+    font-size: clamp(20px, 2.1vw, 23px);
+    line-height: 1.6;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    margin: 0 0 6px;
+    font-weight: 400;
+    transition: color var(--dur) var(--ease);
+  }
+
+  .pinyin {
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.01em;
+    margin: 0 0 10px;
+    line-height: 1.55;
+    font-style: italic;
+    transition: opacity var(--dur) var(--ease);
+  }
+  body.hide-pinyin .pinyin { display: none; }
+
+  .sentence-ja {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.6;
+    margin: 0 0 10px;
+    padding-left: 10px;
+    border-left: 2px solid var(--divider);
+  }
+  body.hide-translation .sentence-ja { display: none; }
+
+  .display-toggles {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .display-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--ink-3);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+  }
+  .display-toggle:hover { color: var(--ink-2); }
+  .display-toggle.active {
+    background: var(--bg-elevated);
+    color: var(--ink);
+    border-color: var(--ink-3);
+  }
+  .display-toggle .dt-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ink-mute);
+    transition: background var(--dur) var(--ease);
+  }
+  .display-toggle.active .dt-dot { background: var(--accent); }
+
+  .script-toggle {
+    display: inline-flex;
+    padding: 2px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+  .script-toggle-btn {
+    border: none;
+    background: transparent;
+    padding: 5px 12px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+  }
+  .script-toggle-btn:not(.active):hover { color: var(--ink-2); }
+  .script-toggle-btn.active {
+    background: var(--bg-elevated);
+    color: var(--ink);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  .audio-pills {
+    display: inline-flex;
+    gap: 5px;
+    opacity: 0.45;
+    transition: opacity var(--dur) var(--ease);
+  }
+  .sentence:hover .audio-pills,
+  .sentence:focus-within .audio-pills,
+  body.touch .audio-pills {
+    opacity: 1;
+  }
+  .audio-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--ink-3);
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    letter-spacing: 0.02em;
+  }
+  .audio-pill:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .audio-pill svg { width: 8px; height: 8px; }
+
+  /* ========== Translation ========== */
+  .translation {
+    padding: 18px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 24px;
+  }
+  body.dark .translation {
+    background: var(--bg-subtle);
+  }
+  .section-label {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 10px;
+  }
+  .translation-text {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.85;
+    letter-spacing: 0.005em;
+  }
+
+  /* ========== Vocab ========== */
+  .vocab-section { margin-bottom: 28px; }
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: max-content max-content 1fr;
+    gap: 8px 24px;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 13.5px;
+    align-items: baseline;
+  }
+  body.dark .vocab-grid {
+    background: var(--bg-subtle);
+  }
+  .vocab-zh {
+    font-family: var(--font-zh);
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 14.5px;
+  }
+  .vocab-py {
+    color: var(--ink-3);
+    font-style: italic;
+    font-size: 12.5px;
+  }
+  .vocab-ja {
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+
+  /* ========== Counters ========== */
+  .progress-block {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 14px 4px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .counter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .counter-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  .dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+  .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1.5px solid var(--border-strong);
+    cursor: pointer;
+    transition: all var(--dur) var(--ease-spring);
+  }
+  .dot:hover {
+    border-color: var(--accent);
+    transform: scale(1.12);
+  }
+  .dot.filled {
+    background: var(--accent);
+    border-color: var(--accent);
+    animation: fill-pop var(--dur-slow) var(--ease-spring);
+  }
+  @keyframes fill-pop {
+    0% { transform: scale(0.6); }
+    50% { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+
+  .complete-btn {
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--ink);
+    color: var(--bg-card);
+    border: 1px solid var(--ink);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .complete-btn:hover {
+    background: var(--ink-2);
+    border-color: var(--ink-2);
+  }
+  body.dark .complete-btn {
+    color: var(--bg);
+  }
+  .complete-btn.completed {
+    background: transparent;
+    color: var(--ink-3);
+    border-color: var(--border-strong);
+  }
+  .complete-btn.completed:hover {
+    color: var(--ink);
+    border-color: var(--ink-3);
+  }
+  .complete-btn svg { width: 14px; height: 14px; }
+
+  /* ========== Writing Card ========== */
+  .writing-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .writing-card .right-hint {
+    font-size: 13px;
+    color: var(--ink-3);
+    margin: 0 0 18px;
+    line-height: 1.7;
+  }
+
+  /* Mode tabs (canvas / typing) */
+  .mode-tabs {
+    display: inline-flex;
+    padding: 3px;
+    background: var(--bg-subtle);
+    border-radius: 10px;
+    margin-bottom: 18px;
+    gap: 2px;
+  }
+  .mode-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: transparent;
+    border: none;
+    color: var(--ink-3);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 7px;
+    transition: all var(--dur) var(--ease);
+  }
+  .mode-tab:hover { color: var(--ink-2); }
+  .mode-tab.active {
+    background: var(--bg-elevated);
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+  }
+  .mode-tab svg { width: 13px; height: 13px; }
+
+  .write-pane[hidden] { display: none; }
+
+  /* Typing area */
+  .reference-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  body.dark .reference-block { background: var(--bg-subtle); }
+  .reference-block summary {
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    user-select: none;
+    list-style: none;
+    transition: background var(--dur) var(--ease);
+  }
+  .reference-block summary::-webkit-details-marker { display: none; }
+  .reference-block summary::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 8px;
+    transition: transform var(--dur) var(--ease);
+    color: var(--ink-3);
+    font-size: 10px;
+  }
+  .reference-block[open] summary::before {
+    transform: rotate(90deg);
+  }
+  .reference-block summary:hover { background: var(--bg-subtle); }
+  .reference-text {
+    padding: 4px 18px 16px;
+    font-family: var(--font-zh);
+    font-size: 16px;
+    color: var(--ink-2);
+    line-height: 1.9;
+    letter-spacing: 0.03em;
+    border-top: 1px solid var(--divider);
+  }
+
+  .typing-input {
+    width: 100%;
+    min-height: 280px;
+    padding: 16px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: var(--font-zh);
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+    resize: vertical;
+    transition: border-color var(--dur) var(--ease);
+  }
+  body.dark .typing-input { background: var(--bg-subtle); }
+  .typing-input:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+  .typing-input::placeholder {
+    color: var(--ink-4);
+    font-style: italic;
+  }
+
+  .char-count {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+  }
+  .char-count.complete { color: var(--accent); font-weight: 600; }
+
+  .typing-submode-tabs { margin-bottom: 10px; }
+  .dictation-card {
+    background: var(--bg-subtle);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 18px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .dictation-card .dictation-icon { font-size: 28px; line-height: 1; }
+  .dictation-card .dictation-msg {
+    flex: 1;
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    min-width: 180px;
+  }
+  body.dark .dictation-card { background: var(--bg-card); }
+
+  .diff-output {
+    margin-top: 14px;
+    padding: 16px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: var(--font-zh);
+    font-size: 16px;
+    line-height: 1.9;
+    letter-spacing: 0.03em;
+  }
+  body.dark .diff-output { background: var(--bg-subtle); }
+  .diff-output .diff-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 10px;
+    font-style: normal;
+  }
+  .diff-output .diff-summary {
+    display: inline-flex;
+    gap: 14px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--divider);
+    letter-spacing: 0.02em;
+    font-style: normal;
+  }
+  .diff-output .diff-summary strong {
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .diff-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .diff-line {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--divider);
+  }
+  body.dark .diff-line { background: var(--bg-subtle); }
+  .diff-line.is-ok { border-color: rgba(58, 158, 100, 0.35); background: rgba(58, 158, 100, 0.06); }
+  .diff-line.has-error { border-color: rgba(192, 57, 43, 0.30); background: rgba(192, 57, 43, 0.04); }
+  body.dark .diff-line.is-ok { background: rgba(58, 158, 100, 0.12); }
+  body.dark .diff-line.has-error { background: rgba(240, 133, 122, 0.10); }
+  .diff-line-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .diff-line-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+  }
+  .diff-line-status {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+  }
+  .diff-line-status.ok { color: #2f7a4d; background: rgba(58, 158, 100, 0.16); }
+  .diff-line-status.err { color: #c0392b; background: rgba(192, 57, 43, 0.12); }
+  body.dark .diff-line-status.ok { color: #7dd6a3; background: rgba(58, 158, 100, 0.24); }
+  body.dark .diff-line-status.err { color: #f0857a; background: rgba(240, 133, 122, 0.18); }
+  .diff-row-label {
+    display: inline-block;
+    min-width: 32px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    color: var(--ink-4);
+    margin-right: 8px;
+    letter-spacing: 0.06em;
+    vertical-align: middle;
+  }
+  .diff-line-orig {
+    color: var(--ink-3);
+    font-size: 14px;
+    margin-bottom: 6px;
+    line-height: 1.7;
+  }
+  .diff-line-typed {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    font-size: 16px;
+    line-height: 2;
+  }
+  .diff-row-body { display: inline; }
+  .diff-match { color: var(--ink); }
+  .diff-wrong {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1.05;
+    margin: 0 1px;
+    padding: 0 2px;
+    background: rgba(192, 57, 43, 0.08);
+    border-radius: 4px;
+  }
+  .diff-wrong .diff-typed-char {
+    color: #c0392b;
+    text-decoration: line-through;
+    text-decoration-color: rgba(192, 57, 43, 0.55);
+    font-size: 14px;
+  }
+  .diff-wrong .diff-expect-char {
+    color: #2f7a4d;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  body.dark .diff-wrong { background: rgba(240, 133, 122, 0.14); }
+  body.dark .diff-wrong .diff-typed-char { color: #f0857a; }
+  body.dark .diff-wrong .diff-expect-char { color: #7dd6a3; }
+  .diff-missing {
+    color: #c0392b;
+    background: rgba(192, 57, 43, 0.10);
+    border: 1px dashed rgba(192, 57, 43, 0.45);
+    border-radius: 4px;
+    padding: 0 3px;
+    margin: 0 1px;
+  }
+  body.dark .diff-missing {
+    color: #f0857a;
+    background: rgba(240, 133, 122, 0.12);
+    border-color: rgba(240, 133, 122, 0.45);
+  }
+  .diff-extra {
+    color: #c0392b;
+    text-decoration: line-through;
+    text-decoration-color: rgba(192, 57, 43, 0.6);
+  }
+  body.dark .diff-extra { color: #f0857a; }
+  .diff-empty {
+    color: var(--ink-4);
+    font-style: italic;
+    font-size: 13px;
+  }
+
+  .grid-tabs {
+    display: inline-flex;
+    padding: 3px;
+    background: var(--bg-subtle);
+    border-radius: 9px;
+    margin-bottom: 14px;
+    gap: 1px;
+  }
+  .grid-tab {
+    padding: 6px 14px;
+    background: transparent;
+    border: none;
+    color: var(--ink-3);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all var(--dur) var(--ease);
+  }
+  .grid-tab:hover { color: var(--ink-2); }
+  .grid-tab.active {
+    background: var(--bg-elevated);
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .writing-area {
+    flex: 1;
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    min-height: 480px;
+  }
+  body.dark .writing-area { background-color: var(--bg-subtle); }
+  .writing-area.tianzi {
+    background-image:
+      linear-gradient(to right, var(--divider) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--divider) 1px, transparent 1px),
+      repeating-linear-gradient(to right, transparent 0, transparent 39px, var(--accent-soft) 39px, var(--accent-soft) 41px, transparent 41px, transparent 80px),
+      repeating-linear-gradient(to bottom, transparent 0, transparent 39px, var(--accent-soft) 39px, var(--accent-soft) 41px, transparent 41px, transparent 80px);
+    background-size: 80px 80px;
+  }
+  .writing-area.grid {
+    background-image:
+      linear-gradient(to right, var(--divider) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--divider) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .writing-area.lined {
+    background-image:
+      repeating-linear-gradient(to bottom, transparent 0, transparent 47px, var(--divider) 47px, var(--divider) 48px);
+  }
+  .writing-area.blank { background-image: none; }
+
+  canvas {
+    display: block;
+    width: 100%;
+    background: transparent;
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  .canvas-controls {
+    display: flex;
+    gap: 6px;
+    margin-top: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .canvas-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 12px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--ink-2);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+  }
+  .canvas-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .canvas-btn svg { width: 12px; height: 12px; }
+  .brush-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+  .brush-control input[type="range"] {
+    accent-color: var(--accent);
+    width: 80px;
+  }
+
+  /* ========== Tone Colors ========== */
+  .t1 { color: var(--t1); }
+  .t2 { color: var(--t2); }
+  .t3 { color: var(--t3); }
+  .t4 { color: var(--t4); }
+  .t0 { color: var(--t0); }
+
+  /* ========== Tone Legend (inline) ========== */
+  .tone-legend {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin: 10px 0 14px;
+    padding: 8px 12px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+  }
+  .tone-legend-label {
+    color: var(--ink-3);
+    font-weight: 500;
+    margin-right: 2px;
+  }
+  .tone-legend span.tone-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .tone-legend i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    display: inline-block;
+  }
+  body.hide-pinyin .tone-legend { display: none; }
+
+  /* ========== Footer ========== */
+  footer.site {
+    margin-top: 56px;
+    padding: 28px 0 0;
+    border-top: 1px solid var(--divider);
+    color: var(--ink-3);
+    font-size: 11.5px;
+    letter-spacing: 0.015em;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer.site .meta {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    padding-top: 14px;
+    margin-top: 4px;
+    border-top: 1px solid var(--divider);
+    font-size: 10.5px;
+    color: var(--ink-4);
+    letter-spacing: 0.02em;
+  }
+  footer.site .meta a { color: var(--ink-3); text-decoration: none; transition: color 0.2s ease; }
+  footer.site .meta a:hover { color: var(--accent); }
+  footer .legend {
+    display: inline-flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  footer .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  footer .legend i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    display: inline-block;
+  }
+  footer .keys {
+    color: var(--ink-4);
+  }
+  footer kbd {
+    display: inline-block;
+    padding: 1px 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-2);
+    margin: 0 1px;
+  }
+
+  /* ========== Page transition ========== */
+  .lesson-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+  }
+  .lesson-card.changing {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+</style>
+<link rel="stylesheet" href="clips.css?v=13">
+<script src="clips.js?v=13" defer></script>
+<script src="daily.js?v=1"></script>
+</head>
+<body>
+<div class="app">
+  <header class="site">
+    <div class="brand">
+      <h1>Journal 일본어<span class="sub">일본어 단문 베껴쓰기</span></h1>
+      <p>JLPT N5~N2 대응 · 하루 한 문단 트레이닝</p>
+    </div>
+    <div class="header-right">
+      <div class="progress-meta">
+        <div class="progress-numbers">
+          <span class="now" id="progress-now">0</span>
+          <span class="of" id="progress-of">/ 14</span>
+          <span class="label">완료</span>
+        </div>
+        <div class="progress-dots" id="progress-dots"></div>
+      </div>
+      <button class="icon-btn" id="theme-toggle" title="테마 전환 (D)" aria-label="테마 전환">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="voice-warning" id="voice-warning">
+    브라우저에 일본어(ja-JP) 음성이 없습니다. macOS:「시스템 설정 → 손쉬운 사용 → 음성 콘텐츠」/ Windows:「설정 → 시간 및 언어 → 언어 및 지역」에서 일본어 음성을 추가해 주세요.
+  </div>
+
+  <nav class="day-nav">
+    <button class="nav-btn" id="prev-day" title="이전 날 (←)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      이전
+    </button>
+    <div class="day-indicator">
+      <span class="num" id="day-num">1</span><span class="total" id="day-total">14</span>
+    </div>
+    <select class="day-jump" id="day-jump" title="날짜로 이동"></select>
+    <button class="nav-btn" id="next-day" title="다음 날 (→)">
+      다음
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <div class="toggle-group">
+      <button class="reset-link" id="reset-btn" title="진행 리셋">⟲ Reset</button>
+    </div>
+  </nav>
+
+  <main>
+    <article class="card lesson-card" id="lesson-card">
+      <div class="lesson-meta">
+        <span class="hsk-badge" id="hsk-badge"><i></i><span id="hsk-text">JLPT N5</span></span>
+        <span class="theme-text">
+          <span class="zh" id="theme-zh">自己紹介</span>
+          <span class="sep">·</span>
+          <span id="theme-ja">자기소개</span>
+        </span>
+      </div>
+      <h2 class="lesson-title" id="lesson-title">잘 부탁합니다</h2>
+      <p class="lesson-subtitle" id="lesson-subtitle">서로 알아 가요</p>
+
+      <div class="tip">
+        <span class="tip-label">Point</span>
+        <span id="tip-text"></span>
+      </div>
+
+      <div class="audio-bar">
+        <button class="play-btn" id="play-all-normal">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          전체 재생
+        </button>
+        <button class="play-btn ghost" id="play-all-slow">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          느리게
+        </button>
+        <button class="play-btn ghost" id="stop-audio" title="정지 (Esc)">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+          정지
+        </button>
+      </div>
+
+      <div class="display-toggles">
+        <button class="display-toggle active" id="pinyin-toggle" title="후리가나 표시 전환">
+          <span class="dt-dot"></span>
+          후리가나
+        </button>
+        <button class="display-toggle active" id="translation-toggle" title="한국어 번역 표시 전환">
+          <span class="dt-dot"></span>
+          번역
+        </button>
+      </div>
+
+      <div class="passage" id="passage"></div>
+
+      <div class="vocab-section">
+        <div class="section-label" style="margin-bottom:10px;">단어</div>
+        <div class="vocab-grid" id="vocab-list"></div>
+      </div>
+
+      <div class="progress-block">
+        <div class="counter">
+          <span class="counter-label">낭독 · 5</span>
+          <span class="dots" id="read-dots"></span>
+        </div>
+        <div class="counter">
+          <span class="counter-label">쓰기 · 3</span>
+          <span class="dots" id="write-dots"></span>
+        </div>
+      </div>
+
+      <button class="complete-btn" id="complete-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="complete-text">오늘의 레슨을 완료하기</span>
+      </button>
+    </article>
+
+    <article class="card writing-card">
+      <div class="lesson-meta">
+        <span class="theme-text" style="color:var(--ink-3);">WRITE<span class="sep">·</span>쓰기</span>
+      </div>
+      <h2 class="lesson-title" style="font-size:22px;margin-bottom:6px;">나의 노트</h2>
+
+      <div class="mode-tabs" id="mode-tabs">
+        <button class="mode-tab" data-mode="canvas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+          손글씨
+        </button>
+        <button class="mode-tab active" data-mode="typing">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M7 16h10"/></svg>
+          타이핑
+        </button>
+      </div>
+
+      <div class="grid-tabs typing-submode-tabs" id="typing-submode-tabs">
+        <button class="grid-tab active" data-submode="original">원문 표시</button>
+        <button class="grid-tab" data-submode="dictation">받아쓰기</button>
+        <button class="grid-tab" data-submode="translation">번역 표시</button>
+      </div>
+
+      <p class="right-hint" id="typing-hint" hidden></p>
+
+      <details class="reference-block" id="reference-block" open>
+        <summary id="reference-summary">참고할 원문 표시</summary>
+        <div class="reference-text" id="reference-text"></div>
+      </details>
+
+      <div class="dictation-card" id="dictation-card" hidden>
+        <div class="dictation-icon">🔊</div>
+        <button class="canvas-btn" id="dictation-play-normal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          보통
+        </button>
+        <button class="canvas-btn" id="dictation-play-slow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          느리게
+        </button>
+        <button class="canvas-btn" id="dictation-stop">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+          정지
+        </button>
+      </div>
+
+      <div class="write-pane" id="canvas-pane" hidden>
+        <p class="right-hint">종이에 쓰는 것이 가장 좋지만, 이 캔버스에서도 연습할 수 있어요. 가나·한자는 네모 칸에 쓰면 글자 균형을 잡기 쉬워요.</p>
+
+        <div class="grid-tabs" id="grid-tabs">
+          <button class="grid-tab active" data-mode="tianzi">네모 칸</button>
+          <button class="grid-tab" data-mode="grid">모눈</button>
+          <button class="grid-tab" data-mode="lined">가로줄</button>
+          <button class="grid-tab" data-mode="blank">무지</button>
+        </div>
+
+        <div class="writing-area tianzi" id="writing-area">
+          <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="canvas-controls">
+          <button class="canvas-btn" id="clear-canvas">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14H7L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            지우기
+          </button>
+          <button class="canvas-btn" id="undo-canvas">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            한 획 되돌리기
+          </button>
+          <div class="brush-control">
+            굵기
+            <input type="range" id="brush-size" min="1" max="10" value="3">
+          </div>
+        </div>
+      </div>
+
+      <div class="write-pane" id="typing-pane">
+        <textarea class="typing-input" id="typing-input"
+                  placeholder="여기에 베껴 써 보세요…"
+                  spellcheck="false"></textarea>
+
+        <div class="canvas-controls">
+          <button class="canvas-btn" id="compare-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            원문과 비교
+          </button>
+          <button class="canvas-btn" id="clear-typing">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14H7L5 6"/></svg>
+            지우기
+          </button>
+          <span class="char-count" id="char-count">0 / 0 글자</span>
+        </div>
+
+        <div class="diff-output" id="diff-output" hidden></div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site">
+    <div class="meta">
+      <span>개인 취미 범위로 만들고 있습니다. 사소한 버그는 양해 부탁드립니다.</span>
+      <span>© 2026 mari · <a href="https://x.com/mmmmmmmari_" target="_blank" rel="noopener">@mmmmmmmari_</a></span>
+    </div>
+  </footer>
+</div>
+
+<script>
+const LESSONS = [
+  {
+    day: 1, hsk: 1,
+    theme: { zh: "自己紹介", ja: "자기소개" },
+    title: { zh: "よろしくお願いします", ja: "서로 알아 가요" },
+    tip: "「N＋です」＝「~입니다」. 「~で」는 명사를 잇는 「~이고/~이며」. 「~ので」는 이유를 나타내는 「~여서/~때문에」(객관적 이유에 자주 씀).",
+    sentences: [
+      { zh: "こんにちは。キム・ミンスです。", pinyin: "こんにちは。きむ・みんすです。" },
+      { zh: "今年三十歳で、韓国人です。", pinyin: "ことしさんじゅっさいで、かんこくじんです。" },
+      { zh: "ソウルに住んでいて、毎日会社に行きます。", pinyin: "そうるにすんでいて、まいにちかいしゃにいきます。" },
+      { zh: "日本がとても好きなので、今日本語を勉強しています。", pinyin: "にほんがとてもすきなので、いまにほんごをべんきょうしています。" },
+      { zh: "どうぞよろしくお願いします。", pinyin: "どうぞよろしくおねがいします。" }
+    ],
+    translation: "안녕하세요. 김민수입니다. 올해 서른 살이고, 한국 사람이에요. 서울에 살고 있고, 매일 회사에 가요. 일본을 아주 좋아해서 지금 일본어를 공부하고 있어요. 잘 부탁합니다.",
+    vocab: [
+      { zh: "今年", pinyin: "ことし", ja: "올해" },
+      { zh: "〜歳", pinyin: "〜さい", ja: "~살(나이)" },
+      { zh: "住む", pinyin: "すむ", ja: "살다" },
+      { zh: "毎日", pinyin: "まいにち", ja: "매일" },
+      { zh: "会社", pinyin: "かいしゃ", ja: "회사" },
+      { zh: "好きだ", pinyin: "すきだ", ja: "좋아하다" },
+      { zh: "勉強する", pinyin: "べんきょうする", ja: "공부하다" }
+    ]
+  },
+  {
+    day: 2, hsk: 1,
+    theme: { zh: "家族", ja: "가족" },
+    title: { zh: "私の家族", ja: "따뜻한 우리 집" },
+    tip: "「~で」(명사+で)＝「~이고」로 문장을 연결. 「~も」＝「~도」. 「好きです」 대상에는 조사 「が」를 씀(「サッカーが好きです」＝축구를 좋아해요).",
+    sentences: [
+      { zh: "私の家族は四人です。", pinyin: "わたしのかぞくはよにんです。" },
+      { zh: "父と母、弟と私です。", pinyin: "ちちとはは、おとうととわたしです。" },
+      { zh: "父は医者で、母も働いています。", pinyin: "ちちはいしゃで、ははもはたらいています。" },
+      { zh: "弟は大学生で、サッカーが好きです。", pinyin: "おとうとはだいがくせいで、さっかーがすきです。" },
+      { zh: "私たちは仲が良い家族です。", pinyin: "わたしたちはなかがいいかぞくです。" }
+    ],
+    translation: "우리 가족은 네 명이에요. 아버지와 어머니, 남동생과 저예요. 아버지는 의사이고, 어머니도 일하고 있어요. 남동생은 대학생이고, 축구를 좋아해요. 우리는 사이가 좋은 가족이에요.",
+    vocab: [
+      { zh: "家族", pinyin: "かぞく", ja: "가족" },
+      { zh: "四人", pinyin: "よにん", ja: "네 명" },
+      { zh: "父", pinyin: "ちち", ja: "(자신의) 아버지" },
+      { zh: "母", pinyin: "はは", ja: "(자신의) 어머니" },
+      { zh: "弟", pinyin: "おとうと", ja: "남동생" },
+      { zh: "働く", pinyin: "はたらく", ja: "일하다" },
+      { zh: "仲が良い", pinyin: "なかがいい", ja: "사이가 좋다" }
+    ]
+  },
+  {
+    day: 15, hsk: 1,
+    theme: { zh: "天気", ja: "날씨" },
+    title: { zh: "今日はいい一日", ja: "즐거운 하루" },
+    tip: "과거형은 「ます→ました」, 「です→でした」. 형용사 과거는 「~い→~かった(です)」(面白い→面白かった). 「~に行く」＝「~하러 가다」.",
+    sentences: [
+      { zh: "今日はいい天気です。", pinyin: "きょうはいいてんきです。" },
+      { zh: "友だちと一緒に映画を見に行きました。", pinyin: "ともだちといっしょにえいがをみにいきました。" },
+      { zh: "映画はとても面白かったです。", pinyin: "えいがはとてもおもしろかったです。" },
+      { zh: "その後、カフェでコーヒーを飲みました。", pinyin: "そのあと、かふぇでこーひーをのみました。" },
+      { zh: "今日は本当に楽しい一日でした。", pinyin: "きょうはほんとうにたのしいいちにちでした。" }
+    ],
+    translation: "오늘은 날씨가 좋아요. 친구와 함께 영화를 보러 갔어요. 영화는 아주 재미있었어요. 그 후에 카페에서 커피를 마셨어요. 오늘은 정말 즐거운 하루였어요.",
+    vocab: [
+      { zh: "天気", pinyin: "てんき", ja: "날씨" },
+      { zh: "友だち", pinyin: "ともだち", ja: "친구" },
+      { zh: "一緒に", pinyin: "いっしょに", ja: "함께" },
+      { zh: "映画", pinyin: "えいが", ja: "영화" },
+      { zh: "面白い", pinyin: "おもしろい", ja: "재미있다" },
+      { zh: "飲む", pinyin: "のむ", ja: "마시다" },
+      { zh: "楽しい", pinyin: "たのしい", ja: "즐겁다" }
+    ]
+  },
+  {
+    day: 16, hsk: 1,
+    theme: { zh: "買い物", ja: "장보기" },
+    title: { zh: "買い物に行く", ja: "장을 봐요" },
+    tip: "「~たいです」＝「~하고 싶어요」(과거 「~たかったです」). 「~が、」＝「~지만」(역접). 「~と思います」＝「~려고 해요/~라고 생각해요」(의지·추측).",
+    sentences: [
+      { zh: "今日はスーパーに買い物に行きました。", pinyin: "きょうはすーぱーにかいものにいきました。" },
+      { zh: "水とお米と果物を買いました。", pinyin: "みずとおこめとくだものをかいました。" },
+      { zh: "りんごが大きくて、とても安かったです。", pinyin: "りんごがおおきくて、とてもやすかったです。" },
+      { zh: "お茶も買いたかったですが、お金が足りませんでした。", pinyin: "おちゃもかいたかったですが、おかねがたりませんでした。" },
+      { zh: "また今度買おうと思います。", pinyin: "またこんどかおうとおもいます。" }
+    ],
+    translation: "오늘은 슈퍼에 장을 보러 갔어요. 물과 쌀과 과일을 샀어요. 사과가 크고, 아주 쌌어요. 차도 사고 싶었지만, 돈이 모자랐어요. 다음에 또 사려고 해요.",
+    vocab: [
+      { zh: "買い物", pinyin: "かいもの", ja: "장보기·쇼핑" },
+      { zh: "お米", pinyin: "おこめ", ja: "쌀" },
+      { zh: "果物", pinyin: "くだもの", ja: "과일" },
+      { zh: "安い", pinyin: "やすい", ja: "(값이) 싸다" },
+      { zh: "お金", pinyin: "おかね", ja: "돈" },
+      { zh: "足りる", pinyin: "たりる", ja: "충분하다" },
+      { zh: "今度", pinyin: "こんど", ja: "다음번·이번" }
+    ]
+  },
+  {
+    day: 20, hsk: 1,
+    theme: { zh: "子ども", ja: "아이" },
+    title: { zh: "私の娘", ja: "사랑스러운 딸" },
+    tip: "「~のが好きです」＝「~하는 것을 좋아해요」(동사+の로 명사화). 「~と」＝「~하면」(자연스러운 결과). 「~になります」＝「~가 됩니다/~해집니다」.",
+    sentences: [
+      { zh: "私には五歳の娘がいます。", pinyin: "わたしにはごさいのむすめがいます。" },
+      { zh: "娘は絵を描くのが大好きです。", pinyin: "むすめはえをかくのがだいすきです。" },
+      { zh: "毎朝、一緒に幼稚園まで歩きます。", pinyin: "まいあさ、いっしょにようちえんまであるきます。" },
+      { zh: "娘の笑った顔を見ると、私も幸せになります。", pinyin: "むすめのわらったかおをみると、わたしもしあわせになります。" },
+      { zh: "子どもの成長は本当に早いです。", pinyin: "こどものせいちょうはほんとうにはやいです。" }
+    ],
+    translation: "저에게는 다섯 살 딸이 있어요. 딸은 그림 그리는 것을 아주 좋아해요. 매일 아침 함께 유치원까지 걸어가요. 딸의 웃는 얼굴을 보면 저도 행복해져요. 아이의 성장은 정말 빨라요.",
+    vocab: [
+      { zh: "娘", pinyin: "むすめ", ja: "딸" },
+      { zh: "絵", pinyin: "え", ja: "그림" },
+      { zh: "描く", pinyin: "かく", ja: "그리다" },
+      { zh: "幼稚園", pinyin: "ようちえん", ja: "유치원" },
+      { zh: "笑う", pinyin: "わらう", ja: "웃다" },
+      { zh: "幸せ", pinyin: "しあわせ", ja: "행복" },
+      { zh: "成長", pinyin: "せいちょう", ja: "성장" }
+    ]
+  },
+  {
+    day: 21, hsk: 1,
+    theme: { zh: "時間", ja: "시간" },
+    title: { zh: "今、何時ですか", ja: "하루의 시간" },
+    tip: "시각의 「~時」는 「いち, に, さん…」로 읽되 4시=よじ, 7시=しちじ, 9시=くじ에 주의. 시각의 「~에」는 조사 「に」. 「~ごろ」＝「~쯤·무렵」.",
+    sentences: [
+      { zh: "今、何時ですか。", pinyin: "いま、なんじですか。" },
+      { zh: "今は朝の七時です。", pinyin: "いまはあさのしちじです。" },
+      { zh: "私はいつも八時に家を出ます。", pinyin: "わたしはいつもはちじにいえをでます。" },
+      { zh: "お昼ご飯は十二時半に食べます。", pinyin: "おひるごはんはじゅうにじはんにたべます。" },
+      { zh: "夜は十一時ごろに寝ます。", pinyin: "よるはじゅういちじごろにねます。" }
+    ],
+    translation: "지금 몇 시예요? 지금은 아침 일곱 시예요. 저는 늘 여덟 시에 집을 나가요. 점심은 열두 시 반에 먹어요. 밤에는 열한 시쯤에 자요.",
+    vocab: [
+      { zh: "何時", pinyin: "なんじ", ja: "몇 시" },
+      { zh: "いつも", pinyin: "いつも", ja: "늘·항상" },
+      { zh: "家を出る", pinyin: "いえをでる", ja: "집을 나서다" },
+      { zh: "お昼ご飯", pinyin: "おひるごはん", ja: "점심밥" },
+      { zh: "半", pinyin: "はん", ja: "반(30분)" },
+      { zh: "夜", pinyin: "よる", ja: "밤" },
+      { zh: "寝る", pinyin: "ねる", ja: "자다" }
+    ]
+  },
+  {
+    day: 22, hsk: 1,
+    theme: { zh: "学び", ja: "배움" },
+    title: { zh: "日本語を勉強しています", ja: "매일 조금씩" },
+    tip: "「~ながら」＝「~하면서」(동시 동작). 「~て」＝「~하고」(나열·순서). 수단의 「~で」＝「~로」(日本語で＝일본어로).",
+    sentences: [
+      { zh: "私は毎日日本語を勉強しています。", pinyin: "わたしはまいにちにほんごをべんきょうしています。" },
+      { zh: "朝は単語を覚えて、夜は本を読みます。", pinyin: "あさはたんごをおぼえて、よるはほんをよみます。" },
+      { zh: "日本のドラマを見ながら勉強します。", pinyin: "にほんのどらまをみながらべんきょうします。" },
+      { zh: "日本語は難しいですが、とても面白いです。", pinyin: "にほんごはむずかしいですが、とてもおもしろいです。" },
+      { zh: "いつか日本人の友だちと日本語で話したいです。", pinyin: "いつかにほんじんのともだちとにほんごではなしたいです。" }
+    ],
+    translation: "저는 매일 일본어를 공부하고 있어요. 아침에는 단어를 외우고, 밤에는 책을 읽어요. 일본 드라마를 보면서 공부해요. 일본어는 어렵지만, 아주 재미있어요. 언젠가 일본인 친구와 일본어로 이야기하고 싶어요.",
+    vocab: [
+      { zh: "単語", pinyin: "たんご", ja: "단어" },
+      { zh: "覚える", pinyin: "おぼえる", ja: "외우다" },
+      { zh: "読む", pinyin: "よむ", ja: "읽다" },
+      { zh: "難しい", pinyin: "むずかしい", ja: "어렵다" },
+      { zh: "いつか", pinyin: "いつか", ja: "언젠가" },
+      { zh: "話す", pinyin: "はなす", ja: "말하다" },
+      { zh: "〜ながら", pinyin: "〜ながら", ja: "~하면서" }
+    ]
+  },
+  {
+    day: 23, hsk: 1,
+    theme: { zh: "友達", ja: "친구" },
+    title: { zh: "私の友だち", ja: "소중한 친구" },
+    tip: "「~ので」＝「~여서·~때문에」(이유). 「あまり~ません」＝「별로 ~하지 않다」. 가능형 「会う→会えます」(만날 수 있다), 부정 「会えません」.",
+    sentences: [
+      { zh: "私には仲のいい友だちがいます。", pinyin: "わたしにはなかのいいともだちがいます。" },
+      { zh: "名前はジホで、高校の同級生です。", pinyin: "なまえはじほで、こうこうのどうきゅうせいです。" },
+      { zh: "今は遠くに住んでいるので、あまり会えません。", pinyin: "いまはとおくにすんでいるので、あまりあえません。" },
+      { zh: "でも週末はよく電話で話します。", pinyin: "でもしゅうまつはよくでんわではなします。" },
+      { zh: "つらいとき、友だちがいて本当に良かったです。", pinyin: "つらいとき、ともだちがいてほんとうによかったです。" }
+    ],
+    translation: "저에게는 사이가 좋은 친구가 있어요. 이름은 지호이고, 고등학교 동창이에요. 지금은 멀리 살고 있어서 자주 못 만나요. 하지만 주말에는 자주 전화로 이야기해요. 힘들 때 친구가 있어서 정말 다행이에요.",
+    vocab: [
+      { zh: "仲のいい", pinyin: "なかのいい", ja: "사이가 좋은" },
+      { zh: "同級生", pinyin: "どうきゅうせい", ja: "동급생·동창" },
+      { zh: "遠く", pinyin: "とおく", ja: "멀리" },
+      { zh: "会う", pinyin: "あう", ja: "만나다" },
+      { zh: "週末", pinyin: "しゅうまつ", ja: "주말" },
+      { zh: "電話", pinyin: "でんわ", ja: "전화" },
+      { zh: "つらい", pinyin: "つらい", ja: "괴롭다·힘들다" }
+    ]
+  },
+  {
+    day: 24, hsk: 1,
+    theme: { zh: "外出", ja: "외출" },
+    title: { zh: "タクシーに乗る", ja: "약속에 가요" },
+    tip: "「~に乗る」＝「~을 타다」(조사 に 주의). 「~まで」＝「~까지」. 「間に合う」＝「시간에 맞추다·늦지 않다」.",
+    sentences: [
+      { zh: "今日は友だちと約束があります。", pinyin: "きょうはともだちとやくそくがあります。" },
+      { zh: "時間がないので、タクシーに乗ります。", pinyin: "じかんがないので、たくしーにのります。" },
+      { zh: "すみません、駅までお願いします。", pinyin: "すみません、えきまでおねがいします。" },
+      { zh: "道が込んでいて、少し遅れました。", pinyin: "みちがこんでいて、すこしおくれました。" },
+      { zh: "でも約束の時間に間に合いました。", pinyin: "でもやくそくのじかんにまにあいました。" }
+    ],
+    translation: "오늘은 친구와 약속이 있어요. 시간이 없어서 택시를 타요. 죄송합니다, 역까지 부탁합니다. 길이 막혀서 조금 늦었어요. 하지만 약속 시간에 맞춰 도착했어요.",
+    vocab: [
+      { zh: "約束", pinyin: "やくそく", ja: "약속" },
+      { zh: "タクシー", pinyin: "たくしー", ja: "택시" },
+      { zh: "乗る", pinyin: "のる", ja: "타다" },
+      { zh: "駅", pinyin: "えき", ja: "역" },
+      { zh: "込む", pinyin: "こむ", ja: "붐비다·막히다" },
+      { zh: "遅れる", pinyin: "おくれる", ja: "늦다" },
+      { zh: "間に合う", pinyin: "まにあう", ja: "시간에 대다" }
+    ]
+  },
+  {
+    day: 25, hsk: 1,
+    theme: { zh: "料理", ja: "요리" },
+    title: { zh: "料理を作る", ja: "직접 만들어요" },
+    tip: "「~のために」＝「~을 위해」. 「~そうに」＝「~해 보이게·~한 듯이」(おいしそうに＝맛있게). 「~てくれる」＝「(나를 위해) ~해 주다」.",
+    sentences: [
+      { zh: "私は料理を作るのが好きです。", pinyin: "わたしはりょうりをつくるのがすきです。" },
+      { zh: "週末は家族のためにご飯を作ります。", pinyin: "しゅうまつはかぞくのためにごはんをつくります。" },
+      { zh: "今日はキムチチゲを作りました。", pinyin: "きょうはきむちちげをつくりました。" },
+      { zh: "少し辛いですが、とてもおいしいです。", pinyin: "すこしからいですが、とてもおいしいです。" },
+      { zh: "家族がおいしそうに食べてくれて、うれしいです。", pinyin: "かぞくがおいしそうにたべてくれて、うれしいです。" }
+    ],
+    translation: "저는 요리하는 것을 좋아해요. 주말에는 가족을 위해 밥을 만들어요. 오늘은 김치찌개를 만들었어요. 조금 맵지만, 아주 맛있어요. 가족이 맛있게 먹어 줘서 기뻐요.",
+    vocab: [
+      { zh: "料理", pinyin: "りょうり", ja: "요리" },
+      { zh: "作る", pinyin: "つくる", ja: "만들다" },
+      { zh: "ご飯", pinyin: "ごはん", ja: "밥" },
+      { zh: "辛い", pinyin: "からい", ja: "맵다" },
+      { zh: "おいしい", pinyin: "おいしい", ja: "맛있다" },
+      { zh: "〜てくれる", pinyin: "〜てくれる", ja: "~해 주다" },
+      { zh: "うれしい", pinyin: "うれしい", ja: "기쁘다" }
+    ]
+  },
+  {
+    day: 3, hsk: 2,
+    theme: { zh: "日常生活", ja: "일상생활" },
+    title: { zh: "これが私の一日", ja: "평범한 하루" },
+    tip: "「~てから」＝「~한 다음에」(순서). 「~と」＝「~하면」. 「~ている」는 상태·진행(疲れています＝피곤한 상태예요).",
+    sentences: [
+      { zh: "私はたいてい七時に起きます。", pinyin: "わたしはたいていしちじにおきます。" },
+      { zh: "顔を洗って、朝ご飯を食べてから家を出ます。", pinyin: "かおをあらって、あさごはんをたべてからいえをでます。" },
+      { zh: "会社で働いて、昼休みには同僚とご飯を食べます。", pinyin: "かいしゃではたらいて、ひるやすみにはどうりょうとごはんをたべます。" },
+      { zh: "夕方家に帰ると、少し疲れています。", pinyin: "ゆうがたいえにかえると、すこしつかれています。" },
+      { zh: "それでも、一日を終えて休む時間が一番好きです。", pinyin: "それでも、いちにちをおえてやすむじかんがいちばんすきです。" }
+    ],
+    translation: "저는 보통 일곱 시에 일어나요. 세수를 하고, 아침을 먹은 다음에 집을 나서요. 회사에서 일하고, 점심시간에는 동료와 밥을 먹어요. 저녁에 집에 돌아오면 조금 피곤해요. 그래도 하루를 마치고 쉬는 시간이 가장 좋아요.",
+    vocab: [
+      { zh: "たいてい", pinyin: "たいてい", ja: "대개·보통" },
+      { zh: "起きる", pinyin: "おきる", ja: "일어나다" },
+      { zh: "顔を洗う", pinyin: "かおをあらう", ja: "세수하다" },
+      { zh: "昼休み", pinyin: "ひるやすみ", ja: "점심시간" },
+      { zh: "同僚", pinyin: "どうりょう", ja: "동료" },
+      { zh: "疲れる", pinyin: "つかれる", ja: "지치다" },
+      { zh: "終える", pinyin: "おえる", ja: "끝내다" }
+    ]
+  },
+  {
+    day: 4, hsk: 2,
+    theme: { zh: "食べ物", ja: "음식" },
+    title: { zh: "日本の食べ物が好き", ja: "매운 것도 좋아요" },
+    tip: "「~てみる」＝「~해 보다」(시도). 「~なので」＝「~여서」(명사+な+ので). 「元気が出る」＝「기운이 나다」.",
+    sentences: [
+      { zh: "私は日本の食べ物が大好きです。", pinyin: "わたしはにほんのたべものがだいすきです。" },
+      { zh: "特にお寿司とラーメンをよく食べます。", pinyin: "とくにおすしとらーめんをよくたべます。" },
+      { zh: "韓国人なので、辛い料理も大好きです。", pinyin: "かんこくじんなので、からいりょうりもだいすきです。" },
+      { zh: "時々、自分で日本料理を作ってみます。", pinyin: "ときどき、じぶんでにほんりょうりをつくってみます。" },
+      { zh: "おいしいものを食べると、元気が出ます。", pinyin: "おいしいものをたべると、げんきがでます。" }
+    ],
+    translation: "저는 일본 음식을 아주 좋아해요. 특히 초밥과 라면을 자주 먹어요. 한국 사람이라서 매운 요리도 아주 좋아해요. 가끔 직접 일본 요리를 만들어 봐요. 맛있는 것을 먹으면 힘이 나요.",
+    vocab: [
+      { zh: "食べ物", pinyin: "たべもの", ja: "음식" },
+      { zh: "特に", pinyin: "とくに", ja: "특히" },
+      { zh: "お寿司", pinyin: "おすし", ja: "초밥" },
+      { zh: "辛い", pinyin: "からい", ja: "맵다" },
+      { zh: "時々", pinyin: "ときどき", ja: "가끔" },
+      { zh: "自分で", pinyin: "じぶんで", ja: "직접·스스로" },
+      { zh: "元気が出る", pinyin: "げんきがでる", ja: "기운이 나다" }
+    ]
+  },
+  {
+    day: 17, hsk: 2,
+    theme: { zh: "週末", ja: "주말" },
+    title: { zh: "週末は何をする？", ja: "느긋한 주말" },
+    tip: "「~たり~たりします」＝「~하거나 ~하거나 해요」(여러 동작 나열). 가능형 「なれる」(될 수 있다). 「~を散歩する」＝이동의 を.",
+    sentences: [
+      { zh: "週末はたいてい家でゆっくり休みます。", pinyin: "しゅうまつはたいていいえでゆっくりやすみます。" },
+      { zh: "土曜日の朝は、掃除をしたり洗濯をしたりします。", pinyin: "どようびのあさは、そうじをしたりせんたくをしたりします。" },
+      { zh: "午後は近くの公園を散歩します。", pinyin: "ごごはちかくのこうえんをさんぽします。" },
+      { zh: "日曜日は友だちに会ったり、映画を見たりします。", pinyin: "にちようびはともだちにあったり、えいがをみたりします。" },
+      { zh: "こうして週末を過ごすと、また元気になれます。", pinyin: "こうしてしゅうまつをすごすと、またげんきになれます。" }
+    ],
+    translation: "주말에는 보통 집에서 느긋하게 쉬어요. 토요일 아침에는 청소를 하거나 빨래를 하거나 해요. 오후에는 가까운 공원을 산책해요. 일요일에는 친구를 만나거나 영화를 보거나 해요. 이렇게 주말을 보내면 다시 기운이 나요.",
+    vocab: [
+      { zh: "掃除", pinyin: "そうじ", ja: "청소" },
+      { zh: "洗濯", pinyin: "せんたく", ja: "빨래" },
+      { zh: "公園", pinyin: "こうえん", ja: "공원" },
+      { zh: "散歩", pinyin: "さんぽ", ja: "산책" },
+      { zh: "会う", pinyin: "あう", ja: "만나다" },
+      { zh: "過ごす", pinyin: "すごす", ja: "(시간을) 보내다" },
+      { zh: "こうして", pinyin: "こうして", ja: "이렇게 (하여)" }
+    ]
+  },
+  {
+    day: 18, hsk: 2,
+    theme: { zh: "体調", ja: "몸 상태" },
+    title: { zh: "少し調子が悪い", ja: "몸조심" },
+    tip: "형용사 て형 「痛い→痛くて」＝「아프고/아파서」. 「~たいです」＝「~하고 싶어요」. 「~になる」＝「~해지다」(元気になる＝건강해지다).",
+    sentences: [
+      { zh: "昨日から少し体の調子が悪いです。", pinyin: "きのうからすこしからだのちょうしがわるいです。" },
+      { zh: "頭が痛くて、熱も少しあります。", pinyin: "あたまがいたくて、ねつもすこしあります。" },
+      { zh: "だから今日は会社を休みました。", pinyin: "だからきょうはかいしゃをやすみました。" },
+      { zh: "薬を飲んで、温かいお茶をたくさん飲みました。", pinyin: "くすりをのんで、あたたかいおちゃをたくさんのみました。" },
+      { zh: "早く治って、また元気になりたいです。", pinyin: "はやくなおって、またげんきになりたいです。" }
+    ],
+    translation: "어제부터 몸 상태가 조금 안 좋아요. 머리가 아프고, 열도 조금 있어요. 그래서 오늘은 회사를 쉬었어요. 약을 먹고, 따뜻한 차를 많이 마셨어요. 빨리 나아서 다시 건강해지고 싶어요.",
+    vocab: [
+      { zh: "調子", pinyin: "ちょうし", ja: "상태·컨디션" },
+      { zh: "頭", pinyin: "あたま", ja: "머리" },
+      { zh: "痛い", pinyin: "いたい", ja: "아프다" },
+      { zh: "熱", pinyin: "ねつ", ja: "열" },
+      { zh: "薬", pinyin: "くすり", ja: "약" },
+      { zh: "温かい", pinyin: "あたたかい", ja: "따뜻하다" },
+      { zh: "治る", pinyin: "なおる", ja: "낫다" }
+    ]
+  },
+  {
+    day: 5, hsk: 3,
+    theme: { zh: "趣味", ja: "취미" },
+    title: { zh: "私の小さな趣味", ja: "사진 찍기" },
+    tip: "「~けれど」＝「~지만」. 「~ごとに」＝「~마다」. 「~てくる」＝변화·진행(見えてくる＝보이기 시작하다). 「~おかげで」＝「~덕분에」.",
+    sentences: [
+      { zh: "私には小さいけれど大切な趣味があります。", pinyin: "わたしにはちいさいけれどたいせつなしゅみがあります。" },
+      { zh: "それは写真を撮ることです。", pinyin: "それはしゃしんをとることです。" },
+      { zh: "週末ごとにカメラを持って、町をゆっくり歩きます。", pinyin: "しゅうまつごとにかめらをもって、まちをゆっくりあるきます。" },
+      { zh: "普通の景色も、写真に残すと特別に見えてきます。", pinyin: "ふつうのけしきも、しゃしんにのこすととくべつにみえてきます。" },
+      { zh: "この趣味のおかげで、毎日がもっと楽しくなりました。", pinyin: "このしゅみのおかげで、まいにちがもっとたのしくなりました。" }
+    ],
+    translation: "저에게는 작지만 소중한 취미가 있어요. 바로 사진을 찍는 것이에요. 주말마다 카메라를 들고 거리를 천천히 걸어요. 평범한 풍경도 사진으로 남기면 특별하게 보여요. 이 취미 덕분에 매일이 더 즐거워졌어요.",
+    vocab: [
+      { zh: "大切だ", pinyin: "たいせつだ", ja: "소중하다" },
+      { zh: "写真を撮る", pinyin: "しゃしんをとる", ja: "사진을 찍다" },
+      { zh: "カメラ", pinyin: "かめら", ja: "카메라" },
+      { zh: "景色", pinyin: "けしき", ja: "풍경·경치" },
+      { zh: "残す", pinyin: "のこす", ja: "남기다" },
+      { zh: "特別だ", pinyin: "とくべつだ", ja: "특별하다" },
+      { zh: "おかげで", pinyin: "おかげで", ja: "덕분에" }
+    ]
+  },
+  {
+    day: 6, hsk: 3,
+    theme: { zh: "週末", ja: "주말" },
+    title: { zh: "のんびりした週末", ja: "아무것도 안 하는 날" },
+    tip: "「何も~ない」＝「아무것도 ~않다」. 「~だけ」＝「~만큼·~만」(好きなだけ＝원하는 만큼). 「~けれど」＝「~지만」.",
+    sentences: [
+      { zh: "今週末は、何も予定を立てませんでした。", pinyin: "こんしゅうまつは、なにもよていをたてませんでした。" },
+      { zh: "朝はゆっくり寝て、好きなだけ休みました。", pinyin: "あさはゆっくりねて、すきなだけやすみました。" },
+      { zh: "温かいコーヒーを飲みながら、好きな本を読みました。", pinyin: "あたたかいこーひーをのみながら、すきなほんをよみました。" },
+      { zh: "午後は日の光を浴びながら、音楽を聞きました。", pinyin: "ごごはひのひかりをあびながら、おんがくをききました。" },
+      { zh: "何もしなかったけれど、心がとても穏やかでした。", pinyin: "なにもしなかったけれど、こころがとてもおだやかでした。" }
+    ],
+    translation: "이번 주말에는 아무 계획도 세우지 않았어요. 아침에는 느긋하게 자고, 원하는 만큼 쉬었어요. 따뜻한 커피를 마시면서 좋아하는 책을 읽었어요. 오후에는 햇빛을 쬐면서 음악을 들었어요. 아무것도 안 했지만, 마음이 아주 편안했어요.",
+    vocab: [
+      { zh: "予定", pinyin: "よてい", ja: "예정·계획" },
+      { zh: "立てる", pinyin: "たてる", ja: "(계획을) 세우다" },
+      { zh: "好きなだけ", pinyin: "すきなだけ", ja: "원하는 만큼" },
+      { zh: "日の光", pinyin: "ひのひかり", ja: "햇빛" },
+      { zh: "浴びる", pinyin: "あびる", ja: "(햇빛을) 쬐다" },
+      { zh: "音楽", pinyin: "おんがく", ja: "음악" },
+      { zh: "穏やかだ", pinyin: "おだやかだ", ja: "편안하다·온화하다" }
+    ]
+  },
+  {
+    day: 7, hsk: 3,
+    theme: { zh: "都市", ja: "도시" },
+    title: { zh: "ソウルが好き", ja: "내가 사는 도시" },
+    tip: "「~以上」＝「~이상」. 「その分」＝「그만큼」. 「~ごとに」＝「~마다」. 「気に入る」＝「마음에 들다」.",
+    sentences: [
+      { zh: "私はソウルに十年以上住んでいます。", pinyin: "わたしはそうるにじゅうねんいじょうすんでいます。" },
+      { zh: "この街はいつも忙しいですが、その分活気があります。", pinyin: "このまちはいつもいそがしいですが、そのぶんかっきがあります。" },
+      { zh: "朝の地下鉄は本当に込んでいます。", pinyin: "あさのちかてつはほんとうにこんでいます。" },
+      { zh: "でも、路地ごとに小さなカフェや本屋があって、気に入っています。", pinyin: "でも、ろじごとにちいさなかふぇやほんやがあって、きにいっています。" },
+      { zh: "にぎやかさと静けさの両方があるところが、ソウルの魅力です。", pinyin: "にぎやかさとしずけさのりょうほうがあるところが、そうるのみりょくです。" }
+    ],
+    translation: "저는 서울에 십 년 이상 살고 있어요. 이 도시는 늘 바쁘지만, 그만큼 활기가 있어요. 아침 지하철은 정말 붐벼요. 하지만 골목마다 작은 카페나 서점이 있어서 마음에 들어요. 북적임과 고요함이 둘 다 있는 점이 서울의 매력이에요.",
+    vocab: [
+      { zh: "街", pinyin: "まち", ja: "거리·도시" },
+      { zh: "活気", pinyin: "かっき", ja: "활기" },
+      { zh: "地下鉄", pinyin: "ちかてつ", ja: "지하철" },
+      { zh: "路地", pinyin: "ろじ", ja: "골목" },
+      { zh: "本屋", pinyin: "ほんや", ja: "서점" },
+      { zh: "気に入る", pinyin: "きにいる", ja: "마음에 들다" },
+      { zh: "魅力", pinyin: "みりょく", ja: "매력" }
+    ]
+  },
+  {
+    day: 8, hsk: 3,
+    theme: { zh: "学び", ja: "배움" },
+    title: { zh: "焦らず、ゆっくり", ja: "천천히 가도 괜찮아" },
+    tip: "「~ようにしている」＝「~하려고 (노력)하고 있다」(습관). 「~ものだ」＝「~인 법이다」(일반적 진리). 「~ず」＝「~하지 않고」(문어적).",
+    sentences: [
+      { zh: "日本語の勉強を始めて、もう一年になります。", pinyin: "にほんごのべんきょうをはじめて、もういちねんになります。" },
+      { zh: "最初は早く上手になりたくて、よく焦っていました。", pinyin: "さいしょははやくじょうずになりたくて、よくあせっていました。" },
+      { zh: "でも、言葉は一日では上達しないものです。", pinyin: "でも、ことばはいちにちではじょうたつしないものです。" },
+      { zh: "今は毎日少しずつ、続けるようにしています。", pinyin: "いまはまいにちすこしずつ、つづけるようにしています。" },
+      { zh: "焦らずゆっくり進むことが、結局は一番の近道です。", pinyin: "あせらずゆっくりすすむことが、けっきょくはいちばんのちかみちです。" }
+    ],
+    translation: "일본어 공부를 시작한 지 벌써 일 년이 됐어요. 처음에는 빨리 잘하고 싶어서 자주 조급했어요. 하지만 언어는 하루아침에 늘지 않는 법이에요. 지금은 매일 조금씩 꾸준히 하려고 해요. 서두르지 않고 천천히 가는 것이 결국 가장 빠른 길이에요.",
+    vocab: [
+      { zh: "始める", pinyin: "はじめる", ja: "시작하다" },
+      { zh: "上手だ", pinyin: "じょうずだ", ja: "잘하다·능숙하다" },
+      { zh: "焦る", pinyin: "あせる", ja: "조급해하다" },
+      { zh: "言葉", pinyin: "ことば", ja: "말·언어" },
+      { zh: "上達する", pinyin: "じょうたつする", ja: "향상되다·늘다" },
+      { zh: "続ける", pinyin: "つづける", ja: "계속하다" },
+      { zh: "近道", pinyin: "ちかみち", ja: "지름길" }
+    ]
+  },
+  {
+    day: 9, hsk: 3,
+    theme: { zh: "旅行", ja: "여행" },
+    title: { zh: "東京は楽しかった", ja: "첫 일본 여행" },
+    tip: "「~へ」＝방향의 「~로/에」. 「~てみたい」＝「~해 보고 싶다」. 과거 연체수식 「食べた料理」＝「먹은 음식」.",
+    sentences: [
+      { zh: "先月、初めて日本へ旅行に行きました。", pinyin: "せんげつ、はじめてにほんへりょこうにいきました。" },
+      { zh: "東京タワーにも登って、浅草もまわりました。", pinyin: "とうきょうたわーにものぼって、あさくさもまわりました。" },
+      { zh: "市場で食べた屋台の料理が、本当においしかったです。", pinyin: "いちばでたべたやたいのりょうりが、ほんとうにおいしかったです。" },
+      { zh: "みんな親切で、道もすぐに分かりました。", pinyin: "みんなしんせつで、みちもすぐにわかりました。" },
+      { zh: "次は京都にもぜひ行ってみたいです。", pinyin: "つぎはきょうとにもぜひいってみたいです。" }
+    ],
+    translation: "지난달에 처음으로 일본에 여행을 갔어요. 도쿄 타워에도 올라가고, 아사쿠사도 둘러봤어요. 시장에서 먹은 노점 음식이 정말 맛있었어요. 다들 친절해서 길도 금방 알았어요. 다음에는 교토에도 꼭 가 보고 싶어요.",
+    vocab: [
+      { zh: "先月", pinyin: "せんげつ", ja: "지난달" },
+      { zh: "旅行", pinyin: "りょこう", ja: "여행" },
+      { zh: "登る", pinyin: "のぼる", ja: "오르다" },
+      { zh: "市場", pinyin: "いちば", ja: "시장" },
+      { zh: "屋台", pinyin: "やたい", ja: "노점·포장마차" },
+      { zh: "親切だ", pinyin: "しんせつだ", ja: "친절하다" },
+      { zh: "次", pinyin: "つぎ", ja: "다음" }
+    ]
+  },
+  {
+    day: 10, hsk: 3,
+    theme: { zh: "健康", ja: "건강" },
+    title: { zh: "健康が一番大切", ja: "몸이 먼저예요" },
+    tip: "「~たことがあります」＝「~한 적이 있어요」(경험). 「~ようになる」＝「~하게 되다」(변화). 「どんなに~ても」＝「아무리 ~해도」.",
+    sentences: [
+      { zh: "去年、体を壊して、ひどく後悔したことがあります。", pinyin: "きょねん、からだをこわして、ひどくこうかいしたことがあります。" },
+      { zh: "それ以来、毎朝三十分ずつ歩くようになりました。", pinyin: "それいらい、まいあささんじゅっぷんずつあるくようになりました。" },
+      { zh: "インスタント食品を減らして、野菜を多く食べています。", pinyin: "いんすたんとしょくひんをへらして、やさいをおおくたべています。" },
+      { zh: "早く寝て早く起きると、体がずっと軽くなります。", pinyin: "はやくねてはやくおきると、からだがずっとかるくなります。" },
+      { zh: "どんなに忙しくても、健康を失えば意味がありません。", pinyin: "どんなにいそがしくても、けんこうをうしなえばいみがありません。" }
+    ],
+    translation: "작년에 건강을 해쳐서 크게 후회한 적이 있어요. 그 이후로 매일 아침 삼십 분씩 걷게 되었어요. 인스턴트 식품을 줄이고, 채소를 많이 먹고 있어요. 일찍 자고 일찍 일어나면 몸이 훨씬 가벼워져요. 아무리 바빠도 건강을 잃으면 의미가 없어요.",
+    vocab: [
+      { zh: "体を壊す", pinyin: "からだをこわす", ja: "건강을 해치다" },
+      { zh: "後悔する", pinyin: "こうかいする", ja: "후회하다" },
+      { zh: "減らす", pinyin: "へらす", ja: "줄이다" },
+      { zh: "野菜", pinyin: "やさい", ja: "채소" },
+      { zh: "軽い", pinyin: "かるい", ja: "가볍다" },
+      { zh: "失う", pinyin: "うしなう", ja: "잃다" },
+      { zh: "意味", pinyin: "いみ", ja: "의미" }
+    ]
+  },
+  {
+    day: 11, hsk: 3,
+    theme: { zh: "ショッピング", ja: "쇼핑" },
+    title: { zh: "ネット通販の良し悪し", ja: "편리함과 함정" },
+    tip: "「~すぎる」＝「너무 ~하다」(違いすぎる＝너무 다르다). 「~ほうがいい」＝「~하는 편이 좋다」. 가능형 「見られる」(볼 수 있다), 부정 「見られない」.",
+    sentences: [
+      { zh: "最近は、ほとんどの物をインターネットで買います。", pinyin: "さいきんは、ほとんどのものをいんたーねっとでかいます。" },
+      { zh: "家で簡単に注文すれば、次の日には届きます。", pinyin: "いえでかんたんにちゅうもんすれば、つぎのひにはとどきます。" },
+      { zh: "でも、実物を見られないので、時々失敗します。", pinyin: "でも、じつぶつをみられないので、ときどきしっぱいします。" },
+      { zh: "この前は、写真と色が違いすぎて返品しました。", pinyin: "このまえは、しゃしんといろがちがいすぎてへんぴんしました。" },
+      { zh: "便利ですが、たまには店で直接買うほうがいいですね。", pinyin: "べんりですが、たまにはみせでちょくせつかうほうがいいですね。" }
+    ],
+    translation: "요즘은 거의 모든 물건을 인터넷으로 사요. 집에서 간단히 주문하면 다음 날에는 도착해요. 하지만 실물을 볼 수 없어서 가끔 실패해요. 지난번에는 사진과 색이 너무 달라서 반품했어요. 편리하지만, 가끔은 가게에서 직접 사는 게 좋네요.",
+    vocab: [
+      { zh: "注文する", pinyin: "ちゅうもんする", ja: "주문하다" },
+      { zh: "届く", pinyin: "とどく", ja: "도착하다·닿다" },
+      { zh: "実物", pinyin: "じつぶつ", ja: "실물" },
+      { zh: "失敗する", pinyin: "しっぱいする", ja: "실패하다" },
+      { zh: "色", pinyin: "いろ", ja: "색" },
+      { zh: "返品する", pinyin: "へんぴんする", ja: "반품하다" },
+      { zh: "直接", pinyin: "ちょくせつ", ja: "직접" }
+    ]
+  },
+  {
+    day: 12, hsk: 3,
+    theme: { zh: "友人", ja: "친구" },
+    title: { zh: "こんな友だちがいて", ja: "멀어도 가까운 사이" },
+    tip: "「なかなか~ない」＝「좀처럼 ~않다」. 「~ように」＝「~처럼/~같이」(昨日会ったように＝어제 만난 것처럼). 「~こと」＝동사 명사화.",
+    sentences: [
+      { zh: "私には、十年以上の付き合いの友だちがいます。", pinyin: "わたしには、じゅうねんいじょうのつきあいのともだちがいます。" },
+      { zh: "遠くに住んでいるので、なかなか会えません。", pinyin: "とおくにすんでいるので、なかなかあえません。" },
+      { zh: "それでも、つらいことがあると一番先に思い出します。", pinyin: "それでも、つらいことがあるといちばんさきにおもいだします。" },
+      { zh: "久しぶりに電話しても、昨日会ったように話せます。", pinyin: "ひさしぶりにでんわしても、きのうあったようにはなせます。" },
+      { zh: "こんな友だちがそばにいることが、本当にありがたいです。", pinyin: "こんなともだちがそばにいることが、ほんとうにありがたいです。" }
+    ],
+    translation: "저에게는 십 년 넘게 알고 지낸 친구가 있어요. 멀리 살아서 좀처럼 만나지 못해요. 그래도 힘든 일이 있으면 가장 먼저 떠올라요. 오랜만에 전화해도 어제 만난 것처럼 이야기할 수 있어요. 이런 친구가 곁에 있다는 게 정말 고마워요.",
+    vocab: [
+      { zh: "付き合い", pinyin: "つきあい", ja: "교제·사귐" },
+      { zh: "なかなか", pinyin: "なかなか", ja: "좀처럼" },
+      { zh: "思い出す", pinyin: "おもいだす", ja: "떠올리다·생각나다" },
+      { zh: "久しぶり", pinyin: "ひさしぶり", ja: "오랜만" },
+      { zh: "〜ように", pinyin: "〜ように", ja: "~처럼" },
+      { zh: "そば", pinyin: "そば", ja: "곁·옆" },
+      { zh: "ありがたい", pinyin: "ありがたい", ja: "고맙다·감사하다" }
+    ]
+  },
+  {
+    day: 13, hsk: 4,
+    theme: { zh: "季節", ja: "계절" },
+    title: { zh: "四季の美しさ", ja: "계절이 주는 선물" },
+    tip: "「~ごとに」＝「~마다」. 「~たびに」＝「~할 때마다」. 「~てくれる」＝「(나를 위해) ~해 주다」. 「~に包まれる」＝수동「~에 둘러싸이다」.",
+    sentences: [
+      { zh: "日本には、はっきりとした四季があり、季節ごとに景色が変わります。", pinyin: "にほんには、はっきりとしたしきがあり、きせつごとにけしきがかわります。" },
+      { zh: "春には、町のあちこちで桜が咲き、心を弾ませてくれます。", pinyin: "はるには、まちのあちこちでさくらがさき、こころをはずませてくれます。" },
+      { zh: "夏の青い空と秋の紅葉は、それぞれ違った魅力を持っています。", pinyin: "なつのあおいそらとあきのこうようは、それぞれちがったみりょくをもっています。" },
+      { zh: "冬になると、町全体が白い雪に包まれます。", pinyin: "ふゆになると、まちぜんたいがしろいゆきにつつまれます。" },
+      { zh: "季節が変わるたびに、新しい始まりを感じられるのがうれしいです。", pinyin: "きせつがかわるたびに、あたらしいはじまりをかんじられるのがうれしいです。" }
+    ],
+    translation: "일본에는 뚜렷한 사계절이 있어서 계절마다 풍경이 바뀌어요. 봄에는 거리 곳곳에서 벚꽃이 피어 마음을 설레게 해 줘요. 여름의 푸른 하늘과 가을의 단풍은 각각 다른 매력을 지니고 있어요. 겨울이 되면 도시 전체가 하얀 눈에 둘러싸여요. 계절이 바뀔 때마다 새로운 시작을 느낄 수 있어서 좋아요.",
+    vocab: [
+      { zh: "四季", pinyin: "しき", ja: "사계절" },
+      { zh: "桜", pinyin: "さくら", ja: "벚꽃" },
+      { zh: "咲く", pinyin: "さく", ja: "(꽃이) 피다" },
+      { zh: "紅葉", pinyin: "こうよう", ja: "단풍" },
+      { zh: "全体", pinyin: "ぜんたい", ja: "전체" },
+      { zh: "包む", pinyin: "つつむ", ja: "감싸다" },
+      { zh: "〜たびに", pinyin: "〜たびに", ja: "~할 때마다" }
+    ]
+  },
+  {
+    day: 14, hsk: 4,
+    theme: { zh: "目標と夢", ja: "목표와 꿈" },
+    title: { zh: "一歩ずつ進む", ja: "꿈을 향해" },
+    tip: "「~はずだ」＝「~일 것이다」(당연한 추측). 「~ようになる」＝「~할 수 있게 되다」. 「~のだと信じる」＝「~라고 믿다」(のだ＝설명·강조).",
+    sentences: [
+      { zh: "誰にでも、叶えたい夢が一つくらいあるはずです。", pinyin: "だれにでも、かなえたいゆめがひとつくらいあるはずです。" },
+      { zh: "私の夢は、日本語で自由に話せるようになることです。", pinyin: "わたしのゆめは、にほんごでじゆうにはなせるようになることです。" },
+      { zh: "もちろん、その道は遠く、あきらめたくなる時もあります。", pinyin: "もちろん、そのみちはとおく、あきらめたくなるときもあります。" },
+      { zh: "でも、昨日より今日、一つでも多く覚えれば十分です。", pinyin: "でも、きのうよりきょう、ひとつでもおおくおぼえればじゅうぶんです。" },
+      { zh: "大きな目標も、結局は小さな一歩から始まるのだと信じています。", pinyin: "おおきなもくひょうも、けっきょくはちいさないっぽからはじまるのだとしんじています。" }
+    ],
+    translation: "누구에게나 이루고 싶은 꿈이 하나쯤은 있을 거예요. 제 꿈은 일본어로 자유롭게 말할 수 있게 되는 것이에요. 물론 그 길은 멀고, 포기하고 싶어질 때도 있어요. 하지만 어제보다 오늘, 하나라도 더 외우면 충분해요. 큰 목표도 결국은 작은 한 걸음에서 시작된다고 믿어요.",
+    vocab: [
+      { zh: "叶える", pinyin: "かなえる", ja: "이루다" },
+      { zh: "夢", pinyin: "ゆめ", ja: "꿈" },
+      { zh: "自由だ", pinyin: "じゆうだ", ja: "자유롭다" },
+      { zh: "あきらめる", pinyin: "あきらめる", ja: "포기하다" },
+      { zh: "十分だ", pinyin: "じゅうぶんだ", ja: "충분하다" },
+      { zh: "目標", pinyin: "もくひょう", ja: "목표" },
+      { zh: "一歩", pinyin: "いっぽ", ja: "한 걸음" }
+    ]
+  },
+  {
+    day: 19, hsk: 4,
+    theme: { zh: "人生観", ja: "인생관" },
+    title: { zh: "時間の意味", ja: "시간을 어떻게 쓸까" },
+    tip: "「~ほど」＝「~할수록」. 「~のが」＝동사 명사화+주격. 「~のだと思う」＝「~라고 생각하다」. 「二度と~ない」＝「두 번 다시 ~않다」.",
+    sentences: [
+      { zh: "年を取るほど、時間が経つのがどんどん速く感じられます。", pinyin: "としをとるほど、じかんがたつのがどんどんはやくかんじられます。" },
+      { zh: "昔は時間がたくさんあると思って、よく後回しにしていました。", pinyin: "むかしはじかんがたくさんあるとおもって、よくあとまわしにしていました。" },
+      { zh: "しかし、過ぎた時間は二度と戻ってきません。", pinyin: "しかし、すぎたじかんはにどともどってきません。" },
+      { zh: "だから最近は、大切な人と過ごす時間を一番大事にしています。", pinyin: "だからさいきんは、たいせつなひととすごすじかんをいちばんだいじにしています。" },
+      { zh: "結局、時間をどう使うかが、人生をつくるのだと思います。", pinyin: "けっきょく、じかんをどうつかうかが、じんせいをつくるのだとおもいます。" }
+    ],
+    translation: "나이가 들수록 시간이 가는 것이 점점 빠르게 느껴져요. 예전에는 시간이 많다고 생각해서 자주 미루곤 했어요. 하지만 지나간 시간은 두 번 다시 돌아오지 않아요. 그래서 요즘은 소중한 사람과 보내는 시간을 가장 소중히 여겨요. 결국 시간을 어떻게 쓰는가가 인생을 만든다고 생각해요.",
+    vocab: [
+      { zh: "年を取る", pinyin: "としをとる", ja: "나이를 먹다" },
+      { zh: "経つ", pinyin: "たつ", ja: "(시간이) 지나다" },
+      { zh: "後回し", pinyin: "あとまわし", ja: "뒤로 미룸" },
+      { zh: "過ぎる", pinyin: "すぎる", ja: "지나가다" },
+      { zh: "戻る", pinyin: "もどる", ja: "돌아오다" },
+      { zh: "大事だ", pinyin: "だいじだ", ja: "소중하다" },
+      { zh: "人生", pinyin: "じんせい", ja: "인생" }
+    ]
+  }
+];
+
+const HSK_INFO = {
+  1: { label: "입문", target: 10, desc: "기본 인사와 자기소개" },
+  2: { label: "초급", target: 15, desc: "일상생활" },
+  3: { label: "중급", target: 25, desc: "복문·접속 표현" },
+  4: { label: "중상급", target: 30, desc: "추상적 주제" }
+};
+// 내부 레벨값(hsk: 1~4)을 JLPT 표기(N5~N2)로 변환
+const JLPT = { 1: "N5", 2: "N4", 3: "N3", 4: "N2" };
+
+// Compute levelNum (sequence within JLPT level) and globalIndex for each lesson
+LESSONS.forEach((l, i) => {
+  l.globalIndex = i;
+  const sameLevelBefore = LESSONS.slice(0, i).filter(x => x.hsk === l.hsk).length;
+  l.levelNum = sameLevelBefore + 1;
+});
+
+const STORAGE_KEY = 'japanese-diary-ko-progress-v1';
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+  catch { return {}; }
+}
+function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+let progress = loadProgress();
+let currentIdx = progress._currentIdx ?? 0;  // 0-based array index
+// 클립 「출처로」용 deep link: #d=N 으로 레슨 번호 덮어쓰기
+const _hashMatch = location.hash.match(/^#d=(\d+)/);
+if (_hashMatch) {
+  const _hashIdx = parseInt(_hashMatch[1], 10);
+  if (_hashIdx >= 0 && _hashIdx < LESSONS.length) currentIdx = _hashIdx;
+}
+if (currentIdx < 0 || currentIdx >= LESSONS.length) currentIdx = 0;
+let showPinyin = progress._showPinyin !== false;
+let showTranslation = progress._showTranslation !== false;
+let gridMode = progress._gridMode || 'tianzi';
+let theme = progress._theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+let writeMode = progress._writeMode || 'typing';  // 'canvas' or 'typing'
+let typingSubMode = progress._typingSubMode || 'original';  // 'original' | 'dictation' | 'translation'
+// 일본어에는 자체 변환이 없으므로 그대로 통과(호출부 호환을 위해 함수는 유지)
+function tx(s) { return s; }
+
+function currentLesson() {
+  return LESSONS[currentIdx];
+}
+function lessonKey(lesson) {
+  return `lesson_${lesson.hsk}_${lesson.levelNum}`;
+}
+function getLessonProgress(lesson) {
+  return progress[lessonKey(lesson)] || { read: 0, written: 0, completed: false };
+}
+function setLessonProgress(lesson, data) {
+  progress[lessonKey(lesson)] = data;
+  saveProgress(progress);
+}
+
+// ===== Speech =====
+function pickZhVoice() {
+  const voices = speechSynthesis.getVoices();
+  return voices.find(v => v.lang === 'ja-JP')
+      || voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ja'));
+}
+
+let playingSentenceEl = null;
+let activePlayBtn = null;
+
+function setActiveBtn(btn) {
+  if (activePlayBtn) activePlayBtn.classList.remove('playing');
+  activePlayBtn = btn;
+  if (btn) btn.classList.add('playing');
+}
+
+function speakSentence(text, rate, sentenceEl) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'ja-JP';
+  u.rate = rate;
+  const v = pickZhVoice();
+  if (v) u.voice = v;
+  if (sentenceEl) {
+    if (playingSentenceEl) playingSentenceEl.classList.remove('playing');
+    sentenceEl.classList.add('playing');
+    playingSentenceEl = sentenceEl;
+  }
+  u.onend = () => {
+    if (sentenceEl) sentenceEl.classList.remove('playing');
+    if (playingSentenceEl === sentenceEl) playingSentenceEl = null;
+  };
+  speechSynthesis.speak(u);
+}
+
+// 听写 (dictation) playback supports pause/resume: stopping captures the
+// current sentence index, and the next play resumes from that point.
+let dictationResumeIdx = null;
+let dictationActiveIdx = null;
+let dictationToken = null;
+
+function speakAll(sentenceEls, rate, btn) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  // Cancel any in-flight dictation loop so onend doesn't fight this loop.
+  dictationActiveIdx = null;
+  dictationToken = null;
+  setActiveBtn(btn);
+  let i = 0;
+  const speakNext = () => {
+    if (i >= sentenceEls.length) {
+      setActiveBtn(null);
+      if (playingSentenceEl) { playingSentenceEl.classList.remove('playing'); playingSentenceEl = null; }
+      return;
+    }
+    const el = sentenceEls[i];
+    const u = new SpeechSynthesisUtterance(el.dataset.zh);
+    u.lang = 'ja-JP'; u.rate = rate;
+    const v = pickZhVoice(); if (v) u.voice = v;
+    if (playingSentenceEl) playingSentenceEl.classList.remove('playing');
+    el.classList.add('playing'); playingSentenceEl = el;
+    u.onend = () => { i++; speakNext(); };
+    speechSynthesis.speak(u);
+  };
+  speakNext();
+}
+
+function playDictation(rate) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  setActiveBtn(null);
+  if (playingSentenceEl) { playingSentenceEl.classList.remove('playing'); playingSentenceEl = null; }
+
+  const sentenceEls = document.querySelectorAll('.sentence');
+  if (sentenceEls.length === 0) return;
+
+  let startIdx = (dictationResumeIdx !== null && dictationResumeIdx < sentenceEls.length)
+    ? dictationResumeIdx
+    : 0;
+  dictationResumeIdx = null;
+
+  let i = startIdx;
+  dictationActiveIdx = i;
+  const myToken = Symbol('dictation');
+  dictationToken = myToken;
+
+  const speakNext = () => {
+    if (dictationToken !== myToken) return;
+    if (i >= sentenceEls.length) {
+      dictationActiveIdx = null;
+      if (playingSentenceEl) { playingSentenceEl.classList.remove('playing'); playingSentenceEl = null; }
+      return;
+    }
+    dictationActiveIdx = i;
+    const el = sentenceEls[i];
+    const u = new SpeechSynthesisUtterance(el.dataset.zh);
+    u.lang = 'ja-JP'; u.rate = rate;
+    const v = pickZhVoice(); if (v) u.voice = v;
+    if (playingSentenceEl) playingSentenceEl.classList.remove('playing');
+    el.classList.add('playing'); playingSentenceEl = el;
+    u.onend = () => {
+      if (dictationToken !== myToken) return;
+      i++;
+      speakNext();
+    };
+    speechSynthesis.speak(u);
+  };
+  speakNext();
+}
+
+function stopAudio() {
+  // If a dictation loop is mid-flight, remember where it was so the next
+  // dictation-play resumes there.
+  if (dictationActiveIdx !== null) {
+    dictationResumeIdx = dictationActiveIdx;
+    dictationActiveIdx = null;
+  }
+  dictationToken = null;
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  setActiveBtn(null);
+  if (playingSentenceEl) { playingSentenceEl.classList.remove('playing'); playingSentenceEl = null; }
+}
+
+function checkVoiceSupport() {
+  const has = !!pickZhVoice();
+  document.getElementById('voice-warning').style.display = has ? 'none' : 'block';
+}
+if (typeof speechSynthesis !== 'undefined') {
+  speechSynthesis.onvoiceschanged = checkVoiceSupport;
+  setTimeout(checkVoiceSupport, 300);
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+// 일본어 후리가나에는 성조가 없으므로 그대로 표시
+function colorizePinyin(text) {
+  return escapeHtml(text);
+}
+
+// ===== Render =====
+function renderProgress() {
+  const completed = LESSONS.filter(l => getLessonProgress(l).completed).length;
+  document.getElementById('progress-now').textContent = completed;
+  document.getElementById('progress-of').textContent = `/ ${LESSONS.length}`;
+  const dotsEl = document.getElementById('progress-dots');
+  dotsEl.innerHTML = '';
+  LESSONS.forEach((l, idx) => {
+    const i = document.createElement('i');
+    if (getLessonProgress(l).completed) i.classList.add('done');
+    else if (idx === currentIdx) i.classList.add('current');
+    i.title = `JLPT ${JLPT[l.hsk]} · ${String(l.levelNum).padStart(2,'0')} — ${l.theme.ja}`;
+    dotsEl.appendChild(i);
+  });
+}
+
+function renderDayJump() {
+  const sel = document.getElementById('day-jump');
+  sel.innerHTML = '';
+  // Group by HSK level
+  [1, 2, 3, 4].forEach(hsk => {
+    const lessons = LESSONS.filter(l => l.hsk === hsk);
+    if (lessons.length === 0) return;
+    const og = document.createElement('optgroup');
+    og.label = `JLPT ${JLPT[hsk]} · ${HSK_INFO[hsk].label}（${lessons.length} / ${HSK_INFO[hsk].target}）`;
+    lessons.forEach(l => {
+      const opt = document.createElement('option');
+      opt.value = l.globalIndex;
+      const check = getLessonProgress(l).completed ? '✓ ' : '   ';
+      opt.textContent = `${check}JLPT ${JLPT[l.hsk]} · ${String(l.levelNum).padStart(2,'0')}  —  ${l.theme.ja}`;
+      og.appendChild(opt);
+    });
+    sel.appendChild(og);
+  });
+  sel.value = currentIdx;
+}
+
+function renderDay(animate = false) {
+  const lesson = currentLesson();
+  if (!lesson) return;
+  const card = document.getElementById('lesson-card');
+  if (animate) {
+    card.classList.add('changing');
+    setTimeout(() => { doRender(lesson); card.classList.remove('changing'); }, 200);
+  } else {
+    doRender(lesson);
+  }
+}
+
+function doRender(lesson) {
+  // 홈의 '이어서 하기' / 연속 일수에 기록
+  if (window.LC) {
+    LC.record({
+      href:  'japanese-diary-ko.html',
+      label: 'Journal 일본어',
+      sub:   `제${lesson.levelNum}과 · ${lesson.title.zh}`
+    });
+  }
+  document.getElementById('day-num').textContent = String(lesson.levelNum).padStart(2, '0');
+  const avail = LESSONS.filter(l => l.hsk === lesson.hsk).length;
+  document.getElementById('day-total').textContent = avail;
+  document.getElementById('hsk-text').textContent = `JLPT ${JLPT[lesson.hsk]} · ${HSK_INFO[lesson.hsk].label}`;
+  document.getElementById('theme-zh').textContent = lesson.theme.zh;
+  document.getElementById('theme-ja').textContent = lesson.theme.ja;
+  document.getElementById('lesson-title').textContent = lesson.title.zh;
+  document.getElementById('lesson-subtitle').textContent = lesson.title.ja;
+  document.getElementById('tip-text').textContent = lesson.tip;
+
+  const passage = document.getElementById('passage');
+  passage.innerHTML = '';
+
+  // 한국어 번역을 문말 기호로 나누고, 각 일본어 문장 수에 맞춰 할당(한국어는 마침표 '.' 사용)
+  const jaChunks = (lesson.translation || '')
+    .split(/(?<=[。．.！？!?])/)
+    .map(s => s.trim())
+    .filter(Boolean);
+  let jaIdx = 0;
+
+  lesson.sentences.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'sentence';
+    row.dataset.zh = s.zh;
+    const punctCount = Math.max(1, (s.zh.match(/[。！？!?]/g) || []).length);
+    const jaForRow = jaChunks.slice(jaIdx, jaIdx + punctCount).join('');
+    jaIdx += punctCount;
+    row.innerHTML = `
+      <p class="zh"></p>
+      <p class="pinyin">${colorizePinyin(s.pinyin)}</p>
+      <p class="sentence-ja"></p>
+      <div class="audio-pills">
+        <button class="audio-pill" data-rate="0.95">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          보통
+        </button>
+        <button class="audio-pill" data-rate="0.55">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          느리게
+        </button>
+      </div>
+    `;
+    row.querySelector('.zh').textContent = tx(s.zh);
+    const jaEl = row.querySelector('.sentence-ja');
+    jaEl.textContent = jaForRow;
+    if (!jaForRow) jaEl.style.display = 'none';
+    row.addEventListener('click', e => {
+      if (e.target.closest('.audio-pill')) return;
+      speakSentence(s.zh, 0.95, row);
+    });
+    row.querySelectorAll('.audio-pill').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        speakSentence(s.zh, parseFloat(btn.dataset.rate), row);
+      });
+    });
+    passage.appendChild(row);
+  });
+
+  const vlist = document.getElementById('vocab-list');
+  vlist.innerHTML = '';
+  lesson.vocab.forEach(v => {
+    const zh = document.createElement('div'); zh.className = 'vocab-zh'; zh.textContent = tx(v.zh);
+    const py = document.createElement('div'); py.className = 'vocab-py'; py.innerHTML = colorizePinyin(v.pinyin);
+    const ja = document.createElement('div'); ja.className = 'vocab-ja'; ja.textContent = v.ja;
+    vlist.appendChild(zh); vlist.appendChild(py); vlist.appendChild(ja);
+  });
+
+  const dp = getLessonProgress(lesson);
+  renderDots('read-dots', 5, dp.read, 'read');
+  renderDots('write-dots', 3, dp.written, 'written');
+
+  const btn = document.getElementById('complete-btn');
+  const btnText = document.getElementById('complete-text');
+  if (dp.completed) { btn.classList.add('completed'); btnText.textContent = '완료됨 (클릭해서 취소)'; }
+  else { btn.classList.remove('completed'); btnText.textContent = '오늘의 레슨을 완료하기'; }
+
+  document.getElementById('prev-day').disabled = currentIdx === 0;
+  document.getElementById('next-day').disabled = currentIdx === LESSONS.length - 1;
+  document.getElementById('day-jump').value = currentIdx;
+
+  renderProgress();
+}
+
+function renderDots(containerId, total, current, type) {
+  const c = document.getElementById(containerId);
+  c.innerHTML = '';
+  for (let i = 1; i <= total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i <= current ? ' filled' : '');
+    d.title = `${type === 'read' ? '音読' : '書写'} ${i}回目`;
+    d.addEventListener('click', () => {
+      const lesson = currentLesson();
+      const dp = getLessonProgress(lesson);
+      dp[type] = (dp[type] === i) ? i - 1 : i;
+      setLessonProgress(lesson, dp);
+      renderDay();
+    });
+    c.appendChild(d);
+  }
+}
+
+function applyTheme() {
+  document.body.classList.toggle('dark', theme === 'dark');
+}
+function toggleTheme() {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  progress._theme = theme;
+  saveProgress(progress);
+  applyTheme();
+}
+
+function applyPinyinVisibility() {
+  document.body.classList.toggle('hide-pinyin', !showPinyin);
+  document.getElementById('pinyin-toggle').classList.toggle('active', showPinyin);
+}
+
+function applyTranslationVisibility() {
+  document.body.classList.toggle('hide-translation', !showTranslation);
+  document.getElementById('translation-toggle').classList.toggle('active', showTranslation);
+}
+
+function goToIdx(n, animate = true) {
+  if (n < 0 || n >= LESSONS.length) return;
+  stopAudio();
+  dictationResumeIdx = null;
+  currentIdx = n;
+  progress._currentIdx = currentIdx;
+  saveProgress(progress);
+  renderDay(animate);
+  renderDayJump();
+  clearCanvas();
+  clearTyping();
+}
+
+document.getElementById('prev-day').addEventListener('click', () => goToIdx(currentIdx - 1));
+document.getElementById('next-day').addEventListener('click', () => goToIdx(currentIdx + 1));
+document.getElementById('day-jump').addEventListener('change', e => goToIdx(parseInt(e.target.value)));
+
+document.getElementById('complete-btn').addEventListener('click', () => {
+  const lesson = currentLesson();
+  const dp = getLessonProgress(lesson);
+  const wasCompleted = dp.completed;
+  dp.completed = !dp.completed;
+  // 완료로 전환했을 때만, 다음 실행 시 다음 레슨부터 시작되도록 저장 (마지막 레슨 제외)
+  if (!wasCompleted && currentIdx < LESSONS.length - 1) {
+    progress._currentIdx = currentIdx + 1;
+  }
+  setLessonProgress(lesson, dp);
+  renderDay();
+  renderDayJump();
+});
+
+document.getElementById('reset-btn').addEventListener('click', () => {
+  if (confirm('진행 상황을 모두 리셋하시겠습니까? (되돌릴 수 없습니다)')) {
+    localStorage.removeItem(STORAGE_KEY);
+    progress = {}; currentIdx = 0; showPinyin = true; showTranslation = true; gridMode = 'tianzi';
+    applyPinyinVisibility(); applyTranslationVisibility(); applyGridMode(gridMode);
+    renderDay(); renderDayJump();
+  }
+});
+
+document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+document.getElementById('pinyin-toggle').addEventListener('click', () => {
+  showPinyin = !showPinyin;
+  progress._showPinyin = showPinyin;
+  saveProgress(progress);
+  applyPinyinVisibility();
+});
+
+document.getElementById('translation-toggle').addEventListener('click', () => {
+  showTranslation = !showTranslation;
+  progress._showTranslation = showTranslation;
+  saveProgress(progress);
+  applyTranslationVisibility();
+});
+
+
+document.getElementById('play-all-normal').addEventListener('click', e => {
+  speakAll(document.querySelectorAll('.sentence'), 0.95, e.currentTarget);
+});
+document.getElementById('play-all-slow').addEventListener('click', e => {
+  speakAll(document.querySelectorAll('.sentence'), 0.55, e.currentTarget);
+});
+document.getElementById('stop-audio').addEventListener('click', stopAudio);
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  switch (e.key) {
+    case 'ArrowLeft':  e.preventDefault(); goToIdx(currentIdx - 1); break;
+    case 'ArrowRight': e.preventDefault(); goToIdx(currentIdx + 1); break;
+    case ' ': e.preventDefault();
+      speakAll(document.querySelectorAll('.sentence'), 0.95, document.getElementById('play-all-normal'));
+      break;
+    case 'Escape': e.preventDefault(); stopAudio(); break;
+    case 'p': case 'P': e.preventDefault(); document.getElementById('pinyin-toggle').click(); break;
+    case 'd': case 'D': e.preventDefault(); toggleTheme(); break;
+  }
+});
+
+// ===== Canvas =====
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const writingArea = document.getElementById('writing-area');
+let drawing = false;
+let strokes = [];
+let currentStroke = [];
+
+function fitCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = writingArea.getBoundingClientRect();
+  const targetHeight = Math.max(480, rect.height);
+  canvas.width = rect.width * dpr;
+  canvas.height = targetHeight * dpr;
+  canvas.style.width = rect.width + 'px';
+  canvas.style.height = targetHeight + 'px';
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
+  redraw();
+}
+
+function redraw() {
+  const dpr = window.devicePixelRatio || 1;
+  ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+  const color = document.body.classList.contains('dark') ? '#f1ebde' : '#1a1611';
+  ctx.strokeStyle = color;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = parseInt(document.getElementById('brush-size').value);
+  strokes.forEach(stroke => {
+    if (stroke.length < 2) return;
+    ctx.beginPath();
+    ctx.moveTo(stroke[0].x, stroke[0].y);
+    for (let i = 1; i < stroke.length; i++) ctx.lineTo(stroke[i].x, stroke[i].y);
+    ctx.stroke();
+  });
+}
+
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  const cx = e.touches ? e.touches[0].clientX : e.clientX;
+  const cy = e.touches ? e.touches[0].clientY : e.clientY;
+  return { x: cx - rect.left, y: cy - rect.top };
+}
+
+function drawSegment(prev, cur) {
+  const color = document.body.classList.contains('dark') ? '#f1ebde' : '#1a1611';
+  ctx.strokeStyle = color;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = parseInt(document.getElementById('brush-size').value);
+  ctx.beginPath();
+  ctx.moveTo(prev.x, prev.y);
+  ctx.lineTo(cur.x, cur.y);
+  ctx.stroke();
+}
+
+function startStroke(e) { drawing = true; currentStroke = [getPos(e)]; }
+function moveStroke(e) {
+  if (!drawing) return;
+  const pos = getPos(e);
+  const prev = currentStroke[currentStroke.length - 1];
+  currentStroke.push(pos);
+  drawSegment(prev, pos);
+}
+function endStroke() {
+  if (drawing) {
+    if (currentStroke.length > 1) strokes.push(currentStroke);
+    drawing = false;
+  }
+}
+
+canvas.addEventListener('mousedown', startStroke);
+canvas.addEventListener('mousemove', moveStroke);
+canvas.addEventListener('mouseup', endStroke);
+canvas.addEventListener('mouseleave', endStroke);
+canvas.addEventListener('touchstart', e => { e.preventDefault(); startStroke(e); });
+canvas.addEventListener('touchmove', e => { e.preventDefault(); moveStroke(e); });
+canvas.addEventListener('touchend', e => { e.preventDefault(); endStroke(); });
+
+document.getElementById('clear-canvas').addEventListener('click', clearCanvas);
+document.getElementById('undo-canvas').addEventListener('click', () => { strokes.pop(); redraw(); });
+function clearCanvas() { strokes = []; redraw(); }
+
+function applyGridMode(mode) {
+  writingArea.classList.remove('tianzi', 'grid', 'lined', 'blank');
+  writingArea.classList.add(mode);
+  document.querySelectorAll('.grid-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.mode === mode);
+  });
+}
+document.querySelectorAll('.grid-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    gridMode = t.dataset.mode;
+    progress._gridMode = gridMode;
+    saveProgress(progress);
+    applyGridMode(gridMode);
+  });
+});
+
+// ===== Write mode (canvas / typing) =====
+function applyWriteMode(mode) {
+  document.getElementById('canvas-pane').hidden = (mode !== 'canvas');
+  document.getElementById('typing-pane').hidden = (mode !== 'typing');
+  document.querySelectorAll('.mode-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.mode === mode);
+  });
+  if (mode === 'canvas') {
+    requestAnimationFrame(fitCanvas);
+  } else {
+    updateReferenceText();
+    updateCharCount();
+  }
+}
+document.querySelectorAll('.mode-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    writeMode = t.dataset.mode;
+    progress._writeMode = writeMode;
+    saveProgress(progress);
+    applyWriteMode(writeMode);
+  });
+});
+
+// ===== Typing =====
+const typingInput = document.getElementById('typing-input');
+const charCount = document.getElementById('char-count');
+const diffOutput = document.getElementById('diff-output');
+
+function getLessonText() {
+  const lesson = currentLesson();
+  if (!lesson) return '';
+  return lesson.sentences.map(s => tx(s.zh)).join('\n');
+}
+
+function updateReferenceText() {
+  const lesson = currentLesson();
+  if (!lesson) return;
+  const refEl = document.getElementById('reference-text');
+  const summary = document.getElementById('reference-summary');
+  refEl.innerHTML = '';
+  if (typingSubMode === 'translation') {
+    // 한국어 번역을 문말 기호(。！？)로 나눠 원문과 같이 한 문장씩 줄바꿈으로 표시
+    const parts = (lesson.translation || '')
+      .split(/(?<=[。！？])/)
+      .map(s => s.trim())
+      .filter(Boolean);
+    parts.forEach(s => {
+      const p = document.createElement('p');
+      p.textContent = s;
+      p.style.margin = '0 0 4px';
+      refEl.appendChild(p);
+    });
+    if (summary) summary.textContent = '한국어 번역 표시';
+  } else {
+    lesson.sentences.forEach(s => {
+      const p = document.createElement('p');
+      p.textContent = tx(s.zh);
+      p.style.margin = '0 0 4px';
+      refEl.appendChild(p);
+    });
+    if (summary) summary.textContent = '참고할 원문 표시';
+  }
+}
+
+function applyTypingSubMode(mode) {
+  typingSubMode = mode;
+  const refBlock = document.getElementById('reference-block');
+  const dictCard = document.getElementById('dictation-card');
+  const hint = document.getElementById('typing-hint');
+  const input = document.getElementById('typing-input');
+  document.querySelectorAll('#typing-submode-tabs .grid-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.submode === mode);
+  });
+  if (mode === 'dictation') {
+    refBlock.hidden = true;
+    dictCard.hidden = false;
+    hint.hidden = false;
+    hint.textContent = '아래 버튼으로 듣고 받아써 봅시다. 원문과 번역은 표시되어 있지 않습니다.';
+    input.placeholder = '들은 문장을 적어 보세요…';
+  } else if (mode === 'translation') {
+    refBlock.hidden = false;
+    dictCard.hidden = true;
+    hint.hidden = true;
+    hint.textContent = '';
+    input.placeholder = '번역을 보고 일본어로 적어 보세요…';
+  } else {
+    refBlock.hidden = false;
+    dictCard.hidden = true;
+    hint.hidden = true;
+    hint.textContent = '';
+    input.placeholder = '여기에 베껴 써 보세요…';
+  }
+  updateReferenceText();
+}
+
+document.querySelectorAll('#typing-submode-tabs .grid-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    const m = t.dataset.submode;
+    progress._typingSubMode = m;
+    saveProgress(progress);
+    applyTypingSubMode(m);
+  });
+});
+
+document.getElementById('dictation-play-normal').addEventListener('click', () => {
+  playDictation(0.95);
+});
+document.getElementById('dictation-play-slow').addEventListener('click', () => {
+  playDictation(0.55);
+});
+document.getElementById('dictation-stop').addEventListener('click', stopAudio);
+
+const PUNCT_RE = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/;
+const PUNCT_RE_G = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/g;
+
+function updateCharCount() {
+  const typed = typingInput.value;
+  const original = getLessonText();
+  const typedCount = [...typed].filter(c => !PUNCT_RE.test(c)).length;
+  const originalCount = [...original].filter(c => !PUNCT_RE.test(c)).length;
+  charCount.textContent = `${typedCount} / ${originalCount} 文字`;
+  charCount.classList.toggle('complete', typedCount >= originalCount && typedCount > 0);
+}
+
+function clearTyping() {
+  if (typingInput) {
+    typingInput.value = '';
+    updateReferenceText();
+    updateCharCount();
+    diffOutput.hidden = true;
+    diffOutput.innerHTML = '';
+  }
+}
+
+function computeDiff(typed, original) {
+  // Strip whitespace/punctuation for comparison, but use LCS alignment so
+  // a single dropped char doesn't cascade into "everything after is wrong".
+  const t = [...typed.replace(PUNCT_RE_G, '')];
+  const o = [...original.replace(PUNCT_RE_G, '')];
+  const n = t.length, m = o.length;
+
+  if (n === 0 && m === 0) {
+    return { ops: [], match: 0, wrong: 0, missing: 0, extra: 0, total: 0 };
+  }
+
+  const dp = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+  for (let i = 1; i <= n; i++) {
+    for (let j = 1; j <= m; j++) {
+      if (t[i-1] === o[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+      else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+    }
+  }
+
+  const ops = [];
+  let i = n, j = m;
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && t[i-1] === o[j-1]) {
+      ops.push({ type: 'match', char: t[i-1], oi: j-1 });
+      i--; j--;
+    } else if (j > 0 && (i === 0 || dp[i][j-1] >= dp[i-1][j])) {
+      ops.push({ type: 'missing', char: o[j-1], oi: j-1 });
+      j--;
+    } else {
+      ops.push({ type: 'extra', char: t[i-1] });
+      i--;
+    }
+  }
+  ops.reverse();
+
+  // Pair adjacent missing+extra into a single "wrong" substitution.
+  const merged = [];
+  for (let k = 0; k < ops.length; k++) {
+    const a = ops[k], b = ops[k+1];
+    if (a.type === 'missing' && b && b.type === 'extra') {
+      merged.push({ type: 'wrong', char: b.char, expected: a.char, oi: a.oi });
+      k++;
+    } else if (a.type === 'extra' && b && b.type === 'missing') {
+      merged.push({ type: 'wrong', char: a.char, expected: b.char, oi: b.oi });
+      k++;
+    } else {
+      merged.push(a);
+    }
+  }
+
+  let match = 0, wrong = 0, missing = 0, extra = 0;
+  for (const op of merged) {
+    if (op.type === 'match') match++;
+    else if (op.type === 'wrong') wrong++;
+    else if (op.type === 'missing') missing++;
+    else if (op.type === 'extra') extra++;
+  }
+  return { ops: merged, match, wrong, missing, extra, total: m };
+}
+
+function splitOriginalSentences(original) {
+  // Split keeping the trailing punctuation with each sentence.
+  const sentences = [];
+  let cur = '';
+  for (const c of original) {
+    cur += c;
+    if (/[。！？!?]/.test(c)) {
+      sentences.push(cur);
+      cur = '';
+    }
+  }
+  if (cur.trim()) sentences.push(cur);
+  return sentences;
+}
+
+function renderDiff() {
+  const typed = typingInput.value;
+  const original = getLessonText();
+  if (!typed.trim()) {
+    diffOutput.hidden = false;
+    diffOutput.innerHTML = '<span class="diff-label">비교 결과</span><p style="color:var(--ink-3);font-size:13px;font-style:italic;">타이핑 영역에 문장을 입력한 뒤 비교하세요.</p>';
+    return;
+  }
+  const { ops, match, wrong, missing, extra, total } = computeDiff(typed, original);
+
+  // Split original into sentences; bucket ops by which sentence each op belongs to.
+  const sentences = splitOriginalSentences(original);
+  const sentenceLens = sentences.map(s => [...s.replace(PUNCT_RE_G, '')].length);
+  const cumLens = [];
+  { let acc = 0; for (const l of sentenceLens) { acc += l; cumLens.push(acc); } }
+
+  const buckets = sentences.map(() => []);
+  let lastBucket = 0;
+  for (const op of ops) {
+    let b;
+    if (op.type === 'match' || op.type === 'wrong' || op.type === 'missing') {
+      b = cumLens.findIndex(c => op.oi < c);
+      if (b === -1) b = sentences.length - 1;
+      lastBucket = b;
+    } else {
+      // 'extra' has no original index — attach to the bucket of the surrounding chars.
+      b = lastBucket;
+    }
+    buckets[b].push(op);
+  }
+
+  const linesHtml = sentences.map((origLine, idx) => {
+    const bucket = buckets[idx];
+    const hasErrors = bucket.length === 0 || bucket.some(op => op.type !== 'match');
+    const typedHtml = bucket.length === 0
+      ? '<span class="diff-empty">（未入力）</span>'
+      : bucket.map(op => {
+          if (op.type === 'match') return `<span class="diff-match">${escapeHtml(op.char)}</span>`;
+          if (op.type === 'wrong') return `<span class="diff-wrong"><span class="diff-typed-char">${escapeHtml(op.char)}</span><span class="diff-expect-char">${escapeHtml(op.expected)}</span></span>`;
+          if (op.type === 'missing') return `<span class="diff-missing">${escapeHtml(op.char)}</span>`;
+          if (op.type === 'extra') return `<span class="diff-extra">${escapeHtml(op.char)}</span>`;
+          return '';
+        }).join('');
+    const badge = hasErrors ? '<span class="diff-line-status err">확인 필요</span>' : '<span class="diff-line-status ok">✓ 정답</span>';
+    return `
+      <div class="diff-line ${hasErrors ? 'has-error' : 'is-ok'}">
+        <div class="diff-line-head"><span class="diff-line-label">第${idx + 1}文</span>${badge}</div>
+        <div class="diff-line-orig"><span class="diff-row-label">原文</span>${escapeHtml(origLine)}</div>
+        <div class="diff-line-typed"><span class="diff-row-label">入力</span><span class="diff-row-body">${typedHtml}</span></div>
+      </div>
+    `;
+  }).join('');
+
+  const accuracy = total > 0 ? Math.round((match / total) * 100) : 0;
+  diffOutput.hidden = false;
+  diffOutput.innerHTML = `
+    <span class="diff-label">비교 결과 · 정답률 ${accuracy}%</span>
+    <div class="diff-lines">${linesHtml}</div>
+    <div class="diff-summary">
+      <span>정답 <strong>${match}</strong></span>
+      <span>誤字 <strong>${wrong}</strong></span>
+      <span>누락 <strong>${missing}</strong></span>
+      <span>여분 <strong>${extra}</strong></span>
+    </div>
+  `;
+}
+
+if (typingInput) {
+  typingInput.addEventListener('input', updateCharCount);
+  document.getElementById('compare-btn').addEventListener('click', renderDiff);
+  document.getElementById('clear-typing').addEventListener('click', () => {
+    if (typingInput.value && !confirm('입력 내용을 지우시겠습니까?')) return;
+    clearTyping();
+  });
+}
+
+if ('ontouchstart' in window) {
+  document.body.classList.add('touch');
+}
+
+window.addEventListener('resize', fitCanvas);
+
+applyTheme();
+applyPinyinVisibility();
+applyTranslationVisibility();
+applyGridMode(gridMode);
+applyWriteMode(writeMode);
+applyTypingSubMode(typingSubMode);
+renderDayJump();
+renderDay();
+updateReferenceText();
+updateCharCount();
+fitCanvas();
+</script>
+</body>
+</html>
