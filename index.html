@@ -1276,10 +1276,10 @@
   <!-- ③ For Chinese learners -->
   <section class="panel" data-panel="zh" aria-labelledby="zh-title">
     <div class="panel-head">
-      <div class="kicker">Channel 03 · Coming soon</div>
+      <div class="kicker">Channel 03 · Now playing</div>
       <h2 class="panel-title" id="zh-title">
         <span class="zh">用中文学习</span>
-        <span class="sm">Tools explained in Chinese — for learners of Korean & Japanese · 即将推出</span>
+        <span class="sm">Tools explained in Chinese — for learners of Korean & Japanese</span>
       </h2>
       <p class="panel-desc">用中文学习韩语与日语。</p>
     </div>
@@ -1333,17 +1333,17 @@
         </div>
       </a>
 
-      <div class="tile soon" style="--i:4">
+      <a href="japanese-practice-zh.html" class="tile" style="--i:4">
         <div class="tile-top">
           <span class="tile-num">05</span>
-          <span class="tile-tag">JP · Talk<span class="soon">SOON</span></span>
+          <span class="tile-tag">JP · Talk</span>
         </div>
         <div class="tile-bottom">
           <h3 class="tile-name">Daily 日语</h3>
-          <p class="tile-sub">日语作文练习（即将推出）</p>
-          <span class="tile-cta">即将推出</span>
+          <p class="tile-sub">日语作文练习 · JLPT N5</p>
+          <span class="tile-cta">打开<span class="arrow">→</span></span>
         </div>
-      </div>
+      </a>
     </div>
   </section>
 
@@ -1551,6 +1551,15 @@
   const UPDATE_VISIBLE     = 5;    // 折りたたまず表示する件数
 
   const updates = [
+    {
+      date: "2026-06-03",
+      tag:  { ja: "日语 · Daily", ko: "日语 · Daily", zh: "日语 · Daily" },
+      text: {
+        ja: "Daily 日语（中国語ユーザー向け・日本語作文ドリル JLPT N5）を公開 — 中国語解説＋ふりがな、全14課が生成型で尽きない。これでDaily系の日中韓×他2言語が全コンプリート。",
+        ko: "Daily 日语(중국어 사용자용·일본어 작문 드릴 JLPT N5)를 공개 — 중국어 해설＋후리가나, 전 14과 생성형으로 무한 출제. 이로써 Daily 시리즈가 전부 갖춰짐.",
+        zh: "上线 Daily 日语（面向中文用户·日语写作训练 JLPT N5）— 中文讲解＋假名注音，全14课生成式无限出题。至此 Daily 系列全部组合到齐。"
+      }
+    },
     {
       date: "2026-06-03",
       tag:  { ja: "韩语 · Journal", ko: "韩语 · Journal", zh: "韩语 · Journal" },
