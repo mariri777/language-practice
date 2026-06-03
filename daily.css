@@ -198,11 +198,13 @@ input,textarea,button{ font-family:inherit; color:inherit; }
 #result-area{ margin:0; }
 .result{ margin:12px 0 0; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:24px; box-shadow:var(--shadow); animation:upIn .42s var(--ease-out); }
 @keyframes upIn{ from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);} }
-.verdict{ display:flex; align-items:center; gap:9px; font-family:var(--font-display); font-size:14px; font-weight:800; letter-spacing:-.01em; margin-bottom:18px; }
+.verdict{ display:flex; align-items:center; flex-wrap:wrap; gap:9px; font-family:var(--font-display); font-size:14px; font-weight:800; letter-spacing:-.01em; margin-bottom:18px; }
 .verdict .emoji{ font-size:16px; }
 .verdict-correct{ color:var(--good); }
 .verdict-partial{ color:var(--accent-deep); }
 .verdict-wrong{ color:var(--bad); }
+.verdict-soft{ color:#c8860a; }
+.verdict-soft .verdict-alt{ flex-basis:100%; margin-left:0; }
 .mastered-badge{ margin-left:auto; font-family:var(--font-display); font-size:10px; font-weight:800; letter-spacing:.04em; color:var(--accent); border:1px solid var(--accent); padding:3px 8px; border-radius:5px; }
 .answer-block{ }
 .label{ font-family:var(--font-display); font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-4); margin-bottom:7px; }

@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="daily.css?v=10" />
+  <link rel="stylesheet" href="daily.css?v=11" />
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
 <script src="daily.js?v=1"></script>
@@ -2704,6 +2704,24 @@
       });
       return false;
     }
+    // ── 中間·誠実型: 主語省略・助詞のゆれ・語順を吸収したソフト一致判定 ──
+    const SOFT_SUBJ = ["わたくしは","わたしは","あたしは","じぶんは","ぼくは","おれは","私は","僕は","俺は","自分は","저는","제가","나는","내가"];
+    const SOFT_ADV  = ["少し","ちょっと","とても","すごく","もっと","ずっと","たくさん","ゆっくり","全然","あまり","たぶん","조금","아주","매우","많이","천천히"];
+    const SOFT_PART = ["は","が","を","은","는","이","가","을","를"];
+    function reduceForm(s){
+      s = canonical(s);
+      for (const p of SOFT_SUBJ){ if (s.startsWith(p)){ s = s.slice(p.length); break; } }
+      for (const a of SOFT_ADV){ if (a) s = s.split(a).join(""); }
+      for (const p of SOFT_PART){ s = s.split(p).join(""); }
+      return s;
+    }
+    function checkSoft(user){
+      const r = reduceForm(user);
+      if (!r) return false;
+      if (reduceForm(currentSent.zh) === r) return true;
+      if (currentSent.alts) return currentSent.alts.some(a => { const zh=(a&&typeof a==="object")?a.zh:a; return zh && reduceForm(zh)===r; });
+      return false;
+    }
     function compareAnswer(user, correct) {
       // Render the diff in whichever script the user is viewing.
       const userView = (state && state.traditional && window.S2T) ? window.S2T.convert(user) : user;
@@ -2738,16 +2756,22 @@
 
     function renderResult(user) {
       const cmp = compareAnswer(user, currentSent.zh);
-      const isCorrect = checkAlternatives(user) || cmp.verdict === "correct";
+      const exact = checkAlternatives(user) || cmp.verdict === "correct";
+      const soft = !exact && (cmp.similarity || 0) >= 0.5 && checkSoft(user);
+      const isCorrect = exact || soft;
       // 別解で正解したか（模範解答そのものではない受理）
-      const viaAlt = isCorrect && user && canonical(user) !== canonical(currentSent.zh);
+      const viaAlt = exact && user && canonical(user) !== canonical(currentSent.zh);
 
       let alreadyMastered = masteredList(state.currentCourseId).includes(currentSentIdx);
       let verdictHTML;
       if (isCorrect) {
         const badge = alreadyMastered ? "" : `<span class="mastered-badge">+1 マスター</span>`;
-        const altNote = viaAlt ? `<span class="verdict-alt">あなたの答えも別解として正解です</span>` : "";
-        verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">✓</span>正解！${badge}${altNote}</div>`;
+        if (soft) {
+          verdictHTML = `<div class="verdict verdict-soft"><span class="emoji">✓</span>正解かも${badge}<span class="verdict-alt">模範解答と少し違いますが、合っているかもしれません（下で確認）</span></div>`;
+        } else {
+          const altNote = viaAlt ? `<span class="verdict-alt">あなたの答えも別解として正解です</span>` : "";
+          verdictHTML = `<div class="verdict verdict-correct"><span class="emoji">✓</span>正解！${badge}${altNote}</div>`;
+        }
       } else if (cmp.verdict === "partial") {
         verdictHTML = `<div class="verdict verdict-partial"><span class="emoji">↻</span>惜しい！もう一度挑戦</div>`;
       } else {
