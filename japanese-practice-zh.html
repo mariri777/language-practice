@@ -3064,6 +3064,8 @@
       if (!state.mastered[courseId]) state.mastered[courseId] = [];
       if (!state.mastered[courseId].includes(sentIdx)) {
         state.mastered[courseId].push(sentIdx);
+        // 首页“本月 写出”记录：第一次写出的1句
+        if (window.LC && LC.win) LC.win({ skill: '書', lang: 'ja', source: 'daily' });
       }
       if (isCompleted(courseId) && !state.completedCourses.includes(courseId)) {
         state.completedCourses.push(courseId);

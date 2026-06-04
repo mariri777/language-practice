@@ -7868,6 +7868,8 @@
       if (!state.mastered[courseId]) state.mastered[courseId] = [];
       if (!state.mastered[courseId].includes(sentIdx)) {
         state.mastered[courseId].push(sentIdx);
+        // ホームの「今月 書けた」へ：初めて書けた1文を記録
+        if (window.LC && LC.win) LC.win({ skill: '書', lang: 'ko', source: 'daily' });
       }
       if (isCompleted(courseId) && !state.completedCourses.includes(courseId)) {
         state.completedCourses.push(courseId);
