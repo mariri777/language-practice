@@ -2092,8 +2092,10 @@
       const CMP = [
         {z:"我",p:"wǒ",j:"私"}, {z:"他",p:"tā",j:"彼"}, {z:"我哥哥",p:"wǒ gēge",j:"私の兄"}, {z:"我妹妹",p:"wǒ mèimei",j:"私の妹"}
       ];
-      const CMP_ADJ = [{z:"高",p:"gāo",j:"背が高い"}, {z:"忙",p:"máng",j:"忙しい"}, {z:"瘦",p:"shòu",j:"痩せている"}];
+      const CMP_ADJ = [{z:"高",p:"gāo",j:"背が高い",pred:"背が高いです"}, {z:"忙",p:"máng",j:"忙しい",pred:"忙しいです"}, {z:"瘦",p:"shòu",j:"痩せている",pred:"痩せています"}];
       const AGE_DIFF = [{z:"两岁",p:"liǎng suì",j:"2歳"}, {z:"三岁",p:"sān suì",j:"3歳"}, {z:"五岁",p:"wǔ suì",j:"5歳"}];
+      // 年齢比較は「兄＝必ず年上／妹＝必ず年下」のような矛盾を避けるため、年齢順を含意しない主語のみを使う
+      const CMP_AGE = [{z:"我",p:"wǒ",j:"私"}, {z:"他",p:"tā",j:"彼"}, {z:"她",p:"tā",j:"彼女"}, {z:"我朋友",p:"wǒ péngyou",j:"私の友達"}];
       const REQ = [
         {z:"帮我",p:"bāng wǒ",j:"手伝っ",jw:"（私を）手伝う"}, {z:"等我",p:"děng wǒ",j:"待っ",jw:"（私を）待つ"}, {z:"教我",p:"jiāo wǒ",j:"教え",jw:"（私に）教える"}
       ];
@@ -2110,14 +2112,14 @@
         const a = pick(CMP); let b = pick(CMP); while (b.z === a.z) b = pick(CMP);
         const adj = pick(CMP_ADJ);
         return {
-          ja:`${a.j}は${b.j}より${adj.j}です。`, zh:`${a.z}比${b.z}${adj.z}。`, py:`${a.p} bǐ ${b.p} ${adj.p}.`,
+          ja:`${a.j}は${b.j}より${adj.pred}。`, zh:`${a.z}比${b.z}${adj.z}。`, py:`${a.p} bǐ ${b.p} ${adj.p}.`,
           w:[{z:a.z,p:a.p,j:a.j},{z:"比",p:"bǐ",j:"〜より"},{z:b.z,p:b.p,j:b.j},{z:adj.z,p:adj.p,j:adj.j}],
           g:"<strong>比較「A＋比＋B＋形容詞」</strong>＝「AはBより〜」。形容詞に <code>很</code> は付けない。差は形容詞の後ろ（<code>高一点／高得多</code>）。否定は <code>没有B那么...</code>。",
           alts:[]
         };
       }
       function fCompareAge() {
-        const a = pick(CMP); let b = pick(CMP); while (b.z === a.z) b = pick(CMP);
+        const a = pick(CMP_AGE); let b = pick(CMP_AGE); while (b.z === a.z) b = pick(CMP_AGE);
         const d = pick(AGE_DIFF), older = rnd(2) === 0;
         return {
           ja:`${a.j}は${b.j}より${d.j}${older?"年上":"年下"}です。`, zh:`${a.z}比${b.z}${older?"大":"小"}${d.z}。`, py:`${a.p} bǐ ${b.p} ${older?"dà":"xiǎo"} ${d.p}.`,
