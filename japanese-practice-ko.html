@@ -3344,6 +3344,8 @@
       if (!state.mastered[courseId]) state.mastered[courseId] = [];
       if (!state.mastered[courseId].includes(sentIdx)) {
         state.mastered[courseId].push(sentIdx);
+        // 홈의 '이번 달 쓴 문장'에 기록: 처음 쓴 1문장
+        if (window.LC && LC.win) LC.win({ skill: '書', lang: 'ja', source: 'daily' });
       }
       if (isCompleted(courseId) && !state.completedCourses.includes(courseId)) {
         state.completedCourses.push(courseId);
