@@ -321,14 +321,33 @@
 - grammar: 이 문장에 실제로 나오는 것만 0~4개. 없는 문법을 만들지 말 것. point는 나온 형태 그대로(예: 중국어 「把」「了」「的」, 일본어 「は」「を」「て」). 일반화한 사전 표제어로 만들지 말 것.
 문장: """${text}"""`;
 
+    const sleep = ms => new Promise(r=>setTimeout(r,ms));
+    const ATTEMPTS = 5;            // 1회 + 최대 4회 자동 재시도
+    const RETRYABLE = [408,429,500,502,503,504];
     try{
-      const res = await fetch(P().base+'/chat/completions', {
-        method:'POST',
-        headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
-        body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
-      });
-      const raw = await res.text();
-      if(!res.ok){ throw new Error('API 오류 (HTTP '+res.status+')\n'+raw.slice(0,300)); }
+      let raw;
+      for(let i=0;;i++){
+        let res;
+        try{
+          res = await fetch(P().base+'/chat/completions', {
+            method:'POST',
+            headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
+            body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
+          });
+        }catch(netErr){
+          if(i<ATTEMPTS-1){ $('goLabel').innerHTML='<span class="spin"></span>다시 연결 중… ('+(i+1)+'/'+(ATTEMPTS-1)+')'; await sleep(1200*Math.pow(2,i)); continue; }
+          throw netErr;
+        }
+        raw = await res.text();
+        if(res.ok) break;
+        if(RETRYABLE.includes(res.status) && i<ATTEMPTS-1){
+          const wait = Math.round((1200*Math.pow(2,i)) * (1+Math.random()*0.3));
+          $('goLabel').innerHTML='<span class="spin"></span>혼잡… 재시도 ('+(i+1)+'/'+(ATTEMPTS-1)+')';
+          await sleep(wait); continue;
+        }
+        if(res.status===503) throw new Error('AI가 혼잡합니다(HTTP 503). 자동으로 여러 번 시도했지만 응답이 없었어요. 잠시 후 다시 하거나 문장을 짧게 나눠 보세요. ⚙ 에서 다른 모델(예: gemini-2.5-flash)로 바꾸는 것도 효과적입니다.');
+        throw new Error('API 오류 (HTTP '+res.status+')\n'+raw.slice(0,300));
+      }
       let data;
       try{ data = JSON.parse(JSON.parse(raw).choices[0].message.content); }
       catch(e){ throw new Error('응답 분석에 실패했어요. 다시 시도해 주세요.'); }

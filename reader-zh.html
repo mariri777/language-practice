@@ -321,14 +321,33 @@
 - grammar：只列该句真正出现的，0~4 个。不要编造句中没有的语法。point 用出现的原形（如 韩语「-에」「-지」，日语「は」「を」「て」），不要用泛化的词典词条。
 句子："""${text}"""`;
 
+    const sleep = ms => new Promise(r=>setTimeout(r,ms));
+    const ATTEMPTS = 5;            // 1次 + 最多4次自动重试
+    const RETRYABLE = [408,429,500,502,503,504];
     try{
-      const res = await fetch(P().base+'/chat/completions', {
-        method:'POST',
-        headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
-        body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
-      });
-      const raw = await res.text();
-      if(!res.ok){ throw new Error('API 错误 (HTTP '+res.status+')\n'+raw.slice(0,300)); }
+      let raw;
+      for(let i=0;;i++){
+        let res;
+        try{
+          res = await fetch(P().base+'/chat/completions', {
+            method:'POST',
+            headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
+            body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
+          });
+        }catch(netErr){
+          if(i<ATTEMPTS-1){ $('goLabel').innerHTML='<span class="spin"></span>重新连接中… ('+(i+1)+'/'+(ATTEMPTS-1)+')'; await sleep(1200*Math.pow(2,i)); continue; }
+          throw netErr;
+        }
+        raw = await res.text();
+        if(res.ok) break;
+        if(RETRYABLE.includes(res.status) && i<ATTEMPTS-1){
+          const wait = Math.round((1200*Math.pow(2,i)) * (1+Math.random()*0.3));
+          $('goLabel').innerHTML='<span class="spin"></span>繁忙中… 重试 ('+(i+1)+'/'+(ATTEMPTS-1)+')';
+          await sleep(wait); continue;
+        }
+        if(res.status===503) throw new Error('AI 繁忙（HTTP 503）。自动重试多次仍无响应。请稍后再试，或把文本分短一些。也可在 ⚙ 切换其他模型（如 gemini-2.5-flash）。');
+        throw new Error('API 错误 (HTTP '+res.status+')\n'+raw.slice(0,300));
+      }
       let data;
       try{ data = JSON.parse(JSON.parse(raw).choices[0].message.content); }
       catch(e){ throw new Error('解析回复失败，请重试。'); }
