@@ -357,9 +357,11 @@
   @media (max-width: 720px) {
     /* スマホ：3チャンネルを横幅いっぱいに等分し、常に全部見えるように */
     .tab { flex: 1 1 0; min-width: 0; align-items: center; text-align: center; padding: 13px 4px; gap: 5px; }
-    .tab-meta, .tab-suffix { display: none; }
+    .tab-meta { display: none; }
     .tab-num { font-size: 9px; letter-spacing: 0.14em; }
-    .tab-label { font-size: 18px; letter-spacing: 0.02em; }
+    /* 言語名の下に「ユーザー/사용자/用户」を小さく重ね、“その言語で解説”の意味を保つ */
+    .tab-label { font-size: 18px; letter-spacing: 0.02em; display: flex; flex-direction: column; align-items: center; gap: 2px; line-height: 1.12; }
+    .tab-suffix { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: var(--ink-4); }
   }
 
   .tab-num {
