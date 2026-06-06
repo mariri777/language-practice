@@ -65,6 +65,7 @@
   .word{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
   .word:first-child{border-top:0}
   .word .term{font-size:20px;min-width:0}
+  .word .term .base{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:999px;background:var(--hair);color:var(--ink-3);font-size:11px;font-style:normal;vertical-align:middle}
   .word.zh .term{font-family:var(--font-zh)} .word.ja .term{font-family:var(--font-ja)}
   .word .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:14px}
   .word .mean{flex:1;min-width:0;color:var(--ink-2);font-size:14px}
@@ -84,6 +85,7 @@
   .dict-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
   .dict-item:first-child{border-top:0}
   .dict-item .term{font-size:18px} .dict-item.zh .term{font-family:var(--font-zh)} .dict-item.ja .term{font-family:var(--font-ja)}
+  .dict-item .term .base{display:inline-block;margin-left:7px;padding:1px 7px;border-radius:999px;background:var(--hair);color:var(--ink-3);font-size:11px;vertical-align:middle}
   .dict-item .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:13px}
   .dict-item .mean{flex:1;color:var(--ink-2);font-size:14px}
   .del{background:none;border:0;color:var(--ink-4);cursor:pointer;font-size:16px;padding:4px 8px}
@@ -277,7 +279,7 @@
   function addToDict(w, lang, source){
     const a = loadDict();
     if(a.some(d=>d.term===w.term && d.lang===lang)) return;
-    a.push({ id:'w_'+Math.random().toString(36).slice(2,9), term:w.term, reading:w.reading||'', meaning:w.meaning||'', lang, source:source||'', addedAt:Date.now() });
+    a.push({ id:'w_'+Math.random().toString(36).slice(2,9), term:w.term, base:w.base||'', reading:w.reading||'', meaning:w.meaning||'', lang, source:source||'', addedAt:Date.now() });
     saveDict(a); renderDict();
   }
   function removeFromDict(id){ saveDict(loadDict().filter(d=>d.id!==id)); renderDict(); }
@@ -288,7 +290,7 @@
     if(!a.length){ el.innerHTML = '<div class="dict-empty">아직 없어요. 위에서 문장을 분석하고, 마음에 든 단어를 「＋사전」으로 추가해 보세요.</div>'; return; }
     el.innerHTML = a.map(d=>`
       <div class="dict-item ${d.lang}">
-        <span class="term">${esc(d.term)}</span>
+        <span class="term">${esc(d.term)}${d.base&&d.base!==d.term?`<span class="base">원형 ${esc(d.base)}</span>`:''}</span>
         ${d.reading?`<span class="read">${esc(d.reading)}</span>`:''}
         <span class="mean">${esc(d.meaning)}</span>
         ${d.lang?`<span class="tag">${d.lang==='zh'?'中':'日'}</span>`:''}
@@ -310,7 +312,7 @@
     $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>분석 중…';
 
     const prompt = `당신은 한국어 사용자를 위한 어학 어시스턴트입니다. 입력은 SNS·채팅의 격식 없는 문장일 가능성이 높고, 인터넷 슬랭·줄임말·신조어·방언·감정 표현(예: 중국어 「yyds＝최고」「绝绝子＝대박」, 일본어 「草／www＝ㅋㅋ」 등)이 포함된다는 전제로 분석하세요. 아래 JSON만 반환하세요(앞뒤에 설명 금지).
-{"translation":"자연스러운 한국어 번역. 직역이 아니라 SNS에서의 실제 뉘앙스로","words":[{"term":"문장 속 어구(슬랭·줄임말 포함)","reading":"중국어=병음 / 일본어=요미가나(히라가나)","meaning":"한국어 뜻. 인터넷 용법이 있으면 그 뜻을 우선"}],"grammar":[{"point":"문장에 실제로 나온 조사·어미·문형을 나온 형태 그대로","note":"이 문장에서의 역할을 정확히 1~2문장으로"}]}
+{"translation":"자연스러운 한국어 번역. 직역이 아니라 SNS에서의 실제 뉘앙스로","words":[{"term":"문장에 나온 형태 그대로(활용·변화한 채로. 슬랭·줄임말 포함)","base":"그 단어의 원형·사전 표제형(일본어 동사·형용사는 종지형. 중국어 등 활용하지 않는 단어는 term과 같게)","reading":"중국어=병음 / 일본어=요미가나(히라가나)","meaning":"한국어 뜻. 인터넷 용법이 있으면 그 뜻을 우선"}],"grammar":[{"point":"문장에 실제로 나온 조사·어미·문형을 나온 형태 그대로","note":"이 문장에서의 역할을 정확히 1~2문장으로"}]}
 
 규칙:
 - 슬랭·줄임말·기호 표현도 words에 적극 포함(그게 배우고 싶은 말).
@@ -350,8 +352,9 @@
     $('words').innerHTML = words.map((w,i)=>{
       const wl = lang || detectLang(w.term||'');
       const saved = dictHas(w.term, wl);
+      const showBase = w.base && w.base!==w.term;
       return `<div class="word ${wl}" data-i="${i}">
-        <span class="term">${esc(w.term)}</span>
+        <span class="term">${esc(w.term)}${showBase?`<span class="base">원형 ${esc(w.base)}</span>`:''}</span>
         ${w.reading?`<span class="read">${esc(w.reading)}</span>`:''}
         <span class="mean">${esc(w.meaning)}</span>
         <span class="add"><button class="add-btn ${saved?'saved':''}" data-i="${i}" data-lang="${wl}">${saved?'✓ 추가됨':'＋ 사전'}</button></span>
