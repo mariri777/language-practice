@@ -417,10 +417,10 @@
     position: relative;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 40px 40px 100px;
+    padding: 32px 40px 84px;
     min-height: 50vh;
   }
-  @media (max-width: 720px) { .panel-wrap { padding: 28px 18px 64px; } }
+  @media (max-width: 720px) { .panel-wrap { padding: 22px 18px 56px; } }
 
   .panel { display: none; opacity: 0; transform: translateY(20px); }
   .panel.active {
@@ -670,6 +670,93 @@
   .tile.soon:hover::before { transform: translateX(-120%); }
   .tile.soon:hover .tile-cta { color: var(--ink-4); }
   .tile.soon:hover .tile-cta .arrow { transform: none; }
+
+  /* ============ Tile groups (by target language) ============ */
+  .tile-group { margin-bottom: 34px; }
+  .tile-group:last-child { margin-bottom: 0; }
+  @media (max-width: 720px) { .tile-group { margin-bottom: 24px; } }
+
+  .group-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 16px;
+  }
+  @media (max-width: 720px) { .group-head { gap: 10px; margin: 0 0 11px; } }
+  .group-head::before {
+    content: "";
+    width: 20px; height: 2px;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+  .group-head::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--hairline);
+  }
+  .group-label {
+    font-family: var(--font-mincho);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--ink-2);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  @media (max-width: 720px) { .group-label { font-size: 14px; letter-spacing: 0.06em; } }
+  .group-label.ko { font-family: var(--font-ko); font-weight: 500; }
+  .group-label.zh { font-family: var(--font-zh); }
+
+  /* Chinese panel: use a CJK-SC serif so 简体字 don't fall back unevenly */
+  .panel[data-panel="zh"] .tile-name { font-family: var(--font-zh); }
+  .panel[data-panel="zh"] .tile-sub  { font-family: var(--font-zh); font-style: normal; font-weight: 500; }
+
+  /* ============ Mobile: tiles become compact rows ============ */
+  @media (max-width: 720px) {
+    .tiles { grid-template-columns: 1fr; gap: 8px; }
+    .tile {
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+      min-height: 0;
+      padding: 13px 15px;
+    }
+    .tile-top { flex: 0 0 auto; }
+    .tile-tag { display: none; }
+    .tile-num { font-size: 23px; }
+    .tile-bottom {
+      flex: 1 1 auto;
+      min-width: 0;
+      margin-top: 0;
+      padding-top: 0;
+    }
+    .tile-name { font-size: 16px; }
+    .tile-sub {
+      margin: 2px 0 0;
+      font-size: 12.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tile-cta { display: none; }
+    /* repurpose the bottom accent bar as a tappable chevron on the right */
+    .tile::after {
+      content: "\203A";
+      position: static;
+      order: 3;
+      flex: 0 0 auto;
+      margin-left: auto;
+      width: auto; height: auto;
+      background: none;
+      transform: none;
+      color: var(--ink-4);
+      font-family: var(--font-num);
+      font-size: 24px;
+      line-height: 1;
+    }
+    .tile:hover::after { transform: none; }
+  }
 
   /* ============ Footer ============ */
   footer.site {
@@ -1112,90 +1199,103 @@
       <p class="panel-desc">中国語と韓国語を、日本語の解説で。</p>
     </div>
 
-    <div class="tiles">
-      <a href="chinese-practice.html" class="tile" style="--i:0">
-        <div class="tile-top">
-          <span class="tile-num">01</span>
-          <span class="tile-tag">CN · Talk</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Daily 中国語</h3>
-          <p class="tile-sub">中国語の作文ドリル</p>
-          <span class="tile-cta">Open<span class="arrow">→</span></span>
-        </div>
-      </a>
+    <div class="tile-group">
+      <div class="group-head"><span class="group-label">中国語を学ぶ</span></div>
+      <div class="tiles">
+        <a href="chinese-practice.html" class="tile" style="--i:0">
+          <div class="tile-top">
+            <span class="tile-num">01</span>
+            <span class="tile-tag">CN · Talk</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Daily 中国語</h3>
+            <p class="tile-sub">中国語の作文ドリル</p>
+            <span class="tile-cta">Open<span class="arrow">→</span></span>
+          </div>
+        </a>
 
-      <a href="chinese-diary.html" class="tile" style="--i:1">
-        <div class="tile-top">
-          <span class="tile-num">02</span>
-          <span class="tile-tag">CN · Journal</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Journal 中文</h3>
-          <p class="tile-sub">中国語の短文を書き写す</p>
-          <span class="tile-cta">Open<span class="arrow">→</span></span>
-        </div>
-      </a>
+        <a href="chinese-diary.html" class="tile" style="--i:1">
+          <div class="tile-top">
+            <span class="tile-num">02</span>
+            <span class="tile-tag">CN · Journal</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Journal 中文</h3>
+            <p class="tile-sub">中国語の短文を書き写す</p>
+            <span class="tile-cta">Open<span class="arrow">→</span></span>
+          </div>
+        </a>
 
-      <a href="chinese-lookup.html" class="tile" style="--i:2">
-        <div class="tile-top">
-          <span class="tile-num">03</span>
-          <span class="tile-tag">CN · Tool</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Lookup 中文</h3>
-          <p class="tile-sub">手書きで漢字を検索</p>
-          <span class="tile-cta">Open<span class="arrow">→</span></span>
-        </div>
-      </a>
+        <a href="chinese-lookup.html" class="tile" style="--i:2">
+          <div class="tile-top">
+            <span class="tile-num">03</span>
+            <span class="tile-tag">CN · Tool</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Lookup 中文</h3>
+            <p class="tile-sub">手書きで漢字を検索</p>
+            <span class="tile-cta">Open<span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
+    </div>
 
-      <a href="korean-practice.html" class="tile" style="--i:3">
-        <div class="tile-top">
-          <span class="tile-num">04</span>
-          <span class="tile-tag">KR · Talk</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Daily 한국어</h3>
-          <p class="tile-sub">韓国語の作文ドリル</p>
-          <span class="tile-cta">Open<span class="arrow">→</span></span>
-        </div>
-      </a>
+    <div class="tile-group">
+      <div class="group-head"><span class="group-label">韓国語を学ぶ</span></div>
+      <div class="tiles">
+        <a href="korean-practice.html" class="tile" style="--i:3">
+          <div class="tile-top">
+            <span class="tile-num">01</span>
+            <span class="tile-tag">KR · Talk</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Daily 한국어</h3>
+            <p class="tile-sub">韓国語の作文ドリル</p>
+            <span class="tile-cta">Open<span class="arrow">→</span></span>
+          </div>
+        </a>
 
-      <a href="korean-diary.html" class="tile" style="--i:4">
-        <div class="tile-top">
-          <span class="tile-num">05</span>
-          <span class="tile-tag">KR · Journal</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Journal 한국어</h3>
-          <p class="tile-sub">韓国語の短文を書き写す</p>
-          <span class="tile-cta">Open<span class="arrow">→</span></span>
-        </div>
-      </a>
+        <a href="korean-diary.html" class="tile" style="--i:4">
+          <div class="tile-top">
+            <span class="tile-num">02</span>
+            <span class="tile-tag">KR · Journal</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Journal 한국어</h3>
+            <p class="tile-sub">韓国語の短文を書き写す</p>
+            <span class="tile-cta">Open<span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
+    </div>
 
-      <a href="reader.html" class="tile" style="--i:5">
-        <div class="tile-top">
-          <span class="tile-num">06</span>
-          <span class="tile-tag">CN·KR · Read</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Reader</h3>
-          <p class="tile-sub">貼って中国語・韓国語を読む</p>
-          <span class="tile-cta">Open<span class="arrow">→</span></span>
-        </div>
-      </a>
+    <div class="tile-group">
+      <div class="group-head"><span class="group-label">読む・書く</span></div>
+      <div class="tiles">
+        <a href="reader.html" class="tile" style="--i:5">
+          <div class="tile-top">
+            <span class="tile-num">01</span>
+            <span class="tile-tag">CN·KR · Read</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Reader</h3>
+            <p class="tile-sub">貼って中国語・韓国語を読む</p>
+            <span class="tile-cta">Open<span class="arrow">→</span></span>
+          </div>
+        </a>
 
-      <a href="writer.html" class="tile" style="--i:6">
-        <div class="tile-top">
-          <span class="tile-num">07</span>
-          <span class="tile-tag">CN·KR · Write</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Writer</h3>
-          <p class="tile-sub">書いて「通じるか」をAI判定</p>
-          <span class="tile-cta">Open<span class="arrow">→</span></span>
-        </div>
-      </a>
+        <a href="writer.html" class="tile" style="--i:6">
+          <div class="tile-top">
+            <span class="tile-num">02</span>
+            <span class="tile-tag">CN·KR · Write</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Writer</h3>
+            <p class="tile-sub">書いて「通じるか」をAI判定</p>
+            <span class="tile-cta">Open<span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -1210,66 +1310,79 @@
       <p class="panel-desc">중국어와 일본어를, 한국어 해설로.</p>
     </div>
 
-    <div class="tiles">
-      <a href="chinese-practice-ko.html" class="tile" style="--i:0">
-        <div class="tile-top">
-          <span class="tile-num">01</span>
-          <span class="tile-tag">CN · Talk</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Daily 중국어</h3>
-          <p class="tile-sub ko">중국어 작문 드릴</p>
-          <span class="tile-cta">시작<span class="arrow">→</span></span>
-        </div>
-      </a>
+    <div class="tile-group">
+      <div class="group-head"><span class="group-label ko">중국어를 배우다</span></div>
+      <div class="tiles">
+        <a href="chinese-practice-ko.html" class="tile" style="--i:0">
+          <div class="tile-top">
+            <span class="tile-num">01</span>
+            <span class="tile-tag">CN · Talk</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Daily 중국어</h3>
+            <p class="tile-sub ko">중국어 작문 드릴</p>
+            <span class="tile-cta">시작<span class="arrow">→</span></span>
+          </div>
+        </a>
 
-      <a href="chinese-diary-ko.html" class="tile" style="--i:1">
-        <div class="tile-top">
-          <span class="tile-num">02</span>
-          <span class="tile-tag">CN · Journal</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Journal 중국어</h3>
-          <p class="tile-sub ko">중국어 단문 베껴쓰기</p>
-          <span class="tile-cta">시작<span class="arrow">→</span></span>
-        </div>
-      </a>
+        <a href="chinese-diary-ko.html" class="tile" style="--i:1">
+          <div class="tile-top">
+            <span class="tile-num">02</span>
+            <span class="tile-tag">CN · Journal</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Journal 중국어</h3>
+            <p class="tile-sub ko">중국어 단문 베껴쓰기</p>
+            <span class="tile-cta">시작<span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
+    </div>
 
-      <a href="japanese-practice-ko.html" class="tile" style="--i:2">
-        <div class="tile-top">
-          <span class="tile-num">03</span>
-          <span class="tile-tag">JP · Talk</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Daily 일본어</h3>
-          <p class="tile-sub ko">일본어 작문 드릴 · JLPT N5–N3</p>
-          <span class="tile-cta">시작<span class="arrow">→</span></span>
-        </div>
-      </a>
+    <div class="tile-group">
+      <div class="group-head"><span class="group-label ko">일본어를 배우다</span></div>
+      <div class="tiles">
+        <a href="japanese-practice-ko.html" class="tile" style="--i:2">
+          <div class="tile-top">
+            <span class="tile-num">01</span>
+            <span class="tile-tag">JP · Talk</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Daily 일본어</h3>
+            <p class="tile-sub ko">일본어 작문 드릴 · JLPT N5–N3</p>
+            <span class="tile-cta">시작<span class="arrow">→</span></span>
+          </div>
+        </a>
 
-      <a href="japanese-diary-ko.html" class="tile" style="--i:3">
-        <div class="tile-top">
-          <span class="tile-num">04</span>
-          <span class="tile-tag">JP · Journal</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Journal 일본어</h3>
-          <p class="tile-sub ko">일본어 단문 베껴쓰기</p>
-          <span class="tile-cta">시작<span class="arrow">→</span></span>
-        </div>
-      </a>
+        <a href="japanese-diary-ko.html" class="tile" style="--i:3">
+          <div class="tile-top">
+            <span class="tile-num">02</span>
+            <span class="tile-tag">JP · Journal</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Journal 일본어</h3>
+            <p class="tile-sub ko">일본어 단문 베껴쓰기</p>
+            <span class="tile-cta">시작<span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
+    </div>
 
-      <a href="reader-ko.html" class="tile" style="--i:4">
-        <div class="tile-top">
-          <span class="tile-num">05</span>
-          <span class="tile-tag">CN·JP · Read</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Reader</h3>
-          <p class="tile-sub ko">붙여넣어 중국어·일본어를 읽다</p>
-          <span class="tile-cta">시작<span class="arrow">→</span></span>
-        </div>
-      </a>
+    <div class="tile-group">
+      <div class="group-head"><span class="group-label ko">읽기</span></div>
+      <div class="tiles">
+        <a href="reader-ko.html" class="tile" style="--i:4">
+          <div class="tile-top">
+            <span class="tile-num">01</span>
+            <span class="tile-tag">CN·JP · Read</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Reader</h3>
+            <p class="tile-sub ko">붙여넣어 중국어·일본어를 읽다</p>
+            <span class="tile-cta">시작<span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -1284,66 +1397,79 @@
       <p class="panel-desc">用中文学习韩语与日语。</p>
     </div>
 
-    <div class="tiles">
-      <a href="korean-practice.html?lang=zh" class="tile" style="--i:0">
-        <div class="tile-top">
-          <span class="tile-num">01</span>
-          <span class="tile-tag">KR · Talk</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Daily 韩语</h3>
-          <p class="tile-sub">韩语作文练习</p>
-          <span class="tile-cta">打开<span class="arrow">→</span></span>
-        </div>
-      </a>
+    <div class="tile-group">
+      <div class="group-head"><span class="group-label zh">学日语</span></div>
+      <div class="tiles">
+        <a href="japanese-practice-zh.html" class="tile" style="--i:0">
+          <div class="tile-top">
+            <span class="tile-num">01</span>
+            <span class="tile-tag">JP · Talk</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Daily 日语</h3>
+            <p class="tile-sub">日语作文练习 · JLPT N5–N3</p>
+            <span class="tile-cta">打开<span class="arrow">→</span></span>
+          </div>
+        </a>
 
-      <a href="korean-diary-zh.html" class="tile" style="--i:1">
-        <div class="tile-top">
-          <span class="tile-num">02</span>
-          <span class="tile-tag">KR · Journal</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Journal 韩语</h3>
-          <p class="tile-sub">抄写韩语短句</p>
-          <span class="tile-cta">打开<span class="arrow">→</span></span>
-        </div>
-      </a>
+        <a href="japanese-diary-zh.html" class="tile" style="--i:1">
+          <div class="tile-top">
+            <span class="tile-num">02</span>
+            <span class="tile-tag">JP · Journal</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Journal 日语</h3>
+            <p class="tile-sub">抄写日语短句</p>
+            <span class="tile-cta">打开<span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
+    </div>
 
-      <a href="japanese-practice-zh.html" class="tile" style="--i:2">
-        <div class="tile-top">
-          <span class="tile-num">03</span>
-          <span class="tile-tag">JP · Talk</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Daily 日语</h3>
-          <p class="tile-sub">日语作文练习 · JLPT N5–N3</p>
-          <span class="tile-cta">打开<span class="arrow">→</span></span>
-        </div>
-      </a>
+    <div class="tile-group">
+      <div class="group-head"><span class="group-label zh">学韩语</span></div>
+      <div class="tiles">
+        <a href="korean-practice.html?lang=zh" class="tile" style="--i:2">
+          <div class="tile-top">
+            <span class="tile-num">01</span>
+            <span class="tile-tag">KR · Talk</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Daily 韩语</h3>
+            <p class="tile-sub">韩语作文练习</p>
+            <span class="tile-cta">打开<span class="arrow">→</span></span>
+          </div>
+        </a>
 
-      <a href="japanese-diary-zh.html" class="tile" style="--i:3">
-        <div class="tile-top">
-          <span class="tile-num">04</span>
-          <span class="tile-tag">JP · Journal</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Journal 日语</h3>
-          <p class="tile-sub">抄写日语短句</p>
-          <span class="tile-cta">打开<span class="arrow">→</span></span>
-        </div>
-      </a>
+        <a href="korean-diary-zh.html" class="tile" style="--i:3">
+          <div class="tile-top">
+            <span class="tile-num">02</span>
+            <span class="tile-tag">KR · Journal</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Journal 韩语</h3>
+            <p class="tile-sub">抄写韩语短句</p>
+            <span class="tile-cta">打开<span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
+    </div>
 
-      <a href="reader-zh.html" class="tile" style="--i:4">
-        <div class="tile-top">
-          <span class="tile-num">05</span>
-          <span class="tile-tag">KR·JP · Read</span>
-        </div>
-        <div class="tile-bottom">
-          <h3 class="tile-name">Reader</h3>
-          <p class="tile-sub">粘贴韩语·日语即读</p>
-          <span class="tile-cta">打开<span class="arrow">→</span></span>
-        </div>
-      </a>
+    <div class="tile-group">
+      <div class="group-head"><span class="group-label zh">阅读</span></div>
+      <div class="tiles">
+        <a href="reader-zh.html" class="tile" style="--i:4">
+          <div class="tile-top">
+            <span class="tile-num">01</span>
+            <span class="tile-tag">KR·JP · Read</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Reader</h3>
+            <p class="tile-sub">粘贴韩语·日语即读</p>
+            <span class="tile-cta">打开<span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -1552,12 +1678,12 @@
 
   const updates = [
     {
-      date: "2026-06-04",
-      tag:  { ja: "トップ", ko: "トップ", zh: "トップ" },
+      date: "2026-06-06",
+      tag:  { ja: "トップ", ko: "홈", zh: "首页" },
       text: {
-        ja: "トップのツール一覧を整理 — 各タブで同じ学習言語の Daily と Journal を隣り合わせにグループ化し、Reader・Writer を末尾にそろえて並び順を3タブで統一。",
-        ko: "홈의 도구 목록 정리 — 각 탭에서 같은 학습 언어의 Daily와 Journal을 나란히 묶고, Reader·Writer를 끝에 모아 3개 탭의 순서를 통일.",
-        zh: "整理首页工具列表 — 各标签页中把同一学习语言的 Daily 与 Journal 相邻分组，Reader·Writer 统一置于末尾，三个标签顺序一致。"
+        ja: "トップを見やすく整理 — 各タブを「中国語を学ぶ／韓国語を学ぶ／読む・書く」のように学習言語ごとのセクションに分け、スマホは一覧しやすい横長カードに。中文表示のフォントも調整。",
+        ko: "홈을 보기 좋게 정리 — 각 탭을 ‘중국어를 배우다／일본어를 배우다／읽기’처럼 학습 언어별 섹션으로 나누고, 모바일은 한눈에 보이는 가로형 카드로. 중국어 표시 폰트도 조정.",
+        zh: "首页重新整理更易读 — 各标签页按学习语言分区（学日语／学韩语／阅读），手机改为一目了然的横向卡片，并调整了中文显示字体。"
       }
     },
     {
