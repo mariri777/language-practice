@@ -65,6 +65,7 @@
   .word{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
   .word:first-child{border-top:0}
   .word .term{font-size:20px;min-width:0}
+  .word .term .base{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:999px;background:var(--hair);color:var(--ink-3);font-size:11px;font-style:normal;vertical-align:middle}
   .word.ko .term{font-family:var(--font-ko)} .word.ja .term{font-family:var(--font-ja)}
   .word .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:14px}
   .word .mean{flex:1;min-width:0;color:var(--ink-2);font-size:14px}
@@ -84,6 +85,7 @@
   .dict-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
   .dict-item:first-child{border-top:0}
   .dict-item .term{font-size:18px} .dict-item.ko .term{font-family:var(--font-ko)} .dict-item.ja .term{font-family:var(--font-ja)}
+  .dict-item .term .base{display:inline-block;margin-left:7px;padding:1px 7px;border-radius:999px;background:var(--hair);color:var(--ink-3);font-size:11px;vertical-align:middle}
   .dict-item .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:13px}
   .dict-item .mean{flex:1;color:var(--ink-2);font-size:14px}
   .del{background:none;border:0;color:var(--ink-4);cursor:pointer;font-size:16px;padding:4px 8px}
@@ -277,7 +279,7 @@
   function addToDict(w, lang, source){
     const a = loadDict();
     if(a.some(d=>d.term===w.term && d.lang===lang)) return;
-    a.push({ id:'w_'+Math.random().toString(36).slice(2,9), term:w.term, reading:w.reading||'', meaning:w.meaning||'', lang, source:source||'', addedAt:Date.now() });
+    a.push({ id:'w_'+Math.random().toString(36).slice(2,9), term:w.term, base:w.base||'', reading:w.reading||'', meaning:w.meaning||'', lang, source:source||'', addedAt:Date.now() });
     saveDict(a); renderDict();
   }
   function removeFromDict(id){ saveDict(loadDict().filter(d=>d.id!==id)); renderDict(); }
@@ -288,7 +290,7 @@
     if(!a.length){ el.innerHTML = '<div class="dict-empty">还没有内容。在上面解析文本，然后用「＋词典」添加想记的词吧。</div>'; return; }
     el.innerHTML = a.map(d=>`
       <div class="dict-item ${d.lang}">
-        <span class="term">${esc(d.term)}</span>
+        <span class="term">${esc(d.term)}${d.base&&d.base!==d.term?`<span class="base">原形 ${esc(d.base)}</span>`:''}</span>
         ${d.reading?`<span class="read">${esc(d.reading)}</span>`:''}
         <span class="mean">${esc(d.meaning)}</span>
         ${d.lang?`<span class="tag">${d.lang==='ko'?'韩':'日'}</span>`:''}
@@ -310,7 +312,7 @@
     $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>解析中…';
 
     const prompt = `你是面向中文母语者的语言助手。输入很可能是社交媒体/聊天的口语文本，可能包含网络流行语·缩写·新词·方言·情绪表达（例如 韩语「ㅋㅋ＝哈哈」「ㅠㅠ＝哭」，日语「草／www＝哈哈」等），请据此分析。只返回下面的 JSON（前后不要任何说明）：
-{"translation":"自然的中文翻译。不要直译，按社交媒体里的真实语气","words":[{"term":"句中的词语（含流行语·缩写）","reading":"韩语=罗马音 / 日语=假名读音","meaning":"中文意思。有网络用法时优先"}],"grammar":[{"point":"句中实际出现的助词·词尾·句型，按出现的原形","note":"在该句中的作用，用1~2句准确说明"}]}
+{"translation":"自然的中文翻译。不要直译，按社交媒体里的真实语气","words":[{"term":"句中出现的原样形态（含活用·变形，流行语·缩写也包含）","base":"该词的原形·词典词条形（日语动词·形容词用终止形，韩语用言用「-다」形；中文等不活用的词与 term 相同即可）","reading":"韩语=罗马音 / 日语=假名读音","meaning":"中文意思。有网络用法时优先"}],"grammar":[{"point":"句中实际出现的助词·词尾·句型，按出现的原形","note":"在该句中的作用，用1~2句准确说明"}]}
 
 规则：
 - 流行语·缩写·符号表达也要积极放进 words（那才是想学的词）。
@@ -349,8 +351,9 @@
     $('words').innerHTML = words.map((w,i)=>{
       const wl = lang || detectLang(w.term||'');
       const saved = dictHas(w.term, wl);
+      const showBase = w.base && w.base!==w.term;
       return `<div class="word ${wl}" data-i="${i}">
-        <span class="term">${esc(w.term)}</span>
+        <span class="term">${esc(w.term)}${showBase?`<span class="base">原形 ${esc(w.base)}</span>`:''}</span>
         ${w.reading?`<span class="read">${esc(w.reading)}</span>`:''}
         <span class="mean">${esc(w.meaning)}</span>
         <span class="add"><button class="add-btn ${saved?'saved':''}" data-i="${i}" data-lang="${wl}">${saved?'✓ 已添加':'＋ 词典'}</button></span>
