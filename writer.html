@@ -30,9 +30,7 @@
 
   h1{font-family:var(--font-mincho);font-size:clamp(26px,5vw,38px);font-weight:400;letter-spacing:.04em;margin:8px 0 2px}
   h1 .dot{color:var(--red);font-family:var(--font-num);font-style:italic}
-  .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 10px}
-  .scorechip{display:inline-flex;align-items:center;gap:7px;background:var(--green-soft);color:var(--green);border:1px solid rgba(47,124,94,.3);border-radius:20px;padding:4px 13px;font-size:12.5px;font-weight:700;margin:0 0 18px}
-  .scorechip b{font-family:var(--font-num);font-style:italic;font-size:16px;font-weight:700}
+  .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 18px}
 
   .card{background:var(--bg-elevated);border:1px solid var(--hair);border-radius:14px;padding:18px;margin-bottom:16px}
   label{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4);margin:0 0 7px}
@@ -73,8 +71,6 @@
   .verdict.off   .vmark{background:var(--ink-4)}
   .verdict .vtext{font-weight:700;font-size:16px}
   .verdict.ok .vtext{color:var(--green)} .verdict.almost .vtext{color:var(--gold)} .verdict.off .vtext{color:var(--ink-3)}
-  .win-add{margin-left:auto;font-family:var(--font-num);font-style:italic;color:var(--green);font-size:15px;font-weight:700;opacity:0;transition:opacity .4s}
-  .win-add.show{opacity:1}
   .comment{color:var(--ink-2);font-size:14.5px;line-height:1.7;margin:0 0 4px}
 
   .sec-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin:18px 0 8px;display:flex;align-items:center;gap:10px}
@@ -128,7 +124,6 @@
 <div class="wrap">
   <h1>書いてみる<span class="dot">.</span></h1>
   <p class="lead">言いたいことを、その言語で書いてみる。AIが「通じるか」を判定して、もっと自然な言い方も教えてくれます。</p>
-  <div class="scorechip">✍️ 今月 自分の力で書けた文 <b id="monthCount">0</b></div>
 
   <!-- settings -->
   <div class="card" id="settings">
@@ -192,7 +187,6 @@
       <div class="verdict" id="verdict">
         <span class="vmark" id="vmark"></span>
         <span class="vtext" id="vtext"></span>
-        <span class="win-add" id="winAdd">書けた +1</span>
       </div>
       <p class="comment" id="comment"></p>
 
@@ -252,13 +246,6 @@
     b.addEventListener('click', ()=>{ TL=b.dataset.lang; localStorage.setItem(LANG_K,TL); syncLang(); });
   });
   syncLang();
-
-  /* ---------- score chip ---------- */
-  function refreshScore(){
-    try{ $('monthCount').textContent = LC.winCount({skill:'書', since:LC.monthStart()}); }
-    catch{ $('monthCount').textContent = '0'; }
-  }
-  refreshScore();
 
   /* ---------- settings ---------- */
   function fillModels(ids){
@@ -476,15 +463,12 @@
       });
     });
 
-    // 「書けた +1」— 通じた(ok)ときだけ、1意図1回まで
-    const winAdd = $('winAdd'); winAdd.classList.remove('show');
+    // 「書けた」を裏で記録（通じた=okのとき、1意図1回まで。画面には出さない）
     if(v==='ok'){
       const sig = TL+'|'+$('intent').value.trim();
       if(sig !== render._lastWinSig){
         render._lastWinSig = sig;
         try{ LC.win({ skill:'書', lang:TL, source:'writer' }); }catch{}
-        refreshScore();
-        winAdd.classList.add('show');
       }
     }
 

@@ -1075,8 +1075,6 @@
 
   .rec-streak .rec-num { color: var(--red); }
   .rec-streak .ico { font-size: 16px; }
-  .rec-wrote .rec-num { color: #2f7c5e; }
-  .rec-wrote .ico { font-size: 15px; }
 
   .rec-cal {
     display: flex;
@@ -1163,7 +1161,6 @@
 
   <div class="record">
     <div class="rec-stat rec-streak" id="rec-streak" hidden><span class="ico">🔥</span><span class="rec-num" id="streak-num">0</span><span class="rec-label">日連続</span></div>
-    <div class="rec-stat rec-wrote" id="rec-wrote" hidden><span class="ico">✍️</span><span class="rec-num" id="wrote-num">0</span><span class="rec-label">書けた / 今月</span></div>
     <div class="rec-cal">
       <span class="rec-cal-label">今月</span>
       <div class="cal-dots" id="cal-dots"></div>
@@ -1539,18 +1536,6 @@
       streakWrap.hidden = false;
     } else {
       streakWrap.hidden = true;
-    }
-
-    // 今月「書けた」文の数（能力の手応え）
-    const wroteWrap = document.getElementById('rec-wrote');
-    if (wroteWrap && LC.winCount) {
-      const w = LC.winCount({ skill: '書', since: LC.monthStart() });
-      if (w >= 1) {
-        document.getElementById('wrote-num').textContent = w;
-        wroteWrap.hidden = false;
-      } else {
-        wroteWrap.hidden = true;
-      }
     }
 
     // 今月カレンダー（活動日に点）
