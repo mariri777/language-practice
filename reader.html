@@ -300,7 +300,22 @@
   }
   renderDict();
 
-  /* ---------- analyze (Groq) ---------- */
+  /* ---------- 長文を文単位で区切る（lookbehind不使用＝旧端末でも安全） ---------- */
+  function splitIntoChunks(text, max){
+    const enders = '。．.!?！？…\n';
+    const sents = []; let s='';
+    for(const ch of text){ s+=ch; if(enders.indexOf(ch)>=0){ sents.push(s); s=''; } }
+    if(s) sents.push(s);
+    const chunks = []; let buf='';
+    for(const p of sents){
+      if(buf && (buf.length+p.length) > max){ chunks.push(buf); buf=p; }
+      else buf += p;
+    }
+    if(buf.trim()) chunks.push(buf);
+    return chunks.length ? chunks : [text];
+  }
+
+  /* ---------- analyze ---------- */
   async function analyze(){
     const text = $('input').value.trim();
     $('err').textContent='';
@@ -310,16 +325,6 @@
     const key = getKey();
     $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>解析中…';
 
-    const prompt = `あなたは日本語話者向けの語学アシスタントです。入力はSNS・チャットのくだけた文の可能性が高く、ネットスラング・略語・新語・方言・感情表現（例: 韓国語の「ㅋㅋ＝笑」「ㅠㅠ＝泣」、中国語の「yyds＝最高」「绝绝子＝神」など）が含まれる前提で解析してください。下記JSONのみを返す（前後に説明文を付けない）。
-{"translation":"自然な日本語訳。文字どおりでなく、SNSでの実際のニュアンスで訳す","words":[{"term":"文中に現れた形そのまま（活用・変化したまま。スラング・略語も含める）","base":"その語の原形・辞書見出し形（韓国語の用言は「-다」終止形、日本語の動詞・形容詞は終止形。中国語など活用しない語は term と同じでよい）","reading":"中国語=ピンイン / 韓国語=ローマ字発音","meaning":"日本語の意味。ネット用法があればその意味を優先"}],"grammar":[{"point":"文中に実際に現れた助詞・語尾・文型を、現れた形そのままで","note":"この文での働きを正確に1〜2文で"}]}
-
-ルール：
-- スラング・略語・記号的表現も words に積極的に含める（それこそ学びたい語）。
-- 意味に確信が持てない語は、meaning の先頭に「(推測)」と付け、分かる範囲で書く。知ったかぶりで断定しない。
-- 固有名詞・完全に自明な語は省く。words は5〜12個目安。
-- grammar：この文に本当に出てくるものだけ、0〜4個。文に存在しない文法を作らない。point は文中に出た形そのまま（例：韓国語「-에」「게（것이の縮約）」「-지」、中国語「把」「了」「的」）。一般化した辞書見出しにしない。別々の助詞を1つにまとめない。
-文："""${text}"""`;
-
     const sleep = ms => new Promise(r=>setTimeout(r,ms));
     const RETRYABLE = [408,429,500,502,503,504];
     // 選んだモデルが混雑(503など)で返らないとき、軽い別モデルへ自動で切替える
@@ -327,52 +332,82 @@
     const models = provider()==='gemini'
       ? [...new Set([chosen,'gemini-2.0-flash','gemini-flash-latest','gemini-2.5-flash'])]
       : [chosen];
-    const callOnce = async (mdl) => {
+
+    const buildPrompt = (chunk) => `あなたは日本語話者向けの語学アシスタントです。入力はSNS・チャットのくだけた文の可能性が高く、ネットスラング・略語・新語・方言・感情表現（例: 韓国語の「ㅋㅋ＝笑」「ㅠㅠ＝泣」、中国語の「yyds＝最高」「绝绝子＝神」など）が含まれる前提で解析してください。下記JSONのみを返す（前後に説明文を付けない）。
+{"translation":"自然な日本語訳。文字どおりでなく、SNSでの実際のニュアンスで訳す","words":[{"term":"文中に現れた形そのまま（活用・変化したまま。スラング・略語も含める）","base":"その語の原形・辞書見出し形（韓国語の用言は「-다」終止形、日本語の動詞・形容詞は終止形。中国語など活用しない語は term と同じでよい）","reading":"中国語=ピンイン / 韓国語=ローマ字発音","meaning":"日本語の意味。ネット用法があればその意味を優先"}],"grammar":[{"point":"文中に実際に現れた助詞・語尾・文型を、現れた形そのままで","note":"この文での働きを正確に1〜2文で"}]}
+
+ルール：
+- スラング・略語・記号的表現も words に積極的に含める（それこそ学びたい語）。
+- 意味に確信が持てない語は、meaning の先頭に「(推測)」と付け、分かる範囲で書く。知ったかぶりで断定しない。
+- 固有名詞・完全に自明な語は省く。words は5〜12個目安。
+- grammar：この文に本当に出てくるものだけ、0〜4個。文に存在しない文法を作らない。point は文中に出た形そのまま（例：韓国語「-에」「게（것이の縮約）」「-지」、中国語「把」「了」「的」）。一般化した辞書見出しにしない。別々の助詞を1つにまとめない。
+文："""${chunk}"""`;
+
+    const callOnce = (prompt, mdl) => {
       const ctl = new AbortController();
       const to = setTimeout(()=>ctl.abort(), 45000);   // 45秒で打ち切り（無反応対策）
-      try{
-        const res = await fetch(P().base+'/chat/completions', {
-          method:'POST', signal: ctl.signal,
-          headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
-          body: JSON.stringify({ model: mdl, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
-        });
-        const raw = await res.text();
-        return { ok: res.ok, status: res.status, raw };
-      } finally { clearTimeout(to); }
+      return fetch(P().base+'/chat/completions', {
+        method:'POST', signal: ctl.signal,
+        headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
+        body: JSON.stringify({ model: mdl, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
+      }).then(async res => ({ ok: res.ok, status: res.status, raw: await res.text() }))
+        .finally(()=>clearTimeout(to));
     };
-    try{
+
+    // 1区間を解析（混雑時は軽い別モデルへ自動切替）。失敗時は throw。
+    async function analyzeChunk(chunkText, tag){
+      const prompt = buildPrompt(chunkText);
       let raw, lastStatus = 0;
       outer:
       for(let mi=0; mi<models.length; mi++){
         const mdl = models[mi], switched = mi>0;
         for(let i=0;i<2;i++){           // モデルごとに最大2回
           let r;
-          try{ r = await callOnce(mdl); }
-          catch(netErr){               // タイムアウト/通信断 → このモデルは諦め次へ
-            lastStatus = 0; break;
-          }
+          try{ r = await callOnce(prompt, mdl); }
+          catch(netErr){ lastStatus = 0; break; }   // タイムアウト/通信断 → 次のモデルへ
           if(r.ok){ raw = r.raw; break outer; }
           lastStatus = r.status;
           if(RETRYABLE.includes(r.status)){
-            $('goLabel').innerHTML = '<span class="spin"></span>' + (switched ? ('別モデルで解析中… ('+mdl+')') : ('混雑中… 再試行 ('+(i+1)+'/2)'));
+            $('goLabel').innerHTML = '<span class="spin"></span>' + tag + (switched ? ('別モデル… ('+mdl+')') : ('混雑中… 再試行'));
             if(i<1){ await sleep(Math.round(800*Math.pow(2,i)*(1+Math.random()*0.3))); continue; }
             continue outer;            // 2回ダメなら次のモデルへ
           }
-          // 認証エラーや、ユーザー自身が選んだモデルでの失敗は停止。
-          // フォールバックで選んだモデルが非対応(404等)なら次のモデルへ。
           if(mi===0 || [401,403].includes(r.status)) throw new Error('API エラー (HTTP '+r.status+')\n'+r.raw.slice(0,300));
-          continue outer;
+          continue outer;              // フォールバック先が非対応(404等)なら次のモデルへ
         }
       }
       if(raw===undefined){
-        throw new Error(lastStatus===503
+        const e = new Error(lastStatus===503
           ? 'AI が混雑しています（HTTP 503）。軽いモデルに切替えても返りませんでした。少し時間をおくか、文章を短く分けて試してください。⚙ で DeepSeek（要チャージ・安定）に替えるのも有効です。'
           : 'AI から応答がありませんでした'+(lastStatus?'（HTTP '+lastStatus+'）':'')+'。少し待って再試行してください。');
+        e.skippable = true; throw e;
       }
-      let data;
-      try{ data = JSON.parse(JSON.parse(raw).choices[0].message.content); }
-      catch(e){ throw new Error('返答の解析に失敗しました。もう一度試してください。'); }
-      render(text, data);
+      try{ return JSON.parse(JSON.parse(raw).choices[0].message.content); }
+      catch(e){ const er=new Error('返答の解析に失敗しました。'); er.skippable=true; throw er; }
+    }
+
+    try{
+      const chunks = splitIntoChunks(text, 240);
+      if(chunks.length===1){
+        render(text, await analyzeChunk(chunks[0], ''));
+      } else {
+        // 長文 → 区間ごとに順番に解析して結果を統合
+        const trans=[], words=[], grams=[]; const seenW=new Set(), seenG=new Set();
+        let failed=0;
+        for(let c=0;c<chunks.length;c++){
+          const tag = '('+(c+1)+'/'+chunks.length+') ';
+          $('goLabel').innerHTML = '<span class="spin"></span>解析中… '+tag;
+          let data;
+          try{ data = await analyzeChunk(chunks[c], tag); }
+          catch(e){ if(e.skippable){ failed++; continue; } throw e; }
+          if(data.translation) trans.push(data.translation);
+          (Array.isArray(data.words)?data.words:[]).forEach(w=>{ const k=(w.term||'')+'¦'+(w.base||''); if(w.term && !seenW.has(k)){ seenW.add(k); words.push(w); } });
+          (Array.isArray(data.grammar)?data.grammar:[]).forEach(g=>{ const k=g.point||''; if(g.point && !seenG.has(k)){ seenG.add(k); grams.push(g); } });
+        }
+        if(!trans.length && !words.length) throw new Error('解析できませんでした'+(failed?'（混雑などで全'+chunks.length+'区間が失敗）':'')+'。少し待つか、文章を短くして試してください。');
+        render(text, { translation: trans.join(' '), words, grammar: grams });
+        if(failed) $('err').textContent = '※ 長文のため'+chunks.length+'区間に分けて解析しました。うち'+failed+'区間は混雑で取得できませんでした（時間をおくと全部取れます）。';
+      }
     }catch(err){
       const m = (err&&err.message)||String(err);
       $('err').textContent = /Failed to fetch|NetworkError|Load failed/i.test(m)
