@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TTS テスト — 聞き取りツールの声確認</title>
+<style>
+  :root{ --bg:#f1e8d2; --card:#faf2dc; --ink:#14100a; --ink3:#6a604e; --red:#8a2438; --rule:#c1b491; --green:#2f7c5e; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
+       font-size:15px;line-height:1.6;padding:18px 16px 80px;max-width:640px;margin:0 auto}
+  h1{font-size:20px;margin:4px 0 4px}
+  .note{font-size:12.5px;color:var(--ink3);margin:0 0 16px}
+  .card{background:var(--card);border:1px solid rgba(20,16,10,.1);border-radius:12px;padding:14px;margin-bottom:14px}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;color:#a59881;text-transform:uppercase;margin:0 0 6px}
+  select,input[type=text]{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:#fff}
+  .row{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+  .btn{font:inherit;font-weight:700;padding:10px 16px;border:0;border-radius:8px;background:var(--red);color:#fff;cursor:pointer}
+  .btn.sm{padding:7px 12px;font-size:13px}
+  .btn.ghost{background:transparent;color:var(--red);border:1px solid var(--red)}
+  .sent{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid rgba(20,16,10,.08)}
+  .sent:first-child{border-top:0}
+  .sent .zh{font-size:18px;font-family:"Songti SC","Noto Serif SC",serif}
+  .sent .ja{flex:1;color:var(--ink3);font-size:12.5px}
+  .sent button{flex-shrink:0}
+  .meta{font-size:12.5px;color:var(--ink3);margin-top:8px;white-space:pre-wrap}
+  .rate{display:flex;align-items:center;gap:10px;margin-top:10px}
+  .rate input{flex:1}
+  .rate b{font-variant-numeric:tabular-nums;min-width:40px;text-align:right}
+  .ok{color:var(--green);font-weight:700}
+  .warn{color:var(--red);font-weight:700}
+</style>
+</head>
+<body>
+<h1>🔊 聞き取りツールの声テスト</h1>
+<p class="note">この端末の内蔵音声で中国語がどう聞こえるかの確認用。▶を押して、声調が自然か・聞き取り練習に使えそうかをチェックしてください（iPhoneは最初のタップで音が出ます。マナーモードだと鳴らないことがあります）。</p>
+
+<div class="card">
+  <label>声（この端末で使える中国語の声）</label>
+  <select id="voice"></select>
+  <div class="rate">
+    <span style="font-size:12px;color:var(--ink3)">速さ</span>
+    <input type="range" id="rate" min="0.5" max="1.2" step="0.1" value="0.9">
+    <b id="rateVal">0.9x</b>
+  </div>
+  <div class="meta" id="meta">声を読み込み中…</div>
+</div>
+
+<div class="card">
+  <label>サンプル文（HSK1〜2 / Daily と同じレベル感）</label>
+  <div id="sents"></div>
+</div>
+
+<div class="card">
+  <label>自由入力（好きな中国語で試す）</label>
+  <input type="text" id="custom" value="我想去中国旅游，你呢？">
+  <div class="row">
+    <button class="btn" id="playCustom">▶ 再生</button>
+    <button class="btn ghost sm" id="stop">■ 停止</button>
+  </div>
+</div>
+
+<div class="card">
+  <label>おまけ：韓国語の声（将来用）</label>
+  <select id="voiceKo"></select>
+  <div class="row"><button class="btn sm" id="playKo">▶ 안녕하세요. 주말에 뭐 했어요?</button></div>
+  <div class="meta" id="metaKo"></div>
+</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const SENTS = [
+    { zh:'你好！你叫什么名字？',        ja:'こんにちは！お名前は？' },
+    { zh:'我喜欢喝咖啡，不喜欢喝茶。',  ja:'コーヒーは好きだけど、お茶は好きじゃない。' },
+    { zh:'明天我们一起去看电影吧。',    ja:'明日いっしょに映画を見に行こうよ。' },
+    { zh:'这个多少钱？有点儿贵。',      ja:'これはいくら？ちょっと高いね。' },
+    { zh:'我学了三个月汉语了。',        ja:'中国語を3か月勉強しています。' }
+  ];
+
+  let voicesZh = [], voicesKo = [];
+  function loadVoices(){
+    const all = speechSynthesis.getVoices();
+    if(!all.length) return;
+    // 普通話(zh-CN)を先頭に、台湾・広東などは後ろへ
+    voicesZh = all.filter(v=>/^zh([-_]|$)/i.test(v.lang))
+                  .sort((a,b)=>(/CN/i.test(b.lang)?1:0)-(/CN/i.test(a.lang)?1:0));
+    voicesKo = all.filter(v=>/^ko([-_]|$)/i.test(v.lang));
+    $('voice').innerHTML = voicesZh.map((v,i)=>`<option value="${i}">${v.name}（${v.lang}${v.localService?'・端末内':'・オンライン'}）</option>`).join('')
+      || '<option value="">（中国語の声が見つかりません）</option>';
+    $('voiceKo').innerHTML = voicesKo.map((v,i)=>`<option value="${i}">${v.name}（${v.lang}${v.localService?'・端末内':'・オンライン'}）</option>`).join('')
+      || '<option value="">（韓国語の声が見つかりません）</option>';
+    $('meta').innerHTML = voicesZh.length
+      ? `<span class="ok">✓ 中国語の声 ${voicesZh.length} 個</span>（全声 ${all.length} 個中）。複数あれば聞き比べてみて。`
+      : `<span class="warn">✕ 中国語の声がありません。</span>この端末ではTTS方式は厳しいかも。`;
+    $('metaKo').textContent = voicesKo.length ? `韓国語の声 ${voicesKo.length} 個` : '韓国語の声なし';
+  }
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+  // iOS: 声リストが遅れて来ることがあるので保険
+  setTimeout(loadVoices, 300); setTimeout(loadVoices, 1500);
+
+  function speak(text, voice, lang){
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if(voice) u.voice = voice;
+    u.lang = (voice && voice.lang) || lang;
+    u.rate = parseFloat($('rate').value);
+    speechSynthesis.speak(u);
+  }
+  const zhVoice = () => voicesZh[+$('voice').value] || null;
+
+  $('sents').innerHTML = SENTS.map((s,i)=>`
+    <div class="sent">
+      <button class="btn sm" data-i="${i}">▶</button>
+      <span class="zh">${s.zh}</span>
+      <span class="ja">${s.ja}</span>
+    </div>`).join('');
+  $('sents').querySelectorAll('button').forEach(b=>
+    b.addEventListener('click', ()=> speak(SENTS[+b.dataset.i].zh, zhVoice(), 'zh-CN')));
+
+  $('playCustom').addEventListener('click', ()=> speak($('custom').value.trim(), zhVoice(), 'zh-CN'));
+  $('stop').addEventListener('click', ()=> speechSynthesis.cancel());
+  $('playKo').addEventListener('click', ()=> speak('안녕하세요. 주말에 뭐 했어요?', voicesKo[+$('voiceKo').value]||null, 'ko-KR'));
+  $('rate').addEventListener('input', ()=> $('rateVal').textContent = $('rate').value+'x');
+</script>
+</body>
+</html>
