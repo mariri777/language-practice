@@ -308,7 +308,6 @@
     if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='먼저 API 키를 설정해 주세요 (오른쪽 위 ⚙).'; return; }
 
     const key = getKey();
-    const model = getModel();
     $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>분석 중…';
 
     const prompt = `당신은 한국어 사용자를 위한 어학 어시스턴트입니다. 입력은 SNS·채팅의 격식 없는 문장일 가능성이 높고, 인터넷 슬랭·줄임말·신조어·방언·감정 표현(예: 중국어 「yyds＝최고」「绝绝子＝대박」, 일본어 「草／www＝ㅋㅋ」 등)이 포함된다는 전제로 분석하세요. 아래 JSON만 반환하세요(앞뒤에 설명 금지).
@@ -322,31 +321,49 @@
 문장: """${text}"""`;
 
     const sleep = ms => new Promise(r=>setTimeout(r,ms));
-    const ATTEMPTS = 5;            // 1회 + 최대 4회 자동 재시도
     const RETRYABLE = [408,429,500,502,503,504];
+    // 선택한 모델이 혼잡(503 등)으로 응답이 없으면 가벼운 다른 모델로 자동 전환
+    const chosen = getModel();
+    const models = provider()==='gemini'
+      ? [...new Set([chosen,'gemini-2.0-flash','gemini-flash-latest','gemini-2.5-flash'])]
+      : [chosen];
+    const callOnce = async (mdl) => {
+      const ctl = new AbortController();
+      const to = setTimeout(()=>ctl.abort(), 45000);
+      try{
+        const res = await fetch(P().base+'/chat/completions', {
+          method:'POST', signal: ctl.signal,
+          headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
+          body: JSON.stringify({ model: mdl, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
+        });
+        const raw = await res.text();
+        return { ok: res.ok, status: res.status, raw };
+      } finally { clearTimeout(to); }
+    };
     try{
-      let raw;
-      for(let i=0;;i++){
-        let res;
-        try{
-          res = await fetch(P().base+'/chat/completions', {
-            method:'POST',
-            headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
-            body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
-          });
-        }catch(netErr){
-          if(i<ATTEMPTS-1){ $('goLabel').innerHTML='<span class="spin"></span>다시 연결 중… ('+(i+1)+'/'+(ATTEMPTS-1)+')'; await sleep(1200*Math.pow(2,i)); continue; }
-          throw netErr;
+      let raw, lastStatus = 0;
+      outer:
+      for(let mi=0; mi<models.length; mi++){
+        const mdl = models[mi], switched = mi>0;
+        for(let i=0;i<2;i++){
+          let r;
+          try{ r = await callOnce(mdl); }
+          catch(netErr){ lastStatus = 0; break; }
+          if(r.ok){ raw = r.raw; break outer; }
+          lastStatus = r.status;
+          if(RETRYABLE.includes(r.status)){
+            $('goLabel').innerHTML = '<span class="spin"></span>' + (switched ? ('다른 모델로 분석 중… ('+mdl+')') : ('혼잡… 재시도 ('+(i+1)+'/2)'));
+            if(i<1){ await sleep(Math.round(800*Math.pow(2,i)*(1+Math.random()*0.3))); continue; }
+            continue outer;
+          }
+          if(mi===0 || [401,403].includes(r.status)) throw new Error('API 오류 (HTTP '+r.status+')\n'+r.raw.slice(0,300));
+          continue outer;   // 폴백 모델이 미지원(404 등)이면 다음 모델로
         }
-        raw = await res.text();
-        if(res.ok) break;
-        if(RETRYABLE.includes(res.status) && i<ATTEMPTS-1){
-          const wait = Math.round((1200*Math.pow(2,i)) * (1+Math.random()*0.3));
-          $('goLabel').innerHTML='<span class="spin"></span>혼잡… 재시도 ('+(i+1)+'/'+(ATTEMPTS-1)+')';
-          await sleep(wait); continue;
-        }
-        if(res.status===503) throw new Error('AI가 혼잡합니다(HTTP 503). 자동으로 여러 번 시도했지만 응답이 없었어요. 잠시 후 다시 하거나 문장을 짧게 나눠 보세요. ⚙ 에서 다른 모델(예: gemini-2.5-flash)로 바꾸는 것도 효과적입니다.');
-        throw new Error('API 오류 (HTTP '+res.status+')\n'+raw.slice(0,300));
+      }
+      if(raw===undefined){
+        throw new Error(lastStatus===503
+          ? 'AI가 혼잡합니다(HTTP 503). 가벼운 모델로 바꿔도 응답이 없었어요. 잠시 후 다시 하거나 문장을 짧게 나눠 보세요. ⚙ 에서 DeepSeek(충전 필요·안정)로 바꾸는 것도 효과적입니다.'
+          : 'AI에서 응답이 없었어요'+(lastStatus?'(HTTP '+lastStatus+')':'')+'. 잠시 후 다시 시도해 주세요.');
       }
       let data;
       try{ data = JSON.parse(JSON.parse(raw).choices[0].message.content); }

@@ -308,7 +308,6 @@
     if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='请先设置 API 密钥（右上角 ⚙）。'; return; }
 
     const key = getKey();
-    const model = getModel();
     $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>解析中…';
 
     const prompt = `你是面向中文母语者的语言助手。输入很可能是社交媒体/聊天的口语文本，可能包含网络流行语·缩写·新词·方言·情绪表达（例如 韩语「ㅋㅋ＝哈哈」「ㅠㅠ＝哭」，日语「草／www＝哈哈」等），请据此分析。只返回下面的 JSON（前后不要任何说明）：
@@ -322,31 +321,49 @@
 句子："""${text}"""`;
 
     const sleep = ms => new Promise(r=>setTimeout(r,ms));
-    const ATTEMPTS = 5;            // 1次 + 最多4次自动重试
     const RETRYABLE = [408,429,500,502,503,504];
+    // 所选模型繁忙(503等)无响应时，自动切换到更轻的其他模型
+    const chosen = getModel();
+    const models = provider()==='gemini'
+      ? [...new Set([chosen,'gemini-2.0-flash','gemini-flash-latest','gemini-2.5-flash'])]
+      : [chosen];
+    const callOnce = async (mdl) => {
+      const ctl = new AbortController();
+      const to = setTimeout(()=>ctl.abort(), 45000);
+      try{
+        const res = await fetch(P().base+'/chat/completions', {
+          method:'POST', signal: ctl.signal,
+          headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
+          body: JSON.stringify({ model: mdl, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
+        });
+        const raw = await res.text();
+        return { ok: res.ok, status: res.status, raw };
+      } finally { clearTimeout(to); }
+    };
     try{
-      let raw;
-      for(let i=0;;i++){
-        let res;
-        try{
-          res = await fetch(P().base+'/chat/completions', {
-            method:'POST',
-            headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
-            body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
-          });
-        }catch(netErr){
-          if(i<ATTEMPTS-1){ $('goLabel').innerHTML='<span class="spin"></span>重新连接中… ('+(i+1)+'/'+(ATTEMPTS-1)+')'; await sleep(1200*Math.pow(2,i)); continue; }
-          throw netErr;
+      let raw, lastStatus = 0;
+      outer:
+      for(let mi=0; mi<models.length; mi++){
+        const mdl = models[mi], switched = mi>0;
+        for(let i=0;i<2;i++){
+          let r;
+          try{ r = await callOnce(mdl); }
+          catch(netErr){ lastStatus = 0; break; }
+          if(r.ok){ raw = r.raw; break outer; }
+          lastStatus = r.status;
+          if(RETRYABLE.includes(r.status)){
+            $('goLabel').innerHTML = '<span class="spin"></span>' + (switched ? ('用其他模型解析中… ('+mdl+')') : ('繁忙中… 重试 ('+(i+1)+'/2)'));
+            if(i<1){ await sleep(Math.round(800*Math.pow(2,i)*(1+Math.random()*0.3))); continue; }
+            continue outer;
+          }
+          if(mi===0 || [401,403].includes(r.status)) throw new Error('API 错误 (HTTP '+r.status+')\n'+r.raw.slice(0,300));
+          continue outer;   // 备用模型不支持(404等)则换下一个
         }
-        raw = await res.text();
-        if(res.ok) break;
-        if(RETRYABLE.includes(res.status) && i<ATTEMPTS-1){
-          const wait = Math.round((1200*Math.pow(2,i)) * (1+Math.random()*0.3));
-          $('goLabel').innerHTML='<span class="spin"></span>繁忙中… 重试 ('+(i+1)+'/'+(ATTEMPTS-1)+')';
-          await sleep(wait); continue;
-        }
-        if(res.status===503) throw new Error('AI 繁忙（HTTP 503）。自动重试多次仍无响应。请稍后再试，或把文本分短一些。也可在 ⚙ 切换其他模型（如 gemini-2.5-flash）。');
-        throw new Error('API 错误 (HTTP '+res.status+')\n'+raw.slice(0,300));
+      }
+      if(raw===undefined){
+        throw new Error(lastStatus===503
+          ? 'AI 繁忙（HTTP 503）。切换到更轻的模型后仍无响应。请稍后再试，或把文本分短一些。也可在 ⚙ 切换到 DeepSeek（需充值·稳定）。'
+          : 'AI 没有响应'+(lastStatus?'（HTTP '+lastStatus+'）':'')+'。请稍后再试。');
       }
       let data;
       try{ data = JSON.parse(JSON.parse(raw).choices[0].message.content); }
