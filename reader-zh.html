@@ -300,6 +300,21 @@
   }
   renderDict();
 
+  /* ---------- 长文按句子切分（不使用 lookbehind=旧设备也安全） ---------- */
+  function splitIntoChunks(text, max){
+    const enders = '。．.!?！？…\n';
+    const sents = []; let s='';
+    for(const ch of text){ s+=ch; if(enders.indexOf(ch)>=0){ sents.push(s); s=''; } }
+    if(s) sents.push(s);
+    const chunks = []; let buf='';
+    for(const p of sents){
+      if(buf && (buf.length+p.length) > max){ chunks.push(buf); buf=p; }
+      else buf += p;
+    }
+    if(buf.trim()) chunks.push(buf);
+    return chunks.length ? chunks : [text];
+  }
+
   /* ---------- analyze ---------- */
   async function analyze(){
     const text = $('input').value.trim();
@@ -310,16 +325,6 @@
     const key = getKey();
     $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>解析中…';
 
-    const prompt = `你是面向中文母语者的语言助手。输入很可能是社交媒体/聊天的口语文本，可能包含网络流行语·缩写·新词·方言·情绪表达（例如 韩语「ㅋㅋ＝哈哈」「ㅠㅠ＝哭」，日语「草／www＝哈哈」等），请据此分析。只返回下面的 JSON（前后不要任何说明）：
-{"translation":"自然的中文翻译。不要直译，按社交媒体里的真实语气","words":[{"term":"句中出现的原样形态（含活用·变形，流行语·缩写也包含）","base":"该词的原形·词典词条形（日语动词·形容词用终止形，韩语用言用「-다」形；中文等不活用的词与 term 相同即可）","reading":"韩语=罗马音 / 日语=假名读音","meaning":"中文意思。有网络用法时优先"}],"grammar":[{"point":"句中实际出现的助词·词尾·句型，按出现的原形","note":"在该句中的作用，用1~2句准确说明"}]}
-
-规则：
-- 流行语·缩写·符号表达也要积极放进 words（那才是想学的词）。
-- 对意思没把握时，meaning 开头加「(推测)」，在已知范围内说明，不要不懂装懂。
-- 专有名词、过于显而易见的词省略。words 5~12 个。
-- grammar：只列该句真正出现的，0~4 个。不要编造句中没有的语法。point 用出现的原形（如 韩语「-에」「-지」，日语「は」「を」「て」），不要用泛化的词典词条。
-句子："""${text}"""`;
-
     const sleep = ms => new Promise(r=>setTimeout(r,ms));
     const RETRYABLE = [408,429,500,502,503,504];
     // 所选模型繁忙(503等)无响应时，自动切换到更轻的其他模型
@@ -327,32 +332,43 @@
     const models = provider()==='gemini'
       ? [...new Set([chosen,'gemini-2.0-flash','gemini-flash-latest','gemini-2.5-flash'])]
       : [chosen];
-    const callOnce = async (mdl) => {
+
+    const buildPrompt = (chunk) => `你是面向中文母语者的语言助手。输入很可能是社交媒体/聊天的口语文本，可能包含网络流行语·缩写·新词·方言·情绪表达（例如 韩语「ㅋㅋ＝哈哈」「ㅠㅠ＝哭」，日语「草／www＝哈哈」等），请据此分析。只返回下面的 JSON（前后不要任何说明）：
+{"translation":"自然的中文翻译。不要直译，按社交媒体里的真实语气","words":[{"term":"句中出现的原样形态（含活用·变形，流行语·缩写也包含）","base":"该词的原形·词典词条形（日语动词·形容词用终止形，韩语用言用「-다」形；中文等不活用的词与 term 相同即可）","reading":"韩语=罗马音 / 日语=假名读音","meaning":"中文意思。有网络用法时优先"}],"grammar":[{"point":"句中实际出现的助词·词尾·句型，按出现的原形","note":"在该句中的作用，用1~2句准确说明"}]}
+
+规则：
+- 流行语·缩写·符号表达也要积极放进 words（那才是想学的词）。
+- 对意思没把握时，meaning 开头加「(推测)」，在已知范围内说明，不要不懂装懂。
+- 专有名词、过于显而易见的词省略。words 5~12 个。
+- grammar：只列该句真正出现的，0~4 个。不要编造句中没有的语法。point 用出现的原形（如 韩语「-에」「-지」，日语「は」「を」「て」），不要用泛化的词典词条。
+句子："""${chunk}"""`;
+
+    const callOnce = (prompt, mdl) => {
       const ctl = new AbortController();
       const to = setTimeout(()=>ctl.abort(), 45000);
-      try{
-        const res = await fetch(P().base+'/chat/completions', {
-          method:'POST', signal: ctl.signal,
-          headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
-          body: JSON.stringify({ model: mdl, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
-        });
-        const raw = await res.text();
-        return { ok: res.ok, status: res.status, raw };
-      } finally { clearTimeout(to); }
+      return fetch(P().base+'/chat/completions', {
+        method:'POST', signal: ctl.signal,
+        headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
+        body: JSON.stringify({ model: mdl, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
+      }).then(async res => ({ ok: res.ok, status: res.status, raw: await res.text() }))
+        .finally(()=>clearTimeout(to));
     };
-    try{
+
+    // 解析一个区间（繁忙时自动切到更轻的模型）。失败则 throw。
+    async function analyzeChunk(chunkText, tag){
+      const prompt = buildPrompt(chunkText);
       let raw, lastStatus = 0;
       outer:
       for(let mi=0; mi<models.length; mi++){
         const mdl = models[mi], switched = mi>0;
         for(let i=0;i<2;i++){
           let r;
-          try{ r = await callOnce(mdl); }
+          try{ r = await callOnce(prompt, mdl); }
           catch(netErr){ lastStatus = 0; break; }
           if(r.ok){ raw = r.raw; break outer; }
           lastStatus = r.status;
           if(RETRYABLE.includes(r.status)){
-            $('goLabel').innerHTML = '<span class="spin"></span>' + (switched ? ('用其他模型解析中… ('+mdl+')') : ('繁忙中… 重试 ('+(i+1)+'/2)'));
+            $('goLabel').innerHTML = '<span class="spin"></span>' + tag + (switched ? ('其他模型… ('+mdl+')') : ('繁忙中… 重试'));
             if(i<1){ await sleep(Math.round(800*Math.pow(2,i)*(1+Math.random()*0.3))); continue; }
             continue outer;
           }
@@ -361,14 +377,36 @@
         }
       }
       if(raw===undefined){
-        throw new Error(lastStatus===503
+        const e = new Error(lastStatus===503
           ? 'AI 繁忙（HTTP 503）。切换到更轻的模型后仍无响应。请稍后再试，或把文本分短一些。也可在 ⚙ 切换到 DeepSeek（需充值·稳定）。'
           : 'AI 没有响应'+(lastStatus?'（HTTP '+lastStatus+'）':'')+'。请稍后再试。');
+        e.skippable = true; throw e;
       }
-      let data;
-      try{ data = JSON.parse(JSON.parse(raw).choices[0].message.content); }
-      catch(e){ throw new Error('解析回复失败，请重试。'); }
-      render(text, data);
+      try{ return JSON.parse(JSON.parse(raw).choices[0].message.content); }
+      catch(e){ const er=new Error('解析回复失败。'); er.skippable=true; throw er; }
+    }
+
+    try{
+      const chunks = splitIntoChunks(text, 240);
+      if(chunks.length===1){
+        render(text, await analyzeChunk(chunks[0], ''));
+      } else {
+        const trans=[], words=[], grams=[]; const seenW=new Set(), seenG=new Set();
+        let failed=0;
+        for(let c=0;c<chunks.length;c++){
+          const tag = '('+(c+1)+'/'+chunks.length+') ';
+          $('goLabel').innerHTML = '<span class="spin"></span>解析中… '+tag;
+          let data;
+          try{ data = await analyzeChunk(chunks[c], tag); }
+          catch(e){ if(e.skippable){ failed++; continue; } throw e; }
+          if(data.translation) trans.push(data.translation);
+          (Array.isArray(data.words)?data.words:[]).forEach(w=>{ const k=(w.term||'')+'¦'+(w.base||''); if(w.term && !seenW.has(k)){ seenW.add(k); words.push(w); } });
+          (Array.isArray(data.grammar)?data.grammar:[]).forEach(g=>{ const k=g.point||''; if(g.point && !seenG.has(k)){ seenG.add(k); grams.push(g); } });
+        }
+        if(!trans.length && !words.length) throw new Error('未能解析'+(failed?'（因繁忙等全部 '+chunks.length+' 段失败）':'')+'。请稍后再试，或把文本改短。');
+        render(text, { translation: trans.join(' '), words, grammar: grams });
+        if(failed) $('err').textContent = '※ 文本较长，已分成 '+chunks.length+' 段解析。其中 '+failed+' 段因繁忙未取到（过一会儿可全部取到）。';
+      }
     }catch(err){
       const m = (err&&err.message)||String(err);
       $('err').textContent = /Failed to fetch|NetworkError|Load failed/i.test(m)

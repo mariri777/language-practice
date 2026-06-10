@@ -300,6 +300,21 @@
   }
   renderDict();
 
+  /* ---------- 긴 글을 문장 단위로 나누기 (lookbehind 미사용=구형 단말도 안전) ---------- */
+  function splitIntoChunks(text, max){
+    const enders = '。．.!?！？…\n';
+    const sents = []; let s='';
+    for(const ch of text){ s+=ch; if(enders.indexOf(ch)>=0){ sents.push(s); s=''; } }
+    if(s) sents.push(s);
+    const chunks = []; let buf='';
+    for(const p of sents){
+      if(buf && (buf.length+p.length) > max){ chunks.push(buf); buf=p; }
+      else buf += p;
+    }
+    if(buf.trim()) chunks.push(buf);
+    return chunks.length ? chunks : [text];
+  }
+
   /* ---------- analyze (Gemini) ---------- */
   async function analyze(){
     const text = $('input').value.trim();
@@ -310,16 +325,6 @@
     const key = getKey();
     $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>분석 중…';
 
-    const prompt = `당신은 한국어 사용자를 위한 어학 어시스턴트입니다. 입력은 SNS·채팅의 격식 없는 문장일 가능성이 높고, 인터넷 슬랭·줄임말·신조어·방언·감정 표현(예: 중국어 「yyds＝최고」「绝绝子＝대박」, 일본어 「草／www＝ㅋㅋ」 등)이 포함된다는 전제로 분석하세요. 아래 JSON만 반환하세요(앞뒤에 설명 금지).
-{"translation":"자연스러운 한국어 번역. 직역이 아니라 SNS에서의 실제 뉘앙스로","words":[{"term":"문장에 나온 형태 그대로(활용·변화한 채로. 슬랭·줄임말 포함)","base":"그 단어의 원형·사전 표제형(일본어 동사·형용사는 종지형. 중국어 등 활용하지 않는 단어는 term과 같게)","reading":"중국어=병음 / 일본어=요미가나(히라가나)","meaning":"한국어 뜻. 인터넷 용법이 있으면 그 뜻을 우선"}],"grammar":[{"point":"문장에 실제로 나온 조사·어미·문형을 나온 형태 그대로","note":"이 문장에서의 역할을 정확히 1~2문장으로"}]}
-
-규칙:
-- 슬랭·줄임말·기호 표현도 words에 적극 포함(그게 배우고 싶은 말).
-- 뜻에 확신이 없으면 meaning 앞에 「(추측)」을 붙이고 아는 범위로. 아는 척 단정 금지.
-- 고유명사·자명한 단어는 생략. words는 5~12개 정도.
-- grammar: 이 문장에 실제로 나오는 것만 0~4개. 없는 문법을 만들지 말 것. point는 나온 형태 그대로(예: 중국어 「把」「了」「的」, 일본어 「は」「を」「て」). 일반화한 사전 표제어로 만들지 말 것.
-문장: """${text}"""`;
-
     const sleep = ms => new Promise(r=>setTimeout(r,ms));
     const RETRYABLE = [408,429,500,502,503,504];
     // 선택한 모델이 혼잡(503 등)으로 응답이 없으면 가벼운 다른 모델로 자동 전환
@@ -327,32 +332,43 @@
     const models = provider()==='gemini'
       ? [...new Set([chosen,'gemini-2.0-flash','gemini-flash-latest','gemini-2.5-flash'])]
       : [chosen];
-    const callOnce = async (mdl) => {
+
+    const buildPrompt = (chunk) => `당신은 한국어 사용자를 위한 어학 어시스턴트입니다. 입력은 SNS·채팅의 격식 없는 문장일 가능성이 높고, 인터넷 슬랭·줄임말·신조어·방언·감정 표현(예: 중국어 「yyds＝최고」「绝绝子＝대박」, 일본어 「草／www＝ㅋㅋ」 등)이 포함된다는 전제로 분석하세요. 아래 JSON만 반환하세요(앞뒤에 설명 금지).
+{"translation":"자연스러운 한국어 번역. 직역이 아니라 SNS에서의 실제 뉘앙스로","words":[{"term":"문장에 나온 형태 그대로(활용·변화한 채로. 슬랭·줄임말 포함)","base":"그 단어의 원형·사전 표제형(일본어 동사·형용사는 종지형. 중국어 등 활용하지 않는 단어는 term과 같게)","reading":"중국어=병음 / 일본어=요미가나(히라가나)","meaning":"한국어 뜻. 인터넷 용법이 있으면 그 뜻을 우선"}],"grammar":[{"point":"문장에 실제로 나온 조사·어미·문형을 나온 형태 그대로","note":"이 문장에서의 역할을 정확히 1~2문장으로"}]}
+
+규칙:
+- 슬랭·줄임말·기호 표현도 words에 적극 포함(그게 배우고 싶은 말).
+- 뜻에 확신이 없으면 meaning 앞에 「(추측)」을 붙이고 아는 범위로. 아는 척 단정 금지.
+- 고유명사·자명한 단어는 생략. words는 5~12개 정도.
+- grammar: 이 문장에 실제로 나오는 것만 0~4개. 없는 문법을 만들지 말 것. point는 나온 형태 그대로(예: 중국어 「把」「了」「的」, 일본어 「は」「を」「て」). 일반화한 사전 표제어로 만들지 말 것.
+문장: """${chunk}"""`;
+
+    const callOnce = (prompt, mdl) => {
       const ctl = new AbortController();
       const to = setTimeout(()=>ctl.abort(), 45000);
-      try{
-        const res = await fetch(P().base+'/chat/completions', {
-          method:'POST', signal: ctl.signal,
-          headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
-          body: JSON.stringify({ model: mdl, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
-        });
-        const raw = await res.text();
-        return { ok: res.ok, status: res.status, raw };
-      } finally { clearTimeout(to); }
+      return fetch(P().base+'/chat/completions', {
+        method:'POST', signal: ctl.signal,
+        headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
+        body: JSON.stringify({ model: mdl, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
+      }).then(async res => ({ ok: res.ok, status: res.status, raw: await res.text() }))
+        .finally(()=>clearTimeout(to));
     };
-    try{
+
+    // 한 구간 분석(혼잡 시 가벼운 다른 모델로 자동 전환). 실패 시 throw.
+    async function analyzeChunk(chunkText, tag){
+      const prompt = buildPrompt(chunkText);
       let raw, lastStatus = 0;
       outer:
       for(let mi=0; mi<models.length; mi++){
         const mdl = models[mi], switched = mi>0;
         for(let i=0;i<2;i++){
           let r;
-          try{ r = await callOnce(mdl); }
+          try{ r = await callOnce(prompt, mdl); }
           catch(netErr){ lastStatus = 0; break; }
           if(r.ok){ raw = r.raw; break outer; }
           lastStatus = r.status;
           if(RETRYABLE.includes(r.status)){
-            $('goLabel').innerHTML = '<span class="spin"></span>' + (switched ? ('다른 모델로 분석 중… ('+mdl+')') : ('혼잡… 재시도 ('+(i+1)+'/2)'));
+            $('goLabel').innerHTML = '<span class="spin"></span>' + tag + (switched ? ('다른 모델… ('+mdl+')') : ('혼잡… 재시도'));
             if(i<1){ await sleep(Math.round(800*Math.pow(2,i)*(1+Math.random()*0.3))); continue; }
             continue outer;
           }
@@ -361,14 +377,36 @@
         }
       }
       if(raw===undefined){
-        throw new Error(lastStatus===503
+        const e = new Error(lastStatus===503
           ? 'AI가 혼잡합니다(HTTP 503). 가벼운 모델로 바꿔도 응답이 없었어요. 잠시 후 다시 하거나 문장을 짧게 나눠 보세요. ⚙ 에서 DeepSeek(충전 필요·안정)로 바꾸는 것도 효과적입니다.'
           : 'AI에서 응답이 없었어요'+(lastStatus?'(HTTP '+lastStatus+')':'')+'. 잠시 후 다시 시도해 주세요.');
+        e.skippable = true; throw e;
       }
-      let data;
-      try{ data = JSON.parse(JSON.parse(raw).choices[0].message.content); }
-      catch(e){ throw new Error('응답 분석에 실패했어요. 다시 시도해 주세요.'); }
-      render(text, data);
+      try{ return JSON.parse(JSON.parse(raw).choices[0].message.content); }
+      catch(e){ const er=new Error('응답 분석에 실패했어요.'); er.skippable=true; throw er; }
+    }
+
+    try{
+      const chunks = splitIntoChunks(text, 240);
+      if(chunks.length===1){
+        render(text, await analyzeChunk(chunks[0], ''));
+      } else {
+        const trans=[], words=[], grams=[]; const seenW=new Set(), seenG=new Set();
+        let failed=0;
+        for(let c=0;c<chunks.length;c++){
+          const tag = '('+(c+1)+'/'+chunks.length+') ';
+          $('goLabel').innerHTML = '<span class="spin"></span>분석 중… '+tag;
+          let data;
+          try{ data = await analyzeChunk(chunks[c], tag); }
+          catch(e){ if(e.skippable){ failed++; continue; } throw e; }
+          if(data.translation) trans.push(data.translation);
+          (Array.isArray(data.words)?data.words:[]).forEach(w=>{ const k=(w.term||'')+'¦'+(w.base||''); if(w.term && !seenW.has(k)){ seenW.add(k); words.push(w); } });
+          (Array.isArray(data.grammar)?data.grammar:[]).forEach(g=>{ const k=g.point||''; if(g.point && !seenG.has(k)){ seenG.add(k); grams.push(g); } });
+        }
+        if(!trans.length && !words.length) throw new Error('분석하지 못했어요'+(failed?'(혼잡 등으로 전체 '+chunks.length+'구간 실패)':'')+'. 잠시 후 다시 하거나 문장을 짧게 해보세요.');
+        render(text, { translation: trans.join(' '), words, grammar: grams });
+        if(failed) $('err').textContent = '※ 긴 글이라 '+chunks.length+'구간으로 나눠 분석했어요. 그중 '+failed+'구간은 혼잡으로 가져오지 못했어요(시간을 두면 전부 가져옵니다).';
+      }
     }catch(err){
       const m = (err&&err.message)||String(err);
       $('err').textContent = /Failed to fetch|NetworkError|Load failed/i.test(m)
