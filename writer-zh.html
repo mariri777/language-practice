@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writer · 写写看 — 日々</title>
+<meta name="theme-color" content="#fdf3f4">
+<style>
+  :root{
+    --bg:#fdf3f4; --bg-elevated:#fffafb; --bg-tile:#f9e9ec; --bg-deep:#f0d7dc;
+    --ink:#33171f; --ink-2:#4d2733; --ink-3:#7d4f5c; --ink-4:#b58f9a;
+    --red:#c94f6d; --red-deep:#96334d; --red-bright:#dd6c87; --red-soft:rgba(201,79,109,.08); --red-glow:rgba(201,79,109,.2);
+    --gold:#b6843a; --green:#2f7c5e; --green-soft:rgba(47,124,94,.1); --rule:#e3c4cc; --hair:rgba(51,23,31,.10);
+    --font-ui:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+    --font-head:"Songti SC","STSong","Source Han Serif SC","Noto Serif SC",serif;
+    --font-num:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+    --font-ko:"Apple SD Gothic Neo","Source Han Serif K","Noto Serif KR",serif;
+    --font-ja:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.65;
+       padding:0 0 80px;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+  header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;max-width:760px;margin:0 auto}
+  .brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  .brand .mark{width:26px;height:26px;background:var(--red);color:#fff;display:inline-flex;align-items:center;justify-content:center;border-radius:5px;font-family:var(--font-num);font-style:italic;font-size:17px;transform:rotate(-4deg)}
+  .gear{background:none;border:0;font-size:20px;cursor:pointer;color:var(--ink-3);padding:6px}
+
+  h1{font-family:var(--font-head);font-size:clamp(26px,5vw,38px);font-weight:600;letter-spacing:.02em;margin:8px 0 2px}
+  h1 .dot{color:var(--red);font-family:var(--font-num);font-style:italic}
+  .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 18px}
+
+  .card{background:var(--bg-elevated);border:1px solid var(--hair);border-radius:14px;padding:18px;margin-bottom:16px}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4);margin:0 0 7px}
+  textarea,input{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
+  textarea{min-height:64px;resize:vertical}
+  textarea.attempt{min-height:80px}
+  textarea.attempt.ja{font-family:var(--font-ja)} textarea.attempt.ko{font-family:var(--font-ko)}
+  .btn{font:inherit;font-weight:700;padding:12px 20px;border:0;border-radius:10px;background:var(--red);color:#fff;cursor:pointer;transition:background .2s}
+  .btn:hover{background:var(--red-bright)} .btn:disabled{opacity:.5;cursor:wait}
+  .btn.ghost{background:transparent;color:var(--red);border:1px solid var(--red)}
+  .btn.sm{padding:6px 12px;font-size:13px;border-radius:8px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+  .spacer{flex:1}
+
+  /* language segmented toggle */
+  .seg{display:inline-flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin-bottom:14px}
+  .seg button{font:inherit;font-weight:700;font-size:14px;padding:8px 18px;border:0;background:transparent;color:var(--ink-3);cursor:pointer}
+  .seg button.on{background:var(--red);color:#fff}
+
+  /* settings */
+  #settings{display:none}
+  #settings.open{display:block}
+  .notice{background:var(--red-soft);border:1px solid rgba(138,36,56,.25);color:var(--red-deep);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-bottom:14px}
+  .notice a{font-weight:700}
+  .notice ol{margin:8px 0 6px;padding-left:20px}
+  .notice li{margin:2px 0}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;background:rgba(20,16,10,.06);padding:1px 5px;border-radius:4px;font-size:.92em}
+  .disclose{font-size:12px;color:var(--ink-4);margin:10px 0 0;line-height:1.6}
+  .hint{font-size:12px;color:var(--ink-3);margin:6px 0 0;line-height:1.6}
+  select{appearance:auto}
+
+  /* result */
+  #result{display:none}
+  .verdict{display:flex;align-items:center;gap:11px;padding:4px 0 14px}
+  .verdict .vmark{width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;color:#fff}
+  .verdict.ok    .vmark{background:var(--green)}
+  .verdict.almost .vmark{background:var(--gold)}
+  .verdict.off   .vmark{background:var(--ink-4)}
+  .verdict .vtext{font-weight:700;font-size:16px}
+  .verdict.ok .vtext{color:var(--green)} .verdict.almost .vtext{color:var(--gold)} .verdict.off .vtext{color:var(--ink-3)}
+  .comment{color:var(--ink-2);font-size:14.5px;line-height:1.7;margin:0 0 4px}
+
+  .sec-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin:18px 0 8px;display:flex;align-items:center;gap:10px}
+  .sec-title::before{content:"";width:24px;height:2px;background:var(--red)}
+  .natural{font-size:19px;line-height:1.7;color:var(--ink);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .natural.ja{font-family:var(--font-ja)} .natural.ko{font-family:var(--font-ko)}
+  .natural .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:15px}
+  .copy{background:transparent;border:1px solid var(--rule);color:var(--ink-3);border-radius:8px;padding:4px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;margin-left:auto}
+  .copy.done{background:var(--green);border-color:var(--green);color:#fff}
+
+  .alt{padding:8px 0;border-top:1px solid var(--hair);font-size:15px}
+  .alt:first-child{border-top:0}
+  .alt.ja .at{font-family:var(--font-ja)} .alt.ko .at{font-family:var(--font-ko)}
+  .alt .ar{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:13px;margin-left:8px}
+  .alt .an{display:block;color:var(--ink-3);font-size:13px;margin-top:2px}
+
+  .word{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
+  .word:first-child{border-top:0}
+  .word .term{font-size:18px;min-width:0}
+  .word.ja .term{font-family:var(--font-ja)} .word.ko .term{font-family:var(--font-ko)}
+  .word .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:14px}
+  .word .mean{flex:1;min-width:0;color:var(--ink-2);font-size:14px}
+  .add-btn{background:transparent;border:1px solid var(--rule);color:var(--ink-3);border-radius:8px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0}
+  .add-btn.saved{background:var(--green);border-color:var(--green);color:#fff}
+
+  /* dictionary */
+  .dict-head{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
+  .dict-head .n{font-family:var(--font-num);font-style:italic;font-size:30px;color:var(--red)}
+  .dict-empty{color:var(--ink-4);font-size:14px;padding:8px 0}
+  .dict-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
+  .dict-item:first-child{border-top:0}
+  .dict-item .term{font-size:18px} .dict-item.ja .term{font-family:var(--font-ja)} .dict-item.ko .term{font-family:var(--font-ko)}
+  .dict-item .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:13px}
+  .dict-item .mean{flex:1;color:var(--ink-2);font-size:14px}
+  .del{background:none;border:0;color:var(--ink-4);cursor:pointer;font-size:16px;padding:4px 8px}
+  .del:hover{color:var(--red)}
+  .tag{font-size:10px;font-weight:700;letter-spacing:.1em;padding:2px 7px;border-radius:20px;background:var(--bg-deep);color:var(--ink-3)}
+
+  .err{color:var(--red);font-size:14px;margin-top:10px;white-space:pre-wrap}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px;margin-right:8px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html?tab=zh"><span class="mark">&amp;</span> 日々</a>
+  <button class="gear" id="gearBtn" title="设置" aria-label="设置">⚙</button>
+</header>
+
+<div class="wrap">
+  <h1>写写看<span class="dot">.</span></h1>
+  <p class="lead">把想说的话，用那门语言自己写写看。AI 会判定「能不能看懂」，还会教你更自然的说法。</p>
+
+  <!-- settings -->
+  <div class="card" id="settings">
+    <label>AI（可选 Gemini 或 DeepSeek / 与 Reader 通用）</label>
+    <select id="provider">
+      <option value="gemini">Gemini（Google·免费 / 中国大陆无法使用）</option>
+      <option value="deepseek">DeepSeek（需充值 / 中国大陆可用）</option>
+    </select>
+    <p class="hint" id="provHint"></p>
+    <label style="margin-top:14px">API 密钥（仅保存在此浏览器内）</label>
+    <input id="key" type="password" placeholder="AIza..." autocomplete="off">
+    <div class="row">
+      <button class="btn sm" id="saveKey">保存</button>
+      <button class="btn sm ghost" id="clearKey">清除</button>
+      <a id="getKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="font-size:13px;color:var(--ink-3)">获取密钥 →</a>
+    </div>
+    <label style="margin-top:14px">模型</label>
+    <select id="model"></select>
+    <div class="row"><button class="btn sm ghost" id="loadModels" type="button">获取可用模型列表</button></div>
+    <p class="hint" id="modelHint">先保存密钥再获取，可选的模型会更多。与 Reader 使用同一密钥·设置。</p>
+  </div>
+
+  <div class="notice" id="noKey" style="display:none">
+    <strong>第一次使用？</strong> — 判定使用 AI。请在右上角 <strong>⚙</strong> 选择 <strong>Gemini</strong>（免费·大陆✕）或 <strong>DeepSeek</strong>（需充值·大陆◯），并填入你自己的密钥：
+    <ol>
+      <li>在 <a id="noKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">密钥页面</a> 创建并复制密钥</li>
+      <li>粘贴到 ⚙ 的「API 密钥」并点「保存」</li>
+    </ol>
+    密钥只保存在你的浏览器中，不会发送给站点运营者。在 Reader 设置过的话，可以直接用。
+  </div>
+
+  <!-- compose -->
+  <div class="card">
+    <div class="seg" id="langSeg">
+      <button data-lang="ja" class="on">写日语</button>
+      <button data-lang="ko">写韩语</button>
+    </div>
+
+    <label>① 用中文写下想说的话</label>
+    <textarea id="intent" placeholder="例：今天和朋友去看了电影，特别开心！"></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="btn ghost sm" id="topicBtn" type="button">来个题目</button>
+      <span class="spacer"></span>
+    </div>
+
+    <label style="margin-top:16px">② 用<span id="attemptLangLabel">日语</span>自己写写看</label>
+    <textarea id="attempt" class="attempt ja" placeholder="先靠自己的力量。想不起来的词也没关系，写到会的地方就好。"></textarea>
+
+    <div class="row">
+      <button class="btn" id="go"><span id="goLabel">判定能不能看懂</span></button>
+      <button class="btn ghost sm" id="clearIn">清空</button>
+    </div>
+    <div class="err" id="err"></div>
+    <p class="hint">💡 不完美也没关系，「能看懂就是赢」。边写边把订正存进词典，能想起来的词会越来越多。</p>
+    <p class="disclose">※ 输入的文字会发送给所选 AI（Gemini 或 DeepSeek）进行判定，并非仅在浏览器内处理。尤其 Gemini 免费层的输入可能被用于模型改进，请勿写下不想被看到的内容。</p>
+  </div>
+
+  <!-- result -->
+  <div id="result">
+    <div class="card">
+      <div class="verdict" id="verdict">
+        <span class="vmark" id="vmark"></span>
+        <span class="vtext" id="vtext"></span>
+      </div>
+      <p class="comment" id="comment"></p>
+
+      <div class="sec-title">自然的说法</div>
+      <div class="natural" id="natural"></div>
+
+      <div class="sec-title" id="altsTitle" style="display:none">其他说法</div>
+      <div id="alts"></div>
+
+      <div class="sec-title" id="fixesTitle" style="display:none">想记住的词</div>
+      <div id="fixes"></div>
+    </div>
+  </div>
+
+  <!-- dictionary -->
+  <div class="card">
+    <div class="dict-head">
+      <div class="sec-title" style="margin:0">我的词典</div>
+      <span class="n" id="dictCount">0</span>
+    </div>
+    <div id="dictList"></div>
+  </div>
+</div>
+
+<script src="daily.js?v=1"></script>
+<script>
+  const $ = id => document.getElementById(id);
+  const DICT_K='mydict-zh-v1';
+  const PROVIDERS = {
+    gemini:   { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash', keyph:'AIza...', console:'https://aistudio.google.com/apikey',
+                guide:'拿不准就选 gemini-2.5-flash（免费每天250次·均衡 ◎）。最高精度是 gemini-2.5-pro（免费每天100次）。出新版本会自动出现在列表里。',
+                note:'Gemini 免费，但中国大陆无法使用（需 VPN）。免费层输入可能用于训练。' },
+    deepseek: { base:'https://api.deepseek.com',                                 model:'deepseek-chat',    keyph:'sk-...',  console:'https://platform.deepseek.com',
+                guide:'deepseek-chat 为标准（中国大陆可用）。使用需先充值（按用量计费）。',
+                note:'DeepSeek 在中国大陆也能用。使用需先充值（按用量计费）。' }
+  };
+  const provider = () => localStorage.getItem('reader-provider') || 'gemini';
+  const P = () => PROVIDERS[provider()] || PROVIDERS.gemini;
+  const keyK = () => 'key-'+provider();
+  const modelK = () => 'model-'+provider();
+  const seenK = () => 'seen-models-'+provider();
+  const getKey = () => (localStorage.getItem(keyK())||'').trim();
+  const getModel = () => (localStorage.getItem(modelK())||P().model).trim();
+  function hasKey(){ return !!getKey(); }
+  function refreshKeyNotice(){ $('noKey').style.display = hasKey() ? 'none' : 'block'; }
+
+  /* ---------- target language ---------- */
+  const LANG_K='writer-zh-lang';
+  let TL = localStorage.getItem(LANG_K) || 'ja';   // 'ja' | 'ko'
+  const langName = l => l==='ja' ? '日语' : '韩语';
+  function syncLang(){
+    $('langSeg').querySelectorAll('button').forEach(b=> b.classList.toggle('on', b.dataset.lang===TL));
+    $('attemptLangLabel').textContent = langName(TL);
+    const a = $('attempt'); a.classList.remove('ja','ko'); a.classList.add(TL);
+  }
+  $('langSeg').querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', ()=>{ TL=b.dataset.lang; localStorage.setItem(LANG_K,TL); syncLang(); });
+  });
+  syncLang();
+
+  /* ---------- settings ---------- */
+  function fillModels(ids){
+    const sel = $('model'); const cur = getModel(); const list = ids.slice();
+    if(!list.includes(cur)) list.unshift(cur);
+    sel.innerHTML = list.map(id=>`<option value="${id}"${id===cur?' selected':''}>${id}</option>`).join('');
+  }
+  function isChatModel(id){
+    if(provider()==='gemini') return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id);
+    return true;
+  }
+  function syncProviderUI(){
+    const p = P();
+    $('provider').value = provider();
+    $('key').value = getKey();
+    $('key').placeholder = p.keyph;
+    $('getKeyLink').href = p.console;
+    const nkl = $('noKeyLink'); if(nkl) nkl.href = p.console;
+    $('provHint').textContent = p.note;
+    fillModels([]);
+    $('modelHint').textContent = p.guide;
+    refreshKeyNotice();
+  }
+  syncProviderUI();
+
+  async function loadModels(){
+    const key = getKey(); const hint = $('modelHint');
+    if(!key){ hint.textContent='请先保存密钥。'; return; }
+    hint.textContent='获取中…';
+    try{
+      const res = await fetch(P().base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
+      const j = await res.json();
+      const ids = (j.data||[]).map(m=>m.id).filter(Boolean).filter(isChatModel).sort();
+      if(!ids.length){ hint.textContent='未能获取模型。'; return; }
+      fillModels(ids);
+      let seen = []; try{ seen = JSON.parse(localStorage.getItem(seenK())||'[]'); }catch{}
+      if(seen.length){
+        const fresh = ids.filter(id=>!seen.includes(id));
+        hint.textContent = fresh.length ? ('✨ 有新模型了：'+fresh.join('、')+'（可选）') : P().guide;
+      } else hint.textContent = P().guide;
+      localStorage.setItem(seenK(), JSON.stringify(ids));
+    }catch(e){ hint.textContent='未能获取列表（请检查密钥·网络）。'; }
+  }
+  $('loadModels').addEventListener('click', loadModels);
+  $('model').addEventListener('change', ()=> localStorage.setItem(modelK(), $('model').value));
+  $('provider').addEventListener('change', ()=>{
+    localStorage.setItem('reader-provider', $('provider').value);
+    syncProviderUI();
+    if(hasKey()) loadModels();
+  });
+  $('gearBtn').addEventListener('click', ()=>{
+    const opening = !$('settings').classList.contains('open');
+    $('settings').classList.toggle('open');
+    if(opening && hasKey() && $('model').options.length <= 1) loadModels();
+  });
+  $('saveKey').addEventListener('click', ()=>{
+    localStorage.setItem(keyK(), $('key').value.trim());
+    if($('model').value) localStorage.setItem(modelK(), $('model').value);
+    refreshKeyNotice();
+    if(hasKey()) loadModels();
+  });
+  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(keyK()); $('key').value=''; refreshKeyNotice(); });
+
+  /* ---------- helpers ---------- */
+  function detectLang(s){
+    if(/[가-힣]/.test(s)) return 'ko';
+    if(/[ぁ-んァ-ヶ一-鿿㐀-䶿]/.test(s)) return 'ja';
+    return '';
+  }
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  /* ---------- dictionary (shared with Reader) ---------- */
+  function loadDict(){ try{ return JSON.parse(localStorage.getItem(DICT_K)||'[]'); }catch{ return []; } }
+  function saveDict(a){ localStorage.setItem(DICT_K, JSON.stringify(a)); }
+  function dictHas(term,lang){ return loadDict().some(d=>d.term===term && d.lang===lang); }
+  function addToDict(w, lang, source){
+    const a = loadDict();
+    if(a.some(d=>d.term===w.term && d.lang===lang)) return;
+    a.push({ id:'w_'+Math.random().toString(36).slice(2,9), term:w.term, reading:w.reading||'', meaning:w.meaning||'', lang, source:source||'', addedAt:Date.now() });
+    saveDict(a); renderDict();
+  }
+  function removeFromDict(id){ saveDict(loadDict().filter(d=>d.id!==id)); renderDict(); }
+  function renderDict(){
+    const a = loadDict().sort((x,y)=>y.addedAt-x.addedAt);
+    $('dictCount').textContent = a.length;
+    const el = $('dictList');
+    if(!a.length){ el.innerHTML = '<div class="dict-empty">还没有词。写句子并判定后，可以把订正和值得学的词存到这里。</div>'; return; }
+    el.innerHTML = a.map(d=>`
+      <div class="dict-item ${d.lang}">
+        <span class="term">${esc(d.term)}</span>
+        ${d.reading?`<span class="read">${esc(d.reading)}</span>`:''}
+        <span class="mean">${esc(d.meaning)}</span>
+        ${d.lang?`<span class="tag">${d.lang==='ja'?'日':'韩'}</span>`:''}
+        <button class="del" data-id="${d.id}" title="删除">✕</button>
+      </div>`).join('');
+    el.querySelectorAll('.del').forEach(b=> b.addEventListener('click', ()=>removeFromDict(b.dataset.id)));
+  }
+  renderDict();
+
+  /* ---------- AI call ---------- */
+  async function callAI(messages, opts){
+    const res = await fetch(P().base+'/chat/completions', {
+      method:'POST',
+      headers:{ 'Authorization':'Bearer '+getKey(), 'Content-Type':'application/json' },
+      body: JSON.stringify(Object.assign({ model:getModel(), messages, temperature:0.3 }, opts||{}))
+    });
+    const raw = await res.text();
+    if(!res.ok) throw new Error('API 错误 (HTTP '+res.status+')\n'+raw.slice(0,300));
+    return JSON.parse(raw).choices[0].message.content;
+  }
+
+  /* ---------- 题目 ---------- */
+  $('topicBtn').addEventListener('click', async ()=>{
+    if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='请先设置 API 密钥（右上角 ⚙）。'; return; }
+    const btn=$('topicBtn'); btn.disabled=true; const old=btn.textContent; btn.textContent='思考中…';
+    try{
+      const c = await callAI([{role:'user',content:
+        '请用中文出一句像发在社交平台（小红书·微博等）上的、一句话的「想说的话」，只出一个。要日常、简短，让语言学习初~中级者想动笔写写看。不要附说明或符号，只返回那一句话。'}],
+        { temperature:1.0 });
+      $('intent').value = (c||'').trim().replace(/^["「『]|["」』]$/g,'');
+      $('attempt').focus();
+    }catch(e){ $('err').textContent = '题目获取失败，请再试一次。'; }
+    finally{ btn.disabled=false; btn.textContent=old; }
+  });
+
+  /* ---------- judge ---------- */
+  async function judge(){
+    const intent = $('intent').value.trim();
+    const attempt = $('attempt').value.trim();
+    $('err').textContent='';
+    if(!intent){ $('err').textContent='请先在 ① 用中文写下「想说的话」。'; return; }
+    if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='请先设置 API 密钥（右上角 ⚙）。'; return; }
+
+    $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>判定中…';
+    const tgt = langName(TL);
+    const readingKind = TL==='ja' ? '全文假名读音（平假名）' : '罗马字注音';
+
+    const prompt = `你是面向中文使用者的${tgt}写作教练。学习者会提交「想用中文表达的意思」和「自己写的${tgt}句子」。你的工作是温和、积极地判定那句${tgt}是否传达了原意，并教给更自然的说法。
+最重要：不要挑错。即使有些不自然，只要「意思能传达」就算 ok。不要打击积极性，先肯定好的地方。不要武断，自然与否以社交平台·日常会话为标准。
+
+判定(verdict)：
+- "ok"     … 意思能正常传达（允许些许不自然）
+- "almost" … 改一部分就能传达（差一点）
+- "off"    … 传达不了／偏差很大／空白
+
+只返回下面的 JSON（前后不要加说明文字）：
+{"verdict":"ok|almost|off","comment":"中文1~2句。先表扬，再点出好的地方或可惜的地方。","natural":"最自然地表达该意思的${tgt}句子（1句）","reading":"natural 的${readingKind}","alts":[{"text":"另一种自然的说法(${tgt})","reading":"${readingKind}","note":"语感差异(中文·可选)"}],"fixes":[{"term":"与学习者句子的差异，或记住会很有用的词语(${tgt})","reading":"${readingKind}","meaning":"中文意思"}]}
+
+规则：
+- natural 和 reading 必须填写（即使空白提交，也能看答案学习）。
+- alts 0~2个，没有就空数组。
+- fixes 2~5个，以学习者句中差一点的词、漏掉的词、记住很方便的词为主。专有名词和不言自明的词省略。
+- 学习者的句子是空白也不要责备，verdict="off"，comment 鼓励「先写到想得起来的地方」，natural/reading 照常填写。
+
+想说的话（中文）："""${intent}"""
+学习者写的${tgt}句子："""${attempt||'(还没写)'}"""`;
+
+    try{
+      const content = await callAI([{role:'user',content:prompt}], { temperature:0.3, response_format:{type:'json_object'} });
+      let data; try{ data = JSON.parse(content); }catch(e){ throw new Error('解析回复失败，请再试一次。'); }
+      render(data);
+    }catch(err){
+      const m = (err&&err.message)||String(err);
+      $('err').textContent = /Failed to fetch|NetworkError|Load failed/i.test(m)
+        ? '网络/连接失败。请检查密钥或网络。' : m;
+    }finally{
+      $('go').disabled=false; $('goLabel').textContent='判定能不能看懂';
+    }
+  }
+
+  const VERDICT_UI = {
+    ok:     { mark:'✓', text:'能看懂！' },
+    almost: { mark:'△', text:'差一点！改这里就通了' },
+    off:    { mark:'↻', text:'先看看下面的说法，再试一次' }
+  };
+
+  function render(data){
+    const v = (data.verdict==='ok'||data.verdict==='almost'||data.verdict==='off') ? data.verdict : 'almost';
+    const ui = VERDICT_UI[v];
+    const vEl = $('verdict'); vEl.className = 'verdict '+v;
+    $('vmark').textContent = ui.mark;
+    $('vtext').textContent = ui.text;
+    $('comment').textContent = data.comment || '';
+
+    // natural
+    const nat = $('natural'); nat.className = 'natural '+TL;
+    nat.innerHTML = `<span>${esc(data.natural||'')}</span>${data.reading?`<span class="read">${esc(data.reading)}</span>`:''}<button class="copy" id="copyNat">复制</button>`;
+    const cp = $('copyNat');
+    if(cp) cp.addEventListener('click', ()=>{
+      navigator.clipboard?.writeText(data.natural||'').then(()=>{ cp.textContent='✓ 已复制'; cp.classList.add('done'); });
+    });
+
+    // alts
+    const alts = Array.isArray(data.alts)?data.alts.filter(a=>a&&a.text):[];
+    $('altsTitle').style.display = alts.length ? '' : 'none';
+    $('alts').innerHTML = alts.map(a=>`<div class="alt ${TL}"><span class="at">${esc(a.text)}</span>${a.reading?`<span class="ar">${esc(a.reading)}</span>`:''}${a.note?`<span class="an">${esc(a.note)}</span>`:''}</div>`).join('');
+
+    // fixes → dict
+    const fixes = Array.isArray(data.fixes)?data.fixes.filter(f=>f&&f.term):[];
+    $('fixesTitle').style.display = fixes.length ? '' : 'none';
+    $('fixes').innerHTML = fixes.map((f,i)=>{
+      const saved = dictHas(f.term, TL);
+      return `<div class="word ${TL}">
+        <span class="term">${esc(f.term)}</span>
+        ${f.reading?`<span class="read">${esc(f.reading)}</span>`:''}
+        <span class="mean">${esc(f.meaning||'')}</span>
+        <button class="add-btn ${saved?'saved':''}" data-i="${i}">${saved?'✓ 已加入':'＋ 词典'}</button>
+      </div>`;
+    }).join('');
+    $('fixes').querySelectorAll('.add-btn').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        if(b.classList.contains('saved')) return;
+        addToDict(fixes[+b.dataset.i], TL, $('intent').value.trim());
+        b.classList.add('saved'); b.textContent='✓ 已加入';
+      });
+    });
+
+    // 在后台记录「写出来了」（看懂=ok 时，1个意思只记1次。不在画面上显示）
+    if(v==='ok'){
+      const sig = TL+'|'+$('intent').value.trim();
+      if(sig !== render._lastWinSig){
+        render._lastWinSig = sig;
+        try{ LC.win({ skill:'書', lang:TL, source:'writer-zh' }); }catch{}
+      }
+    }
+
+    $('result').style.display='block';
+    $('result').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // 换了句子后，下一次 ok 算作新的一次
+  $('intent').addEventListener('input', ()=>{ render._lastWinSig = null; });
+
+  $('go').addEventListener('click', judge);
+  $('clearIn').addEventListener('click', ()=>{ $('intent').value=''; $('attempt').value=''; render._lastWinSig=null; $('intent').focus(); });
+
+  // 作为工具使用也记录（显示在首页的「继续上次」）
+  try{ LC.record({ href:'writer-zh.html', label:'Writer 写写看', sub:'写'+langName(TL) }); }catch{}
+</script>
+</body>
+</html>
