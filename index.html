@@ -1374,7 +1374,7 @@
     </div>
 
     <div class="tile-group">
-      <div class="group-head"><span class="group-label ko">읽기</span></div>
+      <div class="group-head"><span class="group-label ko">읽고 쓰기</span></div>
       <div class="tiles">
         <a href="reader-ko.html" class="tile" style="--i:4">
           <div class="tile-top">
@@ -1384,6 +1384,18 @@
           <div class="tile-bottom">
             <h3 class="tile-name">Reader</h3>
             <p class="tile-sub ko">붙여넣어 중국어·일본어를 읽다</p>
+            <span class="tile-cta">시작<span class="arrow">→</span></span>
+          </div>
+        </a>
+
+        <a href="writer-ko.html" class="tile" style="--i:5">
+          <div class="tile-top">
+            <span class="tile-num">02</span>
+            <span class="tile-tag">CN·JP · Write</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Writer</h3>
+            <p class="tile-sub ko">써 보고 ‘통하는지’ AI 판정</p>
             <span class="tile-cta">시작<span class="arrow">→</span></span>
           </div>
         </a>
@@ -1461,7 +1473,7 @@
     </div>
 
     <div class="tile-group">
-      <div class="group-head"><span class="group-label zh">阅读</span></div>
+      <div class="group-head"><span class="group-label zh">读·写</span></div>
       <div class="tiles">
         <a href="reader-zh.html" class="tile" style="--i:4">
           <div class="tile-top">
@@ -1471,6 +1483,18 @@
           <div class="tile-bottom">
             <h3 class="tile-name">Reader</h3>
             <p class="tile-sub">粘贴韩语·日语即读</p>
+            <span class="tile-cta">打开<span class="arrow">→</span></span>
+          </div>
+        </a>
+
+        <a href="writer-zh.html" class="tile" style="--i:5">
+          <div class="tile-top">
+            <span class="tile-num">02</span>
+            <span class="tile-tag">JP·KR · Write</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Writer</h3>
+            <p class="tile-sub">写写看，AI 判定「能不能看懂」</p>
             <span class="tile-cta">打开<span class="arrow">→</span></span>
           </div>
         </a>
@@ -1670,6 +1694,15 @@
   const UPDATE_VISIBLE     = 5;    // 折りたたまず表示する件数
 
   const updates = [
+    {
+      date: "2026-06-10",
+      tag:  { ja: "Writer · NEW", ko: "Writer · NEW", zh: "Writer · NEW" },
+      text: {
+        ja: "한국어・中文チャンネルにも Writer を公開 — 3言語すべてで「書いてAI判定」が使えるように。",
+        ko: "한국어 채널에도 Writer 공개 — 중국어·일본어를 써 보고 ‘통하는지’ AI가 판정해 줘요.",
+        zh: "中文频道也上线 Writer — 写写日语·韩语，AI 判定「能不能看懂」。"
+      }
+    },
     {
       date: "2026-06-10",
       tag:  { ja: "Reader / Writer", ko: "Reader / Writer", zh: "Reader / Writer" },

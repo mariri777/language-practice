@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writer · 써 보기 — 日々</title>
+<meta name="theme-color" content="#fdf3f4">
+<style>
+  :root{
+    --bg:#fdf3f4; --bg-elevated:#fffafb; --bg-tile:#f9e9ec; --bg-deep:#f0d7dc;
+    --ink:#33171f; --ink-2:#4d2733; --ink-3:#7d4f5c; --ink-4:#b58f9a;
+    --red:#c94f6d; --red-deep:#96334d; --red-bright:#dd6c87; --red-soft:rgba(201,79,109,.08); --red-glow:rgba(201,79,109,.2);
+    --gold:#b6843a; --green:#2f7c5e; --green-soft:rgba(47,124,94,.1); --rule:#e3c4cc; --hair:rgba(51,23,31,.10);
+    --font-ui:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",system-ui,sans-serif;
+    --font-head:"Apple SD Gothic Neo","Nanum Myeongjo","Noto Serif KR",serif;
+    --font-num:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+    --font-zh:"Songti SC","STSong","Source Han Serif SC","Noto Serif SC",serif;
+    --font-ja:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.65;
+       padding:0 0 80px;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+  header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;max-width:760px;margin:0 auto}
+  .brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  .brand .mark{width:26px;height:26px;background:var(--red);color:#fff;display:inline-flex;align-items:center;justify-content:center;border-radius:5px;font-family:var(--font-num);font-style:italic;font-size:17px;transform:rotate(-4deg)}
+  .gear{background:none;border:0;font-size:20px;cursor:pointer;color:var(--ink-3);padding:6px}
+
+  h1{font-family:var(--font-head);font-size:clamp(26px,5vw,38px);font-weight:600;letter-spacing:.01em;margin:8px 0 2px}
+  h1 .dot{color:var(--red);font-family:var(--font-num);font-style:italic}
+  .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 18px}
+
+  .card{background:var(--bg-elevated);border:1px solid var(--hair);border-radius:14px;padding:18px;margin-bottom:16px}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4);margin:0 0 7px}
+  textarea,input{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
+  textarea{min-height:64px;resize:vertical}
+  textarea.attempt{min-height:80px}
+  textarea.attempt.zh{font-family:var(--font-zh)} textarea.attempt.ja{font-family:var(--font-ja)}
+  .btn{font:inherit;font-weight:700;padding:12px 20px;border:0;border-radius:10px;background:var(--red);color:#fff;cursor:pointer;transition:background .2s}
+  .btn:hover{background:var(--red-bright)} .btn:disabled{opacity:.5;cursor:wait}
+  .btn.ghost{background:transparent;color:var(--red);border:1px solid var(--red)}
+  .btn.sm{padding:6px 12px;font-size:13px;border-radius:8px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+  .spacer{flex:1}
+
+  /* language segmented toggle */
+  .seg{display:inline-flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin-bottom:14px}
+  .seg button{font:inherit;font-weight:700;font-size:14px;padding:8px 18px;border:0;background:transparent;color:var(--ink-3);cursor:pointer}
+  .seg button.on{background:var(--red);color:#fff}
+
+  /* settings */
+  #settings{display:none}
+  #settings.open{display:block}
+  .notice{background:var(--red-soft);border:1px solid rgba(138,36,56,.25);color:var(--red-deep);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-bottom:14px}
+  .notice a{font-weight:700}
+  .notice ol{margin:8px 0 6px;padding-left:20px}
+  .notice li{margin:2px 0}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;background:rgba(20,16,10,.06);padding:1px 5px;border-radius:4px;font-size:.92em}
+  .disclose{font-size:12px;color:var(--ink-4);margin:10px 0 0;line-height:1.6}
+  .hint{font-size:12px;color:var(--ink-3);margin:6px 0 0;line-height:1.6}
+  select{appearance:auto}
+
+  /* result */
+  #result{display:none}
+  .verdict{display:flex;align-items:center;gap:11px;padding:4px 0 14px}
+  .verdict .vmark{width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;color:#fff}
+  .verdict.ok    .vmark{background:var(--green)}
+  .verdict.almost .vmark{background:var(--gold)}
+  .verdict.off   .vmark{background:var(--ink-4)}
+  .verdict .vtext{font-weight:700;font-size:16px}
+  .verdict.ok .vtext{color:var(--green)} .verdict.almost .vtext{color:var(--gold)} .verdict.off .vtext{color:var(--ink-3)}
+  .comment{color:var(--ink-2);font-size:14.5px;line-height:1.7;margin:0 0 4px}
+
+  .sec-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin:18px 0 8px;display:flex;align-items:center;gap:10px}
+  .sec-title::before{content:"";width:24px;height:2px;background:var(--red)}
+  .natural{font-size:19px;line-height:1.7;color:var(--ink);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .natural.zh{font-family:var(--font-zh)} .natural.ja{font-family:var(--font-ja)}
+  .natural .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:15px}
+  .copy{background:transparent;border:1px solid var(--rule);color:var(--ink-3);border-radius:8px;padding:4px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;margin-left:auto}
+  .copy.done{background:var(--green);border-color:var(--green);color:#fff}
+
+  .alt{padding:8px 0;border-top:1px solid var(--hair);font-size:15px}
+  .alt:first-child{border-top:0}
+  .alt.zh .at{font-family:var(--font-zh)} .alt.ja .at{font-family:var(--font-ja)}
+  .alt .ar{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:13px;margin-left:8px}
+  .alt .an{display:block;color:var(--ink-3);font-size:13px;margin-top:2px}
+
+  .word{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
+  .word:first-child{border-top:0}
+  .word .term{font-size:18px;min-width:0}
+  .word.zh .term{font-family:var(--font-zh)} .word.ja .term{font-family:var(--font-ja)}
+  .word .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:14px}
+  .word .mean{flex:1;min-width:0;color:var(--ink-2);font-size:14px}
+  .add-btn{background:transparent;border:1px solid var(--rule);color:var(--ink-3);border-radius:8px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0}
+  .add-btn.saved{background:var(--green);border-color:var(--green);color:#fff}
+
+  /* dictionary */
+  .dict-head{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
+  .dict-head .n{font-family:var(--font-num);font-style:italic;font-size:30px;color:var(--red)}
+  .dict-empty{color:var(--ink-4);font-size:14px;padding:8px 0}
+  .dict-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
+  .dict-item:first-child{border-top:0}
+  .dict-item .term{font-size:18px} .dict-item.zh .term{font-family:var(--font-zh)} .dict-item.ja .term{font-family:var(--font-ja)}
+  .dict-item .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:13px}
+  .dict-item .mean{flex:1;color:var(--ink-2);font-size:14px}
+  .del{background:none;border:0;color:var(--ink-4);cursor:pointer;font-size:16px;padding:4px 8px}
+  .del:hover{color:var(--red)}
+  .tag{font-size:10px;font-weight:700;letter-spacing:.1em;padding:2px 7px;border-radius:20px;background:var(--bg-deep);color:var(--ink-3)}
+
+  .err{color:var(--red);font-size:14px;margin-top:10px;white-space:pre-wrap}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px;margin-right:8px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html?tab=ko"><span class="mark">&amp;</span> 日々</a>
+  <button class="gear" id="gearBtn" title="설정" aria-label="설정">⚙</button>
+</header>
+
+<div class="wrap">
+  <h1>써 보기<span class="dot">.</span></h1>
+  <p class="lead">하고 싶은 말을 그 언어로 직접 써 보세요. AI가 ‘통하는지’ 판정하고, 더 자연스러운 표현도 알려줘요.</p>
+
+  <!-- settings -->
+  <div class="card" id="settings">
+    <label>AI (Gemini 또는 DeepSeek 선택 / Reader와 공통)</label>
+    <select id="provider">
+      <option value="gemini">Gemini (Google·무료 / 중국 본토에서는 사용 불가)</option>
+      <option value="deepseek">DeepSeek (충전 필요 / 중국 본토에서도 사용 가능)</option>
+    </select>
+    <p class="hint" id="provHint"></p>
+    <label style="margin-top:14px">API 키 (이 브라우저에만 저장)</label>
+    <input id="key" type="password" placeholder="AIza..." autocomplete="off">
+    <div class="row">
+      <button class="btn sm" id="saveKey">저장</button>
+      <button class="btn sm ghost" id="clearKey">삭제</button>
+      <a id="getKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="font-size:13px;color:var(--ink-3)">키 발급 →</a>
+    </div>
+    <label style="margin-top:14px">모델</label>
+    <select id="model"></select>
+    <div class="row"><button class="btn sm ghost" id="loadModels" type="button">사용 가능한 모델 목록 가져오기</button></div>
+    <p class="hint" id="modelHint">키를 저장한 뒤 가져오면 선택할 수 있는 모델이 늘어나요. Reader와 같은 키·설정을 사용해요.</p>
+  </div>
+
+  <div class="notice" id="noKey" style="display:none">
+    <strong>처음이신가요?</strong> — 판정에 AI를 사용해요. 오른쪽 위 <strong>⚙</strong> 에서 <strong>Gemini</strong>(무료·중국 본토✕) 또는 <strong>DeepSeek</strong>(충전 필요·중국 본토◯)을 고르고, 본인 키를 넣어주세요:
+    <ol>
+      <li><a id="noKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">키 발급 페이지</a> 에서 키를 만들어 복사</li>
+      <li>⚙ 의 「API 키」에 붙여넣고 「저장」</li>
+    </ol>
+    키는 이 브라우저에만 저장되며, 사이트 운영자에게는 전송되지 않아요. Reader에서 설정했다면 그대로 쓸 수 있어요.
+  </div>
+
+  <!-- compose -->
+  <div class="card">
+    <div class="seg" id="langSeg">
+      <button data-lang="zh" class="on">중국어로 쓰기</button>
+      <button data-lang="ja">일본어로 쓰기</button>
+    </div>
+
+    <label>① 한국어로, 하고 싶은 말</label>
+    <textarea id="intent" placeholder="예: 오늘 친구랑 영화 보러 갔는데 진짜 재밌었어!"></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="btn ghost sm" id="topicBtn" type="button">주제 받기</button>
+      <span class="spacer"></span>
+    </div>
+
+    <label style="margin-top:16px">② <span id="attemptLangLabel">중국어</span>로 직접 써 보기</label>
+    <textarea id="attempt" class="attempt zh" placeholder="먼저 스스로의 힘으로. 생각나지 않는 단어가 있어도 OK, 아는 데까지 써 보세요."></textarea>
+
+    <div class="row">
+      <button class="btn" id="go"><span id="goLabel">통하는지 판정</span></button>
+      <button class="btn ghost sm" id="clearIn">지우기</button>
+    </div>
+    <div class="err" id="err"></div>
+    <p class="hint">💡 완벽하지 않아도 괜찮아요. ‘통하면 승리’. 써 보고 교정을 사전에 모아 가면, 떠올릴 수 있는 단어가 점점 늘어나요.</p>
+    <p class="disclose">※ 입력한 문장은 판정을 위해 선택한 AI(Gemini 또는 DeepSeek)로 전송됩니다. 브라우저 안에서만 처리되지 않아요. 특히 Gemini 무료 등급은 입력이 모델 개선에 사용될 수 있으니, 보이고 싶지 않은 내용은 쓰지 마세요.</p>
+  </div>
+
+  <!-- result -->
+  <div id="result">
+    <div class="card">
+      <div class="verdict" id="verdict">
+        <span class="vmark" id="vmark"></span>
+        <span class="vtext" id="vtext"></span>
+      </div>
+      <p class="comment" id="comment"></p>
+
+      <div class="sec-title">자연스러운 표현</div>
+      <div class="natural" id="natural"></div>
+
+      <div class="sec-title" id="altsTitle" style="display:none">다른 표현</div>
+      <div id="alts"></div>
+
+      <div class="sec-title" id="fixesTitle" style="display:none">기억해 두고 싶은 말</div>
+      <div id="fixes"></div>
+    </div>
+  </div>
+
+  <!-- dictionary -->
+  <div class="card">
+    <div class="dict-head">
+      <div class="sec-title" style="margin:0">내 사전</div>
+      <span class="n" id="dictCount">0</span>
+    </div>
+    <div id="dictList"></div>
+  </div>
+</div>
+
+<script src="daily.js?v=1"></script>
+<script>
+  const $ = id => document.getElementById(id);
+  const DICT_K='mydict-ko-v1';
+  const PROVIDERS = {
+    gemini:   { base:'https://generativelanguage.googleapis.com/v1beta/openai', model:'gemini-2.5-flash', keyph:'AIza...', console:'https://aistudio.google.com/apikey',
+                guide:'고민되면 gemini-2.5-flash (무료 하루 250회·균형 ◎). 최고 정확도는 gemini-2.5-pro (무료 하루 100회). 새 버전이 나오면 자동으로 목록에 추가돼요.',
+                note:'Gemini는 무료. 단 중국 본토에서는 사용 불가(VPN 필요). 무료 등급은 입력이 학습에 쓰일 수 있어요.' },
+    deepseek: { base:'https://api.deepseek.com',                                 model:'deepseek-chat',    keyph:'sk-...',  console:'https://platform.deepseek.com',
+                guide:'deepseek-chat 가 표준 (중국 본토에서도 사용 가능). 사용에 사전 충전이 필요해요 (사용량 만큼 과금).',
+                note:'DeepSeek는 중국 본토에서도 사용 가능. 사용에 사전 충전이 필요해요 (사용량 만큼 과금).' }
+  };
+  const provider = () => localStorage.getItem('reader-provider') || 'gemini';
+  const P = () => PROVIDERS[provider()] || PROVIDERS.gemini;
+  const keyK = () => 'key-'+provider();
+  const modelK = () => 'model-'+provider();
+  const seenK = () => 'seen-models-'+provider();
+  const getKey = () => (localStorage.getItem(keyK())||'').trim();
+  const getModel = () => (localStorage.getItem(modelK())||P().model).trim();
+  function hasKey(){ return !!getKey(); }
+  function refreshKeyNotice(){ $('noKey').style.display = hasKey() ? 'none' : 'block'; }
+
+  /* ---------- target language ---------- */
+  const LANG_K='writer-ko-lang';
+  let TL = localStorage.getItem(LANG_K) || 'zh';   // 'zh' | 'ja'
+  const langName = l => l==='zh' ? '중국어' : '일본어';
+  function syncLang(){
+    $('langSeg').querySelectorAll('button').forEach(b=> b.classList.toggle('on', b.dataset.lang===TL));
+    $('attemptLangLabel').textContent = langName(TL);
+    const a = $('attempt'); a.classList.remove('zh','ja'); a.classList.add(TL);
+  }
+  $('langSeg').querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', ()=>{ TL=b.dataset.lang; localStorage.setItem(LANG_K,TL); syncLang(); });
+  });
+  syncLang();
+
+  /* ---------- settings ---------- */
+  function fillModels(ids){
+    const sel = $('model'); const cur = getModel(); const list = ids.slice();
+    if(!list.includes(cur)) list.unshift(cur);
+    sel.innerHTML = list.map(id=>`<option value="${id}"${id===cur?' selected':''}>${id}</option>`).join('');
+  }
+  function isChatModel(id){
+    if(provider()==='gemini') return /gemini/i.test(id) && !/(embedding|imagen|image|veo|tts|aqa|learnlm)/i.test(id);
+    return true;
+  }
+  function syncProviderUI(){
+    const p = P();
+    $('provider').value = provider();
+    $('key').value = getKey();
+    $('key').placeholder = p.keyph;
+    $('getKeyLink').href = p.console;
+    const nkl = $('noKeyLink'); if(nkl) nkl.href = p.console;
+    $('provHint').textContent = p.note;
+    fillModels([]);
+    $('modelHint').textContent = p.guide;
+    refreshKeyNotice();
+  }
+  syncProviderUI();
+
+  async function loadModels(){
+    const key = getKey(); const hint = $('modelHint');
+    if(!key){ hint.textContent='먼저 키를 저장해 주세요.'; return; }
+    hint.textContent='가져오는 중…';
+    try{
+      const res = await fetch(P().base+'/models', { headers:{ 'Authorization':'Bearer '+key } });
+      const j = await res.json();
+      const ids = (j.data||[]).map(m=>m.id).filter(Boolean).filter(isChatModel).sort();
+      if(!ids.length){ hint.textContent='모델을 가져오지 못했어요.'; return; }
+      fillModels(ids);
+      let seen = []; try{ seen = JSON.parse(localStorage.getItem(seenK())||'[]'); }catch{}
+      if(seen.length){
+        const fresh = ids.filter(id=>!seen.includes(id));
+        hint.textContent = fresh.length ? ('✨ 새 모델이 나왔어요: '+fresh.join('、')+' (선택 가능)') : P().guide;
+      } else hint.textContent = P().guide;
+      localStorage.setItem(seenK(), JSON.stringify(ids));
+    }catch(e){ hint.textContent='목록을 가져오지 못했어요 (키·통신 확인).'; }
+  }
+  $('loadModels').addEventListener('click', loadModels);
+  $('model').addEventListener('change', ()=> localStorage.setItem(modelK(), $('model').value));
+  $('provider').addEventListener('change', ()=>{
+    localStorage.setItem('reader-provider', $('provider').value);
+    syncProviderUI();
+    if(hasKey()) loadModels();
+  });
+  $('gearBtn').addEventListener('click', ()=>{
+    const opening = !$('settings').classList.contains('open');
+    $('settings').classList.toggle('open');
+    if(opening && hasKey() && $('model').options.length <= 1) loadModels();
+  });
+  $('saveKey').addEventListener('click', ()=>{
+    localStorage.setItem(keyK(), $('key').value.trim());
+    if($('model').value) localStorage.setItem(modelK(), $('model').value);
+    refreshKeyNotice();
+    if(hasKey()) loadModels();
+  });
+  $('clearKey').addEventListener('click', ()=>{ localStorage.removeItem(keyK()); $('key').value=''; refreshKeyNotice(); });
+
+  /* ---------- helpers ---------- */
+  function detectLang(s){
+    if(/[ぁ-んァ-ヶ]/.test(s)) return 'ja';
+    if(/[一-鿿㐀-䶿]/.test(s)) return 'zh';
+    return '';
+  }
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  /* ---------- dictionary (shared with Reader) ---------- */
+  function loadDict(){ try{ return JSON.parse(localStorage.getItem(DICT_K)||'[]'); }catch{ return []; } }
+  function saveDict(a){ localStorage.setItem(DICT_K, JSON.stringify(a)); }
+  function dictHas(term,lang){ return loadDict().some(d=>d.term===term && d.lang===lang); }
+  function addToDict(w, lang, source){
+    const a = loadDict();
+    if(a.some(d=>d.term===w.term && d.lang===lang)) return;
+    a.push({ id:'w_'+Math.random().toString(36).slice(2,9), term:w.term, reading:w.reading||'', meaning:w.meaning||'', lang, source:source||'', addedAt:Date.now() });
+    saveDict(a); renderDict();
+  }
+  function removeFromDict(id){ saveDict(loadDict().filter(d=>d.id!==id)); renderDict(); }
+  function renderDict(){
+    const a = loadDict().sort((x,y)=>y.addedAt-x.addedAt);
+    $('dictCount').textContent = a.length;
+    const el = $('dictList');
+    if(!a.length){ el.innerHTML = '<div class="dict-empty">아직 없어요. 문장을 써서 판정하면, 교정이나 배울 단어를 여기에 모을 수 있어요.</div>'; return; }
+    el.innerHTML = a.map(d=>`
+      <div class="dict-item ${d.lang}">
+        <span class="term">${esc(d.term)}</span>
+        ${d.reading?`<span class="read">${esc(d.reading)}</span>`:''}
+        <span class="mean">${esc(d.meaning)}</span>
+        ${d.lang?`<span class="tag">${d.lang==='zh'?'中':'日'}</span>`:''}
+        <button class="del" data-id="${d.id}" title="삭제">✕</button>
+      </div>`).join('');
+    el.querySelectorAll('.del').forEach(b=> b.addEventListener('click', ()=>removeFromDict(b.dataset.id)));
+  }
+  renderDict();
+
+  /* ---------- AI call ---------- */
+  async function callAI(messages, opts){
+    const res = await fetch(P().base+'/chat/completions', {
+      method:'POST',
+      headers:{ 'Authorization':'Bearer '+getKey(), 'Content-Type':'application/json' },
+      body: JSON.stringify(Object.assign({ model:getModel(), messages, temperature:0.3 }, opts||{}))
+    });
+    const raw = await res.text();
+    if(!res.ok) throw new Error('API 오류 (HTTP '+res.status+')\n'+raw.slice(0,300));
+    return JSON.parse(raw).choices[0].message.content;
+  }
+
+  /* ---------- 주제 ---------- */
+  $('topicBtn').addEventListener('click', async ()=>{
+    if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='먼저 API 키를 설정해 주세요 (오른쪽 위 ⚙).'; return; }
+    const btn=$('topicBtn'); btn.disabled=true; const old=btn.textContent; btn.textContent='생각 중…';
+    try{
+      const c = await callAI([{role:'user',content:
+        'SNS(X·인스타그램 등)에 올릴 법한, 한마디 ‘하고 싶은 말’을 한국어로 딱 하나만 내주세요. 일상적이고 짧게, 어학 초~중급자가 써 보고 싶어지는 내용으로. 설명이나 기호 없이 그 한 문장만 반환하세요.'}],
+        { temperature:1.0 });
+      $('intent').value = (c||'').trim().replace(/^["「]|["」]$/g,'');
+      $('attempt').focus();
+    }catch(e){ $('err').textContent = '주제를 가져오지 못했어요. 다시 시도해 주세요.'; }
+    finally{ btn.disabled=false; btn.textContent=old; }
+  });
+
+  /* ---------- judge ---------- */
+  async function judge(){
+    const intent = $('intent').value.trim();
+    const attempt = $('attempt').value.trim();
+    $('err').textContent='';
+    if(!intent){ $('err').textContent='① ‘하고 싶은 말’을 한국어로 입력해 주세요.'; return; }
+    if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='먼저 API 키를 설정해 주세요 (오른쪽 위 ⚙).'; return; }
+
+    $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>판정 중…';
+    const tgt = langName(TL);
+    const readingKind = TL==='zh' ? '병음(pinyin)' : '전문 히라가나 읽기(후리가나)';
+
+    const prompt = `당신은 한국어 사용자를 위한 ${tgt} 라이팅 코치입니다. 학습자가 ‘한국어로 하고 싶은 말’과 ‘스스로 써 본 ${tgt} 문장’을 제출합니다. 당신의 일은, 그 ${tgt} 문장이 의도를 전달하고 있는지를 다정하고 긍정적으로 판정하고, 더 자연스러운 표현을 알려주는 것입니다.
+가장 중요: 틀린 곳 찾기를 하지 말 것. 다소 부자연스러워도 ‘의도가 전달된다’면 ok로 할 것. 기죽이지 말고, 먼저 좋은 점을 인정할 것. 단정하지 말고, 자연스러움은 SNS·일상 회화 기준으로.
+
+판정(verdict):
+- "ok"     … 의도가 제대로 전달됨 (다소 부자연스러움은 허용)
+- "almost" … 일부만 고치면 전달됨 (아까움)
+- "off"    … 전달되지 않음／크게 어긋남／빈칸
+
+아래 JSON만 반환할 것 (앞뒤에 설명문 금지):
+{"verdict":"ok|almost|off","comment":"한국어 1~2문장. 먼저 칭찬한 뒤, 좋은 점이나 아쉬운 점을 한마디.","natural":"그 의도를 가장 자연스럽게 표현한 ${tgt} 문장 (1문장)","reading":"natural의 ${readingKind}","alts":[{"text":"또 다른 자연스러운 표현(${tgt})","reading":"${readingKind}","note":"뉘앙스 차이(한국어·선택)"}],"fixes":[{"term":"학습자 문장과의 차이나, 기억해 두면 유용한 어구(${tgt})","reading":"${readingKind}","meaning":"한국어 뜻"}]}
+
+규칙:
+- natural과 reading은 반드시 채울 것 (빈칸이어도 답을 보고 배울 수 있도록).
+- alts는 0~2개. 없으면 빈 배열.
+- fixes는 2~5개. 학습자 문장에서 아까웠던 말·빠졌던 말·기억하면 편리한 말 중심으로. 고유명사나 자명한 말은 생략.
+- 학습자의 문장이 비어 있어도 탓하지 말고, verdict="off", comment는 ‘먼저 생각나는 데까지 써 보자’고 격려하고, natural/reading은 채울 것.
+
+하고 싶은 말 (한국어): """${intent}"""
+학습자가 쓴 ${tgt} 문장: """${attempt||'(아직 쓰지 않음)'}"""`;
+
+    try{
+      const content = await callAI([{role:'user',content:prompt}], { temperature:0.3, response_format:{type:'json_object'} });
+      let data; try{ data = JSON.parse(content); }catch(e){ throw new Error('응답 분석에 실패했어요. 다시 시도해 주세요.'); }
+      render(data);
+    }catch(err){
+      const m = (err&&err.message)||String(err);
+      $('err').textContent = /Failed to fetch|NetworkError|Load failed/i.test(m)
+        ? '네트워크/연결에 실패했어요. 키나 통신을 확인해 주세요.' : m;
+    }finally{
+      $('go').disabled=false; $('goLabel').textContent='통하는지 판정';
+    }
+  }
+
+  const VERDICT_UI = {
+    ok:     { mark:'✓', text:'통해요!' },
+    almost: { mark:'△', text:'아까워요! 여기만 고치면 통해요' },
+    off:    { mark:'↻', text:'먼저 아래 표현을 보고, 다시 한번' }
+  };
+
+  function render(data){
+    const v = (data.verdict==='ok'||data.verdict==='almost'||data.verdict==='off') ? data.verdict : 'almost';
+    const ui = VERDICT_UI[v];
+    const vEl = $('verdict'); vEl.className = 'verdict '+v;
+    $('vmark').textContent = ui.mark;
+    $('vtext').textContent = ui.text;
+    $('comment').textContent = data.comment || '';
+
+    // natural
+    const nat = $('natural'); nat.className = 'natural '+TL;
+    nat.innerHTML = `<span>${esc(data.natural||'')}</span>${data.reading?`<span class="read">${esc(data.reading)}</span>`:''}<button class="copy" id="copyNat">복사</button>`;
+    const cp = $('copyNat');
+    if(cp) cp.addEventListener('click', ()=>{
+      navigator.clipboard?.writeText(data.natural||'').then(()=>{ cp.textContent='✓ 복사함'; cp.classList.add('done'); });
+    });
+
+    // alts
+    const alts = Array.isArray(data.alts)?data.alts.filter(a=>a&&a.text):[];
+    $('altsTitle').style.display = alts.length ? '' : 'none';
+    $('alts').innerHTML = alts.map(a=>`<div class="alt ${TL}"><span class="at">${esc(a.text)}</span>${a.reading?`<span class="ar">${esc(a.reading)}</span>`:''}${a.note?`<span class="an">${esc(a.note)}</span>`:''}</div>`).join('');
+
+    // fixes → dict
+    const fixes = Array.isArray(data.fixes)?data.fixes.filter(f=>f&&f.term):[];
+    $('fixesTitle').style.display = fixes.length ? '' : 'none';
+    $('fixes').innerHTML = fixes.map((f,i)=>{
+      const saved = dictHas(f.term, TL);
+      return `<div class="word ${TL}">
+        <span class="term">${esc(f.term)}</span>
+        ${f.reading?`<span class="read">${esc(f.reading)}</span>`:''}
+        <span class="mean">${esc(f.meaning||'')}</span>
+        <button class="add-btn ${saved?'saved':''}" data-i="${i}">${saved?'✓ 추가됨':'＋ 사전'}</button>
+      </div>`;
+    }).join('');
+    $('fixes').querySelectorAll('.add-btn').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        if(b.classList.contains('saved')) return;
+        addToDict(fixes[+b.dataset.i], TL, $('intent').value.trim());
+        b.classList.add('saved'); b.textContent='✓ 추가됨';
+      });
+    });
+
+    // ‘써냈다’를 뒤에서 기록 (통함=ok일 때, 1의도 1회까지. 화면에는 표시하지 않음)
+    if(v==='ok'){
+      const sig = TL+'|'+$('intent').value.trim();
+      if(sig !== render._lastWinSig){
+        render._lastWinSig = sig;
+        try{ LC.win({ skill:'書', lang:TL, source:'writer-ko' }); }catch{}
+      }
+    }
+
+    $('result').style.display='block';
+    $('result').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // 문장을 바꾸면, 다음 ok를 새 1건으로 센다
+  $('intent').addEventListener('input', ()=>{ render._lastWinSig = null; });
+
+  $('go').addEventListener('click', judge);
+  $('clearIn').addEventListener('click', ()=>{ $('intent').value=''; $('attempt').value=''; render._lastWinSig=null; $('intent').focus(); });
+
+  // 도구 이용으로도 기록 (홈의 ‘이어서 하기’에 표시)
+  try{ LC.record({ href:'writer-ko.html', label:'Writer 써 보기', sub:langName(TL)+'로 쓰기' }); }catch{}
+</script>
+</body>
+</html>
