@@ -308,7 +308,6 @@
     if(!hasKey()){ $('settings').classList.add('open'); $('err').textContent='先にAPIキーを設定してね（右上の⚙）。'; return; }
 
     const key = getKey();
-    const model = getModel();
     $('go').disabled = true; $('goLabel').innerHTML = '<span class="spin"></span>解析中…';
 
     const prompt = `あなたは日本語話者向けの語学アシスタントです。入力はSNS・チャットのくだけた文の可能性が高く、ネットスラング・略語・新語・方言・感情表現（例: 韓国語の「ㅋㅋ＝笑」「ㅠㅠ＝泣」、中国語の「yyds＝最高」「绝绝子＝神」など）が含まれる前提で解析してください。下記JSONのみを返す（前後に説明文を付けない）。
@@ -322,32 +321,53 @@
 文："""${text}"""`;
 
     const sleep = ms => new Promise(r=>setTimeout(r,ms));
-    const ATTEMPTS = 5;            // 1回 + 最大4回の自動リトライ
     const RETRYABLE = [408,429,500,502,503,504];
+    // 選んだモデルが混雑(503など)で返らないとき、軽い別モデルへ自動で切替える
+    const chosen = getModel();
+    const models = provider()==='gemini'
+      ? [...new Set([chosen,'gemini-2.0-flash','gemini-flash-latest','gemini-2.5-flash'])]
+      : [chosen];
+    const callOnce = async (mdl) => {
+      const ctl = new AbortController();
+      const to = setTimeout(()=>ctl.abort(), 45000);   // 45秒で打ち切り（無反応対策）
+      try{
+        const res = await fetch(P().base+'/chat/completions', {
+          method:'POST', signal: ctl.signal,
+          headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
+          body: JSON.stringify({ model: mdl, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
+        });
+        const raw = await res.text();
+        return { ok: res.ok, status: res.status, raw };
+      } finally { clearTimeout(to); }
+    };
     try{
-      let raw;
-      for(let i=0;;i++){
-        let res;
-        try{
-          res = await fetch(P().base+'/chat/completions', {
-            method:'POST',
-            headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json' },
-            body: JSON.stringify({ model, messages:[{role:'user',content:prompt}], temperature:0.2, response_format:{type:'json_object'} })
-          });
-        }catch(netErr){
-          // 通信エラーもリトライ対象
-          if(i<ATTEMPTS-1){ $('goLabel').innerHTML='<span class="spin"></span>再接続中… ('+(i+1)+'/'+(ATTEMPTS-1)+')'; await sleep(1200*Math.pow(2,i)); continue; }
-          throw netErr;
+      let raw, lastStatus = 0;
+      outer:
+      for(let mi=0; mi<models.length; mi++){
+        const mdl = models[mi], switched = mi>0;
+        for(let i=0;i<2;i++){           // モデルごとに最大2回
+          let r;
+          try{ r = await callOnce(mdl); }
+          catch(netErr){               // タイムアウト/通信断 → このモデルは諦め次へ
+            lastStatus = 0; break;
+          }
+          if(r.ok){ raw = r.raw; break outer; }
+          lastStatus = r.status;
+          if(RETRYABLE.includes(r.status)){
+            $('goLabel').innerHTML = '<span class="spin"></span>' + (switched ? ('別モデルで解析中… ('+mdl+')') : ('混雑中… 再試行 ('+(i+1)+'/2)'));
+            if(i<1){ await sleep(Math.round(800*Math.pow(2,i)*(1+Math.random()*0.3))); continue; }
+            continue outer;            // 2回ダメなら次のモデルへ
+          }
+          // 認証エラーや、ユーザー自身が選んだモデルでの失敗は停止。
+          // フォールバックで選んだモデルが非対応(404等)なら次のモデルへ。
+          if(mi===0 || [401,403].includes(r.status)) throw new Error('API エラー (HTTP '+r.status+')\n'+r.raw.slice(0,300));
+          continue outer;
         }
-        raw = await res.text();
-        if(res.ok) break;
-        if(RETRYABLE.includes(res.status) && i<ATTEMPTS-1){
-          const wait = Math.round((1200*Math.pow(2,i)) * (1+Math.random()*0.3));   // 1.2s,2.4s,4.8s,9.6s + ゆらぎ
-          $('goLabel').innerHTML='<span class="spin"></span>混雑中… 再試行 ('+(i+1)+'/'+(ATTEMPTS-1)+')';
-          await sleep(wait); continue;
-        }
-        if(res.status===503) throw new Error('AI が混雑しています（HTTP 503）。自動で数回試しても返りませんでした。少し待つか、文章を短く分けて試してください。⚙ で別のモデル（例: gemini-2.5-flash）に替えるのも有効です。');
-        throw new Error('API エラー (HTTP '+res.status+')\n'+raw.slice(0,300));
+      }
+      if(raw===undefined){
+        throw new Error(lastStatus===503
+          ? 'AI が混雑しています（HTTP 503）。軽いモデルに切替えても返りませんでした。少し時間をおくか、文章を短く分けて試してください。⚙ で DeepSeek（要チャージ・安定）に替えるのも有効です。'
+          : 'AI から応答がありませんでした'+(lastStatus?'（HTTP '+lastStatus+'）':'')+'。少し待って再試行してください。');
       }
       let data;
       try{ data = JSON.parse(JSON.parse(raw).choices[0].message.content); }
