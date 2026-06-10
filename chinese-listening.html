@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listening · 聞いて当てる — 日々</title>
+<meta name="theme-color" content="#eff4fa">
+<style>
+  :root{
+    --bg:#eff4fa; --bg-elevated:#f9fbfe; --bg-tile:#e7eef7; --bg-deep:#d7e3f1;
+    --ink:#10203a; --ink-2:#243854; --ink-3:#5a6e8c; --ink-4:#9bacc4;
+    --accent:#2f6db6; --accent-deep:#1d4a85; --accent-bright:#4a88cf; --accent-soft:rgba(47,109,182,.08);
+    --gold:#b6843a; --green:#2f7c5e; --red:#b54848; --rule:#c3d3e6; --hair:rgba(16,32,58,.10);
+    --font-ui:-apple-system,BlinkMacSystemFont,"Inter","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif;
+    --font-mincho:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+    --font-num:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+    --font-zh:"Songti SC","STSong","Source Han Serif SC","Noto Serif SC",serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.65;
+       padding:0 0 80px;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:680px;margin:0 auto;padding:0 18px}
+
+  header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;max-width:680px;margin:0 auto}
+  .brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  .brand .mark{width:26px;height:26px;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;border-radius:5px;font-family:var(--font-num);font-style:italic;font-size:17px;transform:rotate(-4deg)}
+  .gear{background:none;border:0;font-size:20px;cursor:pointer;color:var(--ink-3);padding:6px}
+
+  h1{font-family:var(--font-mincho);font-size:clamp(26px,5vw,38px);font-weight:400;letter-spacing:.04em;margin:8px 0 2px}
+  h1 .dot{color:var(--accent);font-family:var(--font-num);font-style:italic}
+  .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 18px}
+
+  .card{background:var(--bg-elevated);border:1px solid var(--hair);border-radius:14px;padding:18px;margin-bottom:16px}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4);margin:0 0 7px}
+  select{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink);appearance:auto}
+  .btn{font:inherit;font-weight:700;padding:12px 20px;border:0;border-radius:10px;background:var(--accent);color:#fff;cursor:pointer;transition:background .2s}
+  .btn:hover{background:var(--accent-bright)} .btn:disabled{opacity:.5;cursor:default}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+  .btn.sm{padding:6px 12px;font-size:13px;border-radius:8px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+  .hint{font-size:12px;color:var(--ink-3);margin:6px 0 0;line-height:1.6}
+
+  /* settings */
+  #settings{display:none}
+  #settings.open{display:block}
+  .rate{display:flex;align-items:center;gap:10px;margin-top:12px}
+  .rate input{flex:1}
+  .rate b{font-variant-numeric:tabular-nums;min-width:42px;text-align:right;font-weight:700}
+
+  /* level select */
+  .levels{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .lv{border:1px solid var(--rule);background:#fff;border-radius:12px;padding:14px;text-align:left;cursor:pointer;font:inherit;transition:border-color .15s}
+  .lv:hover{border-color:var(--accent)}
+  .lv .lv-name{font-weight:700;font-size:16px}
+  .lv .lv-sub{font-size:12px;color:var(--ink-3);margin-top:2px}
+  .lv:disabled{opacity:.45;cursor:default}
+  .lv:disabled:hover{border-color:var(--rule)}
+
+  /* quiz */
+  #quiz{display:none}
+  .q-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .q-no{font-family:var(--font-num);font-style:italic;font-size:20px;color:var(--accent)}
+  .q-quit{background:none;border:0;color:var(--ink-4);font:inherit;font-size:13px;cursor:pointer}
+  .playzone{display:flex;align-items:center;justify-content:center;gap:14px;padding:18px 0 22px}
+  .play{width:84px;height:84px;border-radius:50%;border:0;background:var(--accent);color:#fff;font-size:30px;cursor:pointer;transition:transform .15s,background .2s;display:inline-flex;align-items:center;justify-content:center}
+  .play:hover{background:var(--accent-bright)} .play:active{transform:scale(.95)}
+  .play.pulse{animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(47,109,182,.35)}50%{box-shadow:0 0 0 14px rgba(47,109,182,0)}}
+  @media (prefers-reduced-motion:reduce){.play.pulse{animation:none}}
+  .slow{width:52px;height:52px;border-radius:50%;border:1px solid var(--rule);background:#fff;font-size:20px;cursor:pointer}
+  .slow:hover{border-color:var(--accent)}
+  .choices{display:grid;gap:10px}
+  .choice{border:1px solid var(--rule);background:#fff;border-radius:12px;padding:13px 16px;text-align:left;cursor:pointer;font:inherit;font-size:14.5px;color:var(--ink-2);transition:border-color .15s}
+  .choice:hover{border-color:var(--accent)}
+  .choice:disabled{cursor:default}
+  .choice.wrong{border-color:var(--red);color:var(--red);background:rgba(181,72,72,.05);opacity:.7}
+  .choice.right{border-color:var(--green);background:rgba(47,124,94,.08);color:var(--ink);font-weight:700}
+
+  /* answer reveal */
+  #reveal{display:none;margin-top:16px;border-top:1px solid var(--hair);padding-top:14px}
+  .rv-flag{font-weight:700;font-size:15px;margin:0 0 8px}
+  .rv-flag.ok{color:var(--green)} .rv-flag.retry{color:var(--gold)}
+  .rv-zh{font-family:var(--font-zh);font-size:24px;line-height:1.6}
+  .rv-py{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:15px;margin:2px 0 0}
+  .rv-ja{color:var(--ink-2);font-size:14.5px;margin:6px 0 0}
+
+  /* result */
+  #result{display:none;text-align:center;padding:10px 0}
+  .res-big{font-family:var(--font-mincho);font-size:30px;margin:6px 0 2px}
+  .res-num{font-family:var(--font-num);font-style:italic;font-size:44px;color:var(--accent);line-height:1.1}
+  .res-sub{color:var(--ink-3);font-size:13.5px;margin:6px 0 18px}
+
+  .err{color:var(--red);font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html"><span class="mark">&amp;</span> 日々</a>
+  <button class="gear" id="gearBtn" title="設定" aria-label="設定">⚙</button>
+</header>
+
+<div class="wrap">
+  <h1>聞いて当てる<span class="dot">.</span></h1>
+  <p class="lead">中国語の文を耳だけで聞いて、意味を当てる4択。何度でも聞き直せます。音声はこの端末の内蔵音声を使うので、設定もオフラインもOK。</p>
+
+  <!-- settings -->
+  <div class="card" id="settings">
+    <label>声（この端末で使える中国語の声）</label>
+    <select id="voice"></select>
+    <div class="rate">
+      <span style="font-size:12px;color:var(--ink-3)">速さ</span>
+      <input type="range" id="rate" min="0.5" max="1.2" step="0.1" value="0.9">
+      <b id="rateVal">0.9x</b>
+    </div>
+    <div class="row"><button class="btn sm ghost" id="testVoice" type="button">▶ この声を試す</button></div>
+    <p class="hint" id="voiceHint"></p>
+  </div>
+
+  <!-- level select -->
+  <div class="card" id="intro">
+    <label>レベルを選んでスタート（1セット10問）</label>
+    <div class="levels">
+      <button class="lv" data-hsk="1"><span class="lv-name">HSK 1</span><span class="lv-sub" id="n-hsk1"></span></button>
+      <button class="lv" data-hsk="2"><span class="lv-name">HSK 2</span><span class="lv-sub" id="n-hsk2"></span></button>
+      <button class="lv" data-hsk="3"><span class="lv-name">HSK 3</span><span class="lv-sub" id="n-hsk3"></span></button>
+      <button class="lv" data-hsk="4"><span class="lv-name">HSK 4</span><span class="lv-sub" id="n-hsk4"></span></button>
+      <button class="lv" data-hsk="dict" id="lvDict" style="grid-column:1/-1"><span class="lv-name">マイ辞書から</span><span class="lv-sub" id="n-dict">Reader/Writerで貯めた中国語の単語が出ます</span></button>
+    </div>
+    <p class="hint">💡 文は Daily 中国語と同じ検証済みのもの。まず HSK1〜2 が「耳だけで」分かるようになると、簡単な会話がぐっと近づきます。</p>
+    <div class="err" id="err"></div>
+  </div>
+
+  <!-- quiz -->
+  <div class="card" id="quiz">
+    <div class="q-top">
+      <span class="q-no"><span id="qNow">1</span> / <span id="qTotal">10</span></span>
+      <button class="q-quit" id="quitBtn">やめる</button>
+    </div>
+    <div class="playzone">
+      <button class="play pulse" id="playBtn" title="再生" aria-label="再生">▶</button>
+      <button class="slow" id="slowBtn" title="ゆっくり再生" aria-label="ゆっくり再生">🐢</button>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div id="reveal">
+      <p class="rv-flag" id="rvFlag"></p>
+      <div class="rv-zh" id="rvZh"></div>
+      <div class="rv-py" id="rvPy"></div>
+      <div class="rv-ja" id="rvJa"></div>
+      <div class="row">
+        <button class="btn" id="nextBtn">次へ →</button>
+        <button class="btn ghost sm" id="againBtn">▶ もう一度聞く</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- result -->
+  <div class="card" id="result">
+    <div class="res-num" id="resNum">10</div>
+    <div class="res-big">聞けた！</div>
+    <p class="res-sub" id="resSub"></p>
+    <div class="row" style="justify-content:center">
+      <button class="btn" id="moreBtn">もう1セット</button>
+      <button class="btn ghost" id="backBtn">レベルを選ぶ</button>
+    </div>
+  </div>
+</div>
+
+<script src="daily.js?v=1"></script>
+<script src="zh-bank.js?v=1"></script>
+<script>
+  const $ = id => document.getElementById(id);
+  const RATE_K='listening-rate', VOICE_K='listening-voice-zh';
+
+  /* ---------- TTS ---------- */
+  let voicesZh = [];
+  function loadVoices(){
+    const all = speechSynthesis.getVoices();
+    if(!all.length) return;
+    voicesZh = all.filter(v=>/^zh([-_]|$)/i.test(v.lang))
+                  .sort((a,b)=>(/CN/i.test(b.lang)?1:0)-(/CN/i.test(a.lang)?1:0));
+    const saved = localStorage.getItem(VOICE_K);
+    $('voice').innerHTML = voicesZh.map((v,i)=>`<option value="${i}"${v.name===saved?' selected':''}>${v.name}（${v.lang}${v.localService?'・端末内':'・オンライン'}）</option>`).join('')
+      || '<option value="">（中国語の声が見つかりません）</option>';
+    $('voiceHint').textContent = voicesZh.length
+      ? '声は端末によって違います。いくつか聞き比べて、自然なものを選んでね。'
+      : 'この端末には中国語の音声が入っていないようです（iPhone/Android/Macなら大抵あります）。';
+  }
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+  setTimeout(loadVoices, 300); setTimeout(loadVoices, 1500);
+
+  const rate = () => parseFloat(localStorage.getItem(RATE_K) || '0.9');
+  $('rate').value = rate(); $('rateVal').textContent = rate()+'x';
+  $('rate').addEventListener('input', ()=>{ localStorage.setItem(RATE_K, $('rate').value); $('rateVal').textContent = $('rate').value+'x'; });
+  $('voice').addEventListener('change', ()=>{ const v = voicesZh[+$('voice').value]; if(v) localStorage.setItem(VOICE_K, v.name); });
+
+  function speak(text, r){
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    const v = voicesZh[+$('voice').value] || voicesZh[0];
+    if(v) u.voice = v;
+    u.lang = (v && v.lang) || 'zh-CN';
+    u.rate = r || rate();
+    speechSynthesis.speak(u);
+  }
+  $('gearBtn').addEventListener('click', ()=> $('settings').classList.toggle('open'));
+  $('testVoice').addEventListener('click', ()=> speak('你好！我们一起去看电影吧。'));
+
+  /* ---------- sources ---------- */
+  function dictWords(){
+    try{
+      return (JSON.parse(localStorage.getItem('mydict-v1')||'[]'))
+        .filter(d=>d.lang==='zh' && d.term && d.meaning);
+    }catch{ return []; }
+  }
+  function bankOf(hsk){ return ZH_BANK.filter(s=>s.hsk===hsk); }
+
+  function setupIntro(){
+    [1,2,3,4].forEach(h=> $('n-hsk'+h).textContent = bankOf(h).length+'文');
+    const dw = dictWords();
+    if(dw.length >= 4){
+      $('lvDict').disabled = false;
+      $('n-dict').textContent = dw.length+'語（Reader/Writerで貯めた単語）';
+    } else {
+      $('lvDict').disabled = true;
+      $('n-dict').textContent = 'あと'+(4-dw.length)+'語で解放（ReaderかWriterで辞書に4語以上ためると出題できます）';
+    }
+  }
+  setupIntro();
+
+  /* ---------- quiz state ---------- */
+  const shuffle = a => { const c=a.slice(); for(let i=c.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [c[i],c[j]]=[c[j],c[i]]; } return c; };
+  let Q = null; // { items:[{speakText, zh, py, ja}], i, firstTryWins, answeredThis, firstTry }
+
+  function buildSet(kind){
+    if(kind === 'dict'){
+      const dw = shuffle(dictWords());
+      const items = dw.slice(0, 10).map(w=>({ speakText:w.term, zh:w.term, py:w.reading||'', ja:w.meaning, pool:'dict' }));
+      return items.length >= 4 ? items : null;
+    }
+    const pool = bankOf(+kind);
+    return shuffle(pool).slice(0, 10).map(s=>({ speakText:s.zh, zh:s.zh, py:s.py, ja:s.ja, hsk:s.hsk, pool:'bank' }));
+  }
+  function distractors(item){
+    let cands;
+    if(item.pool === 'dict'){
+      cands = dictWords().map(w=>w.meaning).filter(m=>m && m!==item.ja);
+    } else {
+      cands = bankOf(item.hsk).map(s=>s.ja).filter(j=>j!==item.ja);
+      if(cands.length < 3) cands = ZH_BANK.map(s=>s.ja).filter(j=>j!==item.ja);
+    }
+    return shuffle([...new Set(cands)]).slice(0,3);
+  }
+
+  function start(kind){
+    const items = buildSet(kind);
+    if(!items){ $('err').textContent='マイ辞書の中国語の単語が4語未満です。'; return; }
+    Q = { items, i:0, wins:0, kind };
+    $('err').textContent='';
+    $('intro').style.display='none'; $('result').style.display='none'; $('quiz').style.display='block';
+    $('qTotal').textContent = items.length;
+    try{
+      const lbl = kind==='dict' ? 'マイ辞書' : 'HSK'+kind;
+      LC.record({ href:'chinese-listening.html', label:'Listening 中国語', sub:lbl+' ・ 聞いて当てる' });
+    }catch{}
+    renderQ(false);
+  }
+
+  function renderQ(autoplay){
+    const it = Q.items[Q.i];
+    Q.firstTry = true; Q.done = false;
+    $('qNow').textContent = Q.i+1;
+    $('reveal').style.display='none';
+    $('playBtn').classList.add('pulse');
+    const opts = shuffle([it.ja, ...distractors(it)]);
+    $('choices').innerHTML = opts.map(o=>`<button class="choice">${o.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</button>`).join('');
+    $('choices').querySelectorAll('.choice').forEach(b=>{
+      b.addEventListener('click', ()=> answer(b, b.textContent === it.ja));
+    });
+    if(autoplay) speak(it.speakText);
+  }
+
+  function answer(btn, correct){
+    if(Q.done) return;
+    if(!correct){
+      btn.classList.add('wrong'); btn.disabled = true;
+      Q.firstTry = false;
+      return; // 減点なし・もう一度選べる
+    }
+    Q.done = true;
+    btn.classList.add('right');
+    $('choices').querySelectorAll('.choice').forEach(b=> b.disabled = true);
+    const it = Q.items[Q.i];
+    if(Q.firstTry){
+      Q.wins++;
+      try{ LC.win({ skill:'聞', lang:'zh', source:'listening' }); }catch{}
+    }
+    $('rvFlag').textContent = Q.firstTry ? '✓ 一発で聞けた！' : '✓ 正解！（聞き直してもう一度耳に入れよう）';
+    $('rvFlag').className = 'rv-flag ' + (Q.firstTry?'ok':'retry');
+    $('rvZh').textContent = it.zh;
+    $('rvPy').textContent = it.py;
+    $('rvJa').textContent = it.ja;
+    $('reveal').style.display='block';
+    $('playBtn').classList.remove('pulse');
+  }
+
+  $('playBtn').addEventListener('click', ()=>{ $('playBtn').classList.remove('pulse'); speak(Q.items[Q.i].speakText); });
+  $('slowBtn').addEventListener('click', ()=>{ $('playBtn').classList.remove('pulse'); speak(Q.items[Q.i].speakText, Math.max(0.5, rate()*0.75)); });
+  $('againBtn').addEventListener('click', ()=> speak(Q.items[Q.i].speakText));
+  $('nextBtn').addEventListener('click', ()=>{
+    if(Q.i+1 < Q.items.length){ Q.i++; renderQ(true); }
+    else finish();
+  });
+  $('quitBtn').addEventListener('click', ()=>{ speechSynthesis.cancel(); $('quiz').style.display='none'; $('intro').style.display='block'; setupIntro(); });
+
+  function finish(){
+    speechSynthesis.cancel();
+    $('quiz').style.display='none';
+    $('result').style.display='block';
+    $('resNum').textContent = Q.wins+' / '+Q.items.length;
+    $('resSub').textContent = Q.wins===Q.items.length
+      ? '全部一発で聞き取れた！耳が育ってる🎉'
+      : '一発で聞き取れた数。聞き直して正解した分も、ちゃんと耳の栄養になってます。';
+  }
+  $('moreBtn').addEventListener('click', ()=> start(Q.kind));
+  $('backBtn').addEventListener('click', ()=>{ $('result').style.display='none'; $('intro').style.display='block'; setupIntro(); });
+
+  document.querySelectorAll('.lv').forEach(b=>{
+    b.addEventListener('click', ()=> start(b.dataset.hsk));
+  });
+</script>
+</body>
+</html>
