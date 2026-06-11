@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>8月のゴール · ロードマップ — 日々</title>
+<title>ゴール · 道のり — 日々</title>
 <meta name="theme-color" content="#f1e8d2">
 <style>
   :root{
@@ -24,22 +24,42 @@
   header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;max-width:680px;margin:0 auto}
   .brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
   .brand .mark{width:26px;height:26px;background:var(--red);color:#fff;display:inline-flex;align-items:center;justify-content:center;border-radius:5px;font-family:var(--font-num);font-style:italic;font-size:17px;transform:rotate(-4deg)}
+  .gear{background:none;border:0;font-size:20px;cursor:pointer;color:var(--ink-3);padding:6px}
 
   h1{font-family:var(--font-mincho);font-size:clamp(26px,5vw,38px);font-weight:400;letter-spacing:.04em;margin:8px 0 2px}
   h1 .dot{color:var(--red);font-family:var(--font-num);font-style:italic}
-  .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 14px}
-  .scenes{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
-  .scene{font-size:12px;font-weight:700;background:var(--red-soft);color:var(--red-deep);border:1px solid rgba(138,36,56,.22);border-radius:20px;padding:4px 12px}
+  .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 18px}
 
   .card{background:var(--bg-elevated);border:1px solid var(--hair);border-radius:14px;padding:18px;margin-bottom:16px}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4);margin:0 0 8px}
+  input[type=text],input[type=date]{width:100%;font:inherit;padding:11px 13px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
+  .btn{font:inherit;font-weight:700;padding:12px 20px;border:0;border-radius:10px;background:var(--red);color:#fff;cursor:pointer;transition:background .2s}
+  .btn:hover{background:var(--red-bright)} .btn:disabled{opacity:.45;cursor:default}
+  .btn.ghost{background:transparent;color:var(--red);border:1px solid var(--red)}
+  .btn.sm{padding:6px 12px;font-size:13px;border-radius:8px}
+  .hint{font-size:12px;color:var(--ink-3);margin:8px 0 0;line-height:1.6}
 
-  /* countdown */
+  /* onboarding */
+  #setup{display:none}
+  .types{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .type{border:1px solid var(--rule);background:#fff;border-radius:12px;padding:13px;text-align:left;cursor:pointer;font:inherit;transition:border-color .15s}
+  .type:hover{border-color:var(--red)}
+  .type.on{border-color:var(--red);background:var(--red-soft)}
+  .type .t-name{font-weight:700;font-size:15px}
+  .type .t-sub{font-size:11.5px;color:var(--ink-3);margin-top:2px;display:block}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:13px;font-weight:700;border:1px solid var(--rule);background:#fff;color:var(--ink-3);border-radius:20px;padding:7px 15px;cursor:pointer}
+  .chip.on{border-color:var(--red);background:var(--red);color:#fff}
+
+  /* plan view */
+  #plan{display:none}
+  .scenes{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+  .scene{font-size:12px;font-weight:700;background:var(--red-soft);color:var(--red-deep);border:1px solid rgba(138,36,56,.22);border-radius:20px;padding:4px 12px}
   .count{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
   .count .n{font-family:var(--font-num);font-style:italic;font-size:52px;color:var(--red);line-height:1}
   .count .l{font-size:13px;color:var(--ink-3)}
   .count .d{margin-left:auto;font-size:12px;color:var(--ink-4)}
 
-  /* today */
   .today{background:var(--red);color:#fff;border:0}
   .today .kicker{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.8;margin:0 0 8px}
   .today .task{font-size:17px;font-weight:700;line-height:1.55;margin:0 0 4px}
@@ -48,7 +68,8 @@
   .today .tiny{display:inline-block;margin-left:12px;font-size:12.5px;color:#fff;opacity:.8;text-decoration:underline}
   .nopressure{font-size:12px;color:var(--ink-4);margin:-6px 0 16px;padding:0 4px}
 
-  /* phases */
+  .cele{background:rgba(47,124,94,.1);border:1px solid rgba(47,124,94,.35);color:var(--green);border-radius:12px;padding:12px 15px;font-size:14px;font-weight:700;margin-bottom:16px;display:none}
+
   .phase-head{display:flex;align-items:baseline;gap:10px;margin:0 0 4px}
   .phase-num{font-family:var(--font-num);font-style:italic;font-size:24px;color:var(--red)}
   .phase-title{font-weight:700;font-size:16px}
@@ -59,7 +80,6 @@
   .item.done .st{color:var(--green);font-size:16px}
   .item .lb{flex:1;min-width:0;font-size:14px;color:var(--ink-2)}
   .item.done .lb{color:var(--ink-4);text-decoration:line-through;text-decoration-color:rgba(47,124,94,.5)}
-  .item .lb .sub{display:block;font-size:11.5px;color:var(--ink-4)}
   .item a.jump{flex-shrink:0;font-size:12px;font-weight:700;color:var(--red);text-decoration:none}
   .item .act{flex-shrink:0;font:inherit;font-size:12.5px;font-weight:700;border:1px solid var(--rule);background:#fff;color:var(--ink-3);border-radius:8px;padding:5px 11px;cursor:pointer}
   .item .act:hover{border-color:var(--red);color:var(--red)}
@@ -68,52 +88,115 @@
   .bar i{display:block;height:100%;background:var(--red);border-radius:4px;transition:width .4s}
   .item.done .bar i{background:var(--green)}
 
+  /* week + achievements */
+  .week{display:flex;gap:10px;flex-wrap:wrap}
+  .wk{background:var(--bg-tile);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--ink-2)}
+  .wk b{font-family:var(--font-num);font-style:italic;font-size:20px;color:var(--red);margin-right:3px}
+  .ach{display:flex;align-items:baseline;gap:10px;padding:8px 0;border-top:1px solid var(--hair);font-size:13.5px}
+  .ach:first-of-type{border-top:0}
+  .ach .d{flex-shrink:0;font-family:var(--font-num);font-style:italic;font-size:12px;color:var(--ink-4)}
+  .ach .t{color:var(--ink-2)}
+  .ach-empty{font-size:13px;color:var(--ink-4)}
+
   .foot{font-size:12px;color:var(--ink-4);line-height:1.7;margin-top:4px}
 </style>
 </head>
 <body>
 <header>
   <a class="brand" href="index.html"><span class="mark">&amp;</span> 日々</a>
+  <button class="gear" id="gearBtn" title="目標を変更" aria-label="目標を変更" style="display:none">⚙</button>
 </header>
 
 <div class="wrap">
-  <h1>8月のゴール<span class="dot">.</span></h1>
-  <p class="lead">8月中旬までに、簡単な中国語会話ができるようになる。そのための道のりを、毎日「今日はこれ」だけに引き直して出します。</p>
-  <div class="scenes">
-    <span class="scene">友達とおしゃべり</span>
-    <span class="scene">旅行・街中</span>
-    <span class="scene">推し活・配信</span>
-  </div>
 
-  <div class="card">
-    <div class="count">
-      <span class="n" id="days">--</span>
-      <span class="l">残り日数<br>（8月15日まで）</span>
-      <span class="d" id="doneCount"></span>
+  <!-- ===== onboarding ===== -->
+  <div id="setup">
+    <h1>ゴールを決める<span class="dot">.</span></h1>
+    <p class="lead">なりたい姿と期限を決めると、このサイトのツールで「何を・どれだけやればいいか」の道のりを組み立てます。入力はぜんぶ、あなたのブラウザの中だけに保存されます。</p>
+
+    <div class="card">
+      <label>① どうなりたい？（中国語）</label>
+      <div class="types" id="typeSel">
+        <button class="type" data-type="talk"><span class="t-name">🗣 会話できる</span><span class="t-sub">聞いて・組み立てて・返せる</span></button>
+        <button class="type" data-type="listen"><span class="t-name">👂 聞き取れる</span><span class="t-sub">耳だけで意味が分かる</span></button>
+        <button class="type" data-type="read"><span class="t-name">📖 読める</span><span class="t-sub">SNSや投稿がすらすら読める</span></button>
+        <button class="type" data-type="write"><span class="t-name">✍️ 書ける</span><span class="t-sub">投稿・コメント・返信が書ける</span></button>
+      </div>
+      <p class="hint">※ 韓国語の目標は準備中。まずは中国語から。</p>
+    </div>
+
+    <div class="card" id="sceneCard" style="display:none">
+      <label>② 使いたい場面（あとで場面ミッションになります・複数OK）</label>
+      <div class="chips" id="sceneSel">
+        <button class="chip" data-scene="friend">友達とおしゃべり</button>
+        <button class="chip" data-scene="travel">旅行・街中</button>
+        <button class="chip" data-scene="oshi">推し活・配信</button>
+        <button class="chip" data-scene="intro">あいさつ・自己紹介</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <label>③ いつまで？</label>
+      <input type="date" id="deadline">
+      <label style="margin-top:14px">④ 目標をひとこと（任意・自分に見せる用）</label>
+      <input type="text" id="goalTitle" placeholder="例：8月の旅行までに、お店で困らないようになる">
+      <div style="margin-top:16px">
+        <button class="btn" id="buildBtn" disabled>この目標で道のりを組む →</button>
+      </div>
+      <p class="hint">あとから ⚙ でいつでも変えられます。</p>
     </div>
   </div>
 
-  <div class="card today">
-    <p class="kicker">▶ 今日はこれ</p>
-    <p class="task" id="todayTask">…</p>
-    <p class="why" id="todayWhy"></p>
-    <a class="go" id="todayGo" href="#">開く →</a>
-    <a class="tiny" href="chinese-listening.html?n=3">今日は無理な日 → 3問だけ聞く</a>
+  <!-- ===== plan ===== -->
+  <div id="plan">
+    <h1 id="planH1">ゴール<span class="dot">.</span></h1>
+    <p class="lead" id="planLead"></p>
+    <div class="scenes" id="planScenes"></div>
+
+    <div class="card">
+      <div class="count">
+        <span class="n" id="days">--</span>
+        <span class="l" id="daysLabel">残り日数</span>
+        <span class="d" id="doneCount"></span>
+      </div>
+    </div>
+
+    <div class="cele" id="cele"></div>
+
+    <div class="card today">
+      <p class="kicker">▶ 今日はこれ</p>
+      <p class="task" id="todayTask">…</p>
+      <p class="why" id="todayWhy"></p>
+      <a class="go" id="todayGo" href="#">開く →</a>
+      <a class="tiny" href="chinese-listening.html?n=3">今日は無理な日 → 3問だけ聞く</a>
+    </div>
+    <p class="nopressure">休んだ日があっても「遅れ」はありません。ここは毎日、残りのいちばん手前から引き直されるだけです。</p>
+
+    <div id="phases"></div>
+
+    <div class="card">
+      <label>今週の自分</label>
+      <div class="week" id="week"></div>
+    </div>
+
+    <div class="card">
+      <label>できるようになったこと</label>
+      <div id="achList"><p class="ach-empty">チェックポイントを達成すると、日付つきでここに積まれていきます。</p></div>
+    </div>
+
+    <p class="foot">Daily のコース完走・Listening のベストスコア・Writer の「✓通じる」回数・Reader の解析回数・マイ辞書の語数は自動で反映。シャドーイングと場面ミッションは、やったら自分で「+1」「✓」を（自己申告でOK。あなたの練習です）。</p>
   </div>
-  <p class="nopressure">休んだ日があっても「遅れ」はありません。ここは毎日、残りのいちばん手前から引き直されるだけです。</p>
-
-  <div id="phases"></div>
-
-  <p class="foot">チェックの仕組み：Daily のコース完走・Listening のベストスコア・Writer の「✓通じる」回数・Reader の解析回数は自動で反映されます。シャドーイングと場面練習は、やったら自分で「+1」「✓」を押してください（自己申告でOK。あなたの練習です）。</p>
 </div>
 
 <script src="daily.js?v=1"></script>
 <script>
   const $ = id => document.getElementById(id);
-  const DEADLINE = new Date(2026, 7, 15); // 2026-08-15
+  const GOAL_K = 'goal-zh-v1';
   const SELF_K = 'roadmap-zh-v1';
 
-  /* ---------- data sources ---------- */
+  /* ---------- stores ---------- */
+  function goal(){ try{ return JSON.parse(localStorage.getItem(GOAL_K)||'null'); }catch{ return null; } }
+  function saveGoal(g){ localStorage.setItem(GOAL_K, JSON.stringify(g)); }
   function selfState(){ try{ return JSON.parse(localStorage.getItem(SELF_K)||'{}'); }catch{ return {}; } }
   function saveSelf(s){ localStorage.setItem(SELF_K, JSON.stringify(s)); }
   function counter(key){ return (selfState().counts||{})[key]||0; }
@@ -121,6 +204,7 @@
   function checked(key){ return !!(selfState().checks||{})[key]; }
   function toggleCheck(key){ const s=selfState(); s.checks=s.checks||{}; s.checks[key]=!s.checks[key]; saveSelf(s); }
 
+  /* ---------- auto progress sources ---------- */
   function dailyDone(ids){
     try{
       const st = JSON.parse(localStorage.getItem('cn-practice-v2')||'{}');
@@ -135,93 +219,192 @@
     try{ return LC.getWins().filter(w=>w.skill==='書' && w.source==='writer').length; }catch{ return 0; }
   }
   function readerUses(){ return parseInt(localStorage.getItem('reader-uses'))||0; }
-
-  /* ---------- the plan ---------- */
-  const PHASES = [
-    { num:'壱', title:'土台 — 耳と基本文', when:'目安：6月いっぱい',
-      desc:'HSK1の文型・数字・時間は、おしゃべりでも旅行でも全部の土台。まず「耳だけで分かる」を作る。' },
-    { num:'弐', title:'組み立て — 近況が言える', when:'目安：7月前半',
-      desc:'「昨日◯◯した」「◯◯したい」「◯◯より好き」が言えると、友達との会話が回りはじめる。' },
-    { num:'参', title:'場面 — 旅行と推し活', when:'目安：7月後半',
-      desc:'ゴールの3场面に直結する表現を、Writer と Reader で実戦形式に。' },
-    { num:'肆', title:'仕上げ — 反射神経', when:'目安：8月前半',
-      desc:'考えてから言うのではなく、聞いた瞬間・言いたい瞬間に出るところまで磨く。' }
-  ];
-
-  const ITEMS = [
-    { ph:0, id:'d1', label:'Daily 中国語：HSK1 の3コースを完走', link:'chinese-practice.html',
-      prog:()=>({n:dailyDone([0,1,2]), t:3}),
-      task:'Daily 中国語で HSK1 の続きを1課ぶん（10問）', why:'あいさつ・数字・場所——会話の足腰。' },
-    { ph:0, id:'l1', label:'Listening：HSK1 で一発 8/10 を出す', link:'chinese-listening.html',
-      prog:()=>({n:Math.min(listenBest('1'),8), t:8}),
-      task:'Listening HSK1 を1セット（一発8問正解でクリア）', why:'耳だけで分かる文を増やす。何度でも挑戦OK。' },
-    { ph:0, id:'s1', label:'シャドーイング：聞いた文をマネして言う ×10文', link:'chinese-listening.html', self:'count', key:'shadow', target:10,
-      prog:()=>({n:Math.min(counter('shadow'),10), t:10}),
-      task:'Listening で2文、答え合わせのあと声に出してマネる（やったらここで +1）', why:'口が覚えると、会話で出てくる。' },
-
-    { ph:1, id:'d2', label:'Daily 中国語：HSK2 の3コースを完走', link:'chinese-practice.html',
-      prog:()=>({n:dailyDone([3,4,5]), t:3}),
-      task:'Daily 中国語で HSK2 の続きを1課ぶん（10問）', why:'了・过・願望・比較＝近況報告の道具。' },
-    { ph:1, id:'l2', label:'Listening：HSK2 で一発 8/10 を出す', link:'chinese-listening.html',
-      prog:()=>({n:Math.min(listenBest('2'),8), t:8}),
-      task:'Listening HSK2 を1セット（一発8問正解でクリア）', why:'返事が聞き取れないと会話にならない。' },
-    { ph:1, id:'w1', label:'Writer：「✓通じる」を合計10回（近況・感想を書く）', link:'writer.html',
-      prog:()=>({n:Math.min(writerWins(),10), t:10}),
-      task:'Writer で、友達に言いたい近況や感想を1文（✓通じるまで）', why:'自分の言葉で組み立てる練習。直しは辞書へ。' },
-    { ph:1, id:'s2', label:'シャドーイング：累計30文', link:'chinese-listening.html', self:'count', key:'shadow', target:30,
-      prog:()=>({n:Math.min(counter('shadow'),30), t:30}),
-      task:'Listening で2文シャドーイング（やったら +1）', why:'毎日少しずつ、口の筋トレ。' },
-
-    { ph:2, id:'t1', label:'旅行：注文の一言を Writer で ✓（例「これをください」「おすすめは？」）', link:'writer.html', self:'check', key:'t1',
-      prog:()=>({n:checked('t1')?1:0, t:1}),
-      task:'Writer で「これをください／おすすめはありますか」を自分の言い方で ✓ に', why:'旅行场面その1。✓が出たらここをチェック。' },
-    { ph:2, id:'t2', label:'旅行：値段・買い物を Writer で ✓（例「いくら？」「ちょっと高い」）', link:'writer.html', self:'check', key:'t2',
-      prog:()=>({n:checked('t2')?1:0, t:1}),
-      task:'Writer で「これいくら？ちょっと高いな」を ✓ に', why:'旅行场面その2。' },
-    { ph:2, id:'t3', label:'旅行：移動・道きき Writer で ✓（例「駅はどこ？」「歩いて行ける？」）', link:'writer.html', self:'check', key:'t3',
-      prog:()=>({n:checked('t3')?1:0, t:1}),
-      task:'Writer で「駅はどこですか？歩いて行けますか？」を ✓ に', why:'旅行场面その3。' },
-    { ph:2, id:'o1', label:'推し活：応援コメントを Writer で ✓（例「今日も最高だった！」）', link:'writer.html', self:'check', key:'o1',
-      prog:()=>({n:checked('o1')?1:0, t:1}),
-      task:'Writer で、推しに送りたい応援コメントを1つ ✓ に', why:'本当に使う言葉がいちばん覚わる。' },
-    { ph:2, id:'o2', label:'推し活：配信・投稿の感想を Writer で ✓', link:'writer.html', self:'check', key:'o2',
-      prog:()=>({n:checked('o2')?1:0, t:1}),
-      task:'Writer で、昨日見た配信や投稿の感想を1文 ✓ に', why:'感想が言えると友達との会話も弾む。' },
-    { ph:2, id:'r1', label:'Reader：友達や推しの投稿を5回読む', link:'reader.html',
-      prog:()=>({n:Math.min(readerUses(),5), t:5}),
-      task:'Reader に友達か推しの投稿を1つ貼って読む（気になる語は＋辞書）', why:'生の中国語に触れる。辞書も育つ。' },
-    { ph:2, id:'l3', label:'Listening：HSK3 で一発 7/10（背伸び）', link:'chinese-listening.html',
-      prog:()=>({n:Math.min(listenBest('3'),7), t:7}),
-      task:'Listening HSK3 を1セット（一発7問でクリア）', why:'少し上を聞いておくと、HSK2が楽に聞こえる。' },
-
-    { ph:3, id:'l4', label:'Listening：HSK1か2で一発 9/10', link:'chinese-listening.html',
-      prog:()=>({n:Math.min(Math.max(listenBest('1'),listenBest('2')),9), t:9}),
-      task:'Listening HSK1か2 を1セット（一発9問でクリア）', why:'ほぼ全部聞こえる＝会話のスピードについていける。' },
-    { ph:3, id:'w2', label:'Writer：「✓通じる」を合計25回', link:'writer.html',
-      prog:()=>({n:Math.min(writerWins(),25), t:25}),
-      task:'Writer で今日言いたかったことを1文（✓通じるまで）', why:'量が反射神経を作る。' },
-    { ph:3, id:'s3', label:'仕上げ：「今日言いたかった一言」を7回', link:'writer.html', self:'count', key:'daily7', target:7,
-      prog:()=>({n:Math.min(counter('daily7'),7), t:7}),
-      task:'今日言いたかった一言を Writer で✓にして、ここで +1', why:'最後の1週間の儀式。8月の自分への引き継ぎ。' }
-  ];
-
-  /* ---------- render ---------- */
-  function daysLeft(){
-    const today = new Date(); today.setHours(0,0,0,0);
-    return Math.max(0, Math.ceil((DEADLINE - today) / 86400000));
+  function dictCount(){
+    try{ return JSON.parse(localStorage.getItem('mydict-v1')||'[]').filter(d=>d.lang==='zh').length; }catch{ return 0; }
   }
-  function isDone(it){ const p = it.prog(); return p.n >= p.t; }
 
-  function render(){
-    $('days').textContent = daysLeft();
-    const doneN = ITEMS.filter(isDone).length;
-    $('doneCount').textContent = 'チェックポイント '+doneN+' / '+ITEMS.length;
+  /* ---------- parts bank ---------- */
+  const cap = (fn,t)=>()=>({n:Math.min(fn(),t), t});
+  const PART = {
+    daily1:  t=>({label:'Daily 中国語：HSK1 の3コースを完走', link:'chinese-practice.html', prog:()=>({n:dailyDone([0,1,2]),t:3}), task:'Daily 中国語で HSK1 の続きを1課ぶん（10問）', why:'あいさつ・数字・場所——全部の足腰。'}),
+    daily2:  t=>({label:'Daily 中国語：HSK2 の3コースを完走', link:'chinese-practice.html', prog:()=>({n:dailyDone([3,4,5]),t:3}), task:'Daily 中国語で HSK2 の続きを1課ぶん（10問）', why:'了・过・願望・比較＝近況報告の道具。'}),
+    daily3:  t=>({label:'Daily 中国語：HSK3 のコースを3つ完走', link:'chinese-practice.html', prog:()=>({n:dailyDone([6,7,8,9,10,11])>3?3:dailyDone([6,7,8,9,10,11]),t:3}), task:'Daily 中国語で HSK3 の続きを1課ぶん（10問）', why:'読み物によく出る接続詞・補語に慣れる。'}),
+    listen1_8: t=>({label:'Listening：HSK1 で一発 8/10', link:'chinese-listening.html', prog:cap(()=>listenBest('1'),8), task:'Listening HSK1 を1セット（一発8問でクリア）', why:'耳だけで分かる文を増やす。何度でも挑戦OK。'}),
+    listen2_8: t=>({label:'Listening：HSK2 で一発 8/10', link:'chinese-listening.html', prog:cap(()=>listenBest('2'),8), task:'Listening HSK2 を1セット（一発8問でクリア）', why:'返事が聞き取れないと会話にならない。'}),
+    listen3_7: t=>({label:'Listening：HSK3 で一発 7/10（背伸び）', link:'chinese-listening.html', prog:cap(()=>listenBest('3'),7), task:'Listening HSK3 を1セット（一発7問でクリア）', why:'少し上を聞くと、下が楽に聞こえる。'}),
+    listen4_6: t=>({label:'Listening：HSK4 で一発 6/10（挑戦）', link:'chinese-listening.html', prog:cap(()=>listenBest('4'),6), task:'Listening HSK4 を1セット（一発6問でクリア）', why:'実際の会話スピードへの慣らし。'}),
+    listen12_9: t=>({label:'Listening：HSK1か2で一発 9/10', link:'chinese-listening.html', prog:cap(()=>Math.max(listenBest('1'),listenBest('2')),9), task:'Listening HSK1か2 を1セット（一発9問でクリア）', why:'ほぼ全部聞こえる＝スピードについていける。'}),
+    shadow:  t=>({label:`シャドーイング：聞いた文をマネして言う 累計${t}文`, link:'chinese-listening.html', self:'count', key:'shadow', prog:cap(()=>counter('shadow'),t), task:'Listening で2文、答え合わせのあと声に出してマネる（やったら +1）', why:'口が覚えると、会話で出てくる。'}),
+    writer:  t=>({label:`Writer：「✓通じる」を合計${t}回`, link:'writer.html', prog:cap(writerWins,t), task:'Writer で言いたいことを1文（✓通じるまで）', why:'自分の言葉で組み立てる練習。直しは辞書へ。'}),
+    reader:  t=>({label:`Reader：気になる投稿を読む 累計${t}回`, link:'reader.html', prog:cap(readerUses,t), task:'Reader に投稿や文章を1つ貼って読む（気になる語は＋辞書）', why:'生の中国語に触れる。辞書も育つ。'}),
+    dict:    t=>({label:`マイ辞書：${t}語ためる`, link:'reader.html', prog:cap(dictCount,t), task:'Reader/Writer で気になった語を「＋辞書」（あと少し！）', why:'自分が出会った語こそ、また出会う語。'}),
+    daily7:  t=>({label:'仕上げ：「今日言いたかった一言」を7回', link:'writer.html', self:'count', key:'daily7', prog:cap(()=>counter('daily7'),7), task:'今日言いたかった一言を Writer で✓にして、ここで +1', why:'最後の儀式。未来の自分への引き継ぎ。'})
+  };
+  // 場面ミッション（self check）
+  const MISSIONS = {
+    travel: [
+      {key:'t1', label:'旅行：注文の一言を Writer で ✓（「これをください」「おすすめは？」）', task:'Writer で「これをください／おすすめは？」を自分の言い方で ✓ に'},
+      {key:'t2', label:'旅行：値段・買い物を Writer で ✓（「いくら？」「ちょっと高い」）', task:'Writer で「これいくら？ちょっと高いな」を ✓ に'},
+      {key:'t3', label:'旅行：移動・道きき Writer で ✓（「駅はどこ？」「歩いて行ける？」）', task:'Writer で「駅はどこ？歩いて行ける？」を ✓ に'}
+    ],
+    oshi: [
+      {key:'o1', label:'推し活：応援コメントを Writer で ✓（「今日も最高だった！」）', task:'Writer で、推しに送りたい応援コメントを1つ ✓ に'},
+      {key:'o2', label:'推し活：配信・投稿の感想を Writer で ✓', task:'Writer で、見た配信や投稿の感想を1文 ✓ に'}
+    ],
+    friend: [
+      {key:'f1', label:'友達：近況報告を Writer で ✓（「最近◯◯にハマってる」）', task:'Writer で、友達に言いたい近況を1文 ✓ に'},
+      {key:'f2', label:'友達：質問を Writer で ✓（「週末なにしてた？」）', task:'Writer で、友達に聞きたい質問を1つ ✓ に'}
+    ],
+    intro: [
+      {key:'g1', label:'自己紹介を Writer で ✓（名前・出身・好きなもの）', task:'Writer で、自己紹介3点セットを ✓ に'}
+    ]
+  };
+  function missionItems(scenes){
+    const out = [];
+    (scenes||[]).forEach(s=> (MISSIONS[s]||[]).forEach(m=> out.push({
+      label:m.label, link:'writer.html', self:'check', key:m.key,
+      prog:()=>({n:checked(m.key)?1:0, t:1}), task:m.task, why:'本当に使う言葉がいちばん覚わる。✓が出たらチェック。'
+    })));
+    return out;
+  }
 
-    // 今日はこれ＝フェーズ順で最初の未完了
-    const next = ITEMS.find(it=>!isDone(it));
+  /* ---------- plans per goal type ---------- */
+  const PHASE_META = {
+    talk: [
+      {num:'壱', title:'土台 — 耳と基本文', desc:'まず「耳だけで分かる」を作る。HSK1は全部の足腰。'},
+      {num:'弐', title:'組み立て — 近況が言える', desc:'「昨日◯◯した」「◯◯したい」が言えると会話が回りはじめる。'},
+      {num:'参', title:'場面 — 自分の生活で使う', desc:'選んだ場面に直結する表現を実戦形式で。'},
+      {num:'肆', title:'仕上げ — 反射神経', desc:'考えてからではなく、瞬間に出るところまで。'}
+    ],
+    listen: [
+      {num:'壱', title:'土台 — まず聞こえる', desc:'HSK1の文を耳だけで。文型を知ると聞こえ方が変わる。'},
+      {num:'弐', title:'伸ばす — 日常の速さ', desc:'HSK2＋口に出す練習。言える文は聞こえる文。'},
+      {num:'参', title:'背伸び — 一段上を聞く', desc:'上のレベルを聞くと、下が楽になる。'},
+      {num:'肆', title:'仕上げ — ほぼ全部聞こえる', desc:'9割聞こえれば、会話も配信もついていける。'}
+    ],
+    read: [
+      {num:'壱', title:'土台 — 文の形を知る', desc:'読解は文型の知識が半分。HSK1と辞書づくりから。'},
+      {num:'弐', title:'量 — 生の文に触れる', desc:'Reader で実物を読む。出会った語を貯める。'},
+      {num:'参', title:'広げる — 長め・速め', desc:'HSK3の接続詞と、読む量をさらに。'},
+      {num:'肆', title:'仕上げ — 辞書が育った', desc:'自分の辞書50語＝あなた専用の頻出単語帳。'}
+    ],
+    write: [
+      {num:'壱', title:'土台 — 短い文が作れる', desc:'HSK1の語順で、まず1文。'},
+      {num:'弐', title:'組み立て — 言いたいことを形に', desc:'Writer で実際に書く。直しが教材になる。'},
+      {num:'参', title:'場面 — 本番の文を書く', desc:'選んだ場面の「本当に出したい一文」を仕上げる。'},
+      {num:'肆', title:'仕上げ — 毎日書ける', desc:'量が反射神経を作る。'}
+    ]
+  };
+  function buildPlan(type, scenes){
+    const M = missionItems(scenes);
+    if(type==='listen') return [
+      [PART.daily1(), PART.listen1_8(), PART.shadow(10)],
+      [PART.daily2(), PART.listen2_8(), PART.shadow(30)],
+      [PART.listen3_7(), PART.reader(5), PART.shadow(50)],
+      [PART.listen12_9(), PART.listen4_6()]
+    ];
+    if(type==='read') return [
+      [PART.daily1(), PART.dict(10), PART.reader(5)],
+      [PART.daily2(), PART.reader(15), PART.dict(25)],
+      [PART.daily3(), PART.reader(30), PART.writer(5)],
+      [PART.dict(50), PART.reader(50)]
+    ];
+    if(type==='write') return [
+      [PART.daily1(), PART.writer(5), PART.dict(10)],
+      [PART.daily2(), PART.writer(15), PART.listen1_8()],
+      [...M, PART.writer(25), PART.reader(5)],
+      [PART.writer(40), PART.daily7()]
+    ];
+    // talk（デフォルト）
+    return [
+      [PART.daily1(), PART.listen1_8(), PART.shadow(10)],
+      [PART.daily2(), PART.listen2_8(), PART.writer(10), PART.shadow(30)],
+      [...M, PART.reader(5), PART.listen3_7()],
+      [PART.listen12_9(), PART.writer(25), PART.daily7()]
+    ];
+  }
+  const TYPE_NAME = { talk:'会話できる', listen:'聞き取れる', read:'読める', write:'書ける' };
+  const SCENE_NAME = { friend:'友達とおしゃべり', travel:'旅行・街中', oshi:'推し活・配信', intro:'あいさつ・自己紹介' };
+
+  /* ---------- onboarding ---------- */
+  let selType = null, selScenes = [];
+  function refreshSetup(){
+    document.querySelectorAll('.type').forEach(b=> b.classList.toggle('on', b.dataset.type===selType));
+    $('sceneCard').style.display = (selType==='talk'||selType==='write') ? 'block' : 'none';
+    document.querySelectorAll('.chip').forEach(b=> b.classList.toggle('on', selScenes.includes(b.dataset.scene)));
+    $('buildBtn').disabled = !(selType && $('deadline').value);
+  }
+  document.querySelectorAll('.type').forEach(b=> b.addEventListener('click', ()=>{ selType=b.dataset.type; refreshSetup(); }));
+  document.querySelectorAll('.chip').forEach(b=> b.addEventListener('click', ()=>{
+    const s=b.dataset.scene;
+    selScenes = selScenes.includes(s) ? selScenes.filter(x=>x!==s) : [...selScenes, s];
+    refreshSetup();
+  }));
+  $('deadline').addEventListener('change', refreshSetup);
+  $('buildBtn').addEventListener('click', ()=>{
+    const g = {
+      type: selType,
+      scenes: (selType==='talk'||selType==='write') ? selScenes : [],
+      title: $('goalTitle').value.trim(),
+      deadline: $('deadline').value,
+      createdAt: goal()?.createdAt || Date.now(),
+      doneIds: goal()?.doneIds || [],
+      ach: goal()?.ach || []
+    };
+    saveGoal(g);
+    show();
+  });
+
+  /* ---------- plan rendering ---------- */
+  function daysLeft(dl){
+    const t = new Date(); t.setHours(0,0,0,0);
+    const d = new Date(dl+'T00:00:00');
+    return Math.max(0, Math.ceil((d - t) / 86400000));
+  }
+  function fmtMD(d){ return (d.getMonth()+1)+'/'+d.getDate(); }
+  function phaseWhen(g, pi){
+    const a = new Date(g.createdAt), b = new Date(g.deadline+'T00:00:00');
+    if(b<=a) return '';
+    const span = (b-a)/4;
+    return '目安：〜'+fmtMD(new Date(a.getTime()+span*(pi+1)));
+  }
+  function itemId(it){ return it.key || it.label; }
+  function isDone(it){ const p=it.prog(); return p.n>=p.t; }
+
+  function renderPlan(){
+    const g = goal(); if(!g) return;
+    const phases = buildPlan(g.type, g.scenes);
+    const meta = PHASE_META[g.type] || PHASE_META.talk;
+    const flat = phases.flat();
+
+    $('planH1').innerHTML = (g.title ? esc(g.title) : '中国語、'+TYPE_NAME[g.type]+'ようになる') + '<span class="dot">.</span>';
+    $('planLead').textContent = '期限は '+g.deadline.replace(/-/g,'/')+'。毎日「今日はこれ」だけに引き直して出します。';
+    $('planScenes').innerHTML = ['<span class="scene">'+TYPE_NAME[g.type]+'</span>']
+      .concat((g.scenes||[]).map(s=>'<span class="scene">'+SCENE_NAME[s]+'</span>')).join('');
+
+    $('days').textContent = daysLeft(g.deadline);
+    const doneItems = flat.filter(isDone);
+    $('doneCount').textContent = 'チェックポイント '+doneItems.length+' / '+flat.length;
+
+    // 新規達成 → できたリストへ＋お祝い
+    const prevDone = new Set(g.doneIds||[]);
+    const newly = doneItems.filter(it=>!prevDone.has(itemId(it)));
+    if(newly.length){
+      const today = LC.dateStr();
+      newly.forEach(it=> g.ach.push({ t: it.label, d: today }));
+      g.doneIds = doneItems.map(itemId);
+      saveGoal(g);
+      $('cele').style.display='block';
+      $('cele').textContent = '🎉 できるようになった： '+newly.map(it=>it.label).join(' ／ ');
+    }
+    // 完了が取り消された場合も同期（self checkの解除など）
+    g.doneIds = doneItems.map(itemId); saveGoal(g);
+
+    // 今日はこれ
+    const next = flat.find(it=>!isDone(it));
     if(next){
       $('todayTask').textContent = next.task;
-      $('todayWhy').textContent = next.why || '';
+      $('todayWhy').textContent = next.why||'';
       $('todayGo').href = next.link;
     } else {
       $('todayTask').textContent = '全チェックポイント達成！🎉 もう「勉強」じゃなく、使う段階です。';
@@ -229,31 +412,73 @@
       $('todayGo').href = 'writer.html';
     }
 
-    $('phases').innerHTML = PHASES.map((p,pi)=>{
-      const rows = ITEMS.filter(it=>it.ph===pi).map(it=>{
-        const pr = it.prog(); const done = pr.n >= pr.t;
+    // フェーズ
+    $('phases').innerHTML = phases.map((items,pi)=>{
+      const rows = items.map(it=>{
+        const pr = it.prog(); const done = pr.n>=pr.t;
         const stat = done ? '✓' : (pr.t>1 ? pr.n+'/'+pr.t : '・');
-        let act = '';
+        let act='';
         if(it.self==='count') act = `<button class="act" data-bump="${it.key}">${done?'✓ 完了':'+1'}</button>`;
         if(it.self==='check') act = `<button class="act" data-check="${it.key}">${done?'✓ 済':'✓ にする'}</button>`;
         return `<div class="item ${done?'done':''}">
           <span class="st">${stat}</span>
-          <span class="lb">${it.label}${pr.t>1?`<span class="bar"><i style="width:${Math.round(pr.n/pr.t*100)}%"></i></span>`:''}</span>
+          <span class="lb">${esc(it.label)}${pr.t>1?`<span class="bar"><i style="width:${Math.round(pr.n/pr.t*100)}%"></i></span>`:''}</span>
           ${act}
           <a class="jump" href="${it.link}">開く→</a>
         </div>`;
       }).join('');
       return `<div class="card">
-        <div class="phase-head"><span class="phase-num">${p.num}</span><span class="phase-title">${p.title}</span><span class="phase-when">${p.when}</span></div>
-        <p class="phase-desc">${p.desc}</p>
+        <div class="phase-head"><span class="phase-num">${meta[pi].num}</span><span class="phase-title">${meta[pi].title}</span><span class="phase-when">${phaseWhen(g,pi)}</span></div>
+        <p class="phase-desc">${meta[pi].desc}</p>
         ${rows}
       </div>`;
     }).join('');
+    document.querySelectorAll('[data-bump]').forEach(b=> b.addEventListener('click', ()=>{ bump(b.dataset.bump,1); renderPlan(); }));
+    document.querySelectorAll('[data-check]').forEach(b=> b.addEventListener('click', ()=>{ toggleCheck(b.dataset.check); renderPlan(); }));
 
-    document.querySelectorAll('[data-bump]').forEach(b=> b.addEventListener('click', ()=>{ bump(b.dataset.bump, 1); render(); }));
-    document.querySelectorAll('[data-check]').forEach(b=> b.addEventListener('click', ()=>{ toggleCheck(b.dataset.check); render(); }));
+    // 今週の自分
+    let wins=[]; try{ wins = LC.getWins(); }catch{}
+    const wk = Date.now()-7*86400000;
+    const week = wins.filter(w=>w.at>=wk);
+    const c = s => week.filter(w=>w.skill===s).length;
+    const parts = [];
+    if(c('聞')) parts.push('<div class="wk"><b>'+c('聞')+'</b>聞けた</div>');
+    if(c('書')) parts.push('<div class="wk"><b>'+c('書')+'</b>書けた</div>');
+    if(c('読')) parts.push('<div class="wk"><b>'+c('読')+'</b>読めた</div>');
+    $('week').innerHTML = parts.join('') || '<p class="ach-empty">今週はこれから。1問でも「できた」が出るとここに数字が積まれます。</p>';
+
+    // できるようになったこと
+    const ach = (g.ach||[]).slice().reverse();
+    $('achList').innerHTML = ach.length
+      ? ach.map(a=>`<div class="ach"><span class="d">${a.d.slice(5).replace('-','/')}</span><span class="t">${esc(a.t)}</span></div>`).join('')
+      : '<p class="ach-empty">チェックポイントを達成すると、日付つきでここに積まれていきます。</p>';
   }
-  render();
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  /* ---------- view switching ---------- */
+  function show(){
+    const g = goal();
+    $('setup').style.display = g ? 'none' : 'block';
+    $('plan').style.display = g ? 'block' : 'none';
+    $('gearBtn').style.display = g ? 'block' : 'none';
+    if(g) renderPlan();
+    else {
+      // デフォルト期限：70日後
+      if(!$('deadline').value){
+        const d = new Date(Date.now()+70*86400000);
+        $('deadline').value = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      }
+      refreshSetup();
+    }
+  }
+  $('gearBtn').addEventListener('click', ()=>{
+    const g = goal();
+    if(g){ selType=g.type; selScenes=g.scenes||[]; $('deadline').value=g.deadline; $('goalTitle').value=g.title||''; }
+    $('plan').style.display='none'; $('setup').style.display='block'; $('gearBtn').style.display='none';
+    refreshSetup();
+    window.scrollTo({top:0});
+  });
+  show();
 </script>
 </body>
 </html>
