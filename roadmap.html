@@ -35,8 +35,6 @@
   input[type=text],input[type=date]{width:100%;font:inherit;padding:11px 13px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
   .btn{font:inherit;font-weight:700;padding:12px 20px;border:0;border-radius:10px;background:var(--red);color:#fff;cursor:pointer;transition:background .2s}
   .btn:hover{background:var(--red-bright)} .btn:disabled{opacity:.45;cursor:default}
-  .btn.ghost{background:transparent;color:var(--red);border:1px solid var(--red)}
-  .btn.sm{padding:6px 12px;font-size:13px;border-radius:8px}
   .hint{font-size:12px;color:var(--ink-3);margin:8px 0 0;line-height:1.6}
 
   /* onboarding */
@@ -45,6 +43,8 @@
   .type{border:1px solid var(--rule);background:#fff;border-radius:12px;padding:13px;text-align:left;cursor:pointer;font:inherit;transition:border-color .15s}
   .type:hover{border-color:var(--red)}
   .type.on{border-color:var(--red);background:var(--red-soft)}
+  .type:disabled{opacity:.5;cursor:default}
+  .type:disabled:hover{border-color:var(--rule)}
   .type .t-name{font-weight:700;font-size:15px}
   .type .t-sub{font-size:11.5px;color:var(--ink-3);margin-top:2px;display:block}
   .chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -88,7 +88,6 @@
   .bar i{display:block;height:100%;background:var(--red);border-radius:4px;transition:width .4s}
   .item.done .bar i{background:var(--green)}
 
-  /* week + achievements */
   .week{display:flex;gap:10px;flex-wrap:wrap}
   .wk{background:var(--bg-tile);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--ink-2)}
   .wk b{font-family:var(--font-num);font-style:italic;font-size:20px;color:var(--red);margin-right:3px}
@@ -104,59 +103,54 @@
 <body>
 <header>
   <a class="brand" href="index.html"><span class="mark">&amp;</span> 日々</a>
-  <button class="gear" id="gearBtn" title="目標を変更" aria-label="目標を変更" style="display:none">⚙</button>
+  <button class="gear" id="gearBtn" title="⚙" aria-label="⚙" style="display:none">⚙</button>
 </header>
 
 <div class="wrap">
 
   <!-- ===== onboarding ===== -->
   <div id="setup">
-    <h1>ゴールを決める<span class="dot">.</span></h1>
-    <p class="lead">なりたい姿と期限を決めると、このサイトのツールで「何を・どれだけやればいいか」の道のりを組み立てます。入力はぜんぶ、あなたのブラウザの中だけに保存されます。</p>
+    <h1 id="suH1"></h1>
+    <p class="lead" id="suLead"></p>
 
     <div class="card">
-      <label>① どうなりたい？（中国語）</label>
-      <div class="types" id="typeSel">
-        <button class="type" data-type="talk"><span class="t-name">🗣 会話できる</span><span class="t-sub">聞いて・組み立てて・返せる</span></button>
-        <button class="type" data-type="listen"><span class="t-name">👂 聞き取れる</span><span class="t-sub">耳だけで意味が分かる</span></button>
-        <button class="type" data-type="read"><span class="t-name">📖 読める</span><span class="t-sub">SNSや投稿がすらすら読める</span></button>
-        <button class="type" data-type="write"><span class="t-name">✍️ 書ける</span><span class="t-sub">投稿・コメント・返信が書ける</span></button>
-      </div>
-      <p class="hint">※ 韓国語の目標は準備中。まずは中国語から。</p>
+      <label id="q0Label"></label>
+      <div class="types" id="targetSel"></div>
+    </div>
+
+    <div class="card">
+      <label id="q1Label"></label>
+      <div class="types" id="typeSel"></div>
+      <p class="hint" id="typeHint" style="display:none"></p>
     </div>
 
     <div class="card" id="sceneCard" style="display:none">
-      <label>② 使いたい場面（あとで場面ミッションになります・複数OK）</label>
-      <div class="chips" id="sceneSel">
-        <button class="chip" data-scene="friend">友達とおしゃべり</button>
-        <button class="chip" data-scene="travel">旅行・街中</button>
-        <button class="chip" data-scene="oshi">推し活・配信</button>
-        <button class="chip" data-scene="intro">あいさつ・自己紹介</button>
-      </div>
+      <label id="q2Label"></label>
+      <div class="chips" id="sceneSel"></div>
     </div>
 
     <div class="card">
-      <label>③ いつまで？</label>
+      <label id="q3Label"></label>
       <input type="date" id="deadline">
-      <label style="margin-top:14px">④ 目標をひとこと（任意・自分に見せる用）</label>
-      <input type="text" id="goalTitle" placeholder="例：8月の旅行までに、お店で困らないようになる">
+      <label style="margin-top:14px" id="q4Label"></label>
+      <input type="text" id="goalTitle">
       <div style="margin-top:16px">
-        <button class="btn" id="buildBtn" disabled>この目標で道のりを組む →</button>
+        <button class="btn" id="buildBtn" disabled></button>
       </div>
-      <p class="hint">あとから ⚙ でいつでも変えられます。</p>
+      <p class="hint" id="buildHint"></p>
     </div>
   </div>
 
   <!-- ===== plan ===== -->
   <div id="plan">
-    <h1 id="planH1">ゴール<span class="dot">.</span></h1>
+    <h1 id="planH1"></h1>
     <p class="lead" id="planLead"></p>
     <div class="scenes" id="planScenes"></div>
 
     <div class="card">
       <div class="count">
         <span class="n" id="days">--</span>
-        <span class="l" id="daysLabel">残り日数</span>
+        <span class="l" id="daysLabel"></span>
         <span class="d" id="doneCount"></span>
       </div>
     </div>
@@ -164,253 +158,437 @@
     <div class="cele" id="cele"></div>
 
     <div class="card today">
-      <p class="kicker">▶ 今日はこれ</p>
+      <p class="kicker" id="todayKicker"></p>
       <p class="task" id="todayTask">…</p>
       <p class="why" id="todayWhy"></p>
-      <a class="go" id="todayGo" href="#">開く →</a>
-      <a class="tiny" href="chinese-listening.html?n=3">今日は無理な日 → 3問だけ聞く</a>
+      <a class="go" id="todayGo" href="#"></a>
+      <a class="tiny" id="todayTiny" href="#"></a>
     </div>
-    <p class="nopressure">休んだ日があっても「遅れ」はありません。ここは毎日、残りのいちばん手前から引き直されるだけです。</p>
+    <p class="nopressure" id="noPressure"></p>
 
     <div id="phases"></div>
 
     <div class="card">
-      <label>今週の自分</label>
+      <label id="weekLabel"></label>
       <div class="week" id="week"></div>
     </div>
 
     <div class="card">
-      <label>できるようになったこと</label>
-      <div id="achList"><p class="ach-empty">チェックポイントを達成すると、日付つきでここに積まれていきます。</p></div>
+      <label id="achLabel"></label>
+      <div id="achList"></div>
     </div>
 
-    <p class="foot">Daily のコース完走・Listening のベストスコア・Writer の「✓通じる」回数・Reader の解析回数・マイ辞書の語数は自動で反映。シャドーイングと場面ミッションは、やったら自分で「+1」「✓」を（自己申告でOK。あなたの練習です）。</p>
+    <p class="foot" id="foot"></p>
   </div>
 </div>
 
 <script src="daily.js?v=1"></script>
 <script>
   const $ = id => document.getElementById(id);
-  const GOAL_K = 'goal-zh-v1';
-  const SELF_K = 'roadmap-zh-v1';
+  const fmt = (s, v) => s.replace(/\{(\w+)\}/g, (_, k) => v[k] != null ? v[k] : '');
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-  /* ---------- stores ---------- */
+  /* ================= UI language ================= */
+  const qLang = new URLSearchParams(location.search).get('lang');
+  if(qLang && ['ja','ko','zh'].includes(qLang)) localStorage.setItem('roadmap-ui', qLang);
+  const UI = localStorage.getItem('roadmap-ui') || 'ja';
+  document.documentElement.lang = UI;
+
+  /* ================= i18n ================= */
+  const I18N = {
+    ja: {
+      doc_title:'ゴール · 道のり — 日々',
+      su_h1:'ゴールを決める', su_lead:'学ぶ言語・なりたい姿・期限を決めると、このサイトのツールで「何を・どれだけやればいいか」の道のりを組み立てます。入力はぜんぶ、あなたのブラウザの中だけに保存されます。',
+      q0:'① どの言語を学ぶ？', q1:'② どうなりたい？', q2:'③ 使いたい場面（場面ミッションになります・複数OK）', q3:'④ いつまで？', q4:'⑤ 目標をひとこと（任意・自分に見せる用）',
+      build:'この目標で道のりを組む →', build_hint:'あとから ⚙ でいつでも変えられます。',
+      na:'準備中（この言語の聞き取りツールがまだないため）',
+      types:{ talk:['🗣 会話できる','聞いて・組み立てて・返せる'], listen:['👂 聞き取れる','耳だけで意味が分かる'], read:['📖 読める','SNSや投稿がすらすら読める'], write:['✍️ 書ける','投稿・コメント・返信が書ける'] },
+      scenes:{ friend:'友達とおしゃべり', travel:'旅行・街中', oshi:'推し活・配信', intro:'あいさつ・自己紹介' },
+      targets:{ zh:'中国語', ko:'韓国語', ja:'日本語' },
+      type_name:{ talk:'会話できる', listen:'聞き取れる', read:'読める', write:'書ける' },
+      plan_h1:'{target}、{type}ようになる', plan_lead:'期限は {dl}。毎日「今日はこれ」だけに引き直して出します。',
+      days_label:'残り日数', cp:'チェックポイント {a} / {b}',
+      today:'▶ 今日はこれ', open:'開く →', tiny_listen:'今日は無理な日 → 3問だけ聞く', tiny_reader:'今日は無理な日 → 1つ貼って読むだけ',
+      nopressure:'休んだ日があっても「遅れ」はありません。ここは毎日、残りのいちばん手前から引き直されるだけです。',
+      alldone:'全チェックポイント達成！🎉 もう「勉強」じゃなく、使う段階です。',
+      cele:'🎉 できるようになった： ',
+      week:'今週の自分', week_empty:'今週はこれから。1問でも「できた」が出るとここに数字が積まれます。',
+      w_listen:'聞けた', w_write:'書けた', w_read:'読めた',
+      ach:'できるようになったこと', ach_empty:'チェックポイントを達成すると、日付つきでここに積まれていきます。',
+      foot:'Daily のコース完走・Listening のベストスコア・Writer の「✓通じる」回数・Reader の解析回数・マイ辞書の語数は自動で反映。シャドーイングと場面ミッションは、やったら自分で「+1」「✓」を（自己申告でOK。あなたの練習です）。',
+      done_btn:'✓ 完了', plus1:'+1', check_btn:'✓ にする', checked_btn:'✓ 済', jump:'開く→', when:'目安：〜{d}',
+      p:{
+        daily_l:'{tool}：{lv} の3コースを完走', daily_t:'{tool} で {lv} の続きを1課ぶん（10問）',
+        daily_w:['基本文型は全部の足腰。','言いたいことの「道具」を増やす。','一段上の表現に慣れる。'],
+        listen_l:'{tool}：{lv} で一発 {n}/10', listen_t:'{tool} {lv} を1セット（一発{n}問でクリア）', listen_w:'耳だけで分かる文を増やす。何度でも挑戦OK。',
+        listen12_l:'{tool}：{a}か{b}で一発 9/10', listen12_w:'ほぼ全部聞こえる＝スピードについていける。',
+        shadow_l:'シャドーイング：聞いた文をマネして言う 累計{n}文', shadow_t:'{tool} で2文、答え合わせのあと声に出してマネる（やったら +1）', shadow_w:'口が覚えると、会話で出てくる。',
+        writer_l:'Writer：「✓通じる」を合計{n}回', writer_t:'Writer で言いたいことを1文（✓通じるまで）', writer_w:'自分の言葉で組み立てる練習。直しは辞書へ。',
+        reader_l:'Reader：気になる投稿を読む 累計{n}回', reader_t:'Reader に投稿や文章を1つ貼って読む（気になる語は＋辞書）', reader_w:'生の言葉に触れる。辞書も育つ。',
+        dict_l:'マイ辞書：{n}語ためる', dict_t:'Reader/Writer で気になった語を「＋辞書」', dict_w:'自分が出会った語こそ、また出会う語。',
+        daily7_l:'仕上げ：「今日言いたかった一言」を7回', daily7_t:'今日言いたかった一言を Writer で✓にして、ここで +1', daily7_w:'最後の儀式。未来の自分への引き継ぎ。',
+        mission_w:'本当に使う言葉がいちばん覚わる。✓が出たらチェック。'
+      },
+      missions:{
+        travel:[['t1','旅行：注文の一言を Writer で ✓（「これをください」「おすすめは？」）','Writer で「これをください／おすすめは？」を自分の言い方で ✓ に'],
+                ['t2','旅行：値段・買い物を Writer で ✓（「いくら？」「ちょっと高い」）','Writer で「これいくら？ちょっと高いな」を ✓ に'],
+                ['t3','旅行：移動・道きき Writer で ✓（「駅はどこ？」「歩いて行ける？」）','Writer で「駅はどこ？歩いて行ける？」を ✓ に']],
+        oshi:[['o1','推し活：応援コメントを Writer で ✓（「今日も最高だった！」）','Writer で、推しに送りたい応援コメントを1つ ✓ に'],
+              ['o2','推し活：配信・投稿の感想を Writer で ✓','Writer で、見た配信や投稿の感想を1文 ✓ に']],
+        friend:[['f1','友達：近況報告を Writer で ✓（「最近◯◯にハマってる」）','Writer で、友達に言いたい近況を1文 ✓ に'],
+                ['f2','友達：質問を Writer で ✓（「週末なにしてた？」）','Writer で、友達に聞きたい質問を1つ ✓ に']],
+        intro:[['g1','自己紹介を Writer で ✓（名前・出身・好きなもの）','Writer で、自己紹介3点セットを ✓ に']]
+      },
+      nums:['壱','弐','参','肆'],
+      phase:{
+        talk:[['土台 — 耳と基本文','まず「耳だけで分かる」を作る。基本文型は全部の足腰。'],['組み立て — 近況が言える','「昨日◯◯した」「◯◯したい」が言えると会話が回りはじめる。'],['場面 — 自分の生活で使う','選んだ場面に直結する表現を実戦形式で。'],['仕上げ — 反射神経','考えてからではなく、瞬間に出るところまで。']],
+        listen:[['土台 — まず聞こえる','文型を知ると聞こえ方が変わる。'],['伸ばす — 日常の速さ','口に出す練習も。言える文は聞こえる文。'],['背伸び — 一段上を聞く','上のレベルを聞くと、下が楽になる。'],['仕上げ — ほぼ全部聞こえる','9割聞こえれば、会話も配信もついていける。']],
+        read:[['土台 — 文の形を知る','読解は文型の知識が半分。辞書づくりも開始。'],['量 — 生の文に触れる','Reader で実物を読む。出会った語を貯める。'],['広げる — 長め・速め','一段上の文型と、読む量をさらに。'],['仕上げ — 辞書が育った','自分の辞書50語＝あなた専用の頻出単語帳。']],
+        write:[['土台 — 短い文が作れる','基本の語順で、まず1文。'],['組み立て — 言いたいことを形に','Writer で実際に書く。直しが教材になる。'],['場面 — 本番の文を書く','選んだ場面の「本当に出したい一文」を仕上げる。'],['仕上げ — 毎日書ける','量が反射神経を作る。']]
+      }
+    },
+    ko: {
+      doc_title:'골 · 가는 길 — 日々',
+      su_h1:'목표 정하기', su_lead:'배울 언어·되고 싶은 모습·기한을 정하면, 이 사이트의 도구로 「무엇을·얼마나 하면 되는지」의 길을 짜 드려요. 입력은 전부 당신의 브라우저 안에만 저장됩니다.',
+      q0:'① 어떤 언어를 배워요?', q1:'② 어떻게 되고 싶어요?', q2:'③ 쓰고 싶은 장면(장면 미션이 돼요·복수 OK)', q3:'④ 언제까지?', q4:'⑤ 목표 한마디(선택·나에게 보여주는 용)',
+      build:'이 목표로 길 짜기 →', build_hint:'나중에 ⚙ 로 언제든 바꿀 수 있어요.',
+      na:'준비 중(이 언어의 듣기 도구가 아직 없어서)',
+      types:{ talk:['🗣 회화가 된다','듣고·만들고·답할 수 있다'], listen:['👂 알아듣는다','귀로만 뜻을 안다'], read:['📖 읽을 수 있다','SNS·게시물이 술술 읽힌다'], write:['✍️ 쓸 수 있다','댓글·답장을 쓸 수 있다'] },
+      scenes:{ friend:'친구와 수다', travel:'여행·길거리', oshi:'덕질·라이브 방송', intro:'인사·자기소개' },
+      targets:{ zh:'중국어', ko:'한국어', ja:'일본어' },
+      type_name:{ talk:'회화가 되게', listen:'알아듣게', read:'읽을 수 있게', write:'쓸 수 있게' },
+      plan_h1:'{target}, {type}', plan_lead:'기한은 {dl}. 매일 「오늘은 이것」 하나만 다시 계산해서 보여 드려요.',
+      days_label:'남은 날', cp:'체크포인트 {a} / {b}',
+      today:'▶ 오늘은 이것', open:'열기 →', tiny_listen:'오늘은 무리인 날 → 3문제만 듣기', tiny_reader:'오늘은 무리인 날 → 하나만 붙여넣어 읽기',
+      nopressure:'쉰 날이 있어도 「뒤처짐」은 없어요. 매일, 남은 것의 맨 앞에서 다시 계산될 뿐.',
+      alldone:'모든 체크포인트 달성! 🎉 이제 「공부」가 아니라 쓰는 단계예요.',
+      cele:'🎉 할 수 있게 됐다: ',
+      week:'이번 주의 나', week_empty:'이번 주는 지금부터. 한 문제라도 「됐다」가 나오면 여기에 숫자가 쌓여요.',
+      w_listen:'알아들었다', w_write:'써냈다', w_read:'읽어냈다',
+      ach:'할 수 있게 된 것', ach_empty:'체크포인트를 달성하면 날짜와 함께 여기에 쌓여요.',
+      foot:'Daily 코스 완주·Listening 베스트·Writer 「✓통한다」 횟수·Reader 분석 횟수·내 사전 단어 수는 자동 반영. 섀도잉과 장면 미션은 했으면 직접 「+1」「✓」를(자기 신고 OK. 당신의 연습이니까).',
+      done_btn:'✓ 완료', plus1:'+1', check_btn:'✓ 하기', checked_btn:'✓ 됨', jump:'열기→', when:'목표: ~{d}',
+      p:{
+        daily_l:'{tool}: {lv} 3개 코스 완주', daily_t:'{tool} 에서 {lv} 이어서 1과(10문제)',
+        daily_w:['기본 문형은 모든 것의 기초.','하고 싶은 말의 「도구」를 늘린다.','한 단계 위 표현에 익숙해진다.'],
+        listen_l:'{tool}: {lv} 에서 한 번에 {n}/10', listen_t:'{tool} {lv} 1세트(한 번에 {n}문제면 클리어)', listen_w:'귀로만 아는 문장을 늘린다. 몇 번이든 도전 OK.',
+        listen12_l:'{tool}: {a}나 {b}에서 한 번에 9/10', listen12_w:'거의 다 들린다＝속도를 따라갈 수 있다.',
+        shadow_l:'섀도잉: 들은 문장 따라 말하기 누계 {n}문', shadow_t:'{tool} 에서 2문장, 정답 확인 후 소리 내어 따라하기(했으면 +1)', shadow_w:'입이 기억하면 회화에서 나온다.',
+        writer_l:'Writer: 「✓통한다」 합계 {n}회', writer_t:'Writer 에서 하고 싶은 말 1문장(✓통할 때까지)', writer_w:'내 말로 만드는 연습. 고침은 사전으로.',
+        reader_l:'Reader: 궁금한 글 읽기 누계 {n}회', reader_t:'Reader 에 글 하나 붙여넣어 읽기(궁금한 단어는 ＋사전)', reader_w:'날것의 말에 닿는다. 사전도 자란다.',
+        dict_l:'내 사전: {n}단어 모으기', dict_t:'Reader/Writer 에서 궁금한 단어를 「＋사전」', dict_w:'내가 만난 단어가 또 만날 단어.',
+        daily7_l:'마무리: 「오늘 하고 싶었던 한마디」 7회', daily7_t:'오늘 하고 싶었던 한마디를 Writer 에서 ✓로 만들고 여기서 +1', daily7_w:'마지막 의식. 미래의 나에게 인계.',
+        mission_w:'진짜 쓰는 말이 제일 잘 외워진다. ✓가 나오면 체크.'
+      },
+      missions:{
+        travel:[['t1','여행: 주문 한마디를 Writer 에서 ✓(「이거 주세요」「추천은?」)','Writer 에서 「이거 주세요/추천은?」을 내 말로 ✓'],
+                ['t2','여행: 가격·쇼핑을 Writer 에서 ✓(「얼마예요?」「좀 비싸네」)','Writer 에서 「이거 얼마예요? 좀 비싸네」를 ✓'],
+                ['t3','여행: 이동·길묻기를 Writer 에서 ✓(「역이 어디예요?」)','Writer 에서 「역이 어디예요? 걸어갈 수 있어요?」를 ✓']],
+        oshi:[['o1','덕질: 응원 댓글을 Writer 에서 ✓(「오늘도 최고였어!」)','Writer 에서 최애에게 보낼 응원 댓글 하나를 ✓'],
+              ['o2','덕질: 방송·게시물 감상을 Writer 에서 ✓','Writer 에서 본 방송이나 게시물 감상 1문장을 ✓']],
+        friend:[['f1','친구: 근황 보고를 Writer 에서 ✓(「요즘 ◯◯에 빠졌어」)','Writer 에서 친구에게 하고 싶은 근황 1문장을 ✓'],
+                ['f2','친구: 질문을 Writer 에서 ✓(「주말에 뭐 했어?」)','Writer 에서 친구에게 묻고 싶은 질문 하나를 ✓']],
+        intro:[['g1','자기소개를 Writer 에서 ✓(이름·출신·좋아하는 것)','Writer 에서 자기소개 3종 세트를 ✓']]
+      },
+      nums:['Ⅰ','Ⅱ','Ⅲ','Ⅳ'],
+      phase:{
+        talk:[['기초 — 귀와 기본 문형','먼저 「귀로만 안다」를 만든다.'],['조립 — 근황을 말할 수 있다','「어제 ◯◯했어」「◯◯하고 싶어」가 되면 대화가 돌기 시작한다.'],['장면 — 내 생활에서 쓴다','고른 장면에 직결되는 표현을 실전으로.'],['마무리 — 반사신경','생각하고 말하는 게 아니라, 순간에 나오게.']],
+        listen:[['기초 — 일단 들린다','문형을 알면 들리는 게 달라진다.'],['확장 — 일상 속도','소리 내는 연습도. 말할 수 있는 문장은 들린다.'],['도전 — 한 단계 위','위를 들으면 아래가 쉬워진다.'],['마무리 — 거의 다 들린다','9할 들리면 회화도 방송도 따라간다.']],
+        read:[['기초 — 문장의 형태','독해는 문형 지식이 절반. 사전 만들기도 시작.'],['양 — 날것의 글','Reader 로 실물을 읽는다. 만난 단어를 모은다.'],['확장 — 길게·빠르게','한 단계 위 문형과, 읽는 양을 더.'],['마무리 — 사전이 자랐다','내 사전 50단어＝나만의 빈출 단어장.']],
+        write:[['기초 — 짧은 문장','기본 어순으로 일단 1문장.'],['조립 — 하고 싶은 말을 형태로','Writer 로 실제로 쓴다. 고침이 교재가 된다.'],['장면 — 진짜 문장을 쓴다','고른 장면의 「진짜 내보내고 싶은 한 문장」을 완성.'],['마무리 — 매일 쓸 수 있다','양이 반사신경을 만든다.']]
+      }
+    },
+    zh: {
+      doc_title:'目标 · 路线 — 日々',
+      su_h1:'定个目标', su_lead:'定好要学的语言、想达成的样子和期限，就用本站工具排出「做什么、做多少」的路线。输入全部只保存在你的浏览器里。',
+      q0:'① 学哪门语言？', q1:'② 想变成什么样？', q2:'③ 想用的场景（会变成场景任务·可多选）', q3:'④ 到什么时候？', q4:'⑤ 一句话目标（选填·给自己看）',
+      build:'按这个目标排路线 →', build_hint:'之后随时可以用 ⚙ 修改。',
+      na:'准备中（这门语言的听力工具还没有）',
+      types:{ talk:['🗣 能会话','能听懂·能组织·能回应'], listen:['👂 能听懂','只用耳朵就明白'], read:['📖 能阅读','刷帖子不卡顿'], write:['✍️ 能写','能发评论·能回复'] },
+      scenes:{ friend:'和朋友聊天', travel:'旅行·街头', oshi:'追星·直播', intro:'打招呼·自我介绍' },
+      targets:{ zh:'中文', ko:'韩语', ja:'日语' },
+      type_name:{ talk:'能会话', listen:'能听懂', read:'能阅读', write:'能写' },
+      plan_h1:'{target}，{type}', plan_lead:'期限是 {dl}。每天只重新算出一个「今天做这个」。',
+      days_label:'剩余天数', cp:'检查点 {a} / {b}',
+      today:'▶ 今天做这个', open:'打开 →', tiny_listen:'今天不行的话 → 只听3题', tiny_reader:'今天不行的话 → 只贴一篇读读',
+      nopressure:'就算休息了几天也没有「落后」。这里每天只是从剩下的最前面重新算起。',
+      alldone:'所有检查点达成！🎉 已经不是「学习」，是使用阶段了。',
+      cele:'🎉 学会了：',
+      week:'本周的我', week_empty:'本周从现在开始。哪怕做对一题，这里就会有数字。',
+      w_listen:'听懂了', w_write:'写出了', w_read:'读懂了',
+      ach:'学会了的事', ach_empty:'达成检查点后，会带着日期堆在这里。',
+      foot:'Daily 课程完成·Listening 最佳成绩·Writer 「✓能通」次数·Reader 解析次数·我的词典词数自动同步。跟读和场景任务做完后自己点「+1」「✓」（自己申报就好，这是你的练习）。',
+      done_btn:'✓ 完成', plus1:'+1', check_btn:'打 ✓', checked_btn:'✓ 已完成', jump:'打开→', when:'参考：~{d}',
+      p:{
+        daily_l:'{tool}：完成 {lv} 的3个课程', daily_t:'在 {tool} 把 {lv} 接着练1课（10题）',
+        daily_w:['基本句型是一切的基础。','增加表达的「工具」。','习惯高一级的表达。'],
+        listen_l:'{tool}：{lv} 一次答对 {n}/10', listen_t:'{tool} {lv} 做1组（一次答对{n}题过关）', listen_w:'增加只用耳朵就懂的句子。可以挑战无数次。',
+        listen12_l:'{tool}：{a}或{b} 一次答对 9/10', listen12_w:'几乎全听懂＝跟得上速度。',
+        shadow_l:'跟读：听完跟着说 累计{n}句', shadow_t:'在 {tool} 听2句，看完答案后出声跟读（做了就 +1）', shadow_w:'嘴记住了，会话时就出得来。',
+        writer_l:'Writer：「✓能通」累计 {n}次', writer_t:'在 Writer 写1句想说的话（直到✓能通）', writer_w:'用自己的话组织的练习。修改进词典。',
+        reader_l:'Reader：读感兴趣的帖子 累计{n}次', reader_t:'往 Reader 贴一篇帖子读读（在意的词点＋词典）', reader_w:'接触活的语言。词典也会成长。',
+        dict_l:'我的词典：攒{n}个词', dict_t:'在 Reader/Writer 把在意的词「＋词典」', dict_w:'你遇到过的词，就是会再遇到的词。',
+        daily7_l:'收尾：「今天想说的一句」×7次', daily7_t:'把今天想说的一句在 Writer 做到✓，然后在这里 +1', daily7_w:'最后的仪式。交接给未来的自己。',
+        mission_w:'真正会用的话最容易记住。出✓后打钩。'
+      },
+      missions:{
+        travel:[['t1','旅行：点单一句话在 Writer 打 ✓（「请给我这个」「有推荐吗？」）','在 Writer 用自己的说法把「请给我这个/有推荐吗?」做到 ✓'],
+                ['t2','旅行：价格·购物在 Writer 打 ✓（「多少钱？」「有点贵」）','在 Writer 把「这个多少钱? 有点贵」做到 ✓'],
+                ['t3','旅行：交通·问路在 Writer 打 ✓（「车站在哪？」）','在 Writer 把「车站在哪? 走路能到吗?」做到 ✓']],
+        oshi:[['o1','追星：应援评论在 Writer 打 ✓（「今天也超棒！」）','在 Writer 把想发给本命的应援评论做到 ✓'],
+              ['o2','追星：直播·帖子感想在 Writer 打 ✓','在 Writer 写1句看完直播或帖子的感想做到 ✓']],
+        friend:[['f1','朋友：近况报告在 Writer 打 ✓（「最近迷上了◯◯」）','在 Writer 写1句想跟朋友说的近况做到 ✓'],
+                ['f2','朋友：提问在 Writer 打 ✓（「周末干嘛了？」）','在 Writer 写1个想问朋友的问题做到 ✓']],
+        intro:[['g1','自我介绍在 Writer 打 ✓（名字·来自哪·喜欢什么）','在 Writer 把自我介绍三件套做到 ✓']]
+      },
+      nums:['壹','贰','叁','肆'],
+      phase:{
+        talk:[['基础 — 耳朵和基本句型','先做到「只用耳朵就懂」。'],['组织 — 能说近况','会说「昨天做了◯◯」「想◯◯」，对话就转起来了。'],['场景 — 用在自己的生活里','把选好的场景表达实战化。'],['收尾 — 反射神经','不是想好再说，是脱口而出。']],
+        listen:[['基础 — 先听见','懂句型，听到的就不一样。'],['扩展 — 日常语速','也练出声。会说的句子就听得懂。'],['挑战 — 听高一级','听上面的，下面的就轻松了。'],['收尾 — 几乎全听懂','听懂9成，会话和直播都跟得上。']],
+        read:[['基础 — 认识句子的形状','阅读一半靠句型知识。开始攒词典。'],['量 — 接触真实的文字','用 Reader 读实物，攒遇到的词。'],['扩展 — 更长·更快','高一级句型＋更多阅读量。'],['收尾 — 词典长大了','自己的词典50词＝专属高频单词本。']],
+        write:[['基础 — 能造短句','用基本语序先写1句。'],['组织 — 把想说的成形','在 Writer 实际写。修改就是教材。'],['场景 — 写真正要发的','把选好场景的「真想发出去的那句」写完。'],['收尾 — 每天都能写','量造就反射神经。']]
+      }
+    }
+  };
+  const T = I18N[UI];
+  document.title = T.doc_title;
+
+  /* ================= tool map: UI言語 × 学習言語 → ツール/保存キー ================= */
+  const TOOLMAP = {
+    ja: {
+      zh: { daily:{name:'Daily 中国語', href:'chinese-practice.html', key:'cn-practice-v2', lv:[[0,1,2],[3,4,5],[6,7,8,9,10,11]], lvName:['HSK1','HSK2','HSK3','HSK4']},
+            listen:{name:'Listening 中国語', href:'chinese-listening.html', bestKey:'listening-best-v1', kinds:['1','2','3','4'], lvName:['HSK1','HSK2','HSK3','HSK4']},
+            reader:'reader.html', writer:'writer.html', dictKey:'mydict-v1' },
+      ko: { daily:{name:'Daily 한국어', href:'korean-practice.html', key:'ko-practice-v2', lv:[[0,1,2],[3,4,5],[6,7,8,9,10,11]], lvName:['TOPIK1','TOPIK2','TOPIK3','TOPIK4']},
+            listen:{name:'Listening 韓国語', href:'korean-listening.html', bestKey:'lbest-ko-v1', kinds:['1','2','3','4'], lvName:['TOPIK1','TOPIK2','TOPIK3','TOPIK4']},
+            reader:'reader.html', writer:'writer.html', dictKey:'mydict-v1' }
+    },
+    ko: {
+      zh: { daily:{name:'Daily 중국어', href:'chinese-practice-ko.html', key:'cn-practice-ko-v1', lv:[[0,1,2],[3,4,5],[6,7,8,9,10,11]], lvName:['HSK1','HSK2','HSK3','HSK4']},
+            listen:{name:'Listening 중국어', href:'chinese-listening-ko.html', bestKey:'lbest-zh-ko-v1', kinds:['1','2','3','4'], lvName:['HSK1','HSK2','HSK3','HSK4']},
+            reader:'reader-ko.html', writer:'writer-ko.html', dictKey:'mydict-ko-v1' },
+      ja: { daily:{name:'Daily 일본어', href:'japanese-practice-ko.html', key:'jp-practice-ko-v1', lv:[[0,1,2],[3,4,5],[6,7,8]], lvName:['N5 기초','N5 중반','N5 후반','N5']},
+            listen:{name:'Listening 일본어', href:'japanese-listening-ko.html', bestKey:'lbest-ja-ko-v1', kinds:['5','4','3'], lvName:['N5','N4','N3']},
+            reader:'reader-ko.html', writer:'writer-ko.html', dictKey:'mydict-ko-v1' }
+    },
+    zh: {
+      ko: { daily:{name:'Daily 韩语', href:'korean-practice.html?lang=zh', key:'ko-practice-v2', lv:[[0,1,2],[3,4,5],[6,7,8,9,10,11]], lvName:['TOPIK1','TOPIK2','TOPIK3','TOPIK4']},
+            listen:null,
+            reader:'reader-zh.html', writer:'writer-zh.html', dictKey:'mydict-zh-v1' },
+      ja: { daily:{name:'Daily 日语', href:'japanese-practice-zh.html', key:'jp-practice-zh-v1', lv:[[0,1,2],[3,4,5],[6,7,8]], lvName:['N5 基础','N5 中段','N5 后段','N5']},
+            listen:null,
+            reader:'reader-zh.html', writer:'writer-zh.html', dictKey:'mydict-zh-v1' }
+    }
+  };
+  const TARGETS = Object.keys(TOOLMAP[UI]);   // このUIで選べる学習言語
+  const TM = target => TOOLMAP[UI][target];
+
+  /* ================= stores ================= */
+  const GOAL_K = 'goal-v2';
   function goal(){ try{ return JSON.parse(localStorage.getItem(GOAL_K)||'null'); }catch{ return null; } }
   function saveGoal(g){ localStorage.setItem(GOAL_K, JSON.stringify(g)); }
-  function selfState(){ try{ return JSON.parse(localStorage.getItem(SELF_K)||'{}'); }catch{ return {}; } }
-  function saveSelf(s){ localStorage.setItem(SELF_K, JSON.stringify(s)); }
-  function counter(key){ return (selfState().counts||{})[key]||0; }
-  function bump(key, d){ const s=selfState(); s.counts=s.counts||{}; s.counts[key]=Math.max(0,(s.counts[key]||0)+d); saveSelf(s); }
-  function checked(key){ return !!(selfState().checks||{})[key]; }
-  function toggleCheck(key){ const s=selfState(); s.checks=s.checks||{}; s.checks[key]=!s.checks[key]; saveSelf(s); }
+  const selfK = target => 'roadmap-self-'+target+'-v1';
+  function selfState(tg){ try{ return JSON.parse(localStorage.getItem(selfK(tg))||'{}'); }catch{ return {}; } }
+  function saveSelf(tg,s){ localStorage.setItem(selfK(tg), JSON.stringify(s)); }
+  function counter(tg,key){ return (selfState(tg).counts||{})[key]||0; }
+  function bump(tg,key,d){ const s=selfState(tg); s.counts=s.counts||{}; s.counts[key]=Math.max(0,(s.counts[key]||0)+d); saveSelf(tg,s); }
+  function checked(tg,key){ return !!(selfState(tg).checks||{})[key]; }
+  function toggleCheck(tg,key){ const s=selfState(tg); s.checks=s.checks||{}; s.checks[key]=!s.checks[key]; saveSelf(tg,s); }
 
-  /* ---------- auto progress sources ---------- */
-  function dailyDone(ids){
+  /* ================= auto progress sources ================= */
+  function dailyDone(key, ids){
     try{
-      const st = JSON.parse(localStorage.getItem('cn-practice-v2')||'{}');
+      const st = JSON.parse(localStorage.getItem(key)||'{}');
       const done = Array.isArray(st.completedCourses)?st.completedCourses:[];
-      return ids.filter(i=>done.includes(i)).length;
+      return Math.min(ids.filter(i=>done.includes(i)).length, 3);
     }catch{ return 0; }
   }
-  function listenBest(kind){
-    try{ return (JSON.parse(localStorage.getItem('listening-best-v1')||'{}'))[kind]||0; }catch{ return 0; }
+  function listenBest(bestKey, kind){
+    try{ return (JSON.parse(localStorage.getItem(bestKey)||'{}'))[kind]||0; }catch{ return 0; }
   }
-  function writerWins(){
-    try{ return LC.getWins().filter(w=>w.skill==='書' && w.source==='writer').length; }catch{ return 0; }
+  function writerWins(target){
+    try{ return LC.getWins().filter(w=>w.skill==='書' && w.lang===target && String(w.source||'').indexOf('writer')===0).length; }catch{ return 0; }
   }
   function readerUses(){ return parseInt(localStorage.getItem('reader-uses'))||0; }
-  function dictCount(){
-    try{ return JSON.parse(localStorage.getItem('mydict-v1')||'[]').filter(d=>d.lang==='zh').length; }catch{ return 0; }
+  function dictCount(dictKey, target){
+    try{ return JSON.parse(localStorage.getItem(dictKey)||'[]').filter(d=>d.lang===target).length; }catch{ return 0; }
   }
 
-  /* ---------- parts bank ---------- */
-  const cap = (fn,t)=>()=>({n:Math.min(fn(),t), t});
-  const PART = {
-    daily1:  t=>({label:'Daily 中国語：HSK1 の3コースを完走', link:'chinese-practice.html', prog:()=>({n:dailyDone([0,1,2]),t:3}), task:'Daily 中国語で HSK1 の続きを1課ぶん（10問）', why:'あいさつ・数字・場所——全部の足腰。'}),
-    daily2:  t=>({label:'Daily 中国語：HSK2 の3コースを完走', link:'chinese-practice.html', prog:()=>({n:dailyDone([3,4,5]),t:3}), task:'Daily 中国語で HSK2 の続きを1課ぶん（10問）', why:'了・过・願望・比較＝近況報告の道具。'}),
-    daily3:  t=>({label:'Daily 中国語：HSK3 のコースを3つ完走', link:'chinese-practice.html', prog:()=>({n:dailyDone([6,7,8,9,10,11])>3?3:dailyDone([6,7,8,9,10,11]),t:3}), task:'Daily 中国語で HSK3 の続きを1課ぶん（10問）', why:'読み物によく出る接続詞・補語に慣れる。'}),
-    listen1_8: t=>({label:'Listening：HSK1 で一発 8/10', link:'chinese-listening.html', prog:cap(()=>listenBest('1'),8), task:'Listening HSK1 を1セット（一発8問でクリア）', why:'耳だけで分かる文を増やす。何度でも挑戦OK。'}),
-    listen2_8: t=>({label:'Listening：HSK2 で一発 8/10', link:'chinese-listening.html', prog:cap(()=>listenBest('2'),8), task:'Listening HSK2 を1セット（一発8問でクリア）', why:'返事が聞き取れないと会話にならない。'}),
-    listen3_7: t=>({label:'Listening：HSK3 で一発 7/10（背伸び）', link:'chinese-listening.html', prog:cap(()=>listenBest('3'),7), task:'Listening HSK3 を1セット（一発7問でクリア）', why:'少し上を聞くと、下が楽に聞こえる。'}),
-    listen4_6: t=>({label:'Listening：HSK4 で一発 6/10（挑戦）', link:'chinese-listening.html', prog:cap(()=>listenBest('4'),6), task:'Listening HSK4 を1セット（一発6問でクリア）', why:'実際の会話スピードへの慣らし。'}),
-    listen12_9: t=>({label:'Listening：HSK1か2で一発 9/10', link:'chinese-listening.html', prog:cap(()=>Math.max(listenBest('1'),listenBest('2')),9), task:'Listening HSK1か2 を1セット（一発9問でクリア）', why:'ほぼ全部聞こえる＝スピードについていける。'}),
-    shadow:  t=>({label:`シャドーイング：聞いた文をマネして言う 累計${t}文`, link:'chinese-listening.html', self:'count', key:'shadow', prog:cap(()=>counter('shadow'),t), task:'Listening で2文、答え合わせのあと声に出してマネる（やったら +1）', why:'口が覚えると、会話で出てくる。'}),
-    writer:  t=>({label:`Writer：「✓通じる」を合計${t}回`, link:'writer.html', prog:cap(writerWins,t), task:'Writer で言いたいことを1文（✓通じるまで）', why:'自分の言葉で組み立てる練習。直しは辞書へ。'}),
-    reader:  t=>({label:`Reader：気になる投稿を読む 累計${t}回`, link:'reader.html', prog:cap(readerUses,t), task:'Reader に投稿や文章を1つ貼って読む（気になる語は＋辞書）', why:'生の中国語に触れる。辞書も育つ。'}),
-    dict:    t=>({label:`マイ辞書：${t}語ためる`, link:'reader.html', prog:cap(dictCount,t), task:'Reader/Writer で気になった語を「＋辞書」（あと少し！）', why:'自分が出会った語こそ、また出会う語。'}),
-    daily7:  t=>({label:'仕上げ：「今日言いたかった一言」を7回', link:'writer.html', self:'count', key:'daily7', prog:cap(()=>counter('daily7'),7), task:'今日言いたかった一言を Writer で✓にして、ここで +1', why:'最後の儀式。未来の自分への引き継ぎ。'})
-  };
-  // 場面ミッション（self check）
-  const MISSIONS = {
-    travel: [
-      {key:'t1', label:'旅行：注文の一言を Writer で ✓（「これをください」「おすすめは？」）', task:'Writer で「これをください／おすすめは？」を自分の言い方で ✓ に'},
-      {key:'t2', label:'旅行：値段・買い物を Writer で ✓（「いくら？」「ちょっと高い」）', task:'Writer で「これいくら？ちょっと高いな」を ✓ に'},
-      {key:'t3', label:'旅行：移動・道きき Writer で ✓（「駅はどこ？」「歩いて行ける？」）', task:'Writer で「駅はどこ？歩いて行ける？」を ✓ に'}
-    ],
-    oshi: [
-      {key:'o1', label:'推し活：応援コメントを Writer で ✓（「今日も最高だった！」）', task:'Writer で、推しに送りたい応援コメントを1つ ✓ に'},
-      {key:'o2', label:'推し活：配信・投稿の感想を Writer で ✓', task:'Writer で、見た配信や投稿の感想を1文 ✓ に'}
-    ],
-    friend: [
-      {key:'f1', label:'友達：近況報告を Writer で ✓（「最近◯◯にハマってる」）', task:'Writer で、友達に言いたい近況を1文 ✓ に'},
-      {key:'f2', label:'友達：質問を Writer で ✓（「週末なにしてた？」）', task:'Writer で、友達に聞きたい質問を1つ ✓ に'}
-    ],
-    intro: [
-      {key:'g1', label:'自己紹介を Writer で ✓（名前・出身・好きなもの）', task:'Writer で、自己紹介3点セットを ✓ に'}
-    ]
-  };
-  function missionItems(scenes){
-    const out = [];
-    (scenes||[]).forEach(s=> (MISSIONS[s]||[]).forEach(m=> out.push({
-      label:m.label, link:'writer.html', self:'check', key:m.key,
-      prog:()=>({n:checked(m.key)?1:0, t:1}), task:m.task, why:'本当に使う言葉がいちばん覚わる。✓が出たらチェック。'
+  /* ================= parts ================= */
+  function buildParts(tg){
+    const m = TM(tg), P = T.p;
+    const cap = (fn,t)=>()=>({n:Math.min(fn(),t), t});
+    const parts = {
+      daily: s => ({ label:fmt(P.daily_l,{tool:m.daily.name, lv:m.daily.lvName[s]}), link:m.daily.href,
+                     prog:()=>({n:dailyDone(m.daily.key, m.daily.lv[s]), t:3}),
+                     task:fmt(P.daily_t,{tool:m.daily.name, lv:m.daily.lvName[s]}), why:P.daily_w[s] }),
+      writer: n => ({ label:fmt(P.writer_l,{n}), link:m.writer, prog:cap(()=>writerWins(tg),n), task:P.writer_t, why:P.writer_w }),
+      reader: n => ({ label:fmt(P.reader_l,{n}), link:m.reader, prog:cap(readerUses,n), task:P.reader_t, why:P.reader_w }),
+      dict:   n => ({ label:fmt(P.dict_l,{n}), link:m.reader, prog:cap(()=>dictCount(m.dictKey,tg),n), task:P.dict_t, why:P.dict_w }),
+      daily7: () => ({ label:P.daily7_l, link:m.writer, self:'count', key:'daily7', prog:cap(()=>counter(tg,'daily7'),7), task:P.daily7_t, why:P.daily7_w })
+    };
+    if(m.listen){
+      const L = m.listen;
+      parts.listen = (kindIdx, n) => ({ label:fmt(P.listen_l,{tool:L.name, lv:L.lvName[kindIdx], n}), link:L.href,
+                                        prog:cap(()=>listenBest(L.bestKey, L.kinds[kindIdx]),n),
+                                        task:fmt(P.listen_t,{tool:L.name, lv:L.lvName[kindIdx], n}), why:P.listen_w });
+      parts.listen12 = () => ({ label:fmt(P.listen12_l,{tool:L.name, a:L.lvName[0], b:L.lvName[1]}), link:L.href,
+                                prog:cap(()=>Math.max(listenBest(L.bestKey,L.kinds[0]),listenBest(L.bestKey,L.kinds[1])),9),
+                                task:fmt(P.listen_t,{tool:L.name, lv:L.lvName[0]+'/'+L.lvName[1], n:9}), why:P.listen12_w });
+      parts.shadow = n => ({ label:fmt(P.shadow_l,{n}), link:m.listen.href, self:'count', key:'shadow',
+                             prog:cap(()=>counter(tg,'shadow'),n), task:fmt(P.shadow_t,{tool:m.listen.name}), why:P.shadow_w });
+    }
+    return parts;
+  }
+  function missionItems(tg, scenes){
+    const m = TM(tg), out = [];
+    (scenes||[]).forEach(s=> (T.missions[s]||[]).forEach(def=> out.push({
+      label:def[1], link:m.writer, self:'check', key:def[0],
+      prog:()=>({n:checked(tg,def[0])?1:0, t:1}), task:def[2], why:T.p.mission_w
     })));
     return out;
   }
 
-  /* ---------- plans per goal type ---------- */
-  const PHASE_META = {
-    talk: [
-      {num:'壱', title:'土台 — 耳と基本文', desc:'まず「耳だけで分かる」を作る。HSK1は全部の足腰。'},
-      {num:'弐', title:'組み立て — 近況が言える', desc:'「昨日◯◯した」「◯◯したい」が言えると会話が回りはじめる。'},
-      {num:'参', title:'場面 — 自分の生活で使う', desc:'選んだ場面に直結する表現を実戦形式で。'},
-      {num:'肆', title:'仕上げ — 反射神経', desc:'考えてからではなく、瞬間に出るところまで。'}
-    ],
-    listen: [
-      {num:'壱', title:'土台 — まず聞こえる', desc:'HSK1の文を耳だけで。文型を知ると聞こえ方が変わる。'},
-      {num:'弐', title:'伸ばす — 日常の速さ', desc:'HSK2＋口に出す練習。言える文は聞こえる文。'},
-      {num:'参', title:'背伸び — 一段上を聞く', desc:'上のレベルを聞くと、下が楽になる。'},
-      {num:'肆', title:'仕上げ — ほぼ全部聞こえる', desc:'9割聞こえれば、会話も配信もついていける。'}
-    ],
-    read: [
-      {num:'壱', title:'土台 — 文の形を知る', desc:'読解は文型の知識が半分。HSK1と辞書づくりから。'},
-      {num:'弐', title:'量 — 生の文に触れる', desc:'Reader で実物を読む。出会った語を貯める。'},
-      {num:'参', title:'広げる — 長め・速め', desc:'HSK3の接続詞と、読む量をさらに。'},
-      {num:'肆', title:'仕上げ — 辞書が育った', desc:'自分の辞書50語＝あなた専用の頻出単語帳。'}
-    ],
-    write: [
-      {num:'壱', title:'土台 — 短い文が作れる', desc:'HSK1の語順で、まず1文。'},
-      {num:'弐', title:'組み立て — 言いたいことを形に', desc:'Writer で実際に書く。直しが教材になる。'},
-      {num:'参', title:'場面 — 本番の文を書く', desc:'選んだ場面の「本当に出したい一文」を仕上げる。'},
-      {num:'肆', title:'仕上げ — 毎日書ける', desc:'量が反射神経を作る。'}
-    ]
-  };
-  function buildPlan(type, scenes){
-    const M = missionItems(scenes);
-    if(type==='listen') return [
-      [PART.daily1(), PART.listen1_8(), PART.shadow(10)],
-      [PART.daily2(), PART.listen2_8(), PART.shadow(30)],
-      [PART.listen3_7(), PART.reader(5), PART.shadow(50)],
-      [PART.listen12_9(), PART.listen4_6()]
+  /* ================= plans ================= */
+  function buildPlan(g){
+    const F = buildParts(g.target);
+    const M = missionItems(g.target, g.scenes);
+    const L = !!TM(g.target).listen;
+    if(g.type==='listen' && L) return [
+      [F.daily(0), F.listen(0,8), F.shadow(10)],
+      [F.daily(1), F.listen(1,8), F.shadow(30)],
+      [F.listen(2,7), F.reader(5), F.shadow(50)],
+      [F.listen12(), TM(g.target).listen.kinds[3] ? F.listen(3,6) : F.listen(2,8)]
     ];
-    if(type==='read') return [
-      [PART.daily1(), PART.dict(10), PART.reader(5)],
-      [PART.daily2(), PART.reader(15), PART.dict(25)],
-      [PART.daily3(), PART.reader(30), PART.writer(5)],
-      [PART.dict(50), PART.reader(50)]
+    if(g.type==='read') return [
+      [F.daily(0), F.dict(10), F.reader(5)],
+      [F.daily(1), F.reader(15), F.dict(25)],
+      [F.daily(2), F.reader(30), F.writer(5)],
+      [F.dict(50), F.reader(50)]
     ];
-    if(type==='write') return [
-      [PART.daily1(), PART.writer(5), PART.dict(10)],
-      [PART.daily2(), PART.writer(15), PART.listen1_8()],
-      [...M, PART.writer(25), PART.reader(5)],
-      [PART.writer(40), PART.daily7()]
+    if(g.type==='write') return [
+      [F.daily(0), F.writer(5), F.dict(10)],
+      [F.daily(1), F.writer(15), L?F.listen(0,8):F.dict(25)],
+      [...M, F.writer(25), F.reader(5)],
+      [F.writer(40), F.daily7()]
     ];
-    // talk（デフォルト）
+    // talk（要listening）
     return [
-      [PART.daily1(), PART.listen1_8(), PART.shadow(10)],
-      [PART.daily2(), PART.listen2_8(), PART.writer(10), PART.shadow(30)],
-      [...M, PART.reader(5), PART.listen3_7()],
-      [PART.listen12_9(), PART.writer(25), PART.daily7()]
+      [F.daily(0), F.listen(0,8), F.shadow(10)],
+      [F.daily(1), F.listen(1,8), F.writer(10), F.shadow(30)],
+      [...M, F.reader(5), F.listen(2,7)],
+      [F.listen12(), F.writer(25), F.daily7()]
     ];
   }
-  const TYPE_NAME = { talk:'会話できる', listen:'聞き取れる', read:'読める', write:'書ける' };
-  const SCENE_NAME = { friend:'友達とおしゃべり', travel:'旅行・街中', oshi:'推し活・配信', intro:'あいさつ・自己紹介' };
+  const typeAvailable = (tg, type) => (type==='read'||type==='write') ? true : !!TM(tg).listen;
 
-  /* ---------- onboarding ---------- */
-  let selType = null, selScenes = [];
-  function refreshSetup(){
-    document.querySelectorAll('.type').forEach(b=> b.classList.toggle('on', b.dataset.type===selType));
-    $('sceneCard').style.display = (selType==='talk'||selType==='write') ? 'block' : 'none';
-    document.querySelectorAll('.chip').forEach(b=> b.classList.toggle('on', selScenes.includes(b.dataset.scene)));
-    $('buildBtn').disabled = !(selType && $('deadline').value);
+  /* ================= onboarding ================= */
+  let selTarget = null, selType = null, selScenes = [];
+  function initSetupText(){
+    $('suH1').innerHTML = esc(T.su_h1)+'<span class="dot">.</span>';
+    $('suLead').textContent = T.su_lead;
+    $('q0Label').textContent = T.q0; $('q1Label').textContent = T.q1; $('q2Label').textContent = T.q2;
+    $('q3Label').textContent = T.q3; $('q4Label').textContent = T.q4;
+    $('buildBtn').textContent = T.build; $('buildHint').textContent = T.build_hint;
+    $('targetSel').innerHTML = TARGETS.map(tg=>`<button class="type" data-target="${tg}"><span class="t-name">${T.targets[tg]}</span></button>`).join('');
+    $('typeSel').innerHTML = ['talk','listen','read','write'].map(ty=>`<button class="type" data-type="${ty}"><span class="t-name">${T.types[ty][0]}</span><span class="t-sub">${T.types[ty][1]}</span></button>`).join('');
+    $('sceneSel').innerHTML = Object.keys(T.scenes).map(s=>`<button class="chip" data-scene="${s}">${T.scenes[s]}</button>`).join('');
+    document.querySelectorAll('[data-target]').forEach(b=> b.addEventListener('click', ()=>{ selTarget=b.dataset.target; refreshSetup(); }));
+    document.querySelectorAll('[data-type]').forEach(b=> b.addEventListener('click', ()=>{ if(!b.disabled){ selType=b.dataset.type; refreshSetup(); } }));
+    document.querySelectorAll('[data-scene]').forEach(b=> b.addEventListener('click', ()=>{
+      const s=b.dataset.scene;
+      selScenes = selScenes.includes(s) ? selScenes.filter(x=>x!==s) : [...selScenes, s];
+      refreshSetup();
+    }));
   }
-  document.querySelectorAll('.type').forEach(b=> b.addEventListener('click', ()=>{ selType=b.dataset.type; refreshSetup(); }));
-  document.querySelectorAll('.chip').forEach(b=> b.addEventListener('click', ()=>{
-    const s=b.dataset.scene;
-    selScenes = selScenes.includes(s) ? selScenes.filter(x=>x!==s) : [...selScenes, s];
-    refreshSetup();
-  }));
+  function refreshSetup(){
+    document.querySelectorAll('[data-target]').forEach(b=> b.classList.toggle('on', b.dataset.target===selTarget));
+    let naShown = false;
+    document.querySelectorAll('[data-type]').forEach(b=>{
+      const ok = selTarget ? typeAvailable(selTarget, b.dataset.type) : true;
+      b.disabled = !ok;
+      if(!ok){ naShown = true; if(selType===b.dataset.type) selType=null; }
+      b.classList.toggle('on', b.dataset.type===selType);
+    });
+    $('typeHint').style.display = naShown ? 'block' : 'none';
+    $('typeHint').textContent = T.na;
+    $('sceneCard').style.display = (selType==='talk'||selType==='write') ? 'block' : 'none';
+    document.querySelectorAll('[data-scene]').forEach(b=> b.classList.toggle('on', selScenes.includes(b.dataset.scene)));
+    $('buildBtn').disabled = !(selTarget && selType && $('deadline').value);
+  }
   $('deadline').addEventListener('change', refreshSetup);
   $('buildBtn').addEventListener('click', ()=>{
     const g = {
+      target: selTarget,
       type: selType,
       scenes: (selType==='talk'||selType==='write') ? selScenes : [],
       title: $('goalTitle').value.trim(),
       deadline: $('deadline').value,
       createdAt: goal()?.createdAt || Date.now(),
-      doneIds: goal()?.doneIds || [],
-      ach: goal()?.ach || []
+      doneIds: [], ach: goal()?.ach || []
     };
     saveGoal(g);
     show();
   });
 
-  /* ---------- plan rendering ---------- */
+  /* ================= plan rendering ================= */
   function daysLeft(dl){
     const t = new Date(); t.setHours(0,0,0,0);
-    const d = new Date(dl+'T00:00:00');
-    return Math.max(0, Math.ceil((d - t) / 86400000));
+    return Math.max(0, Math.ceil((new Date(dl+'T00:00:00') - t) / 86400000));
   }
   function fmtMD(d){ return (d.getMonth()+1)+'/'+d.getDate(); }
   function phaseWhen(g, pi){
     const a = new Date(g.createdAt), b = new Date(g.deadline+'T00:00:00');
     if(b<=a) return '';
-    const span = (b-a)/4;
-    return '目安：〜'+fmtMD(new Date(a.getTime()+span*(pi+1)));
+    return fmt(T.when, { d: fmtMD(new Date(a.getTime()+((b-a)/4)*(pi+1))) });
   }
-  function itemId(it){ return it.key || it.label; }
-  function isDone(it){ const p=it.prog(); return p.n>=p.t; }
+  const itemId = it => it.key || it.label;
+  const isDone = it => { const p=it.prog(); return p.n>=p.t; };
 
   function renderPlan(){
     const g = goal(); if(!g) return;
-    const phases = buildPlan(g.type, g.scenes);
-    const meta = PHASE_META[g.type] || PHASE_META.talk;
+    const phases = buildPlan(g);
+    const meta = T.phase[g.type] || T.phase.talk;
     const flat = phases.flat();
+    const m = TM(g.target);
 
-    $('planH1').innerHTML = (g.title ? esc(g.title) : '中国語、'+TYPE_NAME[g.type]+'ようになる') + '<span class="dot">.</span>';
-    $('planLead').textContent = '期限は '+g.deadline.replace(/-/g,'/')+'。毎日「今日はこれ」だけに引き直して出します。';
-    $('planScenes').innerHTML = ['<span class="scene">'+TYPE_NAME[g.type]+'</span>']
-      .concat((g.scenes||[]).map(s=>'<span class="scene">'+SCENE_NAME[s]+'</span>')).join('');
+    $('planH1').innerHTML = esc(g.title || fmt(T.plan_h1, {target:T.targets[g.target], type:T.type_name[g.type]})) + '<span class="dot">.</span>';
+    $('planLead').textContent = fmt(T.plan_lead, {dl: g.deadline.replace(/-/g,'/')});
+    $('planScenes').innerHTML = ['<span class="scene">'+T.targets[g.target]+'</span>','<span class="scene">'+T.type_name[g.type]+'</span>']
+      .concat((g.scenes||[]).map(s=>'<span class="scene">'+T.scenes[s]+'</span>')).join('');
 
     $('days').textContent = daysLeft(g.deadline);
+    $('daysLabel').textContent = T.days_label;
     const doneItems = flat.filter(isDone);
-    $('doneCount').textContent = 'チェックポイント '+doneItems.length+' / '+flat.length;
+    $('doneCount').textContent = fmt(T.cp, {a:doneItems.length, b:flat.length});
 
-    // 新規達成 → できたリストへ＋お祝い
+    // 新規達成 → できたリスト＋お祝い
     const prevDone = new Set(g.doneIds||[]);
     const newly = doneItems.filter(it=>!prevDone.has(itemId(it)));
-    if(newly.length){
+    if(newly.length && prevDone.size + newly.length === doneItems.length){
       const today = LC.dateStr();
       newly.forEach(it=> g.ach.push({ t: it.label, d: today }));
-      g.doneIds = doneItems.map(itemId);
-      saveGoal(g);
       $('cele').style.display='block';
-      $('cele').textContent = '🎉 できるようになった： '+newly.map(it=>it.label).join(' ／ ');
+      $('cele').textContent = T.cele + newly.map(it=>it.label).join(' ／ ');
     }
-    // 完了が取り消された場合も同期（self checkの解除など）
     g.doneIds = doneItems.map(itemId); saveGoal(g);
 
     // 今日はこれ
+    $('todayKicker').textContent = T.today;
+    $('todayGo').textContent = T.open;
     const next = flat.find(it=>!isDone(it));
     if(next){
       $('todayTask').textContent = next.task;
       $('todayWhy').textContent = next.why||'';
       $('todayGo').href = next.link;
     } else {
-      $('todayTask').textContent = '全チェックポイント達成！🎉 もう「勉強」じゃなく、使う段階です。';
+      $('todayTask').textContent = T.alldone;
       $('todayWhy').textContent = '';
-      $('todayGo').href = 'writer.html';
+      $('todayGo').href = m.writer;
     }
+    if(m.listen){ $('todayTiny').textContent = T.tiny_listen; $('todayTiny').href = m.listen.href + (m.listen.href.includes('?')?'&':'?') + 'n=3'; }
+    else { $('todayTiny').textContent = T.tiny_reader; $('todayTiny').href = m.reader; }
+    $('noPressure').textContent = T.nopressure;
 
     // フェーズ
     $('phases').innerHTML = phases.map((items,pi)=>{
@@ -418,44 +596,46 @@
         const pr = it.prog(); const done = pr.n>=pr.t;
         const stat = done ? '✓' : (pr.t>1 ? pr.n+'/'+pr.t : '・');
         let act='';
-        if(it.self==='count') act = `<button class="act" data-bump="${it.key}">${done?'✓ 完了':'+1'}</button>`;
-        if(it.self==='check') act = `<button class="act" data-check="${it.key}">${done?'✓ 済':'✓ にする'}</button>`;
+        if(it.self==='count') act = `<button class="act" data-bump="${it.key}">${done?T.done_btn:T.plus1}</button>`;
+        if(it.self==='check') act = `<button class="act" data-check="${it.key}">${done?T.checked_btn:T.check_btn}</button>`;
         return `<div class="item ${done?'done':''}">
           <span class="st">${stat}</span>
           <span class="lb">${esc(it.label)}${pr.t>1?`<span class="bar"><i style="width:${Math.round(pr.n/pr.t*100)}%"></i></span>`:''}</span>
           ${act}
-          <a class="jump" href="${it.link}">開く→</a>
+          <a class="jump" href="${it.link}">${T.jump}</a>
         </div>`;
       }).join('');
       return `<div class="card">
-        <div class="phase-head"><span class="phase-num">${meta[pi].num}</span><span class="phase-title">${meta[pi].title}</span><span class="phase-when">${phaseWhen(g,pi)}</span></div>
-        <p class="phase-desc">${meta[pi].desc}</p>
+        <div class="phase-head"><span class="phase-num">${T.nums[pi]}</span><span class="phase-title">${meta[pi][0]}</span><span class="phase-when">${phaseWhen(g,pi)}</span></div>
+        <p class="phase-desc">${meta[pi][1]}</p>
         ${rows}
       </div>`;
     }).join('');
-    document.querySelectorAll('[data-bump]').forEach(b=> b.addEventListener('click', ()=>{ bump(b.dataset.bump,1); renderPlan(); }));
-    document.querySelectorAll('[data-check]').forEach(b=> b.addEventListener('click', ()=>{ toggleCheck(b.dataset.check); renderPlan(); }));
+    document.querySelectorAll('[data-bump]').forEach(b=> b.addEventListener('click', ()=>{ bump(g.target, b.dataset.bump, 1); renderPlan(); }));
+    document.querySelectorAll('[data-check]').forEach(b=> b.addEventListener('click', ()=>{ toggleCheck(g.target, b.dataset.check); renderPlan(); }));
 
     // 今週の自分
+    $('weekLabel').textContent = T.week;
     let wins=[]; try{ wins = LC.getWins(); }catch{}
     const wk = Date.now()-7*86400000;
-    const week = wins.filter(w=>w.at>=wk);
+    const week = wins.filter(w=>w.at>=wk && w.lang===g.target);
     const c = s => week.filter(w=>w.skill===s).length;
-    const parts = [];
-    if(c('聞')) parts.push('<div class="wk"><b>'+c('聞')+'</b>聞けた</div>');
-    if(c('書')) parts.push('<div class="wk"><b>'+c('書')+'</b>書けた</div>');
-    if(c('読')) parts.push('<div class="wk"><b>'+c('読')+'</b>読めた</div>');
-    $('week').innerHTML = parts.join('') || '<p class="ach-empty">今週はこれから。1問でも「できた」が出るとここに数字が積まれます。</p>';
+    const partsHtml = [];
+    if(c('聞')) partsHtml.push('<div class="wk"><b>'+c('聞')+'</b>'+T.w_listen+'</div>');
+    if(c('書')) partsHtml.push('<div class="wk"><b>'+c('書')+'</b>'+T.w_write+'</div>');
+    if(c('読')) partsHtml.push('<div class="wk"><b>'+c('読')+'</b>'+T.w_read+'</div>');
+    $('week').innerHTML = partsHtml.join('') || '<p class="ach-empty">'+T.week_empty+'</p>';
 
     // できるようになったこと
+    $('achLabel').textContent = T.ach;
     const ach = (g.ach||[]).slice().reverse();
     $('achList').innerHTML = ach.length
       ? ach.map(a=>`<div class="ach"><span class="d">${a.d.slice(5).replace('-','/')}</span><span class="t">${esc(a.t)}</span></div>`).join('')
-      : '<p class="ach-empty">チェックポイントを達成すると、日付つきでここに積まれていきます。</p>';
+      : '<p class="ach-empty">'+T.ach_empty+'</p>';
+    $('foot').textContent = T.foot;
   }
-  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-  /* ---------- view switching ---------- */
+  /* ================= view switching ================= */
   function show(){
     const g = goal();
     $('setup').style.display = g ? 'none' : 'block';
@@ -463,21 +643,22 @@
     $('gearBtn').style.display = g ? 'block' : 'none';
     if(g) renderPlan();
     else {
-      // デフォルト期限：70日後
       if(!$('deadline').value){
         const d = new Date(Date.now()+70*86400000);
         $('deadline').value = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
       }
+      if(TARGETS.length===1) selTarget = TARGETS[0];
       refreshSetup();
     }
   }
   $('gearBtn').addEventListener('click', ()=>{
     const g = goal();
-    if(g){ selType=g.type; selScenes=g.scenes||[]; $('deadline').value=g.deadline; $('goalTitle').value=g.title||''; }
+    if(g){ selTarget=g.target; selType=g.type; selScenes=g.scenes||[]; $('deadline').value=g.deadline; $('goalTitle').value=g.title||''; }
     $('plan').style.display='none'; $('setup').style.display='block'; $('gearBtn').style.display='none';
     refreshSetup();
     window.scrollTo({top:0});
   });
+  initSetupText();
   show();
 </script>
 </body>

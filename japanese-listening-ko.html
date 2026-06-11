@@ -232,14 +232,17 @@
   const shuffle = a => { const c=a.slice(); for(let i=c.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [c[i],c[j]]=[c[j],c[i]]; } return c; };
   let Q = null; // { items:[{speakText, jp, kana, ko}], i, wins, firstTry }
 
+  // ?n=3 → 3문제만 모드(부담 없는 날용). 평소엔 10문제.
+  const SET_N = (()=>{ const n = parseInt(new URLSearchParams(location.search).get('n')); return (n>=3 && n<=10) ? n : 10; })();
+
   function buildSet(kind){
     if(kind === 'dict'){
       const dw = shuffle(dictWords());
-      const items = dw.slice(0, 10).map(w=>({ speakText:w.term, jp:w.term, kana:w.reading||'', ko:w.meaning, pool:'dict' }));
+      const items = dw.slice(0, SET_N).map(w=>({ speakText:w.term, jp:w.term, kana:w.reading||'', ko:w.meaning, pool:'dict' }));
       return items.length >= 4 ? items : null;
     }
     const pool = bankOf(+kind);
-    return shuffle(pool).slice(0, 10).map(s=>({ speakText:s.jp, jp:s.jp, kana:s.kana, ko:s.ko, n:s.n, pool:'bank' }));
+    return shuffle(pool).slice(0, SET_N).map(s=>({ speakText:s.jp, jp:s.jp, kana:s.kana, ko:s.ko, n:s.n, pool:'bank' }));
   }
   function distractors(item){
     let cands;
@@ -315,6 +318,13 @@
 
   function finish(){
     speechSynthesis.cancel();
+    // 레벨별 베스트 스코어 저장(10문제 세트만. 골(roadmap)이 참조)
+    if(Q.items.length === 10){
+      try{
+        const best = JSON.parse(localStorage.getItem('lbest-ja-ko-v1')||'{}');
+        if(!(best[Q.kind] >= Q.wins)){ best[Q.kind] = Q.wins; localStorage.setItem('lbest-ja-ko-v1', JSON.stringify(best)); }
+      }catch{}
+    }
     $('quiz').style.display='none';
     $('result').style.display='block';
     $('resNum').textContent = Q.wins+' / '+Q.items.length;
