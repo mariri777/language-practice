@@ -417,6 +417,7 @@
   }
 
   function render(srcText, data){
+    try{ localStorage.setItem('reader-uses', String((parseInt(localStorage.getItem('reader-uses'))||0)+1)); }catch{}
     const lang = detectLang(srcText);
     $('trans').textContent = data.translation || '（未能获取翻译）';
     const orig = $('orig'); orig.className = 'orig '+lang; orig.textContent = srcText;

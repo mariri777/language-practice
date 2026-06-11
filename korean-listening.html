@@ -233,14 +233,17 @@
   const shuffle = a => { const c=a.slice(); for(let i=c.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [c[i],c[j]]=[c[j],c[i]]; } return c; };
   let Q = null; // { items:[{speakText, ko, roman, ja}], i, firstTryWins, answeredThis, firstTry }
 
+  // ?n=3 で「3問だけ」モード（低燃費の日用）。通常は10問。
+  const SET_N = (()=>{ const n = parseInt(new URLSearchParams(location.search).get('n')); return (n>=3 && n<=10) ? n : 10; })();
+
   function buildSet(kind){
     if(kind === 'dict'){
       const dw = shuffle(dictWords());
-      const items = dw.slice(0, 10).map(w=>({ speakText:w.term, ko:w.term, roman:w.reading||'', ja:w.meaning, pool:'dict' }));
+      const items = dw.slice(0, SET_N).map(w=>({ speakText:w.term, ko:w.term, roman:w.reading||'', ja:w.meaning, pool:'dict' }));
       return items.length >= 4 ? items : null;
     }
     const pool = bankOf(+kind);
-    return shuffle(pool).slice(0, 10).map(s=>({ speakText:s.ko, ko:s.ko, roman:s.roman, ja:s.ja, topik:s.topik, pool:'bank' }));
+    return shuffle(pool).slice(0, SET_N).map(s=>({ speakText:s.ko, ko:s.ko, roman:s.roman, ja:s.ja, topik:s.topik, pool:'bank' }));
   }
   function distractors(item){
     let cands;
@@ -316,6 +319,13 @@
 
   function finish(){
     speechSynthesis.cancel();
+    // ベストスコアを保存（10問セットのみ・レベル別。ゴール（roadmap）が参照）
+    if(Q.items.length === 10){
+      try{
+        const best = JSON.parse(localStorage.getItem('lbest-ko-v1')||'{}');
+        if(!(best[Q.kind] >= Q.wins)){ best[Q.kind] = Q.wins; localStorage.setItem('lbest-ko-v1', JSON.stringify(best)); }
+      }catch{}
+    }
     $('quiz').style.display='none';
     $('result').style.display='block';
     $('resNum').textContent = Q.wins+' / '+Q.items.length;
