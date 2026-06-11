@@ -1162,7 +1162,7 @@
     </a>
 
     <a class="deck-card goal" id="goal-card" href="roadmap.html">
-      <div class="deck-kicker"><span class="ico">🎯</span> ゴール</div>
+      <div class="deck-kicker"><span class="ico">🎯</span> <span id="goal-kicker">ゴール</span></div>
       <div>
         <h3 class="deck-title" id="goal-title">目標を決める</h3>
         <p class="deck-sub" id="goal-sub">なりたい姿と期限から、道のりを組み立てます</p>
@@ -1172,9 +1172,9 @@
   </div>
 
   <div class="record">
-    <div class="rec-stat rec-streak" id="rec-streak" hidden><span class="ico">🔥</span><span class="rec-num" id="streak-num">0</span><span class="rec-label">日連続</span></div>
+    <div class="rec-stat rec-streak" id="rec-streak" hidden><span class="ico">🔥</span><span class="rec-num" id="streak-num">0</span><span class="rec-label" id="streak-label">日連続</span></div>
     <div class="rec-cal">
-      <span class="rec-cal-label">今月</span>
+      <span class="rec-cal-label" id="cal-label">今月</span>
       <div class="cal-dots" id="cal-dots"></div>
     </div>
   </div>
@@ -1472,17 +1472,6 @@
           </div>
         </a>
 
-        <a href="roadmap.html?lang=ko" class="tile" style="--i:9">
-          <div class="tile-top">
-            <span class="tile-num">03</span>
-            <span class="tile-tag">🎯 · Goal</span>
-          </div>
-          <div class="tile-bottom">
-            <h3 class="tile-name">골（목표）</h3>
-            <p class="tile-sub ko">목표를 정하면 가는 길을 짜 줘요</p>
-            <span class="tile-cta">시작<span class="arrow">→</span></span>
-          </div>
-        </a>
       </div>
     </div>
   </section>
@@ -1607,17 +1596,6 @@
           </div>
         </a>
 
-        <a href="roadmap.html?lang=zh" class="tile" style="--i:7">
-          <div class="tile-top">
-            <span class="tile-num">03</span>
-            <span class="tile-tag">🎯 · Goal</span>
-          </div>
-          <div class="tile-bottom">
-            <h3 class="tile-name">目标</h3>
-            <p class="tile-sub">定个目标，给你排出路线</p>
-            <span class="tile-cta">打开<span class="arrow">→</span></span>
-          </div>
-        </a>
       </div>
     </div>
   </section>
@@ -1648,33 +1626,60 @@
 <script src="daily.js?v=1"></script>
 <script>
   // ---- Daily deck: real data from daily.js (LC) ----
-  (function renderDailyDeck() {
+  // デッキ（つづきから・ゴール・記録）の文言はチャンネル言語に追従する
+  const DECK_T = {
+    ja: { resume: 'つづきから', first: 'はじめてみる', cont: '続ける', start: 'はじめる', open: '開く',
+          firstTitle: 'Journal 中国語', firstSub: '第1課からはじめる', firstHref: 'chinese-diary.html',
+          goalKicker: 'ゴール', goalTitle: '目標を決める', goalSub: 'なりたい姿と期限から、道のりを組み立てます',
+          goalHref: 'roadmap.html', goalLeft: n => '残り' + n + '日 ・ 今日の一歩を見る',
+          types: { talk: '会話できる', listen: '聞き取れる', read: '読める', write: '書ける' },
+          tgts: { zh: '中国語', ko: '韓国語', ja: '日本語' }, mk: (tg, ty) => tg + '、' + ty + 'ようになる',
+          streak: '日連続', month: '今月' },
+    ko: { resume: '이어서 하기', first: '시작해 보기', cont: '계속', start: '시작', open: '열기',
+          firstTitle: 'Daily 중국어', firstSub: '1과부터 시작', firstHref: 'chinese-practice-ko.html',
+          goalKicker: '골', goalTitle: '목표 정하기', goalSub: '되고 싶은 모습과 기한으로 가는 길을 짜 드려요',
+          goalHref: 'roadmap.html?lang=ko', goalLeft: n => '남은 ' + n + '일 · 오늘의 한 걸음 보기',
+          types: { talk: '회화가 되게', listen: '알아듣게', read: '읽을 수 있게', write: '쓸 수 있게' },
+          tgts: { zh: '중국어', ko: '한국어', ja: '일본어' }, mk: (tg, ty) => tg + ', ' + ty,
+          streak: '일 연속', month: '이번 달' },
+    zh: { resume: '继续', first: '开始吧', cont: '继续', start: '开始', open: '打开',
+          firstTitle: 'Daily 韩语', firstSub: '从第1课开始', firstHref: 'korean-practice.html?lang=zh',
+          goalKicker: '目标', goalTitle: '定个目标', goalSub: '定好想达成的样子和期限，排出路线',
+          goalHref: 'roadmap.html?lang=zh', goalLeft: n => '剩 ' + n + ' 天 · 看今天的一步',
+          types: { talk: '能会话', listen: '能听懂', read: '能阅读', write: '能写' },
+          tgts: { zh: '中文', ko: '韩语', ja: '日语' }, mk: (tg, ty) => tg + '，' + ty,
+          streak: '天连续', month: '本月' }
+  };
+
+  function renderDailyDeck(aud) {
     if (!window.LC) return;
+    const D = DECK_T[aud] || DECK_T.ja;
     const now = new Date();
 
-    // つづきから — 最後に開いたツール
+    // つづきから — 最後に開いたツール（label/subは各ツールが自分のUI言語で記録済み）
     const last = LC.getLast();
     if (last && last.href) {
-      const card = document.getElementById('resume-card');
-      if (card) card.setAttribute('href', last.href);
-      const titleEl = document.getElementById('resume-title');
-      if (titleEl && last.label) titleEl.textContent = last.label;
+      document.getElementById('resume-card').setAttribute('href', last.href);
+      document.getElementById('resume-kicker').textContent = D.resume;
+      if (last.label) document.getElementById('resume-title').textContent = last.label;
       const subEl = document.getElementById('resume-sub');
-      if (subEl) {
-        if (last.sub) { subEl.textContent = last.sub; subEl.hidden = false; }
-        else { subEl.hidden = true; }
-      }
+      if (last.sub) { subEl.textContent = last.sub; subEl.hidden = false; }
+      else { subEl.hidden = true; }
+      document.getElementById('resume-go').firstChild.textContent = D.cont;
     } else {
-      // まだ何も無い人向け：はじめてみる
-      document.getElementById('resume-kicker').textContent = 'はじめてみる';
-      document.getElementById('resume-title').textContent = 'Journal 中国語';
-      document.getElementById('resume-sub').textContent = '第1課からはじめる';
-      document.getElementById('resume-go').firstChild.textContent = 'はじめる';
+      // まだ何も無い人向け：はじめてみる（チャンネルに合うツールへ）
+      document.getElementById('resume-card').setAttribute('href', D.firstHref);
+      document.getElementById('resume-kicker').textContent = D.first;
+      document.getElementById('resume-title').textContent = D.firstTitle;
+      document.getElementById('resume-sub').textContent = D.firstSub;
+      document.getElementById('resume-go').firstChild.textContent = D.start;
     }
 
     // 連続日数
     const n = LC.streak();
     const streakWrap = document.getElementById('rec-streak');
+    document.getElementById('streak-label').textContent = D.streak;
+    document.getElementById('cal-label').textContent = D.month;
     if (n >= 1) {
       document.getElementById('streak-num').textContent = n;
       streakWrap.hidden = false;
@@ -1682,20 +1687,27 @@
       streakWrap.hidden = true;
     }
 
-    // ゴールカード：目標を設定済みなら「自分の目標＋残り日数」、未設定なら誘い文のまま
+    // ゴールカード：目標を設定済みなら「自分の目標＋残り日数」、未設定なら誘い文
+    document.getElementById('goal-card').setAttribute('href', D.goalHref);
+    document.getElementById('goal-kicker').textContent = D.goalKicker;
+    let goalSet = false;
     try {
       const g = JSON.parse(localStorage.getItem('goal-v2') || 'null');
       if (g && g.deadline) {
-        const TYPE_NAME = { talk: '会話できる', listen: '聞き取れる', read: '読める', write: '書ける' };
-        const TGT_NAME = { zh: '中国語', ko: '韓国語', ja: '日本語' };
+        goalSet = true;
         const t = new Date(); t.setHours(0, 0, 0, 0);
         const left = Math.max(0, Math.ceil((new Date(g.deadline + 'T00:00:00') - t) / 86400000));
         document.getElementById('goal-title').textContent =
-          g.title || ((TGT_NAME[g.target] || '') + '、' + (TYPE_NAME[g.type] || '') + 'ようになる');
-        document.getElementById('goal-sub').textContent = '残り' + left + '日 ・ 今日の一歩を見る';
-        document.getElementById('goal-go').firstChild.textContent = '開く';
+          g.title || D.mk(D.tgts[g.target] || '', D.types[g.type] || '');
+        document.getElementById('goal-sub').textContent = D.goalLeft(left);
+        document.getElementById('goal-go').firstChild.textContent = D.open;
       }
     } catch {}
+    if (!goalSet) {
+      document.getElementById('goal-title').textContent = D.goalTitle;
+      document.getElementById('goal-sub').textContent = D.goalSub;
+      document.getElementById('goal-go').firstChild.textContent = D.start;
+    }
 
     // 今月カレンダー（活動日に点）
     const el = document.getElementById('cal-dots');
@@ -1713,7 +1725,7 @@
         el.appendChild(i);
       }
     }
-  })();
+  }
 
   // Tab switching with sliding underline
   const tabs = document.querySelectorAll('.tab');
@@ -1744,6 +1756,7 @@
     });
     moveUnderline(document.querySelector('.tab.active'));
     renderUpdates(target);
+    renderDailyDeck(target);
     if (opts.scroll) {
       const nav = document.getElementById('tab-nav');
       const navTop = nav.getBoundingClientRect().top + window.scrollY;
@@ -1772,6 +1785,7 @@
     tabs.forEach(t => t.classList.toggle('active', t.dataset.audience === initial));
     panels.forEach(p => p.classList.toggle('active', p.dataset.panel === initial));
   }
+  renderDailyDeck(initial);
   tabs.forEach(t => {
     t.addEventListener('click', () => localStorage.setItem('lc-audience', t.dataset.audience));
   });
@@ -1829,6 +1843,15 @@
   const UPDATE_VISIBLE     = 5;    // 折りたたまず表示する件数
 
   const updates = [
+    {
+      date: "2026-06-11",
+      tag:  { ja: "トップ", ko: "홈", zh: "首页" },
+      text: {
+        ja: "トップの「つづきから」「ゴール」カードがチャンネルの言語に追従するように — 한국어・中文でもホームから1タップ。",
+        ko: "홈의 ‘이어서 하기’ ‘골’ 카드가 채널 언어를 따라가도록 — 한국어로도 홈에서 한 번에.",
+        zh: "首页的「继续」「目标」卡片会跟随频道语言 — 中文用户也能从首页一键进入。"
+      }
+    },
     {
       date: "2026-06-11",
       tag:  { ja: "Listening · NEW", ko: "Listening · NEW", zh: "Listening · NEW" },
