@@ -83,6 +83,7 @@
   .item a.jump{flex-shrink:0;font-size:12px;font-weight:700;color:var(--red);text-decoration:none}
   .item .act{flex-shrink:0;font:inherit;font-size:12.5px;font-weight:700;border:1px solid var(--rule);background:#fff;color:var(--ink-3);border-radius:8px;padding:5px 11px;cursor:pointer}
   .item .act:hover{border-color:var(--red);color:var(--red)}
+  .item .act.minus{padding:5px 9px;color:var(--ink-4)}
   .item.done .act{border-color:var(--green);color:var(--green);background:rgba(47,124,94,.06)}
   .bar{height:4px;background:var(--bg-deep);border-radius:4px;overflow:hidden;margin-top:5px}
   .bar i{display:block;height:100%;background:var(--red);border-radius:4px;transition:width .4s}
@@ -239,7 +240,6 @@
                 ['f2','友達：質問を Writer で ✓（「週末なにしてた？」）','Writer で、友達に聞きたい質問を1つ ✓ に']],
         intro:[['g1','自己紹介を Writer で ✓（名前・出身・好きなもの）','Writer で、自己紹介3点セットを ✓ に']]
       },
-      nums:['壱','弐','参','肆'],
       phase:{
         talk:[['土台 — 耳と基本文','まず「耳だけで分かる」を作る。基本文型は全部の足腰。'],['組み立て — 近況が言える','「昨日◯◯した」「◯◯したい」が言えると会話が回りはじめる。'],['場面 — 自分の生活で使う','選んだ場面に直結する表現を実戦形式で。'],['仕上げ — 反射神経','考えてからではなく、瞬間に出るところまで。']],
         listen:[['土台 — まず聞こえる','文型を知ると聞こえ方が変わる。'],['伸ばす — 日常の速さ','口に出す練習も。言える文は聞こえる文。'],['背伸び — 一段上を聞く','上のレベルを聞くと、下が楽になる。'],['仕上げ — ほぼ全部聞こえる','9割聞こえれば、会話も配信もついていける。']],
@@ -290,7 +290,6 @@
                 ['f2','친구: 질문을 Writer 에서 ✓(「주말에 뭐 했어?」)','Writer 에서 친구에게 묻고 싶은 질문 하나를 ✓']],
         intro:[['g1','자기소개를 Writer 에서 ✓(이름·출신·좋아하는 것)','Writer 에서 자기소개 3종 세트를 ✓']]
       },
-      nums:['Ⅰ','Ⅱ','Ⅲ','Ⅳ'],
       phase:{
         talk:[['기초 — 귀와 기본 문형','먼저 「귀로만 안다」를 만든다.'],['조립 — 근황을 말할 수 있다','「어제 ◯◯했어」「◯◯하고 싶어」가 되면 대화가 돌기 시작한다.'],['장면 — 내 생활에서 쓴다','고른 장면에 직결되는 표현을 실전으로.'],['마무리 — 반사신경','생각하고 말하는 게 아니라, 순간에 나오게.']],
         listen:[['기초 — 일단 들린다','문형을 알면 들리는 게 달라진다.'],['확장 — 일상 속도','소리 내는 연습도. 말할 수 있는 문장은 들린다.'],['도전 — 한 단계 위','위를 들으면 아래가 쉬워진다.'],['마무리 — 거의 다 들린다','9할 들리면 회화도 방송도 따라간다.']],
@@ -341,7 +340,6 @@
                 ['f2','朋友：提问在 Writer 打 ✓（「周末干嘛了？」）','在 Writer 写1个想问朋友的问题做到 ✓']],
         intro:[['g1','自我介绍在 Writer 打 ✓（名字·来自哪·喜欢什么）','在 Writer 把自我介绍三件套做到 ✓']]
       },
-      nums:['壹','贰','叁','肆'],
       phase:{
         talk:[['基础 — 耳朵和基本句型','先做到「只用耳朵就懂」。'],['组织 — 能说近况','会说「昨天做了◯◯」「想◯◯」，对话就转起来了。'],['场景 — 用在自己的生活里','把选好的场景表达实战化。'],['收尾 — 反射神经','不是想好再说，是脱口而出。']],
         listen:[['基础 — 先听见','懂句型，听到的就不一样。'],['扩展 — 日常语速','也练出声。会说的句子就听得懂。'],['挑战 — 听高一级','听上面的，下面的就轻松了。'],['收尾 — 几乎全听懂','听懂9成，会话和直播都跟得上。']],
@@ -597,7 +595,8 @@
         const pr = it.prog(); const done = pr.n>=pr.t;
         const stat = done ? '✓' : (pr.t>1 ? pr.n+'/'+pr.t : '・');
         let act='';
-        if(it.self==='count') act = `<button class="act" data-bump="${it.key}">${done?T.done_btn:T.plus1}</button>`;
+        if(it.self==='count') act = (!done && pr.n>0 ? `<button class="act minus" data-unbump="${it.key}" aria-label="-1">−</button>` : '')
+          + `<button class="act" data-bump="${it.key}">${done?T.done_btn:(T.plus1+' · '+pr.n+'/'+pr.t)}</button>`;
         if(it.self==='check') act = `<button class="act" data-check="${it.key}">${done?T.checked_btn:T.check_btn}</button>`;
         return `<div class="item ${done?'done':''}">
           <span class="st">${stat}</span>
@@ -607,12 +606,13 @@
         </div>`;
       }).join('');
       return `<div class="card">
-        <div class="phase-head"><span class="phase-num">${T.nums[pi]}</span><span class="phase-title">${meta[pi][0]}</span><span class="phase-when">${phaseWhen(g,pi)}</span></div>
+        <div class="phase-head"><span class="phase-num">${pi+1}</span><span class="phase-title">${meta[pi][0]}</span><span class="phase-when">${phaseWhen(g,pi)}</span></div>
         <p class="phase-desc">${meta[pi][1]}</p>
         ${rows}
       </div>`;
     }).join('');
     document.querySelectorAll('[data-bump]').forEach(b=> b.addEventListener('click', ()=>{ bump(g.target, b.dataset.bump, 1); renderPlan(); }));
+    document.querySelectorAll('[data-unbump]').forEach(b=> b.addEventListener('click', ()=>{ bump(g.target, b.dataset.unbump, -1); renderPlan(); }));
     document.querySelectorAll('[data-check]').forEach(b=> b.addEventListener('click', ()=>{ toggleCheck(g.target, b.dataset.check); renderPlan(); }));
 
     // 今週の自分
