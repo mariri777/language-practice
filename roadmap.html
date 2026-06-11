@@ -519,6 +519,7 @@
   $('deadline').addEventListener('change', refreshSetup);
   $('buildBtn').addEventListener('click', ()=>{
     const g = {
+      ui: UI,
       target: selTarget,
       type: selType,
       scenes: (selType==='talk'||selType==='write') ? selScenes : [],
@@ -638,6 +639,17 @@
   /* ================= view switching ================= */
   function show(){
     const g = goal();
+    // この目標の学習言語を今のUIが扱えない場合（例：中国語の目標を中文UIで開いた）、
+    // 目標を作ったチャンネルのUIに切り替えて表示する（白画面クラッシュ防止）
+    if(g && !TOOLMAP[UI][g.target]){
+      const own = (g.ui && TOOLMAP[g.ui] && TOOLMAP[g.ui][g.target]) ? g.ui
+                : ['ja','ko','zh'].find(u => TOOLMAP[u] && TOOLMAP[u][g.target]);
+      if(own && own !== UI){
+        localStorage.setItem('roadmap-ui', own);
+        location.replace('roadmap.html?lang='+own);
+        return;
+      }
+    }
     $('setup').style.display = g ? 'none' : 'block';
     $('plan').style.display = g ? 'block' : 'none';
     $('gearBtn').style.display = g ? 'block' : 'none';
