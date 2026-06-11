@@ -1,6 +1,6 @@
 // Language Practice — shared service worker
 // Bump VERSION whenever shipping new HTML / asset content.
-const VERSION = 'v2.26.0';
+const VERSION = 'v2.27.0';
 const CACHE = `lang-practice-${VERSION}`;
 
 const ASSETS = [
@@ -12,19 +12,25 @@ const ASSETS = [
   './chinese-practice-ko.html',
   './chinese-lookup.html',
   './chinese-lookup-ko.html',
-  './chinese-today.html',
   './korean-practice.html',
-  './korean-today.html',
   './korean-diary.html',
   './korean-diary-zh.html',
   './japanese-diary-ko.html',
   './japanese-diary-zh.html',
+  './japanese-practice-ko.html',
+  './japanese-practice-zh.html',
   './chinese-listening.html',
   './chinese-listening-ko.html',
   './korean-listening.html',
   './japanese-listening-ko.html',
   './japanese-listening-zh.html',
   './korean-listening-zh.html',
+  './reader.html',
+  './reader-ko.html',
+  './reader-zh.html',
+  './writer.html',
+  './writer-ko.html',
+  './writer-zh.html',
   './roadmap.html',
   './zh-bank.js?v=1',
   './zh-bank-ko.js?v=1',
@@ -33,8 +39,9 @@ const ASSETS = [
   './jp-bank-zh.js?v=1',
   './ko-bank-zh.js?v=1',
   './daily.js?v=1',
-  './clips.js?v=3',
-  './clips.css?v=3',
+  './daily.css?v=11',
+  './clips.js?v=13',
+  './clips.css?v=13',
   './s2t.js',
   './index.webmanifest',
   './chinese-diary.webmanifest',
