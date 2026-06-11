@@ -1471,6 +1471,18 @@
             <span class="tile-cta">시작<span class="arrow">→</span></span>
           </div>
         </a>
+
+        <a href="roadmap.html?lang=ko" class="tile" style="--i:9">
+          <div class="tile-top">
+            <span class="tile-num">03</span>
+            <span class="tile-tag">🎯 · Goal</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">골（목표）</h3>
+            <p class="tile-sub ko">목표를 정하면 가는 길을 짜 줘요</p>
+            <span class="tile-cta">시작<span class="arrow">→</span></span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -1553,13 +1565,25 @@
             <span class="tile-cta">打开<span class="arrow">→</span></span>
           </div>
         </a>
+
+        <a href="korean-listening-zh.html" class="tile" style="--i:5">
+          <div class="tile-top">
+            <span class="tile-num">03</span>
+            <span class="tile-tag">KR · Listen</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">Listening 韩语</h3>
+            <p class="tile-sub">只用耳朵听、四选一猜意思</p>
+            <span class="tile-cta">打开<span class="arrow">→</span></span>
+          </div>
+        </a>
       </div>
     </div>
 
     <div class="tile-group">
       <div class="group-head"><span class="group-label zh">读·写</span></div>
       <div class="tiles">
-        <a href="reader-zh.html" class="tile" style="--i:5">
+        <a href="reader-zh.html" class="tile" style="--i:6">
           <div class="tile-top">
             <span class="tile-num">01</span>
             <span class="tile-tag">KR·JP · Read</span>
@@ -1571,7 +1595,7 @@
           </div>
         </a>
 
-        <a href="writer-zh.html" class="tile" style="--i:6">
+        <a href="writer-zh.html" class="tile" style="--i:7">
           <div class="tile-top">
             <span class="tile-num">02</span>
             <span class="tile-tag">JP·KR · Write</span>
@@ -1579,6 +1603,18 @@
           <div class="tile-bottom">
             <h3 class="tile-name">Writer</h3>
             <p class="tile-sub">写写看，AI 判定「能不能看懂」</p>
+            <span class="tile-cta">打开<span class="arrow">→</span></span>
+          </div>
+        </a>
+
+        <a href="roadmap.html?lang=zh" class="tile" style="--i:7">
+          <div class="tile-top">
+            <span class="tile-num">03</span>
+            <span class="tile-tag">🎯 · Goal</span>
+          </div>
+          <div class="tile-bottom">
+            <h3 class="tile-name">目标</h3>
+            <p class="tile-sub">定个目标，给你排出路线</p>
             <span class="tile-cta">打开<span class="arrow">→</span></span>
           </div>
         </a>
@@ -1648,13 +1684,14 @@
 
     // ゴールカード：目標を設定済みなら「自分の目標＋残り日数」、未設定なら誘い文のまま
     try {
-      const g = JSON.parse(localStorage.getItem('goal-zh-v1') || 'null');
+      const g = JSON.parse(localStorage.getItem('goal-v2') || 'null');
       if (g && g.deadline) {
         const TYPE_NAME = { talk: '会話できる', listen: '聞き取れる', read: '読める', write: '書ける' };
+        const TGT_NAME = { zh: '中国語', ko: '韓国語', ja: '日本語' };
         const t = new Date(); t.setHours(0, 0, 0, 0);
         const left = Math.max(0, Math.ceil((new Date(g.deadline + 'T00:00:00') - t) / 86400000));
         document.getElementById('goal-title').textContent =
-          g.title || ('中国語、' + (TYPE_NAME[g.type] || '') + 'ようになる');
+          g.title || ((TGT_NAME[g.target] || '') + '、' + (TYPE_NAME[g.type] || '') + 'ようになる');
         document.getElementById('goal-sub').textContent = '残り' + left + '日 ・ 今日の一歩を見る';
         document.getElementById('goal-go').firstChild.textContent = '開く';
       }
@@ -1796,6 +1833,15 @@
       date: "2026-06-11",
       tag:  { ja: "Listening · NEW", ko: "Listening · NEW", zh: "Listening · NEW" },
       text: {
+        ja: "中文チャンネルに Listening 韩语 を公開 — これで全チャンネル×全ツール種別がコンプリート。",
+        ko: "中文 채널에 Listening 韩语 공개 — 이로써 전 채널×전 도구 종류 완성.",
+        zh: "中文频道上线 Listening 韩语 — 只用耳朵听 TOPIK1~4 韩语句子（1055句）、四选一猜意思。至此全频道工具集齐。"
+      }
+    },
+    {
+      date: "2026-06-11",
+      tag:  { ja: "Listening · NEW", ko: "Listening · NEW", zh: "Listening · NEW" },
+      text: {
         ja: "中文チャンネルに Listening 日语 を公開 — JLPT N5〜N3の日本語文（1582文）の聞き取り4択。",
         ko: "中文 채널에 Listening 日语 공개 — JLPT N5~N3 일본어 문장(1582문장) 듣기 4지선다.",
         zh: "中文频道上线 Listening 日语 — 只用耳朵听 JLPT N5~N3 日语句子（1582句）、四选一猜意思。"
@@ -1832,9 +1878,9 @@
       date: "2026-06-11",
       tag:  { ja: "ゴール · NEW", ko: "골 · NEW", zh: "目标 · NEW" },
       text: {
-        ja: "新機能「ゴール」を公開 — なりたい姿（会話・聞く・読む・書く）と期限を決めると、ツール集の中で何をどれだけやればいいかの道のりを組み立て、毎日「今日はこれ」を1つだけ提示。進みは自動反映、休んでも遅れの概念なし。目標も進捗もブラウザ内だけに保存。",
-        ko: "새 기능 ‘골(목표)’ 공개(일본어 UI) — 되고 싶은 모습과 기한을 정하면 도구들로 가는 길을 짜 주고, 매일 ‘오늘은 이것’ 하나만 제시. 진행은 자동 반영.",
-        zh: "上线新功能「目标」（日语界面）— 定下想达成的样子和期限，就会用站内工具排出路线，每天只给一个「今天做这个」。进度自动同步。"
+        ja: "新機能「ゴール」を公開 — 学ぶ言語（中国語・韓国語）となりたい姿（会話・聞く・読む・書く）と期限を決めると、ツール集の中で何をどれだけやればいいかの道のりを組み立て、毎日「今日はこれ」を1つだけ提示。進みは自動反映、休んでも遅れの概念なし。目標も進捗もブラウザ内だけに保存。",
+        ko: "새 기능 ‘골(목표)’ 공개 — 배울 언어(중국어·일본어)와 되고 싶은 모습, 기한을 정하면 도구들로 가는 길을 짜 주고 매일 ‘오늘은 이것’ 하나만 제시해요. 진행은 자동 반영, 쉬어도 ‘뒤처짐’ 없음. 목표도 진행도 브라우저 안에만 저장.",
+        zh: "上线新功能「目标」— 定好要学的语言（韩语·日语）、想达成的样子和期限，就用站内工具排出路线，每天只给一个「今天做这个」。进度自动同步，休息也不算落后。目标和进度都只存在浏览器里。"
       }
     },
     {
