@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>Lookup 中文 · 손글씨로 한자 검색</title>
+<link rel="icon" type="image/svg+xml" href="favicon-lookup.svg">
+<link rel="apple-touch-icon" href="icons/favicon-zh-180.png">
+<link rel="manifest" href="chinese-lookup-ko.webmanifest">
+<meta name="theme-color" content="#7a2c3a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Lookup 中文">
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+</script>
+<style>
+  :root {
+    --bg: #f3efe5;
+    --bg-card: #faf6ec;
+    --bg-pure: #ffffff;
+    --bg-subtle: #e9e2cf;
+    --bg-deeper: #ddd4be;
+
+    --ink: #0c0b09;
+    --ink-2: #36312a;
+    --ink-3: #7a7065;
+    --ink-4: #aea493;
+    --ink-5: #cfc6b3;
+
+    --accent: #7a2c3a;
+    --accent-2: #5e1f29;
+    --accent-soft: rgba(122, 44, 58, 0.08);
+    --accent-glow: rgba(122, 44, 58, 0.16);
+
+    --rule: #c2b9a5;
+    --divider: #d8d0bd;
+    --grid: #d4cbb6;
+    --grid-soft: #e3dcc8;
+
+    --ease: cubic-bezier(0.2, 0, 0.2, 1);
+    --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur: 280ms;
+
+    --font-ui: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
+               "Noto Sans KR", system-ui, sans-serif;
+    --font-display: -apple-system, "SF Pro Display", "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+    --font-zh: "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", "SimSun", "宋体", serif;
+    --font-num: "Cormorant Garamond", "Iowan Old Style", "Charter", Georgia, serif;
+  }
+
+  body.dark {
+    --bg: #0d0c0a;
+    --bg-card: #15130f;
+    --bg-pure: #1a1814;
+    --bg-subtle: #1f1b16;
+    --bg-deeper: #28221c;
+
+    --ink: #f3eddf;
+    --ink-2: #c8baa3;
+    --ink-3: #948675;
+    --ink-4: #5e5448;
+    --ink-5: #38322a;
+
+    --accent: #d68088;
+    --accent-2: #e29ea4;
+    --accent-soft: rgba(214, 128, 136, 0.12);
+    --accent-glow: rgba(214, 128, 136, 0.20);
+
+    --rule: #36302a;
+    --divider: #28221c;
+    --grid: #38322a;
+    --grid-soft: #25201b;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    margin: 0;
+    font-family: var(--font-ui);
+    color: var(--ink);
+    background: var(--bg);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+    transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+    overscroll-behavior-y: contain;
+  }
+  ::selection { background: var(--ink); color: var(--bg); }
+
+  /* ============ Top bar ============ */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: saturate(160%) blur(10px);
+    -webkit-backdrop-filter: saturate(160%) blur(10px);
+    border-bottom: 1px solid var(--divider);
+  }
+  .back-link {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color var(--dur) var(--ease);
+  }
+  .back-link:hover { color: var(--accent); }
+  .back-link .arrow {
+    display: inline-block;
+    transition: transform var(--dur) var(--ease);
+  }
+  .back-link:hover .arrow { transform: translateX(-3px); }
+
+  .top-title {
+    font-family: var(--font-zh);
+    font-size: 18px;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+  }
+
+  .theme-toggle {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all var(--dur) var(--ease);
+  }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .theme-toggle svg { width: 14px; height: 14px; }
+  body:not(.dark) .theme-toggle .moon { display: block; }
+  body:not(.dark) .theme-toggle .sun  { display: none; }
+  body.dark .theme-toggle .moon { display: none; }
+  body.dark .theme-toggle .sun  { display: block; }
+
+  /* ============ Layout ============ */
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 28px 20px 80px;
+  }
+
+  .lede {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .lede .eyebrow {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .lede h1 {
+    font-family: var(--font-zh);
+    font-weight: 400;
+    font-size: clamp(34px, 7vw, 44px);
+    margin: 0 0 6px;
+    letter-spacing: 0.05em;
+  }
+  .lede .sub {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-3);
+    letter-spacing: 0.01em;
+  }
+  .lede .hint {
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-top: 10px;
+    line-height: 1.7;
+  }
+  .lede .spec {
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    color: var(--ink-4);
+    letter-spacing: 0.1em;
+  }
+  .lede .spec b {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ============ Canvas ============ */
+  .pad {
+    position: relative;
+    margin: 0 auto;
+    width: min(360px, 88vw);
+    aspect-ratio: 1 / 1;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    box-shadow: 0 2px 0 var(--accent-soft), 0 18px 40px -28px rgba(0,0,0,.18);
+    overflow: hidden;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .pad .tianzi {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .pad canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+  }
+  .pad .placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-zh);
+    font-size: 80px;
+    color: var(--ink-5);
+    pointer-events: none;
+    transition: opacity var(--dur) var(--ease);
+    letter-spacing: 0.06em;
+  }
+  .pad.has-ink .placeholder { opacity: 0; }
+
+  .pad-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 16px auto 0;
+    flex-wrap: wrap;
+  }
+  .btn {
+    appearance: none;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    color: var(--ink-2);
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 9px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .btn:hover { color: var(--accent); border-color: var(--accent); }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: .35; cursor: not-allowed; }
+  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  body.dark .btn.primary { color: var(--bg); }
+  .btn.primary:hover { background: var(--accent-2); border-color: var(--accent-2); color: #fff; }
+  body.dark .btn.primary:hover { color: var(--bg); }
+
+  /* ============ Candidates ============ */
+  .candidates {
+    margin-top: 28px;
+    min-height: 64px;
+  }
+  .candidates-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .candidates-row {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 6px 14px;
+    margin: 0 -6px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .candidates-row::-webkit-scrollbar { height: 4px; }
+  .candidates-row::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+  .cand {
+    flex: 0 0 auto;
+    width: 58px;
+    height: 64px;
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    color: var(--ink);
+    font-family: var(--font-zh);
+    font-size: 34px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    scroll-snap-align: start;
+    padding: 0;
+  }
+  .cand:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .cand.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  body.dark .cand.active { color: var(--bg); }
+
+  .status {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 18px 0;
+  }
+  .status.error { color: var(--accent); text-transform: none; letter-spacing: 0.02em; font-family: var(--font-ui); font-size: 13px; }
+
+  /* ============ Selected detail ============ */
+  .detail {
+    margin-top: 24px;
+    padding: 28px 24px 26px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    text-align: center;
+  }
+  .detail[hidden] { display: none; }
+  .detail .big {
+    font-family: var(--font-zh);
+    font-size: clamp(96px, 22vw, 132px);
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 8px;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .detail .pinyin {
+    font-family: var(--font-num);
+    font-style: italic;
+    font-size: 28px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+    min-height: 36px;
+  }
+  .detail .speak {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--ink-3);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 6px;
+    vertical-align: 0.05em;
+    transition: color var(--dur) var(--ease);
+  }
+  .detail .speak:hover { color: var(--accent); }
+  .detail .meaning {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin: 10px auto 0;
+    max-width: 520px;
+    min-height: 22px;
+  }
+  .detail .meaning.dim { color: var(--ink-3); font-style: italic; }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 22px;
+  }
+  .copy-flash {
+    position: fixed;
+    left: 50%;
+    bottom: 32px;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 280ms var(--ease-out-soft);
+    z-index: 200;
+  }
+  .copy-flash.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ============ History ============ */
+  .history {
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--divider);
+  }
+  .history-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .history-label .clear-history {
+    background: none; border: none;
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    cursor: pointer;
+    padding: 4px 0;
+    transition: color var(--dur) var(--ease);
+  }
+  .history-label .clear-history:hover { color: var(--accent); }
+  .history-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .history-list:empty::after {
+    content: "아직 없어요";
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-4);
+    font-style: italic;
+  }
+  .hist {
+    appearance: none;
+    border: 1px solid var(--divider);
+    background: var(--bg-card);
+    color: var(--ink);
+    font-family: var(--font-zh);
+    font-size: 22px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+    line-height: 1.3;
+  }
+  .hist:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ============ Footer ============ */
+  footer.site {
+    max-width: 680px;
+    margin: 24px auto 0;
+    padding: 24px 20px 40px;
+    border-top: 1px solid var(--divider);
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    color: var(--ink-4);
+    letter-spacing: 0.06em;
+    text-align: center;
+  }
+  footer.site a { color: var(--ink-3); text-decoration: none; transition: color var(--dur) var(--ease); }
+  footer.site a:hover { color: var(--accent); }
+
+  @media (max-width: 480px) {
+    main { padding: 22px 16px 60px; }
+    .cand { width: 52px; height: 58px; font-size: 30px; }
+    .detail { padding: 22px 16px 20px; }
+  }
+</style>
+<link rel="stylesheet" href="clips.css?v=13">
+<script src="clips.js?v=13" defer></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link"><span class="arrow">←</span> Back</a>
+  <div class="top-title">Lookup 中文</div>
+  <button class="theme-toggle" id="theme-toggle" aria-label="테마 전환">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  </button>
+</div>
+
+<main>
+  <section class="lede">
+    <div class="eyebrow">Handwriting Lookup</div>
+    <h1>Lookup 中文</h1>
+    <p class="sub">Draw a character, find the reading.</p>
+    <p class="hint">칸 안에 궁금한 글자를 쓰기만 하면 돼요. 병음과 뜻이 나오고, 사전에 그대로 넘길 수 있어요.<br>사전 버튼을 누르면 글자가 자동으로 복사되니, 열린 사전 앱에 붙여넣기만 하면 돼요.</p>
+    <p class="spec">인식 단위: <b>1글자</b>　·　후보: 최대 12개　·　지원: 간체자</p>
+  </section>
+
+  <div class="pad" id="pad">
+    <svg class="tianzi" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <rect x="1.5" y="1.5" width="97" height="97" fill="none" stroke="var(--grid)" stroke-width="0.8"/>
+      <line x1="50" y1="2" x2="50" y2="98" stroke="var(--grid-soft)" stroke-width="0.5" stroke-dasharray="2 2"/>
+      <line x1="2" y1="50" x2="98" y2="50" stroke="var(--grid-soft)" stroke-width="0.5" stroke-dasharray="2 2"/>
+      <line x1="2"  y1="2"  x2="98" y2="98" stroke="var(--grid-soft)" stroke-width="0.4" stroke-dasharray="2 2"/>
+      <line x1="98" y1="2"  x2="2"  y2="98" stroke="var(--grid-soft)" stroke-width="0.4" stroke-dasharray="2 2"/>
+    </svg>
+    <canvas id="canvas" width="600" height="600"></canvas>
+    <div class="placeholder" id="placeholder">字</div>
+  </div>
+
+  <div class="pad-actions">
+    <button class="btn" id="undo" disabled>↶ 한 획 되돌리기</button>
+    <button class="btn" id="clear" disabled>⟲ 지우기</button>
+  </div>
+
+  <section class="candidates">
+    <div class="candidates-label">후보</div>
+    <div class="candidates-row" id="candidates"></div>
+    <div class="status" id="status">칸 안에 글자를 써 주세요</div>
+  </section>
+
+  <section class="detail" id="detail" hidden>
+    <div class="big" id="detail-char">字</div>
+    <div class="pinyin">
+      <span id="detail-pinyin"></span>
+      <button class="speak" id="speak" aria-label="발음 듣기">🔊</button>
+    </div>
+    <div class="meaning dim" id="detail-meaning">뜻을 가져오는 중…</div>
+    <div class="actions">
+      <button class="btn primary" data-builtin="copy-char">글자 복사</button>
+      <button class="btn" data-builtin="copy-pinyin">병음 복사</button>
+      <button class="btn" data-builtin="gtranslate">Google 번역</button>
+    </div>
+  </section>
+
+  <section class="history">
+    <div class="history-label">
+      <span>최근 찾은 글자</span>
+      <button class="clear-history" id="clear-history">지우기</button>
+    </div>
+    <div class="history-list" id="history-list"></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div>인식: Google Input Tools　·　병음: pinyin-pro　·　번역: Google 번역</div>
+  <div style="margin-top:6px;"><a href="index.html">← 홈으로 돌아가기</a></div>
+</footer>
+
+<div class="copy-flash" id="flash">복사했어요</div>
+
+<script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.27.0/dist/index.js"></script>
+<script>
+(() => {
+  // ============ Theme ============
+  const STORE_THEME = 'language-collection-theme';
+  let theme = localStorage.getItem(STORE_THEME) || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const applyTheme = () => document.body.classList.toggle('dark', theme === 'dark');
+  applyTheme();
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(STORE_THEME, theme);
+    applyTheme();
+  });
+
+  // ============ Canvas drawing ============
+  const pad = document.getElementById('pad');
+  const canvas = document.getElementById('canvas');
+  const placeholder = document.getElementById('placeholder');
+  const ctx = canvas.getContext('2d');
+  const LOGICAL = 600;          // logical drawing surface (px)
+  canvas.width = LOGICAL;
+  canvas.height = LOGICAL;
+
+  // strokes: Array<{ xs: number[], ys: number[], ts: number[] }>
+  let strokes = [];
+  let current = null;
+  let startTime = 0;
+
+  const inkColor = () => getComputedStyle(document.body).getPropertyValue('--ink').trim() || '#0c0b09';
+
+  function redraw() {
+    ctx.clearRect(0, 0, LOGICAL, LOGICAL);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = inkColor();
+    ctx.lineWidth = 14;
+    for (const s of strokes) {
+      if (s.xs.length < 1) continue;
+      ctx.beginPath();
+      ctx.moveTo(s.xs[0], s.ys[0]);
+      if (s.xs.length === 1) {
+        ctx.arc(s.xs[0], s.ys[0], 6, 0, Math.PI * 2);
+        ctx.fillStyle = inkColor();
+        ctx.fill();
+      } else {
+        for (let i = 1; i < s.xs.length - 1; i++) {
+          const xc = (s.xs[i] + s.xs[i + 1]) / 2;
+          const yc = (s.ys[i] + s.ys[i + 1]) / 2;
+          ctx.quadraticCurveTo(s.xs[i], s.ys[i], xc, yc);
+        }
+        ctx.lineTo(s.xs[s.xs.length - 1], s.ys[s.ys.length - 1]);
+        ctx.stroke();
+      }
+    }
+    pad.classList.toggle('has-ink', strokes.length > 0);
+    const hasInk = strokes.length > 0;
+    document.getElementById('undo').disabled = !hasInk;
+    document.getElementById('clear').disabled = !hasInk;
+  }
+
+  function getPos(ev) {
+    const rect = canvas.getBoundingClientRect();
+    const x = ((ev.clientX - rect.left) / rect.width) * LOGICAL;
+    const y = ((ev.clientY - rect.top) / rect.height) * LOGICAL;
+    return { x, y };
+  }
+
+  function onDown(ev) {
+    if (ev.button !== undefined && ev.button !== 0) return;
+    ev.preventDefault();
+    canvas.setPointerCapture?.(ev.pointerId);
+    if (strokes.length === 0) startTime = performance.now();
+    const { x, y } = getPos(ev);
+    const t = performance.now() - startTime;
+    current = { xs: [x], ys: [y], ts: [t] };
+    strokes.push(current);
+    cancelRecognition();
+    redraw();
+  }
+  function onMove(ev) {
+    if (!current) return;
+    ev.preventDefault();
+    const { x, y } = getPos(ev);
+    const last = current.xs.length - 1;
+    if (last >= 0) {
+      const dx = x - current.xs[last];
+      const dy = y - current.ys[last];
+      if (dx * dx + dy * dy < 4) return;  // skip tiny moves
+    }
+    current.xs.push(x);
+    current.ys.push(y);
+    current.ts.push(performance.now() - startTime);
+    redraw();
+  }
+  function onUp(ev) {
+    if (!current) return;
+    canvas.releasePointerCapture?.(ev.pointerId);
+    current = null;
+    scheduleRecognition();
+  }
+
+  canvas.addEventListener('pointerdown', onDown);
+  canvas.addEventListener('pointermove', onMove);
+  canvas.addEventListener('pointerup', onUp);
+  canvas.addEventListener('pointercancel', onUp);
+  canvas.addEventListener('pointerleave', (e) => { if (current) onUp(e); });
+
+  document.getElementById('undo').addEventListener('click', () => {
+    strokes.pop();
+    redraw();
+    if (strokes.length === 0) clearCandidates();
+    else scheduleRecognition(0);
+  });
+  document.getElementById('clear').addEventListener('click', () => {
+    strokes = [];
+    redraw();
+    clearCandidates();
+  });
+
+  // ============ Recognition (Google Input Tools) ============
+  let recogTimer = null;
+  let recogSeq = 0;
+  const statusEl = document.getElementById('status');
+  const candRow = document.getElementById('candidates');
+
+  function cancelRecognition() {
+    if (recogTimer) { clearTimeout(recogTimer); recogTimer = null; }
+  }
+  function scheduleRecognition(delay = 320) {
+    cancelRecognition();
+    if (strokes.length === 0) return;
+    recogTimer = setTimeout(recognize, delay);
+  }
+  function clearCandidates() {
+    candRow.innerHTML = '';
+    statusEl.textContent = '칸 안에 글자를 써 주세요';
+    statusEl.classList.remove('error');
+    statusEl.style.display = '';
+  }
+
+  async function recognize() {
+    const seq = ++recogSeq;
+    const ink = strokes.map(s => [s.xs.slice(), s.ys.slice(), s.ts.slice()]);
+    const body = {
+      requests: [{
+        writing_guide: { writing_area_width: LOGICAL, writing_area_height: LOGICAL },
+        pre_context: '',
+        max_num_results: 20,
+        max_completions: 0,
+        ink,
+        language: 'zh_CN'
+      }]
+    };
+    statusEl.textContent = '인식 중…';
+    statusEl.classList.remove('error');
+    statusEl.style.display = '';
+    try {
+      const res = await fetch('https://www.google.com/inputtools/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const text = await res.text();
+      if (seq !== recogSeq) return;
+      const cleaned = text.replace(/^\)\]\}'\s*/, '');
+      const json = JSON.parse(cleaned);
+      if (json[0] !== 'SUCCESS') throw new Error('API returned ' + json[0]);
+      const candidates = (json[1] && json[1][0] && json[1][0][1]) || [];
+      // Keep only single CJK Hanzi candidates (drop multi-char predictions
+      // like "你是", and non-Chinese results like "/", "ㄧ", "～").
+      const HANZI = /^[㐀-䶿一-鿿豈-﫿]$/;
+      const filtered = candidates.filter(c => c.length === 1 && HANZI.test(c)).slice(0, 12);
+      renderCandidates(filtered);
+    } catch (err) {
+      if (seq !== recogSeq) return;
+      statusEl.textContent = '잘 안 됐어요. 인터넷 연결이 불안정하거나 Google 인식 서버에 연결할 수 없는 것 같아요. 잠시 후 다시 시도해 주세요.';
+      statusEl.classList.add('error');
+      candRow.innerHTML = '';
+    }
+  }
+
+  function renderCandidates(list) {
+    candRow.innerHTML = '';
+    if (!list || list.length === 0) {
+      statusEl.textContent = '후보를 찾지 못했어요';
+      return;
+    }
+    statusEl.style.display = 'none';
+    list.forEach((char, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'cand';
+      btn.type = 'button';
+      btn.textContent = char;
+      btn.addEventListener('click', () => selectCharacter(char, btn));
+      candRow.appendChild(btn);
+      if (i === 0) selectCharacter(char, btn, /*silent*/ true);
+    });
+  }
+
+  // ============ Selected character detail ============
+  const detail = document.getElementById('detail');
+  const detailChar = document.getElementById('detail-char');
+  const detailPinyin = document.getElementById('detail-pinyin');
+  const detailMeaning = document.getElementById('detail-meaning');
+  let currentChar = '';
+  let currentPinyin = '';
+
+  function getPinyin(char) {
+    try {
+      if (window.pinyinPro && typeof window.pinyinPro.pinyin === 'function') {
+        return window.pinyinPro.pinyin(char, { toneType: 'symbol', type: 'array' }).join(' ');
+      }
+    } catch (_) {}
+    return '';
+  }
+
+  async function fetchMeaning(char) {
+    try {
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=zh-CN&tl=ko&dt=t&q=${encodeURIComponent(char)}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('translate failed');
+      const json = await res.json();
+      const tr = (json[0] || []).map(x => x[0]).filter(Boolean).join('');
+      return tr || '';
+    } catch {
+      return '';
+    }
+  }
+
+  async function selectCharacter(char, btn, silent = false) {
+    currentChar = char;
+    [...candRow.querySelectorAll('.cand')].forEach(b => b.classList.toggle('active', b === btn));
+    detail.hidden = false;
+    detailChar.textContent = char;
+    currentPinyin = getPinyin(char);
+    detailPinyin.textContent = currentPinyin || '—';
+    detailMeaning.textContent = '뜻을 가져오는 중…';
+    detailMeaning.classList.add('dim');
+    pushHistory(char);
+    const meaning = await fetchMeaning(char);
+    if (currentChar !== char) return;
+    if (meaning) {
+      detailMeaning.textContent = meaning;
+      detailMeaning.classList.remove('dim');
+    } else {
+      detailMeaning.textContent = '뜻 자동 가져오기에 실패했어요(오프라인?). 아래 버튼으로 사전에서 찾아보세요.';
+      detailMeaning.classList.add('dim');
+    }
+    if (!silent) detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ============ Actions ============
+  function flash(msg) {
+    const el = document.getElementById('flash');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(flash._t);
+    flash._t = setTimeout(() => el.classList.remove('show'), 1300);
+  }
+  async function copy(text, label) {
+    try {
+      await navigator.clipboard.writeText(text);
+      flash(label + ' 복사했어요');
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); flash(label + ' 복사했어요'); } catch { flash('복사 실패'); }
+      ta.remove();
+    }
+  }
+  // Builtin actions (copy + Google 번역)
+  document.querySelectorAll('[data-builtin]').forEach(el => {
+    el.addEventListener('click', async () => {
+      if (!currentChar) return;
+      const a = el.dataset.builtin;
+      if (a === 'copy-char') return copy(currentChar, '글자를');
+      if (a === 'copy-pinyin') return copy(currentPinyin || '', '병음을');
+      if (a === 'gtranslate') {
+        try { await navigator.clipboard.writeText(currentChar); } catch (_) {}
+        window.open('https://translate.google.com/?sl=zh-CN&tl=ko&text=' + encodeURIComponent(currentChar) + '&op=translate', '_blank');
+      }
+    });
+  });
+
+  // Speak
+  document.getElementById('speak').addEventListener('click', () => {
+    if (!currentChar || !('speechSynthesis' in window)) return;
+    const u = new SpeechSynthesisUtterance(currentChar);
+    u.lang = 'zh-CN';
+    u.rate = 0.85;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  });
+
+  // ============ History ============
+  const STORE_HIST = 'chinese-lookup-history-ko';
+  function loadHistory() {
+    try { return JSON.parse(localStorage.getItem(STORE_HIST) || '[]'); }
+    catch { return []; }
+  }
+  function saveHistory(list) {
+    localStorage.setItem(STORE_HIST, JSON.stringify(list.slice(0, 40)));
+  }
+  function pushHistory(char) {
+    const list = loadHistory().filter(c => c !== char);
+    list.unshift(char);
+    saveHistory(list);
+    renderHistory();
+  }
+  function renderHistory() {
+    const wrap = document.getElementById('history-list');
+    wrap.innerHTML = '';
+    loadHistory().forEach(char => {
+      const b = document.createElement('button');
+      b.className = 'hist';
+      b.type = 'button';
+      b.textContent = char;
+      b.addEventListener('click', () => {
+        // Re-open detail; create a one-off fake candidate row containing just this char so it's selectable
+        candRow.innerHTML = '';
+        const cb = document.createElement('button');
+        cb.className = 'cand active';
+        cb.type = 'button';
+        cb.textContent = char;
+        cb.addEventListener('click', () => selectCharacter(char, cb));
+        candRow.appendChild(cb);
+        statusEl.style.display = 'none';
+        selectCharacter(char, cb);
+      });
+      wrap.appendChild(b);
+    });
+  }
+  document.getElementById('clear-history').addEventListener('click', () => {
+    if (!confirm('기록을 지울까요?')) return;
+    saveHistory([]);
+    renderHistory();
+  });
+
+  renderHistory();
+  redraw();
+})();
+</script>
+</body>
+</html>
