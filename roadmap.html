@@ -638,7 +638,9 @@
 
   /* ================= view switching ================= */
   function show(){
-    const g = goal();
+    let g = goal();
+    // 旧バージョン（中国語専用・学習言語フィールドなし）の目標を移行
+    if(g && !g.target){ g.target = 'zh'; if(!g.ui) g.ui = 'ja'; saveGoal(g); }
     // この目標の学習言語を今のUIが扱えない場合（例：中国語の目標を中文UIで開いた）、
     // 目標を作ったチャンネルのUIに切り替えて表示する（白画面クラッシュ防止）
     if(g && !TOOLMAP[UI][g.target]){
@@ -650,11 +652,16 @@
         return;
       }
     }
-    $('setup').style.display = g ? 'none' : 'block';
-    $('plan').style.display = g ? 'block' : 'none';
-    $('gearBtn').style.display = g ? 'block' : 'none';
-    if(g) renderPlan();
-    else {
+    // どうしても表示できない目標（不明な言語など）は設定画面に戻す（白画面にしない）
+    let usable = !!(g && TOOLMAP[UI][g.target]);
+    if(usable){
+      try{ renderPlan(); }
+      catch(e){ usable = false; }
+    }
+    $('setup').style.display = usable ? 'none' : 'block';
+    $('plan').style.display = usable ? 'block' : 'none';
+    $('gearBtn').style.display = usable ? 'block' : 'none';
+    if(!usable){
       if(!$('deadline').value){
         const d = new Date(Date.now()+70*86400000);
         $('deadline').value = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
