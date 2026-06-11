@@ -993,6 +993,9 @@
   /* secondary: today */
   .deck-card.today { background: var(--bg-elevated); }
   .deck-card.today:hover { border-color: var(--gold); box-shadow: 0 18px 40px -24px var(--gold-soft); }
+  .deck-card.goal { background: var(--bg-elevated); }
+  .deck-card.goal:hover { border-color: var(--gold); box-shadow: 0 18px 40px -24px var(--gold-soft); }
+  .deck-card.goal .deck-kicker { color: var(--gold); }
 
   .deck-kicker {
     display: inline-flex;
@@ -1156,6 +1159,15 @@
         <p class="deck-sub" id="resume-sub">第7課 ・ 我喜欢做菜</p>
       </div>
       <span class="deck-go" id="resume-go">続ける<span class="arrow">→</span></span>
+    </a>
+
+    <a class="deck-card goal" href="roadmap.html">
+      <div class="deck-kicker"><span class="ico">🎯</span> 8月のゴール</div>
+      <div>
+        <h3 class="deck-title">簡単な中国語会話</h3>
+        <p class="deck-sub" id="goal-sub">今日の一歩を見る</p>
+      </div>
+      <span class="deck-go">開く<span class="arrow">→</span></span>
     </a>
   </div>
 
@@ -1598,6 +1610,14 @@
       streakWrap.hidden = true;
     }
 
+    // ゴールカード：8/15 までの残り日数
+    const goalSub = document.getElementById('goal-sub');
+    if (goalSub) {
+      const t = new Date(); t.setHours(0, 0, 0, 0);
+      const left = Math.max(0, Math.ceil((new Date(2026, 7, 15) - t) / 86400000));
+      goalSub.textContent = '残り' + left + '日 ・ 今日の一歩を見る';
+    }
+
     // 今月カレンダー（活動日に点）
     const el = document.getElementById('cal-dots');
     if (el) {
@@ -1730,6 +1750,15 @@
   const UPDATE_VISIBLE     = 5;    // 折りたたまず表示する件数
 
   const updates = [
+    {
+      date: "2026-06-11",
+      tag:  { ja: "ロードマップ · NEW", ko: "로드맵 · NEW", zh: "路线图 · NEW" },
+      text: {
+        ja: "「8月のゴール」ロードマップを公開 — 8月中旬の簡単な中国語会話へ、毎日「今日はこれ」を1つだけ提示。Daily・Listening・Writer・Reader の進みは自動で反映、休んでも遅れの概念なし。",
+        ko: "‘8월의 목표’ 로드맵 공개(일본어 UI) — 매일 ‘오늘은 이것’ 하나만 제시. 도구 진행도는 자동 반영.",
+        zh: "上线「8月目标」路线图（日语界面）— 每天只给一个「今天做这个」，各工具进度自动同步。"
+      }
+    },
     {
       date: "2026-06-11",
       tag:  { ja: "Listening · NEW", ko: "Listening · NEW", zh: "Listening · NEW" },

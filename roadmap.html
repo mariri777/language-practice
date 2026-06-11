@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8月のゴール · ロードマップ — 日々</title>
+<meta name="theme-color" content="#f1e8d2">
+<style>
+  :root{
+    --bg:#f1e8d2; --bg-elevated:#faf2dc; --bg-tile:#f6ecd2; --bg-deep:#e3d7b5;
+    --ink:#14100a; --ink-2:#2c2317; --ink-3:#6a604e; --ink-4:#a59881;
+    --red:#8a2438; --red-deep:#5a1622; --red-bright:#b53048; --red-soft:rgba(138,36,56,.08);
+    --gold:#b6843a; --green:#2f7c5e; --rule:#c1b491; --hair:rgba(20,16,10,.10);
+    --font-ui:-apple-system,BlinkMacSystemFont,"Inter","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif;
+    --font-mincho:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+    --font-num:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.65;
+       padding:0 0 80px;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:680px;margin:0 auto;padding:0 18px}
+
+  header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;max-width:680px;margin:0 auto}
+  .brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  .brand .mark{width:26px;height:26px;background:var(--red);color:#fff;display:inline-flex;align-items:center;justify-content:center;border-radius:5px;font-family:var(--font-num);font-style:italic;font-size:17px;transform:rotate(-4deg)}
+
+  h1{font-family:var(--font-mincho);font-size:clamp(26px,5vw,38px);font-weight:400;letter-spacing:.04em;margin:8px 0 2px}
+  h1 .dot{color:var(--red);font-family:var(--font-num);font-style:italic}
+  .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 14px}
+  .scenes{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+  .scene{font-size:12px;font-weight:700;background:var(--red-soft);color:var(--red-deep);border:1px solid rgba(138,36,56,.22);border-radius:20px;padding:4px 12px}
+
+  .card{background:var(--bg-elevated);border:1px solid var(--hair);border-radius:14px;padding:18px;margin-bottom:16px}
+
+  /* countdown */
+  .count{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .count .n{font-family:var(--font-num);font-style:italic;font-size:52px;color:var(--red);line-height:1}
+  .count .l{font-size:13px;color:var(--ink-3)}
+  .count .d{margin-left:auto;font-size:12px;color:var(--ink-4)}
+
+  /* today */
+  .today{background:var(--red);color:#fff;border:0}
+  .today .kicker{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.8;margin:0 0 8px}
+  .today .task{font-size:17px;font-weight:700;line-height:1.55;margin:0 0 4px}
+  .today .why{font-size:12.5px;opacity:.85;margin:0 0 14px}
+  .today .go{display:inline-block;background:#fff;color:var(--red-deep);font-weight:700;padding:10px 18px;border-radius:10px;text-decoration:none}
+  .today .tiny{display:inline-block;margin-left:12px;font-size:12.5px;color:#fff;opacity:.8;text-decoration:underline}
+  .nopressure{font-size:12px;color:var(--ink-4);margin:-6px 0 16px;padding:0 4px}
+
+  /* phases */
+  .phase-head{display:flex;align-items:baseline;gap:10px;margin:0 0 4px}
+  .phase-num{font-family:var(--font-num);font-style:italic;font-size:24px;color:var(--red)}
+  .phase-title{font-weight:700;font-size:16px}
+  .phase-when{margin-left:auto;font-size:11.5px;color:var(--ink-4)}
+  .phase-desc{font-size:12.5px;color:var(--ink-3);margin:0 0 12px}
+  .item{display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid var(--hair)}
+  .item .st{flex-shrink:0;width:40px;text-align:center;font-size:12px;font-weight:700;color:var(--ink-4)}
+  .item.done .st{color:var(--green);font-size:16px}
+  .item .lb{flex:1;min-width:0;font-size:14px;color:var(--ink-2)}
+  .item.done .lb{color:var(--ink-4);text-decoration:line-through;text-decoration-color:rgba(47,124,94,.5)}
+  .item .lb .sub{display:block;font-size:11.5px;color:var(--ink-4)}
+  .item a.jump{flex-shrink:0;font-size:12px;font-weight:700;color:var(--red);text-decoration:none}
+  .item .act{flex-shrink:0;font:inherit;font-size:12.5px;font-weight:700;border:1px solid var(--rule);background:#fff;color:var(--ink-3);border-radius:8px;padding:5px 11px;cursor:pointer}
+  .item .act:hover{border-color:var(--red);color:var(--red)}
+  .item.done .act{border-color:var(--green);color:var(--green);background:rgba(47,124,94,.06)}
+  .bar{height:4px;background:var(--bg-deep);border-radius:4px;overflow:hidden;margin-top:5px}
+  .bar i{display:block;height:100%;background:var(--red);border-radius:4px;transition:width .4s}
+  .item.done .bar i{background:var(--green)}
+
+  .foot{font-size:12px;color:var(--ink-4);line-height:1.7;margin-top:4px}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html"><span class="mark">&amp;</span> 日々</a>
+</header>
+
+<div class="wrap">
+  <h1>8月のゴール<span class="dot">.</span></h1>
+  <p class="lead">8月中旬までに、簡単な中国語会話ができるようになる。そのための道のりを、毎日「今日はこれ」だけに引き直して出します。</p>
+  <div class="scenes">
+    <span class="scene">友達とおしゃべり</span>
+    <span class="scene">旅行・街中</span>
+    <span class="scene">推し活・配信</span>
+  </div>
+
+  <div class="card">
+    <div class="count">
+      <span class="n" id="days">--</span>
+      <span class="l">残り日数<br>（8月15日まで）</span>
+      <span class="d" id="doneCount"></span>
+    </div>
+  </div>
+
+  <div class="card today">
+    <p class="kicker">▶ 今日はこれ</p>
+    <p class="task" id="todayTask">…</p>
+    <p class="why" id="todayWhy"></p>
+    <a class="go" id="todayGo" href="#">開く →</a>
+    <a class="tiny" href="chinese-listening.html?n=3">今日は無理な日 → 3問だけ聞く</a>
+  </div>
+  <p class="nopressure">休んだ日があっても「遅れ」はありません。ここは毎日、残りのいちばん手前から引き直されるだけです。</p>
+
+  <div id="phases"></div>
+
+  <p class="foot">チェックの仕組み：Daily のコース完走・Listening のベストスコア・Writer の「✓通じる」回数・Reader の解析回数は自動で反映されます。シャドーイングと場面練習は、やったら自分で「+1」「✓」を押してください（自己申告でOK。あなたの練習です）。</p>
+</div>
+
+<script src="daily.js?v=1"></script>
+<script>
+  const $ = id => document.getElementById(id);
+  const DEADLINE = new Date(2026, 7, 15); // 2026-08-15
+  const SELF_K = 'roadmap-zh-v1';
+
+  /* ---------- data sources ---------- */
+  function selfState(){ try{ return JSON.parse(localStorage.getItem(SELF_K)||'{}'); }catch{ return {}; } }
+  function saveSelf(s){ localStorage.setItem(SELF_K, JSON.stringify(s)); }
+  function counter(key){ return (selfState().counts||{})[key]||0; }
+  function bump(key, d){ const s=selfState(); s.counts=s.counts||{}; s.counts[key]=Math.max(0,(s.counts[key]||0)+d); saveSelf(s); }
+  function checked(key){ return !!(selfState().checks||{})[key]; }
+  function toggleCheck(key){ const s=selfState(); s.checks=s.checks||{}; s.checks[key]=!s.checks[key]; saveSelf(s); }
+
+  function dailyDone(ids){
+    try{
+      const st = JSON.parse(localStorage.getItem('cn-practice-v2')||'{}');
+      const done = Array.isArray(st.completedCourses)?st.completedCourses:[];
+      return ids.filter(i=>done.includes(i)).length;
+    }catch{ return 0; }
+  }
+  function listenBest(kind){
+    try{ return (JSON.parse(localStorage.getItem('listening-best-v1')||'{}'))[kind]||0; }catch{ return 0; }
+  }
+  function writerWins(){
+    try{ return LC.getWins().filter(w=>w.skill==='書' && w.source==='writer').length; }catch{ return 0; }
+  }
+  function readerUses(){ return parseInt(localStorage.getItem('reader-uses'))||0; }
+
+  /* ---------- the plan ---------- */
+  const PHASES = [
+    { num:'壱', title:'土台 — 耳と基本文', when:'目安：6月いっぱい',
+      desc:'HSK1の文型・数字・時間は、おしゃべりでも旅行でも全部の土台。まず「耳だけで分かる」を作る。' },
+    { num:'弐', title:'組み立て — 近況が言える', when:'目安：7月前半',
+      desc:'「昨日◯◯した」「◯◯したい」「◯◯より好き」が言えると、友達との会話が回りはじめる。' },
+    { num:'参', title:'場面 — 旅行と推し活', when:'目安：7月後半',
+      desc:'ゴールの3场面に直結する表現を、Writer と Reader で実戦形式に。' },
+    { num:'肆', title:'仕上げ — 反射神経', when:'目安：8月前半',
+      desc:'考えてから言うのではなく、聞いた瞬間・言いたい瞬間に出るところまで磨く。' }
+  ];
+
+  const ITEMS = [
+    { ph:0, id:'d1', label:'Daily 中国語：HSK1 の3コースを完走', link:'chinese-practice.html',
+      prog:()=>({n:dailyDone([0,1,2]), t:3}),
+      task:'Daily 中国語で HSK1 の続きを1課ぶん（10問）', why:'あいさつ・数字・場所——会話の足腰。' },
+    { ph:0, id:'l1', label:'Listening：HSK1 で一発 8/10 を出す', link:'chinese-listening.html',
+      prog:()=>({n:Math.min(listenBest('1'),8), t:8}),
+      task:'Listening HSK1 を1セット（一発8問正解でクリア）', why:'耳だけで分かる文を増やす。何度でも挑戦OK。' },
+    { ph:0, id:'s1', label:'シャドーイング：聞いた文をマネして言う ×10文', link:'chinese-listening.html', self:'count', key:'shadow', target:10,
+      prog:()=>({n:Math.min(counter('shadow'),10), t:10}),
+      task:'Listening で2文、答え合わせのあと声に出してマネる（やったらここで +1）', why:'口が覚えると、会話で出てくる。' },
+
+    { ph:1, id:'d2', label:'Daily 中国語：HSK2 の3コースを完走', link:'chinese-practice.html',
+      prog:()=>({n:dailyDone([3,4,5]), t:3}),
+      task:'Daily 中国語で HSK2 の続きを1課ぶん（10問）', why:'了・过・願望・比較＝近況報告の道具。' },
+    { ph:1, id:'l2', label:'Listening：HSK2 で一発 8/10 を出す', link:'chinese-listening.html',
+      prog:()=>({n:Math.min(listenBest('2'),8), t:8}),
+      task:'Listening HSK2 を1セット（一発8問正解でクリア）', why:'返事が聞き取れないと会話にならない。' },
+    { ph:1, id:'w1', label:'Writer：「✓通じる」を合計10回（近況・感想を書く）', link:'writer.html',
+      prog:()=>({n:Math.min(writerWins(),10), t:10}),
+      task:'Writer で、友達に言いたい近況や感想を1文（✓通じるまで）', why:'自分の言葉で組み立てる練習。直しは辞書へ。' },
+    { ph:1, id:'s2', label:'シャドーイング：累計30文', link:'chinese-listening.html', self:'count', key:'shadow', target:30,
+      prog:()=>({n:Math.min(counter('shadow'),30), t:30}),
+      task:'Listening で2文シャドーイング（やったら +1）', why:'毎日少しずつ、口の筋トレ。' },
+
+    { ph:2, id:'t1', label:'旅行：注文の一言を Writer で ✓（例「これをください」「おすすめは？」）', link:'writer.html', self:'check', key:'t1',
+      prog:()=>({n:checked('t1')?1:0, t:1}),
+      task:'Writer で「これをください／おすすめはありますか」を自分の言い方で ✓ に', why:'旅行场面その1。✓が出たらここをチェック。' },
+    { ph:2, id:'t2', label:'旅行：値段・買い物を Writer で ✓（例「いくら？」「ちょっと高い」）', link:'writer.html', self:'check', key:'t2',
+      prog:()=>({n:checked('t2')?1:0, t:1}),
+      task:'Writer で「これいくら？ちょっと高いな」を ✓ に', why:'旅行场面その2。' },
+    { ph:2, id:'t3', label:'旅行：移動・道きき Writer で ✓（例「駅はどこ？」「歩いて行ける？」）', link:'writer.html', self:'check', key:'t3',
+      prog:()=>({n:checked('t3')?1:0, t:1}),
+      task:'Writer で「駅はどこですか？歩いて行けますか？」を ✓ に', why:'旅行场面その3。' },
+    { ph:2, id:'o1', label:'推し活：応援コメントを Writer で ✓（例「今日も最高だった！」）', link:'writer.html', self:'check', key:'o1',
+      prog:()=>({n:checked('o1')?1:0, t:1}),
+      task:'Writer で、推しに送りたい応援コメントを1つ ✓ に', why:'本当に使う言葉がいちばん覚わる。' },
+    { ph:2, id:'o2', label:'推し活：配信・投稿の感想を Writer で ✓', link:'writer.html', self:'check', key:'o2',
+      prog:()=>({n:checked('o2')?1:0, t:1}),
+      task:'Writer で、昨日見た配信や投稿の感想を1文 ✓ に', why:'感想が言えると友達との会話も弾む。' },
+    { ph:2, id:'r1', label:'Reader：友達や推しの投稿を5回読む', link:'reader.html',
+      prog:()=>({n:Math.min(readerUses(),5), t:5}),
+      task:'Reader に友達か推しの投稿を1つ貼って読む（気になる語は＋辞書）', why:'生の中国語に触れる。辞書も育つ。' },
+    { ph:2, id:'l3', label:'Listening：HSK3 で一発 7/10（背伸び）', link:'chinese-listening.html',
+      prog:()=>({n:Math.min(listenBest('3'),7), t:7}),
+      task:'Listening HSK3 を1セット（一発7問でクリア）', why:'少し上を聞いておくと、HSK2が楽に聞こえる。' },
+
+    { ph:3, id:'l4', label:'Listening：HSK1か2で一発 9/10', link:'chinese-listening.html',
+      prog:()=>({n:Math.min(Math.max(listenBest('1'),listenBest('2')),9), t:9}),
+      task:'Listening HSK1か2 を1セット（一発9問でクリア）', why:'ほぼ全部聞こえる＝会話のスピードについていける。' },
+    { ph:3, id:'w2', label:'Writer：「✓通じる」を合計25回', link:'writer.html',
+      prog:()=>({n:Math.min(writerWins(),25), t:25}),
+      task:'Writer で今日言いたかったことを1文（✓通じるまで）', why:'量が反射神経を作る。' },
+    { ph:3, id:'s3', label:'仕上げ：「今日言いたかった一言」を7回', link:'writer.html', self:'count', key:'daily7', target:7,
+      prog:()=>({n:Math.min(counter('daily7'),7), t:7}),
+      task:'今日言いたかった一言を Writer で✓にして、ここで +1', why:'最後の1週間の儀式。8月の自分への引き継ぎ。' }
+  ];
+
+  /* ---------- render ---------- */
+  function daysLeft(){
+    const today = new Date(); today.setHours(0,0,0,0);
+    return Math.max(0, Math.ceil((DEADLINE - today) / 86400000));
+  }
+  function isDone(it){ const p = it.prog(); return p.n >= p.t; }
+
+  function render(){
+    $('days').textContent = daysLeft();
+    const doneN = ITEMS.filter(isDone).length;
+    $('doneCount').textContent = 'チェックポイント '+doneN+' / '+ITEMS.length;
+
+    // 今日はこれ＝フェーズ順で最初の未完了
+    const next = ITEMS.find(it=>!isDone(it));
+    if(next){
+      $('todayTask').textContent = next.task;
+      $('todayWhy').textContent = next.why || '';
+      $('todayGo').href = next.link;
+    } else {
+      $('todayTask').textContent = '全チェックポイント達成！🎉 もう「勉強」じゃなく、使う段階です。';
+      $('todayWhy').textContent = '';
+      $('todayGo').href = 'writer.html';
+    }
+
+    $('phases').innerHTML = PHASES.map((p,pi)=>{
+      const rows = ITEMS.filter(it=>it.ph===pi).map(it=>{
+        const pr = it.prog(); const done = pr.n >= pr.t;
+        const stat = done ? '✓' : (pr.t>1 ? pr.n+'/'+pr.t : '・');
+        let act = '';
+        if(it.self==='count') act = `<button class="act" data-bump="${it.key}">${done?'✓ 完了':'+1'}</button>`;
+        if(it.self==='check') act = `<button class="act" data-check="${it.key}">${done?'✓ 済':'✓ にする'}</button>`;
+        return `<div class="item ${done?'done':''}">
+          <span class="st">${stat}</span>
+          <span class="lb">${it.label}${pr.t>1?`<span class="bar"><i style="width:${Math.round(pr.n/pr.t*100)}%"></i></span>`:''}</span>
+          ${act}
+          <a class="jump" href="${it.link}">開く→</a>
+        </div>`;
+      }).join('');
+      return `<div class="card">
+        <div class="phase-head"><span class="phase-num">${p.num}</span><span class="phase-title">${p.title}</span><span class="phase-when">${p.when}</span></div>
+        <p class="phase-desc">${p.desc}</p>
+        ${rows}
+      </div>`;
+    }).join('');
+
+    document.querySelectorAll('[data-bump]').forEach(b=> b.addEventListener('click', ()=>{ bump(b.dataset.bump, 1); render(); }));
+    document.querySelectorAll('[data-check]').forEach(b=> b.addEventListener('click', ()=>{ toggleCheck(b.dataset.check); render(); }));
+  }
+  render();
+</script>
+</body>
+</html>
