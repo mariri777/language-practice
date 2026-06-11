@@ -1155,19 +1155,19 @@
     <a class="deck-card resume" id="resume-card" href="chinese-diary.html">
       <div class="deck-kicker"><span class="ico">▶</span> <span id="resume-kicker">つづきから</span></div>
       <div>
-        <h3 class="deck-title" id="resume-title">Journal 中文</h3>
+        <h3 class="deck-title" id="resume-title">Journal 中国語</h3>
         <p class="deck-sub" id="resume-sub">第7課 ・ 我喜欢做菜</p>
       </div>
       <span class="deck-go" id="resume-go">続ける<span class="arrow">→</span></span>
     </a>
 
-    <a class="deck-card goal" href="roadmap.html">
-      <div class="deck-kicker"><span class="ico">🎯</span> 8月のゴール</div>
+    <a class="deck-card goal" id="goal-card" href="roadmap.html">
+      <div class="deck-kicker"><span class="ico">🎯</span> ゴール</div>
       <div>
-        <h3 class="deck-title">簡単な中国語会話</h3>
-        <p class="deck-sub" id="goal-sub">今日の一歩を見る</p>
+        <h3 class="deck-title" id="goal-title">目標を決める</h3>
+        <p class="deck-sub" id="goal-sub">なりたい姿と期限から、道のりを組み立てます</p>
       </div>
-      <span class="deck-go">開く<span class="arrow">→</span></span>
+      <span class="deck-go" id="goal-go">はじめる<span class="arrow">→</span></span>
     </a>
   </div>
 
@@ -1237,7 +1237,7 @@
             <span class="tile-tag">CN · Journal</span>
           </div>
           <div class="tile-bottom">
-            <h3 class="tile-name">Journal 中文</h3>
+            <h3 class="tile-name">Journal 中国語</h3>
             <p class="tile-sub">中国語の短文を書き写す</p>
             <span class="tile-cta">Open<span class="arrow">→</span></span>
           </div>
@@ -1249,7 +1249,7 @@
             <span class="tile-tag">CN · Tool</span>
           </div>
           <div class="tile-bottom">
-            <h3 class="tile-name">Lookup 中文</h3>
+            <h3 class="tile-name">Lookup 中国語</h3>
             <p class="tile-sub">手書きで漢字を検索</p>
             <span class="tile-cta">Open<span class="arrow">→</span></span>
           </div>
@@ -1278,7 +1278,7 @@
             <span class="tile-tag">KR · Talk</span>
           </div>
           <div class="tile-bottom">
-            <h3 class="tile-name">Daily 한국어</h3>
+            <h3 class="tile-name">Daily 韓国語</h3>
             <p class="tile-sub">韓国語の作文ドリル</p>
             <span class="tile-cta">Open<span class="arrow">→</span></span>
           </div>
@@ -1290,7 +1290,7 @@
             <span class="tile-tag">KR · Journal</span>
           </div>
           <div class="tile-bottom">
-            <h3 class="tile-name">Journal 한국어</h3>
+            <h3 class="tile-name">Journal 韓国語</h3>
             <p class="tile-sub">韓国語の短文を書き写す</p>
             <span class="tile-cta">Open<span class="arrow">→</span></span>
           </div>
@@ -1302,7 +1302,7 @@
             <span class="tile-tag">KR · Listen</span>
           </div>
           <div class="tile-bottom">
-            <h3 class="tile-name">Listening 한국어</h3>
+            <h3 class="tile-name">Listening 韓国語</h3>
             <p class="tile-sub">聞いて意味を当てる4択</p>
             <span class="tile-cta">Open<span class="arrow">→</span></span>
           </div>
@@ -1607,7 +1607,7 @@
     } else {
       // まだ何も無い人向け：はじめてみる
       document.getElementById('resume-kicker').textContent = 'はじめてみる';
-      document.getElementById('resume-title').textContent = 'Journal 中文';
+      document.getElementById('resume-title').textContent = 'Journal 中国語';
       document.getElementById('resume-sub').textContent = '第1課からはじめる';
       document.getElementById('resume-go').firstChild.textContent = 'はじめる';
     }
@@ -1622,13 +1622,19 @@
       streakWrap.hidden = true;
     }
 
-    // ゴールカード：8/15 までの残り日数
-    const goalSub = document.getElementById('goal-sub');
-    if (goalSub) {
-      const t = new Date(); t.setHours(0, 0, 0, 0);
-      const left = Math.max(0, Math.ceil((new Date(2026, 7, 15) - t) / 86400000));
-      goalSub.textContent = '残り' + left + '日 ・ 今日の一歩を見る';
-    }
+    // ゴールカード：目標を設定済みなら「自分の目標＋残り日数」、未設定なら誘い文のまま
+    try {
+      const g = JSON.parse(localStorage.getItem('goal-zh-v1') || 'null');
+      if (g && g.deadline) {
+        const TYPE_NAME = { talk: '会話できる', listen: '聞き取れる', read: '読める', write: '書ける' };
+        const t = new Date(); t.setHours(0, 0, 0, 0);
+        const left = Math.max(0, Math.ceil((new Date(g.deadline + 'T00:00:00') - t) / 86400000));
+        document.getElementById('goal-title').textContent =
+          g.title || ('中国語、' + (TYPE_NAME[g.type] || '') + 'ようになる');
+        document.getElementById('goal-sub').textContent = '残り' + left + '日 ・ 今日の一歩を見る';
+        document.getElementById('goal-go').firstChild.textContent = '開く';
+      }
+    } catch {}
 
     // 今月カレンダー（活動日に点）
     const el = document.getElementById('cal-dots');
@@ -1764,11 +1770,20 @@
   const updates = [
     {
       date: "2026-06-11",
+      tag:  { ja: "トップ", ko: "홈", zh: "首页" },
+      text: {
+        ja: "日本語チャンネルのツール名表記を日本語に統一 — Journal 中文→中国語、Daily 한국어→韓国語 など。",
+        ko: "일본어 채널의 도구 이름 표기를 일본어로 통일 — Journal 中文→中国語, Daily 한국어→韓国語 등.",
+        zh: "统一日语频道的工具命名 — Journal 中文→中国語、Daily 한국어→韓国語 等。"
+      }
+    },
+    {
+      date: "2026-06-11",
       tag:  { ja: "Listening · NEW", ko: "Listening · NEW", zh: "Listening · NEW" },
       text: {
-        ja: "Listening 한국어 を公開 — TOPIK1〜4の韓国語文（1117文）を耳だけで聞いて意味を当てる4択。",
-        ko: "Listening 한국어 공개(일본어 UI) — TOPIK1~4 한국어 문장(1117문장)을 귀로만 듣고 뜻을 맞히는 4지선다.",
-        zh: "上线 Listening 한국어（日语界面）— 只用耳朵听 TOPIK1~4 韩语句子、四选一猜意思。"
+        ja: "Listening 韓国語 を公開 — TOPIK1〜4の韓国語文（1117文）を耳だけで聞いて意味を当てる4択。",
+        ko: "Listening 韓国語 공개(일본어 UI) — TOPIK1~4 한국어 문장(1117문장)을 귀로만 듣고 뜻을 맞히는 4지선다.",
+        zh: "上线 Listening 韓国語（日语界面）— 只用耳朵听 TOPIK1~4 韩语句子、四选一猜意思。"
       }
     },
     {

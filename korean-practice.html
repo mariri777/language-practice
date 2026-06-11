@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daily 한국어 · 韓国語の作文ドリル</title>
+  <title>Daily 韓国語 · 韓国語の作文ドリル</title>
   <link rel="icon" type="image/svg+xml" href="favicon-ko.svg" />
   <link rel="apple-touch-icon" href="icons/favicon-ko-180.png" />
   <link rel="manifest" href="korean-practice.webmanifest" />
@@ -11,7 +11,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Daily 한국어" />
+  <meta name="apple-mobile-web-app-title" content="Daily 韓国語" />
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -48,7 +48,7 @@
     <header class="header">
       <span class="header-eyebrow">Korean Output Trainer</span>
       <h1 id="home-link" role="link" tabindex="0" title="トップへ戻る">
-        Daily <span class="accent">한국어</span>
+        Daily <span class="accent">韓国語</span>
         <span class="ko-title">韓国語の作文ドリル</span>
       </h1>
     </header>
@@ -7578,6 +7578,7 @@
       const setTail = (sel, t) => { const el = document.querySelector(sel); if (el && el.lastChild) el.lastChild.textContent = t; };
       const setAttr = (sel, a, t) => { const el = document.querySelector(sel); if (el) el.setAttribute(a, t); };
       setText(".ko-title", "韩语作文练习");
+      setText("#home-link .accent", "韩语");
       setText(".goal-title", "今日目标");
       setText(".goal-sub", "每天10句");
       setText(".view-home .view-title", "选择想学的级别");
@@ -7602,7 +7603,7 @@
       setText("#next-course-btn", "下一课 →");
       setText("#replay-course-btn", "再来一次");
       setText(".footer-meta", "个人兴趣制作，细小 bug 还请见谅。");
-      document.title = "Daily 한국어 · 韩语作文练习";
+      document.title = "Daily 韩语 · 韩语作文练习";
     }
     applyZhOverlay();
 
@@ -7705,7 +7706,7 @@
         else ensureGenerated(courseId, { fresh: true });
       }
       // ホームの「つづきから」「連続日数」へ記録
-      if (window.LC) LC.record({ href: 'korean-practice.html', label: 'Daily 한국어', sub: `TOPIK${c.topik} ・ ${c.title}` });
+      if (window.LC) LC.record({ href: 'korean-practice.html', label: 'Daily 韓国語', sub: `TOPIK${c.topik} ・ ${c.title}` });
       const intro = COURSE_INTROS[courseId] || { overview: "", points: [] };
       elIntroTopik.textContent = c.topik;
       elIntroNum.textContent = c.num;

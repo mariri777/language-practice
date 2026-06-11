@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Listening 한국어 · 聞いて当てる — 日々</title>
+<title>Listening 韓国語 · 聞いて当てる — 日々</title>
 <meta name="theme-color" content="#eff4fa">
 <style>
   :root{
@@ -127,7 +127,7 @@
       <button class="lv" data-topik="4"><span class="lv-name">TOPIK 4</span><span class="lv-sub" id="n-topik4"></span></button>
       <button class="lv" data-topik="dict" id="lvDict" style="grid-column:1/-1"><span class="lv-name">マイ辞書から</span><span class="lv-sub" id="n-dict">Reader/Writerで貯めた韓国語の単語が出ます</span></button>
     </div>
-    <p class="hint">💡 文は Daily 한국어と同じ検証済みのもの。まず TOPIK1〜2 が「耳だけで」分かるようになると、簡単な会話がぐっと近づきます。</p>
+    <p class="hint">💡 文は Daily 韓国語と同じ検証済みのもの。まず TOPIK1〜2 が「耳だけで」分かるようになると、簡単な会話がぐっと近づきます。</p>
     <div class="err" id="err"></div>
   </div>
 
@@ -262,7 +262,7 @@
     $('qTotal').textContent = items.length;
     try{
       const lbl = kind==='dict' ? 'マイ辞書' : 'TOPIK'+kind;
-      LC.record({ href:'korean-listening.html', label:'Listening 한국어', sub:lbl+' ・ 聞いて当てる' });
+      LC.record({ href:'korean-listening.html', label:'Listening 韓国語', sub:lbl+' ・ 聞いて当てる' });
     }catch{}
     renderQ(false);
   }
