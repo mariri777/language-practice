@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 사전 — 日々</title>
+<meta name="theme-color" content="#fdf3f4">
+<style>
+  :root{
+    --bg:#fdf3f4; --bg-elevated:#fffafb; --bg-tile:#f9e9ec; --bg-deep:#f0d7dc;
+    --ink:#33171f; --ink-2:#4d2733; --ink-3:#7d4f5c; --ink-4:#b58f9a;
+    --red:#c94f6d; --red-deep:#96334d; --red-bright:#dd6c87; --red-soft:rgba(201,79,109,.08); --red-glow:rgba(201,79,109,.2);
+    --gold:#b6843a; --green:#2f7c5e; --rule:#e3c4cc; --hair:rgba(51,23,31,.10);
+    --font-ui:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",system-ui,sans-serif;
+    --font-head:"Apple SD Gothic Neo","Nanum Myeongjo","Noto Serif KR",serif;
+    --font-num:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+    --font-zh:"Songti SC","STSong","Source Han Serif SC","Noto Serif SC",serif;
+    --font-ja:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.65;
+       padding:0 0 80px;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+  header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;max-width:760px;margin:0 auto}
+  .brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  .brand .mark{width:26px;height:26px;background:var(--red);color:#fff;display:inline-flex;align-items:center;justify-content:center;border-radius:5px;font-family:var(--font-num);font-style:italic;font-size:17px;transform:rotate(-4deg)}
+  .back{text-decoration:none;color:var(--ink-3);font-size:13px;font-weight:700}
+
+  h1{font-family:var(--font-head);font-size:clamp(26px,5vw,38px);font-weight:600;letter-spacing:.01em;margin:8px 0 2px}
+  h1 .dot{color:var(--red);font-family:var(--font-num);font-style:italic}
+  .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 18px}
+
+  .card{background:var(--bg-elevated);border:1px solid var(--hair);border-radius:14px;padding:18px;margin-bottom:16px}
+
+  .toolbar{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+  .search{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .chip{font:inherit;font-size:13px;font-weight:700;padding:7px 14px;border:1px solid var(--rule);border-radius:999px;background:#fff;color:var(--ink-3);cursor:pointer;transition:all .15s}
+  .chip:hover{border-color:var(--red)}
+  .chip.on{background:var(--red);border-color:var(--red);color:#fff}
+  .count{margin-left:auto;font-family:var(--font-num);font-style:italic;font-size:22px;color:var(--red)}
+
+  .dict-empty{color:var(--ink-4);font-size:14px;padding:18px 4px;text-align:center}
+  .dict-item{display:flex;align-items:center;gap:12px;padding:12px 4px;border-top:1px solid var(--hair)}
+  .dict-item:first-child{border-top:0}
+  .dict-item .term{font-size:18px}
+  .dict-item.zh .term{font-family:var(--font-zh)} .dict-item.ja .term{font-family:var(--font-ja)}
+  .dict-item .term .base{display:inline-block;margin-left:7px;padding:1px 7px;border-radius:999px;background:var(--hair);color:var(--ink-3);font-size:11px;vertical-align:middle}
+  .dict-item .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:13px}
+  .dict-item .mean{flex:1;color:var(--ink-2);font-size:14px}
+  .tag{font-size:10px;font-weight:700;letter-spacing:.1em;padding:2px 7px;border-radius:20px;background:var(--bg-deep);color:var(--ink-3)}
+  .del{background:none;border:0;color:var(--ink-4);cursor:pointer;font-size:16px;padding:4px 8px}
+  .del:hover{color:var(--red)}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html?tab=ko"><span class="mark">&amp;</span> 日々</a>
+  <a class="back" href="reader-ko.html">← Reader</a>
+</header>
+
+<div class="wrap">
+  <h1>내 사전<span class="dot">.</span></h1>
+  <p class="lead">Reader와 Writer에서 모은 단어. 검색·언어로 좁힐 수 있어요.</p>
+
+  <div class="toolbar">
+    <input class="search" id="q" type="search" placeholder="단어·뜻·읽기로 검색" autocomplete="off">
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="card">
+    <div id="list"></div>
+  </div>
+</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const DICT_K = 'mydict-ko-v1';
+  const LANGS = [{code:'zh',label:'중국어',tag:'中'},{code:'ja',label:'일본어',tag:'日'}];
+
+  function loadDict(){ try{ return JSON.parse(localStorage.getItem(DICT_K)||'[]'); }catch{ return []; } }
+  function saveDict(a){ localStorage.setItem(DICT_K, JSON.stringify(a)); }
+  function removeFromDict(id){ saveDict(loadDict().filter(d=>d.id!==id)); buildChips(); render(); }
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  let filterLang = 'all', query = '';
+
+  function buildChips(){
+    const all = loadDict();
+    const cnt = c => all.filter(d=>d.lang===c).length;
+    const defs = [{code:'all',label:'전체',n:all.length}, ...LANGS.map(l=>({code:l.code,label:l.label,n:cnt(l.code)}))];
+    $('chips').innerHTML = defs.map(d=>
+      `<button class="chip${d.code===filterLang?' on':''}" data-code="${d.code}">${d.label}<span style="opacity:.7"> ${d.n}</span></button>`).join('')
+      + `<span class="count" id="count">0</span>`;
+    $('chips').querySelectorAll('.chip').forEach(b=> b.addEventListener('click', ()=>{ filterLang=b.dataset.code; buildChips(); render(); }));
+  }
+
+  function render(){
+    let a = loadDict().sort((x,y)=>y.addedAt-x.addedAt);
+    const total = a.length;
+    if(filterLang!=='all') a = a.filter(d=>d.lang===filterLang);
+    const q = query.trim().toLowerCase();
+    if(q) a = a.filter(d=>[d.term,d.base,d.reading,d.meaning].some(v=>(v||'').toLowerCase().includes(q)));
+    const cEl = $('count'); if(cEl) cEl.textContent = a.length;
+    const el = $('list');
+    if(!total){ el.innerHTML = '<div class="dict-empty">아직 단어가 없어요. Reader나 Writer에서 「＋사전」하면 여기에 모여요.</div>'; return; }
+    if(!a.length){ el.innerHTML = '<div class="dict-empty">해당하는 단어가 없어요.</div>'; return; }
+    const tagOf = code => (LANGS.find(l=>l.code===code)||{}).tag || '';
+    el.innerHTML = a.map(d=>`
+      <div class="dict-item ${d.lang}">
+        <span class="term">${esc(d.term)}${d.base&&d.base!==d.term?`<span class="base">원형 ${esc(d.base)}</span>`:''}</span>
+        ${d.reading?`<span class="read">${esc(d.reading)}</span>`:''}
+        <span class="mean">${esc(d.meaning)}</span>
+        ${d.lang?`<span class="tag">${tagOf(d.lang)}</span>`:''}
+        <button class="del" data-id="${d.id}" title="삭제">✕</button>
+      </div>`).join('');
+    el.querySelectorAll('.del').forEach(b=> b.addEventListener('click', ()=>removeFromDict(b.dataset.id)));
+  }
+
+  $('q').addEventListener('input', ()=>{ query = $('q').value; render(); });
+  buildChips();
+  render();
+</script>
+</body>
+</html>
