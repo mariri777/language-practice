@@ -81,6 +81,8 @@
   /* dictionary */
   .dict-head{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
   .dict-head .n{font-family:var(--font-num);font-style:italic;font-size:30px;color:var(--red)}
+  .dict-link{display:block;text-decoration:none;transition:border-color .15s} .dict-link:hover{border-color:var(--red)}
+  .dict-link-sub{margin:8px 0 0;color:var(--ink-3);font-size:13px}
   .dict-empty{color:var(--ink-4);font-size:14px;padding:8px 0}
   .dict-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hair)}
   .dict-item:first-child{border-top:0}
@@ -167,14 +169,14 @@
     </div>
   </div>
 
-  <!-- dictionary -->
-  <div class="card">
+  <!-- my dictionary → 専用ページ -->
+  <a class="card dict-link" href="dict.html">
     <div class="dict-head">
       <div class="sec-title" style="margin:0">マイ辞書</div>
       <span class="n" id="dictCount">0</span>
     </div>
-    <div id="dictList"></div>
-  </div>
+    <p class="dict-link-sub">ためた単語を検索・整理する　ひらく →</p>
+  </a>
 </div>
 
 <script>
@@ -284,8 +286,9 @@
   }
   function removeFromDict(id){ saveDict(loadDict().filter(d=>d.id!==id)); renderDict(); }
   function renderDict(){
+    const c = $('dictCount'); if(c) c.textContent = loadDict().length;
+    if(!$('dictList')) return;   // 一覧は専用ページ（dict.html）に移動。ここは件数だけ更新
     const a = loadDict().sort((x,y)=>y.addedAt-x.addedAt);
-    $('dictCount').textContent = a.length;
     const el = $('dictList');
     if(!a.length){ el.innerHTML = '<div class="dict-empty">まだありません。上で文章を解析して、気になった単語を「＋辞書」で追加してね。</div>'; return; }
     el.innerHTML = a.map(d=>`
