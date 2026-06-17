@@ -245,15 +245,21 @@
     const pool = bankOf(+kind);
     return shuffle(pool).slice(0, SET_N).map(s=>({ speakText:s.ko, ko:s.ko, roman:s.roman, ja:s.ja, topik:s.topik, pool:'bank' }));
   }
+  // 句読点・空白を無視して比べる（見た目だけ違う重複や、答えと実質同じ選択肢を除く）
+  const normMean = s => (s||'').replace(/[\s。．.!?！？、，,；;…·・]/g,'');
   function distractors(item){
     let cands;
     if(item.pool === 'dict'){
-      cands = dictWords().map(w=>w.meaning).filter(m=>m && m!==item.ja);
+      cands = dictWords().map(w=>w.meaning);
     } else {
-      cands = bankOf(item.topik).map(s=>s.ja).filter(j=>j!==item.ja);
-      if(cands.length < 3) cands = KO_BANK.map(s=>s.ja).filter(j=>j!==item.ja);
+      cands = bankOf(item.topik).map(s=>s.ja);
+      if(cands.length < 8) cands = KO_BANK.map(s=>s.ja);
     }
-    return shuffle([...new Set(cands)]).slice(0,3);
+    const ansN = normMean(item.ja), ansLen = item.ja.length;
+    const uniq = [...new Set(cands)].filter(m => m && normMean(m) !== ansN);
+    // 答えと文字数が近い順に並べ、近いものから3つ（長さで答えが割れるのを防ぐ）
+    uniq.sort((a,b)=> Math.abs(a.length-ansLen) - Math.abs(b.length-ansLen));
+    return shuffle(uniq.slice(0, Math.max(10,3))).slice(0,3);
   }
 
   function start(kind){
