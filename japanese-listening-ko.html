@@ -244,15 +244,21 @@
     const pool = bankOf(+kind);
     return shuffle(pool).slice(0, SET_N).map(s=>({ speakText:s.jp, jp:s.jp, kana:s.kana, ko:s.ko, n:s.n, pool:'bank' }));
   }
+  // 구두점·공백을 무시하고 비교（겉만 다른 중복이나, 답과 사실상 같은 보기를 제외）
+  const normMean = s => (s||'').replace(/[\s。．.!?！？、，,；;…·・]/g,'');
   function distractors(item){
     let cands;
     if(item.pool === 'dict'){
-      cands = dictWords().map(w=>w.meaning).filter(m=>m && m!==item.ko);
+      cands = dictWords().map(w=>w.meaning);
     } else {
-      cands = bankOf(item.n).map(s=>s.ko).filter(j=>j!==item.ko);
-      if(cands.length < 3) cands = JP_BANK.map(s=>s.ko).filter(j=>j!==item.ko);
+      cands = bankOf(item.n).map(s=>s.ko);
+      if(cands.length < 8) cands = JP_BANK.map(s=>s.ko);
     }
-    return shuffle([...new Set(cands)]).slice(0,3);
+    const ansN = normMean(item.ko), ansLen = item.ko.length;
+    const uniq = [...new Set(cands)].filter(m => m && normMean(m) !== ansN);
+    // 답과 글자 수가 가까운 순으로 정렬해 가까운 것부터 3개（길이로 답이 드러나지 않게）
+    uniq.sort((a,b)=> Math.abs(a.length-ansLen) - Math.abs(b.length-ansLen));
+    return shuffle(uniq.slice(0, Math.max(10,3))).slice(0,3);
   }
 
   function start(kind){

@@ -245,15 +245,21 @@
     const pool = bankOf(+kind);
     return shuffle(pool).slice(0, SET_N).map(s=>({ speakText:s.ko, ko:s.ko, roman:s.roman, zh:s.zh, topik:s.topik, pool:'bank' }));
   }
+  // 忽略标点·空格再比较（去掉看似不同的重复，以及与答案实质相同的选项）
+  const normMean = s => (s||'').replace(/[\s。．.!?！？、，,；;…·・]/g,'');
   function distractors(item){
     let cands;
     if(item.pool === 'dict'){
-      cands = dictWords().map(w=>w.meaning).filter(m=>m && m!==item.zh);
+      cands = dictWords().map(w=>w.meaning);
     } else {
-      cands = bankOf(item.topik).map(s=>s.zh).filter(j=>j!==item.zh);
-      if(cands.length < 3) cands = KO_BANK.map(s=>s.zh).filter(j=>j!==item.zh);
+      cands = bankOf(item.topik).map(s=>s.zh);
+      if(cands.length < 8) cands = KO_BANK.map(s=>s.zh);
     }
-    return shuffle([...new Set(cands)]).slice(0,3);
+    const ansN = normMean(item.zh), ansLen = item.zh.length;
+    const uniq = [...new Set(cands)].filter(m => m && normMean(m) !== ansN);
+    // 按与答案字数接近的顺序排列，从最接近的里挑3个（避免凭长度猜出答案）
+    uniq.sort((a,b)=> Math.abs(a.length-ansLen) - Math.abs(b.length-ansLen));
+    return shuffle(uniq.slice(0, Math.max(10,3))).slice(0,3);
   }
 
   function start(kind){
