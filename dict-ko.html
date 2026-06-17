@@ -33,6 +33,9 @@
   .lead{color:var(--ink-3);font-size:13.5px;margin:0 0 18px}
 
   .card{background:var(--bg-elevated);border:1px solid var(--hair);border-radius:14px;padding:18px;margin-bottom:16px}
+  .btn{font:inherit;font-weight:700;padding:11px 18px;border:0;border-radius:10px;background:var(--red);color:#fff;cursor:pointer;transition:background .2s}
+  .btn:hover{background:var(--red-bright)} .btn:disabled{opacity:.45;cursor:default}
+  .btn.ghost{background:transparent;color:var(--red);border:1px solid var(--red)}
 
   .toolbar{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
   .search{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
@@ -41,18 +44,45 @@
   .chip:hover{border-color:var(--red)}
   .chip.on{background:var(--red);border-color:var(--red);color:#fff}
   .count{margin-left:auto;font-family:var(--font-num);font-style:italic;font-size:22px;color:var(--red)}
+  .testbar{display:flex;align-items:center;gap:12px}
+  .testbar .hint{color:var(--ink-3);font-size:12px}
 
   .dict-empty{color:var(--ink-4);font-size:14px;padding:18px 4px;text-align:center}
-  .dict-item{display:flex;align-items:center;gap:12px;padding:12px 4px;border-top:1px solid var(--hair)}
+  .dict-item{display:flex;align-items:center;gap:10px;padding:12px 4px;border-top:1px solid var(--hair)}
   .dict-item:first-child{border-top:0}
+  .dict-item.is-learned{opacity:.68}
   .dict-item .term{font-size:18px}
   .dict-item.zh .term{font-family:var(--font-zh)} .dict-item.ja .term{font-family:var(--font-ja)}
   .dict-item .term .base{display:inline-block;margin-left:7px;padding:1px 7px;border-radius:999px;background:var(--hair);color:var(--ink-3);font-size:11px;vertical-align:middle}
   .dict-item .read{font-family:var(--font-num);font-style:italic;color:var(--ink-3);font-size:13px}
-  .dict-item .mean{flex:1;color:var(--ink-2);font-size:14px}
-  .tag{font-size:10px;font-weight:700;letter-spacing:.1em;padding:2px 7px;border-radius:20px;background:var(--bg-deep);color:var(--ink-3)}
-  .del{background:none;border:0;color:var(--ink-4);cursor:pointer;font-size:16px;padding:4px 8px}
+  .dict-item .mean{flex:1;color:var(--ink-2);font-size:14px;min-width:0}
+  .speak{background:none;border:1px solid var(--rule);border-radius:8px;color:var(--ink-3);cursor:pointer;font-size:14px;padding:4px 9px;flex-shrink:0}
+  .speak:hover{border-color:var(--red);color:var(--red)}
+  .badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;flex-shrink:0}
+  .badge.learned{background:var(--green);color:#fff}
+  .badge.prog{background:var(--bg-deep);color:var(--ink-3);font-family:var(--font-num);font-style:italic}
+  .tag{font-size:10px;font-weight:700;letter-spacing:.1em;padding:2px 7px;border-radius:20px;background:var(--bg-deep);color:var(--ink-3);flex-shrink:0}
+  .del{background:none;border:0;color:var(--ink-4);cursor:pointer;font-size:16px;padding:4px 6px;flex-shrink:0}
   .del:hover{color:var(--red)}
+
+  #test{display:none}
+  .t-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .t-prog{font-family:var(--font-num);font-style:italic;color:var(--red);font-size:20px}
+  .t-quit{background:none;border:0;color:var(--ink-4);font:inherit;font-size:13px;cursor:pointer}
+  .t-term{font-size:30px;text-align:center;margin:10px 0 4px;display:flex;align-items:center;justify-content:center;gap:12px}
+  .t-term.zh{font-family:var(--font-zh)} .t-term.ja{font-family:var(--font-ja)}
+  .t-read{text-align:center;font-family:var(--font-num);font-style:italic;color:var(--ink-3);margin:0 0 16px}
+  .t-choices{display:grid;gap:10px}
+  .t-choice{border:1px solid var(--rule);background:#fff;border-radius:12px;padding:13px 16px;text-align:left;cursor:pointer;font:inherit;font-size:14.5px;color:var(--ink-2);transition:border-color .15s}
+  .t-choice:hover{border-color:var(--red)}
+  .t-choice:disabled{cursor:default}
+  .t-choice.wrong{border-color:var(--red);color:var(--red);opacity:.6}
+  .t-choice.right{border-color:var(--green);background:rgba(47,124,94,.08);color:var(--ink);font-weight:700}
+  .t-next{margin-top:14px;display:none}
+  .t-done{text-align:center;padding:6px 0}
+  .t-done .big{font-family:var(--font-head);font-size:26px;margin:4px 0}
+  .t-done .num{font-family:var(--font-num);font-style:italic;font-size:40px;color:var(--red);line-height:1.1}
+  .t-done .sub{color:var(--ink-3);font-size:13.5px;margin:6px 0 16px}
 </style>
 </head>
 <body>
@@ -63,15 +93,44 @@
 
 <div class="wrap">
   <h1>내 사전<span class="dot">.</span></h1>
-  <p class="lead">Reader와 Writer에서 모은 단어. 검색·언어로 좁힐 수 있어요.</p>
+  <p class="lead">Reader와 Writer에서 모은 단어. 검색·읽기·테스트로 익혀 보세요.</p>
 
-  <div class="toolbar">
-    <input class="search" id="q" type="search" placeholder="단어·뜻·읽기로 검색" autocomplete="off">
-    <div class="chips" id="chips"></div>
+  <div id="browse">
+    <div class="toolbar">
+      <input class="search" id="q" type="search" placeholder="단어·뜻·읽기로 검색" autocomplete="off">
+      <div class="chips" id="chips"></div>
+      <div class="testbar">
+        <button class="btn" id="testBtn">테스트 ▶</button>
+        <span class="hint" id="testHint">5번 연속 맞히면 「외움」 표시가 붙어요</span>
+      </div>
+    </div>
+    <div class="card">
+      <div id="list"></div>
+    </div>
   </div>
 
-  <div class="card">
-    <div id="list"></div>
+  <div id="test">
+    <div class="card">
+      <div class="t-top">
+        <span class="t-prog"><span id="tNow">1</span> / <span id="tTotal">10</span></span>
+        <button class="t-quit" id="tQuit">그만두기</button>
+      </div>
+      <div id="tQuiz">
+        <div class="t-term" id="tTerm"></div>
+        <div class="t-read" id="tRead"></div>
+        <div class="t-choices" id="tChoices"></div>
+        <button class="btn t-next" id="tNext">다음 →</button>
+      </div>
+      <div class="t-done" id="tDone" style="display:none">
+        <div class="num" id="tScore"></div>
+        <div class="big">수고했어요!</div>
+        <p class="sub" id="tSub"></p>
+        <div style="display:flex;gap:10px;justify-content:center">
+          <button class="btn" id="tAgain">한 세트 더</button>
+          <button class="btn ghost" id="tBack">사전으로</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -79,47 +138,139 @@
   const $ = id => document.getElementById(id);
   const DICT_K = 'mydict-ko-v1';
   const LANGS = [{code:'zh',label:'중국어',tag:'中'},{code:'ja',label:'일본어',tag:'日'}];
+  const NEED = 5;
+
+  try{ speechSynthesis.getVoices(); }catch{}
+  function speak(text, lang){
+    if(!('speechSynthesis' in window) || !text) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    const pref = lang==='zh' ? 'zh' : lang==='ko' ? 'ko' : 'ja';
+    const v = (speechSynthesis.getVoices()||[]).find(x=>new RegExp('^'+pref,'i').test(x.lang));
+    if(v) u.voice = v;
+    u.lang = pref==='zh' ? 'zh-CN' : pref==='ko' ? 'ko-KR' : 'ja-JP';
+    u.rate = 0.9;
+    speechSynthesis.speak(u);
+  }
 
   function loadDict(){ try{ return JSON.parse(localStorage.getItem(DICT_K)||'[]'); }catch{ return []; } }
   function saveDict(a){ localStorage.setItem(DICT_K, JSON.stringify(a)); }
   function removeFromDict(id){ saveDict(loadDict().filter(d=>d.id!==id)); buildChips(); render(); }
   function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  const shuffle = a => { const c=a.slice(); for(let i=c.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [c[i],c[j]]=[c[j],c[i]]; } return c; };
+  const tagOf = code => (LANGS.find(l=>l.code===code)||{}).tag || '';
 
   let filterLang = 'all', query = '';
 
   function buildChips(){
     const all = loadDict();
     const cnt = c => all.filter(d=>d.lang===c).length;
-    const defs = [{code:'all',label:'전체',n:all.length}, ...LANGS.map(l=>({code:l.code,label:l.label,n:cnt(l.code)}))];
+    const learned = all.filter(d=>d.learned).length;
+    const defs = [{code:'all',label:'전체',n:all.length}, ...LANGS.map(l=>({code:l.code,label:l.label,n:cnt(l.code)})), {code:'learned',label:'✓ 외움',n:learned}];
     $('chips').innerHTML = defs.map(d=>
       `<button class="chip${d.code===filterLang?' on':''}" data-code="${d.code}">${d.label}<span style="opacity:.7"> ${d.n}</span></button>`).join('')
       + `<span class="count" id="count">0</span>`;
     $('chips').querySelectorAll('.chip').forEach(b=> b.addEventListener('click', ()=>{ filterLang=b.dataset.code; buildChips(); render(); }));
   }
 
-  function render(){
+  function currentList(){
     let a = loadDict().sort((x,y)=>y.addedAt-x.addedAt);
-    const total = a.length;
-    if(filterLang!=='all') a = a.filter(d=>d.lang===filterLang);
+    if(filterLang==='learned') a = a.filter(d=>d.learned);
+    else if(filterLang!=='all') a = a.filter(d=>d.lang===filterLang);
     const q = query.trim().toLowerCase();
     if(q) a = a.filter(d=>[d.term,d.base,d.reading,d.meaning].some(v=>(v||'').toLowerCase().includes(q)));
+    return a;
+  }
+
+  function render(){
+    const total = loadDict().length;
+    const a = currentList();
     const cEl = $('count'); if(cEl) cEl.textContent = a.length;
     const el = $('list');
     if(!total){ el.innerHTML = '<div class="dict-empty">아직 단어가 없어요. Reader나 Writer에서 「＋사전」하면 여기에 모여요.</div>'; return; }
     if(!a.length){ el.innerHTML = '<div class="dict-empty">해당하는 단어가 없어요.</div>'; return; }
-    const tagOf = code => (LANGS.find(l=>l.code===code)||{}).tag || '';
-    el.innerHTML = a.map(d=>`
-      <div class="dict-item ${d.lang}">
+    el.innerHTML = a.map(d=>{
+      const badge = d.learned ? '<span class="badge learned">✓ 외움</span>'
+                  : (d.streak ? `<span class="badge prog">${d.streak}/${NEED}</span>` : '');
+      return `<div class="dict-item ${d.lang}${d.learned?' is-learned':''}">
+        <button class="speak" data-text="${esc(d.term)}" data-lang="${d.lang}" title="읽기">🔊</button>
         <span class="term">${esc(d.term)}${d.base&&d.base!==d.term?`<span class="base">원형 ${esc(d.base)}</span>`:''}</span>
         ${d.reading?`<span class="read">${esc(d.reading)}</span>`:''}
         <span class="mean">${esc(d.meaning)}</span>
+        ${badge}
         ${d.lang?`<span class="tag">${tagOf(d.lang)}</span>`:''}
         <button class="del" data-id="${d.id}" title="삭제">✕</button>
-      </div>`).join('');
+      </div>`;
+    }).join('');
     el.querySelectorAll('.del').forEach(b=> b.addEventListener('click', ()=>removeFromDict(b.dataset.id)));
+    el.querySelectorAll('.speak').forEach(b=> b.addEventListener('click', ()=> speak(b.dataset.text, b.dataset.lang)));
   }
 
   $('q').addEventListener('input', ()=>{ query = $('q').value; render(); });
+
+  let T = null;
+  function startTest(){
+    let pool = currentList().filter(d=>d.term && d.meaning);
+    pool = pool.slice().sort((a,b)=> (a.learned?1:0)-(b.learned?1:0) || (a.streak||0)-(b.streak||0));
+    pool = shuffle(pool.slice(0, Math.min(10, pool.length)));
+    const hint = $('testHint');
+    if(pool.length < 4){ if(hint){ hint.style.color='var(--red)'; hint.textContent='테스트하려면 단어가 4개 이상 필요해요 (지금 선택에서 '+pool.length+'개).'; } return; }
+    if(hint){ hint.style.color=''; hint.textContent='5번 연속 맞히면 「외움」 표시가 붙어요'; }
+    T = { items: pool, i:0, correct:0, firstTry:true, learned:[] };
+    $('browse').style.display='none'; $('test').style.display='block';
+    $('tDone').style.display='none'; $('tQuiz').style.display='block';
+    $('tTotal').textContent = pool.length;
+    renderQ();
+  }
+  function renderQ(){
+    const it = T.items[T.i];
+    T.firstTry = true;
+    $('tNow').textContent = T.i+1;
+    $('tNext').style.display='none';
+    const term = $('tTerm'); term.className = 't-term '+it.lang;
+    term.innerHTML = `<span>${esc(it.term)}</span><button class="speak" id="tSpeak" title="읽기">🔊</button>`;
+    $('tRead').textContent = it.reading || '';
+    $('tSpeak').addEventListener('click', ()=> speak(it.term, it.lang));
+    const all = loadDict();
+    let cand = all.filter(d=>d.lang===it.lang && d.meaning!==it.meaning).map(d=>d.meaning);
+    if(cand.length < 3) cand = all.filter(d=>d.meaning!==it.meaning).map(d=>d.meaning);
+    const opts = shuffle([it.meaning, ...shuffle([...new Set(cand)]).slice(0,3)]);
+    $('tChoices').innerHTML = opts.map(o=>`<button class="t-choice">${esc(o)}</button>`).join('');
+    $('tChoices').querySelectorAll('.t-choice').forEach(b=> b.addEventListener('click', ()=> answer(b, b.textContent===it.meaning)));
+    speak(it.term, it.lang);
+  }
+  function answer(btn, correct){
+    if(btn.disabled) return;
+    if(!correct){ btn.classList.add('wrong'); btn.disabled=true; T.firstTry=false; return; }
+    const it = T.items[T.i];
+    $('tChoices').querySelectorAll('.t-choice').forEach(b=>{ b.disabled=true; if(b.textContent===it.meaning) b.classList.add('right'); });
+    const all = loadDict();
+    const rec = all.find(d=>d.id===it.id);
+    if(rec){
+      if(T.firstTry){
+        T.correct++;
+        rec.streak = (rec.streak||0)+1;
+        if(rec.streak>=NEED && !rec.learned){ rec.learned=true; T.learned.push(rec.term); }
+      } else { rec.streak = 0; }
+      saveDict(all);
+    }
+    $('tNext').style.display='inline-block';
+  }
+  function nextQ(){ if(T.i+1 < T.items.length){ T.i++; renderQ(); } else finishTest(); }
+  function finishTest(){
+    try{ speechSynthesis.cancel(); }catch{}
+    $('tQuiz').style.display='none'; $('tDone').style.display='block';
+    $('tScore').textContent = T.correct+' / '+T.items.length;
+    $('tSub').textContent = T.learned.length
+      ? '「외움」이 '+T.learned.length+'개 늘었어요: '+T.learned.join(', ')
+      : '한 번에 맞힌 개수. 계속하면 「외움」 표시가 늘어나요.';
+  }
+  $('testBtn').addEventListener('click', startTest);
+  $('tNext').addEventListener('click', nextQ);
+  $('tAgain').addEventListener('click', startTest);
+  $('tQuit').addEventListener('click', ()=>{ try{speechSynthesis.cancel();}catch{} $('test').style.display='none'; $('browse').style.display='block'; buildChips(); render(); });
+  $('tBack').addEventListener('click', ()=>{ $('test').style.display='none'; $('browse').style.display='block'; buildChips(); render(); });
+
   buildChips();
   render();
 </script>
