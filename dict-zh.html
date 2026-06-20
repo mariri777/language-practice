@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>我的词典 — 日々</title>
+<title>My Words — 日々</title>
 <meta name="theme-color" content="#fdf3f4">
 <style>
   :root{
@@ -37,6 +37,7 @@
   .btn:hover{background:var(--red-bright)} .btn:disabled{opacity:.45;cursor:default}
   .btn.ghost{background:transparent;color:var(--red);border:1px solid var(--red)}
 
+  /* toolbar */
   .toolbar{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
   .search{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
   .chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -47,6 +48,7 @@
   .testbar{display:flex;align-items:center;gap:12px}
   .testbar .hint{color:var(--ink-3);font-size:12px}
 
+  /* list */
   .dict-empty{color:var(--ink-4);font-size:14px;padding:18px 4px;text-align:center}
   .dict-item{display:flex;align-items:center;gap:10px;padding:12px 4px;border-top:1px solid var(--hair)}
   .dict-item:first-child{border-top:0}
@@ -65,6 +67,7 @@
   .del{background:none;border:0;color:var(--ink-4);cursor:pointer;font-size:16px;padding:4px 6px;flex-shrink:0}
   .del:hover{color:var(--red)}
 
+  /* test */
   #test{display:none}
   .t-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
   .t-prog{font-family:var(--font-num);font-style:italic;color:var(--red);font-size:20px}
@@ -92,16 +95,17 @@
 </header>
 
 <div class="wrap">
-  <h1>我的词典<span class="dot">.</span></h1>
-  <p class="lead">在 Reader 和 Writer 里存的单词。用搜索·朗读·测验来记牢。</p>
+  <h1>My Words<span class="dot">.</span></h1>
+  <p class="lead">在 Reader 和 Writer 里存的生词本。用搜索·朗读·测验来记牢。</p>
 
+  <!-- browse -->
   <div id="browse">
     <div class="toolbar">
       <input class="search" id="q" type="search" placeholder="按单词·意思·读音搜索" autocomplete="off">
       <div class="chips" id="chips"></div>
       <div class="testbar">
         <button class="btn" id="testBtn">测验 ▶</button>
-        <span class="hint" id="testHint">连续答对5次就会标上「已掌握」</span>
+        <span class="hint" id="testHint">连续答对5次会标上「已掌握」</span>
       </div>
     </div>
     <div class="card">
@@ -109,6 +113,7 @@
     </div>
   </div>
 
+  <!-- test -->
   <div id="test">
     <div class="card">
       <div class="t-top">
@@ -123,7 +128,7 @@
       </div>
       <div class="t-done" id="tDone" style="display:none">
         <div class="num" id="tScore"></div>
-        <div class="big">辛苦啦！</div>
+        <div class="big">辛苦了！</div>
         <p class="sub" id="tSub"></p>
         <div style="display:flex;gap:10px;justify-content:center">
           <button class="btn" id="tAgain">再来一组</button>
@@ -138,8 +143,9 @@
   const $ = id => document.getElementById(id);
   const DICT_K = 'mydict-zh-v1';
   const LANGS = [{code:'ja',label:'日语',tag:'日'},{code:'ko',label:'韩语',tag:'韩'}];
-  const NEED = 5;
+  const NEED = 5; // 连续答对即掌握
 
+  /* ---------- TTS ---------- */
   try{ speechSynthesis.getVoices(); }catch{}
   function speak(text, lang){
     if(!('speechSynthesis' in window) || !text) return;
@@ -153,6 +159,7 @@
     speechSynthesis.speak(u);
   }
 
+  /* ---------- data ---------- */
   function loadDict(){ try{ return JSON.parse(localStorage.getItem(DICT_K)||'[]'); }catch{ return []; } }
   function saveDict(a){ localStorage.setItem(DICT_K, JSON.stringify(a)); }
   function removeFromDict(id){ saveDict(loadDict().filter(d=>d.id!==id)); buildChips(); render(); }
@@ -208,14 +215,15 @@
 
   $('q').addEventListener('input', ()=>{ query = $('q').value; render(); });
 
+  /* ---------- test ---------- */
   let T = null;
   function startTest(){
     let pool = currentList().filter(d=>d.term && d.meaning);
     pool = pool.slice().sort((a,b)=> (a.learned?1:0)-(b.learned?1:0) || (a.streak||0)-(b.streak||0));
     pool = shuffle(pool.slice(0, Math.min(10, pool.length)));
     const hint = $('testHint');
-    if(pool.length < 4){ if(hint){ hint.style.color='var(--red)'; hint.textContent='测验至少需要4个单词（当前筛选下 '+pool.length+' 个）。'; } return; }
-    if(hint){ hint.style.color=''; hint.textContent='连续答对5次就会标上「已掌握」'; }
+    if(pool.length < 4){ if(hint){ hint.style.color='var(--red)'; hint.textContent='测验需要至少4个单词（现在：'+pool.length+'个）。'; } return; }
+    if(hint){ hint.style.color=''; hint.textContent='连续答对5次会标上「已掌握」'; }
     T = { items: pool, i:0, correct:0, firstTry:true, learned:[] };
     $('browse').style.display='none'; $('test').style.display='block';
     $('tDone').style.display='none'; $('tQuiz').style.display='block';
@@ -251,7 +259,9 @@
         T.correct++;
         rec.streak = (rec.streak||0)+1;
         if(rec.streak>=NEED && !rec.learned){ rec.learned=true; T.learned.push(rec.term); }
-      } else { rec.streak = 0; }
+      } else {
+        rec.streak = 0;
+      }
       saveDict(all);
     }
     $('tNext').style.display='inline-block';
@@ -263,7 +273,7 @@
     $('tScore').textContent = T.correct+' / '+T.items.length;
     $('tSub').textContent = T.learned.length
       ? '「已掌握」增加了 '+T.learned.length+' 个：'+T.learned.join('、')
-      : '一次答对的数量。坚持下去，「已掌握」会越来越多。';
+      : '一次答对的数量。继续下去「已掌握」会越来越多。';
   }
   $('testBtn').addEventListener('click', startTest);
   $('tNext').addEventListener('click', nextQ);

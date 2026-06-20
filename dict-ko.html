@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>내 사전 — 日々</title>
+<title>My Words — 日々</title>
 <meta name="theme-color" content="#fdf3f4">
 <style>
   :root{
@@ -37,6 +37,7 @@
   .btn:hover{background:var(--red-bright)} .btn:disabled{opacity:.45;cursor:default}
   .btn.ghost{background:transparent;color:var(--red);border:1px solid var(--red)}
 
+  /* toolbar */
   .toolbar{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
   .search{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
   .chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -47,6 +48,7 @@
   .testbar{display:flex;align-items:center;gap:12px}
   .testbar .hint{color:var(--ink-3);font-size:12px}
 
+  /* list */
   .dict-empty{color:var(--ink-4);font-size:14px;padding:18px 4px;text-align:center}
   .dict-item{display:flex;align-items:center;gap:10px;padding:12px 4px;border-top:1px solid var(--hair)}
   .dict-item:first-child{border-top:0}
@@ -65,6 +67,7 @@
   .del{background:none;border:0;color:var(--ink-4);cursor:pointer;font-size:16px;padding:4px 6px;flex-shrink:0}
   .del:hover{color:var(--red)}
 
+  /* test */
   #test{display:none}
   .t-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
   .t-prog{font-family:var(--font-num);font-style:italic;color:var(--red);font-size:20px}
@@ -92,16 +95,17 @@
 </header>
 
 <div class="wrap">
-  <h1>내 사전<span class="dot">.</span></h1>
-  <p class="lead">Reader와 Writer에서 모은 단어. 검색·읽기·테스트로 익혀 보세요.</p>
+  <h1>My Words<span class="dot">.</span></h1>
+  <p class="lead">Reader와 Writer에서 모은 단어장. 검색·읽기·테스트로 익혀보세요.</p>
 
+  <!-- browse -->
   <div id="browse">
     <div class="toolbar">
       <input class="search" id="q" type="search" placeholder="단어·뜻·읽기로 검색" autocomplete="off">
       <div class="chips" id="chips"></div>
       <div class="testbar">
         <button class="btn" id="testBtn">테스트 ▶</button>
-        <span class="hint" id="testHint">5번 연속 맞히면 「외움」 표시가 붙어요</span>
+        <span class="hint" id="testHint">5번 연속 맞히면 '외움' 표시가 붙어요</span>
       </div>
     </div>
     <div class="card">
@@ -109,11 +113,12 @@
     </div>
   </div>
 
+  <!-- test -->
   <div id="test">
     <div class="card">
       <div class="t-top">
         <span class="t-prog"><span id="tNow">1</span> / <span id="tTotal">10</span></span>
-        <button class="t-quit" id="tQuit">그만두기</button>
+        <button class="t-quit" id="tQuit">그만하기</button>
       </div>
       <div id="tQuiz">
         <div class="t-term" id="tTerm"></div>
@@ -138,8 +143,9 @@
   const $ = id => document.getElementById(id);
   const DICT_K = 'mydict-ko-v1';
   const LANGS = [{code:'zh',label:'중국어',tag:'中'},{code:'ja',label:'일본어',tag:'日'}];
-  const NEED = 5;
+  const NEED = 5; // 연속 정답으로 마스터
 
+  /* ---------- TTS ---------- */
   try{ speechSynthesis.getVoices(); }catch{}
   function speak(text, lang){
     if(!('speechSynthesis' in window) || !text) return;
@@ -153,6 +159,7 @@
     speechSynthesis.speak(u);
   }
 
+  /* ---------- data ---------- */
   function loadDict(){ try{ return JSON.parse(localStorage.getItem(DICT_K)||'[]'); }catch{ return []; } }
   function saveDict(a){ localStorage.setItem(DICT_K, JSON.stringify(a)); }
   function removeFromDict(id){ saveDict(loadDict().filter(d=>d.id!==id)); buildChips(); render(); }
@@ -208,14 +215,15 @@
 
   $('q').addEventListener('input', ()=>{ query = $('q').value; render(); });
 
+  /* ---------- test ---------- */
   let T = null;
   function startTest(){
     let pool = currentList().filter(d=>d.term && d.meaning);
     pool = pool.slice().sort((a,b)=> (a.learned?1:0)-(b.learned?1:0) || (a.streak||0)-(b.streak||0));
     pool = shuffle(pool.slice(0, Math.min(10, pool.length)));
     const hint = $('testHint');
-    if(pool.length < 4){ if(hint){ hint.style.color='var(--red)'; hint.textContent='테스트하려면 단어가 4개 이상 필요해요 (지금 선택에서 '+pool.length+'개).'; } return; }
-    if(hint){ hint.style.color=''; hint.textContent='5번 연속 맞히면 「외움」 표시가 붙어요'; }
+    if(pool.length < 4){ if(hint){ hint.style.color='var(--red)'; hint.textContent='테스트하려면 단어가 4개 이상 필요해요 (지금: '+pool.length+'개).'; } return; }
+    if(hint){ hint.style.color=''; hint.textContent="5번 연속 맞히면 '외움' 표시가 붙어요"; }
     T = { items: pool, i:0, correct:0, firstTry:true, learned:[] };
     $('browse').style.display='none'; $('test').style.display='block';
     $('tDone').style.display='none'; $('tQuiz').style.display='block';
@@ -251,7 +259,9 @@
         T.correct++;
         rec.streak = (rec.streak||0)+1;
         if(rec.streak>=NEED && !rec.learned){ rec.learned=true; T.learned.push(rec.term); }
-      } else { rec.streak = 0; }
+      } else {
+        rec.streak = 0;
+      }
       saveDict(all);
     }
     $('tNext').style.display='inline-block';
@@ -262,8 +272,8 @@
     $('tQuiz').style.display='none'; $('tDone').style.display='block';
     $('tScore').textContent = T.correct+' / '+T.items.length;
     $('tSub').textContent = T.learned.length
-      ? '「외움」이 '+T.learned.length+'개 늘었어요: '+T.learned.join(', ')
-      : '한 번에 맞힌 개수. 계속하면 「외움」 표시가 늘어나요.';
+      ? "'외움'이 "+T.learned.length+'개 늘었어요: '+T.learned.join(', ')
+      : "한 번에 맞힌 개수. 계속하면 '외움' 표시가 늘어나요.";
   }
   $('testBtn').addEventListener('click', startTest);
   $('tNext').addEventListener('click', nextQ);
