@@ -2344,10 +2344,16 @@ function setActiveBtn(btn) {
   if (btn) btn.classList.add('playing');
 }
 
+// Quote / bracket marks are part of the written sentence (and stay on screen),
+// but TTS voices read them aloud (「引号」). Strip them for speech only.
+function speechClean(s) {
+  return (s || '').replace(/["'“”‘’《》「」『』]/g, '');
+}
+
 function speakSentence(text, rate, sentenceEl) {
   if (!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
+  const u = new SpeechSynthesisUtterance(speechClean(text));
   u.lang = 'zh-CN';
   u.rate = rate;
   const v = pickZhVoice();
@@ -2385,7 +2391,7 @@ function speakAll(sentenceEls, rate, btn) {
       return;
     }
     const el = sentenceEls[i];
-    const u = new SpeechSynthesisUtterance(el.dataset.zh);
+    const u = new SpeechSynthesisUtterance(speechClean(el.dataset.zh));
     u.lang = 'zh-CN'; u.rate = rate;
     const v = pickZhVoice(); if (v) u.voice = v;
     if (playingSentenceEl) playingSentenceEl.classList.remove('playing');
@@ -2424,7 +2430,7 @@ function playDictation(rate) {
     }
     dictationActiveIdx = i;
     const el = sentenceEls[i];
-    const u = new SpeechSynthesisUtterance(el.dataset.zh);
+    const u = new SpeechSynthesisUtterance(speechClean(el.dataset.zh));
     u.lang = 'zh-CN'; u.rate = rate;
     const v = pickZhVoice(); if (v) u.voice = v;
     if (playingSentenceEl) playingSentenceEl.classList.remove('playing');
@@ -2977,8 +2983,8 @@ document.getElementById('dictation-play-slow').addEventListener('click', () => {
 });
 document.getElementById('dictation-stop').addEventListener('click', stopAudio);
 
-const PUNCT_RE = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/;
-const PUNCT_RE_G = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-]/g;
+const PUNCT_RE = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-"'“”‘’《》]/;
+const PUNCT_RE_G = /[\s。、，．・！？!?,.;:：；「」『』（）()　…—–\-"'“”‘’《》]/g;
 
 function updateCharCount() {
   const typed = typingInput.value;
