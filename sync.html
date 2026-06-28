@@ -104,6 +104,31 @@
   <p class="lead">学習の進捗・My Words・streak・ゴールはこの端末のブラウザ内（localStorage）に保存されています。書き出して別の端末で読み込めば、同じ続きから始められます。</p>
 </header>
 
+<!-- クラウド自動同期 -->
+<section class="card" id="cloud-card">
+  <h2>☁️ クラウド自動同期 <span id="cloud-state" style="font-size:13px;font-weight:400"></span></h2>
+  <p class="sub" id="cloud-desc">各端末で同じ「同期コード」を一度入れるだけ。あとは学習するたび自動で保存・取得され、開けば続きから始まります（コピペ・ファイル送信は不要）。</p>
+
+  <div id="cloud-setup">
+    <label style="font-size:13.5px;color:var(--ink-3)">同期コード（自分専用の秘密の合言葉）</label>
+    <div class="row" style="margin-top:6px">
+      <input type="text" id="code-input" placeholder="hibi-…" spellcheck="false" autocomplete="off"
+        style="flex:2;min-width:180px;border:1px solid var(--rule);border-radius:11px;background:var(--bg-tile);padding:12px;font:inherit;color:var(--ink)">
+      <button class="btn ghost" id="btn-gen" style="flex:0 0 auto">🎲 発行</button>
+    </div>
+    <button class="btn wide" id="btn-save-code" style="margin-top:10px">この端末で同期を開始</button>
+    <p class="note">最初の端末で「発行」→「開始」。その後、別の端末で<b>同じコード</b>を入力すれば揃います。コードは推測されにくい長いものにしてください（他人が知ると読み書きできます）。</p>
+  </div>
+
+  <div id="cloud-on" hidden>
+    <p style="font-size:14px;margin:0 0 12px">この端末は <b id="cloud-code-shown" style="font-family:ui-monospace,monospace"></b> で同期中です。</p>
+    <div class="row">
+      <button class="btn" id="btn-sync-now">↻ 今すぐ同期</button>
+      <button class="btn ghost" id="btn-stop">この端末で同期を停止</button>
+    </div>
+  </div>
+</section>
+
 <!-- 現在のデータ -->
 <section class="card" id="summary-card">
   <h2>このデバイスのデータ</h2>
@@ -144,10 +169,11 @@
 </section>
 
 <hr class="hr">
-<p class="note">☁️ 「どの端末でも自動で同じ続き」にするクラウド自動同期は次の段階で追加予定です（現在は手動バックアップ）。</p>
+<p class="note">手動バックアップ（書き出し／読み込み）は、クラウドを使わない保険として残してあります。</p>
 
 <div class="toast" id="toast"></div>
 
+<script src="cloud.js?v=1"></script>
 <script>
 (function(){
   "use strict";
@@ -191,6 +217,7 @@
     var o = {};
     for (var i=0;i<localStorage.length;i++){
       var k = localStorage.key(i);
+      if (k.indexOf("hibi-sync-") === 0) continue;  // 同期コード等の内部キーは手動バックアップに含めない
       o[k] = localStorage.getItem(k);
     }
     return o;
@@ -390,6 +417,53 @@
     if (!raw){ toast("コードを貼り付けるか、ファイルを選んでください", "err"); return; }
     applyImport(raw);
   });
+
+  // ---- クラウド自動同期 UI ----
+  (function cloudUI(){
+    var S = window.HibiSync;
+    var setup = $("cloud-setup"), on = $("cloud-on"), state = $("cloud-state");
+    if (!S){
+      state.textContent = "（読み込みエラー）";
+      setup.hidden = true; return;
+    }
+    if (!S.enabled()){
+      // Worker URL 未設定 → 準備中
+      state.textContent = "— 準備中（サーバー未設定）";
+      $("cloud-desc").innerHTML = "クラウド同期はまだ有効化されていません。<code>cloud.js</code> の Worker URL を設定すると使えます（手順は <code>cloud/README.md</code>）。それまでは下の手動バックアップをお使いください。";
+      setup.hidden = true; return;
+    }
+    function refresh(){
+      if (S.active()){
+        setup.hidden = true; on.hidden = false;
+        state.textContent = "— 同期中 ✓";
+        $("cloud-code-shown").textContent = S.getCode();
+      } else {
+        setup.hidden = false; on.hidden = true;
+        state.textContent = "— オフ";
+        $("code-input").value = "";
+      }
+    }
+    $("btn-gen").addEventListener("click", function(){ $("code-input").value = S.genCode(); });
+    $("btn-save-code").addEventListener("click", function(){
+      var c = $("code-input").value.trim();
+      if (c.length < 8){ toast("コードは8文字以上にしてください", "err"); return; }
+      S.setCode(c);
+      toast("同期を開始しました。反映します…", "ok");
+      setTimeout(function(){ location.reload(); }, 700);
+    });
+    $("btn-sync-now").addEventListener("click", function(){
+      toast("同期中…");
+      S.pushNow();
+      S.syncNow().then(function(){ toast("同期しました", "ok"); });
+    });
+    $("btn-stop").addEventListener("click", function(){
+      if (!confirm("この端末でのクラウド同期を停止します（データは残ります）。よろしいですか？")) return;
+      S.setCode("");
+      toast("同期を停止しました", "ok");
+      refresh();
+    });
+    refresh();
+  })();
 
   renderSummary();
 })();
