@@ -118,13 +118,13 @@
 <!-- ① 書き出す -->
 <section class="card">
   <h2><span class="n">1</span> 書き出す</h2>
-  <p class="sub">いま使っている端末で実行します。ファイル（JSON）に保存するか、コピーして別端末に貼り付けます。</p>
+  <p class="sub">いま使っている端末で実行します。「同期コード」をコピーして別端末に貼り付けるのが手軽です（圧縮済みの英数字1行なので化けません）。データが多いときはファイル保存が確実です。</p>
   <div class="row">
-    <button class="btn" id="btn-download">⤓ ファイルに保存</button>
-    <button class="btn ghost" id="btn-copy">⧉ コピー</button>
+    <button class="btn" id="btn-copy">⧉ 同期コードをコピー</button>
+    <button class="btn ghost" id="btn-download">⤓ ファイルに保存</button>
   </div>
   <details>
-    <summary>中身を確認する（JSON）</summary>
+    <summary>同期コードを確認する</summary>
     <textarea id="export-text" readonly spellcheck="false"></textarea>
   </details>
 </section>
@@ -132,13 +132,13 @@
 <!-- ② 読み込む -->
 <section class="card">
   <h2><span class="n">2</span> 読み込む</h2>
-  <p class="sub">別の端末から書き出したデータを、この端末に取り込みます。</p>
+  <p class="sub">別の端末でコピーした同期コードを貼り付けるか、保存したファイルを選びます。</p>
   <div class="mode">
     <label><input type="radio" name="mode" value="merge" checked> 統合（既存はそのまま・同じ項目は上書き）</label>
     <label><input type="radio" name="mode" value="replace"> 置き換え（この端末のデータを全消去してから取込）</label>
   </div>
-  <input type="file" id="file-input" accept="application/json,.json">
-  <textarea id="import-text" placeholder="またはここに JSON を貼り付け" spellcheck="false"></textarea>
+  <textarea id="import-text" placeholder="ここに同期コードを貼り付け（HIBI1:… で始まる文字列）" spellcheck="false"></textarea>
+  <input type="file" id="file-input" accept="application/json,.json" style="margin-top:10px">
   <button class="btn wide" id="btn-import" style="margin-top:12px">読み込む</button>
   <p class="note">読み込み後はページが自動で再読み込みされ、各ツールに反映されます。</p>
 </section>
@@ -227,11 +227,53 @@
     });
   }
 
-  function payload(){
-    return JSON.stringify({
-      _app: APP_PREFIX, _ver: 1, _at: new Date().toISOString(),
-      _origin: location.origin, data: dump()
-    }, null, 2);
+  function payloadObj(){
+    return { _app: APP_PREFIX, _ver: 1, _at: new Date().toISOString(),
+             _origin: location.origin, data: dump() };
+  }
+  // ファイル用：読みやすい整形JSON
+  function payloadJSON(){ return JSON.stringify(payloadObj(), null, 2); }
+
+  // ---- バイト⇔Base64 ----
+  function bytesToB64(bytes){
+    var bin = "", chunk = 0x8000;
+    for (var i=0;i<bytes.length;i+=chunk){
+      bin += String.fromCharCode.apply(null, bytes.subarray(i, i+chunk));
+    }
+    return btoa(bin);
+  }
+  function b64ToBytes(b64){
+    var bin = atob(b64), len = bin.length, out = new Uint8Array(len);
+    for (var i=0;i<len;i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+
+  var HAS_GZIP = (typeof CompressionStream === "function" && typeof DecompressionStream === "function");
+
+  async function gzipB64(str){
+    var cs = new CompressionStream("gzip");
+    var w = cs.writable.getWriter();
+    w.write(new TextEncoder().encode(str)); w.close();
+    var buf = await new Response(cs.readable).arrayBuffer();
+    return bytesToB64(new Uint8Array(buf));
+  }
+  async function gunzipB64(b64){
+    var ds = new DecompressionStream("gzip");
+    var w = ds.writable.getWriter();
+    w.write(b64ToBytes(b64)); w.close();
+    var buf = await new Response(ds.readable).arrayBuffer();
+    return new TextDecoder().decode(buf);
+  }
+
+  // 短い同期コードを生成（圧縮＋Base64の1行・記号は + / = のみ）
+  // HIBI1: gzip圧縮 / HIBI0: 無圧縮(環境にgzipが無いとき)
+  async function encodeCode(){
+    var json = JSON.stringify(payloadObj());   // コンパクト
+    if (HAS_GZIP){
+      try { return "HIBI1:" + (await gzipB64(json)); }
+      catch(e){ /* フォールバック */ }
+    }
+    return "HIBI0:" + bytesToB64(new TextEncoder().encode(json));
   }
 
   function toast(msg, kind){
@@ -249,7 +291,7 @@
 
   // ---- 書き出す ----
   $("btn-download").addEventListener("click", function(){
-    var json = payload();
+    var json = payloadJSON();
     var blob = new Blob([json], {type:"application/json"});
     var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
@@ -259,13 +301,15 @@
     toast("ファイルを書き出しました", "ok");
   });
 
-  $("btn-copy").addEventListener("click", function(){
-    var json = payload();
-    $("export-text").value = json;
-    var done = function(){ toast("クリップボードにコピーしました", "ok"); };
+  $("btn-copy").addEventListener("click", async function(){
+    var code;
+    try { code = await encodeCode(); }
+    catch(e){ toast("コードの生成に失敗しました", "err"); return; }
+    $("export-text").value = code;
+    var done = function(){ toast("同期コードをコピーしました", "ok"); };
     if (navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(json).then(done, function(){
-        $("export-text").select(); document.execCommand && document.execCommand("copy"); done();
+      navigator.clipboard.writeText(code).then(done, function(){
+        $("export-text").select(); try{document.execCommand("copy");}catch(e){} done();
       });
     } else {
       $("export-text").closest("details").open = true;
@@ -274,22 +318,41 @@
     }
   });
 
-  // 確認用 textarea に常に最新を入れておく
-  $("export-text").value = payload();
+  // 確認用 textarea に最新コードを入れておく
+  encodeCode().then(function(c){ $("export-text").value = c; });
 
   // ---- 読み込む ----
-  function parsePayload(raw){
-    var obj = JSON.parse(raw);
+  // 化けた全角クオート等を半角へ戻す（JSON貼り付け時の自動補正）
+  function normalizeJSON(s){
+    return s.replace(/[“”„‟″＂]/g, '"')
+            .replace(/[‘’‚‛′＇]/g, "'")
+            .trim();
+  }
+
+  function fromObj(obj){
     // 形式A: {_app, data:{...}} / 形式B: 素の {key:value}
     if (obj && obj.data && typeof obj.data === "object") return obj.data;
     if (obj && typeof obj === "object") return obj;
     throw new Error("形式が不正です");
   }
 
-  function applyImport(raw){
+  // 同期コード or 生JSON のどちらでも受け付ける
+  async function parsePayload(raw){
+    var s = raw.trim();
+    var m = /^HIBI([01]):([\s\S]+)$/.exec(s);   // 同期コード
+    if (m){
+      var b64 = m[2].replace(/\s+/g, "");        // 改行・空白を除去
+      var json = (m[1] === "1") ? await gunzipB64(b64)
+                                : new TextDecoder().decode(b64ToBytes(b64));
+      return fromObj(JSON.parse(json));
+    }
+    return fromObj(JSON.parse(normalizeJSON(s))); // 生JSON（クオート補正付き）
+  }
+
+  async function applyImport(raw){
     var data;
-    try { data = parsePayload(raw); }
-    catch(e){ toast("読み込めませんでした：JSONの形式を確認してください", "err"); return; }
+    try { data = await parsePayload(raw); }
+    catch(e){ toast("読み込めませんでした：コード／JSONを確認してください", "err"); return; }
 
     var keys = Object.keys(data);
     if (!keys.length){ toast("データが空でした", "err"); return; }
@@ -324,7 +387,7 @@
 
   $("btn-import").addEventListener("click", function(){
     var raw = $("import-text").value.trim();
-    if (!raw){ toast("ファイルを選ぶか、JSONを貼り付けてください", "err"); return; }
+    if (!raw){ toast("コードを貼り付けるか、ファイルを選んでください", "err"); return; }
     applyImport(raw);
   });
 
