@@ -113,6 +113,25 @@
   }
   body.scrolled .topbar::before { opacity: 1; }
 
+  .topbar-sync {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--ink-3, #5c5240);
+    padding: 7px 13px;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    background: rgba(250, 242, 220, 0.6);
+    transition: color .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
+  }
+  .topbar-sync:hover { color: var(--red); border-color: var(--red); background: var(--red-soft); }
+  .topbar-sync .ico { font-size: 14px; }
+  @media (max-width: 720px) { .topbar-sync .lbl { display: none; } .topbar-sync { padding: 7px 10px; } }
+
   .brand {
     display: inline-flex;
     align-items: center;
@@ -1130,6 +1149,9 @@
     <span class="brand-mark">&amp;</span>
     <span class="brand-text">A Language Collection<span class="brand-dot">·</span>2026</span>
   </a>
+  <a href="sync.html" class="topbar-sync" aria-label="バックアップと同期">
+    <span class="ico">⤓</span><span class="lbl">同期</span>
+  </a>
 </header>
 
 <section class="hero">
@@ -1843,6 +1865,15 @@
   const UPDATE_VISIBLE     = 5;    // 折りたたまず表示する件数
 
   const updates = [
+    {
+      date: "2026-06-28",
+      tag:  { ja: "全般 · NEW", ko: "전체 · NEW", zh: "全站 · NEW" },
+      text: {
+        ja: "バックアップと同期を追加 — 進捗・My Words・ゴールを書き出して別の端末で読み込めば、同じ続きから始められます（ヘッダー「⤓ 同期」）。",
+        ko: "백업·동기화 추가 — 진도·My Words·골을 내보내 다른 기기에서 불러오면 같은 곳에서 이어서 시작（헤더「⤓ 동기화」）.",
+        zh: "新增备份与同步 — 导出进度·My Words·目标，在其他设备导入即可从同一处继续（页眉「⤓ 同步」）。"
+      }
+    },
     {
       date: "2026-06-25",
       tag:  { ja: "ゴール · 改善", ko: "골 · 개선", zh: "目标 · 改进" },
