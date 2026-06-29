@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="daily.css?v=11" />
+  <link rel="stylesheet" href="daily.css?v=12" />
 <link rel="stylesheet" href="clips.css?v=13">
 <script src="clips.js?v=13" defer></script>
 <script src="daily.js?v=1"></script>
@@ -119,6 +119,7 @@
         <h2 class="intro-title" id="intro-title">コース名</h2>
         <p class="intro-overview" id="intro-overview"></p>
         <div class="intro-section-title">このコースで学ぶこと</div>
+        <button class="lesson-playall" id="lesson-playall" type="button" hidden>▶ 例文を通しで聞く</button>
         <ul class="intro-points" id="intro-points"></ul>
         <button class="btn btn-primary intro-start" id="intro-start-btn">10問にチャレンジ</button>
       </div>
@@ -1724,6 +1725,238 @@
     ];
 
     // ========================================================================
+    // COURSE_LESSONS — 入口「このコースで学ぶこと」の各ポイントにぶら下げる例文（🔊 zh-CN）。
+    //   キーはコース index。examples[i] が COURSE_INTROS[index].points[i] と 1 対 1 で対応する。
+    //   zh/py/j は全て各コースの既存文（検証済み）から採取。未定義コースはポイントのみ表示。
+    // ========================================================================
+    const COURSE_LESSONS = {
+      // #0 HSK1-1 あいさつ・自己紹介
+      0: { examples: [
+        { zh: "他不是老师。", py: "tā bú shì lǎoshī.", j: "彼は先生ではありません。" },
+        { zh: "你叫什么名字？", py: "nǐ jiào shénme míngzi?", j: "お名前は何ですか？" },
+        { zh: "我很好。", py: "wǒ hěn hǎo.", j: "元気です。" },
+        { zh: "不客气。", py: "bú kèqi.", j: "どういたしまして。" },
+        { zh: "我叫田中。", py: "wǒ jiào Tiánzhōng.", j: "私は田中といいます。" },
+      ] },
+      // #1 HSK1-2 数字・時間・量詞
+      1: { examples: [
+        { zh: "现在几点？", py: "xiànzài jǐ diǎn?", j: "今、何時ですか？" },
+        { zh: "她有两个孩子。", py: "tā yǒu liǎng ge háizi.", j: "彼女には子どもが2人います。" },
+        { zh: "这本书多少钱？", py: "zhè běn shū duōshao qián?", j: "この本はいくらですか？" },
+        { zh: "我今年二十岁。", py: "wǒ jīnnián èrshí suì.", j: "私は今年20歳です。" },
+        { zh: "我有一个哥哥。", py: "wǒ yǒu yí ge gēge.", j: "私には兄が一人います。" },
+      ] },
+      // #2 HSK1-3 場所・動作・所有
+      2: { examples: [
+        { zh: "我在家。", py: "wǒ zài jiā.", j: "私は家にいます。" },
+        { zh: "我会说中文。", py: "wǒ huì shuō Zhōngwén.", j: "私は中国語が話せます。" },
+        { zh: "他在看电视。", py: "tā zài kàn diànshì.", j: "彼はテレビを見ています。" },
+        { zh: "这是什么？", py: "zhè shì shénme?", j: "これは何ですか？" },
+        { zh: "猫在床下。", py: "māo zài chuáng xià.", j: "猫はベッドの下にいる。" },
+        { zh: "你的书在桌子上。", py: "nǐ de shū zài zhuōzi shàng.", j: "君の本は机の上にある。" },
+      ] },
+      // #3 HSK2-1 完了の「了」と経験の「过」
+      3: { examples: [
+        { zh: "我吃了饭。", py: "wǒ chī le fàn.", j: "私はご飯を食べました。" },
+        { zh: "我去过北京。", py: "wǒ qù guo Běijīng.", j: "私は北京に行ったことがあります。" },
+        { zh: "我没吃饭。", py: "wǒ méi chī fàn.", j: "私はご飯を食べていません。" },
+        { zh: "他还没回家。", py: "tā hái méi huí jiā.", j: "彼はまだ家に帰っていません。" },
+        { zh: "我已经知道了。", py: "wǒ yǐjīng zhīdào le.", j: "もう知っています。" },
+        { zh: "你吃饭了吗？", py: "nǐ chī fàn le ma?", j: "ご飯を食べましたか？" },
+      ] },
+      // #4 HSK2-2 進行・未来・願望
+      4: { examples: [
+        { zh: "他正在打电话。", py: "tā zhèngzài dǎ diànhuà.", j: "彼は今、電話中です。" },
+        { zh: "明天我要去医院。", py: "míngtiān wǒ yào qù yīyuàn.", j: "明日、病院に行く予定です。" },
+        { zh: "我想买一件衣服。", py: "wǒ xiǎng mǎi yí jiàn yīfu.", j: "服を1着買いたい。" },
+        { zh: "我快要毕业了。", py: "wǒ kuài yào bìyè le.", j: "私はもうすぐ卒業します。" },
+        { zh: "他在睡觉呢。", py: "tā zài shuìjiào ne.", j: "彼は寝ているところです。" },
+      ] },
+      // #5 HSK2-3 比較・能力・依頼・接続
+      5: { examples: [
+        { zh: "他比我大两岁。", py: "tā bǐ wǒ dà liǎng suì.", j: "彼は私より2歳年上です。" },
+        { zh: "你能帮我吗？", py: "nǐ néng bāng wǒ ma?", j: "手伝ってもらえますか？" },
+        { zh: "我也喜欢音乐。", py: "wǒ yě xǐhuan yīnyuè.", j: "私も音楽が好きです。" },
+        { zh: "给我一杯水。", py: "gěi wǒ yì bēi shuǐ.", j: "水を1杯ください。" },
+        { zh: "太好了！", py: "tài hǎo le!", j: "すごい！" },
+        { zh: "请慢点说。", py: "qǐng màn diǎn shuō.", j: "ゆっくり話してください。" },
+      ] },
+      // #6 HSK3-1 因果・条件・譲歩
+      6: { examples: [
+        { zh: "如果明天下雨，我就不去。", py: "rúguǒ míngtiān xià yǔ, wǒ jiù bú qù.", j: "もし明日雨が降ったら、私は行きません。" },
+        { zh: "虽然他很累，但是还在工作。", py: "suīrán tā hěn lèi, dànshì hái zài gōngzuò.", j: "彼は疲れているけれど、まだ働いている。" },
+        { zh: "因为我感冒了，所以没去上班。", py: "yīnwèi wǒ gǎnmào le, suǒyǐ méi qù shàngbān.", j: "風邪をひいたので、出勤しませんでした。" },
+        { zh: "只要努力，就一定能成功。", py: "zhǐyào nǔlì, jiù yídìng néng chénggōng.", j: "努力さえすれば、きっと成功する。" },
+        { zh: "一下班，我就回家。", py: "yī xiàbān, wǒ jiù huí jiā.", j: "退勤したら、すぐ家に帰る。" },
+        { zh: "除了苹果，我还喜欢香蕉。", py: "chúle píngguǒ, wǒ hái xǐhuan xiāngjiāo.", j: "リンゴ以外に、バナナも好きです。" },
+        { zh: "我不是不想去，而是没时间。", py: "wǒ bú shì bù xiǎng qù, ér shì méi shíjiān.", j: "行きたくないのではなく、時間がないんです。" },
+      ] },
+      // #7 HSK3-2 並列・比較拡張・程度
+      7: { examples: [
+        { zh: "我一边走路一边听音乐。", py: "wǒ yìbiān zǒulù yìbiān tīng yīnyuè.", j: "歩きながら音楽を聞く。" },
+        { zh: "天气越来越热了。", py: "tiānqì yuè lái yuè rè le.", j: "天気がだんだん暑くなってきた。" },
+        { zh: "他比我还高。", py: "tā bǐ wǒ hái gāo.", j: "彼は私よりもっと背が高い。" },
+        { zh: "我的手机跟你的一样。", py: "wǒ de shǒujī gēn nǐ de yíyàng.", j: "私の携帯はあなたのと同じだ。" },
+        { zh: "他跑得很快。", py: "tā pǎo de hěn kuài.", j: "彼は走るのが速い。" },
+        { zh: "他睡了八个小时。", py: "tā shuì le bā ge xiǎoshí.", j: "彼は8時間寝た。" },
+      ] },
+      // #8 HSK3-3 把構文（処置）
+      8: { examples: [
+        { zh: "我把作业做完了。", py: "wǒ bǎ zuòyè zuò wán le.", j: "私は宿題をやり終えた。" },
+        { zh: "妈妈把饭做好了。", py: "māma bǎ fàn zuò hǎo le.", j: "母はご飯をちゃんと作った。" },
+        { zh: "请把书放在桌子上。", py: "qǐng bǎ shū fàng zài zhuōzi shàng.", j: "本を机の上に置いてください。" },
+        { zh: "我把信寄给他了。", py: "wǒ bǎ xìn jì gěi tā le.", j: "私は手紙を彼に送った。" },
+        { zh: "请把名字写好。", py: "qǐng bǎ míngzi xiě hǎo.", j: "名前をきちんと書いてください。" },
+        { zh: "他把杯子打破了。", py: "tā bǎ bēizi dǎ pò le.", j: "彼はコップを割ってしまった。" },
+      ] },
+      // #9 HSK3-4 結果補語
+      9: { examples: [
+        { zh: "我看见你了。", py: "wǒ kàn jiàn nǐ le.", j: "あなたが見えた。" },
+        { zh: "这次我听懂了。", py: "zhè cì wǒ tīng dǒng le.", j: "今回は聞き取れた。" },
+        { zh: "我买到票了。", py: "wǒ mǎi dào piào le.", j: "私はチケットを買えた。" },
+        { zh: "这个字我写错了。", py: "zhège zì wǒ xiě cuò le.", j: "この字を書き間違えた。" },
+        { zh: "我吃完了。", py: "wǒ chī wán le.", j: "食べ終わった。" },
+        { zh: "你猜对了！", py: "nǐ cāi duì le!", j: "当たった！" },
+        { zh: "我没看见他。", py: "wǒ méi kàn jiàn tā.", j: "私は彼が見えなかった。" },
+      ] },
+      // #10 HSK3-5 様態補語・方向補語
+      10: { examples: [
+        { zh: "他唱歌唱得很好。", py: "tā chàng gē chàng de hěn hǎo.", j: "彼は歌うのが上手です。" },
+        { zh: "我累得走不动了。", py: "wǒ lèi de zǒu bu dòng le.", j: "私は疲れて歩けなくなった。" },
+        { zh: "请上来。", py: "qǐng shànglái.", j: "上がってきてください。" },
+        { zh: "他从外面走进来了。", py: "tā cóng wàimiàn zǒu jìnlái le.", j: "彼は外から歩いて入ってきた。" },
+        { zh: "你听得见吗？", py: "nǐ tīng de jiàn ma?", j: "聞こえますか？" },
+      ] },
+      // #11 HSK3-6 助動詞・使役・推測
+      11: { examples: [
+        { zh: "我应该早点睡觉。", py: "wǒ yīnggāi zǎo diǎn shuìjiào.", j: "私は早く寝るべきだ。" },
+        { zh: "老师叫我们安静。", py: "lǎoshī jiào wǒmen ānjìng.", j: "先生は私たちに静かにさせた。" },
+        { zh: "我以为你不来了。", py: "wǒ yǐwéi nǐ bù lái le.", j: "あなたは来ないと思っていた。" },
+        { zh: "他可能已经走了。", py: "tā kěnéng yǐjīng zǒu le.", j: "彼はもう帰ったかもしれない。" },
+        { zh: "听说他下个月结婚。", py: "tīngshuō tā xià ge yuè jiéhūn.", j: "彼は来月結婚するそうだ。" },
+        { zh: "我对中国文化感兴趣。", py: "wǒ duì Zhōngguó wénhuà gǎn xìngqù.", j: "私は中国文化に興味があります。" },
+        { zh: "别担心，没关系。", py: "bié dānxīn, méi guānxi.", j: "心配しないで、大丈夫。" },
+      ] },
+      // #12 HSK4-1 高度な接続詞①不管・即使・既然
+      12: { examples: [
+        { zh: "不管谁来，我都欢迎。", py: "bùguǎn shéi lái, wǒ dōu huānyíng.", j: "誰が来ても、私は歓迎する。" },
+        { zh: "即使下雨，比赛也照常进行。", py: "jíshǐ xià yǔ, bǐsài yě zhàocháng jìnxíng.", j: "たとえ雨でも、試合は予定通り行う。" },
+        { zh: "既然你来了，就留下来吃饭吧。", py: "jìrán nǐ lái le, jiù liú xiàlái chīfàn ba.", j: "来たのだから、ご飯食べていって。" },
+        { zh: "一旦决定，就不能后悔。", py: "yídàn juédìng, jiù bù néng hòuhuǐ.", j: "一度決めたら、後悔できない。" },
+        { zh: "不管多忙，我都会给你打电话。", py: "bùguǎn duō máng, wǒ dōu huì gěi nǐ dǎ diànhuà.", j: "どんなに忙しくても、電話します。" },
+      ] },
+      // #13 HSK4-2 高度な接続詞②不仅・除非・与其
+      13: { examples: [
+        { zh: "他不仅会说中文，还会说日语。", py: "tā bùjǐn huì shuō Zhōngwén, hái huì shuō Rìyǔ.", j: "彼は中国語だけでなく、日本語も話せる。" },
+        { zh: "除非你道歉，否则我不原谅你。", py: "chúfēi nǐ dàoqiàn, fǒuzé wǒ bù yuánliàng nǐ.", j: "謝らないなら、許さない。" },
+        { zh: "只有努力，才能成功。", py: "zhǐyǒu nǔlì, cái néng chénggōng.", j: "努力してこそ、成功できる。" },
+        { zh: "与其抱怨，不如行动。", py: "yǔqí bàoyuàn, bùrú xíngdòng.", j: "文句を言うより、行動しよう。" },
+        { zh: "不是不愿意，而是没时间。", py: "bú shì bú yuànyì, ér shì méi shíjiān.", j: "やりたくないのではなく、時間がないんです。" },
+        { zh: "之所以失败，是因为没有努力。", py: "zhīsuǒyǐ shībài, shì yīnwèi méiyǒu nǔlì.", j: "失敗したのは、努力しなかったからだ。" },
+        { zh: "通过努力，他终于实现了梦想。", py: "tōngguò nǔlì, tā zhōngyú shíxiàn le mèngxiǎng.", j: "努力を通じて、彼はついに夢を実現した。" },
+      ] },
+      // #14 HSK4-3 因果・推量・由来
+      14: { examples: [
+        { zh: "由于天气不好，飞机晚点了。", py: "yóuyú tiānqì bù hǎo, fēijī wǎndiǎn le.", j: "天気が悪いので、飛行機が遅れた。" },
+        { zh: "这个问题恐怕不容易解决。", py: "zhège wèntí kǒngpà bù róngyì jiějué.", j: "この問題は解決が難しそうだ。" },
+        { zh: "估计他不会来了。", py: "gūjì tā bú huì lái le.", j: "おそらく彼は来ないだろう。" },
+        { zh: "也许明天会下雨。", py: "yěxǔ míngtiān huì xià yǔ.", j: "明日は雨が降るかもしれない。" },
+        { zh: "据说他要辞职了。", py: "jùshuō tā yào cízhí le.", j: "彼は辞職するそうだ。" },
+        { zh: "多亏了你的帮助，我才能成功。", py: "duōkuī le nǐ de bāngzhù, wǒ cái néng chénggōng.", j: "君の助けのおかげで、成功できた。" },
+        { zh: "正因为他懒，所以才失败。", py: "zhèng yīnwèi tā lǎn, suǒyǐ cái shībài.", j: "彼は怠けたからこそ失敗した。" },
+      ] },
+      // #15 HSK4-4 評価・印象・伝聞
+      15: { examples: [
+        { zh: "看来他不会来了。", py: "kànlái tā bú huì lái le.", j: "どうやら彼は来ないようだ。" },
+        { zh: "他似乎不太高兴。", py: "tā sìhū bú tài gāoxìng.", j: "彼はあまり機嫌が良くないようだ。" },
+        { zh: "听说他下个月就要结婚了。", py: "tīngshuō tā xià ge yuè jiù yào jiéhūn le.", j: "聞くところでは、来月結婚するそうだ。" },
+        { zh: "这道菜看起来很好吃。", py: "zhè dào cài kàn qǐlái hěn hǎochī.", j: "この料理は美味しそうだ。" },
+        { zh: "这部电影值得一看。", py: "zhè bù diànyǐng zhíde yí kàn.", j: "この映画は見る価値がある。" },
+        { zh: "在我看来，他是对的。", py: "zài wǒ kàn lái, tā shì duì de.", j: "私から見れば、彼は正しい。" },
+        { zh: "这本书让人深思。", py: "zhè běn shū ràng rén shēnsī.", j: "この本は人を深く考えさせる。" },
+      ] },
+      // #16 HSK4-5 慣用・程度・感嘆
+      16: { examples: [
+        { zh: "这个孩子真聪明！", py: "zhège háizi zhēn cōngming!", j: "この子は本当に賢い！" },
+        { zh: "他居然没来！", py: "tā jūrán méi lái!", j: "なんと彼は来なかった！" },
+        { zh: "我简直不敢相信。", py: "wǒ jiǎnzhí bù gǎn xiāngxìn.", j: "私はまったく信じられない。" },
+        { zh: "难道你忘了吗？", py: "nándào nǐ wàng le ma?", j: "まさか忘れたのか？" },
+        { zh: "反正没人知道。", py: "fǎnzhèng méi rén zhīdào.", j: "どうせ誰も知らない。" },
+        { zh: "他偏偏没去。", py: "tā piānpiān méi qù.", j: "彼はよりによって行かなかった。" },
+        { zh: "你千万别迟到。", py: "nǐ qiānwàn bié chídào.", j: "絶対に遅刻しないで。" },
+        { zh: "我巴不得马上回家。", py: "wǒ bābude mǎshàng huí jiā.", j: "すぐにでも家に帰りたい。" },
+        { zh: "早知道就不去了。", py: "zǎo zhīdào jiù bú qù le.", j: "知っていれば行かなかったのに。" },
+      ] },
+      // #17 HSK4-6 受身・関連表現
+      17: { examples: [
+        { zh: "他被老师批评了。", py: "tā bèi lǎoshī pīpíng le.", j: "彼は先生に叱られた。" },
+        { zh: "这本书是他写的。", py: "zhè běn shū shì tā xiě de.", j: "この本は彼が書いたものだ。" },
+        { zh: "这件事由我负责。", py: "zhè jiàn shì yóu wǒ fùzé.", j: "このことは私が責任を持つ。" },
+        { zh: "对我来说，健康最重要。", py: "duì wǒ lái shuō, jiànkāng zuì zhòngyào.", j: "私にとって、健康が一番大切。" },
+        { zh: "关于这件事，我有不同的看法。", py: "guānyú zhè jiàn shì, wǒ yǒu bùtóng de kànfǎ.", j: "このことについて、私は違う意見がある。" },
+        { zh: "这个问题与我无关。", py: "zhège wèntí yǔ wǒ wú guān.", j: "この問題は私と関係ない。" },
+        { zh: "在大家的帮助下，我完成了任务。", py: "zài dàjiā de bāngzhù xià, wǒ wánchéng le rènwu.", j: "みんなの助けのおかげで、私は任務を完了した。" },
+      ] },
+      // #18 HSK4-7 比較拡張・程度の強調
+      18: { examples: [
+        { zh: "这次比上次好得多。", py: "zhè cì bǐ shàng cì hǎo de duō.", j: "今回は前回よりずっと良かった。" },
+        { zh: "我没有他高。", py: "wǒ méi yǒu tā gāo.", j: "私は彼ほど背が高くない。" },
+        { zh: "这个跟那个一样好。", py: "zhège gēn nàge yíyàng hǎo.", j: "これはあれと同じくらい良い。" },
+        { zh: "这本书比那本贵两倍。", py: "zhè běn shū bǐ nà běn guì liǎng bèi.", j: "この本はあの本の2倍高い。" },
+        { zh: "我跟他差不多大。", py: "wǒ gēn tā chàbuduō dà.", j: "私は彼と歳がだいたい同じだ。" },
+        { zh: "他比我更努力。", py: "tā bǐ wǒ gèng nǔlì.", j: "彼は私よりさらに努力している。" },
+        { zh: "没有什么比健康更重要。", py: "méi yǒu shénme bǐ jiànkāng gèng zhòngyào.", j: "健康ほど大切なものはない。" },
+        { zh: "越来越多的人开始学中文。", py: "yuè lái yuè duō de rén kāishǐ xué Zhōngwén.", j: "中国語を学ぶ人がますます増えている。" },
+      ] },
+      // #19 HSK4-8 方向・可能補語の応用
+      19: { examples: [
+        { zh: "你听得见吗？", py: "nǐ tīng de jiàn ma?", j: "聞こえますか？" },
+        { zh: "这个菜看起来很好吃。", py: "zhège cài kàn qǐlái hěn hǎochī.", j: "この料理は美味しそうだ。" },
+        { zh: "请你继续说下去。", py: "qǐng nǐ jìxù shuō xiàqù.", j: "続けて話してください。" },
+        { zh: "我想出来一个好办法。", py: "wǒ xiǎng chūlái yí ge hǎo bànfǎ.", j: "私は良いアイデアを思いついた。" },
+        { zh: "这件事我办不到。", py: "zhè jiàn shì wǒ bàn bu dào.", j: "このことは私にはできない。" },
+      ] },
+      // #20 HSK4-9 抽象・関連・条件
+      20: { examples: [
+        { zh: "随着科技的发展，生活越来越方便。", py: "suízhe kējì de fāzhǎn, shēnghuó yuè lái yuè fāngbiàn.", j: "技術の発展にともない、生活はますます便利になっている。" },
+        { zh: "凡是参加比赛的人，都有奖品。", py: "fánshì cānjiā bǐsài de rén, dōu yǒu jiǎngpǐn.", j: "試合に参加した人には、みな景品がある。" },
+        { zh: "对于这个问题，专家有不同的看法。", py: "duìyú zhège wèntí, zhuānjiā yǒu bùtóng de kànfǎ.", j: "この問題に対して、専門家は異なる見解がある。" },
+        { zh: "通过这次经验，我学到了很多。", py: "tōngguò zhè cì jīngyàn, wǒ xué dào le hěn duō.", j: "今回の経験を通して、多くを学んだ。" },
+        { zh: "由于工作原因，我经常出差。", py: "yóuyú gōngzuò yuányīn, wǒ jīngcháng chūchāi.", j: "仕事の関係で、よく出張する。" },
+        { zh: "在这种情况下，我们应该冷静。", py: "zài zhè zhǒng qíngkuàng xià, wǒmen yīnggāi lěngjìng.", j: "このような状況で、私たちは冷静になるべきだ。" },
+        { zh: "从这个角度来看，这个计划是可行的。", py: "cóng zhège jiǎodù lái kàn, zhège jìhuà shì kěxíng de.", j: "この角度から見れば、この計画は実行可能だ。" },
+      ] },
+      // #21 HSK4-10 経過・順序・継起
+      21: { examples: [
+        { zh: "我先吃饭，然后做作业。", py: "wǒ xiān chī fàn, ránhòu zuò zuòyè.", j: "先にご飯を食べて、その後で宿題をする。" },
+        { zh: "接着，他又说了几句。", py: "jiēzhe, tā yòu shuō le jǐ jù.", j: "それから、彼はまたいくつか話した。" },
+        { zh: "起初大家都不同意，后来慢慢接受了。", py: "qǐchū dàjiā dōu bù tóngyì, hòulái mànmàn jiēshòu le.", j: "最初はみんな反対していたが、後で徐々に受け入れた。" },
+        { zh: "同时，我也在学习日语。", py: "tóngshí, wǒ yě zài xuéxí Rìyǔ.", j: "同時に、私は日本語も学んでいる。" },
+        { zh: "此外，他还会弹钢琴。", py: "cǐwài, tā hái huì tán gāngqín.", j: "それ以外に、彼はピアノも弾ける。" },
+        { zh: "总之，这次旅行很愉快。", py: "zǒngzhī, zhè cì lǚxíng hěn yúkuài.", j: "要するに、今回の旅行は楽しかった。" },
+      ] },
+      // #22 HSK4-11 思考・感情の表現
+      22: { examples: [
+        { zh: "我以为你不来了。", py: "wǒ yǐwéi nǐ bù lái le.", j: "あなたは来ないと思っていた。" },
+        { zh: "我感到很幸福。", py: "wǒ gǎn dào hěn xìngfú.", j: "とても幸せに感じる。" },
+        { zh: "我盼望着假期的到来。", py: "wǒ pànwàng zhe jiàqī de dàolái.", j: "休暇の到来を心待ちにしている。" },
+        { zh: "我害怕一个人在家。", py: "wǒ hàipà yí ge rén zài jiā.", j: "私は一人で家にいるのが怖い。" },
+        { zh: "他对工作十分认真。", py: "tā duì gōngzuò shífēn rènzhēn.", j: "彼は仕事にとても真面目だ。" },
+        { zh: "我为你感到高兴。", py: "wǒ wèi nǐ gǎn dào gāoxìng.", j: "私はあなたのために嬉しく思う。" },
+      ] },
+      // #23 HSK4-12 仮定・選択・万一
+      23: { examples: [
+        { zh: "与其抱怨，不如行动。", py: "yǔqí bàoyuàn, bùrú xíngdòng.", j: "文句を言うより、行動した方がいい。" },
+        { zh: "要不我们去吃饭吧。", py: "yàobu wǒmen qù chī fàn ba.", j: "そうじゃないなら、ご飯食べに行こうよ。" },
+        { zh: "万一下雨怎么办？", py: "wànyī xià yǔ zěnme bàn?", j: "万一雨が降ったらどうする？" },
+        { zh: "哪怕失败，我也不后悔。", py: "nǎpà shībài, wǒ yě bù hòuhuǐ.", j: "たとえ失敗しても、私は後悔しない。" },
+        { zh: "快点走，否则就来不及了。", py: "kuài diǎn zǒu, fǒuzé jiù lái bu jí le.", j: "早く行こう、でないと間に合わないよ。" },
+        { zh: "假如我是你，我就不会这么做。", py: "jiǎrú wǒ shì nǐ, wǒ jiù bú huì zhème zuò.", j: "もし私があなただったら、こうはしない。" },
+        { zh: "一旦发生问题，立刻通知我。", py: "yídàn fāshēng wèntí, lìkè tōngzhī wǒ.", j: "問題が起きたら、直ちに連絡してください。" },
+      ] },
+    };
+
+    // ========================================================================
     // TEMPLATE ENGINE — mode:"template" courses generate fresh sentences each session.
     //   全ての漢字・拼音（声調含む）は手作業で検証した値を事前テーブルに格納し、
     //   組み合わせるだけ。声調変化（一 yī/yí/yì・两 vs 二 など）はアルゴリズムで
@@ -2307,6 +2540,7 @@
     const elIntroTitle = $("#intro-title");
     const elIntroOverview = $("#intro-overview");
     const elIntroPoints = $("#intro-points");
+    const elLessonPlayAll = $("#lesson-playall");
     const elIntroStartBtn = $("#intro-start-btn");
 
     elTotalCourses.textContent = COURSES.length; // actual count
@@ -2318,6 +2552,7 @@
     let selectedLevel = 1;
 
     function showView(name) {
+      if (typeof stopLessonPlay === "function") stopLessonPlay();
       Object.entries(views).forEach(([k, el]) => {
         if (k === name) el.removeAttribute("hidden");
         else el.setAttribute("hidden", "");
@@ -2416,7 +2651,7 @@
       elIntroNum.textContent = courseId + 1;
       elIntroTitle.textContent = c.title;
       elIntroOverview.textContent = intro.overview;
-      elIntroPoints.innerHTML = intro.points.map(p => `<li>${tx(p)}</li>`).join("");
+      renderPoints(courseId, intro.points);
       const mc = masteredList(courseId).length;
       const total = c.sentences.length;
       const done = mc >= total;
@@ -2508,6 +2743,77 @@
         u.rate = 0.85;
         synth.speak(u);
       } catch (e) {}
+    }
+
+    // ---- コース講義（例文を聞く） -------------------------------------------
+    let lessonExamples = [];      // 現在表示中コースの例文
+    let lessonPlaying = false;    // 通し再生中フラグ
+
+    function stopLessonPlay() {
+      lessonPlaying = false;
+      try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+      if (elLessonPlayAll) { elLessonPlayAll.classList.remove("playing"); elLessonPlayAll.textContent = "▶ 例文を通しで聞く"; }
+      if (elIntroPoints) elIntroPoints.querySelectorAll(".lesson-item").forEach(el => el.classList.remove("playing"));
+    }
+
+    // 「このコースで学ぶこと」の各ポイントに、対応する例文＋🔊・拼音・訳をぶら下げて描画。
+    // 講義データの無いコースは従来どおりポイントのみ（例文なし）。
+    function renderPoints(courseId, points) {
+      stopLessonPlay();
+      points = points || [];
+      const lesson = COURSE_LESSONS[courseId];
+      const hasLesson = !!(lesson && lesson.examples && lesson.examples.length && window.speechSynthesis);
+      lessonExamples = hasLesson ? lesson.examples : [];
+      if (elLessonPlayAll) {
+        if (hasLesson) elLessonPlayAll.removeAttribute("hidden");
+        else elLessonPlayAll.setAttribute("hidden", "");
+      }
+      elIntroPoints.innerHTML = points.map((p, i) => {
+        const ex = hasLesson ? lessonExamples[i] : null;
+        const exHTML = ex ? `
+            <div class="lesson-zh-row">
+              <button class="lesson-speak" type="button" data-li="${i}" aria-label="発音を聞く">🔊</button>
+              <span class="lesson-zh zh">${tx(ex.zh)}</span>
+            </div>
+            <div class="lesson-meta">${ex.py} ・ ${ex.j}</div>` : "";
+        return `<li class="${ex ? "has-example lesson-item" : ""}" data-li="${i}">${tx(p)}${exHTML}</li>`;
+      }).join("");
+      if (hasLesson) {
+        elIntroPoints.querySelectorAll(".lesson-speak").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            stopLessonPlay();
+            const ex = lessonExamples[parseInt(btn.dataset.li)];
+            if (ex) speak(tx(ex.zh));
+          });
+        });
+      }
+    }
+
+    function playLessonAll() {
+      const synth = window.speechSynthesis;
+      if (!synth || !lessonExamples.length) return;
+      if (lessonPlaying) { stopLessonPlay(); return; }
+      synth.cancel();
+      lessonPlaying = true;
+      elLessonPlayAll.classList.add("playing");
+      elLessonPlayAll.textContent = "■ 停止";
+      if (!zhVoice) pickZhVoice();
+      let i = 0;
+      const items = elIntroPoints.querySelectorAll(".lesson-item");
+      const step = () => {
+        if (!lessonPlaying || i >= lessonExamples.length) { stopLessonPlay(); return; }
+        items.forEach(el => el.classList.remove("playing"));
+        if (items[i]) items[i].classList.add("playing");
+        const u = new SpeechSynthesisUtterance(tx(lessonExamples[i].zh));
+        if (zhVoice) { u.voice = zhVoice; u.lang = zhVoice.lang; }
+        else u.lang = "zh-CN";
+        u.rate = 0.85;
+        u.onend = () => { i++; step(); };
+        u.onerror = () => { stopLessonPlay(); };
+        synth.speak(u);
+      };
+      step();
     }
 
     // ========================================================================
@@ -2988,6 +3294,7 @@
 
     // Intro画面 → 練習開始
     elIntroStartBtn.addEventListener("click", startPractice);
+    if (elLessonPlayAll) elLessonPlayAll.addEventListener("click", playLessonAll);
 
     // ========================================================================
     // HINT
