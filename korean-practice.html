@@ -111,6 +111,7 @@
         <h2 class="intro-title" id="intro-title">コース名</h2>
         <p class="intro-overview" id="intro-overview"></p>
         <div class="intro-section-title">このコースで学ぶこと</div>
+        <button class="lesson-playall" id="lesson-playall" type="button" hidden>▶ 例文を通しで聞く</button>
         <ul class="intro-points" id="intro-points"></ul>
         <button class="btn btn-primary intro-start" id="intro-start-btn">チャレンジ開始</button>
       </div>
@@ -5170,6 +5171,247 @@
         points: ["<strong>並列の-(으)며</strong>：書き言葉で二つの動作・状態を並べる。母音/ㄹ語幹は<code>-며</code>、子音語幹は<code>-으며</code>。話し言葉の<code>-고</code>に対応する文語形。", "<strong>対照の-(으)ㄴ/는 반면(에)</strong>：「〜である一方で」。動詞現在は<code>-는 반면</code>、形容詞・過去は<code>-(으)ㄴ 반면</code>を使い分ける。", "<strong>譲歩の-(으)ㅁ에도 불구하고</strong>：「〜にもかかわらず」。名詞化語尾<code>-(으)ㅁ</code>に<code>에도 불구하고</code>が付いた硬い表現。名詞には<code>에도 불구하고</code>を直接付ける。", "<strong>接続副詞</strong>：逆接<code>그러나/하지만</code>、結論<code>따라서/그러므로</code>、添加<code>게다가</code>。文頭に置き文と文をつなぐ。", "<strong>慣用句</strong>：<code>눈치가 빠르다</code>(察しがいい)、<code>발이 넓다</code>(顔が広い)、<code>손이 크다</code>(気前がいい)、<code>미역국을 먹다</code>(試験に落ちる)など、直訳できない決まり文句。", "書き言葉では<code>-며</code>・<code>따라서</code>・<code>그러므로</code>などを好み、話し言葉の<code>-고</code>・<code>그래서</code>と register を区別することが重要。"] }
     ];
 
+    const COURSE_LESSONS = {
+      // #0 TOPIK1-1 あいさつ・自己紹介
+      0: { examples: [
+        { zh: "안녕하세요.", py: "annyeonghaseyo.", j: "こんにちは。" },
+        { zh: "감사합니다.", py: "gamsahamnida.", j: "ありがとうございます。" },
+        { zh: "저는 학생이에요.", py: "jeoneun haksaeng-ieyo.", j: "私は学生です。" },
+        { zh: "저는 학생이에요.", py: "jeoneun haksaeng-ieyo.", j: "私は学生です。" },
+        { zh: "이름이 뭐예요?", py: "ireumi mwoyeyo?", j: "お名前は何ですか？" },
+        { zh: "저는 일본에서 왔어요.", py: "jeoneun ilbon-eseo wasseoyo.", j: "私は日本から来ました。" },
+        { zh: "저는 선생님이에요.", py: "jeoneun seonsaengnim-ieyo.", j: "私は先生です。" },
+        { zh: "저는 스무 살이에요.", py: "jeoneun seumu sal-ieyo.", j: "私は二十歳です。" },
+      ] },
+      // #1 TOPIK1-2 数字・時間・存在
+      1: { examples: [
+        { zh: "저는 스무 살이에요.", py: "jeoneun seumu sarieyo.", j: "私は20歳です。" },
+        { zh: "지금 두 시 삼십 분이에요.", py: "jigeum du si samsip bun-ieyo.", j: "今2時30分です。" },
+        { zh: "개가 두 마리 있어요.", py: "gaega du mari isseoyo.", j: "犬が2匹います。" },
+        { zh: "그는 집에 없어요.", py: "geuneun jib-e eopseoyo.", j: "彼は家にいません。" },
+        { zh: "여동생이 한 명 있어요.", py: "yeodongsaeng-i han myeong isseoyo.", j: "妹が一人います。" },
+        { zh: "이건 삼천 원이에요.", py: "igeon samcheon won-ieyo.", j: "これは三千ウォンです。" },
+        { zh: "제 생일은 유월 십오 일이에요.", py: "je saeng-il-eun yuwol sibo il-ieyo.", j: "私の誕生日は6月15日です。" },
+        { zh: "커피 두 잔 주세요.", py: "keopi du jan juseyo.", j: "コーヒーを2杯ください。" },
+      ] },
+      // #2 TOPIK1-3 助詞・希望・指示
+      2: { examples: [
+        { zh: "오늘 날씨가 좋아요.", py: "oneul nalssiga joayo.", j: "今日は天気がいいです。" },
+        { zh: "저는 사과를 좋아해요.", py: "jeoneun sagwareul joahaeyo.", j: "私はリンゴが好きです。" },
+        { zh: "물을 마시고 싶어요.", py: "mureul masigo sipeoyo.", j: "水が飲みたいです。" },
+        { zh: "친구에게 선물을 줘요.", py: "chingu-ege seonmureul jwoyo.", j: "友達にプレゼントをあげます。" },
+        { zh: "저 사람은 제 선생님이에요.", py: "jeo saram-eun je seonsaengnim-ieyo.", j: "あの人は私の先生です。" },
+        { zh: "저도 커피를 마시고 싶어요.", py: "jeodo keopireul masigo sipeoyo.", j: "私もコーヒーが飲みたいです。" },
+        { zh: "저는 김치만 먹어요.", py: "jeoneun gimchiman meogeoyo.", j: "私はキムチだけ食べます。" },
+        { zh: "저는 그 영화를 보고 싶지 않아요.", py: "jeoneun geu yeonghwareul bogo sipji anayo.", j: "私はその映画が見たくないです。" },
+      ] },
+      // #3 TOPIK2-1 過去と進行
+      3: { examples: [
+        { zh: "어제 가게에 갔어요.", py: "eoje gage-e gasseoyo.", j: "昨日お店に行きました。" },
+        { zh: "그는 지금 전화하고 있어요.", py: "geuneun jigeum jeonhwahago isseoyo.", j: "彼は今電話しています。" },
+        { zh: "저는 매일 일곱 시에 일어나요.", py: "jeoneun maeil ilgop sie ireonayo.", j: "私は毎日7時に起きます。" },
+        { zh: "벌써 먹었어요.", py: "beolsseo meogeosseoyo.", j: "もう食べました。" },
+        { zh: "어젯밤에 뭐 했어요?", py: "eojetbam-e mwo haesseoyo?", j: "昨日の夜は何をしましたか？" },
+        { zh: "어제는 숙제를 안 했어요.", py: "eojeneun sukje-reul an haesseoyo.", j: "昨日は宿題をしませんでした。" },
+        { zh: "지금 밥을 만드는 중이에요.", py: "jigeum bab-eul mandeuneun jung-ieyo.", j: "今ご飯を作っている最中です。" },
+        { zh: "비가 와서 집에 있었어요.", py: "bi-ga waseo jib-e isseosseoyo.", j: "雨が降っていたので家にいました。" },
+      ] },
+      // #4 TOPIK2-2 比較・能力・依頼
+      4: { examples: [
+        { zh: "창문을 열어 줄 수 있어요?", py: "changmuneul yeoreo jul su isseoyo?", j: "窓を開けてくれますか。" },
+        { zh: "그는 저보다 키가 커요.", py: "geuneun jeoboda kiga keoyo.", j: "彼は私より背が高い。" },
+        { zh: "같이 가요.", py: "gachi gayo.", j: "一緒に行きましょう。" },
+        { zh: "천천히 말해 주세요.", py: "cheoncheonhi malhae juseyo.", j: "ゆっくり話してください。" },
+        { zh: "한국 음식을 만들 수 있어요.", py: "hanguk eumsigeul mandeul su isseoyo.", j: "韓国料理を作れます。" },
+        { zh: "저는 피아노를 칠 줄 알아요.", py: "jeoneun piano-reul chil jul arayo.", j: "私はピアノを弾けます。" },
+        { zh: "이 가게 커피가 제일 맛있어요.", py: "i gage keopiga jeil masisseoyo.", j: "この店のコーヒーがいちばんおいしいです。" },
+        { zh: "죄송하지만 좀 도와주세요.", py: "joesonghajiman jom dowajuseyo.", j: "すみませんが、ちょっと手伝ってください。" },
+      ] },
+      // #5 TOPIK2-3 活用変則・程度・量詞
+      5: { examples: [
+        { zh: "이 옷이 예뻐요.", py: "i osi yeppeoyo.", j: "この服はきれいです。" },
+        { zh: "이거 얼마예요?", py: "igeo eolmayeyo?", j: "これはいくらですか？" },
+        { zh: "방에 두 사람이 있어요.", py: "bang-e du sarami isseoyo.", j: "部屋に2人います。" },
+        { zh: "왜 안 와요?", py: "wae an wayo?", j: "なぜ来ないの？" },
+        { zh: "이 가방은 좀 비싸요.", py: "i gabang-eun jom bissayo.", j: "このカバンは少し高いです。" },
+        { zh: "그 말의 뜻을 몰라요.", py: "geu marui tteuseul mollayo.", j: "その言葉の意味がわかりません。" },
+        { zh: "저는 매일 삼십 분 걸어요.", py: "jeoneun maeil samsip bun georeoyo.", j: "私は毎日30分歩きます。" },
+        { zh: "사과 세 개 주세요.", py: "sagwa se gae juseyo.", j: "りんごを3つください。" },
+      ] },
+      // #6 TOPIK3-1 仮定・意志・忠告
+      6: { examples: [
+        { zh: "내일 비가 오면 안 갈 거예요.", py: "naeil biga omyeon an gal geoyeyo.", j: "もし明日雨が降ったら、行きません。" },
+        { zh: "열심히 공부하면 합격할 거예요.", py: "yeolsimhi gongbuhamyeon hapgyeokhal geoyeyo.", j: "一生懸命勉強すれば、合格するでしょう。" },
+        { zh: "물을 많이 마시는 게 좋아요.", py: "mureul mani masineun ge joayo.", j: "水をたくさん飲んだ方がいいです。" },
+        { zh: "이 책이 저 책보다 재미있어요.", py: "i chaegi jeo chaegboda jaemiisseoyo.", j: "この本はあの本より面白い。" },
+        { zh: "두 시간 동안 운동했어요.", py: "du sigan dongan undonghaesseoyo.", j: "2時間運動しました。" },
+        { zh: "주말에 같이 영화를 볼까요?", py: "jumar-e gachi yeonghwareul bolkkayo?", j: "週末、一緒に映画を見ましょうか?" },
+        { zh: "이 버튼을 누르면 돼요.", py: "i beoteuneul nureumyeon dwaeyo.", j: "このボタンを押せばいいです。" },
+        { zh: "피곤하면 좀 쉬지 그래요?", py: "pigonhamyeon jom swiji geuraeyo?", j: "疲れたなら、少し休んだらどうですか？" },
+      ] },
+      // #7 TOPIK3-2 譲歩・禁止・同時動作
+      7: { examples: [
+        { zh: "그는 피곤하지만 아직 일하고 있어요.", py: "geuneun pigonhajiman ajig ilhago isseoyo.", j: "彼は疲れているけれど、まだ働いています。" },
+        { zh: "걱정하지 마세요.", py: "geokjeonghaji maseyo.", j: "心配しないでください。" },
+        { zh: "그는 텔레비전을 보면서 밥을 먹어요.", py: "geuneun tellebijeoneul bomyeonseo babeul meogeoyo.", j: "彼はテレビを見ながらご飯を食べます。" },
+        { zh: "열쇠를 집에 두고 왔어요.", py: "yeolsoereul jibe dugo wasseoyo.", j: "鍵を家に忘れてきました。" },
+        { zh: "그는 피곤하지만 아직 일하고 있어요.", py: "geuneun pigonhajiman ajik ilhago isseoyo.", j: "彼は疲れているけれど、まだ働いています。" },
+        { zh: "밥을 먹은 후에 약을 드세요.", py: "babeul meogeun hue yageul deuseyo.", j: "ご飯を食べた後で、薬を飲んでください。" },
+        { zh: "주말에는 책을 읽거나 영화를 보거나 해요.", py: "jumareneun chaegeul ilkkeona yeonghwareul bogeona haeyo.", j: "週末は本を読んだり、映画を見たりします。" },
+      ] },
+      // #8 TOPIK3-3 手段・思い込み・変化
+      8: { examples: [
+        { zh: "저는 자전거로 왔어요.", py: "jeoneun jajeongeoro wasseoyo.", j: "私は自転車で来ました。" },
+        { zh: "안 오는 줄 알았어요.", py: "an oneun jul arasseoyo.", j: "あなたが来ないと思っていた。" },
+        { zh: "약을 먹으니까 많이 좋아졌어요.", py: "yageul meogeunikka mani joajyeosseoyo.", j: "薬を飲んだら、だいぶ良くなりました。" },
+        { zh: "이 음식은 맛있어 보여요.", py: "i eumsigeun masisseo boyeoyo.", j: "この料理は美味しそうです。" },
+        { zh: "점점 추워지고 있어요.", py: "jeomjeom chuwojigo isseoyo.", j: "だんだん寒くなってきた。" },
+        { zh: "한국 회사에서 일하게 됐어요.", py: "hanguk hoesa-eseo ilhage dwaesseoyo.", j: "韓国の会社で働くことになりました。" },
+        { zh: "두 사람은 벌써 화해한 것 같아요.", py: "du saram-eun beolsseo hwahaehan geot gatayo.", j: "二人はもう仲直りしたようです。" },
+      ] },
+      // #9 TOPIK4-1 高度な接続詞・並列
+      9: { examples: [
+        { zh: "노력을 통해 그는 마침내 꿈을 이루었어요.", py: "noryeogeul tonghae geuneun machimnae kkumeul iruwosseoyo.", j: "努力を通じて、彼はついに夢を実現した。" },
+        { zh: "그는 한국어뿐만 아니라 일본어도 할 수 있어요.", py: "geuneun hangugeoppunman anira ilboneodo hal su isseoyo.", j: "彼は韓国語だけでなく、日本語も話せる。" },
+        { zh: "불평하느니 행동하는 게 낫지요.", py: "bulpyeonghaneuni haengdonghaneun ge natjyo.", j: "文句を言うよりは、行動しよう。" },
+        { zh: "왔으니까 밥 먹고 가세요.", py: "wasseunikka bab meokgo gaseyo.", j: "来たのだから、ご飯を食べていって。" },
+        { zh: "오랫동안 고민한 끝에 드디어 유학을 결심했어요.", py: "oraetdongan gominhan kkeute deudieo yuhageul gyeolsimaesseoyo.", j: "長い間悩んだ末、ついに留学を決心しました。" },
+        { zh: "이 식당은 맛이 좋을 뿐만 아니라 값도 싸요.", py: "i sikdangeun masi joeul ppunman anira gapdo ssayo.", j: "この食堂は味がいいだけでなく、値段も安いです。" },
+        { zh: "그는 지각했어요. 따라서 시험을 볼 수 없었어요.", py: "geuneun jigakaesseoyo. ttaraseo siheomeul bol su eopseosseoyo.", j: "彼は遅刻しました。したがって試験を受けられませんでした。" },
+        { zh: "이 책은 내용이 어려워요. 게다가 분량도 많아요.", py: "i chaegeun naeyongi eoryeowoyo. gedaga bullyangdo manayo.", j: "この本は内容が難しいです。おまけに分量も多いです。" },
+      ] },
+      // #10 TOPIK4-2 譲歩・伝聞・印象
+      10: { examples: [
+        { zh: "아무리 바빠도 전화할게요.", py: "amuri bappado jeonhwahalgeyo.", j: "どんなに忙しくても、電話します。" },
+        { zh: "아무리 비싸도 이건 살게요.", py: "amuri bissado igeon salgeyo.", j: "いくら高くても、これは買うつもりです。" },
+        { zh: "제 말대로 하세요.", py: "je maldaero haseyo.", j: "私の言う通りにしてください。" },
+        { zh: "다음 달에 결혼한다고 해요.", py: "da-eum dare gyeolhonhandago haeyo.", j: "来月、結婚するそうです。" },
+        { zh: "이 문제는 쉽게 해결되지 않을 것 같아요.", py: "i munjeneun swipge haegyeoldoeji aneul geot gatayo.", j: "この問題は簡単に解決しなさそうだ。" },
+        { zh: "선생님이 내일까지 숙제를 내라고 하셨어요.", py: "seonsaengnim-i naeilkkaji sukjereul naerago hasyeosseoyo.", j: "先生が明日までに宿題を出せと言いました。" },
+        { zh: "두 사람은 벌써 화해했나 봐요.", py: "du saram-eun beolsseo hwahaehaenna bwayo.", j: "二人はもう仲直りしたみたいです。" },
+      ] },
+      // #11 TOPIK4-3 程度・抽象・状態
+      11: { examples: [
+        { zh: "생각하면 할수록 모르겠어요.", py: "saenggakamyeon halsurok moreugesseoyo.", j: "考えれば考えるほど分からなくなります。" },
+        { zh: "이 소설은 한 번 읽어 볼 만해요.", py: "i soseoreun han beon ilgeo bol manhaeyo.", j: "この小説は一読の価値がある。" },
+        { zh: "저는 한국 문화에 관심이 있어요.", py: "jeoneun hanguk munhwa-e gwansimi isseoyo.", j: "私は韓国文化に興味があります。" },
+        { zh: "그는 일에 매우 성실해요.", py: "geuneun ire maeu seongsilhaeyo.", j: "彼は仕事にとても真面目だ。" },
+        { zh: "그녀는 약속에 철저해요.", py: "geunyeoneun yaksoge cheoljeohaeyo.", j: "彼女は約束に厳格です。" },
+        { zh: "나이가 들수록 조용한 게 좋아져요.", py: "naiga deulsurok joyonghan ge joajyeoyo.", j: "年を取るにつれ、静けさが好きになる。" },
+        { zh: "이 가게 음식은 가격에 비해 맛있는 편이에요.", py: "i gage eumsigeun gagyeoge bihae masinneun pyeonieyo.", j: "この店の料理は値段の割においしいほうです。" },
+        { zh: "누구나 처음에는 실수하기 마련이에요.", py: "nuguna cheoeumeneun silsuhagi maryeonieyo.", j: "誰でも初めは失敗するものです。" },
+      ] },
+      // #12 TOPIK1-4 場所・移動・日常動作
+      12: { examples: [
+        { zh: "저는 집에 있어요.", py: "jeoneun jib-e isseoyo.", j: "私は家にいます。" },
+        { zh: "식당에서 밥을 먹어요.", py: "sikdang-eseo bab-eul meogeoyo.", j: "食堂でご飯を食べます。" },
+        { zh: "저는 회사에 다녀요.", py: "jeoneun hoesa-e danyeoyo.", j: "私は会社に通っています。" },
+        { zh: "점심을 먹으러 식당에 가요.", py: "jeomsim-eul meogeureo sikdang-e gayo.", j: "昼ご飯を食べに食堂へ行きます。" },
+        { zh: "가방은 책상 위에 있어요.", py: "gabang-eun chaeksang wi-e isseoyo.", j: "カバンは机の上にあります。" },
+        { zh: "집에서 학교까지 친구하고 같이 다녀요.", py: "jib-eseo hakgyo-kkaji chinguhago gachi danyeoyo.", j: "家から学校まで友だちと一緒に通っています。" },
+      ] },
+      // #13 TOPIK1-5 否定・疑問詞・形容詞
+      13: { examples: [
+        { zh: "오늘은 안 가요.", py: "oneureun an gayo.", j: "今日は行きません。" },
+        { zh: "매운 건 못 먹어요.", py: "maeun geon mot meogeoyo.", j: "辛い物は食べられません。" },
+        { zh: "왜 한국어를 공부해요?", py: "wae hangugeoreul gongbuhaeyo?", j: "なぜ韓国語を勉強しますか？" },
+        { zh: "이 가방은 너무 비싸요.", py: "i gabangeun neomu bissayo.", j: "この鞄はとても高いです。" },
+        { zh: "오늘은 날씨가 나빠요. 그래서 안 나가요.", py: "oneureun nalssiga nappayo. geuraeseo an nagayo.", j: "今日は天気が悪いです。だから出かけません。" },
+        { zh: "이 가게는 싸요. 그리고 맛있어요.", py: "i gageneun ssayo. geurigo masisseoyo.", j: "この店は安くて、しかも美味しいです。" },
+      ] },
+      // #14 TOPIK1-6 丁寧体（합쇼体）と日付・家族
+      14: { examples: [
+        { zh: "오늘은 책을 읽습니다.", py: "oneureun chaegeul ikseumnida.", j: "今日は本を読みます。" },
+        { zh: "어디에 삽니까?", py: "eodie samnikka?", j: "あなたはどこに住んでいますか？" },
+        { zh: "오늘은 금요일입니다.", py: "oneureun geumyoirimnida.", j: "今日は金曜日です。" },
+        { zh: "제 생일은 시월 삼 일입니다.", py: "je saengireun siwol sam irimnida.", j: "私の誕生日は10月3日です。" },
+        { zh: "저는 형하고 누나가 있습니다.", py: "jeoneun hyeonghago nunaga itseumnida.", j: "私は兄と姉がいます。" },
+        { zh: "저는 동생에게 선물을 줍니다.", py: "jeoneun dongsaengege seonmureul jumnida.", j: "私は弟にプレゼントをあげます。" },
+      ] },
+      // #15 TOPIK2-4 連結語尾と理由
+      15: { examples: [
+        { zh: "아침을 먹고 학교에 가요.", py: "achimeul meokgo hakgyoe gayo.", j: "朝ごはんを食べて、学校に行きます。" },
+        { zh: "한국어는 어렵지만 재미있어요.", py: "hangugeoneun eoryeopjiman jaemiisseoyo.", j: "韓国語は難しいですが、面白いです。" },
+        { zh: "배가 고파서 밥을 먹었어요.", py: "baega gopaseo babeul meogeosseoyo.", j: "おなかがすいたので、ごはんを食べました。" },
+        { zh: "시간이 없으니까 서두릅시다.", py: "sigani eopseunikka seodureupsida.", j: "時間がないから、急ぎましょう。" },
+        { zh: "위험하니까 여기에 앉지 마세요.", py: "wiheomhanikka yeogie anjji maseyo.", j: "危ないから、ここに座らないでください。" },
+        { zh: "값은 싼데 품질은 아주 좋아요.", py: "gapseun ssande pumjireun aju joayo.", j: "値段は安いのに、品質はとても良いです。" },
+      ] },
+      // #16 TOPIK2-5 意志・予定・勧誘
+      16: { examples: [
+        { zh: "제가 연락할게요.", py: "jega yeollakhalgeyo.", j: "私が連絡します。" },
+        { zh: "커피 마실래요?", py: "keopi masillaeyo?", j: "コーヒー飲みますか？（あなたは）" },
+        { zh: "같이 점심 먹읍시다.", py: "gachi jeomsim meogeupsida.", j: "一緒に昼ごはんを食べましょう。" },
+        { zh: "내일 친구를 만나려고 해요.", py: "naeil chingu-reul mannaryeogo haeyo.", j: "明日、友だちに会おうと思います。" },
+        { zh: "우리는 다음 주에 이사하기로 했어요.", py: "urineun da-eum ju-e isahagiro haesseoyo.", j: "私たちは来週、引っ越すことにしました。" },
+        { zh: "더워요. 창문을 열까요?", py: "deowoyo. changmun-eul yeolkkayo?", j: "暑いですね。窓を開けましょうか？" },
+      ] },
+      // #17 TOPIK2-6 経験・試み・授受
+      17: { examples: [
+        { zh: "저는 제주도에 가 본 적이 있어요.", py: "jeoneun jejudoe ga bon jeogi isseoyo.", j: "私は済州島に行ったことがあります。" },
+        { zh: "이 김치를 먹어 보세요.", py: "i gimchireul meogeo boseyo.", j: "このキムチを食べてみてください。" },
+        { zh: "저는 선생님에게서 이메일을 받았어요.", py: "jeoneun seonsaengnimegeseo imeireul badasseoyo.", j: "私は先生からメールをもらいました。" },
+        { zh: "동생이 커피를 타 줬어요.", py: "dongsaeng-i keopireul ta jwosseoyo.", j: "妹がコーヒーを淹れてくれました。" },
+        { zh: "할아버지가 의자에 앉아 있어요.", py: "harabeojiga uijae anja isseoyo.", j: "おじいさんが椅子に座っています。" },
+        { zh: "창문이 열려 있고 방에 불도 켜져 있어요.", py: "changmuni yeollyeo itgo bange buldo kyeojyeo isseoyo.", j: "窓が開いていて、部屋の灯りもついています。" },
+      ] },
+      // #18 TOPIK3-4 連体形と関係節
+      18: { examples: [
+        { zh: "저기 가는 사람이 제 친구예요.", py: "jeogi ganeun sarami je chinguyeyo.", j: "あそこを歩いている人が私の友達です。" },
+        { zh: "어제 먹은 케이크는 정말 맛있었어요.", py: "eoje meogeun keikeuneun jeongmal masisseosseoyo.", j: "昨日食べたケーキはとてもおいしかったです。" },
+        { zh: "키가 큰 사람이 동생이에요.", py: "kiga keun sarami dongsaeng-ieyo.", j: "背が高い人が弟です。" },
+        { zh: "내일 만날 사람은 아주 친절한 분이에요.", py: "naeil mannal sarameun aju chinjeolhan bunieyo.", j: "明日会う人はとても親切な方です。" },
+        { zh: "저는 김치를 만든 적이 있어요.", py: "jeoneun gimchireul mandeun jeogi isseoyo.", j: "私はキムチを作ったことがあります。" },
+        { zh: "제가 만든 김치예요.", py: "jega mandeun gimchiyeyo.", j: "私が作ったキムチです。" },
+      ] },
+      // #19 TOPIK3-5 間接話法（伝聞・引用）
+      19: { examples: [
+        { zh: "미나 씨는 내일 온다고 해요.", py: "mina ssineun naeil ondago haeyo.", j: "ミナさんは明日来ると言っています。" },
+        { zh: "저분은 선생님이라고 했어요.", py: "jeobuneun seonsaengnim-irago haesseoyo.", j: "あの方は先生だと言いました。" },
+        { zh: "그가 이게 얼마냐고 물었어요.", py: "geuga ige eolmanyago mureosseoyo.", j: "彼がこれはいくらかと聞きました。" },
+        { zh: "의사가 매일 운동하라고 했어요.", py: "uisaga maeil undongharago haesseoyo.", j: "医者が毎日運動しなさいと言いました。" },
+        { zh: "동생이 주말에 여행을 가자고 해요.", py: "dongsaeng-i jumare yeohaeng-eul gajago haeyo.", j: "弟が週末に旅行に行こうと言っています。" },
+        { zh: "지호 씨는 주말에 아주 바쁘대요.", py: "jiho ssineun jumare aju bappeudaeyo.", j: "ジホさんは週末にとても忙しいんですって。" },
+      ] },
+      // #20 TOPIK3-6 義務・許可・推測
+      20: { examples: [
+        { zh: "내일은 일찍 일어나야 해요.", py: "naeireun iljjik ireonaya haeyo.", j: "明日は早く起きなければなりません。" },
+        { zh: "여기에서 사진을 찍어도 돼요?", py: "yeogieseo sajineul jjigeodo dwaeyo?", j: "ここで写真を撮ってもいいですか？" },
+        { zh: "수업 시간에 휴대폰을 보면 안 돼요.", py: "sueop sigane hyudaeponeul bomyeon an dwaeyo.", j: "授業中にスマホを見てはいけません。" },
+        { zh: "서두르지 않아도 돼요.", py: "seodureuji anado dwaeyo.", j: "急がなくてもいいです。" },
+        { zh: "하늘이 어둡네요. 비가 오겠어요.", py: "haneuri eodumneyo. biga ogesseoyo.", j: "空が暗いですね。雨が降りそうです。" },
+        { zh: "밖이 시끄럽네요. 무슨 일이 있나 봐요.", py: "bakki sikkeureomneyo. museun iri inna bwayo.", j: "外が騒がしいですね。何かあったようです。" },
+      ] },
+      // #21 TOPIK4-4 受身・使役
+      21: { examples: [
+        { zh: "멀리 산이 보여요.", py: "meolli san-i boyeoyo.", j: "遠くに山が見えます。" },
+        { zh: "이 요리는 천연 재료로 만들어져요.", py: "i yorineun cheonyeon jaeryoro mandeureojyeoyo.", j: "この料理は天然の材料で作られています。" },
+        { zh: "추워서 아이에게 두꺼운 코트를 입혔어요.", py: "chuwoseo ai-ege dukkeoun koteureul iphyeosseoyo.", j: "寒いので子どもに厚いコートを着せました。" },
+        { zh: "그 영화는 항상 나를 울려요.", py: "geu yeonghwaneun hangsang nareul ullyeoyo.", j: "あの映画はいつも私を泣かせます。" },
+        { zh: "선생님은 학생들에게 책을 많이 읽게 해요.", py: "seonsaengnimeun haksaengdeul-ege chaegeul mani ilkke haeyo.", j: "先生は学生たちに本をたくさん読ませます。" },
+        { zh: "부장님은 신입 사원에게 매일 자료를 준비시켜요.", py: "bujangnimeun sinip sawon-ege maeil jaryoreul junbisikyeoyo.", j: "部長は新入社員に毎日資料を準備させます。" },
+      ] },
+      // #22 TOPIK4-5 談話・ニュアンス語尾
+      22: { examples: [
+        { zh: "오늘은 좀 바쁘거든요.", py: "oneureun jom bappeugeodeunyo.", j: "今日はちょっと忙しいんですよ。" },
+        { zh: "저 가게 유명하잖아요.", py: "jeo gage yumyeonghajanayo.", j: "あの店、有名じゃないですか。" },
+        { zh: "가 보니까 사람이 정말 많더라고요.", py: "ga bonikka sarami jeongmal manteoragoyo.", j: "行ってみたら、人がすごく多かったんですよ。" },
+        { zh: "어제 그 식당에 가 봤는데, 꽤 맛있던데요.", py: "eoje geu sikdange ga bwanneunde, kkwae masitdeondeyo.", j: "昨日その食堂に行ってみたんですけど、結構おいしかったですよ。" },
+        { zh: "와, 여기 경치가 정말 예쁘네요.", py: "wa, yeogi gyeongchiga jeongmal yeppeuneyo.", j: "わあ、ここ景色が本当にきれいですね。" },
+        { zh: "지금 가면 늦을걸요.", py: "jigeum gamyeon neujeulgeollyo.", j: "今行けば、遅れるでしょうよ。" },
+      ] },
+      // #23 TOPIK4-6 書き言葉・接続副詞・慣用表現
+      23: { examples: [
+        { zh: "저는 매일 아침 커피를 마시며 신문을 읽어요.", py: "jeoneun maeil achim keopireul masimyeo sinmuneul ilgeoyo.", j: "私は毎朝コーヒーを飲み、新聞を読みます。" },
+        { zh: "이 제품은 값이 비싼 반면에 품질이 아주 좋아요.", py: "i jepum-eun gapsi bissan banmyeon-e pumjiri aju joayo.", j: "この製品は値段が高い反面、品質がとても良いです。" },
+        { zh: "비가 왔음에도 불구하고 행사는 예정대로 열렸어요.", py: "biga wasseum-edo bulguhago haengsaneun yejeongdaero yeollyeosseoyo.", j: "雨が降ったにもかかわらず、行事は予定通り開かれました。" },
+        { zh: "수요가 늘었다. 그러므로 생산을 늘려야 한다.", py: "suyoga neureotda. geureomeuro saengsan-eul neullyeoya handa.", j: "需要が増えた。それゆえ、生産を増やさなければならない。" },
+        { zh: "그 사람은 눈치가 빨라서 금방 알아차려요.", py: "geu saram-eun nunchiga ppallaseo geumbang aracharyeoyo.", j: "彼女は察しが速くて、すぐ気づきます。" },
+        { zh: "이 도시는 물가가 싸며 교통도 편리하고, 게다가 기후까지 온화하다. 따라서 이주자가 늘고 있다.", py: "i dosineun mulgaga ssamyeo gyotongdo pyeollihago, gedaga gihukkaji onhwahada. ttaraseo ijujaga neulgo itda.", j: "この都市は物価が安く交通も便利であり、その上気候まで温暖だ。したがって移住者が増えている。" },
+      ] },
+    };
+
+
     // ========================================================================
     // TEMPLATE ENGINE — mode:"template" courses generate fresh sentences each session.
     //   All Korean readings / romaja are hand-verified table lookups assembled with
@@ -6534,6 +6776,7 @@
     const elIntroTitle = $("#intro-title");
     const elIntroOverview = $("#intro-overview");
     const elIntroPoints = $("#intro-points");
+    const elLessonPlayAll = $("#lesson-playall");
     const elIntroStartBtn = $("#intro-start-btn");
 
     elTotalCourses.textContent = COURSES.length; // actual count
@@ -7615,6 +7858,7 @@
     let selectedLevel = 1;
 
     function showView(name) {
+      if (typeof stopLessonPlay === "function") stopLessonPlay();
       Object.entries(views).forEach(([k, el]) => {
         if (k === name) el.removeAttribute("hidden");
         else el.setAttribute("hidden", "");
@@ -7713,7 +7957,7 @@
       elIntroNum.textContent = c.num;
       elIntroTitle.textContent = CTITLE(c);
       elIntroOverview.textContent = IOVER(intro);
-      elIntroPoints.innerHTML = IPTS(intro).map(p => `<li>${p}</li>`).join("");
+      renderPoints(courseId, IPTS(intro));
       const mc = masteredList(courseId).length;
       const total = c.sentences.length;
       const done = mc >= total;
@@ -7806,6 +8050,72 @@
         u.pitch = 1;
         synth.speak(u);
       } catch (e) {}
+    }
+
+    // ---- コース講義（このコースで学ぶこと＋例文🔊） ----
+    let lessonExamples = [];
+    let lessonPlaying = false;
+    function stopLessonPlay() {
+      lessonPlaying = false;
+      try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+      if (elLessonPlayAll) { elLessonPlayAll.classList.remove("playing"); elLessonPlayAll.textContent = "▶ 例文を通しで聞く"; }
+      if (elIntroPoints) elIntroPoints.querySelectorAll(".lesson-item").forEach(el => el.classList.remove("playing"));
+    }
+    function renderPoints(courseId, points) {
+      stopLessonPlay();
+      points = points || [];
+      const lesson = (typeof COURSE_LESSONS !== "undefined") ? COURSE_LESSONS[courseId] : null;
+      const hasLesson = !!(lesson && lesson.examples && lesson.examples.length && window.speechSynthesis);
+      lessonExamples = hasLesson ? lesson.examples : [];
+      if (elLessonPlayAll) {
+        if (hasLesson) elLessonPlayAll.removeAttribute("hidden");
+        else elLessonPlayAll.setAttribute("hidden", "");
+      }
+      elIntroPoints.innerHTML = points.map((p, i) => {
+        const ex = hasLesson ? lessonExamples[i] : null;
+        const exHTML = ex ? `
+            <div class="lesson-zh-row">
+              <button class="lesson-speak" type="button" data-li="${i}" aria-label="発音を聞く">🔊</button>
+              <span class="lesson-zh zh">${ex.zh}</span>
+            </div>
+            <div class="lesson-meta">${ex.py} ・ ${ex.j}</div>` : "";
+        return `<li class="${ex ? "has-example lesson-item" : ""}" data-li="${i}">${p}${exHTML}</li>`;
+      }).join("");
+      if (hasLesson) {
+        elIntroPoints.querySelectorAll(".lesson-speak").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            stopLessonPlay();
+            const ex = lessonExamples[parseInt(btn.dataset.li)];
+            if (ex) speak(ex.zh);
+          });
+        });
+      }
+    }
+    function playLessonAll() {
+      const synth = window.speechSynthesis;
+      if (!synth || !lessonExamples.length) return;
+      if (lessonPlaying) { stopLessonPlay(); return; }
+      synth.cancel();
+      lessonPlaying = true;
+      elLessonPlayAll.classList.add("playing");
+      elLessonPlayAll.textContent = "■ 停止";
+      if (!koVoice) pickKoVoice();
+      let i = 0;
+      const items = elIntroPoints.querySelectorAll(".lesson-item");
+      const step = () => {
+        if (!lessonPlaying || i >= lessonExamples.length) { stopLessonPlay(); return; }
+        items.forEach(el => el.classList.remove("playing"));
+        if (items[i]) items[i].classList.add("playing");
+        const u = new SpeechSynthesisUtterance(lessonExamples[i].zh);
+        if (koVoice) { u.voice = koVoice; u.lang = koVoice.lang; }
+        else u.lang = "ko-KR";
+        u.rate = 0.9;
+        u.onend = () => { i++; step(); };
+        u.onerror = () => { stopLessonPlay(); };
+        synth.speak(u);
+      };
+      step();
     }
 
     // ========================================================================
@@ -8285,6 +8595,7 @@
 
     // Intro画面 → 練習開始
     elIntroStartBtn.addEventListener("click", startPractice);
+    if (elLessonPlayAll) elLessonPlayAll.addEventListener("click", playLessonAll);
 
     // ========================================================================
     // HINT

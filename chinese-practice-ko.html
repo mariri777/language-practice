@@ -119,6 +119,7 @@
         <h2 class="intro-title" id="intro-title">코스 이름</h2>
         <p class="intro-overview" id="intro-overview"></p>
         <div class="intro-section-title">이 코스에서 배울 내용</div>
+        <button class="lesson-playall" id="lesson-playall" type="button" hidden>▶ 예문 전체 듣기</button>
         <ul class="intro-points" id="intro-points"></ul>
         <button class="btn btn-primary intro-start" id="intro-start-btn">10문제 도전</button>
       </div>
@@ -2613,6 +2614,210 @@
         points: ["선택 <code>与其...不如... / 宁可...也不...</code>","제안 <code>要不</code>","만일의 대비 <code>万一...怎么办？</code>","극단적 양보 <code>哪怕...也...</code>","조건 불충족의 결과 <code>否则／不然</code>","문어체 가정 <code>假如／倘若</code>","긴급 대응 <code>一旦...，立刻／马上...</code>"] }
     ];
 
+    const COURSE_LESSONS = {
+      0: { examples: [
+        { zh: "他不是老师。", py: "tā bú shì lǎoshī.", j: "그는 선생님이 아닙니다." },
+        { zh: "你叫什么名字？", py: "nǐ jiào shénme míngzi?", j: "성함이 어떻게 되세요?" },
+        { zh: "我很好。", py: "wǒ hěn hǎo.", j: "잘 지내요." },
+        { zh: "不客气。", py: "bú kèqi.", j: "천만에요." },
+        { zh: "我叫田中。", py: "wǒ jiào Tiánzhōng.", j: "저는 다나카라고 합니다." },
+      ] },
+      1: { examples: [
+        { zh: "现在几点？", py: "xiànzài jǐ diǎn?", j: "지금 몇 시예요?" },
+        { zh: "她有两个孩子。", py: "tā yǒu liǎng ge háizi.", j: "그녀에게는 아이가 두 명 있어요." },
+        { zh: "这本书多少钱？", py: "zhè běn shū duōshao qián?", j: "이 책은 얼마예요?" },
+        { zh: "我今年二十岁。", py: "wǒ jīnnián èrshí suì.", j: "저는 올해 스무 살입니다." },
+        { zh: "我有一个哥哥。", py: "wǒ yǒu yí ge gēge.", j: "저에게는 형이 한 명 있어요." },
+      ] },
+      2: { examples: [
+        { zh: "我在家。", py: "wǒ zài jiā.", j: "저는 집에 있어요." },
+        { zh: "我会说中文。", py: "wǒ huì shuō Zhōngwén.", j: "저는 중국어를 할 수 있어요." },
+        { zh: "他在看电视。", py: "tā zài kàn diànshì.", j: "그는 TV를 보고 있어요." },
+        { zh: "这是什么？", py: "zhè shì shénme?", j: "이것은 뭐예요?" },
+        { zh: "猫在床下。", py: "māo zài chuáng xià.", j: "고양이가 침대 밑에 있다." },
+        { zh: "你的书在桌子上。", py: "nǐ de shū zài zhuōzi shàng.", j: "네 책은 책상 위에 있어." },
+      ] },
+      3: { examples: [
+        { zh: "我吃了饭。", py: "wǒ chī le fàn.", j: "저는 밥을 먹었습니다." },
+        { zh: "我去过北京。", py: "wǒ qù guo Běijīng.", j: "저는 베이징에 간 적이 있습니다." },
+        { zh: "我没吃饭。", py: "wǒ méi chī fàn.", j: "저는 밥을 먹지 않았습니다." },
+        { zh: "他还没回家。", py: "tā hái méi huí jiā.", j: "그는 아직 집에 돌아오지 않았습니다." },
+        { zh: "我已经知道了。", py: "wǒ yǐjīng zhīdào le.", j: "이미 알고 있습니다." },
+        { zh: "你吃饭了吗？", py: "nǐ chī fàn le ma?", j: "밥을 먹었습니까?" },
+      ] },
+      4: { examples: [
+        { zh: "他正在打电话。", py: "tā zhèngzài dǎ diànhuà.", j: "그는 지금 통화 중입니다." },
+        { zh: "明天我要去医院。", py: "míngtiān wǒ yào qù yīyuàn.", j: "내일 병원에 갈 예정입니다." },
+        { zh: "我想买一件衣服。", py: "wǒ xiǎng mǎi yí jiàn yīfu.", j: "옷을 한 벌 사고 싶습니다." },
+        { zh: "我快要毕业了。", py: "wǒ kuài yào bìyè le.", j: "저는 곧 졸업합니다." },
+        { zh: "他在睡觉呢。", py: "tā zài shuìjiào ne.", j: "그는 자고 있어요." },
+      ] },
+      5: { examples: [
+        { zh: "他比我大两岁。", py: "tā bǐ wǒ dà liǎng suì.", j: "그는 저보다 두 살 많습니다." },
+        { zh: "你能帮我吗？", py: "nǐ néng bāng wǒ ma?", j: "도와주시겠어요?" },
+        { zh: "我也喜欢音乐。", py: "wǒ yě xǐhuan yīnyuè.", j: "저도 음악을 좋아합니다." },
+        { zh: "给我一杯水。", py: "gěi wǒ yì bēi shuǐ.", j: "물 한 잔 주세요." },
+        { zh: "太好了！", py: "tài hǎo le!", j: "정말 좋아요!" },
+        { zh: "请慢点说。", py: "qǐng màn diǎn shuō.", j: "천천히 말씀해 주세요." },
+      ] },
+      6: { examples: [
+        { zh: "如果明天下雨，我就不去。", py: "rúguǒ míngtiān xià yǔ, wǒ jiù bú qù.", j: "만약 내일 비가 오면, 저는 가지 않을 거예요." },
+        { zh: "虽然他很累，但是还在工作。", py: "suīrán tā hěn lèi, dànshì hái zài gōngzuò.", j: "그는 피곤하지만, 아직도 일하고 있어요." },
+        { zh: "因为我感冒了，所以没去上班。", py: "yīnwèi wǒ gǎnmào le, suǒyǐ méi qù shàngbān.", j: "감기에 걸려서 출근하지 않았어요." },
+        { zh: "只要努力，就一定能成功。", py: "zhǐyào nǔlì, jiù yídìng néng chénggōng.", j: "노력만 하면, 반드시 성공할 수 있어요." },
+        { zh: "一下班，我就回家。", py: "yī xiàbān, wǒ jiù huí jiā.", j: "퇴근하면 곧장 집에 갑니다." },
+        { zh: "除了苹果，我还喜欢香蕉。", py: "chúle píngguǒ, wǒ hái xǐhuan xiāngjiāo.", j: "사과 말고도, 바나나도 좋아해요." },
+        { zh: "我不是不想去，而是没时间。", py: "wǒ bú shì bù xiǎng qù, ér shì méi shíjiān.", j: "가기 싫은 것이 아니라, 시간이 없어요." },
+      ] },
+      7: { examples: [
+        { zh: "我一边走路一边听音乐。", py: "wǒ yìbiān zǒulù yìbiān tīng yīnyuè.", j: "걸으면서 음악을 들어요." },
+        { zh: "天气越来越热了。", py: "tiānqì yuè lái yuè rè le.", j: "날씨가 점점 더워져요." },
+        { zh: "他比我还高。", py: "tā bǐ wǒ hái gāo.", j: "그는 저보다 키가 더 커요." },
+        { zh: "我的手机跟你的一样。", py: "wǒ de shǒujī gēn nǐ de yíyàng.", j: "제 휴대폰은 당신 것과 같아요." },
+        { zh: "他跑得很快。", py: "tā pǎo de hěn kuài.", j: "그는 빨리 달려요." },
+        { zh: "他睡了八个小时。", py: "tā shuì le bā ge xiǎoshí.", j: "그는 여덟 시간 잤어요." },
+      ] },
+      8: { examples: [
+        { zh: "我把作业做完了。", py: "wǒ bǎ zuòyè zuò wán le.", j: "숙제를 다 끝냈어요." },
+        { zh: "妈妈把饭做好了。", py: "māma bǎ fàn zuò hǎo le.", j: "엄마는 밥을 잘 지으셨어요." },
+        { zh: "请把书放在桌子上。", py: "qǐng bǎ shū fàng zài zhuōzi shàng.", j: "책을 책상 위에 놓아 주세요." },
+        { zh: "我把信寄给他了。", py: "wǒ bǎ xìn jì gěi tā le.", j: "편지를 그에게 부쳤어요." },
+        { zh: "请把名字写好。", py: "qǐng bǎ míngzi xiě hǎo.", j: "이름을 똑바로 써 주세요." },
+        { zh: "他把杯子打破了。", py: "tā bǎ bēizi dǎ pò le.", j: "그는 컵을 깨버렸어요." },
+      ] },
+      9: { examples: [
+        { zh: "我看见你了。", py: "wǒ kàn jiàn nǐ le.", j: "당신이 보였어요." },
+        { zh: "这次我听懂了。", py: "zhè cì wǒ tīng dǒng le.", j: "이번에는 알아들었어요." },
+        { zh: "我买到票了。", py: "wǒ mǎi dào piào le.", j: "저는 표를 살 수 있었어요." },
+        { zh: "这个字我写错了。", py: "zhège zì wǒ xiě cuò le.", j: "이 글자를 잘못 썼어요." },
+        { zh: "我吃完了。", py: "wǒ chī wán le.", j: "다 먹었어요." },
+        { zh: "你猜对了！", py: "nǐ cāi duì le!", j: "맞혔어!" },
+        { zh: "我没看见他。", py: "wǒ méi kàn jiàn tā.", j: "저는 그를 못 봤어요." },
+      ] },
+      10: { examples: [
+        { zh: "他唱歌唱得很好。", py: "tā chàng gē chàng de hěn hǎo.", j: "그는 노래를 잘 불러요." },
+        { zh: "我累得走不动了。", py: "wǒ lèi de zǒu bu dòng le.", j: "저는 피곤해서 걸을 수 없게 됐어요." },
+        { zh: "请上来。", py: "qǐng shànglái.", j: "올라오세요." },
+        { zh: "他从外面走进来了。", py: "tā cóng wàimiàn zǒu jìnlái le.", j: "그는 밖에서 걸어 들어왔어요." },
+        { zh: "你听得见吗？", py: "nǐ tīng de jiàn ma?", j: "들려요?" },
+      ] },
+      11: { examples: [
+        { zh: "我应该早点睡觉。", py: "wǒ yīnggāi zǎo diǎn shuìjiào.", j: "저는 일찍 자야 해요." },
+        { zh: "老师叫我们安静。", py: "lǎoshī jiào wǒmen ānjìng.", j: "선생님은 우리를 조용히 시켰어요." },
+        { zh: "我以为你不来了。", py: "wǒ yǐwéi nǐ bù lái le.", j: "저는 당신이 오지 않을 거라고 생각했어요." },
+        { zh: "他可能已经走了。", py: "tā kěnéng yǐjīng zǒu le.", j: "그는 이미 갔을지도 몰라요." },
+        { zh: "听说他下个月结婚。", py: "tīngshuō tā xià ge yuè jiéhūn.", j: "그는 다음 달에 결혼한대요." },
+        { zh: "我对中国文化感兴趣。", py: "wǒ duì Zhōngguó wénhuà gǎn xìngqù.", j: "저는 중국 문화에 관심이 있어요." },
+        { zh: "别担心，没关系。", py: "bié dānxīn, méi guānxi.", j: "걱정하지 마, 괜찮아." },
+      ] },
+      12: { examples: [
+        { zh: "不管谁来，我都欢迎。", py: "bùguǎn shéi lái, wǒ dōu huānyíng.", j: "누가 오든, 저는 환영해요." },
+        { zh: "即使下雨，比赛也照常进行。", py: "jíshǐ xià yǔ, bǐsài yě zhàocháng jìnxíng.", j: "설령 비가 오더라도 시합은 예정대로 진행됩니다." },
+        { zh: "既然你来了，就留下来吃饭吧。", py: "jìrán nǐ lái le, jiù liú xiàlái chīfàn ba.", j: "이왕 왔으니까, 식사하고 가." },
+        { zh: "一旦决定，就不能后悔。", py: "yídàn juédìng, jiù bù néng hòuhuǐ.", j: "한 번 결정하면 후회할 수 없어요." },
+        { zh: "不管多忙，我都会给你打电话。", py: "bùguǎn duō máng, wǒ dōu huì gěi nǐ dǎ diànhuà.", j: "아무리 바빠도 전화할게요." },
+      ] },
+      13: { examples: [
+        { zh: "他不仅会说中文，还会说日语。", py: "tā bùjǐn huì shuō Zhōngwén, hái huì shuō Rìyǔ.", j: "그는 중국어뿐만 아니라, 일본어도 할 줄 알아요." },
+        { zh: "除非你道歉，否则我不原谅你。", py: "chúfēi nǐ dàoqiàn, fǒuzé wǒ bù yuánliàng nǐ.", j: "사과하지 않는 한, 용서하지 않아요." },
+        { zh: "只有努力，才能成功。", py: "zhǐyǒu nǔlì, cái néng chénggōng.", j: "노력해야만, 성공할 수 있어요." },
+        { zh: "与其抱怨，不如行动。", py: "yǔqí bàoyuàn, bùrú xíngdòng.", j: "불평하느니, 행동합시다." },
+        { zh: "不是不愿意，而是没时间。", py: "bú shì bú yuànyì, ér shì méi shíjiān.", j: "하기 싫은 것이 아니라, 시간이 없어요." },
+        { zh: "之所以失败，是因为没有努力。", py: "zhīsuǒyǐ shībài, shì yīnwèi méiyǒu nǔlì.", j: "실패한 것은, 노력하지 않았기 때문이에요." },
+        { zh: "通过努力，他终于实现了梦想。", py: "tōngguò nǔlì, tā zhōngyú shíxiàn le mèngxiǎng.", j: "노력을 통해 그는 마침내 꿈을 실현했어요." },
+      ] },
+      14: { examples: [
+        { zh: "由于天气不好，飞机晚点了。", py: "yóuyú tiānqì bù hǎo, fēijī wǎndiǎn le.", j: "날씨가 나빠서 비행기가 지연됐어요." },
+        { zh: "这个问题恐怕不容易解决。", py: "zhège wèntí kǒngpà bù róngyì jiějué.", j: "이 문제는 해결이 쉽지 않을 것 같아요." },
+        { zh: "估计他不会来了。", py: "gūjì tā bú huì lái le.", j: "아마도 그는 안 올 거예요." },
+        { zh: "也许明天会下雨。", py: "yěxǔ míngtiān huì xià yǔ.", j: "어쩌면 내일 비가 올지도 몰라요." },
+        { zh: "据说他要辞职了。", py: "jùshuō tā yào cízhí le.", j: "그는 사직한다고 해요." },
+        { zh: "多亏了你的帮助，我才能成功。", py: "duōkuī le nǐ de bāngzhù, wǒ cái néng chénggōng.", j: "당신 덕분에 성공할 수 있었어요." },
+        { zh: "正因为他懒，所以才失败。", py: "zhèng yīnwèi tā lǎn, suǒyǐ cái shībài.", j: "그는 게을렀기 때문에 실패했어요." },
+      ] },
+      15: { examples: [
+        { zh: "看来他不会来了。", py: "kànlái tā bú huì lái le.", j: "보아하니 그는 오지 않을 것 같아요." },
+        { zh: "他似乎不太高兴。", py: "tā sìhū bú tài gāoxìng.", j: "그는 별로 기분이 좋지 않은 것 같아요." },
+        { zh: "听说他下个月就要结婚了。", py: "tīngshuō tā xià ge yuè jiù yào jiéhūn le.", j: "듣자 하니, 그는 다음 달에 결혼한대요." },
+        { zh: "这道菜看起来很好吃。", py: "zhè dào cài kàn qǐlái hěn hǎochī.", j: "이 요리는 맛있어 보여요." },
+        { zh: "这部电影值得一看。", py: "zhè bù diànyǐng zhíde yí kàn.", j: "이 영화는 볼 만한 가치가 있어요." },
+        { zh: "在我看来，他是对的。", py: "zài wǒ kàn lái, tā shì duì de.", j: "제가 보기에는, 그가 맞아요." },
+        { zh: "这本书让人深思。", py: "zhè běn shū ràng rén shēnsī.", j: "이 책은 사람을 깊이 생각하게 만들어요." },
+      ] },
+      16: { examples: [
+        { zh: "这个孩子真聪明！", py: "zhège háizi zhēn cōngming!", j: "이 아이는 정말 똑똑하구나!" },
+        { zh: "他居然没来！", py: "tā jūrán méi lái!", j: "뜻밖에도 그가 오지 않았어!" },
+        { zh: "我简直不敢相信。", py: "wǒ jiǎnzhí bù gǎn xiāngxìn.", j: "믿을 수 없을 정도예요." },
+        { zh: "难道你忘了吗？", py: "nándào nǐ wàng le ma?", j: "설마 잊은 거야?" },
+        { zh: "反正没人知道。", py: "fǎnzhèng méi rén zhīdào.", j: "어차피 아무도 몰라요." },
+        { zh: "他偏偏没去。", py: "tā piānpiān méi qù.", j: "그는 굳이 가지 않았어요." },
+        { zh: "你千万别迟到。", py: "nǐ qiānwàn bié chídào.", j: "절대 지각하지 마." },
+        { zh: "我巴不得马上回家。", py: "wǒ bābude mǎshàng huí jiā.", j: "당장이라도 집에 가고 싶어요." },
+        { zh: "早知道就不去了。", py: "zǎo zhīdào jiù bú qù le.", j: "알았더라면 가지 않았을 텐데." },
+      ] },
+      17: { examples: [
+        { zh: "他被老师批评了。", py: "tā bèi lǎoshī pīpíng le.", j: "그는 선생님께 혼났어요." },
+        { zh: "这本书是他写的。", py: "zhè běn shū shì tā xiě de.", j: "이 책은 그가 쓴 거예요." },
+        { zh: "这件事由我负责。", py: "zhè jiàn shì yóu wǒ fùzé.", j: "이 일은 제가 책임집니다." },
+        { zh: "对我来说，健康最重要。", py: "duì wǒ lái shuō, jiànkāng zuì zhòngyào.", j: "저에게는, 건강이 가장 중요해요." },
+        { zh: "关于这件事，我有不同的看法。", py: "guānyú zhè jiàn shì, wǒ yǒu bùtóng de kànfǎ.", j: "이 일에 대해서, 저는 다른 의견이 있어요." },
+        { zh: "这个问题与我无关。", py: "zhège wèntí yǔ wǒ wú guān.", j: "이 문제는 저와 관계없어요." },
+        { zh: "在大家的帮助下，我完成了任务。", py: "zài dàjiā de bāngzhù xià, wǒ wánchéng le rènwu.", j: "모두의 도움으로, 저는 임무를 완수했어요." },
+      ] },
+      18: { examples: [
+        { zh: "这次比上次好得多。", py: "zhè cì bǐ shàng cì hǎo de duō.", j: "이번엔 지난번보다 훨씬 좋았어요." },
+        { zh: "我没有他高。", py: "wǒ méi yǒu tā gāo.", j: "저는 그만큼 키가 크지 않아요." },
+        { zh: "这个跟那个一样好。", py: "zhège gēn nàge yíyàng hǎo.", j: "이것은 저것과 똑같이 좋아요." },
+        { zh: "这本书比那本贵两倍。", py: "zhè běn shū bǐ nà běn guì liǎng bèi.", j: "이 책은 저 책보다 2배 비싸요." },
+        { zh: "我跟他差不多大。", py: "wǒ gēn tā chàbuduō dà.", j: "저는 그와 나이가 거의 비슷해요." },
+        { zh: "他比我更努力。", py: "tā bǐ wǒ gèng nǔlì.", j: "그는 저보다 더 열심히 노력해요." },
+        { zh: "没有什么比健康更重要。", py: "méi yǒu shénme bǐ jiànkāng gèng zhòngyào.", j: "건강만큼 중요한 것은 없어요." },
+        { zh: "越来越多的人开始学中文。", py: "yuè lái yuè duō de rén kāishǐ xué Zhōngwén.", j: "중국어를 배우는 사람이 점점 늘고 있어요." },
+      ] },
+      19: { examples: [
+        { zh: "你听得见吗？", py: "nǐ tīng de jiàn ma?", j: "들려요?" },
+        { zh: "这个菜看起来很好吃。", py: "zhège cài kàn qǐlái hěn hǎochī.", j: "이 요리는 맛있어 보여요." },
+        { zh: "请你继续说下去。", py: "qǐng nǐ jìxù shuō xiàqù.", j: "이어서 계속 말씀하세요." },
+        { zh: "我想出来一个好办法。", py: "wǒ xiǎng chūlái yí ge hǎo bànfǎ.", j: "저는 좋은 방법을 생각해 냈어요." },
+        { zh: "这件事我办不到。", py: "zhè jiàn shì wǒ bàn bu dào.", j: "이 일은 저에게는 할 수 없어요." },
+      ] },
+      20: { examples: [
+        { zh: "随着科技的发展，生活越来越方便。", py: "suízhe kējì de fāzhǎn, shēnghuó yuè lái yuè fāngbiàn.", j: "기술의 발전에 따라, 생활은 점점 편리해지고 있어요." },
+        { zh: "凡是参加比赛的人，都有奖品。", py: "fánshì cānjiā bǐsài de rén, dōu yǒu jiǎngpǐn.", j: "시합에 참가한 사람에게는, 모두 상품이 있어요." },
+        { zh: "对于这个问题，专家有不同的看法。", py: "duìyú zhège wèntí, zhuānjiā yǒu bùtóng de kànfǎ.", j: "이 문제에 대해서, 전문가는 다른 견해를 가지고 있어요." },
+        { zh: "通过这次经验，我学到了很多。", py: "tōngguò zhè cì jīngyàn, wǒ xué dào le hěn duō.", j: "이번 경험을 통해 많은 것을 배웠어요." },
+        { zh: "由于工作原因，我经常出差。", py: "yóuyú gōngzuò yuányīn, wǒ jīngcháng chūchāi.", j: "업무 관계로, 자주 출장 가요." },
+        { zh: "在这种情况下，我们应该冷静。", py: "zài zhè zhǒng qíngkuàng xià, wǒmen yīnggāi lěngjìng.", j: "이런 상황에서, 우리는 침착해야 해요." },
+        { zh: "从这个角度来看，这个计划是可行的。", py: "cóng zhège jiǎodù lái kàn, zhège jìhuà shì kěxíng de.", j: "이 각도에서 보면, 이 계획은 실행 가능해요." },
+      ] },
+      21: { examples: [
+        { zh: "我先吃饭，然后做作业。", py: "wǒ xiān chī fàn, ránhòu zuò zuòyè.", j: "먼저 밥을 먹고, 그런 다음 숙제를 해요." },
+        { zh: "接着，他又说了几句。", py: "jiēzhe, tā yòu shuō le jǐ jù.", j: "이어서 그는 또 몇 마디 했어요." },
+        { zh: "起初大家都不同意，后来慢慢接受了。", py: "qǐchū dàjiā dōu bù tóngyì, hòulái mànmàn jiēshòu le.", j: "처음에는 다들 반대했지만, 나중에 점점 받아들였어요." },
+        { zh: "同时，我也在学习日语。", py: "tóngshí, wǒ yě zài xuéxí Rìyǔ.", j: "동시에 저는 일본어도 배우고 있어요." },
+        { zh: "此外，他还会弹钢琴。", py: "cǐwài, tā hái huì tán gāngqín.", j: "그 밖에, 그는 피아노도 칠 수 있어요." },
+        { zh: "总之，这次旅行很愉快。", py: "zǒngzhī, zhè cì lǚxíng hěn yúkuài.", j: "요컨대, 이번 여행은 즐거웠어요." },
+      ] },
+      22: { examples: [
+        { zh: "我以为你不来了。", py: "wǒ yǐwéi nǐ bù lái le.", j: "저는 당신이 오지 않을 거라고 생각했어요." },
+        { zh: "我感到很幸福。", py: "wǒ gǎn dào hěn xìngfú.", j: "매우 행복하다고 느껴요." },
+        { zh: "我盼望着假期的到来。", py: "wǒ pànwàng zhe jiàqī de dàolái.", j: "휴가의 도래를 학수고대하고 있어요." },
+        { zh: "我害怕一个人在家。", py: "wǒ hàipà yí ge rén zài jiā.", j: "저는 혼자 집에 있는 게 무서워요." },
+        { zh: "他对工作十分认真。", py: "tā duì gōngzuò shífēn rènzhēn.", j: "그는 업무에 매우 진지해요." },
+        { zh: "我为你感到高兴。", py: "wǒ wèi nǐ gǎn dào gāoxìng.", j: "저는 당신 때문에 기뻐요." },
+      ] },
+      23: { examples: [
+        { zh: "与其抱怨，不如行动。", py: "yǔqí bàoyuàn, bùrú xíngdòng.", j: "불평하느니, 행동합시다." },
+        { zh: "要不我们去吃饭吧。", py: "yàobu wǒmen qù chī fàn ba.", j: "그게 아니면, 같이 밥 먹으러 가자." },
+        { zh: "万一下雨怎么办？", py: "wànyī xià yǔ zěnme bàn?", j: "만일 비가 오면 어떻게 하지?" },
+        { zh: "哪怕失败，我也不后悔。", py: "nǎpà shībài, wǒ yě bù hòuhuǐ.", j: "설령 실패해도, 저는 후회하지 않아요." },
+        { zh: "快点走，否则就来不及了。", py: "kuài diǎn zǒu, fǒuzé jiù lái bu jí le.", j: "빨리 가요, 안 그러면 늦어요." },
+        { zh: "假如我是你，我就不会这么做。", py: "jiǎrú wǒ shì nǐ, wǒ jiù bú huì zhème zuò.", j: "만약 제가 당신이라면, 이렇게 하지 않아요." },
+        { zh: "一旦发生问题，立刻通知我。", py: "yídàn fāshēng wèntí, lìkè tōngzhī wǒ.", j: "문제가 발생하면, 즉시 연락 주세요." },
+      ] },
+    };
+
+
     // ========================================================================
     // STATE & STORAGE
     // ========================================================================
@@ -2710,6 +2915,7 @@
     const elIntroTitle = $("#intro-title");
     const elIntroOverview = $("#intro-overview");
     const elIntroPoints = $("#intro-points");
+    const elLessonPlayAll = $("#lesson-playall");
     const elIntroStartBtn = $("#intro-start-btn");
 
     elTotalCourses.textContent = COURSES.length; // actual count
@@ -2721,6 +2927,7 @@
     let selectedLevel = 1;
 
     function showView(name) {
+      if (typeof stopLessonPlay === "function") stopLessonPlay();
       Object.entries(views).forEach(([k, el]) => {
         if (k === name) el.removeAttribute("hidden");
         else el.setAttribute("hidden", "");
@@ -2820,7 +3027,7 @@
       elIntroNum.textContent = courseId + 1;
       elIntroTitle.textContent = c.title;
       elIntroOverview.textContent = intro.overview;
-      elIntroPoints.innerHTML = intro.points.map(p => `<li>${tx(p)}</li>`).join("");
+      renderPoints(courseId, intro.points);
       const mc = masteredList(courseId).length;
       const total = c.sentences.length;
       const done = mc >= total;
@@ -2910,6 +3117,72 @@
         u.rate = 0.85;
         synth.speak(u);
       } catch (e) {}
+    }
+
+    // ---- コース講義（このコースで学ぶこと＋例文🔊） ----
+    let lessonExamples = [];
+    let lessonPlaying = false;
+    function stopLessonPlay() {
+      lessonPlaying = false;
+      try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+      if (elLessonPlayAll) { elLessonPlayAll.classList.remove("playing"); elLessonPlayAll.textContent = "▶ 예문 전체 듣기"; }
+      if (elIntroPoints) elIntroPoints.querySelectorAll(".lesson-item").forEach(el => el.classList.remove("playing"));
+    }
+    function renderPoints(courseId, points) {
+      stopLessonPlay();
+      points = points || [];
+      const lesson = (typeof COURSE_LESSONS !== "undefined") ? COURSE_LESSONS[courseId] : null;
+      const hasLesson = !!(lesson && lesson.examples && lesson.examples.length && window.speechSynthesis);
+      lessonExamples = hasLesson ? lesson.examples : [];
+      if (elLessonPlayAll) {
+        if (hasLesson) elLessonPlayAll.removeAttribute("hidden");
+        else elLessonPlayAll.setAttribute("hidden", "");
+      }
+      elIntroPoints.innerHTML = points.map((p, i) => {
+        const ex = hasLesson ? lessonExamples[i] : null;
+        const exHTML = ex ? `
+            <div class="lesson-zh-row">
+              <button class="lesson-speak" type="button" data-li="${i}" aria-label="발음 듣기">🔊</button>
+              <span class="lesson-zh zh">${tx(ex.zh)}</span>
+            </div>
+            <div class="lesson-meta">${ex.py} ・ ${ex.j}</div>` : "";
+        return `<li class="${ex ? "has-example lesson-item" : ""}" data-li="${i}">${tx(p)}${exHTML}</li>`;
+      }).join("");
+      if (hasLesson) {
+        elIntroPoints.querySelectorAll(".lesson-speak").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            stopLessonPlay();
+            const ex = lessonExamples[parseInt(btn.dataset.li)];
+            if (ex) speak(tx(ex.zh));
+          });
+        });
+      }
+    }
+    function playLessonAll() {
+      const synth = window.speechSynthesis;
+      if (!synth || !lessonExamples.length) return;
+      if (lessonPlaying) { stopLessonPlay(); return; }
+      synth.cancel();
+      lessonPlaying = true;
+      elLessonPlayAll.classList.add("playing");
+      elLessonPlayAll.textContent = "■ 정지";
+      if (!zhVoice) pickZhVoice();
+      let i = 0;
+      const items = elIntroPoints.querySelectorAll(".lesson-item");
+      const step = () => {
+        if (!lessonPlaying || i >= lessonExamples.length) { stopLessonPlay(); return; }
+        items.forEach(el => el.classList.remove("playing"));
+        if (items[i]) items[i].classList.add("playing");
+        const u = new SpeechSynthesisUtterance(tx(lessonExamples[i].zh));
+        if (zhVoice) { u.voice = zhVoice; u.lang = zhVoice.lang; }
+        else u.lang = "zh-CN";
+        u.rate = 0.85;
+        u.onend = () => { i++; step(); };
+        u.onerror = () => { stopLessonPlay(); };
+        synth.speak(u);
+      };
+      step();
     }
 
     // ========================================================================
@@ -3385,6 +3658,7 @@
 
     // Intro画面 → 練習開始
     elIntroStartBtn.addEventListener("click", startPractice);
+    if (elLessonPlayAll) elLessonPlayAll.addEventListener("click", playLessonAll);
 
     // ========================================================================
     // HINT
